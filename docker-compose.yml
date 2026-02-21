@@ -3,6 +3,9 @@ version: '3.8'
 services:
   ultronpro:
     image: ultronpro:latest
+    environment:
+      - ULTRON_FINETUNE_URL=http://ultronpro_trainer:8010/train
+      - ULTRON_FINETUNE_BASE_MODEL=TinyLlama/TinyLlama-1.1B-Chat-v1.0
     deploy:
       replicas: 1
       labels:
@@ -12,6 +15,20 @@ services:
         - "traefik.http.routers.ultronpro.tls=true"
         - "traefik.http.routers.ultronpro.tls.certresolver=letsencryptresolver"
         - "traefik.http.services.ultronpro.loadbalancer.server.port=8000"
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ultronpro_data:/app/data
+    networks:
+      - Nutef
+
+  ultronpro_trainer:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.trainer
+    image: ultronpro_trainer:local
+    deploy:
+      replicas: 1
       restart_policy:
         condition: on-failure
     volumes:

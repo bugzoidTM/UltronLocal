@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>UltronPRO — Dashboard</title>
   <meta name="description" content="UltronPRO AGI - Processador de Curiosidade Adaptativo" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='50' font-size='48'%3E%F0%9F%A4%96%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -461,6 +462,7 @@
     <button class="tab" data-tab="conflicts">⚡ Conflitos</button>
     <button class="tab" data-tab="search">🔍 Busca</button>
     <button class="tab" data-tab="insights">💡 Insights</button>
+    <button class="tab" data-tab="llm">🧪 LLM Ops</button>
     <button class="tab" data-tab="settings">⚙️ Config</button>
   </nav>
 
@@ -743,6 +745,54 @@
       </div>
     </div>
 
+    <!-- LLM Ops Tab -->
+    <div id="tab-llm" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><span class="icon">🧪</span> Uso de LLMs (API + Local)</div>
+          <button class="btn btn-sm btn-secondary" onclick="loadLlmUsage()">🔄 Refresh</button>
+        </div>
+        <div class="card-body">
+          <div class="muted" style="margin-bottom: 12px;">Mostra chamadas, tokens, limites configurados e saldo restante quando aplicável.</div>
+          <div id="llmUsageSummary" class="muted" style="margin-bottom: 12px">(carregando...)</div>
+          <div id="llmHealthMsg" class="muted" style="margin-bottom:10px"></div>
+          <div id="llmUsageList"></div>
+
+          <hr style="margin:14px 0;border-color:#2a2a2a;opacity:.5" />
+          <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;">
+            <strong>🧬 Fine-tune / LoRA (manual + auto)</strong>
+            <button class="btn btn-sm btn-secondary" onclick="loadFinetuneStatus()">🔄 Refresh FT</button>
+          </div>
+          <div style="margin-top:10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;">
+            <input id="ftTaskType" type="text" value="grounding" placeholder="task_type">
+            <input id="ftBaseModel" type="text" value="TinyLlama/TinyLlama-1.1B-Chat-v1.0" placeholder="base model">
+            <button class="btn btn-sm" onclick="ftBuildDataset()">📦 Dataset</button>
+            <button class="btn btn-sm" onclick="ftCreateJob()">➕ Job</button>
+            <button class="btn btn-sm btn-secondary" onclick="ftAutoTrigger()">⚡ Auto Trigger</button>
+          </div>
+          <div style="margin-top:10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;">
+            <label class="muted" style="display:flex;align-items:center;gap:6px;"><input id="ftAutoEnabled" type="checkbox"> Auto enabled</label>
+            <input id="ftMinFeedback" type="number" value="20" min="1" placeholder="min_feedback">
+            <input id="ftMinFailureRate" type="number" value="0.2" min="0" max="1" step="0.01" placeholder="min_failure_rate">
+            <input id="ftCooldownSec" type="number" value="21600" min="60" placeholder="cooldown_sec">
+            <button class="btn btn-sm btn-secondary" onclick="ftSaveAutoConfig()">💾 Save Auto</button>
+          </div>
+          <div id="ftStatusMsg" class="muted" style="margin-top:8px"></div>
+          <div id="ftJobsList" style="margin-top:8px"></div>
+
+          <hr style="margin:14px 0;border-color:#2a2a2a;opacity:.5" />
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+            <strong>📊 Turbo Seguro Report</strong>
+            <div class="btn-group">
+              <button class="btn btn-sm btn-secondary" onclick="loadTurboReport()">🔄 Refresh Report</button>
+              <button class="btn btn-sm" onclick="generateTurboReport()">⚙️ Gerar agora</button>
+            </div>
+          </div>
+          <div id="turboReportBox" class="muted" style="margin-top:8px">(carregando...)</div>
+        </div>
+      </div>
+    </div>
+
     <!-- Settings Tab -->
     <div id="tab-settings" class="tab-content">
       <div class="card">
@@ -809,6 +859,7 @@
         if (tab.dataset.tab === 'curiosity') { loadCuriosityStats(); loadCuriosityQueue(); }
         if (tab.dataset.tab === 'conflicts') loadConflicts();
         if (tab.dataset.tab === 'insights') loadInsights();
+        if (tab.dataset.tab === 'llm') loadLlmUsage();
         if (tab.dataset.tab === 'settings') loadSettings();
       });
     });
@@ -826,12 +877,28 @@
     async function api(url, opts = {}) {
       const timeoutMs = opts.timeoutMs || 12000;
       const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), timeoutMs);
+      const timer = setTimeout(() => controller.abort('timeout'), timeoutMs);
       try {
         const r = await fetch(url, { ...opts, signal: controller.signal });
-        const j = await r.json();
-        if (!r.ok) throw new Error(j.detail || 'Error');
-        return j;
+        let body = null;
+        let raw = '';
+        try {
+          body = await r.json();
+        } catch (_) {
+          try { raw = await r.text(); } catch (_) { raw = ''; }
+        }
+        if (!r.ok) {
+          const detail = (body && (body.detail || body.error || body.message)) || raw || `HTTP ${r.status} em ${url}`;
+          throw new Error(String(detail));
+        }
+        if (body !== null) return body;
+        return {};
+      } catch (e) {
+        if (e?.name === 'AbortError') {
+          throw new Error(`Timeout após ${timeoutMs}ms em ${url}`);
+        }
+        const msg = String(e?.message || e || '').trim();
+        throw new Error(msg || `Falha em ${url}`);
       } finally {
         clearTimeout(timer);
       }
@@ -840,44 +907,31 @@
     // === Status & Questions ===
     let currentQ = null;
 
+    const LITE_MODE = true;
     let _statusTick = 0;
+    let _statusInFlight = false;
     async function loadStatus() {
+      if (_statusInFlight) return;
+      _statusInFlight = true;
       try {
         _statusTick += 1;
-        const slowCycle = (_statusTick % 4) === 0; // ~20s when base is 5s
 
-        // Fast endpoints (frequent)
-        const [st, aut] = await Promise.all([
+        // Fast endpoints only (lite mode) with graceful degradation
+        const settled = await Promise.allSettled([
           api('/api/status', { timeoutMs: 8000 }),
           api('/api/autonomy/status', { timeoutMs: 8000 }),
         ]);
+        if (settled[0].status === 'fulfilled') window.__statusCache = settled[0].value;
+        if (settled[1].status === 'fulfilled') window.__autonomyCache = settled[1].value;
+        const st = window.__statusCache || { stats: {}, agi: {}, tom: {}, next: null };
+        const aut = window.__autonomyCache || { budget: {}, state: {}, queued: 0, expired_recent: 0 };
 
-        // Slow endpoints (batched less frequently)
-        let mem = window.__memCache || {};
-        let meta = window.__metaCache || {};
-        let bench = window.__benchCache || { history: [], avg_score: 0 };
-        let benchStatus = window.__benchStatusCache || {};
-        let sprint2 = window.__sprint2Cache || {};
-
-        if (slowCycle || !window.__memCache) {
-          const slowResults = await Promise.allSettled([
-            api('/api/memory/status', { timeoutMs: 8000 }),
-            api('/api/metacognition/status', { timeoutMs: 8000 }),
-            api('/api/agi/benchmark/trend?limit=7', { timeoutMs: 10000 }),
-            api('/api/agi/benchmark/status', { timeoutMs: 10000 }),
-            api('/api/sprint2/health', { timeoutMs: 10000 }),
-          ]);
-          mem = slowResults[0].status === 'fulfilled' ? slowResults[0].value : mem;
-          meta = slowResults[1].status === 'fulfilled' ? slowResults[1].value : meta;
-          bench = slowResults[2].status === 'fulfilled' ? slowResults[2].value : bench;
-          benchStatus = slowResults[3].status === 'fulfilled' ? slowResults[3].value : benchStatus;
-          sprint2 = slowResults[4].status === 'fulfilled' ? slowResults[4].value : sprint2;
-          window.__memCache = mem;
-          window.__metaCache = meta;
-          window.__benchCache = bench;
-          window.__benchStatusCache = benchStatus;
-          window.__sprint2Cache = sprint2;
-        }
+        // Keep placeholders to avoid breaking optional UI blocks
+        const mem = window.__memCache || {};
+        const meta = window.__metaCache || {};
+        const bench = window.__benchCache || { history: [], avg_score: 0 };
+        const benchStatus = window.__benchStatusCache || {};
+        const sprint2 = window.__sprint2Cache || {};
 
         document.getElementById('statExp').textContent = st.stats?.experiences || 0;
         document.getElementById('statTriples').textContent = st.stats?.triples || 0;
@@ -946,10 +1000,12 @@
           document.getElementById('questionMeta').textContent = '';
         }
 
-        // keep conflicts counter/preview fresh even outside conflicts tab
-        loadConflictsSummary();
+        // keep conflicts counter/preview fresh only in full mode
+        if (!LITE_MODE) loadConflictsSummary();
       } catch (e) {
         console.error('loadStatus error:', e);
+      } finally {
+        _statusInFlight = false;
       }
     }
 
@@ -1067,12 +1123,22 @@
       lastEventId = Math.max(lastEventId, ...events.map(e => Number(e.id || 0)));
     }
 
+    let _feedInFlight = false;
     async function loadFeed() {
+      if (_feedInFlight) return;
+      _feedInFlight = true;
       try {
-        const j = await api('/api/events?since_id=' + lastEventId + '&limit=50');
+        const j = await api('/api/events?since_id=' + lastEventId + '&limit=30', { timeoutMs: 20000 });
         appendFeedEvents(j.events || []);
       } catch (e) {
+        const m = String(e?.message || '').toLowerCase();
+        if (m.includes('timeout') || e?.name === 'AbortError') {
+          // intermitente de rede/backend lento; polling seguinte recupera sozinho
+          return;
+        }
         console.error('loadFeed error:', e);
+      } finally {
+        _feedInFlight = false;
       }
     }
 
@@ -1115,6 +1181,7 @@
     let nodeIdByLabel = new Map();
     let lastTripleId = 0;
     let edgeKeySet = new Set();
+    let _graphBootInFlight = false;
 
     function initGraph() {
       if (network) return;
@@ -1131,7 +1198,7 @@
         }
       );
       
-      graphTick();
+      graphBootstrap();
     }
 
     function nid(label) {
@@ -1148,39 +1215,73 @@
       return id;
     }
 
+    function ingestTriples(triples) {
+      for (const t of (triples || [])) {
+        lastTripleId = Math.max(lastTripleId, t.id || 0);
+        const a = nid(t.subject);
+        const b = nid(t.object);
+
+        const key = a + '|' + t.predicate + '|' + b;
+        if (edgeKeySet.has(key)) continue;
+        edgeKeySet.add(key);
+
+        edgeData.add({ id: 'e' + edgeKeySet.size, from: a, to: b, label: t.predicate });
+      }
+
+      // cap graph size to prevent memory spikes
+      const maxNodes = 2400;
+      const maxEdges = 4800;
+      if (nodeData.length > maxNodes) {
+        const ids = nodeData.getIds();
+        nodeData.remove(ids.slice(0, nodeData.length - maxNodes));
+      }
+      if (edgeData.length > maxEdges) {
+        const ids = edgeData.getIds();
+        edgeData.remove(ids.slice(0, edgeData.length - maxEdges));
+      }
+    }
+
+    function updateGraphStats(extra = '') {
+      const totalTriples = Number((document.getElementById('statTriples')?.textContent || '0').replace(/[^0-9]/g, '')) || 0;
+      const approxPct = totalTriples > 0 ? Math.min(100, Math.round((edgeData.length / totalTriples) * 100)) : 0;
+      const suffix = extra ? ` • ${extra}` : '';
+      document.getElementById('graphStats').textContent = `nós=${nodeData.length} arestas=${edgeData.length} (~${approxPct}% do universo visível)${suffix}`;
+    }
+
     async function graphTick() {
       try {
-        if (document.hidden) return;
-        const j = await api('/api/graph/triples?since_id=' + lastTripleId + '&limit=180', { timeoutMs: 7000 });
-        const triples = j.triples || [];
-
-        for (const t of triples) {
-          lastTripleId = Math.max(lastTripleId, t.id || 0);
-          const a = nid(t.subject);
-          const b = nid(t.object);
-
-          const key = a + '|' + t.predicate + '|' + b;
-          if (edgeKeySet.has(key)) continue;
-          edgeKeySet.add(key);
-
-          edgeData.add({ id: 'e' + edgeKeySet.size, from: a, to: b, label: t.predicate });
-        }
-
-        // cap graph size to prevent memory spikes
-        const maxNodes = 600;
-        const maxEdges = 1200;
-        if (nodeData.length > maxNodes) {
-          const ids = nodeData.getIds();
-          nodeData.remove(ids.slice(0, nodeData.length - maxNodes));
-        }
-        if (edgeData.length > maxEdges) {
-          const ids = edgeData.getIds();
-          edgeData.remove(ids.slice(0, edgeData.length - maxEdges));
-        }
-
-        document.getElementById('graphStats').textContent = `nós=${nodeData.length} arestas=${edgeData.length}`;
+        if (document.hidden || !network) return;
+        const j = await api('/api/graph/triples?since_id=' + lastTripleId + '&limit=120', { timeoutMs: 20000 });
+        ingestTriples(j.triples || []);
+        updateGraphStats();
       } catch (e) {
+        const m = String(e?.message || '').toLowerCase();
+        if (m.includes('timeout') || e?.name === 'AbortError') return;
         console.error('graphTick error:', e);
+      }
+    }
+
+    async function graphBootstrap() {
+      if (_graphBootInFlight) return;
+      _graphBootInFlight = true;
+      try {
+        let rounds = 0;
+        const maxRounds = 10;
+        while (!document.hidden && rounds < maxRounds) {
+          const j = await api('/api/graph/triples?since_id=' + lastTripleId + '&limit=120', { timeoutMs: 20000 });
+          const triples = j.triples || [];
+          if (!triples.length) break;
+          ingestTriples(triples);
+          rounds += 1;
+          updateGraphStats(`bootstrap ${rounds}/${maxRounds}`);
+          if (triples.length < 120) break;
+        }
+        updateGraphStats('bootstrap ok');
+      } catch (e) {
+        const m = String(e?.message || '').toLowerCase();
+        if (!m.includes('timeout') && e?.name !== 'AbortError') console.error('graphBootstrap error:', e);
+      } finally {
+        _graphBootInFlight = false;
       }
     }
 
@@ -1295,23 +1396,32 @@
     // === Conflicts ===
     async function loadConflictsSummary() {
       try {
-        const j = await api('/api/conflicts?status=open&limit=30', { timeoutMs: 7000 });
-        const conflicts = j.conflicts || [];
+        const [openRes, resolvedRes] = await Promise.allSettled([
+          api('/api/conflicts?status=open&limit=30', { timeoutMs: 7000 }),
+          api('/api/conflicts?status=resolved&limit=30', { timeoutMs: 7000 }),
+        ]);
+
+        const openConflicts = openRes.status === 'fulfilled' ? (openRes.value.conflicts || []) : [];
+        const resolvedConflicts = resolvedRes.status === 'fulfilled' ? (resolvedRes.value.conflicts || []) : [];
 
         const stat = document.getElementById('statConflicts');
-        if (stat) stat.textContent = conflicts.length;
+        if (stat) stat.textContent = `${openConflicts.length}/${resolvedConflicts.length}`;
 
         const el = document.getElementById('conflictsPreview');
         if (!el) return;
-        if (!conflicts.length) {
-          el.innerHTML = 'Conflitos: nenhum aberto ✅';
+
+        const headline = `Conflitos — abertos: <strong>${openConflicts.length}</strong> • resolvidos: <strong>${resolvedConflicts.length}</strong>`;
+        if (!openConflicts.length) {
+          el.innerHTML = `${headline} • nenhum aberto ✅`;
           return;
         }
-        const line = conflicts.slice(0, 3).map(c => `#${c.id} ${escHtml(c.subject || '')} ${escHtml(c.predicate || '')}`).join(' • ');
-        el.innerHTML = `Conflitos abertos: <strong>${conflicts.length}</strong> — ${line}`;
+
+        const line = openConflicts.slice(0, 3).map(c => `#${c.id} ${escHtml(c.subject || '')} ${escHtml(c.predicate || '')}`).join(' • ');
+        el.innerHTML = `${headline} — ${line}`;
       } catch (e) {
         const el = document.getElementById('conflictsPreview');
-        if (el) el.innerHTML = `Conflitos: erro ao carregar (${escHtml(e.message)})`;
+        const msg = escHtml(String(e?.message || 'falha desconhecida'));
+        if (el) el.innerHTML = `Conflitos: erro ao carregar (${msg})`;
       }
     }
 
@@ -1331,7 +1441,8 @@
         el.innerHTML = `Mission Control — inbox:${by.inbox} • assigned:${by.assigned} • in_progress:${by.in_progress} • review:${by.review} • blocked:${by.blocked} • done:${by.done} | último: ${escHtml(String(last).slice(0,100))}`;
       } catch (e) {
         const el = document.getElementById('missionPreview');
-        if (el) el.innerHTML = `Mission Control: erro (${escHtml(e.message)})`;
+        const msg = escHtml(String(e?.message || 'falha desconhecida'));
+        if (el) el.innerHTML = `Mission Control: erro (${msg})`;
       }
     }
 
@@ -1745,6 +1856,193 @@
       }
     }
 
+    function fmtEta(sec) {
+      if (sec === null || sec === undefined || !Number.isFinite(Number(sec))) return 'n/a';
+      const s = Math.max(0, Number(sec));
+      const h = Math.floor(s / 3600);
+      const m = Math.floor((s % 3600) / 60);
+      return h > 0 ? `${h}h ${m}m` : `${m}m`;
+    }
+
+    async function llmHealthCheck(provider) {
+      const el = document.getElementById('llmHealthMsg');
+      if (el) el.textContent = `Testando ${provider}...`;
+      try {
+        const r = await api('/api/llm/health?provider=' + encodeURIComponent(provider), { timeoutMs: 70000 });
+        if (r.ok) {
+          if (el) el.textContent = `✅ ${provider} OK (${r.latency_ms || '-'} ms) ${r.sample ? '• ' + r.sample : ''}`;
+          showToast(`✅ Healthcheck ${provider}: OK (${r.latency_ms || '-'} ms)`);
+        } else {
+          if (el) el.textContent = `⚠️ ${provider} indisponível: ${r.error || 'erro desconhecido'}`;
+          showToast(`⚠️ Healthcheck ${provider}: indisponível`, 'error');
+        }
+      } catch (e) {
+        if (el) el.textContent = `❌ Falha no healthcheck ${provider}: ${e.message}`;
+        showToast(`❌ Healthcheck ${provider} falhou: ${e.message}`, 'error');
+      }
+    }
+
+    async function loadFinetuneStatus() {
+      try {
+        const st = await api('/api/plasticity/finetune/status', { timeoutMs: 10000 });
+        const auto = (st.auto || {});
+        const jobs = st.jobs || [];
+        const msg = document.getElementById('ftStatusMsg');
+        const list = document.getElementById('ftJobsList');
+        if (document.getElementById('ftAutoEnabled')) document.getElementById('ftAutoEnabled').checked = !!auto.enabled;
+        if (document.getElementById('ftMinFeedback')) document.getElementById('ftMinFeedback').value = Number(auto.min_feedback || 20);
+        if (document.getElementById('ftMinFailureRate')) document.getElementById('ftMinFailureRate').value = Number(auto.min_failure_rate || 0.2);
+        if (document.getElementById('ftCooldownSec')) document.getElementById('ftCooldownSec').value = Number(auto.cooldown_sec || 21600);
+        if (msg) msg.textContent = `auto=${auto.enabled?'ON':'OFF'} • last_job=${auto.last_job_id || '-'} • cooldown=${auto.cooldown_sec || '-'}s`;
+        if (list) {
+          const jobsHtml = (jobs.slice(-8).reverse()).map(j => `<div class="list-item"><strong>${escHtml(j.id||'-')}</strong> <span class="tag tag-blue">${escHtml(j.status||'')}</span><div class="muted">task=${escHtml(j.task_type||'')} • model=${escHtml(j.base_model||'')}</div><div style="margin-top:6px"><button class="btn btn-sm btn-secondary" onclick="ftStartJob('${escHtml(j.id||'')}')">▶️ Start</button> <button class="btn btn-sm btn-secondary" onclick="ftJobProgress('${escHtml(j.id||'')}')">📈 Progress</button> <button class="btn btn-sm btn-secondary" onclick="ftRegisterJob('${escHtml(j.id||'')}')">✅ Register(0.7)</button></div></div>`).join('');
+          const adapters = st.adapters || [];
+          const adHtml = adapters.slice(-6).reverse().map(a => `<div class="list-item"><strong>${escHtml(a.id||'-')}</strong> <span class="tag ${a.active?'tag-green':'tag-purple'}">${a.active?'active':'standby'}</span><div class="muted">task=${escHtml(a.task_type||'')} • q=${Number(a.quality_score||0).toFixed(2)}</div><div style="margin-top:6px"><button class="btn btn-sm btn-secondary" onclick="ftPromoteAdapter('${escHtml(a.id||'')}')">🚀 Promote</button></div></div>`).join('');
+          list.innerHTML = (jobsHtml || '<div class="muted">Sem jobs</div>') + `<div style="margin-top:8px" class="muted">Adapters</div>` + (adHtml || '<div class="muted">Sem adapters</div>');
+        }
+      } catch (e) {
+        const msg = document.getElementById('ftStatusMsg');
+        if (msg) msg.textContent = 'Erro FT: ' + e.message;
+      }
+    }
+
+    async function ftBuildDataset() {
+      try { const r = await api('/api/plasticity/finetune/dataset?max_items=400', { method: 'POST' }); showToast(`✅ dataset rows=${r.rows||0}`); loadFinetuneStatus(); } catch(e){ showToast('❌ '+e.message,'error'); }
+    }
+    async function ftCreateJob() {
+      try {
+        const task_type = (document.getElementById('ftTaskType')?.value || 'grounding').trim();
+        const base_model = (document.getElementById('ftBaseModel')?.value || 'TinyLlama/TinyLlama-1.1B-Chat-v1.0').trim();
+        const r = await api('/api/plasticity/finetune/jobs', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ task_type, base_model, method:'qlora', max_samples:400 })});
+        showToast(`✅ job ${r.job?.id || ''}`);
+        loadFinetuneStatus();
+      } catch(e){ showToast('❌ '+e.message,'error'); }
+    }
+    async function ftStartJob(jobId) {
+      try { const r = await api(`/api/plasticity/finetune/jobs/${encodeURIComponent(jobId)}/start?dry_run=false`, { method:'POST', timeoutMs: 60000 }); showToast(`✅ start ${jobId} (${(r.job||{}).status||''})`); loadFinetuneStatus(); } catch(e){ showToast('❌ '+e.message,'error'); }
+    }
+    async function ftRegisterJob(jobId) {
+      try { const r = await api(`/api/plasticity/finetune/jobs/${encodeURIComponent(jobId)}/register`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ quality_score: 0.7, notes:'manual register via UI'})}); showToast(`✅ adapter ${(r.adapter||{}).id||''}`); loadFinetuneStatus(); } catch(e){ showToast('❌ '+e.message,'error'); }
+    }
+    async function ftJobProgress(jobId) {
+      try {
+        const r = await api(`/api/plasticity/finetune/jobs/${encodeURIComponent(jobId)}/progress`, { timeoutMs: 20000 });
+        const rs = r.remote_status || {};
+        const js = r.job || {};
+        showToast(`📈 ${jobId}: ${js.status || '-'}${rs.status ? ' • remote='+rs.status : ''}`);
+        loadFinetuneStatus();
+      } catch(e){ showToast('❌ '+e.message,'error'); }
+    }
+    async function ftPromoteAdapter(adapterId) {
+      try {
+        const r = await api(`/api/plasticity/finetune/adapters/${encodeURIComponent(adapterId)}/promote`, {
+          method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ min_gain: 0.02 })
+        });
+        showToast(r.promoted ? `🚀 adapter ${adapterId} promovido` : `⏸ promoção negada (A/B mínimo)`);
+        loadFinetuneStatus();
+      } catch(e){ showToast('❌ '+e.message,'error'); }
+    }
+    async function ftSaveAutoConfig() {
+      try {
+        const payload = {
+          enabled: !!document.getElementById('ftAutoEnabled')?.checked,
+          min_feedback: Number(document.getElementById('ftMinFeedback')?.value || 20),
+          min_failure_rate: Number(document.getElementById('ftMinFailureRate')?.value || 0.2),
+          cooldown_sec: Number(document.getElementById('ftCooldownSec')?.value || 21600),
+          task_type: (document.getElementById('ftTaskType')?.value || 'grounding').trim(),
+          base_model: (document.getElementById('ftBaseModel')?.value || 'TinyLlama/TinyLlama-1.1B-Chat-v1.0').trim(),
+        };
+        await api('/api/plasticity/finetune/auto/config', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+        showToast('✅ auto config salvo');
+        loadFinetuneStatus();
+      } catch(e){ showToast('❌ '+e.message,'error'); }
+    }
+    async function ftAutoTrigger() {
+      try { const r = await api('/api/plasticity/finetune/auto/trigger', { method:'POST', timeoutMs: 60000 }); showToast(`⚡ auto trigger: ${r.triggered ? 'job criado' : (r.reason || 'skip')}`); loadFinetuneStatus(); } catch(e){ showToast('❌ '+e.message,'error'); }
+    }
+
+    async function loadTurboReport() {
+      try {
+        const r = await api('/api/turbo/report', { timeoutMs: 10000 });
+        const rep = r.report || {};
+        const a = rep.autonomy || {};
+        const p = rep.plasticity || {};
+        const c = rep.calibration || {};
+        const e = rep.economic || {};
+        const m = rep.mission_control || {};
+        const el = document.getElementById('turboReportBox');
+        if (!el) return;
+        el.innerHTML = `
+          <div class="list-item">
+            <div><strong>updated:</strong> ${rep.generated_at ? new Date(rep.generated_at*1000).toLocaleString() : 'n/a'}</div>
+            <div style="margin-top:6px">autonomy: done=${Number(a.done_rate||0).toFixed(3)} • error=${Number(a.error_rate||0).toFixed(3)} • blocked=${Number(a.blocked_rate||0).toFixed(3)}</div>
+            <div style="margin-top:6px">plasticity: feedback=${p.feedback_total||0} • fail=${Number(p.failure_rate||0).toFixed(3)} • halluc=${Number(p.hallucination_rate||0).toFixed(3)}</div>
+            <div style="margin-top:6px">calibration: brier=${c.brier===undefined?'n/a':Number(c.brier||0).toFixed(4)} • gap=${c.overconfidence_gap===undefined?'n/a':Number(c.overconfidence_gap||0).toFixed(4)}</div>
+            <div style="margin-top:6px">economic: epsilon=${e.epsilon===undefined?'n/a':Number(e.epsilon||0).toFixed(4)} • mix=${escHtml(JSON.stringify(e.mix_recent||{}))}</div>
+            <div style="margin-top:6px">mission: total=${m.total||0} • by_status=${escHtml(JSON.stringify(m.by_status||{}))}</div>
+          </div>
+        `;
+      } catch (e) {
+        const el = document.getElementById('turboReportBox');
+        if (el) el.textContent = 'Erro Turbo Report: ' + e.message;
+      }
+    }
+
+    async function generateTurboReport() {
+      try {
+        await api('/api/turbo/report/generate', { method: 'POST', timeoutMs: 60000 });
+        showToast('✅ Turbo report gerado');
+        loadTurboReport();
+      } catch (e) { showToast('❌ ' + e.message, 'error'); }
+    }
+
+    async function loadLlmUsage() {
+      try {
+        const j = await api('/api/llm/usage', { timeoutMs: 10000 });
+        const providers = j.providers || {};
+        const keys = Object.keys(providers);
+        const summaryEl = document.getElementById('llmUsageSummary');
+        const listEl = document.getElementById('llmUsageList');
+        if (!summaryEl || !listEl) return;
+
+        summaryEl.innerHTML = `Monitorando <strong>${keys.length}</strong> providers • início=${new Date((j.started_at||0)*1000).toLocaleString()}`;
+
+        if (!keys.length) {
+          listEl.innerHTML = '<div class="muted">Sem dados de uso ainda.</div>';
+          return;
+        }
+
+        listEl.innerHTML = keys.map(k => {
+          const p = providers[k] || {};
+          const used = Number(p.tokens_total || 0);
+          const lim = p.limit_applicable ? Number(p.limit_tokens || 0) : null;
+          const rem = (p.remaining_tokens === null || p.remaining_tokens === undefined) ? null : Number(p.remaining_tokens);
+          const eta = p.eta_to_limit_sec;
+          const pct = (lim && lim > 0) ? Math.max(0, Math.min(100, (used / lim) * 100)) : null;
+          const bar = (pct === null) ? '' : `<div style="height:8px;background:#2a2a2a;border-radius:999px;overflow:hidden;margin-top:6px"><div style="height:8px;width:${pct.toFixed(1)}%;background:${pct>85?'#ff5f56':(pct>60?'#ffbd2e':'#27c93f')}"></div></div>`;
+          return `
+            <div class="list-item">
+              <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;">
+                <strong>${escHtml(k)}</strong>
+                <span class="tag ${k==='ollama'?'tag-purple':'tag-blue'}">${k==='ollama'?'local':'api'}</span>
+              </div>
+              <div class="muted" style="margin-top:6px">calls=${Number(p.calls||0)} • ok=${Number(p.ok||0)} • errors=${Number(p.errors||0)}</div>
+              <div class="muted" style="margin-top:4px">tokens in/out/total = ${Number(p.tokens_in||0)} / ${Number(p.tokens_out||0)} / ${used}</div>
+              <div class="muted" style="margin-top:4px">limite=${lim===null?'n/a':lim} • restante=${rem===null?'n/a':rem} • ETA limite=${fmtEta(eta)}</div>
+              <div class="muted" style="margin-top:4px">taxa=${Number(p.tokens_per_sec||0).toFixed(3)} tok/s</div>
+              ${bar}
+              <div style="margin-top:8px"><button class="btn btn-sm btn-secondary llm-health-btn" data-provider="${escHtml(k)}">🩺 Testar ${escHtml(k)}</button></div>
+            </div>
+          `;
+        }).join('');
+      } catch (e) {
+        const summaryEl = document.getElementById('llmUsageSummary');
+        if (summaryEl) summaryEl.textContent = 'Erro ao carregar uso LLM: ' + e.message;
+      }
+      await loadFinetuneStatus();
+      await loadTurboReport();
+    }
+
     // === Settings ===
     async function loadSettings() {
       try {
@@ -1795,47 +2093,66 @@
     // === Init ===
     loadStatus();
     loadSources();
-    loadGoalCurriculum();
-    loadTomStatus();
-    loadHorizonStatus();
-    loadPersonaStatus();
+    // Keep essential dashboard widgets alive even in lite mode
     loadConflictsSummary();
     loadMissionPreview();
     loadFeed();
-    startEventStream();
+    // User-facing core cards should render even in lite mode
+    loadGoalCurriculum();
+    loadHorizonStatus();
+    loadPersonaStatus();
+    if (!LITE_MODE) {
+      loadTomStatus();
+      loadLlmUsage();
+      startEventStream();
+    }
 
-    let statusIntervalMs = 5000;
-    let graphIntervalMs = 3000;
-    let slowIntervalMs = 15000;
+    let statusIntervalMs = 10000;
+    let graphIntervalMs = 6000;
+    let slowIntervalMs = 30000;
     let _timers = [];
+    const _inFlight = new Map();
 
     function clearTimers() {
       _timers.forEach(t => clearInterval(t));
       _timers = [];
     }
 
+    function noOverlap(name, fn) {
+      return async () => {
+        if (_inFlight.get(name)) return;
+        _inFlight.set(name, true);
+        try { await fn(); }
+        finally { _inFlight.set(name, false); }
+      };
+    }
+
     function setupTimers() {
       clearTimers();
-      _timers.push(setInterval(loadStatus, statusIntervalMs));
-      _timers.push(setInterval(loadFeed, statusIntervalMs)); // fallback in case SSE drops
-      _timers.push(setInterval(() => { if (network) graphTick(); }, graphIntervalMs));
-      _timers.push(setInterval(loadGoalCurriculum, slowIntervalMs));
-      _timers.push(setInterval(loadTomStatus, slowIntervalMs));
-      _timers.push(setInterval(loadHorizonStatus, slowIntervalMs));
-      _timers.push(setInterval(loadPersonaStatus, slowIntervalMs));
-      _timers.push(setInterval(loadConflictsSummary, slowIntervalMs));
-      _timers.push(setInterval(loadMissionPreview, slowIntervalMs));
+      _timers.push(setInterval(noOverlap('status', loadStatus), statusIntervalMs));
+      // Keep feed/conflicts/mission refreshing in lite mode too
+      _timers.push(setInterval(noOverlap('feed', loadFeed), statusIntervalMs));
+      _timers.push(setInterval(noOverlap('conflicts', loadConflictsSummary), slowIntervalMs));
+      _timers.push(setInterval(noOverlap('mission', loadMissionPreview), slowIntervalMs));
+      _timers.push(setInterval(noOverlap('graph', async () => { if (network) graphTick(); }), graphIntervalMs));
+      if (!LITE_MODE) {
+        _timers.push(setInterval(noOverlap('goals', loadGoalCurriculum), slowIntervalMs));
+        _timers.push(setInterval(noOverlap('tom', loadTomStatus), slowIntervalMs));
+        _timers.push(setInterval(noOverlap('horizon', loadHorizonStatus), slowIntervalMs));
+        _timers.push(setInterval(noOverlap('persona', loadPersonaStatus), slowIntervalMs));
+        _timers.push(setInterval(noOverlap('llm', loadLlmUsage), slowIntervalMs));
+      }
     }
 
     function updatePollingMode() {
       if (document.hidden) {
-        statusIntervalMs = 20000;
-        graphIntervalMs = 20000;
-        slowIntervalMs = 45000;
+        statusIntervalMs = 30000;
+        graphIntervalMs = 30000;
+        slowIntervalMs = 90000;
       } else {
-        statusIntervalMs = 5000;
-        graphIntervalMs = 4000;
-        slowIntervalMs = 15000;
+        statusIntervalMs = 10000;
+        graphIntervalMs = 6000;
+        slowIntervalMs = 30000;
       }
       setupTimers();
     }
@@ -1849,6 +2166,14 @@
     });
     document.getElementById('insightSearch').addEventListener('keypress', e => {
       if (e.key === 'Enter') loadInsights();
+    });
+
+    // Delegated actions (works even when cards are re-rendered)
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.llm-health-btn');
+      if (!btn) return;
+      const provider = btn.getAttribute('data-provider') || 'auto';
+      llmHealthCheck(provider);
     });
   </script>
 </body>

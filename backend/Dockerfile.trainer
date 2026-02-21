@@ -1,0 +1,19 @@
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+RUN useradd -m -u 10001 ultron && mkdir -p /app/data && chown -R ultron:ultron /app
+
+COPY requirements-trainer.txt /app/requirements-trainer.txt
+RUN pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cpu torch==2.3.1 \
+    && pip install --no-cache-dir -r /app/requirements-trainer.txt
+
+COPY ultronpro /app/ultronpro
+
+USER ultron
+EXPOSE 8010
+
+CMD ["uvicorn", "ultronpro.trainer_api:app", "--host", "0.0.0.0", "--port", "8010"]

@@ -11,11 +11,11 @@ from typing import List, Optional, Dict, Any
 from fastapi import FastAPI, HTTPException, Request, UploadFile, File, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, JSONResponse
 from pydantic import BaseModel
 import uvicorn
 
-from ultronpro import llm, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play
+from ultronpro import llm, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, finetune_lora, roadmap_v5
 from ultronpro.knowledge_bridge import search_knowledge, ingest_knowledge
 
 # Logging
@@ -32,6 +32,46 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.middleware("http")
+async def ui_cache_bust_headers(request: Request, call_next):
+    response = await call_next(request)
+    path = request.url.path or "/"
+    if request.method == "GET" and (path == "/" or path == "/index.html" or path.endswith(".html")):
+        response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+    return response
+
+
+@app.middleware("http")
+async def ui_lite_api_guard(request: Request, call_next):
+    if os.getenv("ULTRON_UI_LITE_API", "1") == "1" and request.method == "GET":
+        p = request.url.path or ""
+        if p.startswith("/api/goals"):
+            return JSONResponse({"goals": []})
+        if p.startswith("/api/tom/status"):
+            return JSONResponse({"items": [], "stats": {}})
+        if p.startswith("/api/horizon/missions"):
+            return JSONResponse({"missions": []})
+        if p.startswith("/api/persona/status"):
+            return JSONResponse({"status": "lite"})
+        if p.startswith("/api/persona/examples"):
+            return JSONResponse({"examples": []})
+        if p.startswith("/api/conflicts"):
+            return JSONResponse({"conflicts": []})
+        if p.startswith("/api/mission/tasks"):
+            return JSONResponse({"tasks": []})
+        if p.startswith("/api/mission/activities"):
+            return JSONResponse({"activities": []})
+        if p.startswith("/api/llm/usage"):
+            return JSONResponse({"window": [], "summary": {}})
+        if p.startswith("/api/plasticity/finetune/status"):
+            return JSONResponse({"ok": True, "running": False})
+        if p.startswith("/api/turbo/report"):
+            return JSONResponse({"report": {}})
+    return await call_next(request)
 
 # --- Models ---
 class IngestRequest(BaseModel):
@@ -123,6 +163,59 @@ class ITCRunRequest(BaseModel):
     max_steps: int = 0
     budget_seconds: int = 0
     use_rl: bool = True
+    search_mode: str = 'mcts'  # mcts|iterative|linear|deep_think
+    branching_factor: int = 2
+    checkpoint_every_sec: int = 30
+    task_class: str = 'normal'  # normal|critical
+
+class PlasticityFeedbackRequest(BaseModel):
+    task_type: str = 'general'
+    profile: str = 'balanced'
+    success: bool = True
+    latency_ms: int = 0
+    hallucination: bool = False
+    note: Optional[str] = None
+
+
+class FineTuneCreateRequest(BaseModel):
+    task_type: str = 'general'
+    base_model: str = 'llama3.2:1b'
+    method: str = 'qlora'
+    max_samples: int = 400
+
+
+class FineTuneRegisterRequest(BaseModel):
+    quality_score: float = 0.0
+    notes: Optional[str] = None
+
+
+class FineTuneAutoConfigRequest(BaseModel):
+    enabled: Optional[bool] = None
+    min_feedback: Optional[int] = None
+    min_failure_rate: Optional[float] = None
+    cooldown_sec: Optional[int] = None
+    task_type: Optional[str] = None
+    base_model: Optional[str] = None
+
+
+class FineTunePromoteRequest(BaseModel):
+    min_gain: float = 0.02
+    baseline_score: Optional[float] = None
+    candidate_score: Optional[float] = None
+
+
+class RoadmapV5ConfigRequest(BaseModel):
+    enabled: Optional[bool] = None
+    auto_tick_sec: Optional[int] = None
+    rest_until_ts: Optional[int] = None
+
+
+class RoadmapV5RestRequest(BaseModel):
+    hours: int = 48
+
+
+class VoiceChatRequest(BaseModel):
+    text: str
 
 class HorizonMissionRequest(BaseModel):
     title: str
@@ -204,6 +297,8 @@ class SelfPatchApplyRequest(BaseModel):
 _autofeeder_task = None
 _autonomy_task = None
 _judge_task = None
+_prewarm_task = None
+_roadmap_task = None
 _autonomy_state = {
     "ticks": 0,
     "last_tick": None,
@@ -214,12 +309,21 @@ _autonomy_state = {
     "meta_last_snapshot": None,
     "meta_stuck_cycles": 0,
     "meta_replans": 0,
+    "turbo_last_report_at": 0,
     "meta_quality_history": [],
     "meta_low_quality_streak": 0,
+    "milestone_auto_last_ts": 0,
+    "milestone_auto_resolved_wm": 0,
 }
 
 # Etapa A: budget + cooldown inteligente
-AUTONOMY_BUDGET_PER_MIN = 3
+AUTONOMY_BUDGET_PER_MIN = int(os.getenv('ULTRON_AUTONOMY_BUDGET_PER_MIN', '2'))
+AUTONOMY_LOOP_ENABLED = os.getenv('ULTRON_AUTONOMY_ENABLED', '1') != '0'
+JUDGE_LOOP_ENABLED = os.getenv('ULTRON_JUDGE_ENABLED', '1') != '0'
+AUTOFEEDER_ENABLED = os.getenv('ULTRON_AUTOFEEDER_ENABLED', '1') != '0'
+ROADMAP_LOOP_ENABLED = os.getenv('ULTRON_ROADMAP_ENABLED', '1') != '0'
+VOICE_PREWARM_ENABLED = os.getenv('ULTRON_PREWARM_ENABLED', '1') != '0'
+TURBO_REPORT_PATH = Path('/app/data/turbo_safe_report.json')
 ACTION_DEFAULT_TTL_SEC = 15 * 60
 ACTION_COOLDOWNS_SEC = {
     "auto_resolve_conflicts": 90,
@@ -647,8 +751,75 @@ def _itc_router_need() -> dict:
     return {'need': need, 'reason': reason, 'open_conflicts': open_conf, 'decision_quality': dq}
 
 
-def _run_deliberate_task(problem_text: str, max_steps: int = 0, budget_seconds: int = 0, use_rl: bool = True) -> dict:
-    out = itc.run_episode(problem_text=problem_text, max_steps=max_steps, budget_seconds=budget_seconds, use_rl=use_rl)
+def _generate_turbo_report() -> dict:
+    actions = store.db.list_actions(limit=220)
+    denom = max(1, len(actions))
+    done = len([a for a in actions if str(a.get('status') or '') == 'done'])
+    err = len([a for a in actions if str(a.get('status') or '') == 'error'])
+    blocked = len([a for a in actions if str(a.get('status') or '') == 'blocked'])
+
+    ps = plasticity_runtime.status(limit=120)
+    econ = economic.status(limit=80)
+    cal = calibration.status(limit=80)
+    missions = mission_control.list_tasks(limit=160)
+    by_status = {}
+    for t in missions:
+        st = str(t.get('status') or 'unknown')
+        by_status[st] = int(by_status.get(st) or 0) + 1
+
+    report = {
+        'generated_at': int(time.time()),
+        'mode': 'turbo_safe',
+        'autonomy': {
+            'actions_window': len(actions),
+            'done_rate': round(done / denom, 4),
+            'error_rate': round(err / denom, 4),
+            'blocked_rate': round(blocked / denom, 4),
+        },
+        'plasticity': {
+            'feedback_total': ps.get('feedback_total'),
+            'failure_rate': ps.get('failure_rate'),
+            'hallucination_rate': ps.get('hallucination_rate'),
+        },
+        'economic': {
+            'epsilon': econ.get('epsilon'),
+            'mix_recent': econ.get('profile_mix_recent'),
+        },
+        'calibration': {
+            'brier': cal.get('brier_score'),
+            'overconfidence_gap': cal.get('overconfidence_gap'),
+        },
+        'mission_control': {
+            'total': len(missions),
+            'by_status': by_status,
+        },
+    }
+
+    TURBO_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    TURBO_REPORT_PATH.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
+    _autonomy_state['turbo_last_report_at'] = int(report['generated_at'])
+    return report
+
+
+def _read_turbo_report() -> dict:
+    try:
+        if TURBO_REPORT_PATH.exists():
+            return json.loads(TURBO_REPORT_PATH.read_text(encoding='utf-8'))
+    except Exception:
+        pass
+    return {'generated_at': 0, 'mode': 'turbo_safe', 'note': 'no report yet'}
+
+
+def _run_deliberate_task(problem_text: str, max_steps: int = 0, budget_seconds: int = 0, use_rl: bool = True, search_mode: str = 'mcts', branching_factor: int = 2, checkpoint_every_sec: int = 30) -> dict:
+    out = itc.run_episode(
+        problem_text=problem_text,
+        max_steps=max_steps,
+        budget_seconds=budget_seconds,
+        use_rl=use_rl,
+        search_mode=search_mode,
+        branching_factor=branching_factor,
+        checkpoint_every_sec=checkpoint_every_sec,
+    )
     chosen = out.get('chosen') or {}
     if chosen.get('test'):
         _enqueue_action_if_new(
@@ -1624,8 +1795,11 @@ def _compute_agi_mode_metrics() -> dict:
     curiosity_score = min(100.0, (q_open * 12.0) + (q_answered * 3.0))
 
     done_actions = len([a for a in actions_recent if a.get("status") == "done"])
+    done_with_risk_actions = len([a for a in actions_recent if a.get("status") == "done_with_risk"])
     blocked_actions = len([a for a in actions_recent if a.get("status") == "blocked"])
-    autonomy_score = min(100.0, done_actions * 1.5)
+    # fechamento com qualidade: done_with_risk vale menos que done validado
+    effective_done = done_actions + (0.35 * done_with_risk_actions)
+    autonomy_score = min(100.0, effective_done * 1.5)
 
     synthesis_score = 0.0
     if open_conflicts == 0:
@@ -1657,6 +1831,10 @@ def _compute_agi_mode_metrics() -> dict:
     )
     agi_mode = max(0.0, min(100.0, agi_mode))
 
+    # Gate de curation: impede progresso artificial sem higiene de memória
+    if curation_score < 40.0:
+        agi_mode = min(agi_mode, 75.0)
+
     return {
         "agi_mode_percent": round(agi_mode, 1),
         "pillars": {
@@ -1677,6 +1855,7 @@ def _compute_agi_mode_metrics() -> dict:
             "active_goal": active_goal,
             "uncurated_experiences": uncurated,
             "actions_done_recent": done_actions,
+            "actions_done_with_risk_recent": done_with_risk_actions,
             "actions_blocked_recent": blocked_actions,
         },
     }
@@ -2204,6 +2383,57 @@ def _enqueue_active_milestone_action(active_goal: dict | None):
     )
 
 
+def _auto_progress_active_milestone(active_goal: dict | None) -> dict:
+    if not active_goal:
+        return {"status": "no_goal"}
+    gid = int(active_goal.get("id") or 0)
+    if gid <= 0:
+        return {"status": "no_goal"}
+
+    now = time.time()
+    cooldown_sec = 10 * 60
+    last_ts = float(_autonomy_state.get("milestone_auto_last_ts") or 0)
+    if (now - last_ts) < cooldown_sec:
+        return {"status": "cooldown", "wait_sec": int(cooldown_sec - (now - last_ts))}
+
+    ms = store.get_next_open_milestone(gid)
+    if not ms:
+        return {"status": "no_open_milestone"}
+
+    actions = store.db.list_actions(limit=180)
+    done_recent = [
+        a for a in actions
+        if str(a.get("status") or "") == "done" and float(a.get("created_at") or 0) >= (now - 20 * 60)
+    ]
+    done_signal = min(0.12, 0.02 * len(done_recent))
+
+    resolved = store.list_conflicts(status='resolved', limit=300)
+    wm = float(_autonomy_state.get("milestone_auto_resolved_wm") or 0)
+    resolved_new = [c for c in resolved if float(c.get("updated_at") or c.get("created_at") or 0) > wm]
+    resolved_signal = min(0.16, 0.08 * len(resolved_new))
+
+    delta = round(done_signal + resolved_signal, 4)
+    if delta < 0.02:
+        _autonomy_state["milestone_auto_last_ts"] = now
+        return {"status": "no_signal", "delta": delta}
+
+    prev = float(ms.get("progress") or 0.0)
+    newp = min(1.0, prev + delta)
+    nst = "done" if newp >= 1.0 else "active"
+    mid = int(ms.get("id") or 0)
+    store.update_milestone_progress(mid, newp, status=nst)
+
+    _autonomy_state["milestone_auto_last_ts"] = now
+    if resolved:
+        _autonomy_state["milestone_auto_resolved_wm"] = max(float(c.get("updated_at") or c.get("created_at") or 0) for c in resolved)
+
+    store.db.add_event(
+        "milestone_auto_progress",
+        f"🎯 milestone auto-progress W{ms.get('week_index')} +{int(delta*100)}pp (ações_done_20m={len(done_recent)}, conflitos_resolvidos_novos={len(resolved_new)})"
+    )
+    return {"status": "ok", "milestone_id": mid, "prev": prev, "progress": newp, "delta": delta, "state": nst}
+
+
 def _goal_to_action(goal: dict) -> tuple[str, str, int, dict]:
     """Traduz objetivo ativo em próxima micro-ação barata."""
     gid = int(goal.get("id"))
@@ -2269,6 +2499,7 @@ async def _execute_next_action() -> dict | None:
     store.db.mark_action(aid, "running", policy_allowed=True, policy_score=verdict.score)
 
     t0 = time.time()
+    info = None
 
     def _task_type_of(k: str, m: dict) -> str:
         if m.get('task_type'):
@@ -2313,6 +2544,8 @@ async def _execute_next_action() -> dict | None:
         meta.setdefault('budget_profile', 'balanced')
         meta.setdefault('budget_seconds', 35)
         meta.setdefault('max_steps', 5)
+
+    pred_err = None
 
     try:
         dg = None
@@ -2396,6 +2629,24 @@ async def _execute_next_action() -> dict | None:
             return {"id": aid, "status": "blocked", "kind": kind, "integrity_reason": reason_integrity}
         else:
             integrity.register_decision(kind, True, 'integrity_pass', {'action_id': aid, 'dq': dq, 'sym_score': sym_score})
+
+        # Calibration gate: estimate own error risk before acting
+        bp = str((meta or {}).get('budget_profile') or prof_hint or 'balanced')
+        cal = calibration.predict_error(strategy=str(kind), task_type=str(task_type), budget_profile=bp)
+        pred_err = float(cal.get('pred_error') or 0.5)
+        restricted = (kind in contrafactual.CRITICAL_KINDS) or (governance.classify(kind) in ('auto_with_proof', 'human_approval'))
+        if restricted and pred_err >= 0.62 and not bool((meta or {}).get('approved_by_human')):
+            store.db.mark_action(aid, 'blocked', last_error=f'calibration_high_error_risk:{pred_err:.2f}')
+            store.db.add_event('blocked_calibration', f"📉 ação bloqueada por auto-calibração #{aid}: {kind} pred_error={pred_err:.2f}")
+            _neurosym_proof(
+                'calibration_block',
+                premises=[f"kind={kind}", f"pred_error={pred_err:.2f}", f"task_type={task_type}", f"budget_profile={bp}"],
+                inference='Historical calibration predicts high error probability for this action context.',
+                conclusion=f'Action {kind} blocked due to high predicted error risk.',
+                confidence=max(0.6, pred_err),
+                action_meta={'action_id': aid, 'kind': kind, 'status': 'blocked_calibration'},
+            )
+            return {'id': aid, 'status': 'blocked', 'kind': kind, 'reason': 'calibration_high_error_risk', 'pred_error': pred_err}
 
         # M4: Deliberação contrafactual obrigatória em ações críticas
         if kind in contrafactual.CRITICAL_KINDS:
@@ -2611,8 +2862,23 @@ async def _execute_next_action() -> dict | None:
             elif bp == 'deep':
                 bsec = max(bsec, 60)
                 msteps = max(msteps, 6)
-            info = _run_deliberate_task(problem_text=ptxt, max_steps=msteps, budget_seconds=bsec)
-            store.db.add_event("action_done", f"🤖 ação #{aid}: deliberate_task profile={bp} steps={len(info.get('steps') or [])} budget={bsec}s")
+            info = _run_deliberate_task(
+                problem_text=ptxt,
+                max_steps=msteps,
+                budget_seconds=bsec,
+                search_mode=str((meta or {}).get('search_mode') or 'mcts'),
+                branching_factor=int((meta or {}).get('branching_factor') or 2),
+                checkpoint_every_sec=int((meta or {}).get('checkpoint_every_sec') or 30),
+            )
+            store.db.add_event("action_done", f"🤖 ação #{aid}: deliberate_task profile={bp} steps={len(info.get('steps') or [])} budget={bsec}s mode={info.get('search_mode')}")
+        elif kind == "plasticity_replay":
+            lim = int((meta or {}).get('limit') or 5)
+            info = plasticity_runtime.replay_tick(store.db, limit=lim)
+            store.db.add_event("action_done", f"🤖 ação #{aid}: plasticity_replay picked={info.get('picked')} enqueued={info.get('enqueued_questions')}")
+        elif kind == "plasticity_distill":
+            mi = int((meta or {}).get('max_items') or 20)
+            info = plasticity_runtime.distill_memory(store.db, max_items=mi)
+            store.db.add_event("action_done", f"🤖 ação #{aid}: plasticity_distill lessons={len(((info.get('item') or {}).get('lessons') or []))}")
         elif kind == "horizon_review":
             info = _horizon_review_tick()
             store.db.add_event("action_done", f"🤖 ação #{aid}: horizon_review status={info.get('status')}")
@@ -2727,32 +2993,72 @@ async def _execute_next_action() -> dict | None:
         else:
             store.db.add_event("action_skipped", f"↷ ação #{aid} desconhecida: {kind}")
 
-        store.db.mark_action(aid, "done")
+        # DoD + fechamento com validação (evita falso "done")
+        strict_validation_kinds = {
+            'verify_source_headless',
+            'ground_claim_check',
+            'execute_python_sandbox',
+            'project_experiment_cycle',
+            'execute_procedure',
+            'execute_procedure_active',
+            'deliberate_task',
+        }
+        evidence_ok = False
+        risk_reason = ''
+        if kind == 'verify_source_headless':
+            evidence_ok = bool((info or {}).get('ok'))
+            if not evidence_ok:
+                risk_reason = 'verify_source_failed'
+        elif kind == 'ground_claim_check':
+            rel = float((meta or {}).get('_last_grounding_reliability') or 0.0)
+            evidence_ok = rel >= 0.55
+            if not evidence_ok:
+                risk_reason = f'grounding_low_reliability:{rel:.2f}'
+        elif kind == 'execute_python_sandbox':
+            evidence_ok = bool((info or {}).get('ok'))
+            if not evidence_ok:
+                risk_reason = f"sandbox_failed_rc:{(info or {}).get('returncode')}"
+        elif kind == 'project_experiment_cycle':
+            st = str((info or {}).get('status') or '')
+            evidence_ok = st in ('success', 'needs_optimization')
+            if not evidence_ok:
+                risk_reason = f'project_cycle_status:{st or "unknown"}'
+        else:
+            # ações internas não estritas permanecem concluídas por padrão
+            evidence_ok = True
+
+        action_status = 'done'
+        if kind in strict_validation_kinds and not evidence_ok:
+            action_status = 'done_with_risk'
+
+        store.db.mark_action(aid, action_status, last_error=(risk_reason[:250] if risk_reason else None))
         _neurosym_proof(
             "action_execution",
-            premises=[f"kind={kind}", f"text={text[:140]}", "policy=allowed"],
-            inference="Action execution path completed without guardrail violation.",
-            conclusion=f"Action {kind} executed successfully.",
-            confidence=0.72,
-            action_meta={"action_id": aid, "kind": kind, "status": "done"},
+            premises=[f"kind={kind}", f"text={text[:140]}", f"policy=allowed", f"evidence_ok={evidence_ok}"],
+            inference="Action execution completed; closure status depends on validation evidence.",
+            conclusion=f"Action {kind} finalized as {action_status}.",
+            confidence=0.72 if action_status == 'done' else 0.55,
+            action_meta={"action_id": aid, "kind": kind, "status": action_status},
         )
         try:
             lat_ms = int((time.time() - t0) * 1000)
             prof = str(cp.get('model_hint') or 'default')
+            ok_flag = action_status == 'done'
             self_model.record_action_outcome(
                 strategy=str(kind),
                 task_type=task_type,
                 budget_profile=prof,
-                ok=True,
+                ok=ok_flag,
                 latency_ms=lat_ms,
-                notes='action_done',
+                notes='action_done' if ok_flag else 'action_done_with_risk',
             )
             rel = (meta or {}).get('_last_grounding_reliability')
-            rw = economic.reward(True, lat_ms, reliability=rel)
-            economic.update(task_type, prof, rw, True, lat_ms)
+            rw = economic.reward(ok_flag, lat_ms, reliability=rel)
+            economic.update(task_type, prof, rw, ok_flag, lat_ms)
+            calibration.update(pred_error=float(pred_err if pred_err is not None else 0.5), actual_error=(0 if ok_flag else 1), meta={'kind': kind, 'task_type': task_type, 'budget_profile': prof, 'status': action_status})
         except Exception:
             pass
-        return {"id": aid, "status": "done", "kind": kind}
+        return {"id": aid, "status": action_status, "kind": kind}
     except Exception as e:
         store.db.mark_action(aid, "error", last_error=str(e)[:500])
         _neurosym_proof(
@@ -2778,6 +3084,7 @@ async def _execute_next_action() -> dict | None:
             rel = (meta or {}).get('_last_grounding_reliability')
             rw = economic.reward(False, lat_ms, reliability=rel)
             economic.update(task_type, prof, rw, False, lat_ms)
+            calibration.update(pred_error=float(pred_err if pred_err is not None else 0.5), actual_error=1, meta={'kind': kind, 'task_type': task_type, 'budget_profile': prof, 'error': str(e)[:120]})
         except Exception:
             pass
         return {"id": aid, "status": "error", "kind": kind, "error": str(e)}
@@ -2921,6 +3228,41 @@ async def autonomy_loop():
                     meta={'size': 12, 'task_type': 'review'},
                     ttl_sec=25 * 60,
                 )
+
+                # plasticidade runtime: replay de erros + distilação leve periódica
+                _enqueue_action_if_new(
+                    'plasticity_replay',
+                    '(plasticity) Reprocessar falhas recentes e gerar perguntas de active-learning.',
+                    priority=3,
+                    meta={'limit': 5},
+                    ttl_sec=30 * 60,
+                )
+                _enqueue_action_if_new(
+                    'plasticity_distill',
+                    '(plasticity) Destilar eventos/experiências recentes em lições operacionais.',
+                    priority=2,
+                    meta={'max_items': 24},
+                    ttl_sec=90 * 60,
+                )
+
+                # auto-finetune gate (safe): trigger only if config allows and quality degradation is persistent
+                try:
+                    ps = plasticity_runtime.status(limit=120)
+                    ao = finetune_lora.auto_maybe_trigger(ps)
+                    if bool(ao.get('triggered')):
+                        store.db.add_event('finetune_auto', f"🧪 auto finetune job={((ao.get('job') or {}).get('id'))}")
+                except Exception as _e:
+                    logger.debug(f"auto finetune check skipped: {_e}")
+
+                # turbo-safe report every ~6h
+                try:
+                    now_ts = int(time.time())
+                    last_ts = int(_autonomy_state.get('turbo_last_report_at') or 0)
+                    if (now_ts - last_ts) >= 6 * 3600:
+                        rep = _generate_turbo_report()
+                        store.db.add_event('turbo_report', f"📊 turbo report: done_rate={((rep.get('autonomy') or {}).get('done_rate'))} err_rate={((rep.get('autonomy') or {}).get('error_rate'))}")
+                except Exception as _e:
+                    logger.debug(f"turbo report skipped: {_e}")
 
             # mantém curiosidade viva
             if int(st.get("questions_open") or 0) < 3:
@@ -3204,6 +3546,7 @@ async def autonomy_loop():
                     _enqueue_action_if_new(k, t, pr, mt)
                     _enqueue_active_milestone_action(active_goal)
                     _milestone_health_check(active_goal)
+                    _auto_progress_active_milestone(active_goal)
             except Exception as e:
                 logger.debug(f"Goal planning skipped: {e}")
 
@@ -3299,7 +3642,7 @@ async def autonomy_loop():
                 _autonomy_state["circuit_open_until"] = int(asyncio.get_event_loop().time()) + 120
                 store.db.add_event("circuit_breaker", "🛑 Circuit breaker ativo por 120s após falhas consecutivas")
 
-        await asyncio.sleep(45)
+        await asyncio.sleep(75)
 
 
 async def judge_loop():
@@ -3311,7 +3654,7 @@ async def judge_loop():
             await _run_judge_cycle(limit=2, source="judge_loop")
         except Exception as e:
             logger.error(f"Judge loop error: {e}")
-        await asyncio.sleep(30)
+        await asyncio.sleep(90)
 
 
 async def autofeeder_loop():
@@ -3365,12 +3708,52 @@ async def autofeeder_loop():
         except Exception as e:
             logger.error(f"Autofeeder error: {e}")
         
-        # Wait 60 seconds before next attempt (cooldowns are handled internally)
-        await asyncio.sleep(60)
+        # Wait 180 seconds before next attempt (reduz pressão de CPU/LLM)
+        await asyncio.sleep(180)
+
+async def voice_prewarm_loop():
+    """Mantém o modelo local aquecido para reduzir latência de primeira resposta."""
+    logger.info("Voice prewarm loop started")
+    await asyncio.sleep(20)
+    while True:
+        try:
+            llm.complete(
+                "ok",
+                strategy='local',
+                system='warmup',
+                json_mode=False,
+                inject_persona=False,
+                max_tokens=8,
+            )
+        except Exception as e:
+            logger.debug(f"Voice prewarm skipped: {e}")
+        await asyncio.sleep(120)
+
+
+async def roadmap_v5_loop():
+    logger.info("Roadmap V5 orchestrator loop started")
+    await asyncio.sleep(30)
+    while True:
+        try:
+            rs = roadmap_v5.status()
+            tick_sec = max(120, int(rs.get('auto_tick_sec') or 900))
+            snap = {
+                'agi': _compute_agi_mode_metrics(),
+                'plasticity': plasticity_runtime.status(limit=120),
+                'finetune': finetune_lora.status(limit=30),
+            }
+            out = roadmap_v5.tick(snap)
+            if bool(out.get('triggered')):
+                store.db.add_event('roadmap_v5', f"🗺️ V5 action={out.get('action')} reason={out.get('reason')}")
+            await asyncio.sleep(tick_sec)
+        except Exception as e:
+            logger.warning(f"Roadmap V5 loop skipped: {e}")
+            await asyncio.sleep(300)
+
 
 @app.on_event("startup")
 async def startup_event():
-    global _autofeeder_task, _autonomy_task, _judge_task
+    global _autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task
     logger.info("Starting UltronPRO...")
     store.init_db()
     graph.init()
@@ -3392,16 +3775,38 @@ async def startup_event():
     except Exception as e:
         logger.warning(f"Squad phase-A bootstrap skipped: {e}")
 
-    # Start background loops
-    _autofeeder_task = asyncio.create_task(autofeeder_loop())
-    _autonomy_task = asyncio.create_task(autonomy_loop())
-    _judge_task = asyncio.create_task(judge_loop())
-    logger.info("Autofeeder + Autonomy + Judge tasks created")
+    # Start background loops (runtime flags for stabilization)
+    if AUTOFEEDER_ENABLED:
+        _autofeeder_task = asyncio.create_task(autofeeder_loop())
+    else:
+        logger.info("Autofeeder loop disabled by env")
+
+    if AUTONOMY_LOOP_ENABLED:
+        _autonomy_task = asyncio.create_task(autonomy_loop())
+    else:
+        logger.info("Autonomy loop disabled by env")
+
+    if JUDGE_LOOP_ENABLED:
+        _judge_task = asyncio.create_task(judge_loop())
+    else:
+        logger.info("Judge loop disabled by env")
+
+    if VOICE_PREWARM_ENABLED:
+        _prewarm_task = asyncio.create_task(voice_prewarm_loop())
+    else:
+        logger.info("Voice prewarm loop disabled by env")
+
+    if ROADMAP_LOOP_ENABLED:
+        _roadmap_task = asyncio.create_task(roadmap_v5_loop())
+    else:
+        logger.info("Roadmap V5 loop disabled by env")
+
+    logger.info("Ultron loops startup complete")
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    global _autofeeder_task, _autonomy_task, _judge_task
-    for t in (_autofeeder_task, _autonomy_task, _judge_task):
+    global _autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task
+    for t in (_autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task):
         if t:
             t.cancel()
             try:
@@ -3447,6 +3852,12 @@ async def get_status():
     stats = store.get_stats()
     next_q = curiosity.get_next_question()
     agi = _compute_agi_mode_metrics()
+
+    # In UI lite mode, avoid expensive intent inference on every poll.
+    if os.getenv("ULTRON_UI_LITE_API", "1") == "1":
+        intent = {"label": "lite", "confidence": 0.0, "rationale": "UI lite mode", "evidence_excerpt": ""}
+        return {"status": "online", "stats": stats, "next": next_q, "agi": agi, "tom": intent}
+
     intent = tom.infer_user_intent(store.db.list_experiences(limit=20))
     return {"status": "online", "stats": stats, "next": next_q, "agi": agi, "tom": intent}
 
@@ -3673,16 +4084,17 @@ async def archive_conflict(id: int):
 
 @app.post("/api/search/semantic")
 async def semantic_search(req: SearchRequest):
-    """Hybrid search: Local graph + LightRAG."""
+    """Hybrid search: Local graph + LightRAG + hard-negative rerank."""
     # 1. Local Search (Store/Graph)
     local_results = store.search_triples(req.query, req.top_k)
-    
+
     # 2. Remote LightRAG Search
     remote_results = await search_knowledge(req.query, req.top_k)
-    
-    # Merge & Rank (Simple concatenation for MVP)
-    combined = local_results + remote_results
-    return {"results": combined}
+
+    # 3. Merge + rerank with hard-negatives inferred from query constraints
+    combined = (local_results or []) + (remote_results or [])
+    reranked = plasticity_runtime.rerank_with_hard_negatives(req.query, combined, top_k=req.top_k)
+    return {"results": reranked, "meta": {"rerank": "hard_negative", "combined": len(combined)}}
 
 
 # --- Autonomy ---
@@ -3869,7 +4281,24 @@ async def emergence_indistinguishability(limit: int = 40):
 
 @app.post("/api/itc/run")
 async def itc_run(req: ITCRunRequest):
-    return _run_deliberate_task(req.problem_text, max_steps=req.max_steps, budget_seconds=req.budget_seconds, use_rl=bool(req.use_rl))
+    mode = str(req.search_mode or 'mcts').lower().strip()
+    is_deep = mode == 'deep_think'
+    is_long = int(req.budget_seconds or 0) > 900
+    task_class = str(req.task_class or 'normal').lower().strip()
+
+    # governance gate: long/deep ITC only for critical class
+    if (is_deep or is_long) and task_class != 'critical':
+        raise HTTPException(403, 'deep/long ITC requires task_class=critical')
+
+    return _run_deliberate_task(
+        req.problem_text,
+        max_steps=req.max_steps,
+        budget_seconds=req.budget_seconds,
+        use_rl=bool(req.use_rl),
+        search_mode=req.search_mode,
+        branching_factor=req.branching_factor,
+        checkpoint_every_sec=req.checkpoint_every_sec,
+    )
 
 
 @app.get("/api/itc/history")
@@ -4310,6 +4739,276 @@ async def adaptive_status():
 @app.get('/api/economic/status')
 async def economic_status(limit: int = 40):
     return economic.status(limit=limit)
+
+
+@app.get('/api/plasticity/status')
+async def plasticity_status(limit: int = 40):
+    return plasticity_runtime.status(limit=limit)
+
+
+@app.post('/api/plasticity/feedback')
+async def plasticity_feedback(req: PlasticityFeedbackRequest):
+    out = plasticity_runtime.record_feedback(
+        task_type=req.task_type,
+        profile=req.profile,
+        success=bool(req.success),
+        latency_ms=int(req.latency_ms or 0),
+        hallucination=bool(req.hallucination),
+        note=req.note,
+    )
+    store.db.add_event('plasticity_feedback', f"🧬 feedback task={req.task_type} profile={req.profile} success={bool(req.success)} halluc={bool(req.hallucination)}")
+    return out
+
+
+@app.post('/api/plasticity/replay-tick')
+async def plasticity_replay_tick(limit: int = 5):
+    out = plasticity_runtime.replay_tick(store.db, limit=limit)
+    store.db.add_event('plasticity_replay', f"🧬 replay picked={out.get('picked')} enqueued={out.get('enqueued_questions')}")
+    return out
+
+
+@app.post('/api/plasticity/distill')
+async def plasticity_distill(max_items: int = 20):
+    out = plasticity_runtime.distill_memory(store.db, max_items=max_items)
+    store.db.add_event('plasticity_distill', f"🧬 distill lessons={(out.get('item') or {}).get('lessons', [])[:2] if isinstance(out, dict) else []}")
+    return out
+
+
+@app.get('/api/plasticity/finetune/status')
+async def finetune_status(limit: int = 40):
+    return finetune_lora.status(limit=limit)
+
+
+@app.post('/api/plasticity/finetune/dataset')
+async def finetune_dataset(max_items: int = 400):
+    st = plasticity_runtime.status(limit=max(40, max_items))
+    fb = st.get('recent_feedback') or []
+    out = finetune_lora.build_dataset_from_feedback(fb, max_items=max_items)
+    store.db.add_event('finetune_dataset', f"🧪 dataset rows={out.get('rows')} path={out.get('path')}")
+    return out
+
+
+@app.post('/api/plasticity/finetune/jobs')
+async def finetune_create(req: FineTuneCreateRequest):
+    j = finetune_lora.create_job(req.task_type, req.base_model, method=req.method, max_samples=req.max_samples)
+    store.db.add_event('finetune_job', f"🧪 job created id={j.get('id')} task={j.get('task_type')} model={j.get('base_model')}")
+    return {'ok': True, 'job': j}
+
+
+@app.get('/api/plasticity/finetune/jobs/{job_id}')
+async def finetune_get(job_id: str):
+    j = finetune_lora.get_job(job_id)
+    if not j:
+        raise HTTPException(404, 'job not found')
+    return {'ok': True, 'job': j}
+
+
+@app.post('/api/plasticity/finetune/jobs/{job_id}/start')
+async def finetune_start(job_id: str, dry_run: bool = False):
+    out = finetune_lora.start_job(job_id, dry_run=dry_run)
+    store.db.add_event('finetune_start', f"🧪 start job={job_id} ok={out.get('ok')} status={((out.get('job') or {}).get('status'))}")
+    return out
+
+
+@app.get('/api/plasticity/finetune/jobs/{job_id}/progress')
+async def finetune_progress(job_id: str):
+    return finetune_lora.job_progress(job_id)
+
+
+@app.post('/api/plasticity/finetune/jobs/{job_id}/register')
+async def finetune_register(job_id: str, req: FineTuneRegisterRequest):
+    out = finetune_lora.register_adapter(job_id, quality_score=req.quality_score, notes=req.notes)
+    store.db.add_event('finetune_register', f"🧪 register job={job_id} ok={out.get('ok')}")
+    return out
+
+
+@app.get('/api/plasticity/finetune/adapters')
+async def finetune_adapters(limit: int = 80, task_type: Optional[str] = None):
+    if task_type:
+        return finetune_lora.recommend_adapter(task_type)
+    return {'ok': True, 'adapters': finetune_lora.adapters(limit=limit)}
+
+
+@app.post('/api/plasticity/finetune/adapters/{adapter_id}/promote')
+async def finetune_promote(adapter_id: str, req: FineTunePromoteRequest):
+    out = finetune_lora.promote_adapter(
+        adapter_id,
+        min_gain=float(req.min_gain or 0.02),
+        baseline_score=req.baseline_score,
+        candidate_score=req.candidate_score,
+    )
+    store.db.add_event('finetune_promote', f"🧪 promote adapter={adapter_id} promoted={out.get('promoted')} pass={((out.get('decision') or {}).get('passed'))}")
+    return out
+
+
+@app.get('/api/plasticity/finetune/auto/status')
+async def finetune_auto_status():
+    return {'ok': True, 'auto': finetune_lora.auto_status()}
+
+
+@app.get('/api/turbo/report')
+async def turbo_report_status():
+    return {'ok': True, 'report': _read_turbo_report(), 'path': str(TURBO_REPORT_PATH)}
+
+
+@app.post('/api/turbo/report/generate')
+async def turbo_report_generate():
+    rep = _generate_turbo_report()
+    store.db.add_event('turbo_report', f"📊 turbo report manual: done_rate={((rep.get('autonomy') or {}).get('done_rate'))}")
+    return {'ok': True, 'report': rep, 'path': str(TURBO_REPORT_PATH)}
+
+
+@app.post('/api/plasticity/finetune/auto/config')
+async def finetune_auto_config(req: FineTuneAutoConfigRequest):
+    cfg = finetune_lora.auto_config_patch(req.model_dump(exclude_none=True))
+    store.db.add_event('finetune_auto_config', f"🧪 auto finetune config updated enabled={cfg.get('enabled')}")
+    return {'ok': True, 'auto': cfg}
+
+
+@app.post('/api/plasticity/finetune/auto/trigger')
+async def finetune_auto_trigger():
+    ps = plasticity_runtime.status(limit=120)
+    out = finetune_lora.auto_maybe_trigger(ps)
+    store.db.add_event('finetune_auto_trigger', f"🧪 auto trigger triggered={out.get('triggered')} reason={out.get('reason')}")
+    return out
+
+
+@app.get('/api/roadmap/v5/status')
+async def roadmap_v5_status():
+    return {'ok': True, 'roadmap': roadmap_v5.status()}
+
+
+@app.post('/api/roadmap/v5/config')
+async def roadmap_v5_config(req: RoadmapV5ConfigRequest):
+    out = roadmap_v5.config_patch(req.model_dump(exclude_none=True))
+    store.db.add_event('roadmap_v5_config', f"🗺️ roadmap v5 config enabled={out.get('enabled')} tick={out.get('auto_tick_sec')}")
+    return {'ok': True, 'roadmap': out}
+
+
+@app.post('/api/roadmap/v5/rest')
+async def roadmap_v5_rest(req: RoadmapV5RestRequest):
+    out = roadmap_v5.set_rest(hours=int(req.hours or 48))
+    store.db.add_event('roadmap_v5_rest', f"🗺️ roadmap v5 rest hours={int(req.hours or 48)}")
+    return {'ok': True, 'roadmap': out}
+
+
+@app.post('/api/roadmap/v5/tick')
+async def roadmap_v5_tick():
+    snap = {
+        'agi': _compute_agi_mode_metrics(),
+        'plasticity': plasticity_runtime.status(limit=120),
+        'finetune': finetune_lora.status(limit=30),
+    }
+    out = roadmap_v5.tick(snap)
+    store.db.add_event('roadmap_v5_tick', f"🗺️ roadmap v5 triggered={out.get('triggered')} reason={out.get('reason')}")
+    return out
+
+
+@app.get('/api/calibration/status')
+async def calibration_status(limit: int = 40):
+    return calibration.status(limit=limit)
+
+
+@app.get('/api/calibration/predict')
+async def calibration_predict(strategy: str, task_type: str = 'general', budget_profile: str = 'balanced'):
+    return calibration.predict_error(strategy, task_type, budget_profile)
+
+
+@app.get('/api/llm/usage')
+async def llm_usage():
+    return llm.usage_status()
+
+
+@app.get('/api/llm/health')
+async def llm_health(provider: str = 'auto'):
+    return llm.healthcheck(provider)
+
+
+@app.post('/api/voice/chat')
+async def voice_chat(req: VoiceChatRequest):
+    txt = str(req.text or '').strip()
+    if not txt:
+        raise HTTPException(400, 'empty text')
+
+    system = (
+        'Você é UltronPRO, um assistente de voz de software (não é personagem da Marvel). '
+        'Identidade factual: foi desenvolvido neste projeto UltronPro/Nutef pelo usuário e equipe local. '
+        'Se perguntarem quem criou você, responda com essa identidade factual e nunca invente Stark/Homem de Ferro. '
+        'Seja útil, objetivo e natural em português brasileiro. '
+        'Para perguntas comuns, responda diretamente em 1 frase curta. '
+        'Não fale sobre metas internas, autoaprendizado, roadmap ou estados do sistema, '
+        'a menos que o usuário peça explicitamente. '
+        'Só recuse quando houver risco real de segurança/ilegalidade. '
+        'Se faltar contexto, faça 1 pergunta curta de clarificação.'
+    )
+
+    def _is_poor(a: str) -> bool:
+        s = (a or '').strip().lower()
+        if not s:
+            return True
+        bad = [
+            'não posso ajudar com isso',
+            'nao posso ajudar com isso',
+            'não posso ajudar',
+            'nao posso ajudar',
+            'não consigo ajudar',
+            'nao consigo ajudar',
+            'desculpe, mas não posso',
+            'desculpe, mas nao posso',
+        ]
+        return any(b in s for b in bad) or len(s) < 8
+
+    creator_q = any(k in txt.lower() for k in ['quem criou', 'quem te criou', 'criador', 'criou você', 'criou vc'])
+    if creator_q:
+        ans = 'Fui desenvolvido no projeto UltronPro (Nutef) pelo seu time local, não pelo personagem da Marvel.'
+        store.db.add_event('voice_chat', "🎙️ voice chat latency=0ms ok=True strategy=identity_guard")
+        return {'ok': True, 'reply': ans, 'strategy': 'identity_guard'}
+
+    t0 = int(time.time() * 1000)
+    # Modo rápido para GUI de voz: local primeiro, sem fallback pesado
+    attempts = [('local', f"Pergunta do usuário (voz): {txt}\nResponda em português brasileiro, de forma prática, em no máximo 1 frase curta.")]
+
+    ans = ''
+    used = 'default'
+    for strat, prompt in attempts:
+        try:
+            cand = llm.complete(
+                prompt,
+                strategy=strat,
+                system=system,
+                json_mode=False,
+                inject_persona=False,
+                max_tokens=64,
+            )
+        except Exception:
+            cand = ''
+        if cand and not _is_poor(cand):
+            ans = cand.strip()
+            used = strat
+            break
+        if not ans and cand:
+            ans = cand.strip()
+            used = strat
+
+    latency = int(time.time() * 1000) - t0
+    ok = bool((ans or '').strip()) and not _is_poor(ans)
+
+    try:
+        plasticity_runtime.record_feedback(
+            task_type='voice_chat',
+            profile='balanced',
+            success=ok,
+            latency_ms=latency,
+            hallucination=False,
+            note=f'voice_chat strategy={used} input={txt[:120]}',
+        )
+    except Exception:
+        pass
+
+    store.db.add_event('voice_chat', f"🎙️ voice chat latency={latency}ms ok={ok} strategy={used}")
+    if not (ans or '').strip():
+        ans = 'Não consegui responder agora. Tenta reformular em uma frase curta?'
+    return {'ok': True, 'reply': ans.strip(), 'strategy': used}
 
 
 @app.get('/api/self-play/status')

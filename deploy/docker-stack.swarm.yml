@@ -3,10 +3,23 @@ version: '3.8'
 services:
   ultronpro:
     image: ultronpro_backend:local
+    environment:
+      - ULTRON_FINETUNE_URL=http://ultronpro_trainer:8010/train
+      - ULTRON_FINETUNE_BASE_MODEL=TinyLlama/TinyLlama-1.1B-Chat-v1.0
     networks:
       - Nutef
     volumes:
       - ultronpro_data:/app/data
+  ultronpro_trainer:
+    image: ultronpro_trainer:local
+    networks:
+      - Nutef
+    volumes:
+      - ultronpro_data:/app/data
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
     deploy:
       replicas: 1
       restart_policy:

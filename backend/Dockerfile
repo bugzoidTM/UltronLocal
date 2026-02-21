@@ -16,4 +16,4 @@ COPY ui /app/ui
 USER ultron
 EXPOSE 8000
 
-CMD ["uvicorn", "ultronpro.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "ultronpro.main:app", "--host", "0.0.0.0", "--port", "8000", "--timeout-keep-alive", "5"]
