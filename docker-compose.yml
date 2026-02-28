@@ -6,6 +6,16 @@ services:
     environment:
       - ULTRON_FINETUNE_URL=http://ultronpro_trainer:8010/train
       - ULTRON_FINETUNE_BASE_MODEL=TinyLlama/TinyLlama-1.1B-Chat-v1.0
+      - ULTRON_FINETUNE_AUTOTRIGGER=0
+      - ULTRON_AUTONOMY_ENABLED=1
+      - ULTRON_JUDGE_ENABLED=1
+      - ULTRON_ROADMAP_ENABLED=1
+      - ULTRON_AUTOFEEDER_ENABLED=1
+      - ULTRON_AUTONOMY_BUDGET_PER_MIN=1
+      - ULTRON_AUTONOMY_TICK_SEC=90
+      - ULTRON_JUDGE_TICK_SEC=180
+      - ULTRON_AUTOFEEDER_TICK_SEC=300
+      - ULTRON_SELFPATCH_GATE_ENABLED=1
     deploy:
       replicas: 1
       labels:

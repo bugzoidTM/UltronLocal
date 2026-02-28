@@ -15,7 +15,7 @@ from fastapi.responses import StreamingResponse, JSONResponse
 from pydantic import BaseModel
 import uvicorn
 
-from ultronpro import llm, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, finetune_lora, roadmap_v5
+from ultronpro import llm, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, finetune_lora, roadmap_v5, agi_path
 from ultronpro.knowledge_bridge import search_knowledge, ingest_knowledge
 
 # Logging
@@ -214,6 +214,12 @@ class RoadmapV5RestRequest(BaseModel):
     hours: int = 48
 
 
+class AgiPathConfigRequest(BaseModel):
+    enabled: Optional[bool] = None
+    auto_tick_sec: Optional[int] = None
+    target_agi_percent: Optional[float] = None
+
+
 class VoiceChatRequest(BaseModel):
     text: str
 
@@ -299,6 +305,7 @@ _autonomy_task = None
 _judge_task = None
 _prewarm_task = None
 _roadmap_task = None
+_agi_path_task = None
 _autonomy_state = {
     "ticks": 0,
     "last_tick": None,
@@ -322,7 +329,13 @@ AUTONOMY_LOOP_ENABLED = os.getenv('ULTRON_AUTONOMY_ENABLED', '1') != '0'
 JUDGE_LOOP_ENABLED = os.getenv('ULTRON_JUDGE_ENABLED', '1') != '0'
 AUTOFEEDER_ENABLED = os.getenv('ULTRON_AUTOFEEDER_ENABLED', '1') != '0'
 ROADMAP_LOOP_ENABLED = os.getenv('ULTRON_ROADMAP_ENABLED', '1') != '0'
+AGI_PATH_LOOP_ENABLED = os.getenv('ULTRON_AGI_PATH_ENABLED', '1') != '0'
 VOICE_PREWARM_ENABLED = os.getenv('ULTRON_PREWARM_ENABLED', '1') != '0'
+FINETUNE_AUTOTRIGGER_ENABLED = os.getenv('ULTRON_FINETUNE_AUTOTRIGGER', '1') != '0'
+AUTONOMY_TICK_SEC = max(20, int(os.getenv('ULTRON_AUTONOMY_TICK_SEC', '75')))
+JUDGE_TICK_SEC = max(45, int(os.getenv('ULTRON_JUDGE_TICK_SEC', '90')))
+AUTOFEEDER_TICK_SEC = max(90, int(os.getenv('ULTRON_AUTOFEEDER_TICK_SEC', '180')))
+RUNTIME_HEALTH_PATH = Path('/app/data/runtime_health.json')
 TURBO_REPORT_PATH = Path('/app/data/turbo_safe_report.json')
 ACTION_DEFAULT_TTL_SEC = 15 * 60
 ACTION_COOLDOWNS_SEC = {
@@ -381,6 +394,42 @@ def _benchmark_history_append(item: dict, max_items: int = 200):
     try:
         BENCHMARK_HISTORY_PATH.parent.mkdir(parents=True, exist_ok=True)
         BENCHMARK_HISTORY_PATH.write_text(json.dumps(arr, ensure_ascii=False, indent=2))
+    except Exception:
+        pass
+
+
+def _runtime_health_snapshot(extra: dict | None = None) -> dict:
+    return {
+        'ts': int(time.time()),
+        'loops': {
+            'autonomy_enabled': AUTONOMY_LOOP_ENABLED,
+            'judge_enabled': JUDGE_LOOP_ENABLED,
+            'autofeeder_enabled': AUTOFEEDER_ENABLED,
+            'roadmap_enabled': ROADMAP_LOOP_ENABLED,
+            'agi_path_enabled': AGI_PATH_LOOP_ENABLED,
+            'voice_prewarm_enabled': VOICE_PREWARM_ENABLED,
+            'finetune_autotrigger_enabled': FINETUNE_AUTOTRIGGER_ENABLED,
+        },
+        'cadence': {
+            'autonomy_tick_sec': AUTONOMY_TICK_SEC,
+            'judge_tick_sec': JUDGE_TICK_SEC,
+            'autofeeder_tick_sec': AUTOFEEDER_TICK_SEC,
+            'budget_per_min': AUTONOMY_BUDGET_PER_MIN,
+        },
+        'autonomy_state': {
+            'ticks': int(_autonomy_state.get('ticks') or 0),
+            'last_tick': _autonomy_state.get('last_tick'),
+            'last_error': _autonomy_state.get('last_error'),
+            'consecutive_errors': int(_autonomy_state.get('consecutive_errors') or 0),
+        },
+        'extra': extra or {},
+    }
+
+
+def _runtime_health_write(extra: dict | None = None):
+    try:
+        RUNTIME_HEALTH_PATH.parent.mkdir(parents=True, exist_ok=True)
+        RUNTIME_HEALTH_PATH.write_text(json.dumps(_runtime_health_snapshot(extra), ensure_ascii=False, indent=2))
     except Exception:
         pass
 
@@ -3109,7 +3158,8 @@ async def autonomy_loop():
             # circuit breaker
             open_until = int(_autonomy_state.get("circuit_open_until") or 0)
             if open_until > now_mono:
-                await asyncio.sleep(20)
+                _runtime_health_write({'reason': 'circuit_open', 'open_until': open_until})
+                await asyncio.sleep(min(20, AUTONOMY_TICK_SEC))
                 continue
 
             st = store.db.stats()
@@ -3246,13 +3296,14 @@ async def autonomy_loop():
                 )
 
                 # auto-finetune gate (safe): trigger only if config allows and quality degradation is persistent
-                try:
-                    ps = plasticity_runtime.status(limit=120)
-                    ao = finetune_lora.auto_maybe_trigger(ps)
-                    if bool(ao.get('triggered')):
-                        store.db.add_event('finetune_auto', f"🧪 auto finetune job={((ao.get('job') or {}).get('id'))}")
-                except Exception as _e:
-                    logger.debug(f"auto finetune check skipped: {_e}")
+                if FINETUNE_AUTOTRIGGER_ENABLED:
+                    try:
+                        ps = plasticity_runtime.status(limit=120)
+                        ao = finetune_lora.auto_maybe_trigger(ps)
+                        if bool(ao.get('triggered')):
+                            store.db.add_event('finetune_auto', f"🧪 auto finetune job={((ao.get('job') or {}).get('id'))}")
+                    except Exception as _e:
+                        logger.debug(f"auto finetune check skipped: {_e}")
 
                 # turbo-safe report every ~6h
                 try:
@@ -3619,7 +3670,8 @@ async def autonomy_loop():
 
             # budget por minuto
             if _recent_actions_count(60) >= AUTONOMY_BUDGET_PER_MIN:
-                await asyncio.sleep(20)
+                _runtime_health_write({'reason': 'budget_throttle'})
+                await asyncio.sleep(min(20, AUTONOMY_TICK_SEC))
                 continue
 
             r = await _execute_next_action()
@@ -3642,7 +3694,8 @@ async def autonomy_loop():
                 _autonomy_state["circuit_open_until"] = int(asyncio.get_event_loop().time()) + 120
                 store.db.add_event("circuit_breaker", "🛑 Circuit breaker ativo por 120s após falhas consecutivas")
 
-        await asyncio.sleep(75)
+        _runtime_health_write({'reason': 'autonomy_tick_complete'})
+        await asyncio.sleep(AUTONOMY_TICK_SEC)
 
 
 async def judge_loop():
@@ -3651,10 +3704,12 @@ async def judge_loop():
     await asyncio.sleep(25)
     while True:
         try:
-            await _run_judge_cycle(limit=2, source="judge_loop")
+            out = await _run_judge_cycle(limit=2, source="judge_loop")
+            _runtime_health_write({'reason': 'judge_tick', 'judge_out': str(out)[:120]})
         except Exception as e:
             logger.error(f"Judge loop error: {e}")
-        await asyncio.sleep(90)
+            _runtime_health_write({'reason': 'judge_error', 'error': str(e)[:180]})
+        await asyncio.sleep(JUDGE_TICK_SEC)
 
 
 async def autofeeder_loop():
@@ -3707,9 +3762,11 @@ async def autofeeder_loop():
                 
         except Exception as e:
             logger.error(f"Autofeeder error: {e}")
-        
-        # Wait 180 seconds before next attempt (reduz pressão de CPU/LLM)
-        await asyncio.sleep(180)
+            _runtime_health_write({'reason': 'autofeeder_error', 'error': str(e)[:180]})
+
+        _runtime_health_write({'reason': 'autofeeder_tick'})
+        # Wait before next attempt (reduz pressão de CPU/LLM)
+        await asyncio.sleep(AUTOFEEDER_TICK_SEC)
 
 async def voice_prewarm_loop():
     """Mantém o modelo local aquecido para reduzir latência de primeira resposta."""
@@ -3740,20 +3797,43 @@ async def roadmap_v5_loop():
             snap = {
                 'agi': _compute_agi_mode_metrics(),
                 'plasticity': plasticity_runtime.status(limit=120),
-                'finetune': finetune_lora.status(limit=30),
+                'finetune': (finetune_lora.status(limit=30) if FINETUNE_AUTOTRIGGER_ENABLED else {'ok': True, 'paused': True}),
             }
             out = roadmap_v5.tick(snap)
             if bool(out.get('triggered')):
                 store.db.add_event('roadmap_v5', f"🗺️ V5 action={out.get('action')} reason={out.get('reason')}")
+            _runtime_health_write({'reason': 'roadmap_tick', 'roadmap_triggered': bool(out.get('triggered'))})
             await asyncio.sleep(tick_sec)
         except Exception as e:
             logger.warning(f"Roadmap V5 loop skipped: {e}")
             await asyncio.sleep(300)
 
 
+async def agi_path_loop():
+    logger.info("AGI path loop started")
+    await asyncio.sleep(40)
+    while True:
+        try:
+            st = agi_path.status()
+            tick_sec = max(180, int(st.get('auto_tick_sec') or 900))
+            snap = {
+                'agi': _compute_agi_mode_metrics(),
+                'plasticity': plasticity_runtime.status(limit=120),
+                'finetune': finetune_lora.status(limit=40),
+            }
+            out = agi_path.tick(snap)
+            if bool(out.get('triggered')):
+                store.db.add_event('agi_path', f"🧠 AGI-path triggered actions={','.join(out.get('actions') or [])}")
+            _runtime_health_write({'reason': 'agi_path_tick', 'agi_path_triggered': bool(out.get('triggered'))})
+            await asyncio.sleep(tick_sec)
+        except Exception as e:
+            logger.warning(f"AGI path loop skipped: {e}")
+            await asyncio.sleep(300)
+
+
 @app.on_event("startup")
 async def startup_event():
-    global _autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task
+    global _autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task
     logger.info("Starting UltronPRO...")
     store.init_db()
     graph.init()
@@ -3801,12 +3881,18 @@ async def startup_event():
     else:
         logger.info("Roadmap V5 loop disabled by env")
 
+    if AGI_PATH_LOOP_ENABLED:
+        _agi_path_task = asyncio.create_task(agi_path_loop())
+    else:
+        logger.info("AGI path loop disabled by env")
+
+    _runtime_health_write({'reason': 'startup_complete'})
     logger.info("Ultron loops startup complete")
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    global _autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task
-    for t in (_autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task):
+    global _autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task
+    for t in (_autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task):
         if t:
             t.cancel()
             try:
@@ -4116,6 +4202,19 @@ async def autonomy_status():
         "expired_recent": expired,
         "recent_actions": actions[-10:],
     }
+
+
+@app.get("/api/runtime/health")
+async def runtime_health():
+    actions = store.db.list_actions(limit=50)
+    recent_events = store.db.list_events(limit=20)
+    payload = _runtime_health_snapshot({
+        'queued': len([a for a in actions if a.get('status') == 'queued']),
+        'running': len([a for a in actions if a.get('status') == 'running']),
+        'recent_event_kinds': [str(e.get('kind') or '') for e in recent_events[-8:]],
+    })
+    _runtime_health_write(payload.get('extra') or {})
+    return payload
 
 
 @app.post("/api/autonomy/tick")
@@ -4901,6 +5000,30 @@ async def roadmap_v5_tick():
     }
     out = roadmap_v5.tick(snap)
     store.db.add_event('roadmap_v5_tick', f"🗺️ roadmap v5 triggered={out.get('triggered')} reason={out.get('reason')}")
+    return out
+
+
+@app.get('/api/agi/path/status')
+async def agi_path_status():
+    return {'ok': True, 'agi_path': agi_path.status()}
+
+
+@app.post('/api/agi/path/config')
+async def agi_path_config(req: AgiPathConfigRequest):
+    out = agi_path.config_patch(req.model_dump(exclude_none=True))
+    store.db.add_event('agi_path_config', f"🧠 agi-path config enabled={out.get('enabled')} tick={out.get('auto_tick_sec')}")
+    return {'ok': True, 'agi_path': out}
+
+
+@app.post('/api/agi/path/tick')
+async def agi_path_tick():
+    snap = {
+        'agi': _compute_agi_mode_metrics(),
+        'plasticity': plasticity_runtime.status(limit=120),
+        'finetune': finetune_lora.status(limit=40),
+    }
+    out = agi_path.tick(snap)
+    store.db.add_event('agi_path_tick', f"🧠 agi-path triggered={out.get('triggered')} reason={((out.get('state') or {}).get('last_reason'))}")
     return out
 
 

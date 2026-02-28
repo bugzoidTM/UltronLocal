@@ -3,6 +3,7 @@ import json
 import subprocess
 from pathlib import Path
 import sys
+import os
 
 REPO = Path('/root/.openclaw/workspace/UltronPro')
 SERVICE = 'ultronpro_ultronpro'
@@ -64,6 +65,31 @@ def smoke_compile(changed_files):
     sh(cmd)
 
 
+def quality_gate():
+    """Block auto-promote if runtime quality is clearly degraded."""
+    if os.getenv('ULTRON_SELFPATCH_GATE_ENABLED', '1') == '0':
+        return
+
+    report = Path('/root/.openclaw/workspace/UltronPro/backend/data/turbo_safe_report.json')
+    if not report.exists():
+        report = Path('/app/data/turbo_safe_report.json')
+
+    if report.exists():
+        try:
+            data = json.loads(report.read_text())
+            au = data.get('autonomy') or {}
+            done_rate = float(au.get('done_rate') or 0.0)
+            err_rate = float(au.get('error_rate') or 0.0)
+            min_done = float(os.getenv('ULTRON_SELFPATCH_MIN_DONE_RATE', '0.20'))
+            max_err = float(os.getenv('ULTRON_SELFPATCH_MAX_ERROR_RATE', '0.60'))
+            if done_rate < min_done and err_rate > max_err:
+                raise RuntimeError(f'quality gate blocked promote (done_rate={done_rate:.2f}, err_rate={err_rate:.2f})')
+        except Exception as e:
+            # if report is unreadable, fail closed by default
+            if os.getenv('ULTRON_SELFPATCH_FAIL_OPEN', '0') != '1':
+                raise RuntimeError(f'quality gate failed: {e}')
+
+
 def deploy():
     sh(f"docker build -t ultronpro_backend:local -f {REPO}/backend/Dockerfile {REPO}/backend")
     sh(f"docker service update --force {SERVICE}")
@@ -103,8 +129,9 @@ def main():
         return 1
 
     smoke_compile(changed)
+    quality_gate()
     deploy()
-    print(f'Applied {applied} patch(es), smoke passed, deploy triggered.')
+    print(f'Applied {applied} patch(es), smoke+quality gate passed, deploy triggered.')
     return 0
 
 

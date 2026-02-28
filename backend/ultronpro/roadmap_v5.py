@@ -13,7 +13,7 @@ def _default() -> dict[str, Any]:
         'enabled': True,
         'phase': 1,
         'phase_name': 'Fase 1 — Confiabilidade Cognitiva',
-        'auto_tick_sec': 900,
+        'auto_tick_sec': 300,
         'rest_until_ts': 0,
         'last_tick_at': 0,
         'last_reason': 'init',
@@ -139,8 +139,9 @@ def tick(snapshot: dict[str, Any]) -> dict[str, Any]:
 
     # Fase 3 -> Fase 4
     if phase == 3:
-        if int(inputs.get('actions_done_recent') or 0) >= 60 and float(agi.get('agi_mode_percent') or 0.0) >= 72.0:
-            _advance(s, 4, 'phase3_execution_stable')
+        # modo acelerado: transição mais responsiva mantendo dois sinais (execução + maturidade AGI)
+        if int(inputs.get('actions_done_recent') or 0) >= 45 and float(agi.get('agi_mode_percent') or 0.0) >= 70.0:
+            _advance(s, 4, 'phase3_execution_stable_accelerated')
             s['last_reason'] = 'advanced_phase_4'
             _save(s)
             return {'ok': True, 'triggered': True, 'action': 'phase_advance', 'state': status()}

@@ -221,18 +221,67 @@ def _toolchain_ready() -> tuple[bool, str]:
         return False, f'missing_toolchain: {e}'
 
 
+def _configured_remote_urls() -> list[str]:
+    urls_env = str(os.getenv('ULTRON_FINETUNE_URLS', '') or '').strip()
+    if urls_env:
+        urls = [u.strip() for u in urls_env.split(',') if u.strip()]
+    else:
+        urls = []
+
+    single = str(os.getenv('ULTRON_FINETUNE_URL', '') or '').strip()
+    if single and single not in urls:
+        urls.append(single)
+    return urls
+
+
+def _pick_remote_url(job_id: str | None = None) -> str:
+    urls = _configured_remote_urls()
+
+    if not urls:
+        return ''
+
+    max_per = max(1, int(os.getenv('ULTRON_FINETUNE_MAX_CONCURRENCY_PER_NODE', '1')))
+    jobs = (_load_jobs().get('jobs') or [])
+
+    # current load per remote_url considering active remote jobs
+    active = [j for j in jobs if str(j.get('status') or '') in ('running_remote',)]
+    load = {u: 0 for u in urls}
+    for j in active:
+        ru = str(j.get('remote_url') or '')
+        if ru in load:
+            load[ru] += 1
+
+    # candidates with available slots
+    candidates = [u for u in urls if load.get(u, 0) < max_per]
+    if not candidates:
+        return ''
+    if len(candidates) == 1:
+        return candidates[0]
+
+    # pick least loaded first, then stable hash tie-break
+    min_load = min(load.get(u, 0) for u in candidates)
+    least = [u for u in candidates if load.get(u, 0) == min_load]
+    if len(least) == 1:
+        return least[0]
+
+    key = str(job_id or uuid.uuid4().hex)
+    idx = sum(ord(ch) for ch in key) % len(least)
+    return least[idx]
+
+
 def start_job(job_id: str, dry_run: bool = False) -> dict[str, Any]:
     j = get_job(job_id)
     if not j:
         return {'ok': False, 'error': 'job_not_found'}
 
     cmd_tpl = os.getenv('ULTRON_FINETUNE_CMD', '').strip()
-    remote_url = os.getenv('ULTRON_FINETUNE_URL', '').strip()
-    if (not cmd_tpl) and (not remote_url):
+    remote_urls_cfg = _configured_remote_urls()
+    remote_url_pre = _pick_remote_url(job_id)
+    if (not cmd_tpl) and (not remote_urls_cfg):
         ready, why = _toolchain_ready()
         if not ready:
             jj = _set_job(job_id, {'status': 'blocked_toolchain', 'last_error': why})
-            return {'ok': False, 'job': jj, 'error': why, 'hint': 'Set ULTRON_FINETUNE_URL/ULTRON_FINETUNE_CMD for external trainer, or install torch+transformers+peft+datasets locally.'}
+            return {'ok': False, 'job': jj, 'error': why, 'hint': 'Set ULTRON_FINETUNE_URLS/ULTRON_FINETUNE_URL/ULTRON_FINETUNE_CMD for external trainer, or install torch+transformers+peft+datasets locally.'}
 
     dataset = Path(str(j.get('dataset_path') or DATASET_TRAIN_PATH))
     val_dataset = Path(str(j.get('dataset_val_path') or DATASET_VAL_PATH))
@@ -270,12 +319,16 @@ def start_job(job_id: str, dry_run: bool = False) -> dict[str, Any]:
             max_samples=j.get('max_samples'),
         )
 
-    remote_url = os.getenv('ULTRON_FINETUNE_URL', '').strip()
+    remote_url = _pick_remote_url(job_id)
     remote_token = os.getenv('ULTRON_FINETUNE_TOKEN', '').strip()
 
     if dry_run:
         jj = _set_job(job_id, {'status': 'dry_run_ready', 'command': cmd, 'remote_url': remote_url or None})
         return {'ok': True, 'job': jj, 'command': cmd, 'remote_url': remote_url or None}
+
+    if (not remote_url) and remote_urls_cfg:
+        jj = _set_job(job_id, {'status': 'queued_remote_wait', 'last_error': 'remote_capacity_full'})
+        return {'ok': False, 'job': jj, 'error': 'remote_capacity_full'}
 
     if remote_url:
         try:
@@ -298,9 +351,9 @@ def start_job(job_id: str, dry_run: bool = False) -> dict[str, Any]:
                 'val_dataset_content': val_text,
                 'adapter_out': adapter_out,
                 'epochs': 1,
-                'batch_size': 1,
-                'grad_accum': 8,
-                'max_length': 512,
+                'batch_size': 2,
+                'grad_accum': 2,
+                'max_length': 768,
             }
             headers = {}
             if remote_token:
@@ -436,12 +489,17 @@ def auto_maybe_trigger(plasticity_status: dict[str, Any]) -> dict[str, Any]:
     if fr < float(cfg.get('min_failure_rate') or 0.2):
         return {'ok': True, 'triggered': False, 'reason': 'failure_rate_low', 'config': cfg}
 
+    # avoid piling multiple concurrent jobs
+    running = [x for x in list_jobs(limit=120) if str(x.get('status') or '') in ('running', 'running_remote')]
+    if running:
+        return {'ok': True, 'triggered': False, 'reason': 'job_already_running', 'running_job_id': str(running[-1].get('id') or ''), 'config': cfg}
+
     # create + start job
     j = create_job(
         str(cfg.get('task_type') or 'grounding'),
         str(cfg.get('base_model') or 'TinyLlama/TinyLlama-1.1B-Chat-v1.0'),
         method='qlora',
-        max_samples=400,
+        max_samples=600,
     )
     st = start_job(str(j.get('id')), dry_run=False)
 
