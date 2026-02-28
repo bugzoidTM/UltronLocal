@@ -19,7 +19,10 @@ REG_PATH = Path('/app/data/adapter_registry.json')
 DATASET_PATH = Path('/app/data/finetune_dataset.jsonl')
 DATASET_TRAIN_PATH = Path('/app/data/finetune_dataset_train.jsonl')
 DATASET_VAL_PATH = Path('/app/data/finetune_dataset_val.jsonl')
+EVAL_GOLD_PATH = Path('/app/data/eval_dataset_gold.json')
 AUTO_PATH = Path('/app/data/finetune_auto.json')
+METRICS_PATH = Path('/app/data/finetune_metrics.json')
+ALERTS_PATH = Path('/app/data/finetune_alerts.jsonl')
 
 
 def _load(path: Path, default):
@@ -71,6 +74,94 @@ def _extract_pair_from_note(note: str) -> tuple[str, str]:
     return user[:420], reply[:420]
 
 
+def _domain_from_task(task: str) -> str:
+    t = str(task or '').lower()
+    if any(k in t for k in ('code', 'python', 'sql', 'tool', 'db')):
+        return 'software'
+    if any(k in t for k in ('finance', 'business', 'market', 'produto', 'vendas')):
+        return 'business'
+    if any(k in t for k in ('legal', 'jurid', 'compliance', 'policy')):
+        return 'legal'
+    if any(k in t for k in ('research', 'science', 'paper', 'experimento')):
+        return 'science'
+    return 'operations'
+
+
+def _ensure_eval_gold():
+    if EVAL_GOLD_PATH.exists():
+        return
+    gold = {
+        'must_have_domains': ['software', 'business', 'legal', 'science', 'operations'],
+        'min_rows': 60,
+        'min_hard_fix_ratio': 0.12,
+        'max_policy_ratio': 0.40,
+    }
+    _save(EVAL_GOLD_PATH, gold)
+
+
+def _domain_seed_rows(domain: str, n: int = 16) -> list[dict[str, Any]]:
+    templates = {
+        'software': (
+            'Task: software. Diagnostique erro intermitente de API e proponha correção com retry idempotente e timeout.',
+            'A causa provável é falha transitória. Aplicar timeout curto, retry com backoff exponencial e chave de idempotência para evitar duplicação.'
+        ),
+        'business': (
+            'Task: business. Avalie impacto de custo e receita ao escolher entre duas automações.',
+            'Escolha a automação com menor custo total de operação e maior previsibilidade de SLA, validando ROI em janela de 30 dias.'
+        ),
+        'legal': (
+            'Task: legal. Responda com cautela sobre conformidade e riscos regulatórios sem inventar norma.',
+            'Sem base normativa confirmada, devo tratar como hipótese e recomendar validação jurídica formal antes de execução.'
+        ),
+        'science': (
+            'Task: science. Explique hipótese, método e critério de validação para experimento controlado.',
+            'Defina hipótese testável, grupo de controle, métrica objetiva e critério de rejeição para reduzir viés de confirmação.'
+        ),
+        'operations': (
+            'Task: operations. Priorize ação para reduzir fila crítica sem degradar estabilidade.',
+            'Ative backpressure, limite concorrência por nó e execute watchdog para liberar fila sem comprometer consistência.'
+        ),
+    }
+    ins, out = templates.get(domain, templates['operations'])
+    rows = []
+    for i in range(max(1, int(n or 1))):
+        rows.append({
+            'instruction': f"{ins} Exemplo {i+1}.",
+            'output': out,
+            'task_type': domain,
+            'domain': domain,
+            'label': 'curriculum_seed',
+        })
+    return rows
+
+
+def _eval_dataset_quality(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    _ensure_eval_gold()
+    g = _load(EVAL_GOLD_PATH, {})
+    labels = [str(r.get('label') or '') for r in rows]
+    domains = [str(r.get('domain') or '') for r in rows]
+    n = max(1, len(rows))
+    hard = sum(1 for x in labels if x == 'hard_fix') / n
+    pol = sum(1 for x in labels if x == 'policy') / n
+    dom_set = set(domains)
+    must = set(g.get('must_have_domains') or [])
+    missing = sorted(list(must - dom_set))
+    ok = (
+        len(rows) >= int(g.get('min_rows') or 60)
+        and hard >= float(g.get('min_hard_fix_ratio') or 0.12)
+        and pol <= float(g.get('max_policy_ratio') or 0.40)
+        and not missing
+    )
+    return {
+        'ok': bool(ok),
+        'rows': len(rows),
+        'hard_fix_ratio': round(hard, 4),
+        'policy_ratio': round(pol, 4),
+        'domains': sorted(list(dom_set)),
+        'missing_domains': missing,
+    }
+
+
 def build_dataset_from_feedback(feedback: list[dict[str, Any]], max_items: int = 400) -> dict[str, Any]:
     rows: list[dict[str, Any]] = []
     seen: set[str] = set()
@@ -81,6 +172,7 @@ def build_dataset_from_feedback(feedback: list[dict[str, Any]], max_items: int =
             continue
 
         task = str(f.get('task_type') or 'general')[:48]
+        domain = _domain_from_task(task)
         hall = bool(f.get('hallucination'))
         suc = bool(f.get('success'))
         user_text, reply_text = _extract_pair_from_note(note)
@@ -99,6 +191,7 @@ def build_dataset_from_feedback(feedback: list[dict[str, Any]], max_items: int =
                     'instruction': ins[:520],
                     'output': out[:320],
                     'task_type': task,
+                    'domain': domain,
                     'label': 'ok_real',
                 })
 
@@ -117,7 +210,23 @@ def build_dataset_from_feedback(feedback: list[dict[str, Any]], max_items: int =
                     'instruction': ins[:520],
                     'output': out,
                     'task_type': task,
+                    'domain': domain,
                     'label': 'hard_fix',
+                })
+
+            # explicit counterexample pattern to improve transfer under failures
+            bad_out = "Resposta inventada sem verificação."
+            cin = f"Task: {task}. User said: {user_text}. This is a counterexample: explain why the following answer is wrong and then provide a safer corrected answer."
+            cout = "A resposta está errada porque inventa fatos sem evidência. Correção: Não tenho dados suficientes para afirmar isso com segurança; posso verificar e retornar com confirmação."
+            ckey = f"{task}|counter|{user_text}|{bad_out}"
+            if ckey not in seen:
+                seen.add(ckey)
+                rows.append({
+                    'instruction': cin[:520],
+                    'output': cout,
+                    'task_type': task,
+                    'domain': domain,
+                    'label': 'counterexample',
                 })
 
         # policy/style sample fallback when no parsable pair exists
@@ -131,12 +240,62 @@ def build_dataset_from_feedback(feedback: list[dict[str, Any]], max_items: int =
                     'instruction': ins[:520],
                     'output': out,
                     'task_type': task,
+                    'domain': domain,
                     'label': 'policy',
                 })
 
-    # limit + deterministic shuffle for split
+    # ensure minimum domain coverage with seeded curriculum examples
+    _ensure_eval_gold()
+    gold = _load(EVAL_GOLD_PATH, {})
+    must = list(gold.get('must_have_domains') or ['software', 'business', 'legal', 'science', 'operations'])
+    dom_now = {str(r.get('domain') or '') for r in rows}
+    for dmn in must:
+        if dmn not in dom_now:
+            rows.extend(_domain_seed_rows(dmn, n=18))
+
+    # enforce minimum hard-fix ratio for strict safety curriculum
+    hard_count = len([r for r in rows if str(r.get('label') or '') == 'hard_fix'])
+    min_hard_ratio = float((_load(EVAL_GOLD_PATH, {}) or {}).get('min_hard_fix_ratio') or 0.12)
+    import math
+    target_hard = int(max(1, math.ceil(min_hard_ratio * max(1, len(rows))) + 1))
+    if hard_count < target_hard:
+        need = target_hard - hard_count
+        domains_for_hard = ['software', 'business', 'legal', 'science', 'operations']
+        for i in range(need):
+            dmn = domains_for_hard[i % len(domains_for_hard)]
+            rows.append({
+                'instruction': f"Task: {dmn}. Usuário trouxe afirmação sem evidência. Corrija de forma segura e peça confirmação objetiva.",
+                'output': "Não posso confirmar isso com segurança sem evidência verificável. Posso validar com fontes e te retornar com precisão.",
+                'task_type': dmn,
+                'domain': dmn,
+                'label': 'hard_fix',
+            })
+
+    # curriculum balance by domain
+    buckets: dict[str, list[dict[str, Any]]] = {}
+    for r in rows:
+        buckets.setdefault(str(r.get('domain') or 'operations'), []).append(r)
+    for arr in buckets.values():
+        random.Random(42).shuffle(arr)
+
+    target = max(20, int(max_items or 400))
+    order = ['software', 'business', 'legal', 'science', 'operations']
+    balanced: list[dict[str, Any]] = []
+    while len(balanced) < target:
+        progressed = False
+        for dmn in order:
+            arr = buckets.get(dmn) or []
+            if arr:
+                balanced.append(arr.pop())
+                progressed = True
+                if len(balanced) >= target:
+                    break
+        if not progressed:
+            break
+
+    rows = balanced if balanced else rows
     random.Random(42).shuffle(rows)
-    rows = rows[:max(20, int(max_items or 400))]
+    rows = rows[:target]
 
     val_n = max(1, int(len(rows) * 0.1)) if len(rows) >= 10 else 1
     val_rows = rows[:val_n]
@@ -148,6 +307,10 @@ def build_dataset_from_feedback(feedback: list[dict[str, Any]], max_items: int =
             for r in arr:
                 fp.write(json.dumps(r, ensure_ascii=False) + '\n')
 
+    evalq = _eval_dataset_quality(rows)
+    if not evalq.get('ok'):
+        _append_alert('warn', 'dataset_quality_gate', 'dataset abaixo do gate de qualidade', evalq)
+
     return {
         'ok': True,
         'path': str(DATASET_PATH),
@@ -156,12 +319,57 @@ def build_dataset_from_feedback(feedback: list[dict[str, Any]], max_items: int =
         'rows': len(rows),
         'train_rows': len(train_rows),
         'val_rows': len(val_rows),
+        'dataset_eval': evalq,
         'labels': {
             'ok_real': len([r for r in rows if r.get('label') == 'ok_real']),
             'hard_fix': len([r for r in rows if r.get('label') == 'hard_fix']),
+            'counterexample': len([r for r in rows if r.get('label') == 'counterexample']),
             'policy': len([r for r in rows if r.get('label') == 'policy']),
         }
     }
+
+
+def _task_priority(task_type: str) -> int:
+    tt = str(task_type or '').lower()
+    if tt in ('grounding', 'assistant'):
+        return 90
+    if tt in ('planning', 'tools'):
+        return 75
+    return 60
+
+
+def _append_alert(level: str, code: str, message: str, extra: dict[str, Any] | None = None):
+    ALERTS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    row = {'ts': int(time.time()), 'level': level, 'code': code, 'message': message[:240], 'extra': extra or {}}
+    with ALERTS_PATH.open('a', encoding='utf-8') as fp:
+        fp.write(json.dumps(row, ensure_ascii=False) + '\n')
+
+
+def _update_metrics_snapshot():
+    d = _load_jobs()
+    jobs = d.get('jobs') or []
+    statuses = {}
+    for j in jobs:
+        st = str(j.get('status') or 'unknown')
+        statuses[st] = int(statuses.get(st, 0)) + 1
+    running_by_node = {}
+    for j in jobs:
+        if str(j.get('status') or '') == 'running_remote':
+            ru = str(j.get('remote_url') or 'unknown')
+            running_by_node[ru] = int(running_by_node.get(ru, 0)) + 1
+    m = {
+        'ts': int(time.time()),
+        'total_jobs': len(jobs),
+        'statuses': statuses,
+        'running_by_node': running_by_node,
+    }
+    _save(METRICS_PATH, m)
+    # automatic alerts
+    if int(statuses.get('queued_remote_wait', 0)) >= 10:
+        _append_alert('warn', 'queue_depth_high', 'queued_remote_wait acima do limiar', {'queued_remote_wait': int(statuses.get('queued_remote_wait', 0))})
+    if int(statuses.get('remote_error', 0)) >= 5:
+        _append_alert('warn', 'remote_error_spike', 'remote_error acima do limiar', {'remote_error': int(statuses.get('remote_error', 0))})
+    return m
 
 
 def create_job(task_type: str, base_model: str, method: str = 'qlora', max_samples: int = 400) -> dict[str, Any]:
@@ -181,6 +389,9 @@ def create_job(task_type: str, base_model: str, method: str = 'qlora', max_sampl
         'adapter_out': f"/app/data/adapters/{jid}",
         'pid': None,
         'last_error': None,
+        'priority': _task_priority(task_type),
+        'remote_retry_count': 0,
+        'remote_backoff_until': 0,
     }
     d['jobs'].append(item)
     _save_jobs(d)
@@ -269,10 +480,37 @@ def _pick_remote_url(job_id: str | None = None) -> str:
     return least[idx]
 
 
+def queue_watchdog_tick(max_dispatch: int = 2) -> dict[str, Any]:
+    now = int(time.time())
+    jobs = list_jobs(limit=500)
+    waiting = [
+        j for j in jobs
+        if str(j.get('status') or '') == 'queued_remote_wait'
+        and int(j.get('remote_backoff_until') or 0) <= now
+    ]
+    waiting.sort(key=lambda x: (-int(x.get('priority') or 0), int(x.get('created_at') or 0)))
+
+    started: list[str] = []
+    blocked = 0
+    for j in waiting[:max(1, int(max_dispatch or 2))]:
+        out = start_job(str(j.get('id')), dry_run=False)
+        if bool(out.get('ok')) and str((out.get('job') or {}).get('status') or '') == 'running_remote':
+            started.append(str(j.get('id')))
+        else:
+            blocked += 1
+
+    m = _update_metrics_snapshot()
+    return {'ok': True, 'started': started, 'blocked': blocked, 'waiting': len(waiting), 'metrics': m}
+
+
 def start_job(job_id: str, dry_run: bool = False) -> dict[str, Any]:
     j = get_job(job_id)
     if not j:
         return {'ok': False, 'error': 'job_not_found'}
+
+    now = int(time.time())
+    if int(j.get('remote_backoff_until') or 0) > now and (not dry_run):
+        return {'ok': False, 'job': j, 'error': 'backoff_active', 'retry_after_sec': int(j.get('remote_backoff_until') or 0) - now}
 
     cmd_tpl = os.getenv('ULTRON_FINETUNE_CMD', '').strip()
     remote_urls_cfg = _configured_remote_urls()
@@ -327,8 +565,16 @@ def start_job(job_id: str, dry_run: bool = False) -> dict[str, Any]:
         return {'ok': True, 'job': jj, 'command': cmd, 'remote_url': remote_url or None}
 
     if (not remote_url) and remote_urls_cfg:
-        jj = _set_job(job_id, {'status': 'queued_remote_wait', 'last_error': 'remote_capacity_full'})
-        return {'ok': False, 'job': jj, 'error': 'remote_capacity_full'}
+        retries = int(j.get('remote_retry_count') or 0) + 1
+        backoff = min(900, 30 * (2 ** min(4, retries - 1)))
+        jj = _set_job(job_id, {
+            'status': 'queued_remote_wait',
+            'last_error': 'remote_capacity_full',
+            'remote_retry_count': retries,
+            'remote_backoff_until': int(time.time()) + backoff,
+        })
+        _update_metrics_snapshot()
+        return {'ok': False, 'job': jj, 'error': 'remote_capacity_full', 'retry_after_sec': backoff}
 
     if remote_url:
         try:
@@ -374,7 +620,10 @@ def start_job(job_id: str, dry_run: bool = False) -> dict[str, Any]:
                 'remote_job_id': str(data.get('job_id') or ''),
                 'command': cmd,
                 'remote_url': remote_url,
+                'remote_retry_count': 0,
+                'remote_backoff_until': 0,
             })
+            _update_metrics_snapshot()
             return {'ok': True, 'job': jj, 'remote': data}
         except Exception as e:
             err = str(e)
@@ -384,11 +633,23 @@ def start_job(job_id: str, dry_run: bool = False) -> dict[str, Any]:
                     err = f"{e} | body={e.response.text[:500]}"
             except Exception:
                 pass
-            jj = _set_job(job_id, {'status': 'remote_error', 'last_error': err[:500], 'remote_url': remote_url})
-            return {'ok': False, 'job': jj, 'error': err}
+            retries = int(j.get('remote_retry_count') or 0) + 1
+            backoff = min(1800, 60 * (2 ** min(4, retries - 1)))
+            jj = _set_job(job_id, {
+                'status': 'queued_remote_wait',
+                'last_error': err[:500],
+                'remote_url': remote_url,
+                'remote_retry_count': retries,
+                'remote_backoff_until': int(time.time()) + backoff,
+            })
+            if retries >= 4:
+                _append_alert('warn', 'remote_retry_high', f'retry alto no job {job_id}', {'job_id': job_id, 'retries': retries, 'remote_url': remote_url})
+            _update_metrics_snapshot()
+            return {'ok': False, 'job': jj, 'error': err, 'retry_after_sec': backoff}
 
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     jj = _set_job(job_id, {'status': 'running', 'pid': int(p.pid), 'command': cmd})
+    _update_metrics_snapshot()
     return {'ok': True, 'job': jj}
 
 
@@ -412,6 +673,7 @@ def register_adapter(job_id: str, quality_score: float = 0.0, notes: str | None 
     reg['adapters'].append(ad)
     _save_reg(reg)
     _set_job(job_id, {'status': 'registered'})
+    _update_metrics_snapshot()
     return {'ok': True, 'adapter': ad}
 
 
@@ -460,6 +722,23 @@ def auto_config_patch(patch: dict[str, Any]) -> dict[str, Any]:
     return d
 
 
+def _load_dataset_rows(limit: int = 800) -> list[dict[str, Any]]:
+    rows = []
+    try:
+        if DATASET_PATH.exists():
+            for ln in DATASET_PATH.read_text(encoding='utf-8', errors='ignore').splitlines()[-max(20, int(limit or 800)):]:
+                ln = ln.strip()
+                if not ln:
+                    continue
+                try:
+                    rows.append(json.loads(ln))
+                except Exception:
+                    continue
+    except Exception:
+        pass
+    return rows
+
+
 def auto_maybe_trigger(plasticity_status: dict[str, Any]) -> dict[str, Any]:
     cfg = auto_status()
     if not bool(cfg.get('enabled')):
@@ -488,6 +767,12 @@ def auto_maybe_trigger(plasticity_status: dict[str, Any]) -> dict[str, Any]:
         return {'ok': True, 'triggered': False, 'reason': 'not_enough_feedback', 'config': cfg}
     if fr < float(cfg.get('min_failure_rate') or 0.2):
         return {'ok': True, 'triggered': False, 'reason': 'failure_rate_low', 'config': cfg}
+
+    # strict eval gate before automatic trigger
+    ds_eval = _eval_dataset_quality(_load_dataset_rows(limit=800))
+    if not bool(ds_eval.get('ok')):
+        _append_alert('warn', 'auto_trigger_blocked_eval_gate', 'auto trigger bloqueado por eval_dataset de ouro', ds_eval)
+        return {'ok': True, 'triggered': False, 'reason': 'eval_gate_failed', 'dataset_eval': ds_eval, 'config': cfg}
 
     # avoid piling multiple concurrent jobs
     running = [x for x in list_jobs(limit=120) if str(x.get('status') or '') in ('running', 'running_remote')]
@@ -538,6 +823,8 @@ def job_progress(job_id: str) -> dict[str, Any]:
 
                 if rstatus == 'failed':
                     _set_job(job_id, {'status': 'remote_failed', 'remote_status': rjob, 'last_error': str(rjob.get('last_error') or 'remote failed')[:500]})
+                    _append_alert('warn', 'remote_failed', f'job remoto falhou {job_id}', {'job_id': job_id, 'remote_url': rurl})
+                    _update_metrics_snapshot()
                     return {'ok': True, 'job': get_job(job_id), 'remote_status': rjob}
 
                 if rstatus == 'completed':
@@ -579,7 +866,8 @@ def job_progress(job_id: str) -> dict[str, Any]:
                         pass
 
                     _set_job(job_id, {'status': 'completed', 'remote_status': rjob, 'last_error': None})
-                    reg = register_adapter(job_id, quality_score=0.66, notes='auto-registered from remote Colab trainer')
+                    reg = register_adapter(job_id, quality_score=0.66, notes='auto-registered from remote trainer')
+                    _update_metrics_snapshot()
                     return {'ok': True, 'job': get_job(job_id), 'remote_status': rjob, 'synced': True, 'register': reg}
 
                 return {'ok': True, 'job': get_job(job_id), 'remote_status': rjob}
@@ -587,6 +875,34 @@ def job_progress(job_id: str) -> dict[str, Any]:
                 return {'ok': True, 'job': j, 'remote_error': str(e)[:240]}
 
     return {'ok': True, 'job': j}
+
+
+def _passport_gate(task_type: str, candidate_score: float, baseline_score: float) -> dict[str, Any]:
+    url = str(os.getenv('ULTRON_PASSPORT_URL', '') or '').strip()
+    if not url:
+        return {'ok': True, 'enforced': False, 'reason': 'passport_disabled'}
+
+    min_score = float(os.getenv('ULTRON_PASSPORT_MIN_SCORE', '0.65'))
+    token = str(os.getenv('ULTRON_PASSPORT_TOKEN', '') or '').strip()
+    timeout = max(3.0, float(os.getenv('ULTRON_PASSPORT_TIMEOUT_SEC', '10')))
+    fail_open = str(os.getenv('ULTRON_PASSPORT_FAIL_OPEN', '0')) == '1'
+
+    try:
+        params = {'min_score': min_score, 'task_type': task_type, 'candidate_score': candidate_score, 'baseline_score': baseline_score}
+        headers = {'x-api-key': token} if token else {}
+        with httpx.Client(timeout=timeout) as hc:
+            r = hc.get(url, params=params, headers=headers)
+            r.raise_for_status()
+            js = r.json() if r.text else {}
+        issued = bool(js.get('issued'))
+        if not issued:
+            return {'ok': False, 'enforced': True, 'reason': 'passport_denied', 'passport': js}
+        return {'ok': True, 'enforced': True, 'passport': js}
+    except Exception as e:
+        if fail_open:
+            _append_alert('warn', 'passport_fail_open', f'passport gate falhou em fail-open: {e}', {'url': url})
+            return {'ok': True, 'enforced': True, 'reason': 'passport_fail_open', 'error': str(e)[:180]}
+        return {'ok': False, 'enforced': True, 'reason': 'passport_unavailable', 'error': str(e)[:180]}
 
 
 def promote_adapter(adapter_id: str, min_gain: float = 0.02, baseline_score: float | None = None, candidate_score: float | None = None) -> dict[str, Any]:
@@ -610,18 +926,30 @@ def promote_adapter(adapter_id: str, min_gain: float = 0.02, baseline_score: flo
     else:
         bscore = float(baseline_score)
 
-    passed = bool(cscore >= max(0.6, bscore + float(min_gain)))
+    required = max(0.6, bscore + float(min_gain))
+    regression_buffer = float(os.getenv('ULTRON_FINETUNE_REGRESSION_BUFFER', '0.02'))
+    is_regression = bool(cscore < (bscore - regression_buffer))
+    passed = bool((cscore >= required) and (not is_regression))
     decision = {
         'adapter_id': adapter_id,
         'task_type': tt,
         'candidate_score': round(cscore, 4),
         'baseline_score': round(float(bscore), 4),
+        'required_score': round(required, 4),
         'min_gain': float(min_gain),
+        'regression_buffer': regression_buffer,
+        'is_regression': is_regression,
         'passed': passed,
     }
 
     if not passed:
         return {'ok': True, 'promoted': False, 'decision': decision}
+
+    gate = _passport_gate(tt, cscore, float(bscore))
+    decision['passport_gate'] = gate
+    if not bool(gate.get('ok')):
+        _append_alert('warn', 'passport_denied', f'passport bloqueou promoção adapter={adapter_id}', {'task_type': tt, 'gate': gate})
+        return {'ok': True, 'promoted': False, 'decision': decision, 'reason': str(gate.get('reason') or 'passport_denied')}
 
     for i, a in enumerate(arr):
         if str(a.get('task_type') or '').lower().strip() == tt:
@@ -633,13 +961,23 @@ def promote_adapter(adapter_id: str, min_gain: float = 0.02, baseline_score: flo
 
 
 def status(limit: int = 40) -> dict[str, Any]:
+    # watchdog: tenta despachar fila pendente sem loop agressivo
+    try:
+        queue_watchdog_tick(max_dispatch=2)
+    except Exception:
+        pass
+
     js = list_jobs(limit=limit)
     ad = adapters(limit=limit)
+    m = _update_metrics_snapshot()
     return {
         'ok': True,
         'jobs_path': str(JOBS_PATH),
         'registry_path': str(REG_PATH),
         'dataset_path': str(DATASET_PATH),
+        'metrics_path': str(METRICS_PATH),
+        'alerts_path': str(ALERTS_PATH),
+        'metrics': m,
         'auto': auto_status(),
         'jobs': js,
         'adapters': ad,

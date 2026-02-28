@@ -8,6 +8,8 @@ import time
 PROJECTS_PATH = Path('/app/data/projects_state.json')
 PLAYBOOKS_PATH = Path('/app/data/recovery_playbooks.json')
 MEMORY_PATH = Path('/app/data/project_memory_index.json')
+ABSTRACTIONS_PATH = Path('/app/data/project_memory_abstractions.json')
+RUN_STATE_PATH = Path('/app/data/project_run_state.json')
 
 
 def _load(path: Path, default):
@@ -22,7 +24,9 @@ def _load(path: Path, default):
 
 def _save(path: Path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, ensure_ascii=False, indent=2))
+    tmp = path.with_suffix(path.suffix + '.tmp')
+    tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2))
+    tmp.replace(path)
 
 
 def _default_projects() -> dict[str, Any]:
@@ -204,6 +208,103 @@ def suggest_playbook_actions(signal: str) -> list[str]:
     return [str(x) for x in (item.get('fallbacks') or [])][:5]
 
 
+def _default_run_state() -> dict[str, Any]:
+    return {'updated_at': int(time.time()), 'steps': []}
+
+
+def load_run_state() -> dict[str, Any]:
+    d = _load(RUN_STATE_PATH, None)
+    if not isinstance(d, dict):
+        return _default_run_state()
+    d.setdefault('steps', [])
+    return d
+
+
+def save_run_state(d: dict[str, Any]):
+    d['updated_at'] = int(time.time())
+    _save(RUN_STATE_PATH, d)
+
+
+def begin_atomic_step(project_id: str, step_name: str, payload: dict[str, Any] | None = None) -> dict[str, Any]:
+    rs = load_run_state()
+    now = int(time.time())
+    token = f"stp_{now}_{len(rs.get('steps') or [])+1}"
+    row = {
+        'token': token,
+        'project_id': str(project_id or ''),
+        'step_name': (step_name or 'step')[:80],
+        'status': 'running',
+        'started_at': now,
+        'updated_at': now,
+        'payload': payload or {},
+        'result': None,
+        'error': None,
+    }
+    arr = list(rs.get('steps') or [])
+    arr.append(row)
+    rs['steps'] = arr[-800:]
+    save_run_state(rs)
+    if project_id:
+        add_checkpoint(project_id, note=f"atomic_begin:{step_name}", progress_delta=0.0, signal='atomic_begin')
+    return row
+
+
+def complete_atomic_step(token: str, note: str = '', progress_delta: float = 0.0, result: dict[str, Any] | None = None) -> dict[str, Any] | None:
+    rs = load_run_state()
+    now = int(time.time())
+    for s in rs.get('steps') or []:
+        if s.get('token') != token:
+            continue
+        s['status'] = 'completed'
+        s['updated_at'] = now
+        s['result'] = result or {}
+        save_run_state(rs)
+        pid = str(s.get('project_id') or '')
+        if pid:
+            add_checkpoint(pid, note=(note or f"atomic_done:{s.get('step_name')}")[:1200], progress_delta=progress_delta, signal='atomic_commit')
+        return s
+    return None
+
+
+def fail_atomic_step(token: str, error: str = '') -> dict[str, Any] | None:
+    rs = load_run_state()
+    now = int(time.time())
+    for s in rs.get('steps') or []:
+        if s.get('token') != token:
+            continue
+        s['status'] = 'failed'
+        s['updated_at'] = now
+        s['error'] = (error or '')[:500]
+        save_run_state(rs)
+        pid = str(s.get('project_id') or '')
+        if pid:
+            add_checkpoint(pid, note=f"atomic_fail:{s.get('step_name')} err={(error or '')[:180]}", progress_delta=0.0, signal='atomic_fail')
+        return s
+    return None
+
+
+def recover_stale_steps(max_age_sec: int = 900) -> dict[str, Any]:
+    rs = load_run_state()
+    now = int(time.time())
+    touched = 0
+    recovered: list[str] = []
+    for s in rs.get('steps') or []:
+        if str(s.get('status') or '') != 'running':
+            continue
+        age = now - int(s.get('updated_at') or s.get('started_at') or now)
+        if age > max(60, int(max_age_sec or 900)):
+            s['status'] = 'stale_interrupted'
+            s['updated_at'] = now
+            recovered.append(str(s.get('token') or ''))
+            touched += 1
+            pid = str(s.get('project_id') or '')
+            if pid:
+                add_checkpoint(pid, note=f"atomic_recover:{s.get('step_name')} age={age}s", progress_delta=0.0, signal='atomic_recover')
+    if touched:
+        save_run_state(rs)
+    return {'ok': True, 'recovered': recovered, 'count': touched}
+
+
 def _default_memory() -> dict[str, Any]:
     return {'updated_at': int(time.time()), 'projects': {}}
 
@@ -221,6 +322,38 @@ def save_memory(d: dict[str, Any]):
     _save(MEMORY_PATH, d)
 
 
+def _extract_abstractions(text: str) -> list[str]:
+    t = str(text or '').lower()
+    out: list[str] = []
+    if 'timeout' in t or 'retry' in t:
+        out.append('Em falha intermitente, usar retry com backoff e idempotência.')
+    if 'conflict' in t or 'contradi' in t:
+        out.append('Resolver contradição com evidência antes de escalar complexidade.')
+    if 'cost' in t or 'custo' in t:
+        out.append('Priorizar opção de menor custo mantendo SLO mínimo.')
+    if 'blocked' in t or 'stale' in t:
+        out.append('Aplicar recovery playbook quando ciclo estagnar.')
+    return list(dict.fromkeys(out))
+
+
+def _remember_abstractions(project_id: str, abstractions: list[str], source_kind: str = 'note'):
+    if not project_id or not abstractions:
+        return
+    d = _load(ABSTRACTIONS_PATH, {'projects': {}})
+    pm = d.setdefault('projects', {})
+    arr = list((pm.get(project_id) or {}).get('items') or [])
+    now = int(time.time())
+    for a in abstractions:
+        arr.append({'ts': now, 'kind': source_kind[:40], 'text': a[:240]})
+    # dedupe by text keeping latest
+    seen = {}
+    for it in arr:
+        seen[str(it.get('text') or '')] = it
+    pm[project_id] = {'items': list(seen.values())[-200:]}
+    d['updated_at'] = now
+    _save(ABSTRACTIONS_PATH, d)
+
+
 def remember(project_id: str, kind: str, text: str, meta: dict[str, Any] | None = None):
     if not project_id:
         return
@@ -235,6 +368,7 @@ def remember(project_id: str, kind: str, text: str, meta: dict[str, Any] | None 
     })
     pm[project_id] = {'items': arr[-500:]}
     save_memory(d)
+    _remember_abstractions(project_id, _extract_abstractions(text), source_kind=kind)
 
 
 def recall(project_id: str, query: str = '', limit: int = 20) -> list[dict[str, Any]]:
@@ -276,6 +410,9 @@ def project_brief(project_id: str, lookback: int = 20) -> dict[str, Any] | None:
     if float(kpi.get('cost_score') or 0.0) > 0.8:
         mitigations.extend(suggest_playbook_actions('tool_failure')[:2])
 
+    abs_d = _load(ABSTRACTIONS_PATH, {'projects': {}})
+    abstractions = list((((abs_d.get('projects') or {}).get(project_id) or {}).get('items') or []) )[-6:]
+
     return {
         'project_id': project_id,
         'title': p.get('title'),
@@ -286,4 +423,5 @@ def project_brief(project_id: str, lookback: int = 20) -> dict[str, Any] | None:
         'next_steps': next_steps[:3],
         'mitigations': list(dict.fromkeys(mitigations))[:3],
         'memory_tail': mem[-8:],
+        'abstractions': abstractions,
     }

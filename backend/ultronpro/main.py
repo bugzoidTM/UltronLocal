@@ -664,8 +664,22 @@ def _apply_runtime_mutation_policy(kind: str, priority: int, cooldown: int, ttl:
     return max(0, min(10, p)), max(10, min(7200, cd)), max(60, min(7200, t)), applied
 
 
+def _arbiter_vote(kind: str, text: str, meta: dict | None = None) -> tuple[bool, dict]:
+    t = str(text or '').lower()
+    # specialist votes
+    safety_ok = not any(x in t for x in ['drop table', 'rm -rf', 'disable safeguards'])
+    relevance_ok = len(str(text or '').strip()) >= 12
+    feasibility_ok = True
+    mm = meta or {}
+    if str(mm.get('intent') or '') == 'tool_failure' and 'context' not in mm:
+        feasibility_ok = False
+    votes = {'safety': safety_ok, 'relevance': relevance_ok, 'feasibility': feasibility_ok}
+    passed = sum(1 for v in votes.values() if v) >= 2 and safety_ok
+    return passed, votes
+
+
 def _enqueue_action_if_new(kind: str, text: str, priority: int = 0, meta: dict | None = None, ttl_sec: int | None = None):
-    """Enfileira ação com dedupe + cooldown + expiração de fila + runtime mutation policy."""
+    """Enfileira ação com dedupe + cooldown + expiração de fila + runtime mutation policy + arbiter gate."""
     recent = store.db.list_actions(limit=120)
     now = time.time()
     cooldown = ACTION_COOLDOWNS_SEC.get(kind, 120)
@@ -696,6 +710,13 @@ def _enqueue_action_if_new(kind: str, text: str, priority: int = 0, meta: dict |
     if mut.get("treated"):
         mmeta["mutation_treated"] = True
         mmeta["mutation_ids"] = mut.get("mutation_ids") or []
+
+    ok_arb, votes = _arbiter_vote(kind, text, mmeta)
+    if not ok_arb:
+        store.db.add_event('arbiter_block', f"🧭 blocked kind={kind} votes={votes}")
+        return
+    mmeta['arbiter_votes'] = votes
+
     store.db.enqueue_action(
         kind=kind,
         text=text,
@@ -950,6 +971,7 @@ def _subgoal_planning_tick() -> dict:
 
 def _project_management_tick() -> dict:
     project_kernel.ensure_default_playbooks()
+    project_kernel.recover_stale_steps(max_age_sec=900)
     p = project_kernel.active_project()
 
     if not p:
@@ -962,6 +984,9 @@ def _project_management_tick() -> dict:
             p = project_kernel.upsert_project(g.get('title') or 'Projeto', g.get('description') or g.get('title') or 'Objetivo', scope='Seed from active goal', sla_hours=72)
         else:
             return {'status': 'no_project_context'}
+
+    step_row = project_kernel.begin_atomic_step(str(p.get('id') or ''), 'project_management_tick', {'scope': 'kpi_playbook_memory'})
+    step_token = str(step_row.get('token') or '')
 
     # KPIs proxy
     acts = store.db.list_actions(limit=160)
@@ -1050,6 +1075,7 @@ def _project_management_tick() -> dict:
         )
 
     store.db.add_event('project_management_tick', f"📦 project={p.get('id')} progressΔ={progress_delta:+.3f} triggers={','.join(triggered) if triggered else 'none'}")
+    project_kernel.complete_atomic_step(step_token, note='project_management_tick_done', progress_delta=float(max(0.0, progress_delta)), result={'triggered': triggered, 'suggested': suggested})
     return {'status': 'ok', 'project': project_kernel.active_project(), 'triggered': triggered, 'suggested': suggested, 'brief': brief}
 
 
@@ -1058,38 +1084,46 @@ def _project_experiment_cycle() -> dict:
     if not p:
         return {'status': 'no_active_project'}
 
-    brief = project_kernel.project_brief(p.get('id')) or {}
-    exp = project_executor.propose_experiment(p, brief=brief)
-    res = project_executor.run_experiment(exp)
-    rec = project_executor.record(exp, res)
+    step = project_kernel.begin_atomic_step(str(p.get('id') or ''), 'project_experiment_cycle', {'scope': 'benchmark_and_record'})
+    token = str(step.get('token') or '')
 
-    project_kernel.remember(
-        p.get('id'),
-        kind='experiment',
-        text=f"exp={exp.get('id')} status={res.get('status')} success={res.get('success')}",
-        meta={'metrics': (res.get('metrics') or {}), 'artifact': res.get('artifact')},
-    )
+    try:
+        brief = project_kernel.project_brief(p.get('id')) or {}
+        exp = project_executor.propose_experiment(p, brief=brief)
+        res = project_executor.run_experiment(exp)
+        rec = project_executor.record(exp, res)
 
-    # if experiment indicates optimization still needed, route mitigation chain
-    if res.get('status') == 'needs_optimization':
-        _enqueue_action_if_new(
-            'route_toolchain',
-            '(project-experiment) otimização necessária, executar rota de remediação.',
-            priority=6,
-            meta={
-                'intent': 'tool_failure',
-                'prefer_low_cost': True,
-                'context': {
-                    'problem_text': f"Projeto {p.get('id')} benchmark p95={((res.get('metrics') or {}).get('p95_read_ms'))}",
-                    'target_domain': 'database_optimization',
-                },
-            },
-            ttl_sec=30 * 60,
+        project_kernel.remember(
+            p.get('id'),
+            kind='experiment',
+            text=f"exp={exp.get('id')} status={res.get('status')} success={res.get('success')}",
+            meta={'metrics': (res.get('metrics') or {}), 'artifact': res.get('artifact')},
         )
 
-    _workspace_publish('project_kernel', 'project.experiment', {'project_id': p.get('id'), 'experiment': rec}, salience=0.82, ttl_sec=3600)
-    store.db.add_event('project_experiment_cycle', f"🧪 project={p.get('id')} exp={exp.get('id')} status={res.get('status')}")
-    return {'status': 'ok', 'project_id': p.get('id'), 'experiment': rec}
+        # if experiment indicates optimization still needed, route mitigation chain
+        if res.get('status') == 'needs_optimization':
+            _enqueue_action_if_new(
+                'route_toolchain',
+                '(project-experiment) otimização necessária, executar rota de remediação.',
+                priority=6,
+                meta={
+                    'intent': 'tool_failure',
+                    'prefer_low_cost': True,
+                    'context': {
+                        'problem_text': f"Projeto {p.get('id')} benchmark p95={((res.get('metrics') or {}).get('p95_read_ms'))}",
+                        'target_domain': 'database_optimization',
+                    },
+                },
+                ttl_sec=30 * 60,
+            )
+
+        _workspace_publish('project_kernel', 'project.experiment', {'project_id': p.get('id'), 'experiment': rec}, salience=0.82, ttl_sec=3600)
+        store.db.add_event('project_experiment_cycle', f"🧪 project={p.get('id')} exp={exp.get('id')} status={res.get('status')}")
+        project_kernel.complete_atomic_step(token, note='project_experiment_cycle_done', progress_delta=0.01, result={'status': res.get('status'), 'experiment_id': exp.get('id')})
+        return {'status': 'ok', 'project_id': p.get('id'), 'experiment': rec}
+    except Exception as e:
+        project_kernel.fail_atomic_step(token, error=str(e))
+        raise
 
 
 async def _absorb_lightrag_general(max_topics: int = 24, doc_limit: int = 24, domains: str = "python,systems,database,ai") -> dict:
@@ -3824,6 +3858,12 @@ async def agi_path_loop():
             out = agi_path.tick(snap)
             if bool(out.get('triggered')):
                 store.db.add_event('agi_path', f"🧠 AGI-path triggered actions={','.join(out.get('actions') or [])}")
+            try:
+                q = finetune_lora.queue_watchdog_tick(max_dispatch=2)
+                if (q.get('started') or []):
+                    store.db.add_event('finetune_queue_watchdog', f"🧪 watchdog dispatched={len(q.get('started') or [])}")
+            except Exception:
+                pass
             _runtime_health_write({'reason': 'agi_path_tick', 'agi_path_triggered': bool(out.get('triggered'))})
             await asyncio.sleep(tick_sec)
         except Exception as e:
@@ -4496,6 +4536,18 @@ async def projects_tick():
     return _project_management_tick()
 
 
+@app.get('/api/projects/run_state')
+async def projects_run_state():
+    return project_kernel.load_run_state()
+
+
+@app.post('/api/projects/recover_stale')
+async def projects_recover_stale(max_age_sec: int = 900):
+    out = project_kernel.recover_stale_steps(max_age_sec=max_age_sec)
+    store.db.add_event('project_recover_stale', f"📦 stale recovered={out.get('count')}")
+    return out
+
+
 @app.get('/api/projects/{project_id}/brief')
 async def projects_brief(project_id: str):
     b = project_kernel.project_brief(project_id)
@@ -4969,6 +5021,13 @@ async def finetune_auto_trigger():
     ps = plasticity_runtime.status(limit=120)
     out = finetune_lora.auto_maybe_trigger(ps)
     store.db.add_event('finetune_auto_trigger', f"🧪 auto trigger triggered={out.get('triggered')} reason={out.get('reason')}")
+    return out
+
+
+@app.post('/api/plasticity/finetune/queue/watchdog')
+async def finetune_queue_watchdog():
+    out = finetune_lora.queue_watchdog_tick(max_dispatch=3)
+    store.db.add_event('finetune_queue_watchdog', f"🧪 watchdog started={len(out.get('started') or [])} waiting={out.get('waiting')}")
     return out
 
 
