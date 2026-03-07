@@ -980,6 +980,29 @@ def job_progress(job_id: str) -> dict[str, Any]:
                     except Exception:
                         pass
 
+                    # Safety gate: validate adapter base model matches requested job base_model.
+                    try:
+                        cfg_path = local_out / 'adapter_config.json'
+                        cfg = json.loads(cfg_path.read_text(encoding='utf-8')) if cfg_path.exists() else {}
+                        got_base = str(cfg.get('base_model_name_or_path') or '').strip()
+                        want_base = str(j.get('base_model') or '').strip()
+                        if want_base and got_base and (got_base != want_base):
+                            _set_job(job_id, {
+                                'status': 'remote_failed',
+                                'remote_status': rjob,
+                                'last_error': f'base_model_mismatch: expected={want_base} got={got_base}'[:500],
+                            })
+                            _append_alert('warn', 'remote_base_model_mismatch', f'job remoto base_model divergente {job_id}', {
+                                'job_id': job_id,
+                                'expected_base_model': want_base,
+                                'got_base_model': got_base,
+                                'remote_url': rurl,
+                            })
+                            _update_metrics_snapshot()
+                            return {'ok': False, 'job': get_job(job_id), 'remote_status': rjob, 'synced': False, 'error': 'base_model_mismatch', 'expected_base_model': want_base, 'got_base_model': got_base}
+                    except Exception:
+                        pass
+
                     _set_job(job_id, {'status': 'completed', 'remote_status': rjob, 'last_error': None})
                     reg = register_adapter(job_id, quality_score=0.66, notes='auto-registered from remote trainer')
                     _update_metrics_snapshot()

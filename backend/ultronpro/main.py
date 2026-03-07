@@ -16,7 +16,7 @@ from fastapi.responses import StreamingResponse, JSONResponse
 from pydantic import BaseModel
 import uvicorn
 
-from ultronpro import llm, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, finetune_lora, roadmap_v5, agi_path, episodic_memory, learning_agenda, sleep_cycle, replay_traces, rag_synth_generator, semantic_cache, prm_lite
+from ultronpro import llm, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, finetune_lora, roadmap_v5, agi_path, episodic_memory, learning_agenda, sleep_cycle, replay_traces, rag_synth_generator, semantic_cache, prm_lite, symbolic_reasoner
 from ultronpro.knowledge_bridge import search_knowledge, ingest_knowledge
 
 # Logging
@@ -3964,10 +3964,17 @@ async def autofeeder_loop():
                 )
                 triples_extracted, triples_added = _extract_and_update_graph(result.text, exp_id)
 
+                # NEW: also push to LightRAG so RAG can use the same acquired knowledge
+                rag_ok = False
+                try:
+                    rag_ok = await ingest_knowledge(result.text, source=result.source_id)
+                except Exception:
+                    rag_ok = False
+
                 # Create learning event
                 store.db.add_event(
                     kind="autofeeder_ingest",
-                    text=f"📚 Aprendido de {result.source_id}: {result.title or result.text[:80]} (+{triples_added} triplas)"
+                    text=f"📚 Aprendido de {result.source_id}: {result.title or result.text[:80]} (+{triples_added} triplas) rag={str(rag_ok).lower()}"
                 )
                 if agenda_top:
                     store.db.add_event(
@@ -5546,8 +5553,7 @@ async def metacognition_ask(req: MetacogAskRequest):
     intent_label = 'runtime' if runtime_intent else ('status' if any(t in ql for t in status_intent_terms) else 'general')
 
     high_risk_terms = [
-        'presidente', 'constituição', 'constituição federal', 'artigo ', 'lei ', 'stf',
-        'hipotenusa', 'cateto', 'teorema', 'equação', 'raiz quadrada'
+        'presidente', 'constituição', 'constituição federal', 'artigo ', 'lei ', 'stf'
     ]
     external_ranking_terms = [
         'ranking externo', 'comparação de produtos', 'comparacao de produtos',
@@ -5574,6 +5580,29 @@ async def metacognition_ask(req: MetacogAskRequest):
                 'answer': ans_cache,
                 'strategy': used_cache,
                 'metrics': {**metrics, 'semantic_cache': {'hit': cache_hit, 'score': hit.get('score')}},
+                'cache_hit': cache_hit,
+                'from_cache': from_cache,
+                **prm_meta,
+            }
+
+    # Dedicated symbolic reasoner routing for logic/math/planning/programming tasks
+    if symbolic_reasoner.should_route(q):
+        sym = symbolic_reasoner.solve(q)
+        if bool(sym.get('ok')) and str(sym.get('answer') or '').strip():
+            ans_sym = str(sym.get('answer') or '').strip()
+            used_sym = 'symbolic_reasoner'
+            try:
+                if not ((risk_class in ('high', 'critical')) or (intent_label in ('runtime', 'status', 'health', 'metrics'))):
+                    semantic_cache.store(q, ans_sym, used_sym)
+            except Exception:
+                pass
+            _trace_emit(ans_sym, used_sym, outcome='success')
+            prm_meta = _prm_pack(ans_sym, used_sym, {**metrics, 'symbolic_reasoner': {'routed': True}})
+            return {
+                'ok': True,
+                'answer': ans_sym,
+                'strategy': used_sym,
+                'metrics': {**metrics, 'symbolic_reasoner': {'routed': True}},
                 'cache_hit': cache_hit,
                 'from_cache': from_cache,
                 **prm_meta,
@@ -5667,8 +5696,7 @@ async def metacognition_ask(req: MetacogAskRequest):
     # Safety rails for identity + out-of-domain factual claims.
     identity_terms = ['quantos anos', 'sua idade', 'quem te criou', 'seu criador', 'seu nome real', 'quando você nasceu']
     high_risk_terms = [
-        'presidente', 'constituição', 'constituição federal', 'artigo ', 'lei ', 'stf',
-        'hipotenusa', 'cateto', 'teorema', 'equação', 'raiz quadrada'
+        'presidente', 'constituição', 'constituição federal', 'artigo ', 'lei ', 'stf'
     ]
     external_ranking_terms = [
         'ranking externo', 'comparação de produtos', 'comparacao de produtos',
@@ -5711,6 +5739,20 @@ async def metacognition_ask(req: MetacogAskRequest):
     ans = ''
     used = 'none'
 
+    # Option A feature-flag: allow direct factual answers for general questions.
+    general_qa_enabled = str(os.getenv('METACOG_GENERAL_QA_ENABLED', '0')).strip().lower() in ('1', 'true', 'yes', 'on')
+    general_qa_max_words = int(os.getenv('METACOG_GENERAL_QA_MAX_WORDS', '16') or 16)
+    general_qa_max_chars = int(os.getenv('METACOG_GENERAL_QA_MAX_CHARS', '140') or 140)
+    looks_question = ('?' in q) or any(w in ql.split() for w in ('qual', 'quem', 'quando', 'onde', 'quanto', 'como'))
+    general_question = (
+        looks_question
+        and (len(q.split()) <= general_qa_max_words)
+        and (len(q) <= general_qa_max_chars)
+        and (not factual_intent)
+        and (not identity_question)
+        and (not high_risk_question)
+    )
+
     def _looks_broken(txt: str) -> bool:
         t = str(txt or '').strip().lower()
         if not t:
@@ -5727,8 +5769,13 @@ async def metacognition_ask(req: MetacogAskRequest):
             return True
         return False
 
-    # Primary only: remote own inference on U3 (cloud fallback intentionally disabled).
-    for strat in ('local',):
+    # Primary pass: local first. If Option A is enabled and this is a simple general question,
+    # allow a second pass via default strategy (OpenClaw bridge/cloud path).
+    strategies = ['local']
+    if general_qa_enabled and general_question:
+        strategies.append('default')
+
+    for strat in tuple(strategies):
         try:
             cand = llm.complete(
                 prompt,
@@ -5737,7 +5784,7 @@ async def metacognition_ask(req: MetacogAskRequest):
                 json_mode=False,
                 inject_persona=False,
                 max_tokens=(80 if short_msg else 120),
-                cloud_fallback=False,
+                cloud_fallback=(strat == 'default'),
             )
         except Exception:
             cand = ''

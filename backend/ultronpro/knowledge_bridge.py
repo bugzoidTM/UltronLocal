@@ -2,6 +2,10 @@ import httpx
 import os
 import logging
 import re
+import json
+import time
+import hashlib
+from pathlib import Path
 from typing import List, Dict, Optional
 
 logger = logging.getLogger("uvicorn")
@@ -52,6 +56,73 @@ def _relevance_score(query: str, text: str) -> float:
     # conservative score; requires some lexical evidence to pass >=0.5 gate
     score = overlap / max(1, len(q_tokens))
     return round(float(score), 4)
+
+
+_INGEST_STATE_PATH = Path('/app/data/rag_ingest_state.json')
+_QUARANTINE_PATH = Path('/app/data/rag_ingest_quarantine.jsonl')
+
+
+def _text_hash(s: str) -> str:
+    return hashlib.md5((s or '').encode('utf-8', errors='ignore')).hexdigest()
+
+
+def _load_ingest_state() -> dict:
+    if _INGEST_STATE_PATH.exists():
+        try:
+            d = json.loads(_INGEST_STATE_PATH.read_text(encoding='utf-8'))
+            if isinstance(d, dict):
+                d.setdefault('recent', [])
+                return d
+        except Exception:
+            pass
+    return {'recent': []}
+
+
+def _save_ingest_state(d: dict):
+    _INGEST_STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    _INGEST_STATE_PATH.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding='utf-8')
+
+
+def _source_penalty(source: str) -> float:
+    s = (source or '').lower()
+    if 'uselessfacts' in s:
+        return 0.12
+    return 0.0
+
+
+def _quality_score(text: str, source: str) -> float:
+    t = str(text or '')
+    toks = re.findall(r"[a-zA-ZÀ-ÿ0-9_]{3,}", t.lower())
+    uniq = len(set(toks)) / max(1, len(toks))
+    length_score = min(1.0, len(t) / 700.0)
+    punct_ok = 1.0 if any(ch in t for ch in '.!?') else 0.6
+    noise = 1.0 if ('```' in t or '{"entity"' in t) else 0.0
+    score = (0.40 * length_score) + (0.35 * uniq) + (0.25 * punct_ok) - (0.20 * noise) - _source_penalty(source)
+    return max(0.0, min(1.0, round(score, 4)))
+
+
+def _dedupe_recent(h: str, max_items: int = 2000) -> bool:
+    st = _load_ingest_state()
+    arr = list(st.get('recent') or [])
+    if h in arr:
+        return False
+    arr.append(h)
+    st['recent'] = arr[-max_items:]
+    _save_ingest_state(st)
+    return True
+
+
+def _quarantine(text: str, source: str, reason: str, score: float):
+    _QUARANTINE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    rec = {
+        'ts': int(time.time()),
+        'source': str(source or '')[:100],
+        'reason': str(reason or '')[:120],
+        'score': float(score),
+        'text': str(text or '')[:1200],
+    }
+    with _QUARANTINE_PATH.open('a', encoding='utf-8') as f:
+        f.write(json.dumps(rec, ensure_ascii=False) + '\n')
 
 
 def _get_lightrag_config():
@@ -213,6 +284,62 @@ async def fetch_random_documents(limit: int = 1) -> List[Dict]:
         return []
 
 async def ingest_knowledge(text: str, source: str = "ultronpro") -> bool:
-    """Push new knowledge to LightRAG (DISABLED - unidirectional flow FROM LightRAG only)."""
-    # Disabled by user request - knowledge flows FROM LightRAG to UltronPro, not the reverse
+    """Push new knowledge to LightRAG.
+
+    Controlled by env ULTRON_LIGHTRAG_INGEST_ENABLED (default: enabled).
+    """
+    enabled = str(os.getenv('ULTRON_LIGHTRAG_INGEST_ENABLED', '1')).strip().lower() not in ('0', 'false', 'no', 'off')
+    if not enabled:
+        return False
+
+    url, key = _get_lightrag_config()
+    if not url or not key:
+        logger.warning('LightRAG ingest skipped: missing config')
+        return False
+
+    t = str(text or '').strip()
+    src = str(source or 'ultronpro')[:80]
+    if len(t) < 40:
+        _quarantine(t, src, 'too_short', 0.0)
+        return False
+
+    # quality gate + lexical dedupe to reduce RAG noise
+    min_q = float(os.getenv('ULTRON_RAG_INGEST_MIN_QUALITY', '0.58') or 0.58)
+    qscore = _quality_score(t, src)
+    if qscore < min_q:
+        _quarantine(t, src, 'low_quality', qscore)
+        return False
+
+    h = _text_hash(t)
+    if not _dedupe_recent(h):
+        return False
+
+    base = url.replace('/api', '')
+    payload = {
+        'text': t,
+        'source': src,
+    }
+
+    endpoints = [f"{base}/documents/text", f"{base}/documents"]
+
+    try:
+        async with httpx.AsyncClient() as client:
+            for ep in endpoints:
+                try:
+                    r = await client.post(
+                        ep,
+                        headers={"X-API-Key": key, 'Content-Type': 'application/json'},
+                        json=payload,
+                        timeout=20.0,
+                    )
+                    if r.status_code < 300:
+                        logger.info(f"LightRAG ingest ok source={src} quality={qscore}")
+                        return True
+                    # fallback try next endpoint
+                except Exception:
+                    continue
+    except Exception as e:
+        logger.error(f'LightRAG ingest error: {e}')
+
+    _quarantine(t, src, 'ingest_failed', qscore)
     return False

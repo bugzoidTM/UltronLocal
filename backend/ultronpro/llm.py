@@ -1,5 +1,8 @@
 import os
 import logging
+import subprocess
+import uuid
+import json
 from pathlib import Path
 from typing import Dict, Optional, Any
 import httpx
@@ -22,11 +25,11 @@ logger = logging.getLogger("uvicorn")
 
 # LLM Routing Strategy
 MODELS = {
-    "default": {"provider": "deepseek", "model": "deepseek-chat"},
+    "default": {"provider": "openclaw_bridge", "model": os.getenv('OPENCLAW_BRIDGE_MODEL', 'openai-codex/gpt-5.3-codex')},
     "cheap": {"provider": "groq", "model": os.getenv('GROQ_DEFAULT_MODEL', 'llama-3.3-70b-versatile')},
-    "reasoning": {"provider": "deepseek", "model": "deepseek-reasoner"},
-    "creative": {"provider": "deepseek", "model": "deepseek-chat"},
-    "deep": {"provider": "deepseek", "model": "deepseek-reasoner"},
+    "reasoning": {"provider": "openclaw_bridge", "model": os.getenv('OPENCLAW_BRIDGE_MODEL', 'openai-codex/gpt-5.3-codex')},
+    "creative": {"provider": "openclaw_bridge", "model": os.getenv('OPENCLAW_BRIDGE_MODEL', 'openai-codex/gpt-5.3-codex')},
+    "deep": {"provider": "openclaw_bridge", "model": os.getenv('OPENCLAW_BRIDGE_MODEL', 'openai-codex/gpt-5.3-codex')},
     "openai_default": {"provider": "openai", "model": os.getenv('OPENAI_DEFAULT_MODEL', 'gpt-4o-mini')},
     "anthropic_default": {"provider": "anthropic", "model": os.getenv('ANTHROPIC_DEFAULT_MODEL', 'claude-3-5-sonnet-20241022')},
     "deepseek_default": {"provider": "deepseek", "model": os.getenv('DEEPSEEK_DEFAULT_MODEL', 'deepseek-chat')},
@@ -48,6 +51,7 @@ class LLMRouter:
                 'groq': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': int(os.getenv('GROQ_TPD_LIMIT', '100000') or 100000)},
                 'deepseek': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': int(os.getenv('DEEPSEEK_DAILY_LIMIT_TOKENS', '0') or 0)},
                 'openrouter': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': int(os.getenv('OPENROUTER_DAILY_LIMIT_TOKENS', '0') or 0)},
+                'openclaw_bridge': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': 0},
                 'ollama': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': 0},
             },
             'last_error': None,
@@ -90,7 +94,7 @@ class LLMRouter:
         p = str(provider or 'auto').lower().strip()
         if p == 'auto':
             # prefer explicit providers, fallback to ollama
-            for cand in ('ultron_infer', 'openrouter', 'openai', 'anthropic', 'groq', 'deepseek', 'ollama'):
+            for cand in ('openclaw_bridge', 'ultron_infer', 'openrouter', 'openai', 'anthropic', 'groq', 'deepseek', 'ollama'):
                 r = self.healthcheck(cand)
                 if r.get('ok'):
                     return r
@@ -109,6 +113,11 @@ class LLMRouter:
                     rr.raise_for_status()
                 dt = int((time.time() - t0) * 1000)
                 return {'ok': True, 'provider': p, 'latency_ms': dt, 'check': 'tags'}
+
+            if p == 'openclaw_bridge':
+                txt = self._call_openclaw_bridge(c, 'Reply with OK only.', 'Healthcheck probe.', json_mode=False, max_tokens=64)
+                dt = int((time.time() - t0) * 1000)
+                return {'ok': bool((txt or '').strip()), 'provider': p, 'latency_ms': dt, 'sample': (txt or '')[:40]}
 
             if p == 'ultron_infer':
                 base = (c or {}).get('base_url') or os.getenv('ULTRON_LOCAL_INFER_URL', 'http://127.0.0.1:8025')
@@ -180,6 +189,13 @@ class LLMRouter:
                     "base_url": os.getenv('ULTRON_LOCAL_INFER_URL', 'http://127.0.0.1:8025'),
                     "token": os.getenv('ULTRON_LOCAL_INFER_TOKEN', '').strip(),
                 }
+            elif provider == "openclaw_bridge":
+                client = {
+                    "agent": os.getenv('OPENCLAW_BRIDGE_AGENT', 'bridge'),
+                    "timeout": int(os.getenv('OPENCLAW_BRIDGE_TIMEOUT_SEC', '120') or 120),
+                    "session_prefix": os.getenv('OPENCLAW_BRIDGE_SESSION_PREFIX', 'ulbridge'),
+                    "url": os.getenv('OPENCLAW_BRIDGE_URL', 'http://172.17.0.1:18991/generate'),
+                }
         except Exception as e:
             logger.error(f"Failed to init {provider}: {e}")
 
@@ -202,8 +218,16 @@ class LLMRouter:
 
         # local runtime providers rely on server-side active adapter marker
         
-        # 1. Prefer OpenRouter free models for default/cheap/creative when configured
-        if strategy in ('default', 'cheap', 'creative'):
+        # 1. Prefer OpenClaw bridge for primary reasoning strategies when available
+        if strategy in ('default', 'reasoning', 'creative', 'deep'):
+            br_client = self._get_client('openclaw_bridge')
+            if br_client:
+                provider = 'openclaw_bridge'
+                model = MODELS['default']['model']
+                client = br_client
+            else:
+                client = self._get_client(provider)
+        elif strategy in ('cheap',):
             or_client = self._get_client('openrouter')
             if or_client:
                 provider = 'openrouter'
@@ -214,13 +238,15 @@ class LLMRouter:
         else:
             client = self._get_client(provider)
         
-        # 2. Fallback chain across cloud providers first
+        # 2. Fallback chain across providers
         if not client and cloud_fallback:
-            for cand in ('deepseek', 'openrouter', 'openai', 'anthropic', 'groq'):
+            for cand in ('openclaw_bridge', 'deepseek', 'openrouter', 'openai', 'anthropic', 'groq'):
                 c = self._get_client(cand)
                 if c:
                     provider = cand
-                    if cand == 'groq':
+                    if cand == 'openclaw_bridge':
+                        model = MODELS['default']['model']
+                    elif cand == 'groq':
                         model = MODELS['cheap']['model']
                     elif cand == 'deepseek':
                         model = MODELS['deep']['model']
@@ -248,6 +274,8 @@ class LLMRouter:
         try:
             if provider == "anthropic":
                 return self._call_anthropic(client, model, prompt, system, json_mode)
+            if provider == 'openclaw_bridge':
+                return self._call_openclaw_bridge(client, prompt, system, json_mode, max_tokens=max_tokens)
             if provider == 'ollama':
                 return self._call_ollama(client, model, prompt, system, json_mode, max_tokens=max_tokens)
             if provider == 'ultron_infer':
@@ -257,15 +285,17 @@ class LLMRouter:
             self._touch(provider, ok=False, err=str(e))
             logger.error(f"LLM Call Error ({provider}/{model}): {e}")
 
-            # retry on alternative cloud providers before touching local
+            # retry on alternative providers before touching local
             if cloud_fallback:
-                for cand in ('deepseek', 'openrouter', 'openai', 'anthropic', 'groq'):
+                for cand in ('openclaw_bridge', 'deepseek', 'openrouter', 'openai', 'anthropic', 'groq'):
                     if cand == provider:
                         continue
                     try:
                         c = self._get_client(cand)
                         if not c:
                             continue
+                        if cand == 'openclaw_bridge':
+                            return self._call_openclaw_bridge(c, prompt, system, json_mode, max_tokens=max_tokens)
                         if cand == 'anthropic':
                             return self._call_anthropic(c, 'claude-3-5-sonnet-20241022', prompt, system, json_mode)
                         if cand == 'deepseek':
@@ -321,6 +351,58 @@ class LLMRouter:
         tout = int(getattr(usage, 'output_tokens', 0) or 0) if usage is not None else 0
         self._touch('anthropic', ok=True, tin=tin, tout=tout)
         return res.content[0].text
+
+    def _call_openclaw_bridge(self, client, prompt, system, json_mode, max_tokens: int | None = None):
+        msg = str(prompt or '').strip()
+        if system:
+            msg = f"System: {str(system).strip()}\n\nUser: {msg}"
+        if json_mode:
+            msg += "\n\nReturn ONLY valid JSON."
+
+        timeout_sec = int((client or {}).get('timeout') or 120)
+
+        # Preferred path: HTTP bridge service on host
+        br_url = str((client or {}).get('url') or '').strip()
+        if br_url:
+            try:
+                with httpx.Client(timeout=max(20.0, float(timeout_sec))) as hc:
+                    rr = hc.post(br_url, json={'message': msg, 'max_tokens': int(max_tokens or 256)})
+                    rr.raise_for_status()
+                    j = rr.json() if rr.text else {}
+                txt = str(j.get('text') or '').strip()
+                if txt:
+                    self._touch('openclaw_bridge', ok=True)
+                    return txt
+            except Exception as e:
+                self._touch('openclaw_bridge', ok=False, err=str(e))
+
+        # Fallback path: local CLI (works only if openclaw binary exists in this runtime)
+        sess = f"{(client or {}).get('session_prefix','ulbridge')}-{uuid.uuid4().hex[:10]}"
+        agent_id = str((client or {}).get('agent') or 'bridge')
+        cmd = [
+            'openclaw', 'agent', '--local', '--agent', agent_id,
+            '--session-id', sess,
+            '--message', msg,
+            '--json', '--timeout', str(timeout_sec)
+        ]
+        p = subprocess.run(cmd, capture_output=True, text=True, timeout=max(30, timeout_sec + 20))
+        if p.returncode != 0:
+            raise RuntimeError((p.stderr or p.stdout or 'openclaw_bridge_failed')[:400])
+
+        out = json.loads((p.stdout or '').strip() or '{}')
+        payloads = out.get('payloads') or []
+        text = ''
+        if payloads and isinstance(payloads[0], dict):
+            text = str(payloads[0].get('text') or '').strip()
+        if not text:
+            raise RuntimeError('openclaw_bridge_empty_reply')
+
+        meta = (out.get('meta') or {}).get('agentMeta') or {}
+        usage = meta.get('usage') or {}
+        tin = int(usage.get('input') or 0)
+        tout = int(usage.get('output') or 0)
+        self._touch('openclaw_bridge', ok=True, tin=tin, tout=tout)
+        return text
 
     def _call_ollama(self, client, model, prompt, system, json_mode, max_tokens: int | None = None):
         base = (client or {}).get('base_url') or os.getenv('OLLAMA_BASE_URL', 'http://127.0.0.1:11434')
