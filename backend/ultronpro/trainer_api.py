@@ -76,10 +76,13 @@ class TrainRequest(BaseModel):
     val_dataset: str = ''
     val_dataset_content: str = ''
     adapter_out: str
+    run_preset: str = 'production'
     epochs: int = 1
+    max_steps: int = 0
     batch_size: int = 1
     grad_accum: int = 8
     max_length: int = 512
+    early_stopping_patience: int = 2
 
 
 @app.get('/health')
@@ -114,6 +117,21 @@ async def job_status(job_id: str, x_api_key: str | None = Header(default=None)):
         ok = (out / 'adapter_config.json').exists() or (out / 'train_meta.json').exists()
         j = _set_job(job_id, {'status': 'completed' if ok else 'failed', 'exit_ok': bool(ok)}) or j
     return {'ok': True, 'job': j}
+
+
+@app.get('/jobs/{job_id}/metrics')
+async def job_metrics(job_id: str, x_api_key: str | None = Header(default=None)):
+    if not _auth_ok(x_api_key):
+        raise HTTPException(401, 'unauthorized')
+    j = _get_job(job_id)
+    if not j:
+        raise HTTPException(404, 'job not found')
+
+    out = Path(str(j.get('adapter_out') or ''))
+    mp = out / 'metrics.jsonl'
+    if not mp.exists():
+        raise HTTPException(404, 'metrics not found')
+    return FileResponse(path=str(mp), media_type='application/x-ndjson', filename=f'{job_id}-metrics.jsonl')
 
 
 @app.get('/jobs/{job_id}/artifact')
@@ -175,10 +193,13 @@ async def train(req: TrainRequest, x_api_key: str | None = Header(default=None))
         cmd += ['--val-dataset', str(val_path)]
     cmd += [
         '--adapter-out', req.adapter_out,
+        '--run-preset', str(req.run_preset or 'production'),
         '--epochs', str(max(1, int(req.epochs))),
+        '--max-steps', str(max(0, int(req.max_steps))),
         '--batch-size', str(max(1, int(req.batch_size))),
         '--grad-accum', str(max(1, int(req.grad_accum))),
         '--max-length', str(max(128, int(req.max_length))),
+        '--early-stopping-patience', str(max(1, int(req.early_stopping_patience))),
     ]
 
     job_id = 'tj_' + uuid.uuid4().hex[:10]
@@ -198,6 +219,8 @@ async def train(req: TrainRequest, x_api_key: str | None = Header(default=None))
         'dataset': req.dataset,
         'val_dataset': req.val_dataset,
         'adapter_out': req.adapter_out,
+        'run_preset': str(req.run_preset or 'production'),
+        'max_steps': int(req.max_steps or 0),
         'log_path': str(log_path),
     }
     d['jobs'].append(item)

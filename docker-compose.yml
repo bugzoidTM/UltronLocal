@@ -5,8 +5,15 @@ services:
     image: ultronpro:latest
     environment:
       - ULTRON_FINETUNE_URL=http://ultronpro_trainer:8010/train
+      - ULTRON_FINETUNE_URLS=http://147.93.116.186:18020/train
+      - ULTRON_FINETUNE_TOKEN=TOKEN_FORTE_123
+      - ULTRON_FINETUNE_MAX_CONCURRENCY_PER_NODE=2
+      - ULTRON_PASSPORT_URL=http://147.93.116.186:18020/passport/issue
+      - ULTRON_PASSPORT_FAIL_OPEN=0
       - ULTRON_FINETUNE_BASE_MODEL=TinyLlama/TinyLlama-1.1B-Chat-v1.0
-      - ULTRON_FINETUNE_AUTOTRIGGER=0
+      - ULTRON_FINETUNE_STRICT_BASE=1
+      - ULTRON_FINETUNE_EPOCHS=5
+      - ULTRON_FINETUNE_AUTOTRIGGER=1
       - ULTRON_AUTONOMY_ENABLED=1
       - ULTRON_JUDGE_ENABLED=1
       - ULTRON_ROADMAP_ENABLED=1
@@ -16,6 +23,10 @@ services:
       - ULTRON_JUDGE_TICK_SEC=180
       - ULTRON_AUTOFEEDER_TICK_SEC=300
       - ULTRON_SELFPATCH_GATE_ENABLED=1
+      - ULTRON_UI_LITE_API=0
+      - ULTRON_LOCAL_INFER_URL=http://147.93.116.186:18025
+      - ULTRON_LOCAL_INFER_TOKEN=TOKEN_FORTE_123
+      - ULTRON_RUNTIME_AUTO_APPLY_ADAPTER=1
     deploy:
       replicas: 1
       labels:
@@ -27,6 +38,36 @@ services:
         - "traefik.http.services.ultronpro.loadbalancer.server.port=8000"
       restart_policy:
         condition: on-failure
+    volumes:
+      - ultronpro_data:/app/data
+    networks:
+      - Nutef
+
+  ultronpro_infer:
+    image: ultronpro_trainer:local
+    environment:
+      - ULTRON_LOCAL_INFER_TOKEN=TOKEN_FORTE_123
+      - ULTRON_FINETUNE_BASE_MODEL=TinyLlama/TinyLlama-1.1B-Chat-v1.0
+      - ULTRON_INFER_TORCH_THREADS=2
+      - ULTRON_INFER_TORCH_INTEROP_THREADS=1
+      - OMP_NUM_THREADS=2
+      - MKL_NUM_THREADS=2
+      - TOKENIZERS_PARALLELISM=false
+      - ULTRON_INFER_MAX_NEW_TOKENS_FAST=96
+      - ULTRON_INFER_MAX_NEW_TOKENS_BALANCED=144
+      - ULTRON_INFER_MAX_NEW_TOKENS_DEEP=224
+    command: ["uvicorn", "ultronpro.inference_api:app", "--host", "0.0.0.0", "--port", "8025"]
+    deploy:
+      replicas: 0
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 8G
+        reservations:
+          cpus: '0.5'
+          memory: 2G
     volumes:
       - ultronpro_data:/app/data
     networks:

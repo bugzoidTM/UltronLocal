@@ -1,9 +1,58 @@
 import httpx
 import os
 import logging
+import re
 from typing import List, Dict, Optional
 
 logger = logging.getLogger("uvicorn")
+
+# Heuristic task_type tagging from document text (fast bootstrap, no classifier required)
+_TASK_TYPE_KEYWORDS = {
+    "coding": ["python", "código", "code", "bug", "stacktrace", "api", "endpoint", "função", "classe", "sql", "docker", "git", "deploy"],
+    "research": ["pesquisa", "artigo", "paper", "estudo", "benchmark", "comparativo", "referência", "fonte", "evidência"],
+    "operations": [
+        "incidente", "erro", "erro 5", "error", "failed", "failure", "exception",
+        "latência", "latencia", "latency", "timeout", "sla", "monitor", "observabilidade", "alerta",
+        "rollback", "restart", "restarted", "produção", "producao", "runtime", "unavailable",
+        "queue", "worker", "dispatch", "scheduler", "backoff", "retry",
+        "job", "status", "registered", "running_remote", "converged", "eval_done", "trigger_eval_batteries",
+        "adapter", "gate", "pipeline", "health", "503", "502", "500"
+    ],
+    "planning": ["roadmap", "milestone", "prioridade", "priorizar", "plano", "objetivo", "estratégia", "estrategia", "cronograma"],
+    "conversation_ptbr": ["responda", "usuário", "usuario", "português", "portugues", "pt-br", "conversa", "assistente"],
+    "safety_guardrails": ["segurança", "seguranca", "política", "politica", "compliance", "guardrail", "risco", "bloquear", "proibido"],
+}
+
+
+def _infer_task_type(text: str) -> str:
+    t = (text or "").lower()
+    if not t:
+        return "general"
+
+    scores: dict[str, int] = {}
+    for task_type, kws in _TASK_TYPE_KEYWORDS.items():
+        s = 0
+        for kw in kws:
+            if kw in t:
+                s += 1
+        scores[task_type] = s
+
+    best = max(scores.items(), key=lambda kv: kv[1]) if scores else ("general", 0)
+    if (best[1] or 0) <= 0:
+        return "general"
+    return str(best[0])
+
+
+def _relevance_score(query: str, text: str) -> float:
+    q_tokens = {t for t in re.findall(r"[a-zA-ZÀ-ÿ0-9_]{4,}", (query or '').lower())}
+    t_tokens = {t for t in re.findall(r"[a-zA-ZÀ-ÿ0-9_]{4,}", (text or '').lower())}
+    if not q_tokens or not t_tokens:
+        return 0.0
+    overlap = len(q_tokens.intersection(t_tokens))
+    # conservative score; requires some lexical evidence to pass >=0.5 gate
+    score = overlap / max(1, len(q_tokens))
+    return round(float(score), 4)
+
 
 def _get_lightrag_config():
     """Load LightRAG config from settings."""
@@ -73,7 +122,15 @@ async def search_knowledge(query: str, top_k: int = 5) -> List[Dict]:
                         continue
 
                     text = str(context)
-                    return [{"text": text[:2500], "source_id": "lightrag", "score": 0.7, "type": "experience"}]
+                    ttype = _infer_task_type(text)
+                    score = _relevance_score(query, text)
+                    return [{
+                        "text": text[:2500],
+                        "source_id": "lightrag",
+                        "score": score,
+                        "type": "experience",
+                        "task_type": ttype,
+                    }]
                 except Exception as e:
                     last_err = str(e)
                     continue
@@ -139,11 +196,13 @@ async def fetch_random_documents(limit: int = 1) -> List[Dict]:
                     content = (doc.get("content_summary") or "").strip()
 
                 if len(content) > 40:
+                    ttype = _infer_task_type(content)
                     results.append(
                         {
                             "id": doc_id,
                             "content": content[:2000],
                             "summary": (doc.get("content_summary") or content)[:200],
+                            "task_type": ttype,
                         }
                     )
 

@@ -178,3 +178,101 @@ def mark_notification(notification_id: str, delivered: bool = True) -> bool:
     if ok:
         _save(d)
     return ok
+
+
+def check_learning_agenda_sla() -> dict[str, Any]:
+    d = _load()
+    now = int(time.time())
+    escalated = 0
+    overdue = 0
+    touched = False
+    active_states = {'inbox', 'assigned', 'in_progress', 'review', 'blocked'}
+
+    for t in d.get('tasks') or []:
+        if str(t.get('task_type') or '') != 'learning_agenda':
+            continue
+        if str(t.get('status') or '') not in active_states:
+            continue
+        due_at = int(t.get('due_at') or 0)
+        esc_at = int(t.get('escalate_at') or 0)
+
+        if due_at and now > due_at:
+            overdue += 1
+
+        if esc_at and now > esc_at and not bool(t.get('escalated')):
+            t['escalated'] = True
+            t['priority'] = max(int(t.get('priority') or 6), 9)
+            t['updated_at'] = now
+            d['activities'].append({
+                'ts': now,
+                'type': 'task_escalated',
+                'text': f"SLA estourado: {t.get('title')}",
+                'task_id': t.get('id'),
+            })
+            escalated += 1
+            touched = True
+
+    if touched:
+        d['updated_at'] = now
+        _save(d)
+
+    return {'ok': True, 'overdue': overdue, 'escalated': escalated}
+
+
+def sync_learning_agenda(rank: list[dict[str, Any]], assignees: list[str] | None = None) -> dict[str, Any]:
+    """Create/update mission tasks from learning agenda priorities with SLA metadata."""
+    d = _load()
+    tasks = d.get('tasks') or []
+    ass = [str(a).lower() for a in (assignees or ['researcher', 'manager'])][:8]
+    now = int(time.time())
+    due_sec = 24 * 3600
+    esc_sec = 36 * 3600
+
+    created = 0
+    updated = 0
+    top = list(rank or [])[:3]
+
+    for item in top:
+        domain = str(item.get('domain') or '').strip()
+        if not domain:
+            continue
+        title = f"[LEARNING] Expandir cobertura em {domain}"
+        desc = f"Gap={item.get('gap')} priority={item.get('priority')} coverage={item.get('coverage')}"
+
+        existing = None
+        for t in tasks:
+            if str(t.get('title') or '') == title and str(t.get('status') or '') in ('inbox', 'assigned', 'in_progress', 'review', 'blocked'):
+                existing = t
+                break
+
+        if existing:
+            existing['description'] = desc[:3000]
+            existing['assignees'] = ass
+            if existing.get('status') == 'done':
+                existing['status'] = 'inbox'
+            existing['due_at'] = int(existing.get('due_at') or (now + due_sec))
+            existing['escalate_at'] = int(existing.get('escalate_at') or (now + esc_sec))
+            existing['updated_at'] = now
+            updated += 1
+        else:
+            nt = {
+                'id': _id('tsk', tasks),
+                'title': title,
+                'description': desc[:3000],
+                'status': 'inbox',
+                'task_type': 'learning_agenda',
+                'assignees': ass,
+                'created_at': now,
+                'updated_at': now,
+                'due_at': now + due_sec,
+                'escalate_at': now + esc_sec,
+                'sla_level': 'standard_24h',
+            }
+            tasks.append(nt)
+            d['activities'].append({'ts': now, 'type': 'task_created', 'text': f"Learning agenda task: {title}", 'task_id': nt['id']})
+            created += 1
+
+    d['tasks'] = tasks[-3000:]
+    d['updated_at'] = now
+    _save(d)
+    return {'ok': True, 'created': created, 'updated': updated, 'tracked_domains': [str(x.get('domain') or '') for x in top]}

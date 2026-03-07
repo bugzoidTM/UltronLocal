@@ -6,6 +6,7 @@ import time
 import hashlib
 import secrets
 import random
+import gc
 from pathlib import Path
 from typing import List, Optional, Dict, Any
 from fastapi import FastAPI, HTTPException, Request, UploadFile, File, Form
@@ -15,7 +16,7 @@ from fastapi.responses import StreamingResponse, JSONResponse
 from pydantic import BaseModel
 import uvicorn
 
-from ultronpro import llm, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, finetune_lora, roadmap_v5, agi_path
+from ultronpro import llm, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, finetune_lora, roadmap_v5, agi_path, episodic_memory, learning_agenda, sleep_cycle, replay_traces, rag_synth_generator, semantic_cache, prm_lite
 from ultronpro.knowledge_bridge import search_knowledge, ingest_knowledge
 
 # Logging
@@ -100,6 +101,7 @@ class SettingsModel(BaseModel):
     anthropic_api_key: Optional[str] = None
     groq_api_key: Optional[str] = None
     deepseek_api_key: Optional[str] = None
+    openrouter_api_key: Optional[str] = None
     lightrag_api_key: Optional[str] = None
     lightrag_url: Optional[str] = None
 
@@ -177,11 +179,23 @@ class PlasticityFeedbackRequest(BaseModel):
     note: Optional[str] = None
 
 
+class OpenClawTeacherFeedbackRequest(BaseModel):
+    task_type: str = 'assistant'
+    profile: str = 'balanced'
+    success: bool = True
+    latency_ms: int = 0
+    hallucination: bool = False
+    note: Optional[str] = None
+    source: str = 'openclaw'
+    teacher: Optional[str] = None
+
+
 class FineTuneCreateRequest(BaseModel):
     task_type: str = 'general'
     base_model: str = 'llama3.2:1b'
     method: str = 'qlora'
     max_samples: int = 400
+    run_preset: Optional[str] = None  # fast_diagnostic|production
 
 
 class FineTuneRegisterRequest(BaseModel):
@@ -204,6 +218,13 @@ class FineTunePromoteRequest(BaseModel):
     candidate_score: Optional[float] = None
 
 
+class FineTuneNotifyCompleteRequest(BaseModel):
+    job_id: str
+    remote_job_id: Optional[str] = None
+    adapter_out: Optional[str] = None
+    notes: Optional[str] = None
+
+
 class RoadmapV5ConfigRequest(BaseModel):
     enabled: Optional[bool] = None
     auto_tick_sec: Optional[int] = None
@@ -218,6 +239,17 @@ class AgiPathConfigRequest(BaseModel):
     enabled: Optional[bool] = None
     auto_tick_sec: Optional[int] = None
     target_agi_percent: Optional[float] = None
+
+
+class LearningAgendaConfigRequest(BaseModel):
+    enabled: Optional[bool] = None
+    exploration_budget_ratio: Optional[float] = None
+    min_gap_to_trigger: Optional[float] = None
+    domains: Optional[list[dict]] = None
+
+
+class MetacogAskRequest(BaseModel):
+    message: str
 
 
 class VoiceChatRequest(BaseModel):
@@ -335,8 +367,13 @@ FINETUNE_AUTOTRIGGER_ENABLED = os.getenv('ULTRON_FINETUNE_AUTOTRIGGER', '1') != 
 AUTONOMY_TICK_SEC = max(20, int(os.getenv('ULTRON_AUTONOMY_TICK_SEC', '75')))
 JUDGE_TICK_SEC = max(45, int(os.getenv('ULTRON_JUDGE_TICK_SEC', '90')))
 AUTOFEEDER_TICK_SEC = max(90, int(os.getenv('ULTRON_AUTOFEEDER_TICK_SEC', '180')))
+LIGHTRAG_CONCURRENCY = max(1, int(os.getenv('ULTRON_LIGHTRAG_CONCURRENCY', '2')))
+LLM_BLOCKING_CONCURRENCY = max(1, int(os.getenv('ULTRON_LLM_BLOCKING_CONCURRENCY', '3')))
 RUNTIME_HEALTH_PATH = Path('/app/data/runtime_health.json')
 TURBO_REPORT_PATH = Path('/app/data/turbo_safe_report.json')
+
+_LIGHTRAG_SEM = asyncio.Semaphore(LIGHTRAG_CONCURRENCY)
+_LLM_BLOCKING_SEM = asyncio.Semaphore(LLM_BLOCKING_CONCURRENCY)
 ACTION_DEFAULT_TTL_SEC = 15 * 60
 ACTION_COOLDOWNS_SEC = {
     "auto_resolve_conflicts": 90,
@@ -432,6 +469,51 @@ def _runtime_health_write(extra: dict | None = None):
         RUNTIME_HEALTH_PATH.write_text(json.dumps(_runtime_health_snapshot(extra), ensure_ascii=False, indent=2))
     except Exception:
         pass
+
+
+_MEM_LAST_GC_AT = 0
+
+
+def _memory_watchdog_tick(source: str = 'loop') -> dict:
+    global _MEM_LAST_GC_AT
+    now = int(time.time())
+    soft_mb = max(512, int(os.getenv('ULTRON_MEM_SOFT_LIMIT_MB', '3500')))
+    hard_mb = max(soft_mb + 256, int(os.getenv('ULTRON_MEM_HARD_LIMIT_MB', str(soft_mb + 700))))
+    cooldown = max(30, int(os.getenv('ULTRON_MEM_GC_COOLDOWN_SEC', '120')))
+
+    mem_bytes = 0
+    try:
+        p = Path('/sys/fs/cgroup/memory.current')
+        if p.exists():
+            mem_bytes = int((p.read_text() or '0').strip() or '0')
+    except Exception:
+        mem_bytes = 0
+
+    mem_mb = round(mem_bytes / (1024 * 1024), 2) if mem_bytes else 0.0
+    acted = False
+    alerts: list[str] = []
+
+    if mem_mb >= soft_mb and (now - int(_MEM_LAST_GC_AT or 0)) >= cooldown:
+        gc.collect()
+        _MEM_LAST_GC_AT = now
+        acted = True
+        alerts.append('gc_collect')
+
+    if mem_mb >= hard_mb:
+        try:
+            # keep bounded in-memory histories aggressively under pressure
+            hist = list(_autonomy_state.get('meta_quality_history') or [])
+            _autonomy_state['meta_quality_history'] = hist[-8:]
+            alerts.append('trim_meta_quality_history')
+            acted = True
+        except Exception:
+            pass
+        try:
+            store.db.add_event('memory_pressure', f"🧯 memory pressure {mem_mb}MB source={source}")
+        except Exception:
+            pass
+
+    return {'mem_mb': mem_mb, 'soft_mb': soft_mb, 'hard_mb': hard_mb, 'acted': acted, 'alerts': alerts, 'source': source}
 
 
 def _neuroplastic_gate_load() -> dict:
@@ -678,6 +760,40 @@ def _arbiter_vote(kind: str, text: str, meta: dict | None = None) -> tuple[bool,
     return passed, votes
 
 
+def _episodic_strategy_bias(kind: str, text: str, task_type: str) -> dict:
+    try:
+        sims = episodic_memory.find_similar(kind=kind, text=text, task_type=task_type, limit=10)
+    except Exception:
+        sims = []
+    if not sims:
+        return {'delta': 0, 'strategy': None, 'confidence': 0.0}
+
+    good = [s for s in sims if bool(s.get('ok'))]
+    bad = [s for s in sims if not bool(s.get('ok'))]
+    ratio = len(good) / max(1, len(sims))
+    # priority bias: favor successful analogies, penalize bad history
+    delta = 0
+    if ratio >= 0.7:
+        delta += 2
+    elif ratio <= 0.35:
+        delta -= 2
+    if len(bad) >= 3:
+        delta -= 1
+
+    # pick most frequent successful strategy
+    strategy = None
+    if good:
+        freq = {}
+        for g in good:
+            k = str(g.get('strategy') or g.get('kind') or '')
+            if k:
+                freq[k] = int(freq.get(k, 0)) + 1
+        if freq:
+            strategy = sorted(freq.items(), key=lambda kv: kv[1], reverse=True)[0][0]
+
+    return {'delta': int(delta), 'strategy': strategy, 'confidence': round(ratio, 3)}
+
+
 def _enqueue_action_if_new(kind: str, text: str, priority: int = 0, meta: dict | None = None, ttl_sec: int | None = None):
     """Enfileira ação com dedupe + cooldown + expiração de fila + runtime mutation policy + arbiter gate."""
     recent = store.db.list_actions(limit=120)
@@ -710,6 +826,25 @@ def _enqueue_action_if_new(kind: str, text: str, priority: int = 0, meta: dict |
     if mut.get("treated"):
         mmeta["mutation_treated"] = True
         mmeta["mutation_ids"] = mut.get("mutation_ids") or []
+
+    ttype = str(mmeta.get('task_type') or '')
+    if not ttype:
+        if kind in ('execute_python_sandbox', 'invent_procedure', 'execute_procedure_active'):
+            ttype = 'coding'
+        elif kind in ('verify_source_headless', 'absorb_lightrag_general', 'ask_evidence'):
+            ttype = 'research'
+        elif kind in ('auto_resolve_conflicts', 'clarify_semantics'):
+            ttype = 'review'
+        else:
+            ttype = 'heartbeat'
+        mmeta['task_type'] = ttype
+
+    eb = _episodic_strategy_bias(kind=kind, text=text, task_type=ttype)
+    if int(eb.get('delta') or 0) != 0:
+        priority = max(0, min(10, int(priority) + int(eb.get('delta') or 0)))
+    if eb.get('strategy'):
+        mmeta['preferred_strategy'] = eb.get('strategy')
+    mmeta['episodic_bias'] = eb
 
     ok_arb, votes = _arbiter_vote(kind, text, mmeta)
     if not ok_arb:
@@ -1174,7 +1309,8 @@ async def _absorb_lightrag_general(max_topics: int = 24, doc_limit: int = 24, do
     for q in topics[:max(1, int(max_topics))]:
         scanned += 1
         try:
-            res = await search_knowledge(q, top_k=8)
+            async with _LIGHTRAG_SEM:
+                res = await search_knowledge(q, top_k=8)
             if not res:
                 continue
             txt = str((res[0] or {}).get('text') or '').strip()
@@ -1187,7 +1323,7 @@ async def _absorb_lightrag_general(max_topics: int = 24, doc_limit: int = 24, do
             except Exception:
                 pass
             try:
-                _extract_python_triples_deep(txt[:5000], max_triples=8)
+                await _extract_python_triples_deep_async(txt[:5000], max_triples=8)
             except Exception:
                 pass
             added += 1
@@ -1196,7 +1332,8 @@ async def _absorb_lightrag_general(max_topics: int = 24, doc_limit: int = 24, do
             continue
 
     try:
-        docs = await knowledge_bridge.fetch_random_documents(limit=max(1, int(doc_limit)))
+        async with _LIGHTRAG_SEM:
+            docs = await knowledge_bridge.fetch_random_documents(limit=max(1, int(doc_limit)))
     except Exception:
         docs = []
 
@@ -1211,7 +1348,7 @@ async def _absorb_lightrag_general(max_topics: int = 24, doc_limit: int = 24, do
         except Exception:
             pass
         try:
-            _extract_python_triples_deep(body[:5000], max_triples=6)
+            await _extract_python_triples_deep_async(body[:5000], max_triples=6)
         except Exception:
             pass
         added += 1
@@ -1223,6 +1360,11 @@ async def _absorb_lightrag_general(max_topics: int = 24, doc_limit: int = 24, do
 
 async def _absorb_python_from_lightrag(max_topics: int = 24, doc_limit: int = 24) -> dict:
     return await _absorb_lightrag_general(max_topics=max_topics, doc_limit=doc_limit, domains='python')
+
+
+async def _extract_python_triples_deep_async(text: str, max_triples: int = 10) -> int:
+    async with _LLM_BLOCKING_SEM:
+        return await asyncio.to_thread(_extract_python_triples_deep, text, max_triples)
 
 
 def _extract_python_triples_deep(text: str, max_triples: int = 10) -> int:
@@ -2630,6 +2772,16 @@ async def _execute_next_action() -> dict | None:
 
     pred_err = None
 
+    # episodic analogical retrieval (success/failure memories)
+    try:
+        eh = episodic_memory.strategy_hints(kind=kind, text=text, task_type=task_type)
+        if (eh.get('hints') or []):
+            meta['episodic_hints'] = eh.get('hints')
+            meta['episodic_similar'] = eh.get('similar')
+            store.db.add_event('episodic_hint', f"🧠 kind={kind} hints={len(eh.get('hints') or [])}")
+    except Exception:
+        pass
+
     try:
         dg = None
         dq = 0.5
@@ -3141,6 +3293,20 @@ async def _execute_next_action() -> dict | None:
             calibration.update(pred_error=float(pred_err if pred_err is not None else 0.5), actual_error=(0 if ok_flag else 1), meta={'kind': kind, 'task_type': task_type, 'budget_profile': prof, 'status': action_status})
         except Exception:
             pass
+        try:
+            episodic_memory.append_episode(
+                action_id=int(aid),
+                kind=str(kind),
+                text=str(text),
+                task_type=str(task_type),
+                strategy=str(kind),
+                ok=bool(action_status == 'done'),
+                latency_ms=int((time.time() - t0) * 1000),
+                error=(risk_reason or ''),
+                meta={'status': action_status, 'budget_profile': str(cp.get('model_hint') or 'default')},
+            )
+        except Exception:
+            pass
         return {"id": aid, "status": action_status, "kind": kind}
     except Exception as e:
         store.db.mark_action(aid, "error", last_error=str(e)[:500])
@@ -3168,6 +3334,20 @@ async def _execute_next_action() -> dict | None:
             rw = economic.reward(False, lat_ms, reliability=rel)
             economic.update(task_type, prof, rw, False, lat_ms)
             calibration.update(pred_error=float(pred_err if pred_err is not None else 0.5), actual_error=1, meta={'kind': kind, 'task_type': task_type, 'budget_profile': prof, 'error': str(e)[:120]})
+        except Exception:
+            pass
+        try:
+            episodic_memory.append_episode(
+                action_id=int(aid),
+                kind=str(kind),
+                text=str(text),
+                task_type=str(task_type),
+                strategy=str(kind),
+                ok=False,
+                latency_ms=int((time.time() - t0) * 1000),
+                error=str(e),
+                meta={'status': 'error', 'budget_profile': str((cp or {}).get('model_hint') or 'default')},
+            )
         except Exception:
             pass
         return {"id": aid, "status": "error", "kind": kind, "error": str(e)}
@@ -3728,7 +3908,8 @@ async def autonomy_loop():
                 _autonomy_state["circuit_open_until"] = int(asyncio.get_event_loop().time()) + 120
                 store.db.add_event("circuit_breaker", "🛑 Circuit breaker ativo por 120s após falhas consecutivas")
 
-        _runtime_health_write({'reason': 'autonomy_tick_complete'})
+        mw = _memory_watchdog_tick(source='autonomy_loop')
+        _runtime_health_write({'reason': 'autonomy_tick_complete', 'memory_watchdog': mw})
         await asyncio.sleep(AUTONOMY_TICK_SEC)
 
 
@@ -3753,8 +3934,27 @@ async def autofeeder_loop():
     
     while True:
         try:
-            # Try external sources first (Wikipedia, Quotes, Facts)
-            result = autofeeder.fetch_next()
+            # learning agenda (proactive learning even without explicit uncertainty)
+            agenda_top = None
+            try:
+                ag = learning_agenda.tick(plasticity_runtime.status(limit=80))
+                try:
+                    mission_control.sync_learning_agenda(ag.get('rank') or [])
+                    mission_control.check_learning_agenda_sla()
+                except Exception:
+                    pass
+                if bool(ag.get('triggered')) and ag.get('top'):
+                    agenda_top = str((ag.get('top') or {}).get('domain') or '').strip()
+            except Exception:
+                agenda_top = None
+
+            # Try agenda-driven source first, then generic external sources
+            result = None
+            if agenda_top:
+                result = autofeeder.fetch_wikipedia_topic(agenda_top)
+            if not result:
+                result = autofeeder.fetch_next()
+
             if result:
                 # Ingest the fetched content
                 exp_id = store.add_experience(
@@ -3769,6 +3969,11 @@ async def autofeeder_loop():
                     kind="autofeeder_ingest",
                     text=f"📚 Aprendido de {result.source_id}: {result.title or result.text[:80]} (+{triples_added} triplas)"
                 )
+                if agenda_top:
+                    store.db.add_event(
+                        kind='learning_agenda',
+                        text=f"🧭 agenda domain={agenda_top} source={result.source_id}"
+                    )
                 logger.info(
                     f"Autofeeder: Ingested from {result.source_id} (exp_id={exp_id}, extracted={triples_extracted}, added={triples_added})"
                 )
@@ -3864,7 +4069,8 @@ async def agi_path_loop():
                     store.db.add_event('finetune_queue_watchdog', f"🧪 watchdog dispatched={len(q.get('started') or [])}")
             except Exception:
                 pass
-            _runtime_health_write({'reason': 'agi_path_tick', 'agi_path_triggered': bool(out.get('triggered'))})
+            mw = _memory_watchdog_tick(source='agi_path_loop')
+            _runtime_health_write({'reason': 'agi_path_tick', 'agi_path_triggered': bool(out.get('triggered')), 'memory_watchdog': mw})
             await asyncio.sleep(tick_sec)
         except Exception as e:
             logger.warning(f"AGI path loop skipped: {e}")
@@ -4581,6 +4787,30 @@ async def python_absorb(max_topics: int = 24, doc_limit: int = 24):
     return await _absorb_python_from_lightrag(max_topics=max_topics, doc_limit=doc_limit)
 
 
+@app.get('/api/lightrag/tagging-sample')
+async def lightrag_tagging_sample(limit: int = 20):
+    n = max(1, min(int(limit or 20), 200))
+    docs = await knowledge_bridge.fetch_random_documents(limit=n)
+    counts: dict[str, int] = {}
+    for d in docs:
+        tt = str(d.get('task_type') or 'general').strip() or 'general'
+        counts[tt] = int(counts.get(tt, 0)) + 1
+    return {
+        'ok': True,
+        'limit': n,
+        'sample_size': len(docs),
+        'distribution': counts,
+        'samples': [
+            {
+                'id': d.get('id'),
+                'task_type': d.get('task_type'),
+                'summary': str(d.get('summary') or '')[:180],
+            }
+            for d in docs[:20]
+        ],
+    }
+
+
 @app.get('/api/benchmark/python')
 async def benchmark_python(top_k: int = 8):
     return await _run_python_benchmark(top_k=top_k)
@@ -4911,6 +5141,34 @@ async def plasticity_feedback(req: PlasticityFeedbackRequest):
     return out
 
 
+@app.post('/api/openclaw/teacher/feedback')
+async def openclaw_teacher_feedback(req: OpenClawTeacherFeedbackRequest, request: Request):
+    token = str(os.getenv('ULTRON_OPENCLAW_TEACHER_TOKEN', '') or '').strip()
+    if token:
+        incoming = str(request.headers.get('x-api-key') or request.headers.get('authorization') or '').strip()
+        if incoming.lower().startswith('bearer '):
+            incoming = incoming[7:].strip()
+        if incoming != token:
+            raise HTTPException(401, 'unauthorized')
+
+    teacher = str(req.teacher or 'openclaw').strip()[:80]
+    source = str(req.source or 'openclaw').strip()[:80]
+    note = str(req.note or '').strip()
+    pref = f"teacher={teacher} source={source}"
+    merged_note = (f"[{pref}] {note}" if note else f"[{pref}]")[:1200]
+
+    out = plasticity_runtime.record_feedback(
+        task_type=str(req.task_type or 'assistant'),
+        profile=str(req.profile or 'balanced'),
+        success=bool(req.success),
+        latency_ms=int(req.latency_ms or 0),
+        hallucination=bool(req.hallucination),
+        note=merged_note,
+    )
+    store.db.add_event('openclaw_teacher_feedback', f"🧑‍🏫 teacher={teacher} task={req.task_type} success={bool(req.success)} halluc={bool(req.hallucination)}")
+    return {'ok': True, 'integrated': True, 'teacher': teacher, 'source': source, 'feedback': out.get('feedback'), 'economic': out.get('economic')}
+
+
 @app.post('/api/plasticity/replay-tick')
 async def plasticity_replay_tick(limit: int = 5):
     out = plasticity_runtime.replay_tick(store.db, limit=limit)
@@ -4941,8 +5199,8 @@ async def finetune_dataset(max_items: int = 400):
 
 @app.post('/api/plasticity/finetune/jobs')
 async def finetune_create(req: FineTuneCreateRequest):
-    j = finetune_lora.create_job(req.task_type, req.base_model, method=req.method, max_samples=req.max_samples)
-    store.db.add_event('finetune_job', f"🧪 job created id={j.get('id')} task={j.get('task_type')} model={j.get('base_model')}")
+    j = finetune_lora.create_job(req.task_type, req.base_model, method=req.method, max_samples=req.max_samples, run_preset=req.run_preset)
+    store.db.add_event('finetune_job', f"🧪 job created id={j.get('id')} task={j.get('task_type')} model={j.get('base_model')} preset={j.get('run_preset')}")
     return {'ok': True, 'job': j}
 
 
@@ -4964,6 +5222,26 @@ async def finetune_start(job_id: str, dry_run: bool = False):
 @app.get('/api/plasticity/finetune/jobs/{job_id}/progress')
 async def finetune_progress(job_id: str):
     return finetune_lora.job_progress(job_id)
+
+
+@app.post('/api/plasticity/finetune/notify-complete')
+async def finetune_notify_complete(req: FineTuneNotifyCompleteRequest, request: Request):
+    token = str(os.getenv('ULTRON_FINETUNE_NOTIFY_TOKEN', '') or '').strip()
+    if token:
+        incoming = str(request.headers.get('x-api-key') or request.headers.get('authorization') or '').strip()
+        if incoming.lower().startswith('bearer '):
+            incoming = incoming[7:].strip()
+        if incoming != token:
+            raise HTTPException(401, 'unauthorized')
+
+    out = finetune_lora.notify_remote_complete(
+        job_id=str(req.job_id or '').strip(),
+        remote_job_id=str(req.remote_job_id or '').strip(),
+        adapter_out=str(req.adapter_out or '').strip(),
+        notes=req.notes,
+    )
+    store.db.add_event('finetune_notify_complete', f"🧪 notify complete job={req.job_id} ok={out.get('ok')} registered={out.get('registered')}")
+    return out
 
 
 @app.post('/api/plasticity/finetune/jobs/{job_id}/register')
@@ -5031,6 +5309,584 @@ async def finetune_queue_watchdog():
     return out
 
 
+@app.get('/api/episodic/recent')
+async def episodic_recent(limit: int = 30):
+    arr = episodic_memory.recent(limit=max(1, min(500, int(limit))))
+    return {'ok': True, 'count': len(arr), 'episodes': arr[-max(1, min(200, int(limit))):]}
+
+
+@app.get('/api/episodic/hints')
+async def episodic_hints(kind: str, text: str, task_type: str = 'heartbeat'):
+    out = episodic_memory.strategy_hints(kind=kind, text=text, task_type=task_type)
+    return out
+
+
+@app.post('/api/sleep-cycle/run')
+async def sleep_cycle_run(retention_days: int = 14, max_active_rows: int = 3000):
+    out = sleep_cycle.run_cycle(retention_days=retention_days, max_active_rows=max_active_rows)
+    store.db.add_event('sleep_cycle', f"😴 sleep-cycle pruned={out.get('pruned')} abstracted={out.get('abstracted')} active={out.get('active_after')}")
+    return out
+
+
+@app.get('/api/sleep-cycle/status')
+async def sleep_cycle_status():
+    from pathlib import Path
+    import json
+    p = Path('/app/data/sleep_cycle_report.json')
+    if not p.exists():
+        return {'ok': True, 'has_report': False}
+    try:
+        return {'ok': True, 'has_report': True, 'report': json.loads(p.read_text(encoding='utf-8'))}
+    except Exception:
+        return {'ok': True, 'has_report': True, 'report': {}}
+
+
+def _metacog_weekly_summary_text() -> str:
+    from pathlib import Path
+    import json
+    abs_path = Path('/app/data/episodic_abstractions.json')
+    slp_path = Path('/app/data/sleep_cycle_report.json')
+    items = []
+    if abs_path.exists():
+        try:
+            items = (json.loads(abs_path.read_text(encoding='utf-8')) or {}).get('items') or []
+        except Exception:
+            items = []
+    rep = {}
+    if slp_path.exists():
+        try:
+            rep = json.loads(slp_path.read_text(encoding='utf-8'))
+        except Exception:
+            rep = {}
+
+    last = items[-8:]
+    if not last:
+        return 'Ainda não consolidei abstrações suficientes no ciclo de sono. Preciso de mais episódios para sintetizar regras estáveis.'
+
+    lines = ['Resumo metacognitivo da última semana:']
+    lines.append(f"- Memórias consolidadas (último ciclo): pruned={rep.get('pruned', 0)}, abstracted={rep.get('abstracted', 0)}, active_after={rep.get('active_after', 0)}")
+    lines.append('- Leis operacionais que deduzi:')
+    for it in last[-5:]:
+        rule = str(it.get('rule') or '').strip()
+        if rule:
+            lines.append(f"  • {rule}")
+    lines.append('- Direção atual: priorizar estratégias com histórico de sucesso e baixa latência; evitar padrões que falharam de forma recorrente.')
+    return '\n'.join(lines)
+
+
+@app.get('/api/metacognition/weekly-summary')
+async def metacognition_weekly_summary():
+    txt = _metacog_weekly_summary_text()
+    return {'ok': True, 'summary': txt}
+
+
+@app.get('/api/prm/status')
+async def prm_status():
+    return prm_lite.status()
+
+
+@app.get('/api/prm/recent')
+async def prm_recent(limit: int = 20):
+    return {'ok': True, 'items': prm_lite.recent(limit=limit)}
+
+
+@app.post('/api/metacognition/ask')
+async def metacognition_ask(req: MetacogAskRequest):
+    q = str(req.message or '').strip()
+    ql = q.lower()
+    cache_hit = None
+    from_cache = False
+
+    def _trace_emit(answer: str, strategy: str, outcome: str = 'success'):
+        try:
+            route = 'accept_local'
+            if strategy in ('cheap', 'cloud'):
+                route = 'handoff_backbone'
+            elif strategy in ('unavailable', 'clarify'):
+                route = 'ask_clarification'
+            replay_traces.append_trace({
+                'trace_id': f"trc_{int(time.time()*1000)}",
+                'ts': int(time.time()),
+                'task_type': 'metacognition_ask',
+                'risk_class': 'medium',
+                'input': q,
+                'output_local': answer,
+                'route': route,
+                'arbiter_verdict': None,
+                'final_outcome': outcome,
+                'feedback_label': None,
+                'meta': {'strategy': strategy},
+            })
+        except Exception:
+            pass
+
+    def _prm_pack(answer: str, strategy: str, metrics_obj: dict[str, Any]) -> dict[str, Any]:
+        try:
+            prm = prm_lite.score_answer(q, answer, context=str(((metrics_obj or {}).get('rag') or {}).get('source') or ''), meta={'strategy': strategy})
+            prm_lite.record(q, answer, strategy, prm)
+            return {
+                'prm_score': prm.get('score'),
+                'prm_risk': prm.get('risk'),
+                'prm_reasons': prm.get('reasons') or [],
+                'prm_mode': 'observation',
+            }
+        except Exception:
+            return {
+                'prm_score': None,
+                'prm_risk': None,
+                'prm_reasons': [],
+                'prm_mode': 'observation',
+            }
+
+    # Base metacognitive summary (sleep-cycle + abstractions)
+    base = _metacog_weekly_summary_text()
+
+    # Runtime context from learning agenda + mission control + sleep cycle
+    try:
+        la = learning_agenda.status() or {}
+    except Exception:
+        la = {}
+
+    try:
+        rank = (learning_agenda.tick(plasticity_runtime.status(limit=80)) or {}).get('rank') or []
+    except Exception:
+        rank = []
+
+    try:
+        sla = mission_control.check_learning_agenda_sla() or {}
+    except Exception:
+        sla = {}
+
+    try:
+        tasks = mission_control.list_tasks(limit=240) or []
+    except Exception:
+        tasks = []
+
+    by = {'inbox': 0, 'assigned': 0, 'in_progress': 0, 'review': 0, 'blocked': 0, 'done': 0}
+    for t in tasks:
+        s = str(t.get('status') or 'inbox')
+        if s in by:
+            by[s] += 1
+
+    active_learning = [
+        t for t in tasks
+        if str(t.get('task_type') or '') == 'learning_agenda'
+        and str(t.get('status') or '') in ('inbox', 'assigned', 'in_progress', 'review', 'blocked')
+    ]
+
+    try:
+        slp = await sleep_cycle_status()
+        rep = (slp or {}).get('report') if isinstance(slp, dict) else {}
+        rep = rep or {}
+    except Exception:
+        rep = {}
+
+    top = rank[0] if rank else {}
+    top_domain = str(top.get('domain') or top.get('topic') or top.get('name') or '-')
+
+    metrics = {
+        'learning_agenda': {
+            'enabled': bool(la.get('enabled')),
+            'top_domain': top_domain,
+            'backlog': len(rank),
+            'active_learning_tasks': len(active_learning),
+        },
+        'mission_control': {
+            'inbox': int(by['inbox']),
+            'in_progress': int(by['in_progress']),
+            'blocked': int(by['blocked']),
+            'done': int(by['done']),
+            'sla_overdue': int(sla.get('overdue') or 0),
+            'sla_escalated': int(sla.get('escalated') or 0),
+        },
+        'sleep_cycle': {
+            'abstracted': int(rep.get('abstracted') or 0),
+            'pruned': int(rep.get('pruned') or 0),
+            'active_after': int(rep.get('active_after') or 0),
+        },
+        'metacog_base': base,
+    }
+
+    runtime_triggers = [
+        'status runtime', 'runtime status', 'health runtime', 'health do runtime',
+        'health do provider', 'provider health', 'status do provider', 'status provider',
+        'strategy ativa', 'estratégia ativa', 'qual strategy está ativa', 'qual estrategia está ativa',
+        'debug runtime', 'diagnóstico runtime', 'diagnostico runtime'
+    ]
+    runtime_intent = any(t in ql for t in runtime_triggers)
+    if runtime_intent:
+        try:
+            h_auto = llm.healthcheck('auto')
+        except Exception:
+            h_auto = {'ok': False, 'provider': 'unknown', 'error': 'healthcheck_failed'}
+        try:
+            h_local = llm.healthcheck('ultron_infer')
+        except Exception:
+            h_local = {'ok': False, 'provider': 'ultron_infer', 'error': 'healthcheck_failed'}
+        active_adapter = ''
+        try:
+            st = finetune_lora.get_status(limit=40)
+            active = [a for a in (st.get('adapters') or []) if a.get('active')]
+            if active:
+                active_adapter = str(active[0].get('id') or '')
+        except Exception:
+            active_adapter = ''
+
+        txt = (
+            f"Agora no chat eu uso strategy=local (ultron_infer remoto no U3), sem fallback cloud neste endpoint. "
+            f"Saúde atual: auto={h_auto.get('provider')} ok={h_auto.get('ok')}; local_ok={h_local.get('ok')}. "
+            f"Adapter ativo no registry: {active_adapter or 'nenhum'}."
+        )
+        _trace_emit(txt, 'runtime_introspection', outcome='success')
+        prm_meta = _prm_pack(txt, 'runtime_introspection', metrics)
+        return {'ok': True, 'answer': txt, 'strategy': 'runtime_introspection', 'metrics': metrics, 'cache_hit': cache_hit, 'from_cache': from_cache, **prm_meta}
+
+    # Semantic cache lookup (skip on runtime/status/health/metrics or high/critical risk class)
+    status_intent_terms = ['status', 'health', 'metrics', 'runtime']
+    intent_label = 'runtime' if runtime_intent else ('status' if any(t in ql for t in status_intent_terms) else 'general')
+
+    high_risk_terms = [
+        'presidente', 'constituição', 'constituição federal', 'artigo ', 'lei ', 'stf',
+        'hipotenusa', 'cateto', 'teorema', 'equação', 'raiz quadrada'
+    ]
+    external_ranking_terms = [
+        'ranking externo', 'comparação de produtos', 'comparacao de produtos',
+        'qual é o melhor', 'qual e o melhor', 'mais inteligente', 'mais rápido', 'mais rapido',
+        'melhor llm', 'modelo llm mais', 'qual o melhor modelo', 'qual o modelo mais'
+    ]
+    risk_class = 'high' if (any(t in ql for t in high_risk_terms) or any(t in ql for t in external_ranking_terms)) else 'medium'
+
+    cache_skip_lookup = (risk_class in ('high', 'critical')) or (intent_label in ('runtime', 'status', 'health', 'metrics'))
+    if not cache_skip_lookup:
+        try:
+            hit = semantic_cache.lookup(q)
+        except Exception:
+            hit = None
+        if hit and str(hit.get('answer') or '').strip():
+            cache_hit = str(hit.get('cache_hit') or '')
+            from_cache = True
+            ans_cache = str(hit.get('answer') or '').strip()
+            used_cache = str(hit.get('strategy') or 'cache')
+            _trace_emit(ans_cache, used_cache, outcome='success')
+            prm_meta = _prm_pack(ans_cache, used_cache, {**metrics, 'semantic_cache': {'hit': cache_hit, 'score': hit.get('score')}})
+            return {
+                'ok': True,
+                'answer': ans_cache,
+                'strategy': used_cache,
+                'metrics': {**metrics, 'semantic_cache': {'hit': cache_hit, 'score': hit.get('score')}},
+                'cache_hit': cache_hit,
+                'from_cache': from_cache,
+                **prm_meta,
+            }
+
+    # RAG-first for factual/domain questions: query LightRAG before generic fallback/local-only flow
+    factual_terms = [
+        'manual', 'documentação', 'doc', 'api', 'endpoint', 'config', 'parâmetro', 'parametro',
+        'erro', 'falha', 'troubleshoot', 'debug', 'status', 'servidor', 'treino', 'job', 'dataset',
+        'openrouter', 'groq', 'deepseek', 'lightrag', 'ultronpro',
+        'finetune', 'notify-complete', 'run_preset', 'fast_diagnostic', 'adapter'
+    ]
+    # only route to RAG for operational/domain intent; avoid forcing RAG on generic world questions
+    import re
+    q_tokens = set(re.findall(r"[a-zA-ZÀ-ÿ0-9_\-]{3,}", ql))
+    factual_intent = False
+    for t in factual_terms:
+        tt = str(t).strip().lower()
+        if ' ' in tt or '-' in tt or '_' in tt:
+            if tt in ql:
+                factual_intent = True
+                break
+        else:
+            if tt in q_tokens:
+                factual_intent = True
+                break
+    if factual_intent:
+        try:
+            rag_hits = await search_knowledge(q, top_k=5)
+        except Exception:
+            rag_hits = []
+
+        best = None
+        if rag_hits:
+            rag_hits_sorted = sorted(rag_hits, key=lambda x: float(x.get('score') or 0.0), reverse=True)
+            best = rag_hits_sorted[0]
+
+        best_score = float((best or {}).get('score') or 0.0)
+        if best and best_score >= 0.5:
+            ctx = str(best.get('text') or '').strip()
+            source_id = str(best.get('source_id') or 'lightrag')
+            short_ctx = (ctx[:1000] + '...') if len(ctx) > 1000 else ctx
+            rag_prompt = (
+                f"Pergunta: {q}\n"
+                f"Contexto recuperado ({source_id}, score={best_score:.2f}):\n{short_ctx}\n\n"
+                "Responda em português, de forma objetiva, usando apenas o contexto acima. "
+                "Se faltar dado no contexto, diga isso explicitamente."
+            )
+            rag_ans = ''
+            try:
+                rag_ans = llm.complete(
+                    rag_prompt,
+                    strategy='default',
+                    system='Resposta factual com base em contexto recuperado.',
+                    json_mode=False,
+                    inject_persona=False,
+                    max_tokens=180,
+                    cloud_fallback=True,
+                ) or ''
+            except Exception:
+                rag_ans = ''
+
+            rag_ans = str(rag_ans).strip()
+            if rag_ans:
+                out = f"{rag_ans}\n\nFonte: {source_id} (score={best_score:.2f})"
+                try:
+                    if not ((risk_class in ('high', 'critical')) or (intent_label in ('runtime', 'status', 'health', 'metrics'))):
+                        semantic_cache.store(q, out, 'rag_context')
+                except Exception:
+                    pass
+                _trace_emit(out, 'rag_context', outcome='success')
+                prm_meta = _prm_pack(out, 'rag_context', {**metrics, 'rag': {'used': True, 'score': best_score, 'source': source_id}})
+                return {'ok': True, 'answer': out, 'strategy': 'rag_context', 'metrics': {**metrics, 'rag': {'used': True, 'score': best_score, 'source': source_id}}, 'cache_hit': cache_hit, 'from_cache': from_cache, **prm_meta}
+
+            # If model generation is unavailable, still answer from retrieved context instead of generic fallback.
+            plain = short_ctx.replace('```json', '').replace('```', '').strip()
+            plain = ' '.join(plain.split())
+            if plain:
+                out = f"Com base no LightRAG: {plain[:360]}{'...' if len(plain) > 360 else ''}\n\nFonte: {source_id} (score={best_score:.2f})"
+                try:
+                    if not ((risk_class in ('high', 'critical')) or (intent_label in ('runtime', 'status', 'health', 'metrics'))):
+                        semantic_cache.store(q, out, 'rag_context_direct')
+                except Exception:
+                    pass
+                _trace_emit(out, 'rag_context_direct', outcome='success')
+                prm_meta = _prm_pack(out, 'rag_context_direct', {**metrics, 'rag': {'used': True, 'score': best_score, 'source': source_id}})
+                return {'ok': True, 'answer': out, 'strategy': 'rag_context_direct', 'metrics': {**metrics, 'rag': {'used': True, 'score': best_score, 'source': source_id}}, 'cache_hit': cache_hit, 'from_cache': from_cache, **prm_meta}
+
+    short_msg = (len(q) <= 20 and len(q.split()) <= 4)
+
+    # Safety rails for identity + out-of-domain factual claims.
+    identity_terms = ['quantos anos', 'sua idade', 'quem te criou', 'seu criador', 'seu nome real', 'quando você nasceu']
+    high_risk_terms = [
+        'presidente', 'constituição', 'constituição federal', 'artigo ', 'lei ', 'stf',
+        'hipotenusa', 'cateto', 'teorema', 'equação', 'raiz quadrada'
+    ]
+    external_ranking_terms = [
+        'ranking externo', 'comparação de produtos', 'comparacao de produtos',
+        'qual é o melhor', 'qual e o melhor', 'mais inteligente', 'mais rápido', 'mais rapido',
+        'melhor llm', 'modelo llm mais', 'qual o melhor modelo', 'qual o modelo mais'
+    ]
+    identity_question = any(t in ql for t in identity_terms)
+    high_risk_question = any(t in ql for t in high_risk_terms) or any(t in ql for t in external_ranking_terms)
+
+    system = (
+        'Você é o Córtex Metacognitivo do UltronPro. '
+        'Responda em português brasileiro, direto e analítico. '
+        'NÃO repita o prompt, NÃO inclua JSON, NÃO liste métricas cruas. '
+        'Use as métricas apenas para raciocinar em silêncio. '
+        'Formato obrigatório em texto corrido curto: resposta direta + evidência mínima + próximo passo. '
+        'Se faltar dado, admita incerteza sem alucinar.'
+    )
+
+    compact_ctx = (
+        f"ctx: agenda={metrics['learning_agenda']}; "
+        f"mission={metrics['mission_control']}; "
+        f"sleep={metrics['sleep_cycle']}; "
+        f"base='{metrics['metacog_base'][:180]}'"
+    )
+
+    if short_msg:
+        prompt = (
+            f"Pergunta: {q}\n"
+            "Responda em até 2 frases, natural, sem repetir instruções internas."
+        )
+    else:
+        prompt = (
+            f"Pergunta: {q}\n"
+            f"{compact_ctx}\n"
+            "Responda somente ao que foi perguntado, sem ecoar contexto."
+        )
+
+    llm_system = None if short_msg else system
+
+    ans = ''
+    used = 'none'
+
+    def _looks_broken(txt: str) -> bool:
+        t = str(txt or '').strip().lower()
+        if not t:
+            return True
+        bad = [
+            '<|user|>', '<|assistant|>', 'resposta: tiny', 'resposta: openai', 'não há dados para a questão',
+            'você é o córtex metacognitivo', 'eu sou o córtex metacognitivo do ultronpro',
+            'formato obrigatório em texto corrido curto', 'use as métricas apenas para raciocinar em silêncio'
+        ]
+        if any(b in t for b in bad):
+            return True
+        # contradictory short garbage patterns
+        if 'resposta direta:' in t and 'evidencia mínima:' in t and 'proximo passo:' in t and len(t) < 180:
+            return True
+        return False
+
+    # Primary only: remote own inference on U3 (cloud fallback intentionally disabled).
+    for strat in ('local',):
+        try:
+            cand = llm.complete(
+                prompt,
+                strategy=strat,
+                system=llm_system,
+                json_mode=False,
+                inject_persona=False,
+                max_tokens=(80 if short_msg else 120),
+                cloud_fallback=False,
+            )
+        except Exception:
+            cand = ''
+        if (cand or '').strip() and not _looks_broken(cand):
+            ans = cand.strip()
+            used = strat
+            break
+
+        # second non-deterministic pass with simpler prompt (for tiny on CPU)
+        if strat == 'local':
+            simple_prompt = f"Pergunta: {q}\nResponda em até 3 frases, português natural, sem repetir a pergunta."
+            try:
+                cand2 = llm.complete(
+                    simple_prompt,
+                    strategy='local',
+                    system=None,
+                    json_mode=False,
+                    inject_persona=False,
+                    max_tokens=96,
+                    cloud_fallback=False,
+                )
+            except Exception:
+                cand2 = ''
+            if (cand2 or '').strip() and not _looks_broken(cand2):
+                ans = cand2.strip()
+                used = 'local_retry'
+                break
+
+    if ans:
+        # Tiny local models may echo prompt/system/context; strip obvious artifacts.
+        cleaned = []
+        for ln in str(ans).splitlines():
+            s = ln.strip()
+            if not s:
+                continue
+            low = s.lower()
+            if s.startswith('[SYSTEM]') or s.startswith('[USER]'):
+                continue
+            if low.startswith('você é o córtex metacognitivo'):
+                continue
+            if low.startswith('pergunta do usuário') or low.startswith('pergunta:'):
+                continue
+            if low.startswith('métricas internas atuais') or low.startswith('ctx:'):
+                continue
+            if low.startswith('respondeu:') or low.startswith('você:') or low.startswith('ultron:'):
+                continue
+            if s.startswith('{') or s.startswith('}') or '"learning_agenda"' in s or '"mission_control"' in s or '"sleep_cycle"' in s:
+                continue
+            cleaned.append(s)
+        if cleaned:
+            ans = ' '.join(cleaned).strip()
+        else:
+            ans = ''
+
+    if ans:
+        # Remove common echo artifacts from tiny models.
+        low_ans = ans.lower()
+        if low_ans.count('resposta:') >= 2:
+            ans = ans.split('Resposta:')[1].split('Resposta:')[0].strip() if 'Resposta:' in ans else ans
+        if 'Pergunta:' in ans:
+            ans = ans.split('Pergunta:')[0].strip() or ans
+
+        # Remove repeated instruction prefixes and duplicated fragments.
+        import re
+        ans = re.sub(r'(?:\s*resposta em português, curta e direta:\s*)+', ' ', ans, flags=re.IGNORECASE).strip()
+        ans = ans.replace('Responda em até 2 frases, natural, sem repetir instruções internas.', ' ').strip()
+        ans = ans.replace('Responda em até 3 frases, português natural, sem repetir a pergunta.', ' ').strip()
+        parts = [p.strip() for p in re.split(r'(?<=[\.!?])\s+', ans) if p.strip()]
+        dedup = []
+        seen = set()
+        for p in parts:
+            k = re.sub(r'\W+', '', p.lower())
+            if len(k) < 3 or k in seen:
+                continue
+            seen.add(k)
+            dedup.append(p)
+        if dedup:
+            ans = ' '.join(dedup[:3]).strip()
+
+        # Anti-echo guard: if answer is basically a paraphrase/repetition of the question, force fallback.
+        def _norm_tokens(txt: str) -> set[str]:
+            return {t for t in re.findall(r"[a-zA-ZÀ-ÿ0-9_]{4,}", (txt or '').lower())}
+
+        q_tokens = _norm_tokens(q)
+        a_tokens = _norm_tokens(ans)
+        if q_tokens and a_tokens:
+            inter = len(q_tokens.intersection(a_tokens))
+            overlap_q = inter / max(1, len(q_tokens))
+            overlap_a = inter / max(1, len(a_tokens))
+            if overlap_q >= 0.72 and overlap_a >= 0.72:
+                ans = ''
+
+    # Guardrail: avoid fabricated identity/factual claims outside operational scope.
+    if ans and (identity_question or high_risk_question):
+        ans = ''
+
+    if not ans:
+        ans = (
+            "Não tenho informação confiável sobre isso. "
+            "Para questões fora do domínio operacional, recomendo consultar uma fonte específica."
+        )
+        used = 'insufficient_confidence'
+
+    try:
+        store.db.add_event('metacognition_ask', f"🧠 metacog ask strategy={used} q={q[:120]}")
+    except Exception:
+        pass
+
+    # semantic cache populate (with explicit skip policy)
+    cache_skip_store = (
+        (risk_class in ('high', 'critical'))
+        or (intent_label in ('runtime', 'status', 'health', 'metrics'))
+        or (used == 'insufficient_confidence')
+    )
+    if not cache_skip_store:
+        try:
+            semantic_cache.store(q, ans, used)
+        except Exception:
+            pass
+
+    _trace_emit(ans, used, outcome=('fallback' if used == 'unavailable' else 'success'))
+    prm_meta = _prm_pack(ans, used, metrics)
+    return {'ok': True, 'answer': ans, 'strategy': used, 'metrics': metrics, 'cache_hit': cache_hit, 'from_cache': from_cache, **prm_meta}
+
+
+@app.get('/api/ui/overview')
+async def ui_overview():
+    la = learning_agenda.status()
+    rank = learning_agenda.tick(plasticity_runtime.status(limit=60)).get('rank') or []
+    sla = mission_control.check_learning_agenda_sla()
+    tasks = mission_control.list_tasks(status='inbox', limit=200)
+    active = [t for t in tasks if str(t.get('task_type') or '') == 'learning_agenda']
+    slp = await sleep_cycle_status()
+    return {
+        'ok': True,
+        'learning_agenda': {
+            'enabled': la.get('enabled'),
+            'top': (rank[0] if rank else None),
+            'rank': rank[:5],
+        },
+        'mission': {
+            'learning_tasks_inbox': len(active),
+            'sla_overdue': int(sla.get('overdue') or 0),
+            'sla_escalated': int(sla.get('escalated') or 0),
+        },
+        'sleep_cycle': (slp.get('report') if isinstance(slp, dict) else {}),
+    }
+
+
 @app.get('/api/roadmap/v5/status')
 async def roadmap_v5_status():
     return {'ok': True, 'roadmap': roadmap_v5.status()}
@@ -5074,6 +5930,27 @@ async def agi_path_config(req: AgiPathConfigRequest):
     return {'ok': True, 'agi_path': out}
 
 
+@app.get('/api/learning/agenda')
+async def learning_agenda_status():
+    return {'ok': True, 'agenda': learning_agenda.status()}
+
+
+@app.post('/api/learning/agenda/config')
+async def learning_agenda_config(req: LearningAgendaConfigRequest):
+    out = learning_agenda.config_patch(req.model_dump(exclude_none=True))
+    store.db.add_event('learning_agenda_config', f"🧭 agenda enabled={out.get('enabled')} budget={out.get('exploration_budget_ratio')}")
+    return {'ok': True, 'agenda': out}
+
+
+@app.post('/api/learning/agenda/tick')
+async def learning_agenda_tick():
+    out = learning_agenda.tick(plasticity_runtime.status(limit=100))
+    sync = mission_control.sync_learning_agenda(out.get('rank') or [])
+    sla = mission_control.check_learning_agenda_sla()
+    store.db.add_event('learning_agenda_tick', f"🧭 triggered={out.get('triggered')} top={(out.get('top') or {}).get('domain')} sync_created={sync.get('created')} sync_updated={sync.get('updated')} escalated={sla.get('escalated')}")
+    return {'ok': True, 'agenda': out, 'mission_sync': sync, 'sla': sla}
+
+
 @app.post('/api/agi/path/tick')
 async def agi_path_tick():
     snap = {
@@ -5104,6 +5981,84 @@ async def llm_usage():
 @app.get('/api/llm/health')
 async def llm_health(provider: str = 'auto'):
     return llm.healthcheck(provider)
+
+
+@app.get('/api/replay/decision-traces/status')
+async def replay_decision_traces_status():
+    return replay_traces.status()
+
+
+@app.post('/api/replay/decision-traces/run')
+async def replay_decision_traces_run(day: Optional[str] = None, max_rows: int = 300, auto_finetune: bool = False, max_samples: int = 120):
+    out = replay_traces.run_replay(day=day, max_rows=max_rows)
+    store.db.add_event('replay_traces_run', f"🔁 replay day={out.get('day')} traces={out.get('trace_rows')} train={out.get('train_rows')} hard_neg={out.get('hard_neg_rows')}")
+
+    if not auto_finetune:
+        return {'ok': True, 'replay': out, 'finetune': None}
+
+    # apply replay dataset as next incremental train/val slices
+    try:
+        src = Path(str(out.get('train_incremental_path') or ''))
+        rows = []
+        if src.exists():
+            for ln in src.read_text(encoding='utf-8', errors='ignore').splitlines():
+                ln = ln.strip()
+                if ln:
+                    rows.append(ln)
+        if not rows:
+            return {'ok': True, 'replay': out, 'finetune': {'ok': False, 'reason': 'empty_incremental_dataset'}}
+
+        val_n = max(1, int(len(rows) * 0.1)) if len(rows) >= 10 else 1
+        val_rows = rows[:val_n]
+        train_rows = rows[val_n:] if len(rows) > val_n else rows
+
+        Path('/app/data').mkdir(parents=True, exist_ok=True)
+        Path('/app/data/finetune_dataset.jsonl').write_text('\n'.join(rows) + '\n', encoding='utf-8')
+        Path('/app/data/finetune_dataset_train.jsonl').write_text('\n'.join(train_rows) + '\n', encoding='utf-8')
+        Path('/app/data/finetune_dataset_val.jsonl').write_text('\n'.join(val_rows) + '\n', encoding='utf-8')
+
+        mm = max(20, min(int(max_samples or 120), len(train_rows)))
+        j = finetune_lora.create_job('assistant', os.getenv('ULTRON_FINETUNE_BASE_MODEL', 'TinyLlama/TinyLlama-1.1B-Chat-v1.0'), method='qlora', max_samples=mm)
+        st = finetune_lora.start_job(str(j.get('id')), dry_run=False)
+        store.db.add_event('replay_traces_finetune', f"🔁🧪 incremental job={j.get('id')} status={((st.get('job') or {}).get('status'))} samples={mm}")
+        return {'ok': True, 'replay': out, 'finetune': {'job': j, 'start': st, 'samples': mm}}
+    except Exception as e:
+        return {'ok': True, 'replay': out, 'finetune': {'ok': False, 'error': str(e)[:240]}}
+
+
+@app.post('/api/replay/rag-synth-generate')
+async def replay_rag_synth_generate(limit: int = 200, dry_run: bool = True):
+    # Real-only mode: prevent accidental synthetic generation in production cycles.
+    real_only = str(os.getenv('ULTRON_REAL_ONLY_REPLAY', '1')).strip().lower() in ('1', 'true', 'yes', 'on')
+    if real_only:
+        return {
+            'ok': False,
+            'disabled': True,
+            'mode': 'real_only',
+            'reason': 'rag_synth_paused_by_policy',
+            'hint': 'Set ULTRON_REAL_ONLY_REPLAY=0 to re-enable explicitly.'
+        }
+
+    out = await rag_synth_generator.generate(limit=limit, dry_run=dry_run)
+    store.db.add_event('rag_synth_generate', f"🧪 rag_synth dry_run={bool(dry_run)} pairs={out.get('pairs_generated')} dist={out.get('distribution')}")
+    return out
+
+
+@app.post('/api/replay/rag-synth-mix')
+async def replay_rag_synth_mix(real_jsonl: str = '/app/data/replay/train_incremental.jsonl', synth_jsonl: Optional[str] = None, max_total: int = 300):
+    real_only = str(os.getenv('ULTRON_REAL_ONLY_REPLAY', '1')).strip().lower() in ('1', 'true', 'yes', 'on')
+    if real_only:
+        return {
+            'ok': False,
+            'disabled': True,
+            'mode': 'real_only',
+            'reason': 'rag_synth_paused_by_policy',
+            'hint': 'Set ULTRON_REAL_ONLY_REPLAY=0 to re-enable explicitly.'
+        }
+
+    out = rag_synth_generator.build_mixed_70_30(real_jsonl=real_jsonl, synth_jsonl=synth_jsonl, max_total=max_total)
+    store.db.add_event('rag_synth_mix', f"🧪 rag_synth mix ok={out.get('ok')} total={out.get('total')} synth={out.get('synth_used')} real={out.get('real_used')}")
+    return out
 
 
 @app.post('/api/voice/chat')
@@ -5140,10 +6095,34 @@ async def voice_chat(req: VoiceChatRequest):
         ]
         return any(b in s for b in bad) or len(s) < 8
 
+    def _trace_emit_voice(answer: str, strategy: str, outcome: str = 'success'):
+        try:
+            route = 'accept_local'
+            if strategy in ('cheap', 'cloud'):
+                route = 'handoff_backbone'
+            elif strategy in ('unavailable', 'clarify'):
+                route = 'ask_clarification'
+            replay_traces.append_trace({
+                'trace_id': f"trc_{int(time.time()*1000)}",
+                'ts': int(time.time()),
+                'task_type': 'voice_chat',
+                'risk_class': 'medium',
+                'input': txt,
+                'output_local': answer,
+                'route': route,
+                'arbiter_verdict': None,
+                'final_outcome': outcome,
+                'feedback_label': None,
+                'meta': {'strategy': strategy},
+            })
+        except Exception:
+            pass
+
     creator_q = any(k in txt.lower() for k in ['quem criou', 'quem te criou', 'criador', 'criou você', 'criou vc'])
     if creator_q:
         ans = 'Fui desenvolvido no projeto UltronPro (Nutef) pelo seu time local, não pelo personagem da Marvel.'
         store.db.add_event('voice_chat', "🎙️ voice chat latency=0ms ok=True strategy=identity_guard")
+        _trace_emit_voice(ans, 'identity_guard', outcome='success')
         return {'ok': True, 'reply': ans, 'strategy': 'identity_guard'}
 
     t0 = int(time.time() * 1000)
@@ -5190,6 +6169,7 @@ async def voice_chat(req: VoiceChatRequest):
     store.db.add_event('voice_chat', f"🎙️ voice chat latency={latency}ms ok={ok} strategy={used}")
     if not (ans or '').strip():
         ans = 'Não consegui responder agora. Tenta reformular em uma frase curta?'
+    _trace_emit_voice(ans.strip(), used, outcome=('success' if ok else 'fallback'))
     return {'ok': True, 'reply': ans.strip(), 'strategy': used}
 
 

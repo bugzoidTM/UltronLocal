@@ -372,23 +372,34 @@ def _update_metrics_snapshot():
     return m
 
 
-def create_job(task_type: str, base_model: str, method: str = 'qlora', max_samples: int = 400) -> dict[str, Any]:
+def create_job(task_type: str, base_model: str, method: str = 'qlora', max_samples: int = 400, run_preset: str | None = None) -> dict[str, Any]:
     d = _load_jobs()
     jid = 'ft_' + uuid.uuid4().hex[:10]
+
+    allowed_base = str(os.getenv('ULTRON_FINETUNE_BASE_MODEL', 'TinyLlama/TinyLlama-1.1B-Chat-v1.0'))
+    strict_base = str(os.getenv('ULTRON_FINETUNE_STRICT_BASE', '1')).strip().lower() not in ('0', 'false', 'no', 'off')
+    req_base = str(base_model or allowed_base)[:120]
+    final_base = allowed_base if strict_base else req_base
+
+    preset = str(run_preset or os.getenv('ULTRON_FINETUNE_DEFAULT_PRESET', 'production') or 'production').strip().lower()
+    if preset not in ('production', 'fast_diagnostic'):
+        preset = 'production'
+
     item = {
         'id': jid,
         'created_at': int(time.time()),
         'updated_at': int(time.time()),
         'status': 'created',
         'task_type': str(task_type or 'general')[:48],
-        'base_model': str(base_model or 'llama3.2:1b')[:120],
+        'base_model': final_base,
         'method': str(method or 'qlora')[:24],
         'max_samples': int(max_samples or 400),
+        'run_preset': preset,
         'dataset_path': str(DATASET_TRAIN_PATH),
         'dataset_val_path': str(DATASET_VAL_PATH),
         'adapter_out': f"/app/data/adapters/{jid}",
         'pid': None,
-        'last_error': None,
+        'last_error': (f"base_model_overridden:{req_base}->{allowed_base}" if (strict_base and req_base != allowed_base) else None),
         'priority': _task_priority(task_type),
         'remote_retry_count': 0,
         'remote_backoff_until': 0,
@@ -483,6 +494,22 @@ def _pick_remote_url(job_id: str | None = None) -> str:
 def queue_watchdog_tick(max_dispatch: int = 2) -> dict[str, Any]:
     now = int(time.time())
     jobs = list_jobs(limit=500)
+
+    # 1) Reconcile running_remote jobs first (pull remote completion -> local register/promote flow)
+    synced = 0
+    for j in jobs:
+        if str(j.get('status') or '') == 'running_remote':
+            try:
+                out = job_progress(str(j.get('id')))
+                if bool((out or {}).get('synced')):
+                    synced += 1
+            except Exception:
+                pass
+
+    # refresh view after reconcile
+    jobs = list_jobs(limit=500)
+
+    # 2) dispatch queued jobs within backoff constraints
     waiting = [
         j for j in jobs
         if str(j.get('status') or '') == 'queued_remote_wait'
@@ -500,7 +527,34 @@ def queue_watchdog_tick(max_dispatch: int = 2) -> dict[str, Any]:
             blocked += 1
 
     m = _update_metrics_snapshot()
-    return {'ok': True, 'started': started, 'blocked': blocked, 'waiting': len(waiting), 'metrics': m}
+    return {'ok': True, 'started': started, 'blocked': blocked, 'waiting': len(waiting), 'synced': synced, 'metrics': m}
+
+
+def _resolve_preset_params(j: dict[str, Any]) -> dict[str, Any]:
+    preset = str(j.get('run_preset') or os.getenv('ULTRON_FINETUNE_DEFAULT_PRESET', 'production') or 'production').strip().lower()
+    if preset not in ('production', 'fast_diagnostic'):
+        preset = 'production'
+
+    if preset == 'fast_diagnostic':
+        return {
+            'preset': preset,
+            'epochs': int(os.getenv('ULTRON_FINETUNE_FAST_EPOCHS', '3') or 3),
+            'early_pat': int(os.getenv('ULTRON_FINETUNE_FAST_EARLY_STOP_PATIENCE', '2') or 2),
+            'max_steps': int(os.getenv('ULTRON_FINETUNE_FAST_MAX_STEPS', '300') or 300),
+            'batch_size': int(os.getenv('ULTRON_FINETUNE_FAST_BATCH_SIZE', '1') or 1),
+            'grad_accum': int(os.getenv('ULTRON_FINETUNE_FAST_GRAD_ACCUM', '8') or 8),
+            'max_length': int(os.getenv('ULTRON_FINETUNE_FAST_MAX_LENGTH', '512') or 512),
+        }
+
+    return {
+        'preset': 'production',
+        'epochs': int(os.getenv('ULTRON_FINETUNE_EPOCHS', '5') or 5),
+        'early_pat': int(os.getenv('ULTRON_FINETUNE_EARLY_STOP_PATIENCE', '2') or 2),
+        'max_steps': int(os.getenv('ULTRON_FINETUNE_MAX_STEPS', '0') or 0),
+        'batch_size': int(os.getenv('ULTRON_FINETUNE_BATCH_SIZE', '1') or 1),
+        'grad_accum': int(os.getenv('ULTRON_FINETUNE_GRAD_ACCUM', '8') or 8),
+        'max_length': int(os.getenv('ULTRON_FINETUNE_MAX_LENGTH', '512') or 512),
+    }
 
 
 def start_job(job_id: str, dry_run: bool = False) -> dict[str, Any]:
@@ -538,14 +592,27 @@ def start_job(job_id: str, dry_run: bool = False) -> dict[str, Any]:
     if ':' in base_model and '/' not in base_model:
         base_model = os.getenv('ULTRON_FINETUNE_BASE_MODEL', 'TinyLlama/TinyLlama-1.1B-Chat-v1.0')
 
+    preset_cfg = _resolve_preset_params(j)
+    run_preset = str(preset_cfg.get('preset') or 'production')
+
     if not cmd_tpl:
+        epochs = max(1, int(preset_cfg.get('epochs') or 5))
+        early_pat = max(1, int(preset_cfg.get('early_pat') or 2))
+        max_steps = max(0, int(preset_cfg.get('max_steps') or 0))
+        batch_size = max(1, int(preset_cfg.get('batch_size') or 1))
+        grad_accum = max(1, int(preset_cfg.get('grad_accum') or 8))
+        max_length = max(64, int(preset_cfg.get('max_length') or 512))
+
         cmd = (
             f"python -m ultronpro.train_lora "
             f"--base-model '{base_model}' "
             f"--dataset '{str(dataset)}' "
             f"--val-dataset '{str(val_dataset) if val_dataset.exists() else ''}' "
             f"--adapter-out '{adapter_out}' "
-            f"--epochs 1 --batch-size 1 --grad-accum 8 --max-length 512"
+            f"--run-preset '{run_preset}' "
+            f"--epochs {epochs} --batch-size {batch_size} --grad-accum {grad_accum} --max-length {max_length} "
+            f"--max-steps {max_steps} "
+            f"--early-stopping-patience {early_pat}"
         )
     else:
         cmd = cmd_tpl.format(
@@ -561,12 +628,14 @@ def start_job(job_id: str, dry_run: bool = False) -> dict[str, Any]:
     remote_token = os.getenv('ULTRON_FINETUNE_TOKEN', '').strip()
 
     if dry_run:
-        jj = _set_job(job_id, {'status': 'dry_run_ready', 'command': cmd, 'remote_url': remote_url or None})
+        jj = _set_job(job_id, {'status': 'dry_run_ready', 'command': cmd, 'remote_url': remote_url or None, 'run_preset': run_preset})
         return {'ok': True, 'job': jj, 'command': cmd, 'remote_url': remote_url or None}
 
     if (not remote_url) and remote_urls_cfg:
         retries = int(j.get('remote_retry_count') or 0) + 1
-        backoff = min(900, 30 * (2 ** min(4, retries - 1)))
+        base_backoff = min(900, 30 * (2 ** min(4, retries - 1)))
+        jitter = random.randint(0, max(1, int(base_backoff * 0.2)))
+        backoff = base_backoff + jitter
         jj = _set_job(job_id, {
             'status': 'queued_remote_wait',
             'last_error': 'remote_capacity_full',
@@ -589,6 +658,9 @@ def start_job(job_id: str, dry_run: bool = False) -> dict[str, Any]:
             except Exception:
                 val_text = ''
 
+            epochs = max(1, int(preset_cfg.get('epochs') or 5))
+            early_pat = max(1, int(preset_cfg.get('early_pat') or 2))
+            max_steps = max(0, int(preset_cfg.get('max_steps') or 0))
             payload = {
                 'base_model': base_model,
                 'dataset': str(dataset),
@@ -596,10 +668,13 @@ def start_job(job_id: str, dry_run: bool = False) -> dict[str, Any]:
                 'val_dataset': str(val_dataset) if val_dataset.exists() else '',
                 'val_dataset_content': val_text,
                 'adapter_out': adapter_out,
-                'epochs': 1,
-                'batch_size': 2,
-                'grad_accum': 2,
-                'max_length': 768,
+                'run_preset': run_preset,
+                'epochs': epochs,
+                'max_steps': max_steps,
+                'batch_size': max(1, int(preset_cfg.get('batch_size') or 1)),
+                'grad_accum': max(1, int(preset_cfg.get('grad_accum') or 8)),
+                'max_length': max(64, int(preset_cfg.get('max_length') or 512)),
+                'early_stopping_patience': early_pat,
             }
             headers = {}
             if remote_token:
@@ -620,6 +695,7 @@ def start_job(job_id: str, dry_run: bool = False) -> dict[str, Any]:
                 'remote_job_id': str(data.get('job_id') or ''),
                 'command': cmd,
                 'remote_url': remote_url,
+                'run_preset': run_preset,
                 'remote_retry_count': 0,
                 'remote_backoff_until': 0,
             })
@@ -634,7 +710,9 @@ def start_job(job_id: str, dry_run: bool = False) -> dict[str, Any]:
             except Exception:
                 pass
             retries = int(j.get('remote_retry_count') or 0) + 1
-            backoff = min(1800, 60 * (2 ** min(4, retries - 1)))
+            base_backoff = min(1800, 60 * (2 ** min(4, retries - 1)))
+            jitter = random.randint(0, max(1, int(base_backoff * 0.2)))
+            backoff = base_backoff + jitter
             jj = _set_job(job_id, {
                 'status': 'queued_remote_wait',
                 'last_error': err[:500],
@@ -675,6 +753,43 @@ def register_adapter(job_id: str, quality_score: float = 0.0, notes: str | None 
     _set_job(job_id, {'status': 'registered'})
     _update_metrics_snapshot()
     return {'ok': True, 'adapter': ad}
+
+
+def notify_remote_complete(job_id: str, remote_job_id: str = '', adapter_out: str = '', notes: str | None = None) -> dict[str, Any]:
+    jid = str(job_id or '').strip()
+    if not jid:
+        return {'ok': False, 'error': 'job_id_required'}
+
+    j = get_job(jid)
+    if not j:
+        return {'ok': False, 'error': 'job_not_found', 'job_id': jid}
+
+    out_path = str(adapter_out or j.get('adapter_out') or '').strip()
+    if out_path:
+        ap = Path(out_path)
+        ok_files = (ap / 'adapter_config.json').exists() and (((ap / 'adapter_model.safetensors').exists()) or ((ap / 'train_meta.json').exists()))
+    else:
+        ok_files = False
+
+    patch = {'status': 'completed' if ok_files else 'remote_failed'}
+    if remote_job_id:
+        patch['remote_job_id'] = str(remote_job_id)
+    if not ok_files:
+        patch['last_error'] = 'notify_complete_missing_artifacts'
+    _set_job(jid, patch)
+
+    reg = _load_reg()
+    existing = next((a for a in (reg.get('adapters') or []) if str(a.get('job_id') or '') == jid), None)
+    if existing is not None:
+        _update_metrics_snapshot()
+        return {'ok': True, 'job_id': jid, 'completed': bool(ok_files), 'registered': True, 'already_registered': True}
+
+    if ok_files:
+        rr = register_adapter(jid, quality_score=0.66, notes=str(notes or 'auto-registered by notify-complete')[:240])
+        return {'ok': bool(rr.get('ok')), 'job_id': jid, 'completed': True, 'registered': bool(rr.get('ok')), 'register': rr}
+
+    _update_metrics_snapshot()
+    return {'ok': True, 'job_id': jid, 'completed': False, 'registered': False}
 
 
 def adapters(limit: int = 80) -> list[dict[str, Any]]:
@@ -886,6 +1001,7 @@ def _passport_gate(task_type: str, candidate_score: float, baseline_score: float
     token = str(os.getenv('ULTRON_PASSPORT_TOKEN', '') or '').strip()
     timeout = max(3.0, float(os.getenv('ULTRON_PASSPORT_TIMEOUT_SEC', '10')))
     fail_open = str(os.getenv('ULTRON_PASSPORT_FAIL_OPEN', '0')) == '1'
+    cache_path = Path('/app/data/passport_last_good.json')
 
     try:
         params = {'min_score': min_score, 'task_type': task_type, 'candidate_score': candidate_score, 'baseline_score': baseline_score}
@@ -897,12 +1013,52 @@ def _passport_gate(task_type: str, candidate_score: float, baseline_score: float
         issued = bool(js.get('issued'))
         if not issued:
             return {'ok': False, 'enforced': True, 'reason': 'passport_denied', 'passport': js}
+        try:
+            cache_path.write_text(json.dumps({'ts': int(time.time()), 'task_type': task_type, 'passport': js}, ensure_ascii=False, indent=2), encoding='utf-8')
+        except Exception:
+            pass
         return {'ok': True, 'enforced': True, 'passport': js}
     except Exception as e:
+        # fail-safe default remains deny; cache is observability only
         if fail_open:
             _append_alert('warn', 'passport_fail_open', f'passport gate falhou em fail-open: {e}', {'url': url})
             return {'ok': True, 'enforced': True, 'reason': 'passport_fail_open', 'error': str(e)[:180]}
-        return {'ok': False, 'enforced': True, 'reason': 'passport_unavailable', 'error': str(e)[:180]}
+        extra = {}
+        try:
+            if cache_path.exists():
+                extra = {'last_good_passport': json.loads(cache_path.read_text(encoding='utf-8'))}
+        except Exception:
+            extra = {}
+        return {'ok': False, 'enforced': True, 'reason': 'passport_unavailable', 'error': str(e)[:180], **extra}
+
+
+def _runtime_activate_adapter(adapter: dict[str, Any]) -> dict[str, Any]:
+    """Mark promoted TinyLlama adapter for local PEFT inference runtime (loaded lazily, no heavy restart)."""
+    enabled = str(os.getenv('ULTRON_RUNTIME_AUTO_APPLY_ADAPTER', '1')).strip().lower() not in ('0', 'false', 'no', 'off')
+    if not enabled:
+        return {'ok': True, 'applied': False, 'reason': 'runtime_auto_apply_disabled'}
+
+    base_model = str(adapter.get('base_model') or '')
+    if 'tinyllama' not in base_model.lower():
+        return {'ok': True, 'applied': False, 'reason': 'base_model_not_supported', 'base_model': base_model}
+
+    adapter_path = str(adapter.get('adapter_path') or '')
+    if not adapter_path:
+        return {'ok': False, 'applied': False, 'reason': 'missing_adapter_path'}
+
+    ap = Path(adapter_path)
+    if not ap.exists():
+        return {'ok': False, 'applied': False, 'reason': 'adapter_path_not_found', 'adapter_path': adapter_path}
+
+    marker = {
+        'ts': int(time.time()),
+        'adapter_id': str(adapter.get('id') or ''),
+        'adapter_path': adapter_path,
+        'base_model': base_model,
+        'task_type': str(adapter.get('task_type') or ''),
+    }
+    Path('/app/data/runtime_active_adapter.json').write_text(json.dumps(marker, ensure_ascii=False, indent=2), encoding='utf-8')
+    return {'ok': True, 'applied': True, 'runtime': 'peft_local', 'marker': marker}
 
 
 def promote_adapter(adapter_id: str, min_gain: float = 0.02, baseline_score: float | None = None, candidate_score: float | None = None) -> dict[str, Any]:
@@ -917,6 +1073,12 @@ def promote_adapter(adapter_id: str, min_gain: float = 0.02, baseline_score: flo
             break
     if idx < 0 or cand is None:
         return {'ok': False, 'error': 'adapter_not_found'}
+
+    job_id = str(cand.get('job_id') or '')
+    j = get_job(job_id) if job_id else None
+    preset = str((j or {}).get('run_preset') or 'production').strip().lower()
+    if preset != 'production':
+        return {'ok': True, 'promoted': False, 'reason': 'promotion_requires_production_job', 'run_preset': preset, 'job_id': job_id}
 
     tt = str(cand.get('task_type') or 'general').lower().strip()
     cscore = float(candidate_score if candidate_score is not None else (cand.get('quality_score') or 0.0))
@@ -957,7 +1119,9 @@ def promote_adapter(adapter_id: str, min_gain: float = 0.02, baseline_score: flo
             arr[i] = a
     reg['adapters'] = arr
     _save_reg(reg)
-    return {'ok': True, 'promoted': True, 'decision': decision, 'adapter': [a for a in arr if str(a.get('id')) == str(adapter_id)][0]}
+    chosen = [a for a in arr if str(a.get('id')) == str(adapter_id)][0]
+    runtime_apply = _runtime_activate_adapter(chosen)
+    return {'ok': True, 'promoted': True, 'decision': decision, 'adapter': chosen, 'runtime_apply': runtime_apply}
 
 
 def status(limit: int = 40) -> dict[str, Any]:

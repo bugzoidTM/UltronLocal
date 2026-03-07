@@ -1,159 +1,247 @@
-# UltronPRO
+# UltronPro
 
-UltronPRO é uma arquitetura de agente cognitivo autônomo com foco em:
-- aprendizado contínuo,
-- planejamento orientado por objetivos,
-- execução segura com guardrails simbólicos,
-- operação de longo horizonte (horas/dias/semanas).
+UltronPro é uma plataforma de agente cognitivo/autônomo para operação técnica contínua (observabilidade, decisão, aprendizagem, execução e segurança), com foco em:
 
-> Base conceitual: `/root/.openclaw/agi.md`
-
----
-
-## Visão geral da arquitetura
-
-UltronPRO combina quatro camadas principais:
-
-1. **Percepção/Aprendizado (neural)**
-   - ingestão de experiências,
-   - extração semântica,
-   - generalização por LLM,
-   - deliberação System-2 (ITC).
-
-2. **Estrutura simbólica**
-   - triplas e evidências,
-   - conflitos tese↔antítese↔síntese,
-   - regras/normas,
-   - world model causal.
-
-3. **Agência/autonomia**
-   - fila de ações com prioridade/cooldown/TTL,
-   - goals, milestones, subgoals (DAG),
-   - project kernel com recuperação de falhas,
-   - roteamento de ferramentas com fallback.
-
-4. **Segurança e governança**
-   - policy guardrails,
-   - causal precheck,
-   - integrity gate (consenso neural+simbólico),
-   - auditoria neuro-simbólica (proofs).
+- **ciclos rápidos de melhoria** (feedback → treino → avaliação → promoção),
+- **segurança operacional** (guardrails, integridade, gates de promoção),
+- **memória e recuperação de contexto** (LightRAG + memória local),
+- **execução prática** em infraestrutura real (Docker Swarm, APIs, jobs, replay).
 
 ---
 
-## Capacidades implementadas (detalhado)
+## 1) Arquitetura técnica (estado atual)
 
-## 1) Conhecimento, memória e curiosidade
-- Ingestão de texto e arquivos.
-- Extração de triplas (LLM + fallback).
-- Curiosidade ativa com fila adaptativa de perguntas.
-- Curadoria de memória e destilação semântica.
-- Esquecimento ativo de baixa utilidade.
-- Memória por projeto (`project_memory_index.json`).
+### 1.1 Backend principal
+- **Framework:** FastAPI
+- **Módulo principal:** `backend/ultronpro/main.py`
+- **Responsável por:** roteamento de API, loop metacognitivo, pipeline de treino/eval, observabilidade, governança.
 
-## 2) Conflitos e síntese
-- Detecção/persistência de conflitos no grafo.
-- Priorização de conflitos persistentes.
-- Auto-resolução com evidência + confiança.
-- Estratégias de improviso para conflitos travados.
-- Escalonamento para revisão humana quando necessário.
+### 1.2 Sub-sistemas cognitivos e operacionais
+- **Metacognition ask endpoint:** `/api/metacognition/ask`
+- **Learning agenda + mission control + sleep cycle** para contexto operacional.
+- **Replay traces** para auditoria de decisões e reprocessamento de histórico.
+- **PRM-lite (observação):** scoring heurístico de qualidade de processo por resposta.
 
-## 3) Goals proativos (Impulso de Vida)
-- Goal-first planner (quando não há emergência).
-- Milestones semanais e progressão incremental.
-- Geração de ações orientadas ao objetivo ativo.
-- Ações proativas de busca (ex.: absorção no LightRAG por domínio do objetivo).
+### 1.3 LLM Router (multi-provider)
+- Roteamento com fallback entre providers e estratégias.
+- Providers integrados:
+  - OpenRouter
+  - DeepSeek
+  - Groq
+  - OpenAI (quando configurado)
+  - Anthropic (quando configurado)
+  - ultron_infer (local)
+- Telemetria de uso por provider e healthchecks.
 
-## 4) Sub-objetivos e planejamento hierárquico
-- DAG de subgoals persistente (`subgoal_dag.json`).
-- Decomposição automática de meta em nós dependentes.
-- Marcação de estado por nó (`open/active/done`).
+### 1.4 RAG + Search
+- Integração com LightRAG (`knowledge_bridge.py`).
+- Fluxo RAG-first para perguntas de domínio/operacionais.
+- Threshold de confiança para uso de contexto recuperado.
+- Endpoint de busca semântica híbrida com rerank:
+  - `/api/search/semantic`
 
-## 5) System-2 / Inference-Time Compute
-- Episódios deliberativos multi-step.
-- Verificação de subresultado por passo.
-- Correção autônoma quando passo falha.
-- Orquestração com RL leve (bandit epsilon-greedy).
-- Métricas de reward/qualidade/latência por episódio.
+### 1.5 Cache semântico
+- Módulo: `backend/ultronpro/semantic_cache.py`
+- Duas camadas:
+  1. **Exact hit** (hash MD5 da query normalizada)
+  2. **Semantic hit** (cosine similarity em embedding local)
+- Configuração atual:
+  - threshold semantic: `0.92`
+  - TTL exact: `24h`
+  - TTL semantic: `12h`
+  - índice semantic: até `500` entradas (evict por antiguidade)
+- Integrado no `/api/metacognition/ask` com metadados:
+  - `cache_hit: exact|semantic|null`
+  - `from_cache: true|false`
 
-## 6) Long-horizon + Project management
-- Missões de longo horizonte com checkpoints.
-- Project kernel com KPI e blockers.
-- Recovery playbooks (timeout, tool_failure, stalemate, regressão KPI).
-- Cadência de gestão (`project_management_cycle`) com próximos passos automáticos.
-- Ciclo experimental técnico (`project_experiment_cycle`) para validação de hipótese.
+### 1.6 Embeddings locais (zero custo API)
+- Módulo: `backend/ultronpro/embeddings.py`
+- Stack: `sentence-transformers`
+- Modelo padrão: `all-MiniLM-L6-v2`
+- Configurável por env:
+  - `ULTRON_EMBED_MODEL`
 
-## 7) Ferramentas de ambiente (sandbox)
-- Escrita/leitura/listagem de arquivos em sandbox (`/app/data/sandbox`).
-- Execução real de código Python com timeout (`python3 -I`).
-- Histórico de execuções.
+### 1.7 Pipeline de treino LoRA
+- Controle de jobs em `finetune_lora.py`
+- Execução remota via `trainer_api.py`
+- Script de treino: `train_lora.py`
+- Recursos já implementados:
+  - dispatch com dataset de treino/val separados,
+  - early stopping,
+  - timeout explícito em etapas pós-treino,
+  - logs por fase (PASSO 0..5),
+  - notificação explícita de conclusão ao control plane,
+  - reconciliação automática de status + auto-register de adapter.
 
-## 8) LightRAG absorption (multi-domínio)
-- Absorção geral do LightRAG por domínios (`python, systems, database, ai`, etc.).
-- Ingestão no Ultron + tentativa de extração para grafo local.
-- Benchmarks dedicados:
-  - `/api/benchmark/python`
-  - `/api/benchmark/lightrag`
+### 1.8 Presets de treino
+- `run_preset` por job:
+  - `fast_diagnostic`
+  - `production`
+- `fast_diagnostic` (atual):
+  - epochs=3
+  - max_steps=300
+  - val split ativo
+- Dispatch inclui flag explícita:
+  - `--run-preset 'fast_diagnostic'`
 
-## 9) Neuroplasticidade controlada
-- Proposta → shadow eval → ativação/reversão.
-- Auto-promote por gate rolling.
-- Auto-revert por degradação ou falta de ganho sustentado (7/14 dias).
-- Canary rollout por `canary_ratio`.
+### 1.9 Promoção de adapters (governança)
+- Promoção bloqueada para jobs não-production.
+- Regra atual:
+  - só promove adapter de `run_preset=production`.
+- Gates principais em uso operacional:
+  - bateria A/B/C
+  - sanity de regressão
+  - integridade do ciclo de treino
 
-## 10) Neuro-simbólico e explicabilidade
-- Proof objects por decisão crítica (`neurosym_proofs.json`).
-- Consistency checker simbólico.
-- Fidelity score (explicação vs ação executada).
-
-## 11) Integrity Gate V1
-- Regras rígidas de integridade (`integrity_rules.json`).
-- Estado de vetos e prevenção de alucinação (`integrity_state.json`).
-- Consenso dual:
-  - confiança deliberativa (neural)
-  - consistência simbólica
-  - prova exigida em ações críticas
-  - causal precheck quando obrigatório
-
-## 12) Auto-modelo e personalidade runtime
-- Auto-biografia persistente (`self_model.json`).
-- Personalidade dinâmica em runtime (valence/arousal/goal/purpose).
-- Few-shot dinâmico com exemplos de estilo (`persona_examples.json`).
-- Injeção automática no system prompt antes de cada chamada LLM.
-
----
-
-## Frontend (UI)
-
-A UI inclui:
-- overview operacional,
-- feed em tempo real (SSE),
-- grafo de conhecimento,
-- conflitos, curiosidade, insights,
-- missões de longo horizonte,
-- persona runtime.
-
-### Otimizações de performance
-- polling adaptativo por visibilidade da aba,
-- limites de itens no feed DOM,
-- limites de nós/arestas no grafo,
-- timeouts e cache para endpoints lentos,
-- preview de conflitos no overview (sem precisar abrir aba de conflitos).
+### 1.10 Professor OpenClaw → UltronPro
+- Endpoint dedicado:
+  - `POST /api/openclaw/teacher/feedback`
+- Permite ingestão de feedback rotulado por “professor” (OpenClaw), com metadados de origem.
+- Suporta hardening por token:
+  - `ULTRON_OPENCLAW_TEACHER_TOKEN`
 
 ---
 
-## Segurança e governança
+## 2) Observabilidade e auditoria
 
-- Policy-based action filtering.
-- Causal precheck para ações sensíveis.
-- Integrity veto para decisões inseguras/incoerentes.
-- Auditoria com eventos e provas neuro-simbólicas.
-- Execução externa controlada (prepare/confirm/execute).
+### 2.1 PRM-lite (modo observação)
+- Módulo: `backend/ultronpro/prm_lite.py`
+- Endpoints:
+  - `GET /api/prm/status`
+  - `GET /api/prm/recent?limit=N`
+- Em cada resposta do `metacognition/ask`, retorna:
+  - `prm_score`
+  - `prm_risk`
+  - `prm_reasons`
+  - `prm_mode=observation`
+
+> Importante: atualmente o PRM **não bloqueia** fallback, promoção ou execução. É telemetria para calibração.
+
+### 2.2 Decision traces
+- Histórico em `/app/data/decision_traces/*.jsonl`
+- Scripts utilitários para replay e povoamento de PRM:
+  - `tools/replay_decision_traces_to_prm.py`
+  - `tools/teacher_tasktype_coverage_prm.py`
+
+### 2.3 Health e status
+- endpoints de status do runtime e providers
+- eventos persistidos no store local
+- logs de treino por job no trainer
 
 ---
 
-## Deploy e dados
+## 3) Infraestrutura
 
-## Execução local (dev)
+### 3.1 Orquestração
+- **Docker Swarm**
+- Serviços principais:
+  - control plane UltronPro
+  - trainer service
+  - LightRAG
+  - Redis
+
+### 3.2 Dados persistentes
+- `/app/data/*`
+  - jobs, adapters, traces, estado PRM, caches, datasets, logs
+
+### 3.3 Dependências críticas
+- FastAPI / Uvicorn
+- sentence-transformers
+- scikit-learn / numpy
+- httpx
+- provedores LLM compatíveis
+
+---
+
+## 4) Endpoints-chave (resumo)
+
+### Metacognition / PRM
+- `POST /api/metacognition/ask`
+- `GET /api/prm/status`
+- `GET /api/prm/recent`
+
+### LLM / Config
+- `GET /api/llm/health`
+- `GET /api/llm/usage`
+- `GET /api/settings`
+- `POST /api/settings`
+
+### RAG / Busca
+- `POST /api/search/semantic`
+- LightRAG bridge via `knowledge_bridge.py`
+
+### Finetune
+- `POST /api/plasticity/finetune/jobs`
+- `POST /api/plasticity/finetune/jobs/{id}/start`
+- `GET /api/plasticity/finetune/jobs/{id}/progress`
+- `POST /api/plasticity/finetune/notify-complete`
+
+### Professor
+- `POST /api/openclaw/teacher/feedback`
+
+---
+
+## 5) Fluxo recomendado de melhoria de modelo
+
+1. Mudou dataset ou hiperparâmetro? → rodar `fast_diagnostic`
+2. Passou no diagnóstico + sem regressão? → rodar `production`
+3. Só promover adapter de job production
+4. Registrar A/B/C + PRM + decisão de promoção
+
+---
+
+## 6) Estado atual de maturidade
+
+- ✅ Multi-provider LLM routing funcional
+- ✅ OpenRouter integrado na UI e no router
+- ✅ RAG-first no metacognition ask
+- ✅ Cache semântico operacional
+- ✅ Embedding local sem custo API
+- ✅ Pipeline de treino com reconciliação robusta
+- ✅ PRM-lite em observação com dados reais
+- ⚠️ PRM ainda sem gate decisório (intencional, aguardando calibração)
+
+---
+
+## 7) Roadmap futuro (priorizado)
+
+## Curto prazo (1–2 semanas)
+1. **Calibração do PRM-lite** com 300–1000 exemplos reais
+   - correlacionar `prm_score` com outcomes reais (A/B/C, retrabalho, incidentes)
+2. **Dashboard de qualidade unificado**
+   - cache hitrate (exact/semantic)
+   - RAG hitrate + score distribution
+   - PRM distribution por task_type
+3. **Hardening professor path**
+   - enforce `teacher` namespace (`openclaw-*`)
+   - validação anti-lixo no payload de feedback
+
+## Médio prazo (2–6 semanas)
+1. **Ativar PRM como gate gradual**
+   - fase 1: warning only
+   - fase 2: soft gate em fast_diagnostic
+   - fase 3: gate parcial em production
+2. **Semantic cache v2**
+   - índice ANN simples (FAISS/ScaNN opcional)
+   - políticas de invalidação por domínio
+3. **Eval contínuo automático**
+   - suíte A/B/C + regressão de latência + PRM + RAG grounding
+
+## Longo prazo (6+ semanas)
+1. **PRM supervisionado leve**
+   - ajuste de pesos com labels humanas
+   - possível migração para scorer treinado
+2. **RAG de maior precisão**
+   - grounding com citações estruturadas
+   - melhor rank fusion local+remote
+3. **Governança avançada de promoção**
+   - rollout canário por tráfego
+   - rollback automático por KPI degradado
+
+---
+
+## 8) Como rodar (dev)
+
 ```bash
 cd backend
 python3 -m venv .venv
@@ -162,83 +250,9 @@ pip install -r requirements.txt
 uvicorn ultronpro.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-UI: `http://localhost:8000`
-
-## Deploy (Swarm)
-Arquivos em `deploy/`.
-
-Dados persistidos em `/app/data` (SQLite + estados cognitivos + benchmarks + persona + sandbox).
-
 ---
 
-## Endpoints principais (resumo)
+## 9) Nota de engenharia
 
-## Núcleo
-- `GET /api/status`
-- `GET /api/agi-mode`
-- `POST /api/autonomy/tick`
-
-## Goals / Subgoals / Missões / Projetos
-- `GET /api/goals`
-- `POST /api/goals/refresh`
-- `POST /api/subgoals/plan`
-- `GET /api/subgoals`
-- `POST /api/horizon/missions`
-- `GET /api/horizon/missions`
-- `POST /api/projects`
-- `GET /api/projects`
-- `POST /api/projects/tick`
-- `GET /api/projects/{project_id}/brief`
-
-## LLM/Reasoning
-- `POST /api/itc/run`
-- `GET /api/itc/status`
-- `GET /api/itc/policy`
-
-## Knowledge / LightRAG
-- `POST /api/lightrag/absorb`
-- `POST /api/python/absorb`
-- `GET /api/benchmark/python`
-- `GET /api/benchmark/lightrag`
-
-## Conflitos
-- `GET /api/conflicts`
-- `POST /api/conflicts/auto-resolve`
-
-## Neuro-simbólico / Integridade
-- `GET /api/neurosym/proofs`
-- `GET /api/neurosym/consistency`
-- `GET /api/neurosym/fidelity`
-- `GET /api/integrity/status`
-- `POST /api/integrity/rules`
-
-## Sandbox
-- `POST /api/sandbox/write`
-- `GET /api/sandbox/read`
-- `GET /api/sandbox/files`
-- `POST /api/sandbox/run-python`
-- `GET /api/sandbox/history`
-
-## Persona / Self-model
-- `GET /api/self-model/status`
-- `POST /api/self-model/refresh`
-- `GET /api/persona/status`
-- `GET /api/persona/examples`
-- `POST /api/persona/examples`
-- `POST /api/persona/config`
-
----
-
-## Limites atuais
-
-- A qualidade final de respostas depende da qualidade/estrutura da base LightRAG.
-- O sistema é robusto, mas não substitui revisão humana em operações críticas.
-- “Autoconsciência” é funcional/operacional, não evidência de qualia fenomenológica.
-
----
-
-## Roadmap curto sugerido
-- Painéis de observabilidade para Integrity/Router/ProjectOps.
-- Benchmark contínuo por domínio com metas de cobertura.
-- Melhor parser estruturado para ingestão de entidades/relacionamentos do LightRAG.
-- Hardening adicional da sandbox (cgroups/seccomp/import policy).
+UltronPro é orientado a **operação real**: melhorar continuamente sem quebrar produção.
+A prioridade é **qualidade observável + segurança + iteração rápida**, não só benchmark isolado de modelo.

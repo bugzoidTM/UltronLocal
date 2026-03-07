@@ -46,6 +46,36 @@ def _get_json(url: str, timeout: float = 10.0) -> dict | list | None:
         return None
 
 
+def fetch_wikipedia_topic(topic: str, lang: str = "pt") -> FeedResult | None:
+    """Fetch Wikipedia summary for a specific topic."""
+    tp = (topic or '').strip()
+    if not tp:
+        return None
+    key = f"wikipedia_topic_{lang}_{tp.lower()[:32]}"
+    if time.time() - _last_fetch.get(key, 0) < COOLDOWN_WIKIPEDIA:
+        return None
+
+    from urllib.parse import quote
+    # normalize topic to title endpoint
+    url = f"https://{lang}.wikipedia.org/api/rest_v1/page/summary/{quote(tp.replace(' ', '_'))}"
+    data = _get_json(url)
+    if not data or not isinstance(data, dict):
+        return None
+    title = data.get('title') or tp
+    extract = data.get('extract') or ''
+    if len(extract) < 40:
+        return None
+
+    _last_fetch[key] = time.time()
+    return FeedResult(
+        source_id=f"wikipedia_topic:{lang}:{tp}",
+        modality="text",
+        title=title,
+        text=f"{title}\n\n{extract[:2200]}",
+        meta={"url": data.get("content_urls", {}).get("desktop", {}).get("page"), "topic": tp},
+    )
+
+
 def fetch_wikipedia_random(lang: str = "pt") -> FeedResult | None:
     """Fetch a random Wikipedia article summary."""
     key = f"wikipedia_{lang}"

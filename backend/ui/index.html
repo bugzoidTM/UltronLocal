@@ -455,6 +455,7 @@
   <!-- Tabs -->
   <nav class="tabs">
     <button class="tab active" data-tab="overview">📊 Overview</button>
+    <button class="tab" data-tab="chat">💬 Chat</button>
     <button class="tab" data-tab="teach">🎓 Ensinar</button>
     <button class="tab" data-tab="graph">🧠 Grafo</button>
     <button class="tab" data-tab="sources">🔒 Fontes & Trust</button>
@@ -484,7 +485,32 @@
           <div class="muted" id="reqScores" style="margin-top:8px">Requisitos 1-8: carregando...</div>
           <div class="muted" id="sprint2Health" style="margin-top:8px">Sprint 2: carregando...</div>
           <div id="conflictsPreview" class="muted" style="margin-top:10px">Conflitos: carregando...</div>
+          <div id="learningAgendaPreview" class="muted" style="margin-top:10px">Learning Agenda: carregando...</div>
           <div id="missionPreview" class="muted" style="margin-top:10px">Mission Control: carregando...</div>
+          <div id="sleepCyclePreview" class="muted" style="margin-top:10px">Ciclo de Sono: carregando...</div>
+        </div>
+      </div>
+
+      <div class="grid-3" style="margin-bottom: 20px;">
+        <div class="stat-card" style="text-align:left;">
+          <div class="stat-value" id="laNow" style="font-size:22px;line-height:1.2;">-</div>
+          <div class="stat-label">Learning Agenda (agora)</div>
+          <div id="laNowMeta" class="muted" style="margin-top:8px;font-size:12px;">carregando...</div>
+        </div>
+        <div class="stat-card" style="text-align:left;">
+          <div class="stat-value" id="missionInProgress" style="font-size:22px;line-height:1.2;">-</div>
+          <div class="stat-label">Tasks em andamento</div>
+          <div id="missionInProgressMeta" class="muted" style="margin-top:8px;font-size:12px;">carregando...</div>
+        </div>
+        <div class="stat-card" style="text-align:left;">
+          <div class="stat-value" id="missionSlaOverdue" style="font-size:22px;line-height:1.2;">-</div>
+          <div class="stat-label">SLA estourado</div>
+          <div id="missionSlaMeta" class="muted" style="margin-top:8px;font-size:12px;">carregando...</div>
+        </div>
+        <div class="stat-card" style="text-align:left;">
+          <div class="stat-value green" id="sleepConsolidated" style="font-size:22px;line-height:1.2;">-</div>
+          <div class="stat-label">Memórias consolidadas (noite)</div>
+          <div id="sleepMeta" class="muted" style="margin-top:8px;font-size:12px;">carregando...</div>
         </div>
       </div>
 
@@ -569,6 +595,25 @@
     </div>
 
     <!-- Teach Tab -->
+    <div id="tab-chat" class="tab-content">
+      <div class="card" style="margin-bottom: 20px;">
+        <div class="card-header">
+          <div class="card-title"><span class="icon">💬</span> Chat com UltronPro (metacognição)</div>
+          <div class="btn-group">
+            <button class="btn btn-sm btn-secondary" onclick="runMetacognitionInterview()">🧪 Rodar entrevista</button>
+            <button class="btn btn-sm btn-secondary" onclick="loadMetacognitionWeeklySummary()">📅 Resumo semanal</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <textarea id="ultronMainChatInput" placeholder="Pergunte sobre aprendizado, abstrações consolidadas ou ciclo de sono..." style="min-height:110px;"></textarea>
+          <div class="btn-group" style="margin-top:10px;">
+            <button class="btn btn-sm" onclick="sendUltronMainChat()">Enviar</button>
+          </div>
+          <pre id="ultronMainChatOut" style="white-space:pre-wrap;max-height:52vh;overflow:auto;margin-top:12px;background:#0b1020;border:1px solid #2b3a66;border-radius:8px;padding:10px;">(sem mensagens)</pre>
+        </div>
+      </div>
+    </div>
+
     <div id="tab-teach" class="tab-content">
       <div class="grid-2">
         <div class="card">
@@ -823,6 +868,11 @@
               <label style="display:block; font-weight:600; margin-bottom:6px; color:var(--text-primary);">DeepSeek API Key (Raciocínio Profundo)</label>
               <input type="password" name="deepseek_api_key" placeholder="sk-..." style="font-family:monospace;">
             </div>
+
+            <div style="margin-bottom: 16px;">
+              <label style="display:block; font-weight:600; margin-bottom:6px; color:var(--text-primary);">OpenRouter API Key (OpenRouter.ai)</label>
+              <input type="password" name="openrouter_api_key" placeholder="sk-or-v1-..." style="font-family:monospace;">
+            </div>
             
             <div style="margin-bottom: 16px;">
               <label style="display:block; font-weight:600; margin-bottom:6px; color:var(--text-primary);">LightRAG API Key (Memória Externa)</label>
@@ -855,6 +905,10 @@
         
         // Load data for specific tabs
         if (tab.dataset.tab === 'graph') initGraph();
+        if (tab.dataset.tab === 'chat') {
+          const i = document.getElementById('ultronMainChatInput');
+          if (i) i.focus();
+        }
         if (tab.dataset.tab === 'sources') loadSources();
         if (tab.dataset.tab === 'curiosity') { loadCuriosityStats(); loadCuriosityQueue(); }
         if (tab.dataset.tab === 'conflicts') loadConflicts();
@@ -875,7 +929,7 @@
 
     // === API ===
     async function api(url, opts = {}) {
-      const timeoutMs = opts.timeoutMs || 12000;
+      const timeoutMs = opts.timeoutMs || 30000;
       const controller = new AbortController();
       const timer = setTimeout(() => controller.abort('timeout'), timeoutMs);
       try {
@@ -904,10 +958,51 @@
       }
     }
 
+    // === Chat / Metacognition ===
+    const METACOG_INTERVIEW_PROMPT = 'Ultron, faça um resumo das abstrações mais importantes que você consolidou no ciclo de sono da última semana.';
+
+    async function sendUltronMainChat(customText = null) {
+      const input = document.getElementById('ultronMainChatInput');
+      const out = document.getElementById('ultronMainChatOut');
+      if (!input || !out) return;
+      const msg = String(customText ?? input.value ?? '').trim();
+      if (!msg) return;
+      out.textContent = 'Processando...';
+      try {
+        const j = await api('/api/metacognition/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: msg }),
+          timeoutMs: 30000,
+        });
+        out.textContent = `👤 Você:\n${msg}\n\n🤖 Ultron:\n${j.answer || '(sem resposta)'}`;
+      } catch (e) {
+        out.textContent = 'Erro no chat: ' + String(e?.message || e);
+      }
+    }
+
+    async function loadMetacognitionWeeklySummary() {
+      const out = document.getElementById('ultronMainChatOut');
+      if (!out) return;
+      out.textContent = 'Carregando resumo semanal...';
+      try {
+        const j = await api('/api/metacognition/weekly-summary', { timeoutMs: 12000 });
+        out.textContent = `📅 Resumo semanal\n\n${j.summary || '(vazio)'}`;
+      } catch (e) {
+        out.textContent = 'Erro ao carregar resumo: ' + String(e?.message || e);
+      }
+    }
+
+    async function runMetacognitionInterview() {
+      const input = document.getElementById('ultronMainChatInput');
+      if (input) input.value = METACOG_INTERVIEW_PROMPT;
+      await sendUltronMainChat(METACOG_INTERVIEW_PROMPT);
+    }
+
     // === Status & Questions ===
     let currentQ = null;
 
-    const LITE_MODE = true;
+    const LITE_MODE = false;
     let _statusTick = 0;
     let _statusInFlight = false;
     async function loadStatus() {
@@ -1443,6 +1538,81 @@
         const el = document.getElementById('missionPreview');
         const msg = escHtml(String(e?.message || 'falha desconhecida'));
         if (el) el.innerHTML = `Mission Control: erro (${msg})`;
+      }
+    }
+
+    async function loadLearningMissionSleepPreview() {
+      try {
+        const [overviewRes, tasksRes] = await Promise.all([
+          api('/api/ui/overview', { timeoutMs: 7000 }),
+          api('/api/mission/tasks?limit=80', { timeoutMs: 7000 }),
+        ]);
+
+        const la = overviewRes?.learning_agenda || {};
+        const top = la?.top || {};
+        const rank = Array.isArray(la?.rank) ? la.rank : [];
+        const topDomain = String(top?.domain || top?.topic || top?.name || 'sem domínio ativo');
+        const topGap = Number(top?.gap || top?.priority || 0);
+        const laEl = document.getElementById('learningAgendaPreview');
+        if (laEl) {
+          laEl.innerHTML = `Learning Agenda — enabled:${la?.enabled ? 'sim' : 'não'} • agora: <strong>${escHtml(topDomain)}</strong> • score=${Number.isFinite(topGap) ? topGap.toFixed(2) : '0.00'} • backlog:${rank.length}`;
+        }
+        const laNow = document.getElementById('laNow');
+        const laNowMeta = document.getElementById('laNowMeta');
+        if (laNow) laNow.textContent = topDomain;
+        if (laNowMeta) laNowMeta.textContent = `enabled=${la?.enabled ? 'sim' : 'não'} • score=${Number.isFinite(topGap) ? topGap.toFixed(2) : '0.00'} • backlog=${rank.length}`;
+
+        const tasks = tasksRes?.tasks || [];
+        const inProgress = tasks.filter(t => String(t?.status || '') === 'in_progress').length;
+        const mission = overviewRes?.mission || {};
+        const slaOverdue = Number(mission?.sla_overdue || 0);
+        const missionEl = document.getElementById('missionPreview');
+        if (missionEl) {
+          missionEl.innerHTML = `Mission Control — em andamento: <strong>${inProgress}</strong> • SLA estourado: <strong>${slaOverdue}</strong> • learning_inbox:${Number(mission?.learning_tasks_inbox || 0)} • escalated:${Number(mission?.sla_escalated || 0)}`;
+        }
+        const missionInProgress = document.getElementById('missionInProgress');
+        const missionInProgressMeta = document.getElementById('missionInProgressMeta');
+        const missionSlaOverdue = document.getElementById('missionSlaOverdue');
+        const missionSlaMeta = document.getElementById('missionSlaMeta');
+        if (missionInProgress) missionInProgress.textContent = String(inProgress);
+        if (missionInProgressMeta) missionInProgressMeta.textContent = `inbox learning=${Number(mission?.learning_tasks_inbox || 0)} • escalated=${Number(mission?.sla_escalated || 0)}`;
+        if (missionSlaOverdue) missionSlaOverdue.textContent = String(slaOverdue);
+        if (missionSlaMeta) missionSlaMeta.textContent = `tasks analisadas=${tasks.length}`;
+
+        const slp = overviewRes?.sleep_cycle || {};
+        const ts = Number(slp?.ts || 0);
+        const when = ts > 0 ? new Date(ts * 1000).toLocaleString('pt-BR') : 'sem ciclo registrado';
+        const sleepEl = document.getElementById('sleepCyclePreview');
+        if (sleepEl) {
+          sleepEl.innerHTML = `Ciclo de Sono — consolidadas esta noite: <strong>${Number(slp?.abstracted || 0)}</strong> • pruned:${Number(slp?.pruned || 0)} • memória ativa:${Number(slp?.active_after || 0)} • último ciclo: ${escHtml(when)}`;
+        }
+        const sleepConsolidated = document.getElementById('sleepConsolidated');
+        const sleepMeta = document.getElementById('sleepMeta');
+        if (sleepConsolidated) sleepConsolidated.textContent = String(Number(slp?.abstracted || 0));
+        if (sleepMeta) sleepMeta.textContent = `pruned=${Number(slp?.pruned || 0)} • ativa=${Number(slp?.active_after || 0)} • ${when}`;
+      } catch (e) {
+        const msg = escHtml(String(e?.message || 'falha desconhecida'));
+        const laEl = document.getElementById('learningAgendaPreview');
+        const sleepEl = document.getElementById('sleepCyclePreview');
+        if (laEl) laEl.innerHTML = `Learning Agenda: erro (${msg})`;
+        if (sleepEl) sleepEl.innerHTML = `Ciclo de Sono: erro (${msg})`;
+
+        const laNow = document.getElementById('laNow');
+        const laNowMeta = document.getElementById('laNowMeta');
+        const missionInProgress = document.getElementById('missionInProgress');
+        const missionInProgressMeta = document.getElementById('missionInProgressMeta');
+        const missionSlaOverdue = document.getElementById('missionSlaOverdue');
+        const missionSlaMeta = document.getElementById('missionSlaMeta');
+        const sleepConsolidated = document.getElementById('sleepConsolidated');
+        const sleepMeta = document.getElementById('sleepMeta');
+        if (laNow) laNow.textContent = 'erro';
+        if (laNowMeta) laNowMeta.textContent = msg;
+        if (missionInProgress) missionInProgress.textContent = 'erro';
+        if (missionInProgressMeta) missionInProgressMeta.textContent = msg;
+        if (missionSlaOverdue) missionSlaOverdue.textContent = 'erro';
+        if (missionSlaMeta) missionSlaMeta.textContent = msg;
+        if (sleepConsolidated) sleepConsolidated.textContent = 'erro';
+        if (sleepMeta) sleepMeta.textContent = msg;
       }
     }
 
@@ -2095,7 +2265,7 @@
     loadSources();
     // Keep essential dashboard widgets alive even in lite mode
     loadConflictsSummary();
-    loadMissionPreview();
+    loadLearningMissionSleepPreview();
     loadFeed();
     // User-facing core cards should render even in lite mode
     loadGoalCurriculum();
@@ -2133,12 +2303,13 @@
       // Keep feed/conflicts/mission refreshing in lite mode too
       _timers.push(setInterval(noOverlap('feed', loadFeed), statusIntervalMs));
       _timers.push(setInterval(noOverlap('conflicts', loadConflictsSummary), slowIntervalMs));
-      _timers.push(setInterval(noOverlap('mission', loadMissionPreview), slowIntervalMs));
+      _timers.push(setInterval(noOverlap('mission', loadLearningMissionSleepPreview), slowIntervalMs));
+      // Keep core strategic cards alive even in lite mode
+      _timers.push(setInterval(noOverlap('goals', loadGoalCurriculum), slowIntervalMs));
+      _timers.push(setInterval(noOverlap('horizon', loadHorizonStatus), slowIntervalMs));
       _timers.push(setInterval(noOverlap('graph', async () => { if (network) graphTick(); }), graphIntervalMs));
       if (!LITE_MODE) {
-        _timers.push(setInterval(noOverlap('goals', loadGoalCurriculum), slowIntervalMs));
         _timers.push(setInterval(noOverlap('tom', loadTomStatus), slowIntervalMs));
-        _timers.push(setInterval(noOverlap('horizon', loadHorizonStatus), slowIntervalMs));
         _timers.push(setInterval(noOverlap('persona', loadPersonaStatus), slowIntervalMs));
         _timers.push(setInterval(noOverlap('llm', loadLlmUsage), slowIntervalMs));
       }
@@ -2176,5 +2347,93 @@
       llmHealthCheck(provider);
     });
   </script>
+
+<script id="ultron-menu-chat-inject">
+(function(){
+  if (window.__ultronChatTabInjected) return; window.__ultronChatTabInjected = true;
+  function ensure(){
+    if (document.getElementById('ultronChatModal')) return true;
+    const modal=document.createElement('div');
+    modal.id='ultronChatModal';
+    modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:100000;';
+    modal.innerHTML=`<div style="max-width:760px;margin:6vh auto;background:#111a33;border:1px solid #2b3a66;border-radius:12px;padding:14px;color:#e6edf3;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <strong>Chat com UltronPro</strong><button id="ultronChatClose" style="background:#0f1730;color:#e6edf3;border:1px solid #2b3a66;border-radius:8px;padding:6px 10px;">Fechar</button>
+      </div>
+      <textarea id="ultronChatInput" placeholder="Pergunte sobre aprendizado, agenda, ciclo de sono..." style="width:100%;min-height:90px;background:#0f1730;color:#e6edf3;border:1px solid #2b3a66;border-radius:8px;padding:8px;"></textarea>
+      <div style="margin-top:8px;display:flex;gap:8px;">
+        <button id="ultronChatSend" style="background:#0f1730;color:#e6edf3;border:1px solid #2b3a66;border-radius:8px;padding:8px 12px;">Enviar</button>
+        <button id="ultronChatWeekly" style="background:#0f1730;color:#e6edf3;border:1px solid #2b3a66;border-radius:8px;padding:8px 12px;">Resumo semanal</button>
+      </div>
+      <pre id="ultronChatOut" style="white-space:pre-wrap;max-height:45vh;overflow:auto;margin-top:10px;background:#0b1020;border:1px solid #2b3a66;border-radius:8px;padding:8px;"></pre>
+    </div>`;
+    document.body.appendChild(modal);
+    document.getElementById('ultronChatClose').onclick=()=>modal.style.display='none';
+    document.getElementById('ultronChatSend').onclick=async()=>{
+      const msg=(document.getElementById('ultronChatInput').value||'').trim(); if(!msg)return;
+      const out=document.getElementById('ultronChatOut'); out.textContent='Processando...';
+      try{
+        const r=await fetch('/api/metacognition/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});
+        const j=await r.json(); out.textContent=j.answer||JSON.stringify(j,null,2);
+      }catch(e){ out.textContent='Erro: '+e; }
+    };
+    document.getElementById('ultronChatWeekly').onclick=async()=>{
+      const out=document.getElementById('ultronChatOut'); out.textContent='Carregando resumo...';
+      try{
+        const r=await fetch('/api/metacognition/weekly-summary'); const j=await r.json(); out.textContent=j.summary||JSON.stringify(j,null,2);
+      }catch(e){ out.textContent='Erro: '+e; }
+    };
+    return true;
+  }
+  function injectTab(){
+    ensure();
+    const all=[...document.querySelectorAll('button,a,div,span')];
+    const overview=all.find(el=> (el.textContent||'').trim()==='Overview');
+    if(!overview) return false;
+    if(document.getElementById('ultronMenuChatTab')) return true;
+    const chat=overview.cloneNode(true);
+    chat.id='ultronMenuChatTab';
+    chat.textContent='💬 Chat';
+    chat.onclick=(e)=>{ e.preventDefault(); e.stopPropagation(); document.getElementById('ultronChatModal').style.display='block'; };
+    if (overview.parentElement){
+      if (overview.nextSibling) overview.parentElement.insertBefore(chat, overview.nextSibling);
+      else overview.parentElement.appendChild(chat);
+      return true;
+    }
+    return false;
+  }
+  let n=0; const iv=setInterval(()=>{ n++; if(injectTab()||n>40) clearInterval(iv); },300);
+})();
+</script>
+
+<script id="ultron-menu-chat-inject-v2">
+(function(){
+  if(window.__ultronChatTabInjectedV2) return; window.__ultronChatTabInjectedV2=true;
+  function mount(){
+    const nodes=[...document.querySelectorAll('button,a,div,span')];
+    const ov=nodes.find(n=>(n.textContent||'').trim()==='Overview');
+    if(!ov) return false;
+    if(document.getElementById('ultronMenuChatTabV2')) return true;
+    const chat=ov.cloneNode(true); chat.id='ultronMenuChatTabV2'; chat.textContent='💬 Chat';
+    chat.onclick=(e)=>{e.preventDefault();e.stopPropagation();const m=document.getElementById('ultronChatModalV2'); if(m) m.style.display='block';};
+    ov.parentElement.insertBefore(chat, ov.nextSibling);
+    if(!document.getElementById('ultronChatModalV2')){
+      const m=document.createElement('div'); m.id='ultronChatModalV2';
+      m.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:100000;';
+      m.innerHTML=`<div style="max-width:760px;margin:6vh auto;background:#111a33;border:1px solid #2b3a66;border-radius:12px;padding:14px;color:#e6edf3;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><strong>Chat com UltronPro</strong><button id="uclosev2">Fechar</button></div>
+      <textarea id="uaskv2" style="width:100%;min-height:90px;" placeholder="Pergunte ao Ultron..."></textarea>
+      <div style="margin-top:8px;"><button id="usendv2">Enviar</button></div>
+      <pre id="uoutv2" style="white-space:pre-wrap;max-height:45vh;overflow:auto;"></pre></div>`;
+      document.body.appendChild(m);
+      document.getElementById('uclosev2').onclick=()=>m.style.display='none';
+      document.getElementById('usendv2').onclick=async()=>{const msg=(document.getElementById('uaskv2').value||'').trim(); if(!msg)return; const out=document.getElementById('uoutv2'); out.textContent='Processando...'; try{const r=await fetch('/api/metacognition/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})}); const j=await r.json(); out.textContent=j.answer||JSON.stringify(j);}catch(e){out.textContent='Erro: '+e;}};
+    }
+    return true;
+  }
+  let i=0; const iv=setInterval(()=>{i++; if(mount()||i>60) clearInterval(iv);},300);
+})();
+</script>
+
 </body>
 </html>

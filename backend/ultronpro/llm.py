@@ -1,5 +1,6 @@
 import os
 import logging
+from pathlib import Path
 from typing import Dict, Optional, Any
 import httpx
 import time
@@ -14,6 +15,7 @@ class SettingsUpdate(BaseModel):
     anthropic_api_key: Optional[str] = None
     groq_api_key: Optional[str] = None
     deepseek_api_key: Optional[str] = None
+    openrouter_api_key: Optional[str] = None
     lightrag_api_key: Optional[str] = None
 
 logger = logging.getLogger("uvicorn")
@@ -21,11 +23,15 @@ logger = logging.getLogger("uvicorn")
 # LLM Routing Strategy
 MODELS = {
     "default": {"provider": "deepseek", "model": "deepseek-chat"},
-    "cheap": {"provider": "deepseek", "model": "deepseek-chat"},
+    "cheap": {"provider": "groq", "model": os.getenv('GROQ_DEFAULT_MODEL', 'llama-3.3-70b-versatile')},
     "reasoning": {"provider": "deepseek", "model": "deepseek-reasoner"},
     "creative": {"provider": "deepseek", "model": "deepseek-chat"},
     "deep": {"provider": "deepseek", "model": "deepseek-reasoner"},
-    "local": {"provider": "ollama", "model": os.getenv('OLLAMA_MODEL', 'llama3.2:1b')}
+    "openai_default": {"provider": "openai", "model": os.getenv('OPENAI_DEFAULT_MODEL', 'gpt-4o-mini')},
+    "anthropic_default": {"provider": "anthropic", "model": os.getenv('ANTHROPIC_DEFAULT_MODEL', 'claude-3-5-sonnet-20241022')},
+    "deepseek_default": {"provider": "deepseek", "model": os.getenv('DEEPSEEK_DEFAULT_MODEL', 'deepseek-chat')},
+    "openrouter_free": {"provider": "openrouter", "model": os.getenv('OPENROUTER_DEFAULT_MODEL', 'google/gemma-2-9b-it:free')},
+    "local": {"provider": "ultron_infer", "model": os.getenv('ULTRON_FINETUNE_BASE_MODEL', 'TinyLlama/TinyLlama-1.1B-Chat-v1.0')}
 }
 
 ALLOW_OLLAMA_FALLBACK = os.getenv('ULTRON_ALLOW_OLLAMA_FALLBACK', '0') == '1'
@@ -41,6 +47,7 @@ class LLMRouter:
                 'anthropic': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': int(os.getenv('ANTHROPIC_DAILY_LIMIT_TOKENS', '0') or 0)},
                 'groq': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': int(os.getenv('GROQ_TPD_LIMIT', '100000') or 100000)},
                 'deepseek': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': int(os.getenv('DEEPSEEK_DAILY_LIMIT_TOKENS', '0') or 0)},
+                'openrouter': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': int(os.getenv('OPENROUTER_DAILY_LIMIT_TOKENS', '0') or 0)},
                 'ollama': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': 0},
             },
             'last_error': None,
@@ -83,7 +90,7 @@ class LLMRouter:
         p = str(provider or 'auto').lower().strip()
         if p == 'auto':
             # prefer explicit providers, fallback to ollama
-            for cand in ('openai', 'anthropic', 'groq', 'deepseek', 'ollama'):
+            for cand in ('ultron_infer', 'openrouter', 'openai', 'anthropic', 'groq', 'deepseek', 'ollama'):
                 r = self.healthcheck(cand)
                 if r.get('ok'):
                     return r
@@ -103,8 +110,29 @@ class LLMRouter:
                 dt = int((time.time() - t0) * 1000)
                 return {'ok': True, 'provider': p, 'latency_ms': dt, 'check': 'tags'}
 
+            if p == 'ultron_infer':
+                base = (c or {}).get('base_url') or os.getenv('ULTRON_LOCAL_INFER_URL', 'http://127.0.0.1:8025')
+                headers = {'x-api-key': os.getenv('ULTRON_LOCAL_INFER_TOKEN','').strip()} if os.getenv('ULTRON_LOCAL_INFER_TOKEN','').strip() else {}
+                with httpx.Client(timeout=10.0) as hc:
+                    rr = hc.get(base.rstrip('/') + '/health', headers=headers)
+                    rr.raise_for_status()
+                dt = int((time.time() - t0) * 1000)
+                return {'ok': True, 'provider': p, 'latency_ms': dt, 'check': 'health'}
+
             # tiny generation probe (low token)
-            txt = self.complete('Reply with OK only.', strategy='default' if p == 'openai' else ('cheap' if p == 'groq' else ('reasoning' if p == 'anthropic' else ('deep' if p == 'deepseek' else 'local'))), system='Healthcheck probe.', json_mode=False)
+            strategy_map = {
+                'openrouter': 'openrouter_free',
+                'openai': 'openai_default',
+                'groq': 'cheap',
+                'anthropic': 'anthropic_default',
+                'deepseek': 'deepseek_default',
+            }
+            txt = self.complete(
+                'Reply with OK only.',
+                strategy=strategy_map.get(p, 'local'),
+                system='Healthcheck probe.',
+                json_mode=False,
+            )
             dt = int((time.time() - t0) * 1000)
             return {'ok': bool((txt or '').strip()), 'provider': p, 'latency_ms': dt, 'sample': (txt or '')[:40]}
         except Exception as e:
@@ -131,9 +159,27 @@ class LLMRouter:
             elif provider == "deepseek":
                 from openai import OpenAI
                 if key: client = OpenAI(api_key=key, base_url="https://api.deepseek.com", timeout=8.0, max_retries=0)
+            elif provider == "openrouter":
+                from openai import OpenAI
+                if key:
+                    client = OpenAI(
+                        api_key=key,
+                        base_url="https://openrouter.ai/api/v1",
+                        timeout=12.0,
+                        max_retries=0,
+                        default_headers={
+                            'HTTP-Referer': os.getenv('OPENROUTER_HTTP_REFERER', 'https://ultronpro.nutef.com'),
+                            'X-Title': os.getenv('OPENROUTER_APP_TITLE', 'UltronPro'),
+                        },
+                    )
             elif provider == "ollama":
                 # local HTTP endpoint; no API key required
                 client = {"base_url": os.getenv('OLLAMA_BASE_URL', 'http://127.0.0.1:11434')}
+            elif provider == "ultron_infer":
+                client = {
+                    "base_url": os.getenv('ULTRON_LOCAL_INFER_URL', 'http://127.0.0.1:8025'),
+                    "token": os.getenv('ULTRON_LOCAL_INFER_TOKEN', '').strip(),
+                }
         except Exception as e:
             logger.error(f"Failed to init {provider}: {e}")
 
@@ -142,7 +188,7 @@ class LLMRouter:
             
         return client
 
-    def complete(self, prompt: str, strategy: str = "default", system: str = None, json_mode: bool = False, inject_persona: bool = True, max_tokens: int | None = None) -> str:
+    def complete(self, prompt: str, strategy: str = "default", system: str = None, json_mode: bool = False, inject_persona: bool = True, max_tokens: int | None = None, cloud_fallback: bool = True) -> str:
         # runtime personality injection (dynamic system prompt + few-shot exemplars)
         if inject_persona:
             try:
@@ -153,13 +199,24 @@ class LLMRouter:
         config = MODELS.get(strategy, MODELS["default"])
         provider = config["provider"]
         model = config["model"]
+
+        # local runtime providers rely on server-side active adapter marker
         
-        # 1. Try preferred provider
-        client = self._get_client(provider)
+        # 1. Prefer OpenRouter free models for default/cheap/creative when configured
+        if strategy in ('default', 'cheap', 'creative'):
+            or_client = self._get_client('openrouter')
+            if or_client:
+                provider = 'openrouter'
+                model = MODELS['openrouter_free']['model']
+                client = or_client
+            else:
+                client = self._get_client(provider)
+        else:
+            client = self._get_client(provider)
         
         # 2. Fallback chain across cloud providers first
-        if not client:
-            for cand in ('deepseek', 'openai', 'anthropic', 'groq'):
+        if not client and cloud_fallback:
+            for cand in ('deepseek', 'openrouter', 'openai', 'anthropic', 'groq'):
                 c = self._get_client(cand)
                 if c:
                     provider = cand
@@ -167,6 +224,8 @@ class LLMRouter:
                         model = MODELS['cheap']['model']
                     elif cand == 'deepseek':
                         model = MODELS['deep']['model']
+                    elif cand == 'openrouter':
+                        model = MODELS['openrouter_free']['model']
                     elif cand == 'openai':
                         model = 'gpt-4o-mini'
                     else:
@@ -191,29 +250,34 @@ class LLMRouter:
                 return self._call_anthropic(client, model, prompt, system, json_mode)
             if provider == 'ollama':
                 return self._call_ollama(client, model, prompt, system, json_mode, max_tokens=max_tokens)
+            if provider == 'ultron_infer':
+                return self._call_ultron_infer(client, model, prompt, system, json_mode, max_tokens=max_tokens)
             return self._call_openai_compat(client, model, prompt, system, json_mode, provider=provider)
         except Exception as e:
             self._touch(provider, ok=False, err=str(e))
             logger.error(f"LLM Call Error ({provider}/{model}): {e}")
 
             # retry on alternative cloud providers before touching local
-            for cand in ('deepseek', 'openai', 'anthropic', 'groq'):
-                if cand == provider:
-                    continue
-                try:
-                    c = self._get_client(cand)
-                    if not c:
+            if cloud_fallback:
+                for cand in ('deepseek', 'openrouter', 'openai', 'anthropic', 'groq'):
+                    if cand == provider:
                         continue
-                    if cand == 'anthropic':
-                        return self._call_anthropic(c, 'claude-3-5-sonnet-20241022', prompt, system, json_mode)
-                    if cand == 'deepseek':
-                        return self._call_openai_compat(c, MODELS['deep']['model'], prompt, system, json_mode, provider='deepseek')
-                    if cand == 'groq':
-                        return self._call_openai_compat(c, MODELS['cheap']['model'], prompt, system, json_mode, provider='groq')
-                    return self._call_openai_compat(c, 'gpt-4o-mini', prompt, system, json_mode, provider='openai')
-                except Exception as e2:
-                    self._touch(cand, ok=False, err=str(e2))
-                    continue
+                    try:
+                        c = self._get_client(cand)
+                        if not c:
+                            continue
+                        if cand == 'anthropic':
+                            return self._call_anthropic(c, 'claude-3-5-sonnet-20241022', prompt, system, json_mode)
+                        if cand == 'deepseek':
+                            return self._call_openai_compat(c, MODELS['deep']['model'], prompt, system, json_mode, provider='deepseek')
+                        if cand == 'openrouter':
+                            return self._call_openai_compat(c, MODELS['openrouter_free']['model'], prompt, system, json_mode, provider='openrouter')
+                        if cand == 'groq':
+                            return self._call_openai_compat(c, MODELS['cheap']['model'], prompt, system, json_mode, provider='groq')
+                        return self._call_openai_compat(c, 'gpt-4o-mini', prompt, system, json_mode, provider='openai')
+                    except Exception as e2:
+                        self._touch(cand, ok=False, err=str(e2))
+                        continue
 
             if ALLOW_OLLAMA_FALLBACK:
                 try:
@@ -283,9 +347,37 @@ class LLMRouter:
             self._touch('ollama', ok=True, tin=tin, tout=tout)
             return str(data.get('response') or '')
 
+    def _call_ultron_infer(self, client, model, prompt, system, json_mode, max_tokens: int | None = None):
+        base = (client or {}).get('base_url') or os.getenv('ULTRON_LOCAL_INFER_URL', 'http://127.0.0.1:8025')
+        token = (client or {}).get('token') or os.getenv('ULTRON_LOCAL_INFER_TOKEN', '').strip()
+        body_prompt = prompt + ('\n\nReturn ONLY valid JSON.' if json_mode else '')
+        req_max = int(max(32, min(256, max_tokens or 160)))
+        mode = 'deep' if req_max >= 180 else 'balanced'
+        payload = {
+            'prompt': body_prompt,
+            'system': system,
+            'max_new_tokens': req_max,
+            'temperature': 0.2,
+            'mode': mode,
+        }
+        headers = {'x-api-key': token} if token else {}
+        last_err = None
+        for to in (18.0, 28.0):
+            try:
+                with httpx.Client(timeout=to) as hc:
+                    r = hc.post(base.rstrip('/') + '/generate', json=payload, headers=headers)
+                    r.raise_for_status()
+                    data = r.json()
+                    txt = str(data.get('text') or '')
+                    self._touch('ultron_infer', ok=True, tin=max(0, len(body_prompt)//4), tout=max(0, len(txt)//4))
+                    return txt
+            except Exception as e:
+                last_err = e
+        raise last_err if last_err else RuntimeError('ultron_infer_failed')
+
 router = LLMRouter()
-def complete(prompt: str, strategy: str = "default", system: str = None, json_mode: bool = False, inject_persona: bool = True, max_tokens: int | None = None) -> str:
-    return router.complete(prompt, strategy, system, json_mode, inject_persona=inject_persona, max_tokens=max_tokens)
+def complete(prompt: str, strategy: str = "default", system: str = None, json_mode: bool = False, inject_persona: bool = True, max_tokens: int | None = None, cloud_fallback: bool = True) -> str:
+    return router.complete(prompt, strategy, system, json_mode, inject_persona=inject_persona, max_tokens=max_tokens, cloud_fallback=cloud_fallback)
 
 def usage_status() -> dict:
     return router.usage_status()

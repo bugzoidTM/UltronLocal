@@ -6,11 +6,12 @@ Model is loaded lazily on first use to avoid startup delay.
 from __future__ import annotations
 
 import json
+import os
 import numpy as np
 from typing import Any
 
 _model = None
-_model_name = "all-MiniLM-L6-v2"
+_model_name = os.getenv('ULTRON_EMBED_MODEL', 'all-MiniLM-L6-v2')
 
 
 def _get_model():
