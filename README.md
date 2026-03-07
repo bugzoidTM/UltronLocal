@@ -252,7 +252,73 @@ uvicorn ultronpro.main:app --reload --host 0.0.0.0 --port 8000
 
 ---
 
-## 9) Nota de engenharia
+## 9) Release Notes (últimas 24h)
+
+### ✅ Runtime, RAG e Resposta
+- Integração **RAG-first** no `/api/metacognition/ask` para perguntas de domínio operacional.
+- Correção de roteamento por token (evitando falso positivo por substring, ex.: `capital` vs `api`).
+- Fallback seguro mantido para baixa confiança (`insufficient_confidence`).
+
+### ✅ Cache semântico (novo)
+- Novo módulo: `backend/ultronpro/semantic_cache.py`.
+- Lookup em 2 camadas:
+  - `exact` (MD5 da query normalizada)
+  - `semantic` (cosine similarity)
+- Política atual:
+  - threshold semantic: `0.92`
+  - TTL exact: `24h`
+  - TTL semantic: `12h`
+  - índice semantic: máximo `500` entradas (evict por antiguidade)
+- Integração no `/api/metacognition/ask` com retorno:
+  - `cache_hit: exact|semantic|null`
+  - `from_cache: true|false`
+
+### ✅ Embeddings locais sem custo API
+- Ativado `sentence-transformers` no backend.
+- Modelo padrão local:
+  - `all-MiniLM-L6-v2`
+- Configuração por env:
+  - `ULTRON_EMBED_MODEL`
+
+### ✅ LLM Router e Providers
+- OpenRouter integrado no roteador e UI de settings.
+- Ajustes de saúde/roteamento para DeepSeek, Groq e OpenRouter.
+- Auto strategy operando com fallback consistente entre providers configurados.
+
+### ✅ Finetune pipeline hardening
+- Notificação explícita worker → control plane ao final do treino:
+  - `POST /api/plasticity/finetune/notify-complete`
+- Correções de travamento pós-treino e reconciliação de estado.
+- Auto-register de adapter quando artefatos válidos existem.
+- Presets de treino com flag explícita no dispatch:
+  - `run_preset=fast_diagnostic|production`
+  - comando inclui `--run-preset ...` e `--max-steps ...`
+- Regra de governança:
+  - promoção só para jobs `production`.
+
+### ✅ Qualidade de dataset e operação
+- Rebalanceamento do dataset para alvo ~`50/35/15` (A/B/C).
+- Split train/val ativo e validado no dispatch.
+- Pipeline de avaliação A/B/C executado e usado para rejeitar candidates regressivos.
+
+### ✅ PRM-lite (modo observação)
+- Novo módulo: `backend/ultronpro/prm_lite.py`.
+- Endpoints:
+  - `GET /api/prm/status`
+  - `GET /api/prm/recent`
+- `metacognition/ask` retorna:
+  - `prm_score`, `prm_risk`, `prm_reasons`, `prm_mode=observation`
+- **Sem bloquear** fallback/promoção nesta fase (telemetria para calibração).
+
+### ✅ Povoamento rápido de PRM com dados reais
+- Script de replay de traces:
+  - `tools/replay_decision_traces_to_prm.py`
+- Script de cobertura por task_type via professor OpenClaw:
+  - `tools/teacher_tasktype_coverage_prm.py`
+
+---
+
+## 10) Nota de engenharia
 
 UltronPro é orientado a **operação real**: melhorar continuamente sem quebrar produção.
 A prioridade é **qualidade observável + segurança + iteração rápida**, não só benchmark isolado de modelo.
