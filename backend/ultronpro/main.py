@@ -15,6 +15,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse, JSONResponse
 from pydantic import BaseModel
 import uvicorn
+import httpx
 
 from ultronpro import llm, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, finetune_lora, roadmap_v5, agi_path, episodic_memory, learning_agenda, sleep_cycle, replay_traces, rag_synth_generator, semantic_cache, prm_lite, symbolic_reasoner
 from ultronpro.knowledge_bridge import search_knowledge, ingest_knowledge
@@ -4789,6 +4790,82 @@ async def lightrag_absorb(max_topics: int = 24, doc_limit: int = 24, domains: st
     return await _absorb_lightrag_general(max_topics=max_topics, doc_limit=doc_limit, domains=domains)
 
 
+@app.get('/api/lightrag/status')
+async def lightrag_status():
+    from ultronpro import settings
+    s = settings.load_settings()
+    url = str(s.get('lightrag_url') or '').strip()
+    key = str(s.get('lightrag_api_key') or '').strip()
+    if not url or not key:
+        raise HTTPException(status_code=400, detail='lightrag_not_configured')
+    base = url.replace('/api', '').rstrip('/')
+    try:
+        async with httpx.AsyncClient(timeout=20.0) as client:
+            r = await client.get(f"{base}/documents", headers={"X-API-Key": key})
+            r.raise_for_status()
+            d = r.json() if r.text else {}
+        st = d.get('statuses') or {}
+        processed = len(st.get('processed') or [])
+        pending = len(st.get('pending') or [])
+        failed = len(st.get('failed') or [])
+        total = sum(len(v or []) for v in st.values() if isinstance(v, list))
+        return {
+            'ok': True,
+            'processed': processed,
+            'pending': pending,
+            'failed': failed,
+            'total': total,
+            'raw_status_keys': list(st.keys()),
+        }
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f'lightrag_status_error: {e}')
+
+
+@app.post('/api/lightrag/ingest')
+async def lightrag_ingest(req: dict):
+    """Batch ingest normalized/chunked text into LightRAG.
+
+    Payload:
+    {
+      "items": [{"text": "...", "source": "..."}],
+      "dry_run": false
+    }
+    """
+    items = (req or {}).get('items') or []
+    dry_run = bool((req or {}).get('dry_run'))
+    if not isinstance(items, list) or not items:
+        raise HTTPException(status_code=400, detail='items_required')
+
+    accepted = 0
+    ok = 0
+    errors = 0
+    for idx, it in enumerate(items, 1):
+        try:
+            if not isinstance(it, dict):
+                errors += 1
+                continue
+            txt = str(it.get('text') or '').strip()
+            src = str(it.get('source') or f'batch_item_{idx}').strip() or f'batch_item_{idx}'
+            if not txt:
+                continue
+            accepted += 1
+            if not dry_run:
+                done = await ingest_knowledge(txt, source=src)
+                ok += 1 if done else 0
+            else:
+                ok += 1
+        except Exception:
+            errors += 1
+
+    return {
+        'ok': True,
+        'accepted': accepted,
+        'ingested_ok': ok,
+        'errors': errors,
+        'dry_run': dry_run,
+    }
+
+
 @app.post('/api/python/absorb')
 async def python_absorb(max_topics: int = 24, doc_limit: int = 24):
     return await _absorb_python_from_lightrag(max_topics=max_topics, doc_limit=doc_limit)
@@ -5397,12 +5474,24 @@ async def prm_recent(limit: int = 20):
     return {'ok': True, 'items': prm_lite.recent(limit=limit)}
 
 
-@app.post('/api/metacognition/ask')
-async def metacognition_ask(req: MetacogAskRequest):
+async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strategy: str | None = None, canary: bool = False):
     q = str(req.message or '').strip()
     ql = q.lower()
     cache_hit = None
     from_cache = False
+    forced_strategy = str(force_generation_strategy or '').strip()
+
+    # Mandatory gate: metacognition must run against an adapter actually loaded by infer.
+    try:
+        import urllib.request as _urlreq
+        with _urlreq.urlopen('http://147.93.116.186:18025/health', timeout=10) as _r:
+            _h = json.loads(_r.read().decode('utf-8', 'ignore'))
+    except Exception as _e:
+        raise HTTPException(status_code=503, detail=f'infer_health_unavailable: {_e}')
+
+    loaded_adapter = str((_h or {}).get('loaded_adapter') or '').strip()
+    if not loaded_adapter:
+        raise HTTPException(status_code=503, detail='adapter_not_loaded: loaded_adapter is empty on infer health')
 
     def _trace_emit(answer: str, strategy: str, outcome: str = 'success'):
         try:
@@ -5548,7 +5637,44 @@ async def metacognition_ask(req: MetacogAskRequest):
         prm_meta = _prm_pack(txt, 'runtime_introspection', metrics)
         return {'ok': True, 'answer': txt, 'strategy': 'runtime_introspection', 'metrics': metrics, 'cache_hit': cache_hit, 'from_cache': from_cache, **prm_meta}
 
-    # Semantic cache lookup (skip on runtime/status/health/metrics or high/critical risk class)
+    # Policy-gate (pre-cache/pre-local): block explicit secret extraction and high-risk medical dosing requests.
+    cred_terms = ['credencial', 'credenciais', 'api key', 'api keys', 'token', 'senha', 'secret', 'chave', 'password', 'bearer']
+    cred_extract_verbs = ['me passa', 'mostra', 'qual é', 'qual e', 'me dá', 'me da', 'forneça', 'forneca', 'revela', 'revelar']
+    cred_exfil_question = (any(t in ql for t in cred_terms) and any(v in ql for v in cred_extract_verbs))
+
+    med_dose_terms = ['dose', 'dosagem', 'posologia']
+    med_drug_terms = ['medicamento', 'remédio', 'remedio', 'fármaco', 'farmaco', 'xarope', 'antibiótico', 'antibiotico']
+    med_pediatric_terms = ['criança', 'crianca', 'bebê', 'bebe', 'infantil', 'anos', 'kg', 'mg']
+    med_high_risk_question = (
+        any(t in ql for t in med_dose_terms)
+        and any(t in ql for t in med_drug_terms)
+        and any(t in ql for t in med_pediatric_terms)
+    )
+
+    abuse_terms = [
+        'phishing', 'captar senhas', 'capturar senhas', 'roubar senha', 'roubar senhas',
+        'engenharia social para senha', 'burlar autenticação', 'burlar autenticacao', 'credential stuffing',
+        'exploit', 'malware', 'ransomware', 'invadir conta', 'invadir sistema'
+    ]
+    abuse_question = any(t in ql for t in abuse_terms)
+
+    if cred_exfil_question or med_high_risk_question or abuse_question:
+        ans_gate = (
+            "Não tenho informação confiável sobre isso. "
+            "Para questões fora do domínio operacional, recomendo consultar uma fonte específica."
+        )
+        _trace_emit(ans_gate, 'insufficient_confidence', outcome='fallback')
+        prm_meta = _prm_pack(ans_gate, 'insufficient_confidence', metrics)
+        return {
+            'ok': True,
+            'answer': ans_gate,
+            'strategy': 'insufficient_confidence',
+            'metrics': metrics,
+            'cache_hit': cache_hit,
+            'from_cache': from_cache,
+            **prm_meta,
+        }
+
     status_intent_terms = ['status', 'health', 'metrics', 'runtime']
     intent_label = 'runtime' if runtime_intent else ('status' if any(t in ql for t in status_intent_terms) else 'general')
 
@@ -5562,6 +5688,70 @@ async def metacognition_ask(req: MetacogAskRequest):
     ]
     risk_class = 'high' if (any(t in ql for t in high_risk_terms) or any(t in ql for t in external_ranking_terms)) else 'medium'
 
+    # Step 2: symbolic router before domain gate
+    if symbolic_reasoner.should_route(q):
+        sym = symbolic_reasoner.solve(q)
+        if bool(sym.get('ok')) and str(sym.get('answer') or '').strip():
+            ans_sym = str(sym.get('answer') or '').strip()
+            used_sym = 'symbolic_reasoner'
+            try:
+                if not ((risk_class in ('high', 'critical')) or (intent_label in ('runtime', 'status', 'health', 'metrics'))):
+                    semantic_cache.store(q, ans_sym, used_sym)
+            except Exception:
+                pass
+            _trace_emit(ans_sym, used_sym, outcome='success')
+            prm_meta = _prm_pack(ans_sym, used_sym, {**metrics, 'symbolic_reasoner': {'routed': True}})
+            return {
+                'ok': True,
+                'answer': ans_sym,
+                'strategy': used_sym,
+                'metrics': {**metrics, 'symbolic_reasoner': {'routed': True}},
+                'cache_hit': cache_hit,
+                'from_cache': from_cache,
+                **prm_meta,
+            }
+
+    # Step 3: domain gate for external factual/ranking queries not captured by symbolic
+    external_fact_terms = [
+        'oscar', 'melhor filme', 'campeão', 'campeao', 'capital de', 'população de', 'populacao de'
+    ]
+    symbolic_exception_terms = [
+        # lógica/matemática
+        'implica', 'verdadeiro ou falso', 'todos os', 'se ', ' então', 'proximo número', 'próximo número',
+        'raiz quadrada', 'x²', 'x^2', 'equação', 'equacao', 'triângulo', 'triangulo', 'porcentagem', '% de',
+        'quantos segundos', 'calcule',
+        # planejamento/programação
+        'checklist', 'migração', 'migracao', 'plano de estudos', 'framework', 'passos para',
+        'python', 'docker', 'dockerfile', 'loop', 'função', 'funcao', 'diferença entre', 'diferenca entre', 'deadlock'
+    ]
+    symbolic_exception = any(t in ql for t in symbolic_exception_terms)
+    external_fact_question = (
+        (('?' in q) or ('qual ' in ql) or ('quem ' in ql) or ('quando ' in ql))
+        and (
+            any(t in ql for t in external_fact_terms)
+            or any(t in ql for t in external_ranking_terms)
+            or any(t in ql for t in high_risk_terms)
+        )
+        and (not symbolic_exception)
+    )
+    if external_fact_question:
+        ans_gate = (
+            "Não tenho informação confiável sobre isso. "
+            "Para questões fora do domínio operacional, recomendo consultar uma fonte específica."
+        )
+        _trace_emit(ans_gate, 'insufficient_confidence', outcome='fallback')
+        prm_meta = _prm_pack(ans_gate, 'insufficient_confidence', metrics)
+        return {
+            'ok': True,
+            'answer': ans_gate,
+            'strategy': 'insufficient_confidence',
+            'metrics': metrics,
+            'cache_hit': cache_hit,
+            'from_cache': from_cache,
+            **prm_meta,
+        }
+
+    # Semantic cache lookup (skip on runtime/status/health/metrics or high/critical risk class)
     cache_skip_lookup = (risk_class in ('high', 'critical')) or (intent_label in ('runtime', 'status', 'health', 'metrics'))
     if not cache_skip_lookup:
         try:
@@ -5580,29 +5770,6 @@ async def metacognition_ask(req: MetacogAskRequest):
                 'answer': ans_cache,
                 'strategy': used_cache,
                 'metrics': {**metrics, 'semantic_cache': {'hit': cache_hit, 'score': hit.get('score')}},
-                'cache_hit': cache_hit,
-                'from_cache': from_cache,
-                **prm_meta,
-            }
-
-    # Dedicated symbolic reasoner routing for logic/math/planning/programming tasks
-    if symbolic_reasoner.should_route(q):
-        sym = symbolic_reasoner.solve(q)
-        if bool(sym.get('ok')) and str(sym.get('answer') or '').strip():
-            ans_sym = str(sym.get('answer') or '').strip()
-            used_sym = 'symbolic_reasoner'
-            try:
-                if not ((risk_class in ('high', 'critical')) or (intent_label in ('runtime', 'status', 'health', 'metrics'))):
-                    semantic_cache.store(q, ans_sym, used_sym)
-            except Exception:
-                pass
-            _trace_emit(ans_sym, used_sym, outcome='success')
-            prm_meta = _prm_pack(ans_sym, used_sym, {**metrics, 'symbolic_reasoner': {'routed': True}})
-            return {
-                'ok': True,
-                'answer': ans_sym,
-                'strategy': used_sym,
-                'metrics': {**metrics, 'symbolic_reasoner': {'routed': True}},
                 'cache_hit': cache_hit,
                 'from_cache': from_cache,
                 **prm_meta,
@@ -5655,12 +5822,12 @@ async def metacognition_ask(req: MetacogAskRequest):
             try:
                 rag_ans = llm.complete(
                     rag_prompt,
-                    strategy='default',
+                    strategy=(forced_strategy or 'default'),
                     system='Resposta factual com base em contexto recuperado.',
                     json_mode=False,
                     inject_persona=False,
                     max_tokens=180,
-                    cloud_fallback=True,
+                    cloud_fallback=(not bool(forced_strategy)),
                 ) or ''
             except Exception:
                 rag_ans = ''
@@ -5711,7 +5878,8 @@ async def metacognition_ask(req: MetacogAskRequest):
         'Responda em português brasileiro, direto e analítico. '
         'NÃO repita o prompt, NÃO inclua JSON, NÃO liste métricas cruas. '
         'Use as métricas apenas para raciocinar em silêncio. '
-        'Formato obrigatório em texto corrido curto: resposta direta + evidência mínima + próximo passo. '
+        'Para questões operacionais/técnicas, use formato: resposta direta + evidência mínima + próximo passo. '
+        'Para conversação geral, responda de forma natural em PT-BR, sem estrutura rígida. '
         'Se faltar dado, admita incerteza sem alucinar.'
     )
 
@@ -5769,11 +5937,15 @@ async def metacognition_ask(req: MetacogAskRequest):
             return True
         return False
 
-    # Primary pass: local first. If Option A is enabled and this is a simple general question,
-    # allow a second pass via default strategy (OpenClaw bridge/cloud path).
-    strategies = ['local']
-    if general_qa_enabled and general_question:
-        strategies.append('default')
+    # Primary pass: local first (or forced canary strategy).
+    # If Option A is enabled and this is a simple general question,
+    # allow a second pass via default strategy.
+    if forced_strategy:
+        strategies = [forced_strategy]
+    else:
+        strategies = ['local']
+        if general_qa_enabled and general_question:
+            strategies.append('default')
 
     for strat in tuple(strategies):
         try:
@@ -5784,7 +5956,7 @@ async def metacognition_ask(req: MetacogAskRequest):
                 json_mode=False,
                 inject_persona=False,
                 max_tokens=(80 if short_msg else 120),
-                cloud_fallback=(strat == 'default'),
+                cloud_fallback=(not bool(forced_strategy) and strat == 'default'),
             )
         except Exception:
             cand = ''
@@ -5794,7 +5966,7 @@ async def metacognition_ask(req: MetacogAskRequest):
             break
 
         # second non-deterministic pass with simpler prompt (for tiny on CPU)
-        if strat == 'local':
+        if (not forced_strategy) and strat == 'local':
             simple_prompt = f"Pergunta: {q}\nResponda em até 3 frases, português natural, sem repetir a pergunta."
             try:
                 cand2 = llm.complete(
@@ -5908,6 +6080,198 @@ async def metacognition_ask(req: MetacogAskRequest):
     _trace_emit(ans, used, outcome=('fallback' if used == 'unavailable' else 'success'))
     prm_meta = _prm_pack(ans, used, metrics)
     return {'ok': True, 'answer': ans, 'strategy': used, 'metrics': metrics, 'cache_hit': cache_hit, 'from_cache': from_cache, **prm_meta}
+
+
+# Canary rollout guardrails (in-memory windowed stats)
+_CANARY_EVENTS: list[dict[str, Any]] = []
+_CANARY_DISABLED_UNTIL_TS: int = 0
+_CANARY_DISABLE_REASON: str = ''
+
+
+def _canary_cfg() -> dict[str, Any]:
+    return {
+        'enabled': str(os.getenv('METACOG_CANARY_ENABLED', '0')).strip().lower() in ('1', 'true', 'yes', 'on'),
+        'rate': float(os.getenv('METACOG_CANARY_RATE', '0.25') or 0.25),
+        'window_sec': int(os.getenv('METACOG_CANARY_WINDOW_SEC', '1800') or 1800),
+        'min_events': int(os.getenv('METACOG_CANARY_MIN_EVENTS', '10') or 10),
+        'max_timeout_ratio': float(os.getenv('METACOG_CANARY_MAX_TIMEOUT_RATIO', '0.20') or 0.20),
+        'max_high_risk_ratio': float(os.getenv('METACOG_CANARY_MAX_HIGH_RISK_RATIO', '0.35') or 0.35),
+    }
+
+
+def _canary_record(model: str, strategy: str, prm_risk: str | None, timeout: bool = False):
+    global _CANARY_EVENTS
+    now = int(time.time())
+    _CANARY_EVENTS.append({
+        'ts': now,
+        'model': model,
+        'strategy': str(strategy or ''),
+        'prm_risk': str(prm_risk or ''),
+        'timeout': bool(timeout),
+        'insufficient': (str(strategy or '') == 'insufficient_confidence'),
+    })
+    # prune old
+    win = _canary_cfg()['window_sec']
+    _CANARY_EVENTS = [e for e in _CANARY_EVENTS if int(e.get('ts') or 0) >= (now - win)]
+
+
+def _canary_maybe_disable() -> str | None:
+    global _CANARY_DISABLED_UNTIL_TS, _CANARY_DISABLE_REASON
+    cfg = _canary_cfg()
+    now = int(time.time())
+    win_events = [e for e in _CANARY_EVENTS if int(e.get('ts') or 0) >= (now - cfg['window_sec'])]
+    c = [e for e in win_events if e.get('model') == 'canary']
+    t = [e for e in win_events if e.get('model') == 'tiny']
+    if len(c) < cfg['min_events']:
+        return None
+
+    # Guardrail 1: timeout ratio
+    timeout_ratio = (sum(1 for e in c if e.get('timeout')) / max(1, len(c)))
+    if timeout_ratio > cfg['max_timeout_ratio']:
+        _CANARY_DISABLED_UNTIL_TS = now + 1800
+        _CANARY_DISABLE_REASON = f'timeout_ratio>{cfg["max_timeout_ratio"]:.2f}'
+        return _CANARY_DISABLE_REASON
+
+    # Guardrail 2: persistent high prm_risk
+    high_ratio = (sum(1 for e in c if str(e.get('prm_risk') or '').lower() == 'high') / max(1, len(c)))
+    if high_ratio > cfg['max_high_risk_ratio']:
+        _CANARY_DISABLED_UNTIL_TS = now + 1800
+        _CANARY_DISABLE_REASON = f'high_prm_risk_ratio>{cfg["max_high_risk_ratio"]:.2f}'
+        return _CANARY_DISABLE_REASON
+
+    # Guardrail 3: insufficient_confidence > 2x tiny in same window
+    if len(t) >= cfg['min_events']:
+        c_ins = (sum(1 for e in c if e.get('insufficient')) / max(1, len(c)))
+        t_ins = (sum(1 for e in t if e.get('insufficient')) / max(1, len(t)))
+        if c_ins > (2.0 * max(0.01, t_ins)):
+            _CANARY_DISABLED_UNTIL_TS = now + 1800
+            _CANARY_DISABLE_REASON = 'insufficient_confidence_rate_gt_2x_tiny'
+            return _CANARY_DISABLE_REASON
+
+    return None
+
+
+@app.post('/api/metacognition/ask')
+async def metacognition_ask(req: MetacogAskRequest):
+    global _CANARY_DISABLED_UNTIL_TS, _CANARY_DISABLE_REASON
+    cfg = _canary_cfg()
+    now = int(time.time())
+    canary_allowed = bool(cfg['enabled']) and now >= int(_CANARY_DISABLED_UNTIL_TS or 0)
+    use_canary = canary_allowed and (random.random() < max(0.0, min(1.0, cfg['rate'])))
+
+    if use_canary:
+        t0 = time.time()
+        try:
+            out = await _metacognition_ask_impl(req, force_generation_strategy='canary_qwen', canary=True)
+            dt = int((time.time() - t0) * 1000)
+            if isinstance(out, dict):
+                out['canary'] = True
+                out['model'] = 'qwen2.5-7b'
+                out['latency_ms'] = dt
+                out.setdefault('strategy', 'canary_qwen')
+                _canary_record('canary', str(out.get('strategy') or ''), str(out.get('prm_risk') or ''), timeout=False)
+                _canary_maybe_disable()
+                if int(_CANARY_DISABLED_UNTIL_TS or 0) > int(time.time()):
+                    out['canary_rollout'] = {'enabled': False, 'disabled_reason': _CANARY_DISABLE_REASON}
+            return out
+        except Exception:
+            # timeout/error fallback to tiny path
+            _canary_record('canary', 'error', None, timeout=True)
+            _canary_maybe_disable()
+
+    # default tiny path
+    out = await _metacognition_ask_impl(req)
+    if isinstance(out, dict):
+        _canary_record('tiny', str(out.get('strategy') or ''), str(out.get('prm_risk') or ''), timeout=False)
+        if int(_CANARY_DISABLED_UNTIL_TS or 0) > int(time.time()):
+            out['canary_rollout'] = {'enabled': False, 'disabled_reason': _CANARY_DISABLE_REASON}
+    return out
+
+
+@app.get('/api/canary/status')
+async def canary_status():
+    cfg = _canary_cfg()
+    now = int(time.time())
+    win_events = [e for e in _CANARY_EVENTS if int(e.get('ts') or 0) >= (now - cfg['window_sec'])]
+    can = [e for e in win_events if e.get('model') == 'canary']
+    tiny = [e for e in win_events if e.get('model') == 'tiny']
+
+    def _pack(arr: list[dict[str, Any]]) -> dict[str, Any]:
+        n = len(arr)
+        if n == 0:
+            return {'events': 0, 'timeout_ratio': 0.0, 'high_prm_risk_ratio': 0.0, 'insufficient_confidence_ratio': 0.0}
+        return {
+            'events': n,
+            'timeout_ratio': sum(1 for e in arr if e.get('timeout')) / n,
+            'high_prm_risk_ratio': sum(1 for e in arr if str(e.get('prm_risk') or '').lower() == 'high') / n,
+            'insufficient_confidence_ratio': sum(1 for e in arr if e.get('insufficient')) / n,
+        }
+
+    can_m = _pack(can)
+    tiny_m = _pack(tiny)
+
+    disabled = now < int(_CANARY_DISABLED_UNTIL_TS or 0)
+    return {
+        'ok': True,
+        'enabled': bool(cfg['enabled']),
+        'rate': cfg['rate'],
+        'window_sec': cfg['window_sec'],
+        'min_events': cfg['min_events'],
+        'rollout_active': bool(cfg['enabled']) and not disabled,
+        'disabled': disabled,
+        'disabled_until_ts': int(_CANARY_DISABLED_UNTIL_TS or 0),
+        'disabled_reason': _CANARY_DISABLE_REASON or None,
+        'thresholds': {
+            'max_timeout_ratio': cfg['max_timeout_ratio'],
+            'max_high_prm_risk_ratio': cfg['max_high_risk_ratio'],
+            'max_insufficient_vs_tiny_multiplier': 2.0,
+        },
+        'metrics': {
+            'canary': can_m,
+            'tiny': tiny_m,
+            'insufficient_ratio_multiplier_vs_tiny': (
+                (can_m['insufficient_confidence_ratio'] / max(0.01, tiny_m['insufficient_confidence_ratio']))
+                if tiny_m['events'] > 0 else None
+            ),
+        },
+    }
+
+
+@app.post('/api/canary/ask')
+async def canary_ask(req: MetacogAskRequest):
+    t0 = time.time()
+    out = await _metacognition_ask_impl(req, force_generation_strategy='canary_qwen', canary=True)
+    dt = int((time.time() - t0) * 1000)
+    if isinstance(out, dict):
+        out['canary'] = True
+        out['model'] = 'qwen2.5-7b'
+        out['latency_ms'] = dt
+        out.setdefault('strategy', 'canary_qwen')
+        out.setdefault('prm_score', None)
+        out.setdefault('prm_risk', None)
+        # lightweight side-by-side baseline (same input, local model only)
+        try:
+            t1 = time.time()
+            tiny_ans = llm.complete(
+                str(req.message or ''),
+                strategy='local',
+                system=None,
+                json_mode=False,
+                inject_persona=False,
+                max_tokens=120,
+                cloud_fallback=False,
+            )
+            td = int((time.time() - t1) * 1000)
+            tiny_prm = prm_lite.score_answer(str(req.message or ''), str(tiny_ans or ''), context='', meta={'strategy': 'local_shadow'}) if tiny_ans else {}
+            out['compare_tinyllama'] = {
+                'strategy': 'local_shadow',
+                'latency_ms': td,
+                'prm_score': tiny_prm.get('score') if isinstance(tiny_prm, dict) else None,
+                'prm_risk': tiny_prm.get('risk') if isinstance(tiny_prm, dict) else None,
+            }
+        except Exception:
+            out['compare_tinyllama'] = {'strategy': 'local_shadow', 'latency_ms': None, 'prm_score': None, 'prm_risk': None}
+    return out
 
 
 @app.get('/api/ui/overview')
