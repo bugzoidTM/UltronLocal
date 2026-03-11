@@ -172,6 +172,91 @@ def run_replay(day: str | None = None, max_rows: int = 300) -> dict[str, Any]:
     return st
 
 
+def _eval_trace_path() -> Path:
+    p = Path('/app/data/eval_traces.jsonl')
+    if p.exists():
+        return p
+    alt = Path('/root/.openclaw/workspace/UltronPro/backend/data/eval_traces.jsonl')
+    return alt
+
+
+def replay_thought_chain(max_rows: int = 300, slow_only: bool = False) -> dict[str, Any]:
+    p = _eval_trace_path()
+    rows: list[dict[str, Any]] = []
+    if p.exists():
+        for ln in p.read_text(encoding='utf-8', errors='ignore').splitlines():
+            ln = ln.strip()
+            if not ln:
+                continue
+            try:
+                rows.append(json.loads(ln))
+            except Exception:
+                continue
+    if max_rows > 0 and len(rows) > max_rows:
+        rows = rows[-max_rows:]
+
+    def _breakpoint(r: dict[str, Any]) -> str:
+        st = str(r.get('final_strategy') or '')
+        gate = str(r.get('gate_decision') or '')
+        lat = r.get('latency_ms')
+        if gate in ('block_insufficient', 'insufficient', 'deny') or st == 'insufficient_confidence':
+            return 'gate'
+        if isinstance(lat, (int, float)) and float(lat) > 10000:
+            return 'generation_latency'
+        if bool(r.get('symbolic_reasoner_routed')) and st not in ('symbolic_reasoner',):
+            return 'symbolic_route_miss'
+        if str(r.get('prm_risk') or '').lower() == 'high':
+            return 'quality_guard'
+        return 'none'
+
+    items = []
+    counts: dict[str, int] = {}
+    by_module: dict[str, int] = {}
+    for r in rows:
+        if slow_only and not (isinstance(r.get('latency_ms'), (int, float)) and float(r.get('latency_ms')) > 10000):
+            continue
+        bp = _breakpoint(r)
+        chain = ['classify_input', 'route_strategy', 'generate_answer', 'prm_evaluate', 'gate_finalize']
+        break_at = {
+            'gate': 'gate_finalize',
+            'generation_latency': 'generate_answer',
+            'symbolic_route_miss': 'route_strategy',
+            'quality_guard': 'prm_evaluate',
+            'none': 'none',
+        }.get(bp, 'none')
+        mod = {
+            'gate_finalize': 'gate',
+            'generate_answer': 'generator',
+            'route_strategy': 'router',
+            'prm_evaluate': 'prm',
+            'none': 'none',
+        }.get(break_at, 'none')
+        counts[bp] = counts.get(bp, 0) + 1
+        by_module[mod] = by_module.get(mod, 0) + 1
+        items.append({
+            'request_id': r.get('request_id'),
+            'input_class': r.get('input_class'),
+            'final_strategy': r.get('final_strategy'),
+            'latency_ms': r.get('latency_ms'),
+            'prm_risk': r.get('prm_risk'),
+            'gate_decision': r.get('gate_decision'),
+            'chain': chain,
+            'breakpoint': bp,
+            'break_at': break_at,
+            'break_module': mod,
+        })
+
+    return {
+        'ok': True,
+        'path': str(p),
+        'rows_scanned': len(rows),
+        'items': items[-120:],
+        'breakpoint_counts': counts,
+        'break_module_counts': by_module,
+        'slow_only': bool(slow_only),
+    }
+
+
 def status() -> dict[str, Any]:
     out: dict[str, Any] = {
         'ok': True,

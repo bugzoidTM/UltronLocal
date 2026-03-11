@@ -322,3 +322,120 @@ uvicorn ultronpro.main:app --reload --host 0.0.0.0 --port 8000
 
 UltronPro é orientado a **operação real**: melhorar continuamente sem quebrar produção.
 A prioridade é **qualidade observável + segurança + iteração rápida**, não só benchmark isolado de modelo.
+
+---
+
+## 11) Metacognitive Supervisor (novo)
+
+### 11.1 Orquestrador dinâmico no `/api/metacognition/ask`
+
+Além do roteamento tradicional, o endpoint agora suporta modo de **orquestração sequencial** para tarefas abertas (planejamento, organização, estratégia), controlado por flag:
+
+- `ULTRON_METACOG_ORCHESTRATOR_ENABLED=1`
+
+Quando ativado e o input indica tarefa aberta, o fluxo é:
+
+1. Planner Qwen gera plano JSON com até 3 passos
+2. Execução de ferramentas em sequência
+3. PRM-lite por passo
+4. Síntese final
+
+Resposta inclui:
+- `strategy=orchestrator_qwen_tools`
+- `orchestration.planner_raw`
+- `orchestration.steps_executed`
+- `orchestration.step_prm`
+
+### 11.2 Ferramentas expostas ao planner
+
+- `search_rag(query)`
+  - usa `knowledge_bridge.search_knowledge(...)`
+- `symbolic_solve(problem)`
+  - usa `symbolic_reasoner.solve(...)`
+- `ask_memory(topic)`
+  - usa memória episódica + resumo metacognitivo
+- `flag_uncertainty(reason)`
+  - marca insuficiência de dados sem alucinar
+
+### 11.3 Guardrails do orquestrador
+
+- máximo de 3 passos por requisição
+- JSON-only no planejamento
+- síntese final com instrução anti-alucinação
+- PRM parcial por passo para observabilidade de cadeia
+
+---
+
+## 12) Reflexion Agent (aprendizado autônomo)
+
+Módulo novo:
+- `backend/ultronpro/reflexion_agent.py`
+
+Integração em loop de runtime (`main.py`):
+- `ULTRON_REFLEXION_ENABLED`
+- `ULTRON_REFLEXION_TICK_SEC`
+
+Endpoints:
+- `GET /api/reflexion/status`
+- `POST /api/reflexion/tick?force=true|false`
+
+Arquivos de estado/log:
+- `/app/data/reflexion_state.json`
+- `/app/data/reflexion_decisions.jsonl`
+- `/app/data/reflexion_proposals.jsonl`
+- `/app/data/reflexion_learning.jsonl`
+
+### 12.1 Política de autonomia (fase atual)
+
+- `confiança > 0.7` + ação reversível → executa autonomamente
+- `confiança > 0.7` + ação irreversível → pede aprovação humana
+- `confiança <= 0.7` → registra hipótese e não executa
+
+Ações reversíveis:
+- `adjust_prm_thresholds`
+- `flag_problem_category`
+
+Ações irreversíveis:
+- `request_teacher_examples`
+- `propose_rag_ingest`
+
+### 12.2 Registro de hipótese e calibração
+
+Cada ciclo pode registrar:
+- `acao`
+- `hipotese`
+- `confianca`
+- `resultado_observado`
+- `hipotese_confirmada`
+- `confianca_pos_acao`
+
+Isso permite aprendizado incremental real (confirmar/refutar hipótese), em vez de apenas histórico passivo.
+
+---
+
+## 13) Replay de pensamento (thought chain)
+
+Novo endpoint:
+- `GET /api/replay/thought-chain?max_rows=300&slow_only=false`
+
+Reconstrói cadeia por decisão:
+- `classify_input -> route_strategy -> generate_answer -> prm_evaluate -> gate_finalize`
+
+E identifica ponto de quebra:
+- `breakpoint`
+- `break_at`
+- `break_module` (`router|generator|prm|gate|none`)
+
+Útil para:
+- localizar gargalo real de outliers
+- diferenciar problema de geração vs gate vs roteamento
+- priorizar patch de latência sem mexer no que já está estável
+
+---
+
+## 14) Observações operacionais recentes
+
+- Outliers lentos continuam concentrando em geração (`break_module=generator`) em casos `canary_qwen` complexos.
+- Orquestrador já validado em tarefa aberta real com execução de múltiplos passos e trilha completa.
+- Reflexion learning já produz ciclos com hipótese confirmada/refutada + recalibração de confiança.
+- PRM-lite permanece em modo observação (não bloqueante), mas agora com sinal por etapa no orquestrador.

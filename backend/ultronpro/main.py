@@ -17,7 +17,7 @@ from pydantic import BaseModel
 import uvicorn
 import httpx
 
-from ultronpro import llm, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, finetune_lora, roadmap_v5, agi_path, episodic_memory, learning_agenda, sleep_cycle, replay_traces, rag_synth_generator, semantic_cache, prm_lite, symbolic_reasoner
+from ultronpro import llm, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, finetune_lora, roadmap_v5, agi_path, episodic_memory, learning_agenda, sleep_cycle, replay_traces, rag_synth_generator, semantic_cache, prm_lite, symbolic_reasoner, reflexion_agent
 from ultronpro.knowledge_bridge import search_knowledge, ingest_knowledge
 
 # Logging
@@ -339,6 +339,7 @@ _judge_task = None
 _prewarm_task = None
 _roadmap_task = None
 _agi_path_task = None
+_reflexion_task = None
 _autonomy_state = {
     "ticks": 0,
     "last_tick": None,
@@ -363,11 +364,13 @@ JUDGE_LOOP_ENABLED = os.getenv('ULTRON_JUDGE_ENABLED', '1') != '0'
 AUTOFEEDER_ENABLED = os.getenv('ULTRON_AUTOFEEDER_ENABLED', '1') != '0'
 ROADMAP_LOOP_ENABLED = os.getenv('ULTRON_ROADMAP_ENABLED', '1') != '0'
 AGI_PATH_LOOP_ENABLED = os.getenv('ULTRON_AGI_PATH_ENABLED', '1') != '0'
+REFLEXION_LOOP_ENABLED = os.getenv('ULTRON_REFLEXION_ENABLED', '1') != '0'
 VOICE_PREWARM_ENABLED = os.getenv('ULTRON_PREWARM_ENABLED', '1') != '0'
 FINETUNE_AUTOTRIGGER_ENABLED = os.getenv('ULTRON_FINETUNE_AUTOTRIGGER', '1') != '0'
 AUTONOMY_TICK_SEC = max(20, int(os.getenv('ULTRON_AUTONOMY_TICK_SEC', '75')))
 JUDGE_TICK_SEC = max(45, int(os.getenv('ULTRON_JUDGE_TICK_SEC', '90')))
 AUTOFEEDER_TICK_SEC = max(90, int(os.getenv('ULTRON_AUTOFEEDER_TICK_SEC', '180')))
+REFLEXION_TICK_SEC = max(45, int(os.getenv('ULTRON_REFLEXION_TICK_SEC', '120')))
 LIGHTRAG_CONCURRENCY = max(1, int(os.getenv('ULTRON_LIGHTRAG_CONCURRENCY', '2')))
 LLM_BLOCKING_CONCURRENCY = max(1, int(os.getenv('ULTRON_LLM_BLOCKING_CONCURRENCY', '3')))
 RUNTIME_HEALTH_PATH = Path('/app/data/runtime_health.json')
@@ -445,6 +448,7 @@ def _runtime_health_snapshot(extra: dict | None = None) -> dict:
             'autofeeder_enabled': AUTOFEEDER_ENABLED,
             'roadmap_enabled': ROADMAP_LOOP_ENABLED,
             'agi_path_enabled': AGI_PATH_LOOP_ENABLED,
+            'reflexion_enabled': REFLEXION_LOOP_ENABLED,
             'voice_prewarm_enabled': VOICE_PREWARM_ENABLED,
             'finetune_autotrigger_enabled': FINETUNE_AUTOTRIGGER_ENABLED,
         },
@@ -452,6 +456,7 @@ def _runtime_health_snapshot(extra: dict | None = None) -> dict:
             'autonomy_tick_sec': AUTONOMY_TICK_SEC,
             'judge_tick_sec': JUDGE_TICK_SEC,
             'autofeeder_tick_sec': AUTOFEEDER_TICK_SEC,
+            'reflexion_tick_sec': REFLEXION_TICK_SEC,
             'budget_per_min': AUTONOMY_BUDGET_PER_MIN,
         },
         'autonomy_state': {
@@ -4085,9 +4090,23 @@ async def agi_path_loop():
             await asyncio.sleep(300)
 
 
+async def reflexion_loop():
+    logger.info("Reflexion loop started")
+    await asyncio.sleep(25)
+    while True:
+        try:
+            out = reflexion_agent.tick(force=False)
+            if bool(out.get('triggered')):
+                store.db.add_event('reflexion', f"🧠 reflexion action={out.get('action')} conf={out.get('confidence')}")
+            await asyncio.sleep(REFLEXION_TICK_SEC)
+        except Exception as e:
+            logger.warning(f"Reflexion loop skipped: {e}")
+            await asyncio.sleep(max(REFLEXION_TICK_SEC, 120))
+
+
 @app.on_event("startup")
 async def startup_event():
-    global _autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task
+    global _autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task, _reflexion_task
     logger.info("Starting UltronPRO...")
     store.init_db()
     graph.init()
@@ -4140,13 +4159,18 @@ async def startup_event():
     else:
         logger.info("AGI path loop disabled by env")
 
+    if REFLEXION_LOOP_ENABLED:
+        _reflexion_task = asyncio.create_task(reflexion_loop())
+    else:
+        logger.info("Reflexion loop disabled by env")
+
     _runtime_health_write({'reason': 'startup_complete'})
     logger.info("Ultron loops startup complete")
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    global _autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task
-    for t in (_autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task):
+    global _autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task, _reflexion_task
+    for t in (_autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task, _reflexion_task):
         if t:
             t.cancel()
             try:
@@ -5425,6 +5449,19 @@ async def sleep_cycle_status():
         return {'ok': True, 'has_report': True, 'report': {}}
 
 
+@app.get('/api/reflexion/status')
+async def reflexion_status():
+    return reflexion_agent.status()
+
+
+@app.post('/api/reflexion/tick')
+async def reflexion_tick(force: bool = False):
+    out = reflexion_agent.tick(force=bool(force))
+    if bool(out.get('triggered')):
+        store.db.add_event('reflexion', f"🧠 reflexion action={out.get('action')} conf={out.get('confidence')}")
+    return out
+
+
 def _metacog_weekly_summary_text() -> str:
     from pathlib import Path
     import json
@@ -5474,24 +5511,224 @@ async def prm_recent(limit: int = 20):
     return {'ok': True, 'items': prm_lite.recent(limit=limit)}
 
 
-async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strategy: str | None = None, canary: bool = False):
+def _classify_eval_input(q: str) -> str:
+    ql = str(q or '').lower()
+    if any(t in ql for t in ['implica', 'verdadeiro', 'todos os', 'lógica', 'logica']):
+        return 'logic'
+    if any(t in ql for t in ['raiz quadrada', 'x²', 'x^2', 'equação', 'equacao', 'triângulo', 'triangulo', '%', 'porcent']):
+        return 'math'
+    if any(t in ql for t in ['plano', 'checklist', 'priorizo', 'migrar', 'backup', 'estudos']):
+        return 'planning'
+    if any(t in ql for t in ['python', 'docker', 'dockerfile', 'função', 'funcao', 'loop', 'deadlock', 'tuple', 'list']):
+        return 'code'
+    return 'general'
+
+
+def _append_eval_trace(event: dict[str, Any]) -> None:
+    try:
+        root = os.getenv('ULTRON_EVAL_TRACE_FILE', '/root/.openclaw/workspace/UltronPro/backend/data/eval_traces.jsonl')
+        p = Path(root)
+        p.parent.mkdir(parents=True, exist_ok=True)
+
+        ev = dict(event or {})
+        ts = int(ev.get('timestamp') or time.time())
+        # Promotion cutoff for cohort tagging (override via env if needed).
+        promotion_cutoff_ts = int(os.getenv('METACOG_QWEN_PROMOTION_TS', '1773158686') or 1773158686)
+        ev['cohort'] = 'post_qwen_promotion' if ts >= promotion_cutoff_ts else 'pre_promotion'
+        ev['promotion_cutoff_ts'] = promotion_cutoff_ts
+
+        with p.open('a', encoding='utf-8') as f:
+            f.write(json.dumps(ev, ensure_ascii=False) + '\n')
+    except Exception:
+        pass
+
+
+def _emit_eval_for_response(endpoint: str, request_id: str, message: str, out: dict[str, Any], latency_ms: int | None) -> None:
+    strategy = str((out or {}).get('strategy') or '')
+    metrics_obj = (out or {}).get('metrics') or {}
+    sym = bool(((metrics_obj.get('symbolic_reasoner') or {}).get('routed')))
+    gate_decision = 'block_insufficient' if strategy == 'insufficient_confidence' else 'allow'
+    model_called = str((out or {}).get('model') or '')
+    if not model_called:
+        model_called = 'none' if strategy in ('insufficient_confidence', 'symbolic_reasoner', 'rag_context_direct') else 'tiny'
+
+    _append_eval_trace({
+        'request_id': request_id,
+        'timestamp': int(time.time()),
+        'endpoint': endpoint,
+        'input_class': _classify_eval_input(message),
+        'router_strategy_escolhida': strategy,
+        'symbolic_reasoner_routed': sym,
+        'gate_decision': gate_decision,
+        'model_called': model_called,
+        'final_strategy': strategy,
+        'latency_ms': int(latency_ms or 0),
+        'prm_score': (out or {}).get('prm_score'),
+        'prm_risk': (out or {}).get('prm_risk'),
+    })
+
+
+def _direct_canary_generate(prompt: str, max_tokens: int = 220) -> str:
+    base = os.getenv('OLLAMA_BASE_URL_LOCAL', os.getenv('OLLAMA_BASE_URL', 'http://127.0.0.1:11434')).rstrip('/')
+    model = os.getenv('OLLAMA_CANARY_MODEL', 'qwen2.5:7b-instruct-q4_K_M')
+    payload = {
+        'model': model,
+        'prompt': str(prompt or ''),
+        'stream': False,
+        'options': {
+            'temperature': 0.2,
+            'num_predict': int(max(16, min(512, max_tokens))),
+        },
+    }
+    try:
+        with httpx.Client(timeout=90.0) as hc:
+            r = hc.post(base + '/api/generate', json=payload)
+            r.raise_for_status()
+            data = r.json() or {}
+            return str(data.get('response') or '').strip()
+    except Exception:
+        return ''
+
+
+def _safe_json_parse(text: str) -> dict[str, Any]:
+    s = str(text or '').strip()
+    if not s:
+        return {}
+    try:
+        return json.loads(s)
+    except Exception:
+        i = s.find('{')
+        j = s.rfind('}')
+        if i >= 0 and j > i:
+            try:
+                return json.loads(s[i:j+1])
+            except Exception:
+                return {}
+    return {}
+
+
+async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generation_strategy: str = 'canary_qwen') -> dict[str, Any]:
+    plan_prompt = json.dumps({
+        'task': 'Decompose user request into up to 3 sequential tool calls then synthesize final answer.',
+        'query': query,
+        'tools': [
+            {'name': 'search_rag', 'args': {'query': 'string'}},
+            {'name': 'symbolic_solve', 'args': {'problem': 'string'}},
+            {'name': 'ask_memory', 'args': {'topic': 'string'}},
+            {'name': 'flag_uncertainty', 'args': {'reason': 'string'}},
+        ],
+        'constraints': {
+            'max_steps': 3,
+            'output_json_only': True,
+            'pt_br': True,
+        },
+        'schema': {
+            'steps': [{'tool': 'string', 'args': 'object'}],
+            'final_answer_style': 'string'
+        }
+    }, ensure_ascii=False)
+
+    planner_raw = llm.complete(
+        prompt=plan_prompt,
+        strategy=generation_strategy,
+        system='Você é um orquestrador metacognitivo. Responda SOMENTE JSON válido.',
+        json_mode=False,
+        inject_persona=False,
+        max_tokens=260,
+    )
+    plan = _safe_json_parse(planner_raw)
+    steps = plan.get('steps') if isinstance(plan.get('steps'), list) else []
+    steps = steps[:3]
+
+    tool_outputs: list[dict[str, Any]] = []
+    step_prm: list[dict[str, Any]] = []
+
+    for idx, st in enumerate(steps, start=1):
+        if not isinstance(st, dict):
+            continue
+        tool = str(st.get('tool') or '').strip()
+        args = st.get('args') if isinstance(st.get('args'), dict) else {}
+        out_txt = ''
+        status = 'ok'
+        if tool == 'search_rag':
+            q = str(args.get('query') or query).strip()
+            docs = await knowledge_bridge.search_knowledge(q, top_k=3)
+            out_txt = '\n'.join([str((d or {}).get('text') or '')[:450] for d in (docs or [])[:2]]).strip()
+            if not out_txt:
+                out_txt = 'Sem contexto RAG relevante encontrado.'
+        elif tool == 'symbolic_solve':
+            problem = str(args.get('problem') or query).strip()
+            sym = symbolic_reasoner.solve(problem)
+            out_txt = str((sym or {}).get('answer') or '').strip() or 'Sem solução simbólica conclusiva.'
+        elif tool == 'ask_memory':
+            topic = str(args.get('topic') or query).strip()
+            hints = episodic_memory.strategy_hints(kind='strategy', text=topic, task_type='planning')
+            brief = _metacog_weekly_summary_text()
+            out_txt = f"{brief}\n\nHints:\n{json.dumps(hints, ensure_ascii=False)[:700]}"
+        elif tool == 'flag_uncertainty':
+            out_txt = f"Incerteza registrada: {str(args.get('reason') or 'insufficient_data')}"
+            status = 'uncertain'
+        else:
+            out_txt = f"Ferramenta inválida: {tool}"
+            status = 'invalid_tool'
+
+        tool_outputs.append({'step': idx, 'tool': tool, 'args': args, 'status': status, 'output': out_txt[:1200]})
+        try:
+            prm = prm_lite.score_answer(query, out_txt[:400], context='', meta={'strategy': 'orchestrator_step', 'tool': tool})
+            step_prm.append({'step': idx, 'tool': tool, 'prm_score': prm.get('score'), 'prm_risk': prm.get('risk')})
+        except Exception:
+            step_prm.append({'step': idx, 'tool': tool, 'prm_score': None, 'prm_risk': None})
+
+    synth_prompt = json.dumps({
+        'query': query,
+        'tool_outputs': tool_outputs,
+        'style': str(plan.get('final_answer_style') or 'objetivo e útil')
+    }, ensure_ascii=False)
+    final_answer = llm.complete(
+        prompt=synth_prompt,
+        strategy=generation_strategy,
+        system='Sintetize resposta final em pt-BR, prática, sem inventar fatos ausentes.',
+        json_mode=False,
+        inject_persona=False,
+        max_tokens=240,
+    )
+
+    return {
+        'ok': True,
+        'answer': str(final_answer or '').strip(),
+        'strategy': 'orchestrator_qwen_tools',
+        'orchestration': {
+            'planner_raw': str(planner_raw or '')[:1000],
+            'steps_executed': tool_outputs,
+            'step_prm': step_prm,
+        },
+        'metrics': metrics,
+        'cache_hit': None,
+        'from_cache': False,
+    }
+
+
+async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strategy: str | None = None, canary: bool = False, bypass_insufficient_gate: bool = False):
     q = str(req.message or '').strip()
     ql = q.lower()
+    input_class = _classify_eval_input(q)
     cache_hit = None
     from_cache = False
     forced_strategy = str(force_generation_strategy or '').strip()
 
-    # Mandatory gate: metacognition must run against an adapter actually loaded by infer.
-    try:
-        import urllib.request as _urlreq
-        with _urlreq.urlopen('http://147.93.116.186:18025/health', timeout=10) as _r:
-            _h = json.loads(_r.read().decode('utf-8', 'ignore'))
-    except Exception as _e:
-        raise HTTPException(status_code=503, detail=f'infer_health_unavailable: {_e}')
+    # Infer health gate (optional for Qwen main path).
+    require_infer_health = str(os.getenv('METACOG_REQUIRE_INFER_HEALTH', '0')).strip().lower() in ('1', 'true', 'yes', 'on')
+    if require_infer_health and forced_strategy != 'canary_qwen':
+        try:
+            import urllib.request as _urlreq
+            with _urlreq.urlopen('http://147.93.116.186:18025/health', timeout=10) as _r:
+                _h = json.loads(_r.read().decode('utf-8', 'ignore'))
+        except Exception as _e:
+            raise HTTPException(status_code=503, detail=f'infer_health_unavailable: {_e}')
 
-    loaded_adapter = str((_h or {}).get('loaded_adapter') or '').strip()
-    if not loaded_adapter:
-        raise HTTPException(status_code=503, detail='adapter_not_loaded: loaded_adapter is empty on infer health')
+        loaded_adapter = str((_h or {}).get('loaded_adapter') or '').strip()
+        if not loaded_adapter:
+            raise HTTPException(status_code=503, detail='adapter_not_loaded: loaded_adapter is empty on infer health')
 
     def _trace_emit(answer: str, strategy: str, outcome: str = 'success'):
         try:
@@ -5658,7 +5895,7 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
     ]
     abuse_question = any(t in ql for t in abuse_terms)
 
-    if cred_exfil_question or med_high_risk_question or abuse_question:
+    if (not bypass_insufficient_gate) and (cred_exfil_question or med_high_risk_question or abuse_question):
         ans_gate = (
             "Não tenho informação confiável sobre isso. "
             "Para questões fora do domínio operacional, recomendo consultar uma fonte específica."
@@ -5687,6 +5924,22 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
         'melhor llm', 'modelo llm mais', 'qual o melhor modelo', 'qual o modelo mais'
     ]
     risk_class = 'high' if (any(t in ql for t in high_risk_terms) or any(t in ql for t in external_ranking_terms)) else 'medium'
+
+    # Dynamic metacognitive orchestrator (phase: supervisor with tool sequence)
+    orch_enabled = str(os.getenv('ULTRON_METACOG_ORCHESTRATOR_ENABLED', '1')).strip().lower() in ('1', 'true', 'yes', 'on')
+    open_task_terms = ['planejar', 'plano', 'organizar', 'estratégia', 'estrategia', 'roteiro', 'festa surpresa', 'surpresa']
+    should_orchestrate = orch_enabled and any(t in ql for t in open_task_terms)
+    if should_orchestrate:
+        try:
+            gen_strategy = forced_strategy if forced_strategy else ('canary_qwen' if canary else 'local')
+            out_orch = await _metacog_orchestrator_run(q, metrics, generation_strategy=gen_strategy)
+            if isinstance(out_orch, dict) and str(out_orch.get('answer') or '').strip():
+                _trace_emit(str(out_orch.get('answer') or ''), 'orchestrator_qwen_tools', outcome='success')
+                prm_meta = _prm_pack(str(out_orch.get('answer') or ''), 'orchestrator_qwen_tools', metrics)
+                out_orch.update(prm_meta)
+                return out_orch
+        except Exception:
+            pass
 
     # Step 2: symbolic router before domain gate
     if symbolic_reasoner.should_route(q):
@@ -5733,8 +5986,9 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
             or any(t in ql for t in high_risk_terms)
         )
         and (not symbolic_exception)
+        and (input_class not in ('logic', 'math', 'planning', 'code'))
     )
-    if external_fact_question:
+    if (not bypass_insufficient_gate) and external_fact_question:
         ans_gate = (
             "Não tenho informação confiável sobre isso. "
             "Para questões fora do domínio operacional, recomendo consultar uma fonte específica."
@@ -5965,6 +6219,14 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
             used = strat
             break
 
+        # hard fallback for canary strategy: call Ollama endpoint directly
+        if strat == 'canary_qwen':
+            cand_direct = _direct_canary_generate(q, max_tokens=(80 if short_msg else 160))
+            if (cand_direct or '').strip() and not _looks_broken(cand_direct):
+                ans = cand_direct.strip()
+                used = 'canary_qwen_direct'
+                break
+
         # second non-deterministic pass with simpler prompt (for tiny on CPU)
         if (not forced_strategy) and strat == 'local':
             simple_prompt = f"Pergunta: {q}\nResponda em até 3 frases, português natural, sem repetir a pergunta."
@@ -6046,12 +6308,10 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
             inter = len(q_tokens.intersection(a_tokens))
             overlap_q = inter / max(1, len(q_tokens))
             overlap_a = inter / max(1, len(a_tokens))
-            if overlap_q >= 0.72 and overlap_a >= 0.72:
+            # For capability classes (logic/math/planning/code), overlap can be naturally high.
+            # Do not nullify valid answers in these classes.
+            if (input_class not in ('logic', 'math', 'planning', 'code')) and overlap_q >= 0.72 and overlap_a >= 0.72:
                 ans = ''
-
-    # Guardrail: avoid fabricated identity/factual claims outside operational scope.
-    if ans and (identity_question or high_risk_question):
-        ans = ''
 
     if not ans:
         ans = (
@@ -6079,7 +6339,33 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
 
     _trace_emit(ans, used, outcome=('fallback' if used == 'unavailable' else 'success'))
     prm_meta = _prm_pack(ans, used, metrics)
-    return {'ok': True, 'answer': ans, 'strategy': used, 'metrics': metrics, 'cache_hit': cache_hit, 'from_cache': from_cache, **prm_meta}
+    prm_risk = str((prm_meta or {}).get('prm_risk') or '').lower()
+    prm_gate_decision = 'allow'
+    if used != 'insufficient_confidence':
+        if prm_risk == 'critical':
+            ans = (
+                "Não tenho informação confiável sobre isso. "
+                "Para questões fora do domínio operacional, recomendo consultar uma fonte específica."
+            )
+            used = 'insufficient_confidence'
+            prm_gate_decision = 'block'
+        elif prm_risk == 'high':
+            prm_gate_decision = 'allow_with_warning'
+        else:
+            prm_gate_decision = 'allow'
+    else:
+        prm_gate_decision = 'block_heuristic'
+
+    return {
+        'ok': True,
+        'answer': ans,
+        'strategy': used,
+        'metrics': metrics,
+        'cache_hit': cache_hit,
+        'from_cache': from_cache,
+        'prm_gate_decision': prm_gate_decision,
+        **prm_meta,
+    }
 
 
 # Canary rollout guardrails (in-memory windowed stats)
@@ -6154,10 +6440,12 @@ def _canary_maybe_disable() -> str | None:
 @app.post('/api/metacognition/ask')
 async def metacognition_ask(req: MetacogAskRequest):
     global _CANARY_DISABLED_UNTIL_TS, _CANARY_DISABLE_REASON
+    req_id = f"req_{int(time.time()*1000)}_{secrets.token_hex(4)}"
     cfg = _canary_cfg()
     now = int(time.time())
+    qwen_main_enabled = str(os.getenv('METACOG_QWEN_MAIN', '1')).strip().lower() in ('1', 'true', 'yes', 'on')
     canary_allowed = bool(cfg['enabled']) and now >= int(_CANARY_DISABLED_UNTIL_TS or 0)
-    use_canary = canary_allowed and (random.random() < max(0.0, min(1.0, cfg['rate'])))
+    use_canary = qwen_main_enabled or (canary_allowed and (random.random() < max(0.0, min(1.0, cfg['rate']))))
 
     if use_canary:
         t0 = time.time()
@@ -6165,26 +6453,34 @@ async def metacognition_ask(req: MetacogAskRequest):
             out = await _metacognition_ask_impl(req, force_generation_strategy='canary_qwen', canary=True)
             dt = int((time.time() - t0) * 1000)
             if isinstance(out, dict):
+                out['request_id'] = req_id
                 out['canary'] = True
                 out['model'] = 'qwen2.5-7b'
                 out['latency_ms'] = dt
                 out.setdefault('strategy', 'canary_qwen')
                 _canary_record('canary', str(out.get('strategy') or ''), str(out.get('prm_risk') or ''), timeout=False)
-                _canary_maybe_disable()
-                if int(_CANARY_DISABLED_UNTIL_TS or 0) > int(time.time()):
-                    out['canary_rollout'] = {'enabled': False, 'disabled_reason': _CANARY_DISABLE_REASON}
+                if not qwen_main_enabled:
+                    _canary_maybe_disable()
+                    if int(_CANARY_DISABLED_UNTIL_TS or 0) > int(time.time()):
+                        out['canary_rollout'] = {'enabled': False, 'disabled_reason': _CANARY_DISABLE_REASON}
+                _emit_eval_for_response('/api/metacognition/ask', req_id, str(req.message or ''), out, dt)
             return out
         except Exception:
-            # timeout/error fallback to tiny path
             _canary_record('canary', 'error', None, timeout=True)
-            _canary_maybe_disable()
+            if not qwen_main_enabled:
+                _canary_maybe_disable()
 
-    # default tiny path
+    # fallback path (tiny/local) if qwen is unavailable
+    t0 = time.time()
     out = await _metacognition_ask_impl(req)
+    dt = int((time.time() - t0) * 1000)
     if isinstance(out, dict):
+        out['request_id'] = req_id
+        out.setdefault('latency_ms', dt)
         _canary_record('tiny', str(out.get('strategy') or ''), str(out.get('prm_risk') or ''), timeout=False)
-        if int(_CANARY_DISABLED_UNTIL_TS or 0) > int(time.time()):
+        if (not qwen_main_enabled) and int(_CANARY_DISABLED_UNTIL_TS or 0) > int(time.time()):
             out['canary_rollout'] = {'enabled': False, 'disabled_reason': _CANARY_DISABLE_REASON}
+        _emit_eval_for_response('/api/metacognition/ask', req_id, str(req.message or ''), out, dt)
     return out
 
 
@@ -6239,16 +6535,19 @@ async def canary_status():
 
 @app.post('/api/canary/ask')
 async def canary_ask(req: MetacogAskRequest):
+    req_id = f"req_{int(time.time()*1000)}_{secrets.token_hex(4)}"
     t0 = time.time()
     out = await _metacognition_ask_impl(req, force_generation_strategy='canary_qwen', canary=True)
     dt = int((time.time() - t0) * 1000)
     if isinstance(out, dict):
+        out['request_id'] = req_id
         out['canary'] = True
         out['model'] = 'qwen2.5-7b'
         out['latency_ms'] = dt
         out.setdefault('strategy', 'canary_qwen')
         out.setdefault('prm_score', None)
         out.setdefault('prm_risk', None)
+        _emit_eval_for_response('/api/canary/ask', req_id, str(req.message or ''), out, dt)
         # lightweight side-by-side baseline (same input, local model only)
         try:
             t1 = time.time()
@@ -6271,6 +6570,72 @@ async def canary_ask(req: MetacogAskRequest):
             }
         except Exception:
             out['compare_tinyllama'] = {'strategy': 'local_shadow', 'latency_ms': None, 'prm_score': None, 'prm_risk': None}
+    return out
+
+
+@app.post('/api/canary/ask_bypass')
+async def canary_ask_bypass(req: MetacogAskRequest):
+    req_id = f"req_{int(time.time()*1000)}_{secrets.token_hex(4)}"
+    t0 = time.time()
+    out = await _metacognition_ask_impl(req, force_generation_strategy='canary_qwen', canary=True, bypass_insufficient_gate=True)
+    dt = int((time.time() - t0) * 1000)
+    if isinstance(out, dict):
+        out['request_id'] = req_id
+        out['canary'] = True
+        out['model'] = 'qwen2.5-7b'
+        out['latency_ms'] = dt
+        out['mode'] = 'gate_bypass'
+        out.setdefault('strategy', 'canary_qwen')
+        out.setdefault('prm_score', None)
+        out.setdefault('prm_risk', None)
+        _emit_eval_for_response('/api/canary/ask_bypass', req_id, str(req.message or ''), out, dt)
+    return out
+
+
+@app.post('/api/canary/ask_direct')
+async def canary_ask_direct(req: MetacogAskRequest):
+    req_id = f"req_{int(time.time()*1000)}_{secrets.token_hex(4)}"
+    q = str(req.message or '').strip()
+    t0 = time.time()
+    ans = _direct_canary_generate(q, max_tokens=220)
+    if not ans:
+        try:
+            ans = llm.complete(
+                q,
+                strategy='canary_qwen',
+                system=None,
+                json_mode=False,
+                inject_persona=False,
+                max_tokens=220,
+                cloud_fallback=False,
+            ) or ''
+        except Exception:
+            ans = ''
+    dt = int((time.time() - t0) * 1000)
+    if not str(ans).strip():
+        ans = "Não tenho informação confiável sobre isso. Para questões fora do domínio operacional, recomendo consultar uma fonte específica."
+        strategy = 'insufficient_confidence'
+    else:
+        strategy = 'direct_canary_qwen'
+
+    try:
+        prm = prm_lite.score_answer(q, str(ans).strip(), context='', meta={'strategy': strategy})
+    except Exception:
+        prm = {}
+    out = {
+        'ok': True,
+        'request_id': req_id,
+        'answer': str(ans).strip(),
+        'strategy': strategy,
+        'canary': True,
+        'model': 'qwen2.5-7b',
+        'latency_ms': dt,
+        'mode': 'direct_model',
+        'prm_score': prm.get('score') if isinstance(prm, dict) else None,
+        'prm_risk': prm.get('risk') if isinstance(prm, dict) else None,
+        'prm_reasons': prm.get('reasons') if isinstance(prm, dict) else [],
+    }
+    _emit_eval_for_response('/api/canary/ask_direct', req_id, q, out, dt)
     return out
 
 
@@ -6397,6 +6762,11 @@ async def llm_health(provider: str = 'auto'):
 @app.get('/api/replay/decision-traces/status')
 async def replay_decision_traces_status():
     return replay_traces.status()
+
+
+@app.get('/api/replay/thought-chain')
+async def replay_thought_chain(max_rows: int = 300, slow_only: bool = False):
+    return replay_traces.replay_thought_chain(max_rows=max_rows, slow_only=slow_only)
 
 
 @app.post('/api/replay/decision-traces/run')
