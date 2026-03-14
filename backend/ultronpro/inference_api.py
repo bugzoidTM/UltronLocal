@@ -24,7 +24,7 @@ except Exception:
 app = FastAPI(title='UltronPro Inference API', version='0.1.0')
 
 API_TOKEN = str(os.getenv('ULTRON_LOCAL_INFER_TOKEN', '') or '').strip()
-BASE_MODEL = str(os.getenv('ULTRON_FINETUNE_BASE_MODEL', 'TinyLlama/TinyLlama-1.1B-Chat-v1.0'))
+BASE_MODEL = str(os.getenv('ULTRON_FINETUNE_BASE_MODEL', 'Qwen/Qwen2.5-3B-Instruct'))
 RUNTIME_ACTIVE_ADAPTER = Path('/app/data/runtime_active_adapter.json')
 
 _lock = Lock()

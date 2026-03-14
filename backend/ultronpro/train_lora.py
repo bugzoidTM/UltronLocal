@@ -12,8 +12,8 @@ from pathlib import Path
 import httpx
 
 from datasets import load_dataset
-from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments, Trainer, DataCollatorForLanguageModeling, TrainerCallback, EarlyStoppingCallback
-from peft import LoraConfig, get_peft_model, TaskType
+from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments, Trainer, DataCollatorForLanguageModeling, TrainerCallback, EarlyStoppingCallback, BitsAndBytesConfig
+from peft import LoraConfig, get_peft_model, TaskType, prepare_model_for_kbit_training
 
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
@@ -80,6 +80,7 @@ def main():
     ap.add_argument('--dataset', required=True)
     ap.add_argument('--adapter-out', required=True)
     ap.add_argument('--val-dataset', default='')
+    ap.add_argument('--method', choices=['qlora', 'lora'], default='qlora')
     ap.add_argument('--epochs', type=int, default=1)
     ap.add_argument('--max-steps', type=int, default=0)
     ap.add_argument('--run-preset', default='production')
@@ -98,13 +99,30 @@ def main():
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
-    model = AutoModelForCausalLM.from_pretrained(args.base_model)
+    qlora_enabled = str(args.method or 'qlora').strip().lower() == 'qlora'
+    if qlora_enabled:
+        bnb_cfg = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_use_double_quant=True,
+            bnb_4bit_quant_type='nf4',
+            bnb_4bit_compute_dtype='float16',
+        )
+        model = AutoModelForCausalLM.from_pretrained(
+            args.base_model,
+            quantization_config=bnb_cfg,
+            device_map='auto',
+            torch_dtype='auto',
+        )
+        model = prepare_model_for_kbit_training(model)
+    else:
+        model = AutoModelForCausalLM.from_pretrained(args.base_model)
 
     lora_cfg = LoraConfig(
         task_type=TaskType.CAUSAL_LM,
         r=16,
         lora_alpha=32,
         lora_dropout=0.05,
+        bias='none',
         target_modules=['q_proj', 'k_proj', 'v_proj', 'o_proj', 'up_proj', 'down_proj', 'gate_proj'],
     )
     model = get_peft_model(model, lora_cfg)
@@ -264,6 +282,7 @@ def main():
     meta = {
         'ok': True,
         'base_model': args.base_model,
+        'method': str(args.method or 'qlora'),
         'dataset': str(ds_path),
         'val_dataset': str(args.val_dataset or ''),
         'adapter_out': str(out),

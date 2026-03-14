@@ -23,6 +23,10 @@ EVAL_GOLD_PATH = Path('/app/data/eval_dataset_gold.json')
 AUTO_PATH = Path('/app/data/finetune_auto.json')
 METRICS_PATH = Path('/app/data/finetune_metrics.json')
 ALERTS_PATH = Path('/app/data/finetune_alerts.jsonl')
+ARTIFACTS_DIR = Path('/app/data/finetune_artifacts')
+RELEASES_DIR = Path('/app/data/finetune_releases')
+ARTIFACT_REG_PATH = Path('/app/data/finetune_artifacts_registry.json')
+ACTIVE_RELEASE_PATH = Path('/app/data/runtime_active_adapter.json')
 
 
 def _load(path: Path, default):
@@ -61,6 +65,47 @@ def _load_reg() -> dict[str, Any]:
 
 def _save_reg(d: dict[str, Any]):
     _save(REG_PATH, d)
+
+
+def _load_artifact_reg() -> dict[str, Any]:
+    d = _load(ARTIFACT_REG_PATH, {'artifacts': [], 'releases': []})
+    if not isinstance(d, dict):
+        d = {'artifacts': [], 'releases': []}
+    d.setdefault('artifacts', [])
+    d.setdefault('releases', [])
+    return d
+
+
+def _save_artifact_reg(d: dict[str, Any]):
+    _save(ARTIFACT_REG_PATH, d)
+
+
+def _sha256_path(path: Path) -> str:
+    import hashlib
+    h = hashlib.sha256()
+    with path.open('rb') as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b''):
+            if not chunk:
+                break
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def _artifact_urls(artifact_id: str) -> dict[str, str]:
+    aid = str(artifact_id or '').strip()
+    return {
+        'manifest': f'/api/plasticity/artifacts/{aid}',
+        'download': f'/api/plasticity/artifacts/{aid}/download',
+    }
+
+
+def _release_urls(release_id: str) -> dict[str, str]:
+    rid = str(release_id or '').strip()
+    return {
+        'manifest': f'/api/plasticity/releases/{rid}',
+        'download': f'/api/plasticity/releases/{rid}/download',
+        'modelfile': f'/api/plasticity/releases/{rid}/modelfile',
+    }
 
 
 def _extract_pair_from_note(note: str) -> tuple[str, str]:
@@ -376,7 +421,7 @@ def create_job(task_type: str, base_model: str, method: str = 'qlora', max_sampl
     d = _load_jobs()
     jid = 'ft_' + uuid.uuid4().hex[:10]
 
-    allowed_base = str(os.getenv('ULTRON_FINETUNE_BASE_MODEL', 'TinyLlama/TinyLlama-1.1B-Chat-v1.0'))
+    allowed_base = str(os.getenv('ULTRON_FINETUNE_BASE_MODEL', 'Qwen/Qwen2.5-3B-Instruct'))
     strict_base = str(os.getenv('ULTRON_FINETUNE_STRICT_BASE', '1')).strip().lower() not in ('0', 'false', 'no', 'off')
     req_base = str(base_model or allowed_base)[:120]
     final_base = allowed_base if strict_base else req_base
@@ -454,6 +499,25 @@ def _configured_remote_urls() -> list[str]:
     if single and single not in urls:
         urls.append(single)
     return urls
+
+
+def _token_for_remote_url(remote_url: str) -> str:
+    default_tok = os.getenv('ULTRON_FINETUNE_TOKEN', '').strip()
+    raw = str(os.getenv('ULTRON_FINETUNE_TOKENS_JSON', '') or '').strip()
+    if not raw:
+        return default_tok
+    try:
+        mp = json.loads(raw)
+        if isinstance(mp, dict):
+            # exact url then host fallback
+            if str(remote_url) in mp and str(mp.get(str(remote_url)) or '').strip():
+                return str(mp.get(str(remote_url)) or '').strip()
+            host = str(remote_url or '').split('://', 1)[-1].split('/', 1)[0]
+            if host in mp and str(mp.get(host) or '').strip():
+                return str(mp.get(host) or '').strip()
+    except Exception:
+        pass
+    return default_tok
 
 
 def _pick_remote_url(job_id: str | None = None) -> str:
@@ -590,7 +654,7 @@ def start_job(job_id: str, dry_run: bool = False) -> dict[str, Any]:
     base_model = str(j.get('base_model') or '').strip()
     # Ollama tags are not valid HF model ids for transformers trainer
     if ':' in base_model and '/' not in base_model:
-        base_model = os.getenv('ULTRON_FINETUNE_BASE_MODEL', 'TinyLlama/TinyLlama-1.1B-Chat-v1.0')
+        base_model = os.getenv('ULTRON_FINETUNE_BASE_MODEL', 'Qwen/Qwen2.5-3B-Instruct')
 
     preset_cfg = _resolve_preset_params(j)
     run_preset = str(preset_cfg.get('preset') or 'production')
@@ -603,9 +667,11 @@ def start_job(job_id: str, dry_run: bool = False) -> dict[str, Any]:
         grad_accum = max(1, int(preset_cfg.get('grad_accum') or 8))
         max_length = max(64, int(preset_cfg.get('max_length') or 512))
 
+        method = 'qlora'
         cmd = (
             f"python -m ultronpro.train_lora "
             f"--base-model '{base_model}' "
+            f"--method '{method}' "
             f"--dataset '{str(dataset)}' "
             f"--val-dataset '{str(val_dataset) if val_dataset.exists() else ''}' "
             f"--adapter-out '{adapter_out}' "
@@ -625,7 +691,7 @@ def start_job(job_id: str, dry_run: bool = False) -> dict[str, Any]:
         )
 
     remote_url = _pick_remote_url(job_id)
-    remote_token = os.getenv('ULTRON_FINETUNE_TOKEN', '').strip()
+    remote_token = _token_for_remote_url(remote_url) if remote_url else os.getenv('ULTRON_FINETUNE_TOKEN', '').strip()
 
     if dry_run:
         jj = _set_job(job_id, {'status': 'dry_run_ready', 'command': cmd, 'remote_url': remote_url or None, 'run_preset': run_preset})
@@ -663,6 +729,7 @@ def start_job(job_id: str, dry_run: bool = False) -> dict[str, Any]:
             max_steps = max(0, int(preset_cfg.get('max_steps') or 0))
             payload = {
                 'base_model': base_model,
+                'method': str(j.get('method') or 'qlora'),
                 'dataset': str(dataset),
                 'dataset_content': ds_text,
                 'val_dataset': str(val_dataset) if val_dataset.exists() else '',
@@ -731,10 +798,70 @@ def start_job(job_id: str, dry_run: bool = False) -> dict[str, Any]:
     return {'ok': True, 'job': jj}
 
 
+def _persist_artifact_from_job(j: dict[str, Any], remote_job_id: str = '') -> dict[str, Any]:
+    job_id = str((j or {}).get('id') or '').strip()
+    local_out = Path(str((j or {}).get('adapter_out') or '')).resolve()
+    if not job_id:
+        return {'ok': False, 'error': 'job_id_required'}
+    if (not local_out.exists()) or (not local_out.is_dir()):
+        return {'ok': False, 'error': 'adapter_out_missing', 'adapter_out': str(local_out)}
+    if not (local_out / 'adapter_config.json').exists():
+        return {'ok': False, 'error': 'adapter_config_missing', 'adapter_out': str(local_out)}
+
+    artifact_id = 'art_' + uuid.uuid4().hex[:10]
+    root = ARTIFACTS_DIR / artifact_id
+    extracted = root / 'adapter'
+    root.mkdir(parents=True, exist_ok=True)
+    if extracted.exists():
+        shutil.rmtree(extracted, ignore_errors=True)
+    shutil.copytree(local_out, extracted, dirs_exist_ok=True)
+
+    tar_path = root / 'artifact.tar.gz'
+    with tarfile.open(tar_path, 'w:gz') as tf:
+        tf.add(extracted, arcname='adapter')
+
+    cfg = {}
+    try:
+        cfg = json.loads((extracted / 'adapter_config.json').read_text(encoding='utf-8'))
+    except Exception:
+        cfg = {}
+
+    meta = {
+        'id': artifact_id,
+        'job_id': job_id,
+        'remote_job_id': str(remote_job_id or (j or {}).get('remote_job_id') or ''),
+        'task_type': str((j or {}).get('task_type') or 'general'),
+        'base_model': str((j or {}).get('base_model') or ''),
+        'source_remote_url': str((j or {}).get('remote_url') or ''),
+        'artifact_dir': str(root),
+        'adapter_dir': str(extracted),
+        'tarball_path': str(tar_path),
+        'sha256': _sha256_path(tar_path),
+        'size_bytes': int(tar_path.stat().st_size if tar_path.exists() else 0),
+        'created_at': int(time.time()),
+        'adapter_config': cfg,
+        'urls': _artifact_urls(artifact_id),
+    }
+    reg = _load_artifact_reg()
+    reg['artifacts'].append(meta)
+    _save_artifact_reg(reg)
+    _set_job(job_id, {'artifact_id': artifact_id, 'artifact_dir': str(root), 'artifact_tarball': str(tar_path)})
+    return {'ok': True, 'artifact': meta}
+
+
 def register_adapter(job_id: str, quality_score: float = 0.0, notes: str | None = None) -> dict[str, Any]:
     j = get_job(job_id)
     if not j:
         return {'ok': False, 'error': 'job_not_found'}
+
+    artifact_meta = None
+    if not str(j.get('artifact_id') or '').strip():
+        pers = _persist_artifact_from_job(j)
+        if bool(pers.get('ok')):
+            artifact_meta = pers.get('artifact') or {}
+            j = get_job(job_id) or j
+    else:
+        artifact_meta = next((a for a in (_load_artifact_reg().get('artifacts') or []) if str(a.get('id') or '') == str(j.get('artifact_id') or '')), None)
 
     reg = _load_reg()
     ad = {
@@ -742,7 +869,8 @@ def register_adapter(job_id: str, quality_score: float = 0.0, notes: str | None 
         'job_id': str(job_id),
         'task_type': str(j.get('task_type') or 'general'),
         'base_model': str(j.get('base_model') or ''),
-        'adapter_path': str(j.get('adapter_out') or ''),
+        'adapter_path': str((artifact_meta or {}).get('adapter_dir') or j.get('adapter_out') or ''),
+        'artifact_id': str((artifact_meta or {}).get('id') or j.get('artifact_id') or ''),
         'quality_score': float(quality_score or 0.0),
         'notes': str(notes or '')[:240],
         'created_at': int(time.time()),
@@ -752,7 +880,7 @@ def register_adapter(job_id: str, quality_score: float = 0.0, notes: str | None 
     _save_reg(reg)
     _set_job(job_id, {'status': 'registered'})
     _update_metrics_snapshot()
-    return {'ok': True, 'adapter': ad}
+    return {'ok': True, 'adapter': ad, 'artifact': artifact_meta}
 
 
 def notify_remote_complete(job_id: str, remote_job_id: str = '', adapter_out: str = '', notes: str | None = None) -> dict[str, Any]:
@@ -812,7 +940,7 @@ def _auto_default() -> dict[str, Any]:
         'min_failure_rate': 0.2,
         'cooldown_sec': 6 * 3600,
         'task_type': 'grounding',
-        'base_model': 'TinyLlama/TinyLlama-1.1B-Chat-v1.0',
+        'base_model': 'Qwen/Qwen2.5-3B-Instruct',
         'last_triggered_at': 0,
         'last_job_id': None,
     }
@@ -897,7 +1025,7 @@ def auto_maybe_trigger(plasticity_status: dict[str, Any]) -> dict[str, Any]:
     # create + start job
     j = create_job(
         str(cfg.get('task_type') or 'grounding'),
-        str(cfg.get('base_model') or 'TinyLlama/TinyLlama-1.1B-Chat-v1.0'),
+        str(cfg.get('base_model') or 'Qwen/Qwen2.5-3B-Instruct'),
         method='qlora',
         max_samples=600,
     )
@@ -923,7 +1051,7 @@ def job_progress(job_id: str) -> dict[str, Any]:
     if st == 'running_remote':
         rj = str(j.get('remote_job_id') or '')
         rurl = str(j.get('remote_url') or os.getenv('ULTRON_FINETUNE_URL', '')).strip()
-        rtoken = str(os.getenv('ULTRON_FINETUNE_TOKEN', '')).strip()
+        rtoken = _token_for_remote_url(rurl) if rurl else str(os.getenv('ULTRON_FINETUNE_TOKEN', '')).strip()
         if rj and rurl:
             try:
                 base = rurl.rsplit('/train', 1)[0] if '/train' in rurl else rurl.rsplit('/', 1)[0]
@@ -1056,32 +1184,79 @@ def _passport_gate(task_type: str, candidate_score: float, baseline_score: float
 
 
 def _runtime_activate_adapter(adapter: dict[str, Any]) -> dict[str, Any]:
-    """Mark promoted TinyLlama adapter for local PEFT inference runtime (loaded lazily, no heavy restart)."""
-    enabled = str(os.getenv('ULTRON_RUNTIME_AUTO_APPLY_ADAPTER', '1')).strip().lower() not in ('0', 'false', 'no', 'off')
-    if not enabled:
-        return {'ok': True, 'applied': False, 'reason': 'runtime_auto_apply_disabled'}
+    """Create an immutable promoted release on the VPS and mark it active.
+    This is topology-safe: the artifact lives in the control plane, not on U1/U2.
+    """
+    artifact_id = str(adapter.get('artifact_id') or '').strip()
+    if not artifact_id:
+        return {'ok': False, 'applied': False, 'reason': 'missing_artifact_id'}
 
-    base_model = str(adapter.get('base_model') or '')
-    if 'tinyllama' not in base_model.lower():
-        return {'ok': True, 'applied': False, 'reason': 'base_model_not_supported', 'base_model': base_model}
+    reg = _load_artifact_reg()
+    artifact = next((a for a in (reg.get('artifacts') or []) if str(a.get('id') or '') == artifact_id), None)
+    if not artifact:
+        return {'ok': False, 'applied': False, 'reason': 'artifact_not_found', 'artifact_id': artifact_id}
 
-    adapter_path = str(adapter.get('adapter_path') or '')
-    if not adapter_path:
-        return {'ok': False, 'applied': False, 'reason': 'missing_adapter_path'}
+    release_id = 'rel_' + uuid.uuid4().hex[:10]
+    release_root = RELEASES_DIR / release_id
+    adapter_dst = release_root / 'adapter'
+    release_root.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(Path(str(artifact.get('adapter_dir') or '')), adapter_dst, dirs_exist_ok=True)
 
-    ap = Path(adapter_path)
-    if not ap.exists():
-        return {'ok': False, 'applied': False, 'reason': 'adapter_path_not_found', 'adapter_path': adapter_path}
+    ollama_base = str(os.getenv('OLLAMA_CANARY_MODEL', 'qwen2.5:3b-instruct-q4_K_M')).strip()
+    model_name = f"qwen-promoted-{str(adapter.get('task_type') or 'general').strip().lower()}-{release_id[-6:]}"
+    modelfile = (
+        f"FROM {ollama_base}\n"
+        f"ADAPTER ./adapter\n"
+        f"TEMPLATE \"{{{{ .Prompt }}}}\"\n"
+    )
+    (release_root / 'Modelfile').write_text(modelfile, encoding='utf-8')
+
+    release = {
+        'id': release_id,
+        'adapter_id': str(adapter.get('id') or ''),
+        'artifact_id': artifact_id,
+        'job_id': str(adapter.get('job_id') or ''),
+        'task_type': str(adapter.get('task_type') or 'general'),
+        'base_model': str(adapter.get('base_model') or ''),
+        'ollama_base_model': ollama_base,
+        'ollama_target_model': model_name,
+        'release_dir': str(release_root),
+        'adapter_dir': str(adapter_dst),
+        'modelfile_path': str(release_root / 'Modelfile'),
+        'created_at': int(time.time()),
+        'sha256': str(artifact.get('sha256') or ''),
+        'artifact_urls': _artifact_urls(artifact_id),
+        'release_urls': _release_urls(release_id),
+        'apply': {
+            'kind': 'ollama_modelfile_with_adapter',
+            'pull_from_vps': True,
+            'commands': [
+                f"curl -fsSL {{CONTROL_PLANE_URL}}/api/plasticity/releases/{release_id}/download -o /tmp/{release_id}.tar.gz",
+                f"mkdir -p /tmp/{release_id} && tar -xzf /tmp/{release_id}.tar.gz -C /tmp/{release_id}",
+                f"cd /tmp/{release_id} && ollama create {model_name} -f Modelfile",
+            ],
+        },
+    }
+    reg['releases'] = [r for r in (reg.get('releases') or []) if not (str(r.get('task_type') or '').strip().lower() == str(adapter.get('task_type') or '').strip().lower() and bool(r.get('active')))]
+    release['active'] = True
+    reg['releases'].append(release)
+    _save_artifact_reg(reg)
 
     marker = {
         'ts': int(time.time()),
+        'mode': 'remote_qwen_release',
+        'release_id': release_id,
         'adapter_id': str(adapter.get('id') or ''),
-        'adapter_path': adapter_path,
-        'base_model': base_model,
+        'artifact_id': artifact_id,
+        'base_model': str(adapter.get('base_model') or ''),
+        'ollama_base_model': ollama_base,
+        'ollama_target_model': model_name,
         'task_type': str(adapter.get('task_type') or ''),
+        'active': True,
+        'release_urls': _release_urls(release_id),
     }
-    Path('/app/data/runtime_active_adapter.json').write_text(json.dumps(marker, ensure_ascii=False, indent=2), encoding='utf-8')
-    return {'ok': True, 'applied': True, 'runtime': 'peft_local', 'marker': marker}
+    ACTIVE_RELEASE_PATH.write_text(json.dumps(marker, ensure_ascii=False, indent=2), encoding='utf-8')
+    return {'ok': True, 'applied': True, 'runtime': 'remote_qwen_release', 'marker': marker, 'release': release}
 
 
 def promote_adapter(adapter_id: str, min_gain: float = 0.02, baseline_score: float | None = None, candidate_score: float | None = None) -> dict[str, Any]:
@@ -1147,6 +1322,37 @@ def promote_adapter(adapter_id: str, min_gain: float = 0.02, baseline_score: flo
     return {'ok': True, 'promoted': True, 'decision': decision, 'adapter': chosen, 'runtime_apply': runtime_apply}
 
 
+def artifacts(limit: int = 80) -> list[dict[str, Any]]:
+    arr = list((_load_artifact_reg().get('artifacts') or []))
+    return arr[-max(1, int(limit or 80)):]
+
+
+def releases(limit: int = 80) -> list[dict[str, Any]]:
+    arr = list((_load_artifact_reg().get('releases') or []))
+    return arr[-max(1, int(limit or 80)):]
+
+
+def get_artifact(artifact_id: str) -> dict[str, Any] | None:
+    return next((a for a in (_load_artifact_reg().get('artifacts') or []) if str(a.get('id') or '') == str(artifact_id)), None)
+
+
+def get_release(release_id: str) -> dict[str, Any] | None:
+    return next((r for r in (_load_artifact_reg().get('releases') or []) if str(r.get('id') or '') == str(release_id)), None)
+
+
+def active_release(task_type: str | None = None) -> dict[str, Any] | None:
+    tt = str(task_type or '').strip().lower()
+    rels = list((_load_artifact_reg().get('releases') or []))
+    rels.reverse()
+    for r in rels:
+        if not bool(r.get('active')):
+            continue
+        if tt and str(r.get('task_type') or '').strip().lower() != tt:
+            continue
+        return r
+    return None
+
+
 def status(limit: int = 40) -> dict[str, Any]:
     # watchdog: tenta despachar fila pendente sem loop agressivo
     try:
@@ -1164,8 +1370,15 @@ def status(limit: int = 40) -> dict[str, Any]:
         'dataset_path': str(DATASET_PATH),
         'metrics_path': str(METRICS_PATH),
         'alerts_path': str(ALERTS_PATH),
+        'artifact_registry_path': str(ARTIFACT_REG_PATH),
+        'artifacts_dir': str(ARTIFACTS_DIR),
+        'releases_dir': str(RELEASES_DIR),
+        'active_release_path': str(ACTIVE_RELEASE_PATH),
         'metrics': m,
         'auto': auto_status(),
         'jobs': js,
         'adapters': ad,
+        'artifacts': artifacts(limit=limit),
+        'releases': releases(limit=limit),
+        'active_release': active_release(),
     }

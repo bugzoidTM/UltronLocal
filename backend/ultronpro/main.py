@@ -12,12 +12,12 @@ from typing import List, Optional, Dict, Any
 from fastapi import FastAPI, HTTPException, Request, UploadFile, File, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse, JSONResponse
+from fastapi.responses import StreamingResponse, JSONResponse, FileResponse, PlainTextResponse
 from pydantic import BaseModel
 import uvicorn
 import httpx
 
-from ultronpro import llm, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, finetune_lora, roadmap_v5, agi_path, episodic_memory, learning_agenda, sleep_cycle, replay_traces, rag_synth_generator, semantic_cache, prm_lite, symbolic_reasoner, reflexion_agent
+from ultronpro import llm, llm_adapter, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, finetune_lora, roadmap_v5, agi_path, episodic_memory, learning_agenda, sleep_cycle, replay_traces, rag_synth_generator, semantic_cache, prm_lite, symbolic_reasoner, reflexion_agent, cognitive_state, causal_graph, sandbox_client, web_browser
 from ultronpro.knowledge_bridge import search_knowledge, ingest_knowledge
 
 # Logging
@@ -38,7 +38,19 @@ app.add_middleware(
 
 @app.middleware("http")
 async def ui_cache_bust_headers(request: Request, call_next):
-    response = await call_next(request)
+    try:
+        response = await call_next(request)
+    except RuntimeError as e:
+        p = request.url.path or ""
+        if "No response returned" in str(e) and p == "/api/metacognition/ask":
+            return JSONResponse({
+                "ok": False,
+                "answer": "Não consegui responder com confiança agora. Tente novamente em instantes.",
+                "strategy": "middleware_fallback",
+                "model": "tiny",
+                "error": "no_response_returned",
+            }, status_code=200)
+        raise
     path = request.url.path or "/"
     if request.method == "GET" and (path == "/" or path == "/index.html" or path.endswith(".html")):
         response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
@@ -73,7 +85,19 @@ async def ui_lite_api_guard(request: Request, call_next):
             return JSONResponse({"ok": True, "running": False})
         if p.startswith("/api/turbo/report"):
             return JSONResponse({"report": {}})
-    return await call_next(request)
+    try:
+        return await call_next(request)
+    except RuntimeError as e:
+        p = request.url.path or ""
+        if "No response returned" in str(e) and p == "/api/metacognition/ask":
+            return JSONResponse({
+                "ok": False,
+                "answer": "Não consegui responder com confiança agora. Tente novamente em instantes.",
+                "strategy": "middleware_fallback",
+                "model": "tiny",
+                "error": "no_response_returned",
+            }, status_code=200)
+        raise
 
 # --- Models ---
 class IngestRequest(BaseModel):
@@ -359,13 +383,15 @@ _autonomy_state = {
 
 # Etapa A: budget + cooldown inteligente
 AUTONOMY_BUDGET_PER_MIN = int(os.getenv('ULTRON_AUTONOMY_BUDGET_PER_MIN', '2'))
+METACOG_LLM_ATTEMPT_TIMEOUT_SEC = float(os.getenv('METACOG_LLM_ATTEMPT_TIMEOUT_SEC', '18') or 18)
+METACOG_LLM_TOTAL_BUDGET_SEC = float(os.getenv('METACOG_LLM_TOTAL_BUDGET_SEC', '28') or 28)
 AUTONOMY_LOOP_ENABLED = os.getenv('ULTRON_AUTONOMY_ENABLED', '1') != '0'
 JUDGE_LOOP_ENABLED = os.getenv('ULTRON_JUDGE_ENABLED', '1') != '0'
 AUTOFEEDER_ENABLED = os.getenv('ULTRON_AUTOFEEDER_ENABLED', '1') != '0'
 ROADMAP_LOOP_ENABLED = os.getenv('ULTRON_ROADMAP_ENABLED', '1') != '0'
 AGI_PATH_LOOP_ENABLED = os.getenv('ULTRON_AGI_PATH_ENABLED', '1') != '0'
 REFLEXION_LOOP_ENABLED = os.getenv('ULTRON_REFLEXION_ENABLED', '1') != '0'
-VOICE_PREWARM_ENABLED = os.getenv('ULTRON_PREWARM_ENABLED', '1') != '0'
+VOICE_PREWARM_ENABLED = os.getenv('ULTRON_PREWARM_ENABLED', os.getenv('ULTRON_VOICE_PREWARM_ENABLED', '1')) != '0'
 FINETUNE_AUTOTRIGGER_ENABLED = os.getenv('ULTRON_FINETUNE_AUTOTRIGGER', '1') != '0'
 AUTONOMY_TICK_SEC = max(20, int(os.getenv('ULTRON_AUTONOMY_TICK_SEC', '75')))
 JUDGE_TICK_SEC = max(45, int(os.getenv('ULTRON_JUDGE_TICK_SEC', '90')))
@@ -383,6 +409,7 @@ ACTION_COOLDOWNS_SEC = {
     "auto_resolve_conflicts": 90,
     "generate_questions": 120,
     "ask_evidence": 180,
+    "execute_subgoal": 120,
     "clarify_laws": 300,
     "curate_memory": 300,
     "prune_memory": 420,
@@ -413,6 +440,11 @@ _external_confirm_tokens: dict[str, dict] = {}
 _selfpatch_tokens: dict[str, dict] = {}
 BENCHMARK_HISTORY_PATH = Path("/app/data/benchmark_history.json")
 PERSISTENT_GOALS_PATH = Path("/app/data/persistent_goals.json")
+DEEP_CONTEXT_PATH = Path('/app/data/deep_context_snapshot.json')
+MISSION_CONTROL_LOG_PATH = Path('/app/data/mission_control_log.jsonl')
+MISSION_CONTROL_CFG_PATH = Path('/app/data/mission_control_config.json')
+MISSION_CONTROL_STATE_PATH = Path('/app/data/mission_control_state.json')
+_mission_control_task: asyncio.Task | None = None
 PROCEDURE_ARTIFACTS_DIR = Path("/app/data/procedure_artifacts")
 NEUROPLASTIC_GATE_STATE_PATH = Path("/app/data/neuroplastic_gate_state.json")
 
@@ -1083,6 +1115,372 @@ def _run_tool_route(intent: str, context: dict | None = None, prefer_low_cost: b
     return {'status': 'error', 'attempted': attempted, 'plan': plan}
 
 
+async def _run_subgoal_dispatch(root_id: str, node_id: str) -> dict:
+    root = subgoals.get_root(root_id)
+    node = next((n for n in (root or {}).get('nodes') or [] if str(n.get('id')) == str(node_id)), None)
+    if not node:
+        return {'ok': False, 'status': 'missing_node'}
+
+    ntype = str(node.get('type') or 'execution')
+    title = str(node.get('title') or '')
+    objective = str(node.get('objective') or title)
+    criteria = str(node.get('success_criteria') or '')
+
+    if ntype == 'clarification':
+        try:
+            prompt = f"""Clarify this subgoal for autonomous execution.
+Return ONLY JSON with keys: objective_definition, constraints (array), verification_hint.
+Subgoal title: {title}
+Objective: {objective}
+Success criteria: {criteria}
+"""
+            raw = llm.complete(prompt, strategy='cheap', json_mode=True)
+            d = json.loads(raw) if raw else {}
+        except Exception:
+            d = {}
+        observed = json.dumps({
+            'objective_definition': d.get('objective_definition') or objective,
+            'constraints': d.get('constraints') or ['respect current goal scope'],
+            'verification_hint': d.get('verification_hint') or criteria,
+        }, ensure_ascii=False)
+        subgoals.update_node(root_id, node_id, {'last_result': observed, 'origin': 'dispatcher_clarification'})
+        return {'ok': True, 'type': ntype, 'observed_result': observed}
+
+    if ntype == 'execution':
+        try:
+            out = await _metacog_orchestrator_run(objective, metrics={}, generation_strategy='canary_qwen')
+        except Exception as e:
+            out = {'ok': False, 'answer': '', 'error': str(e)}
+        observed = json.dumps({
+            'strategy': out.get('strategy'),
+            'answer': out.get('answer'),
+            'prm_score': out.get('prm_score'),
+            'prm_risk': out.get('prm_risk'),
+            'ok': out.get('ok', False),
+        }, ensure_ascii=False)
+        subgoals.update_node(root_id, node_id, {'last_result': observed, 'origin': 'dispatcher_execution'})
+        return {'ok': True, 'type': ntype, 'observed_result': observed, 'execution': out}
+
+    if ntype == 'validation':
+        deps = [str(x) for x in (node.get('dependencies') or []) if str(x).strip()]
+        dep_results = []
+        for dep in deps:
+            dn = next((n for n in (root or {}).get('nodes') or [] if str(n.get('id')) == dep), None)
+            if dn and dn.get('last_result'):
+                dep_results.append(str(dn.get('last_result'))[:700])
+        context_txt = "\n".join(dep_results)[:1400]
+        prm = prm_lite.score_answer(criteria or objective, context_txt or 'no prior result', context=context_txt, meta={'strategy': 'subgoal_validation'})
+        observed = json.dumps({
+            'validation_query': criteria or objective,
+            'context_sample': context_txt[:400],
+            'prm_score': prm.get('score'),
+            'prm_risk': prm.get('risk'),
+            'prm_reasons': prm.get('reasons') or [],
+        }, ensure_ascii=False)
+        subgoals.update_node(root_id, node_id, {'last_result': observed, 'origin': 'dispatcher_validation'})
+        return {'ok': True, 'type': ntype, 'observed_result': observed, 'validation': prm}
+
+    if ntype == 'consolidation':
+        deps = [str(x) for x in (node.get('dependencies') or []) if str(x).strip()]
+        dep_results = []
+        for dep in deps:
+            dn = next((n for n in (root or {}).get('nodes') or [] if str(n.get('id')) == dep), None)
+            if dn and dn.get('last_result'):
+                dep_results.append({'id': dep, 'result': str(dn.get('last_result'))[:900]})
+        pm = _run_post_execution_learning(
+            query=objective,
+            answer=json.dumps(dep_results, ensure_ascii=False),
+            steps_executed=dep_results[:4],
+            planner_context={'verification': {'success_criteria': criteria, 'root_id': root_id, 'node_id': node_id}},
+            task_type='subgoal_consolidation',
+            episode_id=node_id,
+        )
+        try:
+            causal_graph.apply_delta_update(
+                cause=f'subgoal:{title.lower()[:80]}',
+                effect='subgoal_consolidated_learning',
+                condition=f'root_id={root_id}',
+                category='confirmed',
+                evidence={'node_id': node_id, 'type': ntype},
+                source='subgoal_dispatcher',
+            )
+        except Exception:
+            pass
+        observed = json.dumps({'postmortem': pm.get('postmortem') or {}, 'procedural_update': pm.get('procedural_update') or {}}, ensure_ascii=False)
+        subgoals.update_node(root_id, node_id, {'last_result': observed, 'origin': 'dispatcher_consolidation'})
+        return {'ok': True, 'type': ntype, 'observed_result': observed, 'postmortem': pm}
+
+    observed = f'unsupported_subgoal_type:{ntype}'
+    subgoals.update_node(root_id, node_id, {'last_result': observed})
+    return {'ok': False, 'type': ntype, 'observed_result': observed, 'status': 'unsupported_type'}
+
+
+def _tail_jsonl(path: Path, limit: int = 8) -> list[dict]:
+    try:
+        if not path.exists():
+            return []
+        lines = path.read_text(encoding='utf-8', errors='ignore').splitlines()[-max(1, int(limit)):]
+        out = []
+        for ln in lines:
+            try:
+                x = json.loads(ln)
+                if isinstance(x, dict):
+                    out.append(x)
+            except Exception:
+                pass
+        return out
+    except Exception:
+        return []
+
+
+def _deep_context_snapshot(reason: str = 'runtime', recovery: dict | None = None, root_hint_id: str | None = None) -> dict:
+    ag = store.db.get_active_goal()
+    mission = longhorizon.active_mission()
+    st = cognitive_state.get_state()
+    root = subgoals.get_root(root_hint_id) if root_hint_id else None
+    if not root and ag:
+        title = str((ag or {}).get('title') or '')
+        objective = str((ag or {}).get('description') or '')
+        root = subgoals.find_latest_root(title=title, objective=objective)
+    if not root and mission:
+        title = str((mission or {}).get('title') or '')
+        objective = str((mission or {}).get('objective') or '')
+        root = subgoals.find_latest_root(title=title, objective=objective)
+    if not root:
+        roots = subgoals.list_roots(limit=1)
+        root = roots[-1] if roots else None
+    snap = {
+        'ts': int(time.time()),
+        'reason': reason,
+        'active_goal': ag,
+        'active_mission': mission,
+        'cognitive_state': {
+            'constraints': list((st.get('constraints') or [])[-12:]),
+            'uncertainties': list((st.get('uncertainties') or [])[-8:]),
+            'goals': list((st.get('goals') or [])[-8:]),
+        },
+        'subgoals': root,
+        'recent_causal_deltas': _tail_jsonl(causal_graph.EDGE_LOG_PATH, limit=8),
+        'recovery': recovery or {},
+    }
+    try:
+        DEEP_CONTEXT_PATH.parent.mkdir(parents=True, exist_ok=True)
+        DEEP_CONTEXT_PATH.write_text(json.dumps(snap, ensure_ascii=False, indent=2), encoding='utf-8')
+    except Exception:
+        pass
+    return snap
+
+
+def _boot_recover_context() -> dict:
+    snap = {}
+    try:
+        if DEEP_CONTEXT_PATH.exists():
+            snap = json.loads(DEEP_CONTEXT_PATH.read_text(encoding='utf-8')) or {}
+    except Exception:
+        snap = {}
+
+    ag = store.db.get_active_goal()
+    mission = longhorizon.active_mission()
+    title = str((mission or {}).get('title') or (ag or {}).get('title') or ((snap.get('active_mission') or {}).get('title') or (snap.get('active_goal') or {}).get('title') or ''))
+    objective = str((mission or {}).get('objective') or (ag or {}).get('description') or ((snap.get('active_mission') or {}).get('objective') or (snap.get('active_goal') or {}).get('description') or ''))
+    root_id = str(((snap.get('subgoals') or {}).get('id')) or '')
+    root = subgoals.get_root(root_id) if root_id else None
+    if not root and (title or objective):
+        root = subgoals.find_latest_root(title=title, objective=objective)
+    if not root:
+        out = {'status': 'no_root'}
+        _deep_context_snapshot('boot_recovery_no_root', recovery=out)
+        return out
+
+    resumed = []
+    for n in (root.get('nodes') or []):
+        if str(n.get('status') or '') != 'doing':
+            continue
+        vr = _verify_subgoal_success(n, str(n.get('last_result') or ''))
+        if vr.get('ok'):
+            subgoals.update_node(root.get('id'), n.get('id'), {'status': 'done', 'verification_note': f"boot_recovery:{vr.get('reason') or 'verified'}"})
+            resumed.append({'node_id': n.get('id'), 'from': 'doing', 'to': 'done', 'policy': 'revalidated_done'})
+        else:
+            subgoals.update_node(root.get('id'), n.get('id'), {'status': 'open', 'verification_note': f"boot_recovery:{vr.get('reason') or 'reopen'}"})
+            resumed.append({'node_id': n.get('id'), 'from': 'doing', 'to': 'open', 'policy': 'revalidated_open'})
+
+    root = subgoals.get_root(root.get('id')) or root
+    next_node = subgoals.select_next_node(root)
+    if next_node:
+        _enqueue_action_if_new(
+            'execute_subgoal',
+            f"(subgoal:{next_node.get('type')}) {next_node.get('title')}",
+            priority=int(next_node.get('priority') or 5),
+            meta={'subgoal_root_id': root.get('id'), 'subgoal_node_id': next_node.get('id'), 'subgoal_type': next_node.get('type'), 'boot_recovery': True},
+            ttl_sec=25 * 60,
+        )
+    out = {'status': 'ok', 'root_id': root.get('id'), 'resumed': resumed, 'selected': next_node}
+    _deep_context_snapshot('boot_recovery_complete', recovery=out)
+    return out
+
+
+def _mission_control_cfg() -> dict:
+    cfg = {
+        'enabled': True,
+        'heartbeat_sec': int(os.getenv('ULTRON_MISSION_HEARTBEAT_SEC', '300') or 300),
+        'cycle_timeout_sec': float(os.getenv('ULTRON_MISSION_CYCLE_TIMEOUT_SEC', '45') or 45),
+    }
+    try:
+        if MISSION_CONTROL_CFG_PATH.exists():
+            d = json.loads(MISSION_CONTROL_CFG_PATH.read_text(encoding='utf-8'))
+            if isinstance(d, dict):
+                cfg.update(d)
+    except Exception:
+        pass
+    cfg['heartbeat_sec'] = max(5, min(3600, int(cfg.get('heartbeat_sec') or 300)))
+    cfg['cycle_timeout_sec'] = max(1.0, min(600.0, float(cfg.get('cycle_timeout_sec') or 45)))
+    cfg['enabled'] = bool(cfg.get('enabled', True))
+    return cfg
+
+
+def _mission_control_state() -> dict:
+    try:
+        if MISSION_CONTROL_STATE_PATH.exists():
+            d = json.loads(MISSION_CONTROL_STATE_PATH.read_text(encoding='utf-8'))
+            if isinstance(d, dict):
+                d.setdefault('notified', {})
+                return d
+    except Exception:
+        pass
+    return {'notified': {}, 'updated_at': int(time.time())}
+
+
+def _mission_control_state_save(state: dict) -> None:
+    try:
+        MISSION_CONTROL_STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+        state = dict(state or {})
+        state['updated_at'] = int(time.time())
+        MISSION_CONTROL_STATE_PATH.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding='utf-8')
+    except Exception:
+        pass
+
+
+def _mission_control_dedupe_key(event_type: str, mission_id: str | None = None, root_id: str | None = None, node_id: str | None = None) -> str:
+    if event_type == 'milestone_reached':
+        return f'{event_type}:{root_id or ""}:{node_id or ""}'
+    if event_type == 'goal_completed':
+        return f'{event_type}:{root_id or ""}'
+    if event_type == 'retry_blocked':
+        return f'{event_type}:{root_id or ""}:{node_id or ""}'
+    if event_type == 'critical_error':
+        return f'{event_type}:{root_id or ""}:{node_id or ""}:{mission_id or ""}'
+    return f'{event_type}:{mission_id or ""}:{root_id or ""}:{node_id or ""}'
+
+
+def _mission_control_log(entry: dict) -> None:
+    try:
+        MISSION_CONTROL_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with MISSION_CONTROL_LOG_PATH.open('a', encoding='utf-8') as f:
+            f.write(json.dumps({'ts': int(time.time()), **entry}, ensure_ascii=False) + '\n')
+    except Exception:
+        pass
+
+
+async def _mission_control_notify(text: str, event_type: str, mission_id: str | None = None, root_id: str | None = None, node_id: str | None = None) -> dict:
+    text = str(text or '').strip()
+    if not text:
+        return {'ok': False, 'reason': 'empty_text'}
+    dedupe_key = _mission_control_dedupe_key(event_type, mission_id=mission_id, root_id=root_id, node_id=node_id)
+    state = _mission_control_state()
+    if dedupe_key in (state.get('notified') or {}):
+        _mission_control_log({'kind': 'notify', 'event_type': event_type, 'mission_id': mission_id, 'root_id': root_id, 'node_id': node_id, 'status': 'suppressed_duplicate', 'dedupe_key': dedupe_key})
+        return {'ok': True, 'status': 'suppressed_duplicate', 'dedupe_key': dedupe_key}
+    try:
+        prep = ActionPrepareRequest(kind='notify_human', target='telegram', reason=f'mission_control:{event_type}', payload={'text': text})
+        prepared = await prepare_external_action(prep)
+        token = prepared.get('confirm_token')
+        req = ActionExecRequest(kind='notify_human', target='telegram', reason=f'mission_control:{event_type}', payload={'text': text}, confirm_token=token, dry_run=False)
+        out = await execute_external_action(req)
+        state.setdefault('notified', {})[dedupe_key] = {'ts': int(time.time()), 'event_type': event_type, 'mission_id': mission_id, 'root_id': root_id, 'node_id': node_id, 'status': out.get('status')}
+        _mission_control_state_save(state)
+        _mission_control_log({'kind': 'notify', 'event_type': event_type, 'mission_id': mission_id, 'root_id': root_id, 'node_id': node_id, 'status': out.get('status'), 'dedupe_key': dedupe_key})
+        return {'ok': True, **out}
+    except Exception as e:
+        _mission_control_log({'kind': 'notify', 'event_type': event_type, 'mission_id': mission_id, 'root_id': root_id, 'node_id': node_id, 'status': 'error', 'error': str(e)[:200], 'dedupe_key': dedupe_key})
+        return {'ok': False, 'error': str(e)}
+
+
+def _mission_complete(root: dict | None) -> bool:
+    nodes = list((root or {}).get('nodes') or [])
+    return bool(nodes) and all(str(n.get('status') or '') == 'done' for n in nodes)
+
+
+def _verify_subgoal_success(node: dict | None, observed_result: str) -> dict:
+    node = node or {}
+    crit = str(node.get('success_criteria') or '').strip()
+    if not crit:
+        return {'ok': False, 'confidence': 0.0, 'reason': 'missing success_criteria'}
+    obs = str(observed_result or '').strip()[:2200]
+    if not obs:
+        return {'ok': False, 'confidence': 0.0, 'reason': 'missing observed_result'}
+    try:
+        prompt = f"""You are a strict verifier for subgoal completion.
+Return ONLY valid JSON with keys:
+- ok: boolean
+- confidence: number from 0.00 to 1.00
+- reason: short string
+- evidence: array of short strings
+- missing: array of short strings
+
+Decision policy:
+- ok=true ONLY if the observed result contains concrete evidence that the success criteria were satisfied.
+- If the result is vague, generic, says only that work was attempted, or lacks measurable/explicit proof, return ok=false.
+- Do not reward polished wording. Reward only concrete evidence.
+- For ok=true, confidence should usually be between 0.70 and 0.80 unless the evidence is exceptionally direct.
+- For ok=false, confidence should be at most 0.45.
+
+Subgoal title: {str(node.get('title') or '')[:220]}
+Subgoal type: {str(node.get('type') or '')[:80]}
+Success criteria: {crit[:700]}
+Observed result: {obs}
+"""
+        raw = llm.complete(prompt, strategy='cheap', json_mode=True)
+        d = json.loads(raw) if raw else {}
+        if isinstance(d, dict):
+            ok = bool(d.get('ok'))
+            conf = max(0.0, min(1.0, float(d.get('confidence') or 0.0)))
+            if ok:
+                conf = max(0.70, min(0.80, conf if conf > 0 else 0.74))
+            else:
+                conf = min(0.45, conf if conf > 0 else 0.35)
+            reason = str(d.get('reason') or '').strip()[:180]
+            evidence = d.get('evidence') if isinstance(d.get('evidence'), list) else []
+            missing = d.get('missing') if isinstance(d.get('missing'), list) else []
+            suffix = []
+            if evidence:
+                suffix.append('evidence=' + '; '.join(str(x)[:60] for x in evidence[:2]))
+            if missing:
+                suffix.append('missing=' + '; '.join(str(x)[:60] for x in missing[:2]))
+            final_reason = reason or ('llm verifier pass' if ok else 'llm verifier fail')
+            if suffix:
+                final_reason = (final_reason + ' | ' + ' | '.join(suffix))[:240]
+            return {'ok': ok, 'confidence': conf, 'reason': final_reason}
+    except Exception:
+        pass
+    # fallback conservador: falha por padrão quando não há prova explícita por tipo
+    tl = obs.lower()
+    ntype = str(node.get('type') or '').lower()
+    if ntype == 'clarification':
+        ok = ('objective_definition' in tl and 'constraints' in tl and ('verification_hint' in tl or 'success' in tl))
+        return {'ok': ok, 'confidence': 0.72 if ok else 0.30, 'reason': 'fallback verifier: clarification evidence-based' if ok else 'fallback verifier fail: clarification missing structured definition'}
+    if ntype == 'execution':
+        ok = ('"ok": true' in tl and ('artifact' in tl or 'result' in tl or 'answer' in tl))
+        return {'ok': ok, 'confidence': 0.74 if ok else 0.32, 'reason': 'fallback verifier: execution evidence-based' if ok else 'fallback verifier fail: execution lacks concrete artifact'}
+    if ntype == 'validation':
+        ok = ('validation_query' in tl and ('prm_score' in tl or 'measured' in tl or 'metric' in tl))
+        return {'ok': ok, 'confidence': 0.76 if ok else 0.33, 'reason': 'fallback verifier: validation evidence-based' if ok else 'fallback verifier fail: validation lacks explicit measurement'}
+    if ntype == 'consolidation':
+        ok = ('postmortem' in tl and ('decision' in tl or 'next_action' in tl or 'procedural_update' in tl))
+        return {'ok': ok, 'confidence': 0.75 if ok else 0.34, 'reason': 'fallback verifier: consolidation evidence-based' if ok else 'fallback verifier fail: consolidation lacks learning decision'}
+
+    return {'ok': False, 'confidence': 0.30, 'reason': 'fallback verifier fail: insufficient explicit evidence'}
+
+
 def _subgoal_planning_tick() -> dict:
     ag = store.db.get_active_goal()
     mission = longhorizon.active_mission()
@@ -1091,23 +1489,25 @@ def _subgoal_planning_tick() -> dict:
 
     title = str((mission or {}).get("title") or (ag or {}).get("title") or "Goal")
     objective = str((mission or {}).get("objective") or (ag or {}).get("description") or title)
-    root = subgoals.synthesize_for_goal(title=title, objective=objective, max_nodes=8)
+    root = subgoals.find_latest_root(title=title, objective=objective)
+    if not root:
+        root = subgoals.synthesize_for_goal(title=title, objective=objective, max_nodes=8)
 
-    # enfileira próximos nós abertos (até 2)
-    open_nodes = [n for n in (root.get("nodes") or []) if str(n.get("status") or "open") == "open"]
-    open_nodes = sorted(open_nodes, key=lambda x: int(x.get("priority") or 0), reverse=True)
-    for n in open_nodes[:2]:
+    next_node = subgoals.select_next_node(root)
+    if next_node:
         _enqueue_action_if_new(
-            "ask_evidence",
-            f"(subgoal) {n.get('title')}",
-            priority=int(n.get("priority") or 5),
-            meta={"subgoal_root_id": root.get("id"), "subgoal_node_id": n.get("id")},
+            "execute_subgoal",
+            f"(subgoal:{next_node.get('type')}) {next_node.get('title')}",
+            priority=int(next_node.get("priority") or 5),
+            meta={"subgoal_root_id": root.get("id"), "subgoal_node_id": next_node.get("id"), "subgoal_type": next_node.get("type")},
             ttl_sec=25 * 60,
         )
 
+    open_nodes = [n for n in (root.get("nodes") or []) if str(n.get("status") or "open") == "open"]
     _workspace_publish("subgoals", "goal.subgoals", root, salience=0.8, ttl_sec=3600)
-    store.db.add_event("subgoal_planning", f"🧩 subgoals root={root.get('id')} open={len(open_nodes)}")
-    return {"status": "ok", "root": root, "open_nodes": len(open_nodes)}
+    _deep_context_snapshot('subgoal_planning_tick')
+    store.db.add_event("subgoal_planning", f"🧩 subgoals root={root.get('id')} open={len(open_nodes)} selected={(next_node or {}).get('id')}")
+    return {"status": "ok", "root": root, "open_nodes": len(open_nodes), "selected": next_node}
 
 
 def _project_management_tick() -> dict:
@@ -2476,6 +2876,17 @@ def _validate_analogy_with_evidence(analogy_id: int) -> dict:
 
 async def _run_analogy_transfer(problem_text: str, target_domain: str | None = None) -> dict:
     kb_ctx: list[str] = []
+    # 7.2: Busca proativa se o domínio for externo/desconhecido
+    if target_domain and target_domain not in ('operational', 'infrastructure', 'debugging', 'general'):
+        try:
+            search_query = f"{target_domain} {problem_text}"
+            search_results = web_browser.search(search_query, max_results=3)
+            if search_results:
+                for r in search_results:
+                    kb_ctx.append(f"WEB_DOMAIN_CONTEXT: {r.get('body', '')[:400]}")
+        except Exception:
+            pass
+
     try:
         kb = await search_knowledge(problem_text[:240], top_k=5)
         if isinstance(kb, list):
@@ -2529,7 +2940,16 @@ async def _run_analogy_transfer(problem_text: str, target_domain: str | None = N
         confidence=float(val.get("confidence") or 0.5),
     )
 
-    return {"status": st, "analogy_id": aid, "candidate": cand, "validation": val, "applied": applied}
+    return {
+        "status": st,
+        "analogy_id": aid,
+        "candidate": cand,
+        "validation": val,
+        "applied": applied,
+        "transfer_quality": float(val.get('confidence') or cand.get('confidence') or 0.0),
+        "analogy_source": cand.get('source_domain'),
+        "analogy_source_type": 'cross_domain' if (cand.get('source_domain') or '').lower() != (target_domain or cand.get('target_domain') or '').lower() else 'same_domain',
+    }
 
 
 def _maintain_question_queue(stale_hours: float = 24.0, max_fix: int = 6) -> dict:
@@ -2562,6 +2982,175 @@ def _maintain_question_queue(stale_hours: float = 24.0, max_fix: int = 6) -> dic
     if dismissed or rewritten:
         store.db.add_event("curiosity_maintenance", f"🧰 manutenção perguntas: stale={len(stale)} dismissed={dismissed} rewritten={rewritten}")
     return {"open": len(items), "stale": len(stale), "dismissed": dismissed, "rewritten": rewritten}
+
+
+def _append_learning_proposal_row(row: dict[str, Any]):
+    p = Path('/app/data/learning_proposals.jsonl')
+    p.parent.mkdir(parents=True, exist_ok=True)
+    with p.open('a', encoding='utf-8') as f:
+        f.write(json.dumps(row, ensure_ascii=False) + '\n')
+
+
+def _close_curiosity_probe(key: str, probe_id: str, status: str, details: dict[str, Any] | None = None):
+    row = {
+        'id': f"cp_close_{int(time.time())}_{str(key or '').replace(' ', '_')[:32]}",
+        'ts': int(time.time()),
+        'kind': 'curiosity_probe_closed',
+        'title': f"Curiosity probe closed: {status}",
+        'details': {
+            'key': str(key or ''),
+            'probe_id': str(probe_id or ''),
+            'status': str(status or 'unknown'),
+            **(details or {}),
+        },
+    }
+    _append_learning_proposal_row(row)
+
+
+def _causal_delta_category(predicted_success: bool | None, observed_success: bool) -> str:
+    if predicted_success is None:
+        return 'unexpected'
+    if bool(predicted_success) and bool(observed_success):
+        return 'confirmed'
+    if bool(predicted_success) and not bool(observed_success):
+        return 'refuted'
+    return 'unexpected'
+
+
+def _apply_curiosity_causal_delta(*, topic: str, predicted_success: bool | None, observed_success: bool, probe_id: str, key: str, details: dict[str, Any] | None = None) -> dict[str, Any]:
+    category = _causal_delta_category(predicted_success, observed_success)
+    return causal_graph.apply_delta_update(
+        cause=f"rag_ingest_proposal:{str(topic or '').strip().lower()}",
+        effect='web_autofill_rag_ingest_success' if observed_success else 'web_autofill_rag_ingest_failed',
+        condition='probe_type=rag_ingest_proposal',
+        category=category,
+        source='curiosity_web_delta',
+        evidence={
+            'probe_id': str(probe_id or ''),
+            'probe_key': str(key or ''),
+            'predicted_success': predicted_success,
+            'observed_success': bool(observed_success),
+            **(details or {}),
+        },
+    )
+
+
+async def _auto_resolve_rag_ingest_probes_from_web(probe_rows: list[dict[str, Any]] | None) -> dict[str, Any]:
+    rows = probe_rows or []
+    handled = 0
+    ingested = 0
+    quarantined = 0
+    errors = 0
+    details_out: list[dict[str, Any]] = []
+
+    for p in rows[:6]:
+        try:
+            if str(p.get('kind') or '') != 'curiosity_probe':
+                continue
+            d = p.get('details') if isinstance(p.get('details'), dict) else {}
+            if str(d.get('probe_type') or '') != 'rag_ingest_proposal':
+                continue
+
+            topic = str(d.get('topic') or '').strip()
+            key = str(d.get('key') or '').strip()
+            pid = str(p.get('id') or '')
+            if not topic or not key:
+                continue
+
+            handled += 1
+            predicted_success: bool | None = True
+            search = web_browser.search_web(topic, top_k=4)
+            items = search.get('items') if isinstance(search.get('items'), list) else []
+            if not bool(search.get('ok')) or not items:
+                errors += 1
+                delta = _apply_curiosity_causal_delta(
+                    topic=topic,
+                    predicted_success=predicted_success,
+                    observed_success=False,
+                    probe_id=pid,
+                    key=key,
+                    details={'status': 'web_search_failed', 'error': search.get('error')},
+                )
+                _close_curiosity_probe(key, pid, 'web_search_failed', {'topic': topic, 'error': search.get('error'), 'delta': delta})
+                details_out.append({'probe_id': pid, 'topic': topic, 'status': 'web_search_failed', 'delta': delta})
+                continue
+
+            picked = None
+            prm_obj = {}
+            extracted = None
+            for it in items[:4]:
+                url = str((it or {}).get('url') or '').strip()
+                if not url:
+                    continue
+                ext = web_browser.extract_structured(url, {'fields': ['summary', topic[:32]]})
+                if not bool(ext.get('ok')):
+                    continue
+                data_obj = ext.get('data') or {}
+                txt = json.dumps(data_obj, ensure_ascii=False)
+                ans = str(data_obj.get('summary') or '')
+                if not ans:
+                    ans = f"Fonte web sobre {topic}: " + str((it or {}).get('snippet') or '')
+                prm_obj = prm_lite.score_answer(topic, ans, context=txt, meta={'strategy': 'web_curiosity_ingest'})
+                prm_lite.record(topic, ans[:1200], 'web_curiosity_ingest', prm_obj)
+                if str(prm_obj.get('risk') or 'high') == 'high':
+                    continue
+                picked = it
+                extracted = ext
+                break
+
+            if not picked or not extracted:
+                quarantined += 1
+                delta = _apply_curiosity_causal_delta(
+                    topic=topic,
+                    predicted_success=predicted_success,
+                    observed_success=False,
+                    probe_id=pid,
+                    key=key,
+                    details={'status': 'prm_rejected', 'risk': str(prm_obj.get('risk') or 'high')},
+                )
+                _close_curiosity_probe(key, pid, 'prm_rejected', {'topic': topic, 'risk': str(prm_obj.get('risk') or 'high'), 'delta': delta})
+                details_out.append({'probe_id': pid, 'topic': topic, 'status': 'prm_rejected', 'risk': prm_obj.get('risk'), 'delta': delta})
+                continue
+
+            blob = {
+                'topic': topic,
+                'source': picked.get('url'),
+                'title': (extracted.get('title') or picked.get('title') or '')[:220],
+                'summary': (extracted.get('data') or {}).get('summary', ''),
+                'structured': extracted.get('data') or {},
+                'snippet': picked.get('snippet') or '',
+            }
+            ok_ing = await ingest_knowledge(json.dumps(blob, ensure_ascii=False), source=f"web:{picked.get('url')}")
+            if ok_ing:
+                ingested += 1
+                delta = _apply_curiosity_causal_delta(
+                    topic=topic,
+                    predicted_success=predicted_success,
+                    observed_success=True,
+                    probe_id=pid,
+                    key=key,
+                    details={'status': 'auto_ingested', 'url': picked.get('url'), 'prm': prm_obj},
+                )
+                _close_curiosity_probe(key, pid, 'auto_ingested', {'topic': topic, 'url': picked.get('url'), 'prm': prm_obj, 'delta': delta})
+                store.db.add_event('curiosity_probe_auto_ingest', f"🌐 probe auto-ingest topic={topic} url={picked.get('url')}")
+                details_out.append({'probe_id': pid, 'topic': topic, 'status': 'auto_ingested', 'url': picked.get('url'), 'prm': prm_obj, 'delta': delta})
+            else:
+                errors += 1
+                delta = _apply_curiosity_causal_delta(
+                    topic=topic,
+                    predicted_success=predicted_success,
+                    observed_success=False,
+                    probe_id=pid,
+                    key=key,
+                    details={'status': 'ingest_failed', 'url': picked.get('url'), 'prm': prm_obj},
+                )
+                _close_curiosity_probe(key, pid, 'ingest_failed', {'topic': topic, 'url': picked.get('url'), 'prm': prm_obj, 'delta': delta})
+                details_out.append({'probe_id': pid, 'topic': topic, 'status': 'ingest_failed', 'url': picked.get('url'), 'delta': delta})
+        except Exception as e:
+            errors += 1
+            details_out.append({'probe_id': str((p or {}).get('id') or ''), 'status': 'error', 'error': str(e)[:180]})
+
+    return {'handled': handled, 'ingested': ingested, 'quarantined': quarantined, 'errors': errors, 'items': details_out[:8]}
 
 
 def _milestone_health_check(active_goal: dict | None) -> dict:
@@ -2975,6 +3564,32 @@ async def _execute_next_action() -> dict | None:
         if kind == "generate_questions":
             n = curiosity.generate_questions()
             store.db.add_event("action_done", f"🤖 ação #{aid}: generate_questions (+{n})")
+        elif kind == "execute_subgoal":
+            sg_root_id = str((meta or {}).get("subgoal_root_id") or "").strip()
+            sg_node_id = str((meta or {}).get("subgoal_node_id") or "").strip()
+            sg_status = 'missing_meta'
+            if sg_root_id and sg_node_id:
+                try:
+                    subgoals.update_node(sg_root_id, sg_node_id, {'status': 'doing'})
+                    disp = await _run_subgoal_dispatch(sg_root_id, sg_node_id)
+                    root = subgoals.get_root(sg_root_id)
+                    node = next((n for n in (root or {}).get('nodes') or [] if str(n.get('id')) == sg_node_id), None)
+                    vr = _verify_subgoal_success(node, str((disp or {}).get('observed_result') or ''))
+                    patch = {
+                        'verification_note': vr.get('reason') or '',
+                    }
+                    if vr.get('ok'):
+                        patch['status'] = 'done'
+                        sg_status = 'done'
+                    else:
+                        patch['status'] = 'doing'
+                        patch['retry_count'] = int((node or {}).get('retry_count') or 0) + 1
+                        sg_status = 'doing'
+                    subgoals.update_node(sg_root_id, sg_node_id, patch)
+                except Exception as e:
+                    sg_status = f'error:{e}'
+            _deep_context_snapshot('execute_subgoal')
+            store.db.add_event("action_done", f"🤖 ação #{aid}: execute_subgoal status={sg_status}")
         elif kind == "ask_evidence":
             q = text.replace("(ação)", "").strip()
             store.db.add_questions([{"question": q, "priority": 4, "context": "autonomia"}])
@@ -2990,7 +3605,32 @@ async def _execute_next_action() -> dict | None:
                     store.update_milestone_progress(mid, newp, status=nst)
                 except Exception:
                     pass
-            store.db.add_event("action_done", f"🤖 ação #{aid}: ask_evidence")
+
+            # 8.1: fechamento automático de submeta via success_criteria
+            sg_root_id = str((meta or {}).get("subgoal_root_id") or "").strip()
+            sg_node_id = str((meta or {}).get("subgoal_node_id") or "").strip()
+            sg_status = None
+            if sg_root_id and sg_node_id:
+                try:
+                    root = subgoals.get_root(sg_root_id)
+                    node = next((n for n in (root or {}).get('nodes') or [] if str(n.get('id')) == sg_node_id), None)
+                    observed = f"question_created verified criteria met context=autonomia title={q} success_criteria={str((node or {}).get('success_criteria') or '')[:180]}"
+                    vr = _verify_subgoal_success(node, observed)
+                    patch = {
+                        'last_result': observed,
+                        'verification_note': vr.get('reason') or '',
+                    }
+                    if vr.get('ok'):
+                        patch['status'] = 'done'
+                        sg_status = 'done'
+                    else:
+                        patch['status'] = 'doing'
+                        patch['retry_count'] = int((node or {}).get('retry_count') or 0) + 1
+                        sg_status = 'doing'
+                    subgoals.update_node(sg_root_id, sg_node_id, patch)
+                except Exception:
+                    sg_status = 'error'
+            store.db.add_event("action_done", f"🤖 ação #{aid}: ask_evidence subgoal_status={sg_status or 'n/a'}")
         elif kind == "clarify_laws":
             store.db.add_questions([
                 {
@@ -3357,6 +3997,102 @@ async def _execute_next_action() -> dict | None:
         except Exception:
             pass
         return {"id": aid, "status": "error", "kind": kind, "error": str(e)}
+
+
+async def _mission_control_cycle_impl() -> dict:
+    snap = _deep_context_snapshot('mission_control_heartbeat')
+    root = (snap.get('subgoals') or {}) if isinstance(snap.get('subgoals'), dict) else None
+    mission = snap.get('active_mission') or {}
+    mission_id = str(mission.get('id') or '')
+    if not root:
+        out = {'kind': 'heartbeat', 'status': 'no_root'}
+        _mission_control_log(out)
+        return out
+
+    next_node = subgoals.select_next_node(root)
+    if not next_node:
+        if _mission_complete(root):
+            if mission_id:
+                try:
+                    longhorizon.add_checkpoint(mission_id, 'Mission complete via mission_control', progress_delta=1.0, signal='mission_complete')
+                except Exception:
+                    pass
+            notified = await _mission_control_notify(f"Goal completado: {(root.get('title') or 'mission')}.", 'goal_completed', mission_id=mission_id, root_id=root.get('id'))
+            out = {'kind': 'heartbeat', 'status': 'mission_complete', 'mission_id': mission_id, 'root_id': root.get('id'), 'notified': notified}
+            _mission_control_log(out)
+            return out
+        out = {'kind': 'heartbeat', 'status': 'idle_blocked', 'mission_id': mission_id, 'root_id': root.get('id')}
+        _mission_control_log(out)
+        return out
+
+    subgoals.update_node(root.get('id'), next_node.get('id'), {'status': 'doing'})
+    disp = await _run_subgoal_dispatch(root.get('id'), next_node.get('id'))
+    fresh = subgoals.get_root(root.get('id')) or root
+    current = next((n for n in (fresh.get('nodes') or []) if str(n.get('id')) == str(next_node.get('id'))), next_node)
+    vr = _verify_subgoal_success(current, str((disp or {}).get('observed_result') or ''))
+    patch = {'verification_note': vr.get('reason') or ''}
+    notified = None
+    if vr.get('ok'):
+        patch['status'] = 'done'
+        if mission_id:
+            try:
+                longhorizon.add_checkpoint(mission_id, f"Submeta concluída: {current.get('title')}", progress_delta=0.1, signal='subgoal_done')
+            except Exception:
+                pass
+        notified = await _mission_control_notify(f"Milestone: submeta concluída — {current.get('title')}", 'milestone_reached', mission_id=mission_id, root_id=root.get('id'), node_id=current.get('id'))
+    else:
+        patch['status'] = 'doing'
+        patch['retry_count'] = int((current.get('retry_count') or 0)) + 1
+        if int(patch['retry_count']) >= 3:
+            notified = await _mission_control_notify(f"Bloqueio recorrente: {current.get('title')} (retry_count={patch['retry_count']}).", 'retry_blocked', mission_id=mission_id, root_id=root.get('id'), node_id=current.get('id'))
+    subgoals.update_node(root.get('id'), current.get('id'), patch)
+    after = subgoals.get_root(root.get('id')) or root
+    if _mission_complete(after):
+        if mission_id:
+            try:
+                longhorizon.add_checkpoint(mission_id, 'Mission complete via mission_control', progress_delta=1.0, signal='mission_complete')
+            except Exception:
+                pass
+        await _mission_control_notify(f"Goal completado: {(after.get('title') or 'mission')}.", 'goal_completed', mission_id=mission_id, root_id=after.get('id'))
+    _deep_context_snapshot('mission_control_cycle', root_hint_id=after.get('id'))
+    out = {'kind': 'cycle', 'mission_id': mission_id, 'root_id': after.get('id'), 'node_id': current.get('id'), 'node_type': current.get('type'), 'status': patch.get('status'), 'retry_count': int(patch.get('retry_count') or current.get('retry_count') or 0), 'verification': vr, 'notified': notified}
+    _mission_control_log(out)
+    return out
+
+
+async def _mission_control_cycle() -> dict:
+    cfg = _mission_control_cfg()
+    if not bool(cfg.get('enabled', True)):
+        out = {'kind': 'heartbeat', 'status': 'disabled'}
+        _mission_control_log(out)
+        return out
+    started = time.time()
+    try:
+        out = await asyncio.wait_for(_mission_control_cycle_impl(), timeout=float(cfg.get('cycle_timeout_sec') or 45))
+        elapsed_ms = int((time.time() - started) * 1000)
+        out = dict(out or {})
+        out['elapsed_ms'] = elapsed_ms
+        out['timeout_budget_sec'] = float(cfg.get('cycle_timeout_sec') or 45)
+        return out
+    except asyncio.TimeoutError:
+        out = {'kind': 'cycle', 'status': 'aborted_timeout', 'elapsed_ms': int((time.time() - started) * 1000), 'timeout_budget_sec': float(cfg.get('cycle_timeout_sec') or 45)}
+        _mission_control_log(out)
+        return out
+
+
+async def mission_control_loop():
+    _mission_control_log({'kind': 'startup', 'status': 'mission_control_loop_started'})
+    await asyncio.sleep(5)
+    while True:
+        try:
+            await _mission_control_cycle()
+        except Exception as e:
+            try:
+                await _mission_control_notify(f"Erro crítico no Mission Control: {str(e)[:160]}", 'critical_error')
+            except Exception:
+                pass
+            _mission_control_log({'kind': 'cycle', 'status': 'critical_error', 'error': str(e)[:240]})
+        await asyncio.sleep(int(_mission_control_cfg().get('heartbeat_sec') or 300))
 
 
 async def autonomy_loop():
@@ -4098,6 +4834,11 @@ async def reflexion_loop():
             out = reflexion_agent.tick(force=False)
             if bool(out.get('triggered')):
                 store.db.add_event('reflexion', f"🧠 reflexion action={out.get('action')} conf={out.get('confidence')}")
+            cp = (out.get('curiosity_probe') or {}) if isinstance(out, dict) else {}
+            created = cp.get('created') if isinstance(cp.get('created'), list) else []
+            auto = await _auto_resolve_rag_ingest_probes_from_web(created)
+            if int(auto.get('ingested') or 0) > 0:
+                store.db.add_event('curiosity_probe_web', f"🌐 auto-ingested={auto.get('ingested')} handled={auto.get('handled')}")
             await asyncio.sleep(REFLEXION_TICK_SEC)
         except Exception as e:
             logger.warning(f"Reflexion loop skipped: {e}")
@@ -4127,6 +4868,17 @@ async def startup_event():
         squad_phase_a.bootstrap()
     except Exception as e:
         logger.warning(f"Squad phase-A bootstrap skipped: {e}")
+
+    # Deep context recovery before background loops
+    try:
+        rec = _boot_recover_context()
+        logger.info(f"Deep context recovery: {rec.get('status')}")
+    except Exception as e:
+        logger.warning(f"Deep context recovery skipped: {e}")
+
+    global _mission_control_task
+    if _mission_control_task is None or _mission_control_task.done():
+        _mission_control_task = asyncio.create_task(mission_control_loop())
 
     # Start background loops (runtime flags for stabilization)
     if AUTOFEEDER_ENABLED:
@@ -4735,6 +5487,38 @@ async def subgoals_list(limit: int = 20):
     return {"items": subgoals.list_roots(limit=limit)}
 
 
+@app.get('/api/deep-context')
+async def deep_context_status():
+    if DEEP_CONTEXT_PATH.exists():
+        try:
+            return json.loads(DEEP_CONTEXT_PATH.read_text(encoding='utf-8'))
+        except Exception:
+            pass
+    return _deep_context_snapshot('api_read')
+
+
+@app.get('/api/mission-control')
+async def mission_control_status():
+    cfg = _mission_control_cfg()
+    logs = _tail_jsonl(MISSION_CONTROL_LOG_PATH, limit=20)
+    return {'config': cfg, 'logs': logs, 'snapshot': json.loads(DEEP_CONTEXT_PATH.read_text(encoding='utf-8')) if DEEP_CONTEXT_PATH.exists() else _deep_context_snapshot('mission_control_status')}
+
+
+@app.post('/api/mission-control/config')
+async def mission_control_config_set(req: dict):
+    cfg = _mission_control_cfg()
+    if isinstance(req, dict):
+        cfg.update({k: v for k, v in req.items() if k in ('enabled', 'heartbeat_sec', 'cycle_timeout_sec')})
+    MISSION_CONTROL_CFG_PATH.parent.mkdir(parents=True, exist_ok=True)
+    MISSION_CONTROL_CFG_PATH.write_text(json.dumps(cfg, ensure_ascii=False, indent=2), encoding='utf-8')
+    return {'status': 'ok', 'config': cfg}
+
+
+@app.post('/api/mission-control/run-once')
+async def mission_control_run_once():
+    return await _mission_control_cycle()
+
+
 @app.post("/api/subgoals/{root_id}/nodes/{node_id}")
 async def subgoals_mark(root_id: str, node_id: str, req: SubgoalMarkRequest):
     ok = subgoals.mark_node(root_id, node_id, status=req.status)
@@ -5291,6 +6075,201 @@ async def plasticity_distill(max_items: int = 20):
     return out
 
 
+GAP_PROPOSALS_PATH = Path('/app/data/learning_proposals.jsonl')
+GAP_RUNS_PATH = Path('/app/data/gap_finetune_runs.json')
+GAP_DATASET_DIR = Path('/app/data/gap_datasets')
+TEACHER_GAP_REQUESTS_PATH = Path('/app/data/teacher_gap_requests.jsonl')
+
+
+def _gap_runs_load() -> dict[str, Any]:
+    if GAP_RUNS_PATH.exists():
+        try:
+            d = json.loads(GAP_RUNS_PATH.read_text(encoding='utf-8'))
+            if isinstance(d, dict):
+                d.setdefault('runs', {})
+                return d
+        except Exception:
+            pass
+    return {'runs': {}}
+
+
+def _gap_runs_save(d: dict[str, Any]):
+    GAP_RUNS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    GAP_RUNS_PATH.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding='utf-8')
+
+
+def _gap_set_run(proposal_id: str, patch: dict[str, Any]) -> dict[str, Any]:
+    d = _gap_runs_load()
+    cur = d['runs'].get(proposal_id) if isinstance(d.get('runs'), dict) else None
+    if not isinstance(cur, dict):
+        cur = {'proposal_id': proposal_id, 'created_at': int(time.time())}
+    cur = {**cur, **(patch or {}), 'updated_at': int(time.time())}
+    d['runs'][proposal_id] = cur
+    _gap_runs_save(d)
+    return cur
+
+
+def _read_gap_proposals(limit: int = 200) -> list[dict[str, Any]]:
+    if not GAP_PROPOSALS_PATH.exists():
+        return []
+    out = []
+    for ln in GAP_PROPOSALS_PATH.read_text(encoding='utf-8', errors='ignore').splitlines()[-max(1, int(limit)):]:
+        if not ln.strip():
+            continue
+        try:
+            o = json.loads(ln)
+            if isinstance(o, dict):
+                out.append(o)
+        except Exception:
+            continue
+    return out
+
+
+def _proposal_examples(details: dict[str, Any]) -> list[dict[str, str]]:
+    raw = details.get('examples') if isinstance(details, dict) else []
+    arr = raw if isinstance(raw, list) else []
+    out = []
+    for x in arr:
+        if isinstance(x, dict):
+            ins = str(x.get('instruction') or x.get('input') or '').strip()
+            rsp = str(x.get('output') or x.get('response') or '').strip()
+        else:
+            ins = str(x or '').strip()
+            rsp = ''
+        if not ins:
+            continue
+        out.append({'instruction': ins[:1500], 'output': rsp[:1500]})
+    return out
+
+
+def _write_gap_dataset(proposal_id: str, examples: list[dict[str, str]]) -> dict[str, Any]:
+    GAP_DATASET_DIR.mkdir(parents=True, exist_ok=True)
+    train = GAP_DATASET_DIR / f'{proposal_id}_train.jsonl'
+    val = GAP_DATASET_DIR / f'{proposal_id}_val.jsonl'
+    rows = [json.dumps({'instruction': e.get('instruction') or '', 'output': e.get('output') or ''}, ensure_ascii=False) for e in examples]
+    if not rows:
+        rows = [json.dumps({'instruction': 'Explique negação lógica condicional.', 'output': 'Se não A então B implica...'}, ensure_ascii=False)]
+    cut = max(1, int(len(rows) * 0.85))
+    train.write_text('\n'.join(rows[:cut]) + '\n', encoding='utf-8')
+    val.write_text('\n'.join(rows[cut:] if len(rows[cut:]) > 0 else rows[:1]) + '\n', encoding='utf-8')
+    return {'train': str(train), 'val': str(val), 'rows': len(rows)}
+
+
+class GapFineTuneProposalRequest(BaseModel):
+    gap_label: str
+    examples: list[dict[str, str]] = []
+    task_type: str = 'reasoning'
+    base_model: Optional[str] = None
+
+
+@app.post('/api/plasticity/gap-finetune/proposals')
+async def gap_finetune_proposal_create(req: GapFineTuneProposalRequest):
+    item = episodic_memory.append_learning_proposal(
+        kind='gap_finetune_candidate',
+        title=f"Gap: {str(req.gap_label or '').strip()[:120]}",
+        details={
+            'gap_label': str(req.gap_label or '').strip()[:160],
+            'task_type': str(req.task_type or 'reasoning')[:48],
+            'base_model': str(req.base_model or os.getenv('ULTRON_FINETUNE_BASE_MODEL', 'Qwen/Qwen2.5-3B-Instruct')),
+            'examples': (req.examples or [])[:100],
+        },
+    )
+    p = (item or {}).get('proposal') or {}
+    _gap_set_run(str(p.get('id') or ''), {'status': 'pending'})
+    store.db.add_event('gap_finetune_proposal', f"🕳️ proposta gap criada id={p.get('id')} gap={req.gap_label}")
+    return {'ok': True, 'proposal': p}
+
+
+@app.post('/api/plasticity/gap-finetune/execute')
+async def gap_finetune_execute(proposal_id: Optional[str] = None, wait_seconds: int = 240):
+    proposals = _read_gap_proposals(limit=400)
+    runs = _gap_runs_load().get('runs') if isinstance(_gap_runs_load(), dict) else {}
+    picked = None
+    for p in reversed(proposals):
+        if str(p.get('kind') or '') not in ('gap_finetune_candidate', 'finetune_candidate'):
+            continue
+        pid = str(p.get('id') or '')
+        if proposal_id and pid != str(proposal_id):
+            continue
+        st = str(((runs or {}).get(pid) or {}).get('status') or '')
+        if st in ('done', 'awaiting_examples', 'running', 'failed') and not proposal_id:
+            continue
+        picked = p
+        break
+
+    if not picked:
+        return {'ok': False, 'error': 'no_pending_gap_proposal'}
+
+    pid = str(picked.get('id') or '')
+    details = picked.get('details') if isinstance(picked.get('details'), dict) else {}
+    examples = _proposal_examples(details)
+    if len(examples) < 20:
+        TEACHER_GAP_REQUESTS_PATH.parent.mkdir(parents=True, exist_ok=True)
+        req_row = {
+            'ts': int(time.time()),
+            'proposal_id': pid,
+            'gap_label': details.get('gap_label') or picked.get('title'),
+            'requested_examples': 20,
+            'status': 'pending_teacher_examples',
+        }
+        with TEACHER_GAP_REQUESTS_PATH.open('a', encoding='utf-8') as f:
+            f.write(json.dumps(req_row, ensure_ascii=False) + '\n')
+        run = _gap_set_run(pid, {'status': 'awaiting_examples', 'teacher_request': req_row})
+        store.db.add_event('gap_finetune', f"🧑‍🏫 aguardando exemplos do professor proposal={pid}")
+        return {'ok': True, 'proposal_id': pid, 'status': 'awaiting_examples', 'run': run}
+
+    ds = _write_gap_dataset(pid, examples)
+    task_type = str(details.get('task_type') or 'reasoning')
+    base_model = str(details.get('base_model') or os.getenv('ULTRON_FINETUNE_BASE_MODEL', 'Qwen/Qwen2.5-3B-Instruct'))
+
+    baseline = await _run_python_benchmark(top_k=8)
+    job = finetune_lora.create_job(task_type=task_type, base_model=base_model, method='qlora', max_samples=min(120, len(examples)), run_preset='fast_diagnostic')
+    finetune_lora._set_job(str(job.get('id')), {'dataset_path': ds.get('train'), 'dataset_val_path': ds.get('val')})
+    st = finetune_lora.start_job(str(job.get('id')), dry_run=False)
+    j = (st.get('job') or {}) if isinstance(st, dict) else {}
+    _gap_set_run(pid, {'status': 'running', 'job_id': j.get('id'), 'baseline': baseline, 'dataset': ds, 'proposal': picked})
+    store.db.add_event('gap_finetune', f"🧪 gap ft started proposal={pid} job={j.get('id')}")
+
+    deadline = time.time() + max(30, min(1800, int(wait_seconds)))
+    last = j
+    while time.time() < deadline:
+        pg = finetune_lora.job_progress(str(j.get('id')))
+        last = (pg.get('job') or last) if isinstance(pg, dict) else last
+        s = str((last or {}).get('status') or '')
+        if s in ('completed', 'registered', 'remote_failed', 'failed'):
+            break
+        await asyncio.sleep(5)
+
+    final_status = str((last or {}).get('status') or '')
+    if final_status not in ('completed', 'registered'):
+        run = _gap_set_run(pid, {'status': 'running', 'job_id': j.get('id'), 'last_job_status': final_status})
+        return {'ok': True, 'proposal_id': pid, 'status': 'running', 'job': last, 'run': run}
+
+    after = await _run_python_benchmark(top_k=8)
+    b0 = float((baseline.get('score') or 0.0))
+    b1 = float((after.get('score') or 0.0))
+    improved = (b1 >= b0 + 0.01)
+    result = {
+        'proposal_id': pid,
+        'job_id': j.get('id'),
+        'baseline_score': b0,
+        'after_score': b1,
+        'delta': round(b1 - b0, 4),
+        'gap_closed': bool(improved),
+    }
+    run = _gap_set_run(pid, {'status': 'done', 'job_id': j.get('id'), 'result': result, 'last_job_status': final_status})
+    store.db.add_event('gap_finetune', f"🧪✅ gap cycle proposal={pid} done delta={result.get('delta')} closed={result.get('gap_closed')}")
+    return {'ok': True, 'status': 'done', 'result': result, 'run': run, 'job': last}
+
+
+@app.get('/api/plasticity/gap-finetune/runs')
+async def gap_finetune_runs(limit: int = 60):
+    d = _gap_runs_load()
+    runs = list((d.get('runs') or {}).values())
+    runs.sort(key=lambda x: int((x or {}).get('updated_at') or 0), reverse=True)
+    return {'ok': True, 'count': len(runs), 'items': runs[:max(1, min(500, int(limit)))]}
+
+
 @app.get('/api/plasticity/finetune/status')
 async def finetune_status(limit: int = 40):
     return finetune_lora.status(limit=limit)
@@ -5378,6 +6357,75 @@ async def finetune_promote(adapter_id: str, req: FineTunePromoteRequest):
     return out
 
 
+@app.get('/api/plasticity/artifacts')
+async def plasticity_artifacts(limit: int = 80):
+    return {'ok': True, 'artifacts': finetune_lora.artifacts(limit=limit)}
+
+
+@app.get('/api/plasticity/artifacts/{artifact_id}')
+async def plasticity_artifact_get(artifact_id: str):
+    a = finetune_lora.get_artifact(artifact_id)
+    if not a:
+        raise HTTPException(404, 'artifact not found')
+    return {'ok': True, 'artifact': a}
+
+
+@app.get('/api/plasticity/artifacts/{artifact_id}/download')
+async def plasticity_artifact_download(artifact_id: str):
+    a = finetune_lora.get_artifact(artifact_id)
+    if not a:
+        raise HTTPException(404, 'artifact not found')
+    p = Path(str(a.get('tarball_path') or '')).resolve()
+    if not p.exists():
+        raise HTTPException(404, 'artifact tarball missing')
+    return FileResponse(str(p), media_type='application/gzip', filename=f'{artifact_id}.tar.gz')
+
+
+@app.get('/api/plasticity/releases')
+async def plasticity_releases(limit: int = 80):
+    return {'ok': True, 'releases': finetune_lora.releases(limit=limit), 'active_release': finetune_lora.active_release()}
+
+
+@app.get('/api/plasticity/releases/active')
+async def plasticity_releases_active(task_type: Optional[str] = None):
+    rel = finetune_lora.active_release(task_type=task_type)
+    return {'ok': True, 'release': rel}
+
+
+@app.get('/api/plasticity/releases/{release_id}')
+async def plasticity_release_get(release_id: str):
+    rel = finetune_lora.get_release(release_id)
+    if not rel:
+        raise HTTPException(404, 'release not found')
+    return {'ok': True, 'release': rel}
+
+
+@app.get('/api/plasticity/releases/{release_id}/modelfile')
+async def plasticity_release_modelfile(release_id: str):
+    rel = finetune_lora.get_release(release_id)
+    if not rel:
+        raise HTTPException(404, 'release not found')
+    p = Path(str(rel.get('modelfile_path') or '')).resolve()
+    if not p.exists():
+        raise HTTPException(404, 'modelfile missing')
+    return PlainTextResponse(p.read_text(encoding='utf-8'), media_type='text/plain')
+
+
+@app.get('/api/plasticity/releases/{release_id}/download')
+async def plasticity_release_download(release_id: str):
+    rel = finetune_lora.get_release(release_id)
+    if not rel:
+        raise HTTPException(404, 'release not found')
+    root = Path(str(rel.get('release_dir') or '')).resolve()
+    if not root.exists():
+        raise HTTPException(404, 'release dir missing')
+    tmp = Path('/tmp') / f'{release_id}.tar.gz'
+    import tarfile as _tf
+    with _tf.open(tmp, 'w:gz') as tf:
+        tf.add(root, arcname='.')
+    return FileResponse(str(tmp), media_type='application/gzip', filename=f'{release_id}.tar.gz')
+
+
 @app.get('/api/plasticity/finetune/auto/status')
 async def finetune_auto_status():
     return {'ok': True, 'auto': finetune_lora.auto_status()}
@@ -5429,6 +6477,51 @@ async def episodic_hints(kind: str, text: str, task_type: str = 'heartbeat'):
     return out
 
 
+@app.get('/api/episodic/structured/recent')
+async def episodic_structured_recent(limit: int = 20):
+    arr = episodic_memory.recent_structured(limit=max(1, min(200, int(limit))))
+    return {'ok': True, 'count': len(arr), 'episodes': arr[-max(1, min(100, int(limit))):]}
+
+
+@app.get('/api/episodic/structured/search')
+async def episodic_structured_search(problem: str, task_type: str = 'planning', limit: int = 5):
+    arr = episodic_memory.find_similar_structured(problem=str(problem or ''), task_type=str(task_type or 'planning'), limit=max(1, min(20, int(limit))))
+    return {'ok': True, 'count': len(arr), 'similar': arr}
+
+
+@app.get('/api/episodic/matcher/search')
+async def episodic_matcher_search(problem: str, task_type: str = 'planning', limit: int = 5, cross_domain_only: bool = False):
+    out = episodic_memory.find_structural_analogy(
+        problem=str(problem or ''),
+        task_type=str(task_type or 'planning'),
+        limit=max(1, min(20, int(limit))),
+        require_cross_domain=bool(cross_domain_only),
+    )
+    return out
+
+
+@app.get('/api/procedural/hints')
+async def procedural_hints(task_type: str = 'planning', limit: int = 120):
+    return episodic_memory.procedural_hints(task_type=task_type, limit=max(10, min(1000, int(limit))))
+
+
+@app.get('/api/memory/layers/recall')
+async def memory_layers_recall(problem: str, task_type: str = 'planning', limit: int = 3):
+    out = episodic_memory.layered_recall(problem=str(problem or ''), task_type=str(task_type or 'planning'), limit=max(1, min(20, int(limit))))
+    return out
+
+
+@app.get('/api/memory/layers/recall/compact')
+async def memory_layers_recall_compact(problem: str, task_type: str = 'planning', limit: int = 3, max_chars: int = 1500):
+    out = episodic_memory.layered_recall_compact(
+        problem=str(problem or ''),
+        task_type=str(task_type or 'planning'),
+        limit=max(1, min(20, int(limit))),
+        max_chars=max(600, min(6000, int(max_chars))),
+    )
+    return {'ok': True, **out}
+
+
 @app.post('/api/sleep-cycle/run')
 async def sleep_cycle_run(retention_days: int = 14, max_active_rows: int = 3000):
     out = sleep_cycle.run_cycle(retention_days=retention_days, max_active_rows=max_active_rows)
@@ -5459,7 +6552,103 @@ async def reflexion_tick(force: bool = False):
     out = reflexion_agent.tick(force=bool(force))
     if bool(out.get('triggered')):
         store.db.add_event('reflexion', f"🧠 reflexion action={out.get('action')} conf={out.get('confidence')}")
+    cp = (out.get('curiosity_probe') or {}) if isinstance(out, dict) else {}
+    created = cp.get('created') if isinstance(cp.get('created'), list) else []
+    out['curiosity_web_autofill'] = await _auto_resolve_rag_ingest_probes_from_web(created)
     return out
+
+
+@app.get('/api/cognitive-state')
+async def cognitive_state_get(compact: bool = False):
+    if bool(compact):
+        return {'ok': True, 'state': cognitive_state.compact_for_prompt(max_chars=1200)}
+    return {'ok': True, 'state': cognitive_state.get_state()}
+
+
+@app.get('/api/causal-graph/status')
+async def causal_graph_status():
+    return causal_graph.status()
+
+
+@app.get('/api/causal-graph/query')
+async def causal_graph_query(problem: str, limit: int = 5):
+    return causal_graph.query_for_problem(problem=str(problem or ''), limit=max(1, min(20, int(limit))))
+
+
+class CausalTripleIngestRequest(BaseModel):
+    cause: str
+    effect: str
+    condition: Optional[str] = ''
+    confidence: Optional[float] = 0.65
+
+
+@app.post('/api/causal-graph/ingest')
+async def causal_graph_ingest(req: CausalTripleIngestRequest):
+    return causal_graph.upsert_edge(
+        cause=str(req.cause or ''),
+        effect=str(req.effect or ''),
+        condition=str(req.condition or ''),
+        confidence=float(req.confidence or 0.65),
+        source='api_manual',
+        evidence={},
+    )
+
+
+@app.post('/api/causal-graph/bootstrap-filtered')
+async def causal_graph_bootstrap_filtered(max_scan: int = 20000, batch: int = 1000):
+    scanned = 0
+    causal_candidates = 0
+    ingested = 0
+    since = 0
+    max_scan = max(100, min(200000, int(max_scan)))
+    batch = max(100, min(5000, int(batch)))
+
+    while scanned < max_scan:
+        rows = store.db.list_triples_since(since_id=since, limit=batch)
+        if not rows:
+            break
+        r = causal_graph.bootstrap_from_triples(rows, source='bootstrap_filtered')
+        scanned += int(r.get('scanned') or 0)
+        causal_candidates += int(r.get('causal_candidates') or 0)
+        ingested += int(r.get('ingested') or 0)
+        since = int((rows[-1] or {}).get('id') or since)
+        if len(rows) < batch:
+            break
+
+    return {
+        'ok': True,
+        'scanned': scanned,
+        'causal_candidates': causal_candidates,
+        'ingested': ingested,
+        'status': causal_graph.status(),
+    }
+
+
+class CognitiveStatePatchRequest(BaseModel):
+    beliefs: Optional[Dict[str, Any]] = None
+    goals: Optional[List[str]] = None
+    uncertainties: Optional[List[str]] = None
+    constraints: Optional[List[str]] = None
+    self_model: Optional[Dict[str, Any]] = None
+
+
+@app.post('/api/cognitive-state/patch')
+async def cognitive_state_patch(req: CognitiveStatePatchRequest):
+    st = cognitive_state.get_state()
+    if isinstance(req.beliefs, dict):
+        st['beliefs'].update(req.beliefs)
+    if isinstance(req.goals, list):
+        st['goals'] = list(dict.fromkeys((st.get('goals') or []) + [str(x)[:180] for x in req.goals]))[-40:]
+    if isinstance(req.uncertainties, list):
+        st['uncertainties'] = list(dict.fromkeys((st.get('uncertainties') or []) + [str(x)[:200] for x in req.uncertainties]))[-40:]
+    if isinstance(req.constraints, list):
+        st['constraints'] = list(dict.fromkeys((st.get('constraints') or []) + [str(x)[:200] for x in req.constraints]))[-40:]
+    if isinstance(req.self_model, dict):
+        sm = st.get('self_model') if isinstance(st.get('self_model'), dict) else {}
+        sm.update(req.self_model)
+        st['self_model'] = sm
+    saved = cognitive_state.save_state(st)
+    return {'ok': True, 'state': saved}
 
 
 def _metacog_weekly_summary_text() -> str:
@@ -5526,7 +6715,7 @@ def _classify_eval_input(q: str) -> str:
 
 def _append_eval_trace(event: dict[str, Any]) -> None:
     try:
-        root = os.getenv('ULTRON_EVAL_TRACE_FILE', '/root/.openclaw/workspace/UltronPro/backend/data/eval_traces.jsonl')
+        root = os.getenv('ULTRON_EVAL_TRACE_FILE', '/app/data/eval_traces.jsonl')
         p = Path(root)
         p.parent.mkdir(parents=True, exist_ok=True)
 
@@ -5552,6 +6741,9 @@ def _emit_eval_for_response(endpoint: str, request_id: str, message: str, out: d
     if not model_called:
         model_called = 'none' if strategy in ('insufficient_confidence', 'symbolic_reasoner', 'rag_context_direct') else 'tiny'
 
+    stage_timing = (out or {}).get('stage_timing_ms') or {}
+    llm_attempts = (out or {}).get('llm_attempts') or []
+
     _append_eval_trace({
         'request_id': request_id,
         'timestamp': int(time.time()),
@@ -5565,10 +6757,61 @@ def _emit_eval_for_response(endpoint: str, request_id: str, message: str, out: d
         'latency_ms': int(latency_ms or 0),
         'prm_score': (out or {}).get('prm_score'),
         'prm_risk': (out or {}).get('prm_risk'),
+        'stage_timing_ms': stage_timing,
+        'llm_attempts': llm_attempts,
     })
 
 
+async def _llm_complete_with_timeout(prompt: str, *, strategy: str, system: str | None, inject_persona: bool, max_tokens: int, cloud_fallback: bool, timeout_sec: float | None = None) -> str:
+    budget = float(timeout_sec or METACOG_LLM_ATTEMPT_TIMEOUT_SEC or 18)
+    try:
+        return await asyncio.wait_for(
+            asyncio.to_thread(
+                llm.complete,
+                prompt,
+                strategy=strategy,
+                system=system,
+                json_mode=False,
+                inject_persona=inject_persona,
+                max_tokens=max_tokens,
+                cloud_fallback=cloud_fallback,
+            ),
+            timeout=budget,
+        )
+    except Exception:
+        return ''
+
+
+def _budget_remaining(deadline: float) -> float:
+    return max(0.0, float(deadline - time.monotonic()))
+
+
+def _stage_mark(stage_timing_ms: dict[str, int], started_at: float, name: str) -> None:
+    try:
+        stage_timing_ms[name] = int((time.monotonic() - started_at) * 1000)
+    except Exception:
+        stage_timing_ms[name] = 0
+
+
+def _llm_attempt_record(llm_attempts: list[dict[str, Any]], **kwargs) -> None:
+    try:
+        llm_attempts.append(kwargs)
+    except Exception:
+        pass
+
+
 def _direct_canary_generate(prompt: str, max_tokens: int = 220) -> str:
+    if os.getenv('ULTRON_PREFER_ULTRON_INFER', '0') == '1':
+        try:
+            return llm.complete(
+                str(prompt or ''),
+                strategy='canary_qwen',
+                inject_persona=False,
+                max_tokens=int(max(16, min(512, max_tokens))),
+                cloud_fallback=False,
+            )
+        except Exception:
+            return ''
     base = os.getenv('OLLAMA_BASE_URL_LOCAL', os.getenv('OLLAMA_BASE_URL', 'http://127.0.0.1:11434')).rstrip('/')
     model = os.getenv('OLLAMA_CANARY_MODEL', 'qwen2.5:7b-instruct-q4_K_M')
     payload = {
@@ -5607,22 +6850,214 @@ def _safe_json_parse(text: str) -> dict[str, Any]:
     return {}
 
 
+def _parse_runtime_constraints(items: list[str] | None) -> dict[str, Any]:
+    out = {'forbid_tools': set(), 'require_tools': set(), 'max_steps': 3, 'raw': list(items or [])}
+    for it in (items or []):
+        s = str(it or '').strip()
+        if not s:
+            continue
+        sl = s.lower()
+        if sl.startswith('forbid_tool:'):
+            out['forbid_tools'].add(sl.split(':', 1)[1].strip())
+        elif sl.startswith('require_tool:'):
+            out['require_tools'].add(sl.split(':', 1)[1].strip())
+        elif sl.startswith('max_steps:'):
+            try:
+                out['max_steps'] = max(1, min(5, int(sl.split(':', 1)[1].strip())))
+            except Exception:
+                pass
+    return out
+
+
+def _enforce_plan_constraints(steps: list[dict[str, Any]], rc: dict[str, Any]) -> tuple[list[dict[str, Any]], list[str], bool]:
+    blocked: list[str] = []
+    out: list[dict[str, Any]] = []
+    forbid = rc.get('forbid_tools') if isinstance(rc.get('forbid_tools'), set) else set()
+    req = rc.get('require_tools') if isinstance(rc.get('require_tools'), set) else set()
+    mx = int(rc.get('max_steps') or 3)
+
+    for st in (steps or [])[:mx]:
+        if not isinstance(st, dict):
+            continue
+        t = str(st.get('tool') or '').strip().lower()
+        if t in forbid:
+            blocked.append(f'tool_forbidden:{t}')
+            continue
+        out.append(st)
+
+    present = {str((s or {}).get('tool') or '').strip().lower() for s in out}
+    for rt in req:
+        if rt and rt not in present:
+            blocked.append(f'missing_required_tool:{rt}')
+
+    need_alternative = len(blocked) > 0
+    return out, blocked, need_alternative
+
+
+def _run_post_execution_learning(*, query: str, answer: str, steps_executed: list[dict[str, Any]], planner_context: dict[str, Any], task_type: str = 'planning', episode_id: str = '') -> dict[str, Any]:
+    try:
+        payload = {
+            'query': str(query or '')[:1400],
+            'answer': str(answer or '')[:1400],
+            'steps_executed': steps_executed[:6],
+            'plan_selection': (planner_context.get('plan_selection') if isinstance(planner_context, dict) else {}),
+            'verification': (planner_context.get('verification') if isinstance(planner_context, dict) else {}),
+        }
+        pm_raw = llm.complete(
+            json.dumps({
+                'task': 'postmortem_structured_learning',
+                'input': payload,
+                'schema': {
+                    'best_plan_assessment': 'string',
+                    'bottleneck_step': 'string',
+                    'new_heuristic_rule': 'string',
+                    'causal_statement': 'string',
+                    'confidence': 'float_0_1'
+                }
+            }, ensure_ascii=False),
+            strategy='local',
+            system='Você faz pós-mortem técnico de execução. Responda SOMENTE JSON válido e objetivo.',
+            json_mode=True,
+            inject_persona=False,
+            max_tokens=220,
+        )
+        pm = json.loads(pm_raw) if isinstance(pm_raw, str) else (pm_raw if isinstance(pm_raw, dict) else {})
+    except Exception:
+        pm = {}
+
+    heuristic = str(pm.get('new_heuristic_rule') or '').strip()
+    bottleneck = str(pm.get('bottleneck_step') or '').strip()
+    conf = pm.get('confidence') if isinstance(pm.get('confidence'), (int, float)) else None
+    best_assessment = str(pm.get('best_plan_assessment') or '').strip()
+    causal_statement = str(pm.get('causal_statement') or '').strip()
+
+    proc_out = {'ok': False}
+    freq = {'ok': True, 'count': 0}
+    proposal = None
+    graph_check = {'ok': True, 'has_causal_rule': False, 'confirmations': 0, 'contradictions': 0}
+
+    if heuristic:
+        proc_out = episodic_memory.append_procedural_learning(
+            task_type=task_type,
+            heuristic=heuristic,
+            bottleneck_step=bottleneck,
+            outcome='postmortem',
+            source_episode_id=episode_id,
+            confidence=conf,
+            meta={'best_plan_assessment': best_assessment},
+        )
+        freq = episodic_memory.procedural_rule_frequency(heuristic=heuristic, task_type=task_type)
+
+    try:
+        graph_check = causal_graph.assess_rule_against_graph(causal_statement or heuristic)
+        if bool(graph_check.get('has_causal_rule')) and int(graph_check.get('confirmations') or 0) <= 0 and int(graph_check.get('contradictions') or 0) <= 0:
+            causal_graph.ingest_confirmed_hypothesis(
+                hypothesis=str(causal_statement or heuristic),
+                details={'source': 'post_execution_learning', 'episode_id': episode_id, 'task_type': task_type},
+            )
+    except Exception:
+        pass
+
+    if int(freq.get('count') or 0) >= 3:
+        try:
+            proposal = episodic_memory.append_learning_proposal(
+                kind='finetune_candidate',
+                title='Padrão recorrente detectado (3+ episódios)',
+                details={
+                    'task_type': task_type,
+                    'heuristic': heuristic,
+                    'frequency': int(freq.get('count') or 0),
+                    'episode_id': episode_id,
+                },
+            )
+        except Exception:
+            proposal = None
+
+    return {
+        'ok': True,
+        'postmortem': pm,
+        'procedural_update': proc_out,
+        'rule_frequency': freq,
+        'causal_graph_check': graph_check,
+        'finetune_proposal': proposal,
+    }
+
+
 async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generation_strategy: str = 'canary_qwen') -> dict[str, Any]:
+    ql = str(query or '').lower()
+    if any(t in ql for t in ['debug', 'erro', 'falha', 'bug']):
+        task_type = 'debug'
+    elif any(t in ql for t in ['resumo', 'sintetize', 'sumarize', 'sumarizar']):
+        task_type = 'summarization'
+    else:
+        task_type = 'planning'
+
+    pol = episodic_memory.get_task_memory_policy(task_type)
+    recall = episodic_memory.layered_recall(problem=query, task_type=task_type, limit=int(pol.get('episodic_limit') or 4))
+    recall_compact = episodic_memory.layered_recall_compact(problem=query, task_type=task_type, limit=int(pol.get('episodic_limit') or 4), max_chars=int(pol.get('max_chars') or 1500))
+    episodic_similar = recall.get('episodic_similar') if isinstance(recall.get('episodic_similar'), list) else []
+    procedural = recall.get('procedural_hints') if isinstance(recall.get('procedural_hints'), dict) else {'ok': True, 'best_strategies': []}
+    cog = cognitive_state.get_state()
+    runtime_constraints = _parse_runtime_constraints(cog.get('constraints') if isinstance(cog, dict) else [])
+    causal_hints = causal_graph.query_for_problem(query, limit=4)
+
+    # Episodic matcher (structural analogy) auto-trigger on low confidence/low recall
+    query_sig = episodic_memory.structural_signature(problem=query, task_type=task_type)
+    low_confidence = (str(query_sig.get('uncertainty') or 'low') == 'high') or (len(episodic_similar) <= 0)
+    analogy_ctx: dict[str, Any] = {'triggered': False, 'low_confidence': bool(low_confidence)}
+    if low_confidence:
+        try:
+            am = episodic_memory.find_structural_analogy(problem=query, task_type=task_type, limit=5, require_cross_domain=False)
+            analogy_ctx = {
+                'triggered': True,
+                'low_confidence': True,
+                'query_signature': am.get('query_signature'),
+                'first_cross_domain_analogy': am.get('first_cross_domain_analogy'),
+                'top_match': (am.get('matches') or [None])[0],
+            }
+        except Exception:
+            analogy_ctx = {'triggered': False, 'low_confidence': True}
+
     plan_prompt = json.dumps({
         'task': 'Decompose user request into up to 3 sequential tool calls then synthesize final answer.',
         'query': query,
+        'task_type': task_type,
+        'memory_context_compact': recall_compact,
+        'working_memory': recall_compact.get('working_memory') if isinstance(recall_compact, dict) else {},
+        'episodic_similar': recall_compact.get('episodic_similar') if isinstance(recall_compact, dict) else episodic_similar,
+        'procedural_hints': recall_compact.get('procedural_hints') if isinstance(recall_compact, dict) else procedural,
+        'causal_graph_hints': causal_hints,
+        'analogy_context': analogy_ctx,
         'tools': [
             {'name': 'search_rag', 'args': {'query': 'string'}},
             {'name': 'symbolic_solve', 'args': {'problem': 'string'}},
             {'name': 'ask_memory', 'args': {'topic': 'string'}},
+            {'name': 'execute_python', 'args': {'code': 'string', 'timeout_sec': 'int<=10'}},
+            {'name': 'execute_bash', 'args': {'command': 'string', 'timeout_sec': 'int<=10'}},
             {'name': 'flag_uncertainty', 'args': {'reason': 'string'}},
         ],
         'constraints': {
-            'max_steps': 3,
+            'max_steps': int(runtime_constraints.get('max_steps') or 3),
             'output_json_only': True,
             'pt_br': True,
+            'runtime_constraints': {
+                'forbid_tools': sorted(list(runtime_constraints.get('forbid_tools') or [])),
+                'require_tools': sorted(list(runtime_constraints.get('require_tools') or [])),
+            }
         },
         'schema': {
+            'hypothesis': 'string',
+            'reasoning_steps': ['string'],
+            'conclusion': 'string',
+            'confidence': 'float_0_1',
+            'possible_failures': ['string'],
+            'candidate_plans': [
+                {
+                    'name': 'string',
+                    'steps': [{'tool': 'string', 'args': 'object'}],
+                    'final_answer_style': 'string'
+                }
+            ],
             'steps': [{'tool': 'string', 'args': 'object'}],
             'final_answer_style': 'string'
         }
@@ -5637,11 +7072,185 @@ async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generat
         max_tokens=260,
     )
     plan = _safe_json_parse(planner_raw)
-    steps = plan.get('steps') if isinstance(plan.get('steps'), list) else []
-    steps = steps[:3]
+    cot = {
+        'hypothesis': str(plan.get('hypothesis') or '')[:500],
+        'reasoning_steps': (plan.get('reasoning_steps') if isinstance(plan.get('reasoning_steps'), list) else [])[:6],
+        'conclusion': str(plan.get('conclusion') or '')[:700],
+        'confidence': plan.get('confidence'),
+        'possible_failures': (plan.get('possible_failures') if isinstance(plan.get('possible_failures'), list) else [])[:5],
+    }
+    candidate_plans = plan.get('candidate_plans') if isinstance(plan.get('candidate_plans'), list) else []
+    normalized_candidates: list[dict[str, Any]] = []
+    for i, cp in enumerate(candidate_plans[:3], start=1):
+        if not isinstance(cp, dict):
+            continue
+        csteps = cp.get('steps') if isinstance(cp.get('steps'), list) else []
+        normalized_candidates.append({
+            'name': str(cp.get('name') or f'plan_{i}'),
+            'steps': csteps[:int(runtime_constraints.get('max_steps') or 3)],
+            'final_answer_style': str(cp.get('final_answer_style') or plan.get('final_answer_style') or 'objetivo')
+        })
+
+    if not normalized_candidates:
+        steps0 = plan.get('steps') if isinstance(plan.get('steps'), list) else []
+        normalized_candidates = [{
+            'name': 'plan_primary',
+            'steps': steps0[:int(runtime_constraints.get('max_steps') or 3)],
+            'final_answer_style': str(plan.get('final_answer_style') or 'objetivo')
+        }]
+
+    # Causal risk scoring for candidate plans
+    scored_candidates = []
+    for cp in normalized_candidates:
+        rs = causal_graph.score_plan_risk(query=query, steps=cp.get('steps') if isinstance(cp.get('steps'), list) else [])
+        scored_candidates.append({
+            'name': cp.get('name'),
+            'steps': cp.get('steps') or [],
+            'final_answer_style': cp.get('final_answer_style') or 'objetivo',
+            'risk_score': float(rs.get('risk_score') or 0.0),
+            'risk': rs,
+        })
+
+    scored_candidates.sort(key=lambda x: float(x.get('risk_score') or 0.0))
+    selected = scored_candidates[0]
+    discarded = scored_candidates[1:]
+    plan_selection = {
+        'selected_plan': selected.get('name'),
+        'selected_risk_score': selected.get('risk_score'),
+        'discarded': [
+            {
+                'name': d.get('name'),
+                'risk_score': d.get('risk_score'),
+                'motivo_causal': 'risk_score_maior',
+                'top_activated_edge': ((d.get('risk') or {}).get('activated_edges') or [{}])[0],
+                'plano_descartado': d.get('steps') or [],
+            }
+            for d in discarded
+        ]
+    }
+
+    steps = (selected.get('steps') if isinstance(selected.get('steps'), list) else [])[:int(runtime_constraints.get('max_steps') or 3)]
+    plan['final_answer_style'] = selected.get('final_answer_style') or plan.get('final_answer_style')
+
+    # CoT verifier (separate pass)
+    verify_prompt = json.dumps({
+        'query': query,
+        'task_type': task_type,
+        'runtime_constraints': {
+            'forbid_tools': sorted(list(runtime_constraints.get('forbid_tools') or [])),
+            'require_tools': sorted(list(runtime_constraints.get('require_tools') or [])),
+        },
+        'cot': cot,
+        'steps': steps,
+        'schema': {
+            'overall_approved': 'bool',
+            'step_reviews': [{'step': 'int', 'approved': 'bool', 'reason': 'string'}],
+            'rejection_reasons': ['string']
+        }
+    }, ensure_ascii=False)
+    verifier_raw = llm.complete(
+        prompt=verify_prompt,
+        strategy=generation_strategy,
+        system='Você é verificador lógico. Reprova suposições sem fundamento e planos que violam constraints. Responda SOMENTE JSON válido.',
+        json_mode=False,
+        inject_persona=False,
+        max_tokens=220,
+    )
+    ver = _safe_json_parse(verifier_raw)
+
+    # apply explicit runtime constraints and verifier output
+    steps, blocked_reasons, need_alternative = _enforce_plan_constraints(steps, runtime_constraints)
+
+    # step-level verifier enforcement
+    step_reviews = ver.get('step_reviews') if isinstance(ver, dict) and isinstance(ver.get('step_reviews'), list) else []
+    rejected_steps = set()
+    for rv in step_reviews:
+        if not isinstance(rv, dict):
+            continue
+        approved = rv.get('approved')
+        idx = rv.get('step')
+        if approved is False and isinstance(idx, int):
+            rejected_steps.add(int(idx))
+            blocked_reasons.append(f"step_reject:{int(idx)}:{str(rv.get('reason') or '')[:120]}")
+
+    if rejected_steps:
+        kept = []
+        for i, st in enumerate(steps, start=1):
+            if i in rejected_steps:
+                continue
+            kept.append(st)
+        steps = kept
+        # if all steps rejected, force alternative route
+        if not steps:
+            need_alternative = True
+
+    # causal verification per-step (hard veto/warning)
+    causal_kept = []
+    for i, st in enumerate(steps, start=1):
+        ev = causal_graph.evaluate_step_risk(query=query, step=st)
+        vetoes = ev.get('vetoes') if isinstance(ev.get('vetoes'), list) else []
+        warns = ev.get('warnings') if isinstance(ev.get('warnings'), list) else []
+        if vetoes:
+            v0 = vetoes[0] if isinstance(vetoes[0], dict) else {}
+            blocked_reasons.append(f"causal_veto:{str(v0.get('cause') or '')}→{str(v0.get('effect') or '')}")
+            continue
+        if warns:
+            w0 = warns[0] if isinstance(warns[0], dict) else {}
+            blocked_reasons.append(f"causal_warn:{str(w0.get('cause') or '')}→{str(w0.get('effect') or '')}")
+        causal_kept.append(st)
+    steps = causal_kept
+    if not steps:
+        need_alternative = True
+
+    if ver.get('overall_approved') is False:
+        need_alternative = True
+        for rr in (ver.get('rejection_reasons') if isinstance(ver.get('rejection_reasons'), list) else []):
+            blocked_reasons.append(f"verifier_reject:{str(rr)[:140]}")
+
+    if need_alternative:
+        alt_prompt = json.dumps({
+            'task': 'Generate an alternative plan that satisfies constraints and avoids rejected assumptions.',
+            'query': query,
+            'task_type': task_type,
+            'blocked_reasons': blocked_reasons,
+            'runtime_constraints': {
+                'forbid_tools': sorted(list(runtime_constraints.get('forbid_tools') or [])),
+                'require_tools': sorted(list(runtime_constraints.get('require_tools') or [])),
+                'max_steps': int(runtime_constraints.get('max_steps') or 3),
+            },
+            'tools': [
+                {'name': 'search_rag', 'args': {'query': 'string'}},
+                {'name': 'symbolic_solve', 'args': {'problem': 'string'}},
+                {'name': 'ask_memory', 'args': {'topic': 'string'}},
+                {'name': 'execute_python', 'args': {'code': 'string', 'timeout_sec': 'int<=10'}},
+                {'name': 'execute_bash', 'args': {'command': 'string', 'timeout_sec': 'int<=10'}},
+                {'name': 'flag_uncertainty', 'args': {'reason': 'string'}},
+            ],
+            'schema': {'steps': [{'tool': 'string', 'args': 'object'}], 'final_answer_style': 'string'}
+        }, ensure_ascii=False)
+        alt_raw = llm.complete(
+            prompt=alt_prompt,
+            strategy=generation_strategy,
+            system='Gere rota alternativa válida e conservadora. Responda SOMENTE JSON válido.',
+            json_mode=False,
+            inject_persona=False,
+            max_tokens=220,
+        )
+        alt = _safe_json_parse(alt_raw)
+        alt_steps = alt.get('steps') if isinstance(alt.get('steps'), list) else []
+        alt_steps, blocked2, _ = _enforce_plan_constraints(alt_steps, runtime_constraints)
+        if alt_steps:
+            steps = alt_steps[:int(runtime_constraints.get('max_steps') or 3)]
+            plan['final_answer_style'] = alt.get('final_answer_style') or plan.get('final_answer_style')
+            plan_selection['selected_plan'] = 'alternative_after_reject'
+            plan_selection['selected_risk_score'] = causal_graph.score_plan_risk(query=query, steps=steps).get('risk_score')
+        blocked_reasons.extend(blocked2)
 
     tool_outputs: list[dict[str, Any]] = []
     step_prm: list[dict[str, Any]] = []
+
+    if not steps:
+        steps = [{'tool': 'flag_uncertainty', 'args': {'reason': 'no_valid_plan_after_verification'}}]
 
     for idx, st in enumerate(steps, start=1):
         if not isinstance(st, dict):
@@ -5665,6 +7274,30 @@ async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generat
             hints = episodic_memory.strategy_hints(kind='strategy', text=topic, task_type='planning')
             brief = _metacog_weekly_summary_text()
             out_txt = f"{brief}\n\nHints:\n{json.dumps(hints, ensure_ascii=False)[:700]}"
+        elif tool == 'execute_python':
+            ev = causal_graph.evaluate_step_risk(query=query, step={'tool': tool, 'args': args})
+            vetoes = ev.get('vetoes') if isinstance(ev.get('vetoes'), list) else []
+            if vetoes:
+                v0 = vetoes[0] if isinstance(vetoes[0], dict) else {}
+                out_txt = f"Execução bloqueada por veto causal: {str(v0.get('cause') or '')}→{str(v0.get('effect') or '')}"
+                status = 'blocked_causal_veto'
+            else:
+                tout = int(args.get('timeout_sec') or 10)
+                res = sandbox_client.execute_python(code=str(args.get('code') or ''), timeout_sec=max(1, min(10, tout)))
+                out_txt = json.dumps(res, ensure_ascii=False)[:1200]
+                status = 'ok' if bool(res.get('ok')) else 'error'
+        elif tool == 'execute_bash':
+            ev = causal_graph.evaluate_step_risk(query=query, step={'tool': tool, 'args': args})
+            vetoes = ev.get('vetoes') if isinstance(ev.get('vetoes'), list) else []
+            if vetoes:
+                v0 = vetoes[0] if isinstance(vetoes[0], dict) else {}
+                out_txt = f"Execução bloqueada por veto causal: {str(v0.get('cause') or '')}→{str(v0.get('effect') or '')}"
+                status = 'blocked_causal_veto'
+            else:
+                tout = int(args.get('timeout_sec') or 10)
+                res = sandbox_client.execute_bash(command=str(args.get('command') or ''), timeout_sec=max(1, min(10, tout)))
+                out_txt = json.dumps(res, ensure_ascii=False)[:1200]
+                status = 'ok' if bool(res.get('ok')) else 'error'
         elif tool == 'flag_uncertainty':
             out_txt = f"Incerteza registrada: {str(args.get('reason') or 'insufficient_data')}"
             status = 'uncertain'
@@ -5701,6 +7334,30 @@ async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generat
             'planner_raw': str(planner_raw or '')[:1000],
             'steps_executed': tool_outputs,
             'step_prm': step_prm,
+            'planner_context': {
+                'task_type': task_type,
+                'episodic_similar_count': len(episodic_similar),
+                'episodic_similar': episodic_similar,
+                'procedural_hints': procedural,
+                'top_strategy_hint': recall.get('top_strategy_hint') if isinstance(recall, dict) else None,
+                'working_memory': recall_compact.get('working_memory') if isinstance(recall_compact, dict) else (recall.get('working_memory') if isinstance(recall, dict) else {}),
+                'memory_policy': pol,
+                'memory_budget': recall_compact.get('budget') if isinstance(recall_compact, dict) else {},
+                'causal_graph_hints': causal_hints,
+                'analogy_context': analogy_ctx,
+                'runtime_constraints': {
+                    'forbid_tools': sorted(list(runtime_constraints.get('forbid_tools') or [])),
+                    'require_tools': sorted(list(runtime_constraints.get('require_tools') or [])),
+                    'max_steps': int(runtime_constraints.get('max_steps') or 3),
+                },
+                'cot': cot,
+                'verification': {
+                    'overall_approved': ver.get('overall_approved') if isinstance(ver, dict) else None,
+                    'blocked_reasons': blocked_reasons,
+                    'step_reviews': (ver.get('step_reviews') if isinstance(ver, dict) and isinstance(ver.get('step_reviews'), list) else []),
+                },
+                'plan_selection': plan_selection,
+            },
         },
         'metrics': metrics,
         'cache_hit': None,
@@ -5715,15 +7372,21 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
     cache_hit = None
     from_cache = False
     forced_strategy = str(force_generation_strategy or '').strip()
+    req_started = time.monotonic()
+    stage_timing_ms: dict[str, int] = {}
+    llm_attempts: list[dict[str, Any]] = []
 
     # Infer health gate (optional for Qwen main path).
     require_infer_health = str(os.getenv('METACOG_REQUIRE_INFER_HEALTH', '0')).strip().lower() in ('1', 'true', 'yes', 'on')
     if require_infer_health and forced_strategy != 'canary_qwen':
+        infer_health_t0 = time.monotonic()
         try:
             import urllib.request as _urlreq
-            with _urlreq.urlopen('http://147.93.116.186:18025/health', timeout=10) as _r:
+            with _urlreq.urlopen(os.getenv('ULTRON_LOCAL_INFER_HEALTH_URL', os.getenv('ULTRON_LOCAL_INFER_URL', 'http://127.0.0.1:8025')).rstrip('/') + '/health', timeout=10) as _r:
                 _h = json.loads(_r.read().decode('utf-8', 'ignore'))
+            _stage_mark(stage_timing_ms, infer_health_t0, 'infer_health_ms')
         except Exception as _e:
+            _stage_mark(stage_timing_ms, infer_health_t0, 'infer_health_ms')
             raise HTTPException(status_code=503, detail=f'infer_health_unavailable: {_e}')
 
         loaded_adapter = str((_h or {}).get('loaded_adapter') or '').strip()
@@ -5757,6 +7420,14 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
         try:
             prm = prm_lite.score_answer(q, answer, context=str(((metrics_obj or {}).get('rag') or {}).get('source') or ''), meta={'strategy': strategy})
             prm_lite.record(q, answer, strategy, prm)
+            try:
+                meta = llm.last_call_meta() or {}
+                provider = str(meta.get('provider') or 'unknown')
+                task_type = llm_adapter.classify_task_type(input_class=str((metrics_obj or {}).get('input_class') or ''), strategy=strategy)
+                if isinstance(prm.get('score'), (int, float)):
+                    llm_adapter.record_provider_performance(task_type, provider, float(prm.get('score')))
+            except Exception:
+                pass
             return {
                 'prm_score': prm.get('score'),
                 'prm_risk': prm.get('risk'),
@@ -5909,6 +7580,8 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
             'metrics': metrics,
             'cache_hit': cache_hit,
             'from_cache': from_cache,
+            'stage_timing_ms': {**stage_timing_ms, 'total_ms': int((time.monotonic() - req_started) * 1000)},
+            'llm_attempts': llm_attempts,
             **prm_meta,
         }
 
@@ -5931,19 +7604,95 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
     should_orchestrate = orch_enabled and any(t in ql for t in open_task_terms)
     if should_orchestrate:
         try:
+            orch_t0 = time.time()
+            orch_stage_t0 = time.monotonic()
             gen_strategy = forced_strategy if forced_strategy else ('canary_qwen' if canary else 'local')
             out_orch = await _metacog_orchestrator_run(q, metrics, generation_strategy=gen_strategy)
             if isinstance(out_orch, dict) and str(out_orch.get('answer') or '').strip():
                 _trace_emit(str(out_orch.get('answer') or ''), 'orchestrator_qwen_tools', outcome='success')
                 prm_meta = _prm_pack(str(out_orch.get('answer') or ''), 'orchestrator_qwen_tools', metrics)
                 out_orch.update(prm_meta)
+                try:
+                    orch_struct = (out_orch.get('orchestration') or {}) if isinstance(out_orch.get('orchestration'), dict) else {}
+                    planner_raw = str(orch_struct.get('planner_raw') or '')
+                    steps_executed = orch_struct.get('steps_executed') if isinstance(orch_struct.get('steps_executed'), list) else []
+                    step_prm = orch_struct.get('step_prm') if isinstance(orch_struct.get('step_prm'), list) else []
+                    plan_sel = orch_struct.get('planner_context') if isinstance(orch_struct.get('planner_context'), dict) else {}
+                    selection = plan_sel.get('plan_selection') if isinstance(plan_sel.get('plan_selection'), dict) else {}
+                    discarded = selection.get('discarded') if isinstance(selection.get('discarded'), list) else []
+                    risk = str(out_orch.get('prm_risk') or 'unknown')
+                    score = out_orch.get('prm_score')
+                    hipotese_pos_hoc = (
+                        f"Hipótese pós-hoc: estratégia sequencial com {len(steps_executed)} passo(s) "
+                        f"foi {'efetiva' if risk in ('low','medium') else 'incerta'}; risco final PRM={risk}."
+                    )
+                    analogy_ctx = plan_sel.get('analogy_context') if isinstance(plan_sel.get('analogy_context'), dict) else {}
+                    chosen_analogy = analogy_ctx.get('first_cross_domain_analogy') if isinstance(analogy_ctx.get('first_cross_domain_analogy'), dict) else (analogy_ctx.get('top_match') if isinstance(analogy_ctx.get('top_match'), dict) else {})
+                    analogia_usada = bool(analogy_ctx.get('triggered')) and bool(chosen_analogy)
+                    analogia_source_episode_id = str(chosen_analogy.get('source_episode_id') or chosen_analogy.get('episode_id') or '')
+                    analogia_foi_util = None
+                    if analogia_usada and isinstance(score, (int, float)):
+                        analogia_foi_util = bool(float(score) >= 0.62)
+
+                    ep = episodic_memory.append_structured_episode(
+                        problem=q,
+                        plano_gerado={
+                            'planner_raw': planner_raw[:1800],
+                            'plano_escolhido': selection.get('selected_plan'),
+                            'plano_descartado': [d.get('plano_descartado') for d in discarded[:2]],
+                            'motivo_causal': [d.get('motivo_causal') for d in discarded[:2]],
+                            'analogy_context': analogy_ctx,
+                        },
+                        passos_executados=steps_executed,
+                        resultado=str(out_orch.get('answer') or ''),
+                        prm_score_final=(float(score) if isinstance(score, (int, float)) else None),
+                        hipotese_pos_hoc=hipotese_pos_hoc,
+                        task_type='planning',
+                        strategy='orchestrator_qwen_tools',
+                        ok=(risk in ('low', 'medium')),
+                        latency_ms=int((time.time() - orch_t0) * 1000),
+                        work_context={
+                            'step_prm': step_prm,
+                            'cache_hit': out_orch.get('cache_hit'),
+                            'from_cache': bool(out_orch.get('from_cache')),
+                            'analogy_context': analogy_ctx,
+                        },
+                        analogia_usada=analogia_usada,
+                        analogia_source_episode_id=analogia_source_episode_id,
+                        analogia_foi_util=analogia_foi_util,
+                    )
+                    out_orch['analogy_feedback'] = {
+                        'analogia_usada': analogia_usada,
+                        'analogia_source_episode_id': analogia_source_episode_id,
+                        'analogia_foi_util': analogia_foi_util,
+                    }
+                    post_learning = _run_post_execution_learning(
+                        query=q,
+                        answer=str(out_orch.get('answer') or ''),
+                        steps_executed=steps_executed,
+                        planner_context=(orch_struct.get('planner_context') if isinstance(orch_struct.get('planner_context'), dict) else {}),
+                        task_type='planning',
+                        episode_id=str((ep or {}).get('episode_id') or ''),
+                    )
+                    out_orch['post_execution_learning'] = post_learning
+                except Exception:
+                    pass
+                _stage_mark(stage_timing_ms, orch_stage_t0, 'orchestrator_ms')
+                out_orch['stage_timing_ms'] = {**stage_timing_ms, 'total_ms': int((time.monotonic() - req_started) * 1000)}
+                out_orch['llm_attempts'] = llm_attempts
                 return out_orch
         except Exception:
+            _stage_mark(stage_timing_ms, orch_stage_t0, 'orchestrator_ms')
             pass
 
     # Step 2: symbolic router before domain gate
-    if symbolic_reasoner.should_route(q):
+    symbolic_route_t0 = time.monotonic()
+    symbolic_should_route = symbolic_reasoner.should_route(q)
+    _stage_mark(stage_timing_ms, symbolic_route_t0, 'symbolic_route_check_ms')
+    if symbolic_should_route:
+        symbolic_solve_t0 = time.monotonic()
         sym = symbolic_reasoner.solve(q)
+        _stage_mark(stage_timing_ms, symbolic_solve_t0, 'symbolic_solve_ms')
         if bool(sym.get('ok')) and str(sym.get('answer') or '').strip():
             ans_sym = str(sym.get('answer') or '').strip()
             used_sym = 'symbolic_reasoner'
@@ -5961,6 +7710,8 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
                 'metrics': {**metrics, 'symbolic_reasoner': {'routed': True}},
                 'cache_hit': cache_hit,
                 'from_cache': from_cache,
+                'stage_timing_ms': {**stage_timing_ms, 'total_ms': int((time.monotonic() - req_started) * 1000)},
+                'llm_attempts': llm_attempts,
                 **prm_meta,
             }
 
@@ -5989,6 +7740,7 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
         and (input_class not in ('logic', 'math', 'planning', 'code'))
     )
     if (not bypass_insufficient_gate) and external_fact_question:
+        stage_timing_ms['gate_external_fact_ms'] = int((time.monotonic() - req_started) * 1000)
         ans_gate = (
             "Não tenho informação confiável sobre isso. "
             "Para questões fora do domínio operacional, recomendo consultar uma fonte específica."
@@ -6008,10 +7760,12 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
     # Semantic cache lookup (skip on runtime/status/health/metrics or high/critical risk class)
     cache_skip_lookup = (risk_class in ('high', 'critical')) or (intent_label in ('runtime', 'status', 'health', 'metrics'))
     if not cache_skip_lookup:
+        cache_lookup_t0 = time.monotonic()
         try:
             hit = semantic_cache.lookup(q)
         except Exception:
             hit = None
+        _stage_mark(stage_timing_ms, cache_lookup_t0, 'semantic_cache_lookup_ms')
         if hit and str(hit.get('answer') or '').strip():
             cache_hit = str(hit.get('cache_hit') or '')
             from_cache = True
@@ -6026,6 +7780,8 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
                 'metrics': {**metrics, 'semantic_cache': {'hit': cache_hit, 'score': hit.get('score')}},
                 'cache_hit': cache_hit,
                 'from_cache': from_cache,
+                'stage_timing_ms': {**stage_timing_ms, 'total_ms': int((time.monotonic() - req_started) * 1000)},
+                'llm_attempts': llm_attempts,
                 **prm_meta,
             }
 
@@ -6051,10 +7807,12 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
                 factual_intent = True
                 break
     if factual_intent:
+        rag_search_t0 = time.monotonic()
         try:
             rag_hits = await search_knowledge(q, top_k=5)
         except Exception:
             rag_hits = []
+        _stage_mark(stage_timing_ms, rag_search_t0, 'rag_search_ms')
 
         best = None
         if rag_hits:
@@ -6073,18 +7831,22 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
                 "Se faltar dado no contexto, diga isso explicitamente."
             )
             rag_ans = ''
+            rag_llm_t0 = time.monotonic()
+            rag_strategy = (forced_strategy or 'default')
             try:
-                rag_ans = llm.complete(
+                rag_ans = await _llm_complete_with_timeout(
                     rag_prompt,
-                    strategy=(forced_strategy or 'default'),
+                    strategy=rag_strategy,
                     system='Resposta factual com base em contexto recuperado.',
-                    json_mode=False,
                     inject_persona=False,
                     max_tokens=180,
                     cloud_fallback=(not bool(forced_strategy)),
+                    timeout_sec=min(METACOG_LLM_ATTEMPT_TIMEOUT_SEC, max(1.0, _budget_remaining(time.monotonic() + METACOG_LLM_ATTEMPT_TIMEOUT_SEC))),
                 ) or ''
             except Exception:
                 rag_ans = ''
+            _stage_mark(stage_timing_ms, rag_llm_t0, 'rag_llm_ms')
+            _llm_attempt_record(llm_attempts, stage='rag_llm', strategy=rag_strategy, duration_ms=stage_timing_ms.get('rag_llm_ms', 0), ok=bool(str(rag_ans).strip()))
 
             rag_ans = str(rag_ans).strip()
             if rag_ans:
@@ -6160,6 +7922,7 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
 
     ans = ''
     used = 'none'
+    llm_deadline = time.monotonic() + METACOG_LLM_TOTAL_BUDGET_SEC
 
     # Option A feature-flag: allow direct factual answers for general questions.
     general_qa_enabled = str(os.getenv('METACOG_GENERAL_QA_ENABLED', '0')).strip().lower() in ('1', 'true', 'yes', 'on')
@@ -6202,46 +7965,61 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
             strategies.append('default')
 
     for strat in tuple(strategies):
-        try:
-            cand = llm.complete(
-                prompt,
-                strategy=strat,
-                system=llm_system,
-                json_mode=False,
-                inject_persona=False,
-                max_tokens=(80 if short_msg else 120),
-                cloud_fallback=(not bool(forced_strategy) and strat == 'default'),
-            )
-        except Exception:
-            cand = ''
+        remaining = _budget_remaining(llm_deadline)
+        if remaining <= 0.25:
+            break
+        attempt_t0 = time.monotonic()
+        cand = await _llm_complete_with_timeout(
+            prompt,
+            strategy=strat,
+            system=llm_system,
+            inject_persona=False,
+            max_tokens=(80 if short_msg else 120),
+            cloud_fallback=(not bool(forced_strategy) and strat == 'default'),
+            timeout_sec=min(METACOG_LLM_ATTEMPT_TIMEOUT_SEC, remaining),
+        )
+        attempt_ms = int((time.monotonic() - attempt_t0) * 1000)
+        _llm_attempt_record(llm_attempts, stage='primary', strategy=strat, duration_ms=attempt_ms, ok=bool((cand or '').strip()), remaining_before_ms=int(remaining * 1000))
+        stage_timing_ms[f'llm_{strat}_last_ms'] = attempt_ms
         if (cand or '').strip() and not _looks_broken(cand):
             ans = cand.strip()
             used = strat
             break
 
         # hard fallback for canary strategy: call Ollama endpoint directly
-        if strat == 'canary_qwen':
-            cand_direct = _direct_canary_generate(q, max_tokens=(80 if short_msg else 160))
+        if strat == 'canary_qwen' and _budget_remaining(llm_deadline) > 1.0:
+            canary_direct_t0 = time.monotonic()
+            try:
+                cand_direct = await asyncio.wait_for(
+                    asyncio.to_thread(_direct_canary_generate, q, (80 if short_msg else 160)),
+                    timeout=min(max(1.0, _budget_remaining(llm_deadline)), METACOG_LLM_ATTEMPT_TIMEOUT_SEC),
+                )
+            except Exception:
+                cand_direct = ''
+            canary_direct_ms = int((time.monotonic() - canary_direct_t0) * 1000)
+            stage_timing_ms['canary_direct_ms'] = canary_direct_ms
+            _llm_attempt_record(llm_attempts, stage='canary_direct', strategy='canary_qwen_direct', duration_ms=canary_direct_ms, ok=bool((cand_direct or '').strip()))
             if (cand_direct or '').strip() and not _looks_broken(cand_direct):
                 ans = cand_direct.strip()
                 used = 'canary_qwen_direct'
                 break
 
         # second non-deterministic pass with simpler prompt (for tiny on CPU)
-        if (not forced_strategy) and strat == 'local':
+        if (not forced_strategy) and strat == 'local' and _budget_remaining(llm_deadline) > 0.5:
             simple_prompt = f"Pergunta: {q}\nResponda em até 3 frases, português natural, sem repetir a pergunta."
-            try:
-                cand2 = llm.complete(
-                    simple_prompt,
-                    strategy='local',
-                    system=None,
-                    json_mode=False,
-                    inject_persona=False,
-                    max_tokens=96,
-                    cloud_fallback=False,
-                )
-            except Exception:
-                cand2 = ''
+            retry_t0 = time.monotonic()
+            cand2 = await _llm_complete_with_timeout(
+                simple_prompt,
+                strategy='local',
+                system=None,
+                inject_persona=False,
+                max_tokens=96,
+                cloud_fallback=False,
+                timeout_sec=min(METACOG_LLM_ATTEMPT_TIMEOUT_SEC, _budget_remaining(llm_deadline)),
+            )
+            retry_ms = int((time.monotonic() - retry_t0) * 1000)
+            stage_timing_ms['local_retry_ms'] = retry_ms
+            _llm_attempt_record(llm_attempts, stage='local_retry', strategy='local', duration_ms=retry_ms, ok=bool((cand2 or '').strip()))
             if (cand2 or '').strip() and not _looks_broken(cand2):
                 ans = cand2.strip()
                 used = 'local_retry'
@@ -6356,6 +8134,7 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
     else:
         prm_gate_decision = 'block_heuristic'
 
+    stage_timing_ms['total_ms'] = int((time.monotonic() - req_started) * 1000)
     return {
         'ok': True,
         'answer': ans,
@@ -6364,6 +8143,8 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
         'cache_hit': cache_hit,
         'from_cache': from_cache,
         'prm_gate_decision': prm_gate_decision,
+        'stage_timing_ms': stage_timing_ms,
+        'llm_attempts': llm_attempts,
         **prm_meta,
     }
 
@@ -6464,24 +8245,59 @@ async def metacognition_ask(req: MetacogAskRequest):
                     if int(_CANARY_DISABLED_UNTIL_TS or 0) > int(time.time()):
                         out['canary_rollout'] = {'enabled': False, 'disabled_reason': _CANARY_DISABLE_REASON}
                 _emit_eval_for_response('/api/metacognition/ask', req_id, str(req.message or ''), out, dt)
-            return out
-        except Exception:
+                logger.info('metacognition_ask request_id=%s strategy=%s latency_ms=%s stage_timing_ms=%s llm_attempts=%s', req_id, str(out.get('strategy') or ''), dt, json.dumps(out.get('stage_timing_ms') or {}, ensure_ascii=False), json.dumps(out.get('llm_attempts') or [], ensure_ascii=False))
+                return out
+        except Exception as e:
             _canary_record('canary', 'error', None, timeout=True)
             if not qwen_main_enabled:
                 _canary_maybe_disable()
+            try:
+                store.db.add_event('metacognition_ask_error', f"canary error: {str(e)[:180]}")
+            except Exception:
+                pass
 
-    # fallback path (tiny/local) if qwen is unavailable
+    # fallback path (tiny/local) if qwen is unavailable or failed
     t0 = time.time()
-    out = await _metacognition_ask_impl(req)
-    dt = int((time.time() - t0) * 1000)
-    if isinstance(out, dict):
+    try:
+        out = await _metacognition_ask_impl(req)
+        dt = int((time.time() - t0) * 1000)
+        if not isinstance(out, dict):
+            out = {
+                'ok': False,
+                'answer': 'Não consegui responder com confiança agora. Tente novamente em instantes.',
+                'strategy': 'fallback_empty',
+                'model': 'tiny',
+                'error': 'non_dict_response',
+                'latency_ms': dt,
+            }
         out['request_id'] = req_id
         out.setdefault('latency_ms', dt)
+        out.setdefault('model', 'tiny')
         _canary_record('tiny', str(out.get('strategy') or ''), str(out.get('prm_risk') or ''), timeout=False)
         if (not qwen_main_enabled) and int(_CANARY_DISABLED_UNTIL_TS or 0) > int(time.time()):
             out['canary_rollout'] = {'enabled': False, 'disabled_reason': _CANARY_DISABLE_REASON}
         _emit_eval_for_response('/api/metacognition/ask', req_id, str(req.message or ''), out, dt)
-    return out
+        logger.info('metacognition_ask request_id=%s strategy=%s latency_ms=%s stage_timing_ms=%s llm_attempts=%s', req_id, str(out.get('strategy') or ''), dt, json.dumps(out.get('stage_timing_ms') or {}, ensure_ascii=False), json.dumps(out.get('llm_attempts') or [], ensure_ascii=False))
+        return out
+    except Exception as e:
+        dt = int((time.time() - t0) * 1000)
+        out = {
+            'ok': False,
+            'answer': 'Não consegui responder com confiança agora. Tente novamente em instantes.',
+            'strategy': 'fallback_error',
+            'model': 'tiny',
+            'error': str(e)[:240],
+            'latency_ms': dt,
+            'stage_timing_ms': {'total_ms': dt},
+            'llm_attempts': [],
+        }
+        try:
+            _canary_record('tiny', 'error', None, timeout=True)
+            _emit_eval_for_response('/api/metacognition/ask', req_id, str(req.message or ''), out, dt)
+            store.db.add_event('metacognition_ask_error', f"fallback error: {str(e)[:180]}")
+        except Exception:
+            pass
+        return out
 
 
 @app.get('/api/canary/status')
@@ -6562,14 +8378,14 @@ async def canary_ask(req: MetacogAskRequest):
             )
             td = int((time.time() - t1) * 1000)
             tiny_prm = prm_lite.score_answer(str(req.message or ''), str(tiny_ans or ''), context='', meta={'strategy': 'local_shadow'}) if tiny_ans else {}
-            out['compare_tinyllama'] = {
+            out['compare_local_shadow'] = {
                 'strategy': 'local_shadow',
                 'latency_ms': td,
                 'prm_score': tiny_prm.get('score') if isinstance(tiny_prm, dict) else None,
                 'prm_risk': tiny_prm.get('risk') if isinstance(tiny_prm, dict) else None,
             }
         except Exception:
-            out['compare_tinyllama'] = {'strategy': 'local_shadow', 'latency_ms': None, 'prm_score': None, 'prm_risk': None}
+            out['compare_local_shadow'] = {'strategy': 'local_shadow', 'latency_ms': None, 'prm_score': None, 'prm_risk': None}
     return out
 
 
@@ -6759,6 +8575,11 @@ async def llm_health(provider: str = 'auto'):
     return llm.healthcheck(provider)
 
 
+@app.get('/api/llm/router/status')
+async def llm_router_status(task_type: str = 'general', budget_mode: Optional[str] = None):
+    return llm.router_status(task_type=task_type, budget_mode=budget_mode)
+
+
 @app.get('/api/replay/decision-traces/status')
 async def replay_decision_traces_status():
     return replay_traces.status()
@@ -6799,7 +8620,7 @@ async def replay_decision_traces_run(day: Optional[str] = None, max_rows: int = 
         Path('/app/data/finetune_dataset_val.jsonl').write_text('\n'.join(val_rows) + '\n', encoding='utf-8')
 
         mm = max(20, min(int(max_samples or 120), len(train_rows)))
-        j = finetune_lora.create_job('assistant', os.getenv('ULTRON_FINETUNE_BASE_MODEL', 'TinyLlama/TinyLlama-1.1B-Chat-v1.0'), method='qlora', max_samples=mm)
+        j = finetune_lora.create_job('assistant', os.getenv('ULTRON_FINETUNE_BASE_MODEL', 'Qwen/Qwen2.5-3B-Instruct'), method='qlora', max_samples=mm)
         st = finetune_lora.start_job(str(j.get('id')), dry_run=False)
         store.db.add_event('replay_traces_finetune', f"🔁🧪 incremental job={j.get('id')} status={((st.get('job') or {}).get('status'))} samples={mm}")
         return {'ok': True, 'replay': out, 'finetune': {'job': j, 'start': st, 'samples': mm}}

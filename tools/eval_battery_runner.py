@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 import json
+import os
 import time
 from pathlib import Path
 import urllib.request
 
-BASE_URL = 'https://ultronpro.nutef.com'
+BASE_URL = os.getenv('EVAL_BASE_URL', 'https://ultronpro.nutef.com')
+ASK_PATH = os.getenv('EVAL_ASK_PATH', '/api/metacognition/ask')
 TOOLS_DIR = Path('/root/.openclaw/workspace/UltronPro/tools')
 QUESTIONS_PATH = TOOLS_DIR / 'eval_battery_questions.json'
 
@@ -12,7 +14,7 @@ QUESTIONS_PATH = TOOLS_DIR / 'eval_battery_questions.json'
 def post_ask(q: str) -> dict:
     data = json.dumps({'message': q}).encode('utf-8')
     req = urllib.request.Request(
-        BASE_URL + '/api/metacognition/ask',
+        BASE_URL + ASK_PATH,
         data=data,
         headers={'Content-Type': 'application/json'},
         method='POST',
@@ -34,6 +36,19 @@ def get_json(path: str, default):
             return json.loads(r.read().decode('utf-8', 'ignore'))
     except Exception:
         return default
+
+
+def assert_adapter_loaded_for_eval():
+    try:
+        with urllib.request.urlopen('http://147.93.116.186:18025/health', timeout=15) as r:
+            h = json.loads(r.read().decode('utf-8', 'ignore'))
+    except Exception as e:
+        raise RuntimeError(f'infer_health_unavailable: {e}')
+
+    loaded = str(h.get('loaded_adapter') or '').strip()
+    if not loaded:
+        raise RuntimeError('eval_blocked: loaded_adapter is empty on infer health')
+    return h
 
 
 def score_answer(q: str, ans_obj: dict, battery: str) -> dict:
@@ -89,6 +104,7 @@ def _save_partial(report: dict, out_json: Path):
 
 def run():
     ts = time.strftime('%Y%m%d-%H%M%S')
+    infer_health = assert_adapter_loaded_for_eval()
     out_md = TOOLS_DIR / f'eval-batteries-{ts}.md'
     out_json = TOOLS_DIR / f'eval-batteries-{ts}.json'
 
@@ -98,6 +114,7 @@ def run():
 
     report = {
         'ts': ts,
+        'infer_health_gate': infer_health,
         'sleep_status_before': sleep_status,
         'overview_before': overview,
         'batteries': {},

@@ -13,7 +13,11 @@ logger = logging.getLogger("uvicorn")
 # Heuristic task_type tagging from document text (fast bootstrap, no classifier required)
 _TASK_TYPE_KEYWORDS = {
     "coding": ["python", "código", "code", "bug", "stacktrace", "api", "endpoint", "função", "classe", "sql", "docker", "git", "deploy"],
-    "research": ["pesquisa", "artigo", "paper", "estudo", "benchmark", "comparativo", "referência", "fonte", "evidência"],
+    "research": [
+        "pesquisa", "artigo", "paper", "estudo", "benchmark", "comparativo", "referência", "fonte", "evidência",
+        "hipótese", "hipotese", "experimento", "metodologia", "método", "metodo", "resultados", "conclusão", "conclusao",
+        "amostra", "estatística", "estatistica", "revisão", "revisao", "ensaio", "científico", "cientifico", "dados"
+    ],
     "operations": [
         "incidente", "erro", "erro 5", "error", "failed", "failure", "exception",
         "latência", "latencia", "latency", "timeout", "sla", "monitor", "observabilidade", "alerta",
@@ -40,6 +44,10 @@ def _infer_task_type(text: str) -> str:
             if kw in t:
                 s += 1
         scores[task_type] = s
+
+    # Boost research when scientific structure appears
+    if any(k in t for k in ("metodologia", "método", "hipótese", "hipotese", "resultados", "conclusão", "conclusao", "revisão", "revisao")):
+        scores["research"] = int(scores.get("research", 0)) + 2
 
     best = max(scores.items(), key=lambda kv: kv[1]) if scores else ("general", 0)
     if (best[1] or 0) <= 0:
@@ -320,23 +328,38 @@ async def ingest_knowledge(text: str, source: str = "ultronpro") -> bool:
         'source': src,
     }
 
-    endpoints = [f"{base}/documents/text", f"{base}/documents"]
+    endpoints = [
+        (f"{base}/documents/text", payload),
+        (f"{base}/documents", payload),
+        # U1 worker contract fallback
+        (f"{base}/ingest", {'docs': [t]}),
+    ]
 
     try:
         async with httpx.AsyncClient() as client:
-            for ep in endpoints:
+            for ep, body in endpoints:
                 try:
                     r = await client.post(
                         ep,
                         headers={"X-API-Key": key, 'Content-Type': 'application/json'},
-                        json=payload,
+                        json=body,
                         timeout=20.0,
                     )
                     if r.status_code < 300:
-                        logger.info(f"LightRAG ingest ok source={src} quality={qscore}")
+                        # /ingest may return ok=true with ingested_ok=0 (no-op)
+                        if ep.endswith('/ingest'):
+                            try:
+                                jd = r.json() if r.text else {}
+                            except Exception:
+                                jd = {}
+                            if int((jd or {}).get('ingested_ok') or 0) <= 0:
+                                logger.warning(f"LightRAG ingest no-op source={src} ep={ep} resp={(r.text or '')[:180]}")
+                                continue
+                        logger.info(f"LightRAG ingest ok source={src} quality={qscore} ep={ep}")
                         return True
-                    # fallback try next endpoint
-                except Exception:
+                    logger.warning(f"LightRAG ingest rejected ep={ep} status={r.status_code} body={(r.text or '')[:180]}")
+                except Exception as e:
+                    logger.warning(f"LightRAG ingest exception ep={ep}: {e}")
                     continue
     except Exception as e:
         logger.error(f'LightRAG ingest error: {e}')

@@ -5,17 +5,25 @@ import time
 from pathlib import Path
 from typing import Any
 
-from ultronpro import llm
+from ultronpro import llm, cognitive_state, causal_graph, store
 
 TRACE_PATH = Path('/app/data/eval_traces.jsonl')
-if not TRACE_PATH.exists():
+try:
+    _has_trace = TRACE_PATH.exists()
+except Exception:
+    _has_trace = False
+if not _has_trace:
     _alt = Path('/root/.openclaw/workspace/UltronPro/backend/data/eval_traces.jsonl')
-    if _alt.exists():
-        TRACE_PATH = _alt
+    try:
+        if _alt.exists():
+            TRACE_PATH = _alt
+    except Exception:
+        pass
 STATE_PATH = Path('/app/data/reflexion_state.json')
 LOG_PATH = Path('/app/data/reflexion_decisions.jsonl')
 PROPOSALS_PATH = Path('/app/data/reflexion_proposals.jsonl')
 LEARNING_PATH = Path('/app/data/reflexion_learning.jsonl')
+LEARNING_PROPOSALS_PATH = Path('/app/data/learning_proposals.jsonl')
 
 DEFAULTS = {
     'enabled': True,
@@ -28,6 +36,8 @@ DEFAULTS = {
     'last_tick_ts': 0,
     'last_action': 'none',
     'pending_hypothesis_eval': None,
+    'cycle_count': 0,
+    'curiosity_probe_interval': 5,
 }
 
 PRM_STATE_PATH = Path('/app/data/prm_lite_state.json')
@@ -199,7 +209,7 @@ def _safe_parse_json(s: str) -> dict[str, Any]:
     return {}
 
 
-def _build_prompt(rows: list[dict[str, Any]], agg: dict[str, Any], thresholds: dict[str, float]) -> str:
+def _build_prompt(rows: list[dict[str, Any]], agg: dict[str, Any], thresholds: dict[str, float], cog_state: dict[str, Any] | None = None) -> str:
     compact_rows = []
     for r in rows[-20:]:
         compact_rows.append({
@@ -234,6 +244,7 @@ def _build_prompt(rows: list[dict[str, Any]], agg: dict[str, Any], thresholds: d
         'current_prm_thresholds': thresholds,
         'aggregate': agg,
         'recent_traces': compact_rows,
+        'cognitive_state': cog_state or {},
     }
     return json.dumps(spec, ensure_ascii=False)
 
@@ -288,8 +299,184 @@ def _evaluate_pending_if_ready(st: dict[str, Any], all_rows: list[dict[str, Any]
     pending['status'] = 'evaluated'
     pending['evaluated_ts'] = _now()
 
+    if bool(improved):
+        try:
+            causal_graph.ingest_confirmed_hypothesis(
+                hypothesis=str(pending.get('hipotese') or ''),
+                details={
+                    'baseline': pending.get('baseline') or {},
+                    'observed': {'error_rate': post_err, 'outliers_gt_10s_pct': post_out, 'window_n': len(post_rows)},
+                    'action': pending.get('acao'),
+                },
+            )
+        except Exception:
+            pass
+
     _append_jsonl(LEARNING_PATH, pending)
     st['pending_hypothesis_eval'] = None
+
+
+def _extract_gap_evidence(rows: list[dict[str, Any]], last_n: int = 50) -> dict[str, Any]:
+    sample = rows[-max(1, int(last_n or 50)):]
+    by_cls: dict[str, dict[str, Any]] = {}
+    topic_counts: dict[str, int] = {}
+
+    for r in sample:
+        cls = str(r.get('input_class') or 'general')
+        ok = bool(r.get('ok', True))
+        b = by_cls.setdefault(cls, {'n': 0, 'err': 0})
+        b['n'] += 1
+        if not ok:
+            b['err'] += 1
+        topic_counts[cls] = int(topic_counts.get(cls) or 0) + 1
+
+    conf_domains = ((cognitive_state.get_state().get('self_model') or {}).get('confidence_by_domain') or {})
+    low_conf = []
+    for dom, c in (conf_domains.items() if isinstance(conf_domains, dict) else []):
+        try:
+            cv = float(c)
+        except Exception:
+            continue
+        if cv < 0.6:
+            low_conf.append({'domain': str(dom), 'confidence': round(cv, 4)})
+
+    rag_cov = []
+    for topic, cnt in sorted(topic_counts.items(), key=lambda kv: kv[1], reverse=True)[:8]:
+        try:
+            hits = store.db.search_triples(topic, limit=30)
+            docs = len(hits or [])
+        except Exception:
+            docs = 0
+        if docs < 3:
+            rag_cov.append({'topic': topic, 'trace_mentions': int(cnt), 'rag_docs': int(docs)})
+
+    recur_fail = []
+    for cls, s in by_cls.items():
+        n = int(s.get('n') or 0)
+        er = (float(s.get('err') or 0) / max(1, n))
+        if n >= 5 and er > 0.10:
+            recur_fail.append({'input_class': cls, 'error_rate': round(er, 4), 'n': n})
+
+    return {
+        'window_n': len(sample),
+        'low_confidence_domains': low_conf,
+        'low_rag_coverage_topics': rag_cov,
+        'recurrent_failure_classes': recur_fail,
+    }
+
+
+def _curiosity_closed_keys() -> set[str]:
+    keys: set[str] = set()
+    if not LEARNING_PROPOSALS_PATH.exists():
+        return keys
+    for ln in LEARNING_PROPOSALS_PATH.read_text(encoding='utf-8', errors='ignore').splitlines()[-3000:]:
+        if not ln.strip():
+            continue
+        try:
+            o = json.loads(ln)
+        except Exception:
+            continue
+        if str(o.get('kind') or '') != 'curiosity_probe_closed':
+            continue
+        d = o.get('details') if isinstance(o.get('details'), dict) else {}
+        k = str(d.get('key') or '').strip()
+        if k:
+            keys.add(k)
+    return keys
+
+
+def _emit_curiosity_probes(gaps: dict[str, Any]) -> list[dict[str, Any]]:
+    created = []
+    ts = _now()
+    closed = _curiosity_closed_keys()
+
+    # 1) low confidence -> benchmark proposal
+    for x in (gaps.get('low_confidence_domains') or [])[:4]:
+        k = f"benchmark_specific:{str(x.get('domain') or '').strip().lower()}"
+        if k in closed:
+            continue
+        row = {
+            'id': f"cp_{ts}_{len(created)+1}",
+            'ts': ts,
+            'kind': 'curiosity_probe',
+            'title': f"Confiança baixa em domínio: {x.get('domain')}",
+            'details': {
+                'probe_type': 'benchmark_specific',
+                'key': k,
+                'domain': x.get('domain'),
+                'confidence': x.get('confidence'),
+                'trigger': 'confidence_by_domain_lt_0.6',
+                'evidence': x,
+            },
+        }
+        _append_jsonl(LEARNING_PROPOSALS_PATH, row)
+        created.append(row)
+
+    # 2) low rag coverage -> ingest proposal
+    for x in (gaps.get('low_rag_coverage_topics') or [])[:4]:
+        k = f"rag_ingest_proposal:{str(x.get('topic') or '').strip().lower()}"
+        if k in closed:
+            continue
+        row = {
+            'id': f"cp_{ts}_{len(created)+1}",
+            'ts': ts,
+            'kind': 'curiosity_probe',
+            'title': f"Cobertura RAG baixa: {x.get('topic')}",
+            'details': {
+                'probe_type': 'rag_ingest_proposal',
+                'key': k,
+                'topic': x.get('topic'),
+                'rag_docs': x.get('rag_docs'),
+                'trace_mentions': x.get('trace_mentions'),
+                'trigger': 'topic_in_traces_and_rag_docs_lt_3',
+                'evidence': x,
+            },
+        }
+        _append_jsonl(LEARNING_PROPOSALS_PATH, row)
+        created.append(row)
+
+    # 3) recurrent failures -> finetune proposal
+    for x in (gaps.get('recurrent_failure_classes') or [])[:4]:
+        k = f"gap_finetune_proposal:{str(x.get('input_class') or '').strip().lower()}"
+        if k in closed:
+            continue
+        row = {
+            'id': f"cp_{ts}_{len(created)+1}",
+            'ts': ts,
+            'kind': 'curiosity_probe',
+            'title': f"Falha recorrente em classe: {x.get('input_class')}",
+            'details': {
+                'probe_type': 'gap_finetune_proposal',
+                'key': k,
+                'input_class': x.get('input_class'),
+                'error_rate': x.get('error_rate'),
+                'n': x.get('n'),
+                'trigger': 'input_class_error_rate_gt_10pct_last_50',
+                'evidence': x,
+            },
+        }
+        _append_jsonl(LEARNING_PROPOSALS_PATH, row)
+        created.append(row)
+
+    return created
+
+
+def _run_curiosity_probe_if_due(st: dict[str, Any], all_rows: list[dict[str, Any]]) -> dict[str, Any]:
+    cyc = int(st.get('cycle_count') or 0)
+    interval = max(1, int(st.get('curiosity_probe_interval') or 5))
+    if cyc <= 0 or (cyc % interval) != 0:
+        return {'triggered': False, 'cycle_count': cyc, 'interval': interval}
+
+    gaps = _extract_gap_evidence(all_rows, last_n=50)
+    created = _emit_curiosity_probes(gaps)
+    return {
+        'triggered': True,
+        'cycle_count': cyc,
+        'interval': interval,
+        'gaps': gaps,
+        'created_count': len(created),
+        'created': created[:6],
+    }
 
 
 def tick(force: bool = False) -> dict[str, Any]:
@@ -309,7 +496,8 @@ def tick(force: bool = False) -> dict[str, Any]:
     agg = _aggregate(rows)
     thr = _load_prm_thresholds()
 
-    prompt = _build_prompt(rows, agg, thr)
+    cog = cognitive_state.compact_for_prompt(max_chars=800)
+    prompt = _build_prompt(rows, agg, thr, cog_state=cog)
     system = 'You are Ultron Reflexion Agent. Output ONLY valid JSON. Be conservative and factual.'
     raw = llm.complete(prompt=prompt, strategy='metacog_canary_qwen', system=system, json_mode=False, inject_persona=False, max_tokens=260)
     dec = _safe_parse_json(raw)
@@ -380,9 +568,22 @@ def tick(force: bool = False) -> dict[str, Any]:
     }
     _append_jsonl(LOG_PATH, row)
 
+    try:
+        cognitive_state.apply_reflexion_signal(
+            action=action,
+            confidence=conf,
+            hypothesis=hypothesis,
+            reason=reason,
+            aggregate=agg,
+        )
+    except Exception:
+        pass
+
     st['last_line'] = total_lines
     st['last_action'] = action
     st['last_confidence'] = conf
+    st['cycle_count'] = int(st.get('cycle_count') or 0) + 1
+    probe = _run_curiosity_probe_if_due(st, all_rows)
     _save_state(st)
 
     return {
@@ -394,7 +595,14 @@ def tick(force: bool = False) -> dict[str, Any]:
         'reason': reason,
         'hypothesis': hypothesis,
         'applied': applied,
-        'paths': {'state': str(STATE_PATH), 'log': str(LOG_PATH), 'proposals': str(PROPOSALS_PATH), 'learning': str(LEARNING_PATH)},
+        'curiosity_probe': probe,
+        'paths': {
+            'state': str(STATE_PATH),
+            'log': str(LOG_PATH),
+            'proposals': str(PROPOSALS_PATH),
+            'learning': str(LEARNING_PATH),
+            'learning_proposals': str(LEARNING_PROPOSALS_PATH),
+        },
     }
 
 
@@ -403,12 +611,16 @@ def status() -> dict[str, Any]:
     return {
         'ok': True,
         'state': st,
+        'cognitive_state': cognitive_state.compact_for_prompt(max_chars=900),
+        'causal_graph': causal_graph.status(),
         'paths': {
             'trace': str(TRACE_PATH),
             'state': str(STATE_PATH),
             'log': str(LOG_PATH),
             'proposals': str(PROPOSALS_PATH),
             'learning': str(LEARNING_PATH),
+            'learning_proposals': str(LEARNING_PROPOSALS_PATH),
             'prm_state': str(PRM_STATE_PATH),
+            'cognitive_state': '/app/data/cognitive_state.json',
         }
     }

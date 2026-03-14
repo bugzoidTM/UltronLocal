@@ -134,6 +134,26 @@ async def job_metrics(job_id: str, x_api_key: str | None = Header(default=None))
     return FileResponse(path=str(mp), media_type='application/x-ndjson', filename=f'{job_id}-metrics.jsonl')
 
 
+@app.post('/jobs/{job_id}/cancel')
+async def job_cancel(job_id: str, x_api_key: str | None = Header(default=None)):
+    if not _auth_ok(x_api_key):
+        raise HTTPException(401, 'unauthorized')
+    j = _get_job(job_id)
+    if not j:
+        raise HTTPException(404, 'job not found')
+    pid = int(j.get('pid') or 0)
+    if pid and _pid_alive(pid):
+        try:
+            os.kill(pid, 15)
+            time.sleep(1.0)
+            if _pid_alive(pid):
+                os.kill(pid, 9)
+        except Exception as e:
+            raise HTTPException(500, f'cancel failed: {e}')
+    j = _set_job(job_id, {'status': 'cancelled', 'cancelled_at': int(time.time())}) or j
+    return {'ok': True, 'job': j}
+
+
 @app.get('/jobs/{job_id}/artifact')
 async def job_artifact(job_id: str, x_api_key: str | None = Header(default=None)):
     if not _auth_ok(x_api_key):
@@ -161,6 +181,11 @@ async def job_artifact(job_id: str, x_api_key: str | None = Header(default=None)
 async def train(req: TrainRequest, x_api_key: str | None = Header(default=None)):
     if not _auth_ok(x_api_key):
         raise HTTPException(401, 'unauthorized')
+    allowed_base = os.getenv('ULTRON_FINETUNE_BASE_MODEL', 'Qwen/Qwen2.5-3B-Instruct')
+    if str(req.base_model or '').strip() != str(allowed_base).strip():
+        raise HTTPException(400, f'base_model must be {allowed_base}')
+    if str(req.method or 'qlora').strip().lower() != 'qlora':
+        raise HTTPException(400, 'only qlora is allowed')
     ds = Path(req.dataset)
     if (not ds.exists()) and str(req.dataset_content or '').strip():
         ds = Path('/tmp') / f"remote_ds_{uuid.uuid4().hex[:8]}.jsonl"
@@ -187,6 +212,7 @@ async def train(req: TrainRequest, x_api_key: str | None = Header(default=None))
     cmd = [
         'python', '-m', 'ultronpro.train_lora',
         '--base-model', req.base_model,
+        '--method', str(req.method or 'qlora'),
         '--dataset', str(ds),
     ]
     if val_path is not None and Path(str(val_path)).exists():
@@ -216,6 +242,7 @@ async def train(req: TrainRequest, x_api_key: str | None = Header(default=None))
         'status': 'running',
         'pid': int(p.pid),
         'base_model': req.base_model,
+        'method': str(req.method or 'qlora'),
         'dataset': req.dataset,
         'val_dataset': req.val_dataset,
         'adapter_out': req.adapter_out,
