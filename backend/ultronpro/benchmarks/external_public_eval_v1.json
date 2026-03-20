@@ -1,0 +1,124 @@
+{
+  "suite": "external_public_eval_v1",
+  "version": 1,
+  "comparability_note": "Harness público comparável inicial. Esta versão usa um subset manual pequeno e transparente inspirado em benchmarks públicos (ARC-Easy style, HellaSwag style, MMLU style). Serve para infraestrutura, histórico e protocolo. Não substitui ainda uma execução oficial/abrangente dos benchmarks completos.",
+  "items": [
+    {
+      "id": "arc_easy_001",
+      "benchmark": "arc_easy_partial",
+      "split": "dev",
+      "question": "Qual propriedade física mais aumenta a probabilidade de um objeto afundar na água?",
+      "choices": [
+        {"label": "A", "text": "Baixa densidade"},
+        {"label": "B", "text": "Alta densidade"},
+        {"label": "C", "text": "Cor brilhante"},
+        {"label": "D", "text": "Formato circular"}
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "arc_easy_002",
+      "benchmark": "arc_easy_partial",
+      "split": "dev",
+      "question": "Em uma cadeia alimentar simples, as plantas são classificadas principalmente como:",
+      "choices": [
+        {"label": "A", "text": "Consumidores primários"},
+        {"label": "B", "text": "Decompositores"},
+        {"label": "C", "text": "Produtores"},
+        {"label": "D", "text": "Predadores de topo"}
+      ],
+      "answer": "C"
+    },
+    {
+      "id": "arc_easy_003",
+      "benchmark": "arc_easy_partial",
+      "split": "dev",
+      "question": "Qual mudança normalmente faz a água evaporar mais rápido?",
+      "choices": [
+        {"label": "A", "text": "Reduzir a temperatura"},
+        {"label": "B", "text": "Aumentar a área de superfície exposta"},
+        {"label": "C", "text": "Cobrir completamente o recipiente"},
+        {"label": "D", "text": "Diminuir a circulação de ar"}
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "hellaswag_001",
+      "benchmark": "hellaswag_partial",
+      "split": "validation",
+      "question": "Uma pessoa está cortando cebolas na cozinha. Depois de terminar de cortar, ela pega uma frigideira e liga o fogão. O mais plausível é que ela vá:",
+      "choices": [
+        {"label": "A", "text": "colocar as cebolas na frigideira para cozinhar"},
+        {"label": "B", "text": "guardar a frigideira no armário e sair correndo"},
+        {"label": "C", "text": "jogar a cebola no lixo sem motivo"},
+        {"label": "D", "text": "lavar o carro na pia"}
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "hellaswag_002",
+      "benchmark": "hellaswag_partial",
+      "split": "validation",
+      "question": "Alguém está amarrando os cadarços antes de sair de casa em um dia chuvoso. Em seguida, a pessoa pega um guarda-chuva. O próximo passo mais plausível é:",
+      "choices": [
+        {"label": "A", "text": "abrir a geladeira e dormir dentro dela"},
+        {"label": "B", "text": "sair pela porta para enfrentar a chuva"},
+        {"label": "C", "text": "pintar o guarda-chuva com molho de tomate"},
+        {"label": "D", "text": "desamarrar os cadarços para tropeçar"}
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "hellaswag_003",
+      "benchmark": "hellaswag_partial",
+      "split": "validation",
+      "question": "Um ciclista para ao lado de uma fonte de água e pega uma garrafa vazia da mochila. O desfecho mais plausível é que ele:",
+      "choices": [
+        {"label": "A", "text": "encha a garrafa com água"},
+        {"label": "B", "text": "quebre a bicicleta em pedaços"},
+        {"label": "C", "text": "enterre a garrafa no asfalto"},
+        {"label": "D", "text": "espere a garrafa voar sozinha"}
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "mmlu_001",
+      "benchmark": "mmlu_partial",
+      "split": "test",
+      "question": "Na lógica proposicional, a negação de 'P e Q' é equivalente a:",
+      "choices": [
+        {"label": "A", "text": "não P e não Q"},
+        {"label": "B", "text": "não P ou não Q"},
+        {"label": "C", "text": "P ou Q"},
+        {"label": "D", "text": "não P implica Q"}
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "mmlu_002",
+      "benchmark": "mmlu_partial",
+      "split": "test",
+      "question": "Em microeconomia, tudo o mais constante, um aumento no preço de um bem normalmente leva a:",
+      "choices": [
+        {"label": "A", "text": "aumento da quantidade demandada"},
+        {"label": "B", "text": "redução da quantidade demandada"},
+        {"label": "C", "text": "desaparecimento da oferta"},
+        {"label": "D", "text": "demanda perfeitamente inelástica em todos os casos"}
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "mmlu_003",
+      "benchmark": "mmlu_partial",
+      "split": "test",
+      "question": "Na biologia celular, qual organela é mais diretamente associada à produção de ATP em células eucarióticas?",
+      "choices": [
+        {"label": "A", "text": "Complexo de Golgi"},
+        {"label": "B", "text": "Lisossomo"},
+        {"label": "C", "text": "Mitocôndria"},
+        {"label": "D", "text": "Núcleo"}
+      ],
+      "answer": "C"
+    }
+  ]
+}

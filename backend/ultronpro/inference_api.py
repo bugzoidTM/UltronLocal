@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 import os
-import json
 import time
-from pathlib import Path
 from threading import Lock
 from typing import Optional
 import asyncio
@@ -12,7 +10,6 @@ import torch
 from fastapi import FastAPI, HTTPException, Header
 from pydantic import BaseModel
 from transformers import AutoModelForCausalLM, AutoTokenizer
-from peft import PeftModel
 
 # CPU stabilization knobs (safe defaults for VPS)
 try:
@@ -21,17 +18,15 @@ try:
 except Exception:
     pass
 
-app = FastAPI(title='UltronPro Inference API', version='0.1.0')
+app = FastAPI(title='UltronPro Inference API', version='0.2.0')
 
 API_TOKEN = str(os.getenv('ULTRON_LOCAL_INFER_TOKEN', '') or '').strip()
-BASE_MODEL = str(os.getenv('ULTRON_FINETUNE_BASE_MODEL', 'Qwen/Qwen2.5-3B-Instruct'))
-RUNTIME_ACTIVE_ADAPTER = Path('/app/data/runtime_active_adapter.json')
+BASE_MODEL = str(os.getenv('ULTRON_BASE_MODEL', 'Qwen/Qwen2.5-3B-Instruct'))
 
 _lock = Lock()
-_infer_lock = asyncio.Lock()  # backpressure: single generation at a time
+_infer_lock = asyncio.Lock()
 _state = {
     'loaded_base': None,
-    'loaded_adapter': None,
     'tokenizer': None,
     'model': None,
     'last_loaded_at': 0,
@@ -43,23 +38,13 @@ class GenerateRequest(BaseModel):
     system: Optional[str] = None
     max_new_tokens: int = 160
     temperature: float = 0.2
-    mode: Optional[str] = 'balanced'  # fast | balanced | deep
+    mode: Optional[str] = 'balanced'
 
 
 def _auth_ok(x_api_key: str | None) -> bool:
     if not API_TOKEN:
         return True
     return bool(x_api_key and str(x_api_key).strip() == API_TOKEN)
-
-
-def _active_adapter_path() -> str:
-    try:
-        if not RUNTIME_ACTIVE_ADAPTER.exists():
-            return ''
-        j = json.loads(RUNTIME_ACTIVE_ADAPTER.read_text(encoding='utf-8'))
-        return str(j.get('adapter_path') or '').strip()
-    except Exception:
-        return ''
 
 
 def _compose_prompt(system: str | None, prompt: str) -> str:
@@ -70,25 +55,27 @@ def _compose_prompt(system: str | None, prompt: str) -> str:
     return p
 
 
+def _reset_loaded_state():
+    with _lock:
+        _state['tokenizer'] = None
+        _state['model'] = None
+        _state['loaded_base'] = None
+        _state['last_loaded_at'] = 0
+
+
 def _ensure_loaded():
     base = BASE_MODEL
-    adapter = _active_adapter_path()
-
     with _lock:
-        if _state['model'] is not None and _state['tokenizer'] is not None and _state['loaded_base'] == base and _state['loaded_adapter'] == adapter:
+        if _state['model'] is not None and _state['tokenizer'] is not None and _state['loaded_base'] == base:
             return
 
         tok = AutoTokenizer.from_pretrained(base)
         mdl = AutoModelForCausalLM.from_pretrained(base)
         mdl.eval()
 
-        if adapter and Path(adapter).exists():
-            mdl = PeftModel.from_pretrained(mdl, adapter)
-
         _state['tokenizer'] = tok
         _state['model'] = mdl
         _state['loaded_base'] = base
-        _state['loaded_adapter'] = adapter
         _state['last_loaded_at'] = int(time.time())
 
 
@@ -96,9 +83,13 @@ def _ensure_loaded():
 async def health():
     return {
         'ok': True,
+        'mode': 'base_model_only',
         'base_model': BASE_MODEL,
         'loaded_base': _state.get('loaded_base'),
-        'loaded_adapter': _state.get('loaded_adapter'),
+        'adapter_runtime': {
+            'enabled': False,
+            'reason': 'training_disabled_by_architecture',
+        },
         'last_loaded_at': _state.get('last_loaded_at'),
     }
 
@@ -138,8 +129,32 @@ def _infer_sync(req: GenerateRequest) -> dict:
         'ok': True,
         'text': gen,
         'base_model': _state.get('loaded_base'),
-        'adapter': _state.get('loaded_adapter') or '',
+        'adapter': '',
     }
+
+
+@app.post('/runtime/apply-release')
+async def runtime_apply_release(x_api_key: str | None = Header(default=None)):
+    if not _auth_ok(x_api_key):
+        raise HTTPException(401, 'unauthorized')
+    return {
+        'ok': True,
+        'applied': False,
+        'disabled': True,
+        'reason': 'training_disabled_by_architecture',
+    }
+
+
+@app.post('/runtime/reload')
+async def runtime_reload(x_api_key: str | None = Header(default=None)):
+    if not _auth_ok(x_api_key):
+        raise HTTPException(401, 'unauthorized')
+    _reset_loaded_state()
+    try:
+        _ensure_loaded()
+    except Exception as e:
+        raise HTTPException(500, str(e))
+    return {'ok': True, 'loaded_base': _state.get('loaded_base'), 'loaded_adapter': ''}
 
 
 @app.post('/generate')
@@ -147,7 +162,6 @@ async def generate(req: GenerateRequest, x_api_key: str | None = Header(default=
     if not _auth_ok(x_api_key):
         raise HTTPException(401, 'unauthorized')
 
-    # Backpressure: avoid request pile-up that starves /health and causes cascading timeouts.
     try:
         await asyncio.wait_for(_infer_lock.acquire(), timeout=0.8)
     except Exception:

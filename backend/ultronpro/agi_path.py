@@ -3,7 +3,6 @@ from pathlib import Path
 from typing import Any
 import json
 
-from ultronpro import finetune_lora
 
 STATE_PATH = Path('/app/data/agi_path_state.json')
 
@@ -63,17 +62,16 @@ def _score_gaps(snapshot: dict[str, Any], target_agi_percent: float) -> tuple[di
     pillars = agi.get('pillars') or {}
     inputs = agi.get('inputs') or {}
     plast = (snapshot or {}).get('plasticity') or {}
-    ft = (snapshot or {}).get('finetune') or {}
-
     agi_pct = float(agi.get('agi_mode_percent') or 0.0)
     learning = float(pillars.get('learning') or 0.0)
     adaptation = float(pillars.get('adaptation') or 0.0)
     autonomy = float(pillars.get('autonomy') or 0.0)
     grounding = float(pillars.get('grounding') or 0.0)
+    critique = float(agi.get('self_critique') or 0.0)
+    memory = float(agi.get('memory_discipline') or 0.0)
 
     halluc = float(plast.get('hallucination_rate') or 1.0)
     actions_done = int(inputs.get('actions_done_recent') or 0)
-    adapters = int((ft.get('registry') or {}).get('count') or 0)
 
     gaps = {
         'agi_target_gap': round(max(0.0, float(target_agi_percent) - agi_pct), 2),
@@ -81,16 +79,19 @@ def _score_gaps(snapshot: dict[str, Any], target_agi_percent: float) -> tuple[di
         'adaptation_gap': round(max(0.0, 75.0 - adaptation), 2),
         'autonomy_gap': round(max(0.0, 75.0 - autonomy), 2),
         'grounding_gap': round(max(0.0, 82.0 - grounding), 2),
+        'critique_gap': round(max(0.0, 78.0 - critique), 2),
+        'memory_gap': round(max(0.0, 78.0 - memory), 2),
         'hallucination_excess': round(max(0.0, halluc - 0.12), 4),
         'execution_gap': max(0, 60 - actions_done),
-        'adapter_gap': max(0, 3 - adapters),
     }
 
     actions: list[str] = []
     if gaps['hallucination_excess'] > 0:
         actions.append('tighten_grounding_and_feedback')
-    if gaps['adapter_gap'] > 0:
-        actions.append('increase_finetune_frequency')
+    if gaps['critique_gap'] > 0:
+        actions.append('strengthen_internal_critique')
+    if gaps['memory_gap'] > 0:
+        actions.append('discipline_memory_writeback')
     if gaps['execution_gap'] > 0:
         actions.append('raise_safe_autonomy_throughput')
     if gaps['grounding_gap'] > 0:
@@ -118,18 +119,8 @@ def tick(snapshot: dict[str, Any]) -> dict[str, Any]:
     triggered = False
     trigger_out = None
 
-    # AGI-path acceleration action: if gaps indicate low adapter cadence, trigger finetune attempt
-    if 'increase_finetune_frequency' in actions:
-        try:
-            plast = (snapshot or {}).get('plasticity') or {}
-            trigger_out = finetune_lora.auto_maybe_trigger(plast)
-            if bool(trigger_out.get('triggered')):
-                triggered = True
-                s['last_reason'] = 'finetune_acceleration_triggered'
-            else:
-                s['last_reason'] = f"finetune_not_triggered_{trigger_out.get('reason')}"
-        except Exception as e:
-            s['last_reason'] = f'finetune_trigger_error_{str(e)[:80]}'
+    if 'strengthen_internal_critique' in actions or 'discipline_memory_writeback' in actions:
+        s['last_reason'] = 'cognitive_hardening_needed'
     else:
         s['last_reason'] = 'monitor_only'
 

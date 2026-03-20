@@ -1,441 +1,276 @@
 # UltronPro
 
-UltronPro é uma plataforma de agente cognitivo/autônomo para operação técnica contínua (observabilidade, decisão, aprendizagem, execução e segurança), com foco em:
+UltronPro é uma plataforma de agente cognitivo/autônomo para operação técnica contínua: observar, decidir, aprender, executar, auditar e se reorganizar com segurança operacional.
 
-- **ciclos rápidos de melhoria** (feedback → treino → avaliação → promoção),
-- **segurança operacional** (guardrails, integridade, gates de promoção),
-- **memória e recuperação de contexto** (LightRAG + memória local),
-- **execução prática** em infraestrutura real (Docker Swarm, APIs, jobs, replay).
+Hoje o projeto está em uma fase importante de transição:
 
----
-
-## 1) Arquitetura técnica (estado atual)
-
-### 1.1 Backend principal
-- **Framework:** FastAPI
-- **Módulo principal:** `backend/ultronpro/main.py`
-- **Responsável por:** roteamento de API, loop metacognitivo, pipeline de treino/eval, observabilidade, governança.
-
-### 1.2 Sub-sistemas cognitivos e operacionais
-- **Metacognition ask endpoint:** `/api/metacognition/ask`
-- **Learning agenda + mission control + sleep cycle** para contexto operacional.
-- **Replay traces** para auditoria de decisões e reprocessamento de histórico.
-- **PRM-lite (observação):** scoring heurístico de qualidade de processo por resposta.
-
-### 1.3 LLM Router (multi-provider)
-- Roteamento com fallback entre providers e estratégias.
-- Providers integrados:
-  - OpenRouter
-  - DeepSeek
-  - Groq
-  - OpenAI (quando configurado)
-  - Anthropic (quando configurado)
-  - ultron_infer (local)
-- Telemetria de uso por provider e healthchecks.
-
-### 1.4 RAG + Search
-- Integração com LightRAG (`knowledge_bridge.py`).
-- Fluxo RAG-first para perguntas de domínio/operacionais.
-- Threshold de confiança para uso de contexto recuperado.
-- Endpoint de busca semântica híbrida com rerank:
-  - `/api/search/semantic`
-
-### 1.5 Cache semântico
-- Módulo: `backend/ultronpro/semantic_cache.py`
-- Duas camadas:
-  1. **Exact hit** (hash MD5 da query normalizada)
-  2. **Semantic hit** (cosine similarity em embedding local)
-- Configuração atual:
-  - threshold semantic: `0.92`
-  - TTL exact: `24h`
-  - TTL semantic: `12h`
-  - índice semantic: até `500` entradas (evict por antiguidade)
-- Integrado no `/api/metacognition/ask` com metadados:
-  - `cache_hit: exact|semantic|null`
-  - `from_cache: true|false`
-
-### 1.6 Embeddings locais (zero custo API)
-- Módulo: `backend/ultronpro/embeddings.py`
-- Stack: `sentence-transformers`
-- Modelo padrão: `all-MiniLM-L6-v2`
-- Configurável por env:
-  - `ULTRON_EMBED_MODEL`
-
-### 1.7 Pipeline de treino LoRA
-- Controle de jobs em `finetune_lora.py`
-- Execução remota via `trainer_api.py`
-- Script de treino: `train_lora.py`
-- Recursos já implementados:
-  - dispatch com dataset de treino/val separados,
-  - early stopping,
-  - timeout explícito em etapas pós-treino,
-  - logs por fase (PASSO 0..5),
-  - notificação explícita de conclusão ao control plane,
-  - reconciliação automática de status + auto-register de adapter.
-
-### 1.8 Presets de treino
-- `run_preset` por job:
-  - `fast_diagnostic`
-  - `production`
-- `fast_diagnostic` (atual):
-  - epochs=3
-  - max_steps=300
-  - val split ativo
-- Dispatch inclui flag explícita:
-  - `--run-preset 'fast_diagnostic'`
-
-### 1.9 Promoção de adapters (governança)
-- Promoção bloqueada para jobs não-production.
-- Regra atual:
-  - só promove adapter de `run_preset=production`.
-- Gates principais em uso operacional:
-  - bateria A/B/C
-  - sanity de regressão
-  - integridade do ciclo de treino
-
-### 1.10 Professor OpenClaw → UltronPro
-- Endpoint dedicado:
-  - `POST /api/openclaw/teacher/feedback`
-- Permite ingestão de feedback rotulado por “professor” (OpenClaw), com metadados de origem.
-- Suporta hardening por token:
-  - `ULTRON_OPENCLAW_TEACHER_TOKEN`
+- o caminho principal de metacog saiu do **Qwen remoto no U1**,
+- o router ganhou **provider nativo Gemini**,
+- `judge`, `reflexion`, `roadmap`, `agi_path` e `autonomy` rodam em **serviços separados**,
+- o sistema está sendo endurecido para **evoluir sozinho sem se auto-sabotar**.
 
 ---
 
-## 2) Observabilidade e auditoria
+## Estado atual real
 
-### 2.1 PRM-lite (modo observação)
-- Módulo: `backend/ultronpro/prm_lite.py`
-- Endpoints:
-  - `GET /api/prm/status`
-  - `GET /api/prm/recent?limit=N`
-- Em cada resposta do `metacognition/ask`, retorna:
-  - `prm_score`
-  - `prm_risk`
-  - `prm_reasons`
-  - `prm_mode=observation`
+### O que já está funcionando
+- **Gemini como provider principal** do fluxo de `/api/metacognition/ask`
+- **Router multi-provider** com telemetria, health e fallback controlado
+- **Serviços separados** para:
+  - `ultronpro` (control plane / API / UI)
+  - `ultronpro_autonomy`
+  - `ultronpro_judge`
+  - `ultronpro_reflexion`
+  - `ultronpro_roadmap`
+  - `ultronpro_agi_path`
+- **RAG / busca semântica / cache semântico**
+- **Memória e traces persistidos** em `/app/data`
+- **Patch loop / benchmark / promotion gate / rollback manager**
+- **Teacher feedback** vindo do ecossistema OpenClaw
 
-> Importante: atualmente o PRM **não bloqueia** fallback, promoção ou execução. É telemetria para calibração.
+### O que está em endurecimento
+- autonomia longitudinal com cadência segura
+- autoalimentação (`autofeeder`) sem gerar ruído excessivo
+- estabilidade dos workers após a migração para Gemini
+- consolidação de roadmap/agi-path como laços de evolução contínua
 
-### 2.2 Decision traces
-- Histórico em `/app/data/decision_traces/*.jsonl`
-- Scripts utilitários para replay e povoamento de PRM:
-  - `tools/replay_decision_traces_to_prm.py`
-  - `tools/teacher_tasktype_coverage_prm.py`
-
-### 2.3 Health e status
-- endpoints de status do runtime e providers
-- eventos persistidos no store local
-- logs de treino por job no trainer
-
----
-
-## 3) Infraestrutura
-
-### 3.1 Orquestração
-- **Docker Swarm**
-- Serviços principais:
-  - control plane UltronPro
-  - trainer service
-  - LightRAG
-  - Redis
-
-### 3.2 Dados persistentes
-- `/app/data/*`
-  - jobs, adapters, traces, estado PRM, caches, datasets, logs
-
-### 3.3 Dependências críticas
-- FastAPI / Uvicorn
-- sentence-transformers
-- scikit-learn / numpy
-- httpx
-- provedores LLM compatíveis
+### O que foi despriorizado/abandonado como caminho principal
+- **U1 / Ollama / Qwen** como inferência principal interativa
+- uso do `ultron_infer`/`ollama_local` no caminho primário do chat
+- fallbacks cloud quebrados que estavam só piorando latência e erro
 
 ---
 
-## 4) Endpoints-chave (resumo)
+## Arquitetura
 
-### Metacognition / PRM
+### 1. Control plane
+Arquivo principal:
+- `backend/ultronpro/main.py`
+
+Responsável por:
+- API FastAPI
+- UI servida pelo backend
+- roteamento metacognitivo
+- traces, memória, governança, benchmark, patching
+- health/status/usage
+
+### 2. Router LLM
+Arquivos centrais:
+- `backend/ultronpro/llm.py`
+- `backend/ultronpro/llm_adapter.py`
+- `backend/ultronpro/settings.py`
+
+Providers suportados no código atual:
+- `gemini`
+- `openai`
+- `anthropic`
+- `groq`
+- `deepseek`
+- `openrouter`
+- `huggingface`
+- `ollama_local`
+- `ultron_infer`
+
+**Estado operacional recomendado hoje:**
+- principal: `gemini`
+- `ollama_local` e `ultron_infer`: desabilitados no caminho primário
+- `openrouter` e `deepseek`: manter desligados se estiverem quebrados ou sem crédito/modelo útil
+
+### 3. Loops autônomos
+Serviços separados para evitar acoplamento excessivo do plano principal:
+- `autonomy_worker`
+- `judge_worker`
+- `reflexion_worker`
+- `roadmap_worker`
+- `agi_path_worker`
+
+Isso reduz competição desnecessária dentro do processo principal e facilita calibração de cadência/timeout por loop.
+
+### 4. Memória, RAG e observabilidade
+- cache semântico
+- semantic search
+- decision traces
+- replay
+- PRM-lite observacional
+- stores locais em `/app/data`
+
+---
+
+## Provider principal: Gemini
+
+### Motivação
+O Qwen remoto no U1 estava funcional, mas:
+- lento para requests triviais
+- frágil sob concorrência leve
+- causando timeout no chat e nos workers
+
+Gemini 3 Flash Preview se mostrou muito mais responsivo no uso real.
+
+### Variáveis principais
+Exemplo de configuração operacional:
+
+```env
+ULTRON_PRIMARY_LOCAL_PROVIDER=gemini
+ULTRON_CANARY_PROVIDER=gemini
+GEMINI_DEFAULT_MODEL=gemini-3-flash-preview
+GEMINI_API_KEY=AIza...
+
+ULTRON_DISABLE_OLLAMA_LOCAL=1
+ULTRON_DISABLE_ULTRON_INFER=1
+ULTRON_DISABLE_OPENROUTER=1
+ULTRON_DISABLE_DEEPSEEK=1
+
+ULTRON_LLM_ROUTER_TIMEOUT_SEC=15
+ULTRON_LLM_COMPAT_TIMEOUT_SEC=25
+ULTRON_PROVIDER_FAILURE_COOLDOWN_SEC=180
+ULTRON_GEMINI_FAILURE_COOLDOWN_SEC=15
+```
+
+### Notas operacionais
+- `429` do Gemini não deve virar quarentena persistente longa
+- cooldown curto é melhor que banimento implícito do provider
+- workers precisam usar ticks conservadores para não se atropelarem
+
+---
+
+## Serviços no Swarm
+
+Stack principal em:
+- `deploy/docker-stack.swarm.yml`
+
+Serviços esperados:
+- `ultronpro_ultronpro`
+- `ultronpro_ultronpro_autonomy`
+- `ultronpro_ultronpro_judge`
+- `ultronpro_ultronpro_reflexion`
+- `ultronpro_ultronpro_roadmap`
+- `ultronpro_ultronpro_agi_path`
+
+### Estratégia atual de cadência
+Recomendação prática atual:
+- `autonomy`: ligado, cadência moderada, orçamento baixo porém útil
+- `judge`: ligado, tick conservador
+- `reflexion`: ligado, tick conservador
+- `roadmap`: ligado em worker separado
+- `agi_path`: ligado em worker separado
+- `autofeeder`: ligado com tick mais lento para não gerar ruído artificial
+
+---
+
+## Endpoints importantes
+
+### Metacognição / LLM
 - `POST /api/metacognition/ask`
-- `GET /api/prm/status`
-- `GET /api/prm/recent`
-
-### LLM / Config
 - `GET /api/llm/health`
 - `GET /api/llm/usage`
 - `GET /api/settings`
 - `POST /api/settings`
 
-### RAG / Busca
+### RAG / busca
 - `POST /api/search/semantic`
-- LightRAG bridge via `knowledge_bridge.py`
+- `GET /api/rag/router`
+- `POST /api/rag/eval`
+- `GET /api/rag/eval/runs`
 
-### Finetune
+### Plasticidade / benchmark / governança
 - `POST /api/plasticity/finetune/jobs`
 - `POST /api/plasticity/finetune/jobs/{id}/start`
 - `GET /api/plasticity/finetune/jobs/{id}/progress`
 - `POST /api/plasticity/finetune/notify-complete`
 
-### Professor
+### Professor OpenClaw
 - `POST /api/openclaw/teacher/feedback`
 
 ---
 
-## 5) Fluxo recomendado de melhoria de modelo
+## Desenvolvimento local
 
-1. Mudou dataset ou hiperparâmetro? → rodar `fast_diagnostic`
-2. Passou no diagnóstico + sem regressão? → rodar `production`
-3. Só promover adapter de job production
-4. Registrar A/B/C + PRM + decisão de promoção
-
----
-
-## 6) Estado atual de maturidade
-
-- ✅ Multi-provider LLM routing funcional
-- ✅ OpenRouter integrado na UI e no router
-- ✅ RAG-first no metacognition ask
-- ✅ Cache semântico operacional
-- ✅ Embedding local sem custo API
-- ✅ Pipeline de treino com reconciliação robusta
-- ✅ PRM-lite em observação com dados reais
-- ⚠️ PRM ainda sem gate decisório (intencional, aguardando calibração)
-
----
-
-## 7) Roadmap futuro (priorizado)
-
-## Curto prazo (1–2 semanas)
-1. **Calibração do PRM-lite** com 300–1000 exemplos reais
-   - correlacionar `prm_score` com outcomes reais (A/B/C, retrabalho, incidentes)
-2. **Dashboard de qualidade unificado**
-   - cache hitrate (exact/semantic)
-   - RAG hitrate + score distribution
-   - PRM distribution por task_type
-3. **Hardening professor path**
-   - enforce `teacher` namespace (`openclaw-*`)
-   - validação anti-lixo no payload de feedback
-
-## Médio prazo (2–6 semanas)
-1. **Ativar PRM como gate gradual**
-   - fase 1: warning only
-   - fase 2: soft gate em fast_diagnostic
-   - fase 3: gate parcial em production
-2. **Semantic cache v2**
-   - índice ANN simples (FAISS/ScaNN opcional)
-   - políticas de invalidação por domínio
-3. **Eval contínuo automático**
-   - suíte A/B/C + regressão de latência + PRM + RAG grounding
-
-## Longo prazo (6+ semanas)
-1. **PRM supervisionado leve**
-   - ajuste de pesos com labels humanas
-   - possível migração para scorer treinado
-2. **RAG de maior precisão**
-   - grounding com citações estruturadas
-   - melhor rank fusion local+remote
-3. **Governança avançada de promoção**
-   - rollout canário por tráfego
-   - rollback automático por KPI degradado
-
----
-
-## 8) Como rodar (dev)
-
+### Backend
 ```bash
 cd backend
-python3 -m venv .venv
-source .venv/bin/activate
 pip install -r requirements.txt
-uvicorn ultronpro.main:app --reload --host 0.0.0.0 --port 8000
+uvicorn ultronpro.main:app --host 0.0.0.0 --port 8000
+```
+
+### Docker build
+```bash
+cd backend
+docker build -t ultronpro_backend:local .
+docker build -t ultronpro:local .
+```
+
+### Swarm deploy
+```bash
+docker stack deploy -c deploy/docker-stack.swarm.yml ultronpro
 ```
 
 ---
 
-## 9) Release Notes (últimas 24h)
+## Roadmap e maturidade
 
-### ✅ Runtime, RAG e Resposta
-- Integração **RAG-first** no `/api/metacognition/ask` para perguntas de domínio operacional.
-- Correção de roteamento por token (evitando falso positivo por substring, ex.: `capital` vs `api`).
-- Fallback seguro mantido para baixa confiança (`insufficient_confidence`).
+Roadmap vivo:
+- `ROADMAP_AGI_FRONTS.md`
 
-### ✅ Cache semântico (novo)
-- Novo módulo: `backend/ultronpro/semantic_cache.py`.
-- Lookup em 2 camadas:
-  - `exact` (MD5 da query normalizada)
-  - `semantic` (cosine similarity)
-- Política atual:
-  - threshold semantic: `0.92`
-  - TTL exact: `24h`
-  - TTL semantic: `12h`
-  - índice semantic: máximo `500` entradas (evict por antiguidade)
-- Integração no `/api/metacognition/ask` com retorno:
-  - `cache_hit: exact|semantic|null`
-  - `from_cache: true|false`
+O roadmap não é decorativo. Ele deve ser atualizado sempre que houver:
+- implementação real
+- integração funcional
+- observabilidade mínima
+- evidência operacional/benchmark suficiente
 
-### ✅ Embeddings locais sem custo API
-- Ativado `sentence-transformers` no backend.
-- Modelo padrão local:
-  - `all-MiniLM-L6-v2`
-- Configuração por env:
-  - `ULTRON_EMBED_MODEL`
+No estado atual, os fronts mais fortes são:
+- plasticidade estrutural
+- generalização entre domínios
 
-### ✅ LLM Router e Providers
-- OpenRouter integrado no roteador e UI de settings.
-- Ajustes de saúde/roteamento para DeepSeek, Groq e OpenRouter.
-- Auto strategy operando com fallback consistente entre providers configurados.
+E os que mais estão recebendo atenção operacional agora são:
+- automanutenção / individuação
+- consciência operacional integrada
 
-### ✅ Finetune pipeline hardening
-- Notificação explícita worker → control plane ao final do treino:
-  - `POST /api/plasticity/finetune/notify-complete`
-- Correções de travamento pós-treino e reconciliação de estado.
-- Auto-register de adapter quando artefatos válidos existem.
-- Presets de treino com flag explícita no dispatch:
-  - `run_preset=fast_diagnostic|production`
-  - comando inclui `--run-preset ...` e `--max-steps ...`
-- Regra de governança:
-  - promoção só para jobs `production`.
-
-### ✅ Qualidade de dataset e operação
-- Rebalanceamento do dataset para alvo ~`50/35/15` (A/B/C).
-- Split train/val ativo e validado no dispatch.
-- Pipeline de avaliação A/B/C executado e usado para rejeitar candidates regressivos.
-
-### ✅ PRM-lite (modo observação)
-- Novo módulo: `backend/ultronpro/prm_lite.py`.
-- Endpoints:
-  - `GET /api/prm/status`
-  - `GET /api/prm/recent`
-- `metacognition/ask` retorna:
-  - `prm_score`, `prm_risk`, `prm_reasons`, `prm_mode=observation`
-- **Sem bloquear** fallback/promoção nesta fase (telemetria para calibração).
-
-### ✅ Povoamento rápido de PRM com dados reais
-- Script de replay de traces:
-  - `tools/replay_decision_traces_to_prm.py`
-- Script de cobertura por task_type via professor OpenClaw:
-  - `tools/teacher_tasktype_coverage_prm.py`
+Principal motivo:
+- estabilizar o sistema para **trabalhar sozinho sem travar, sem esquecer autoria, sem degradar a própria capacidade futura**.
 
 ---
 
-## 10) Nota de engenharia
+## Filosofia operacional
 
-UltronPro é orientado a **operação real**: melhorar continuamente sem quebrar produção.
-A prioridade é **qualidade observável + segurança + iteração rápida**, não só benchmark isolado de modelo.
+UltronPro não deve ser só “um chat com ferramentas”.
+A meta é um sistema que consiga:
+- observar o próprio estado
+- manter continuidade
+- aprender com falha
+- reorganizar estratégias
+- propor mudanças estruturais
+- validar antes de promover
+- preservar integridade enquanto continua útil
 
----
-
-## 11) Metacognitive Supervisor (novo)
-
-### 11.1 Orquestrador dinâmico no `/api/metacognition/ask`
-
-Além do roteamento tradicional, o endpoint agora suporta modo de **orquestração sequencial** para tarefas abertas (planejamento, organização, estratégia), controlado por flag:
-
-- `ULTRON_METACOG_ORCHESTRATOR_ENABLED=1`
-
-Quando ativado e o input indica tarefa aberta, o fluxo é:
-
-1. Planner Qwen gera plano JSON com até 3 passos
-2. Execução de ferramentas em sequência
-3. PRM-lite por passo
-4. Síntese final
-
-Resposta inclui:
-- `strategy=orchestrator_qwen_tools`
-- `orchestration.planner_raw`
-- `orchestration.steps_executed`
-- `orchestration.step_prm`
-
-### 11.2 Ferramentas expostas ao planner
-
-- `search_rag(query)`
-  - usa `knowledge_bridge.search_knowledge(...)`
-- `symbolic_solve(problem)`
-  - usa `symbolic_reasoner.solve(...)`
-- `ask_memory(topic)`
-  - usa memória episódica + resumo metacognitivo
-- `flag_uncertainty(reason)`
-  - marca insuficiência de dados sem alucinar
-
-### 11.3 Guardrails do orquestrador
-
-- máximo de 3 passos por requisição
-- JSON-only no planejamento
-- síntese final com instrução anti-alucinação
-- PRM parcial por passo para observabilidade de cadeia
+Em resumo:
+**um agente técnico que não apenas responde, mas mantém operação, evolução e memória com governança.**
 
 ---
 
-## 12) Reflexion Agent (aprendizado autônomo)
+## Observações honestas
 
-Módulo novo:
-- `backend/ultronpro/reflexion_agent.py`
+O projeto ainda não está “pronto” nem “10/10”.
+Mas já passou da fase de demo superficial.
 
-Integração em loop de runtime (`main.py`):
-- `ULTRON_REFLEXION_ENABLED`
-- `ULTRON_REFLEXION_TICK_SEC`
+Hoje ele já tem:
+- loops cognitivos reais
+- memória e replay
+- patching e rollback
+- benchmark e gates
+- provider principal cloud funcional
+- arquitetura suficiente para continuar endurecendo em produção
 
-Endpoints:
-- `GET /api/reflexion/status`
-- `POST /api/reflexion/tick?force=true|false`
-
-Arquivos de estado/log:
-- `/app/data/reflexion_state.json`
-- `/app/data/reflexion_decisions.jsonl`
-- `/app/data/reflexion_proposals.jsonl`
-- `/app/data/reflexion_learning.jsonl`
-
-### 12.1 Política de autonomia (fase atual)
-
-- `confiança > 0.7` + ação reversível → executa autonomamente
-- `confiança > 0.7` + ação irreversível → pede aprovação humana
-- `confiança <= 0.7` → registra hipótese e não executa
-
-Ações reversíveis:
-- `adjust_prm_thresholds`
-- `flag_problem_category`
-
-Ações irreversíveis:
-- `request_teacher_examples`
-- `propose_rag_ingest`
-
-### 12.2 Registro de hipótese e calibração
-
-Cada ciclo pode registrar:
-- `acao`
-- `hipotese`
-- `confianca`
-- `resultado_observado`
-- `hipotese_confirmada`
-- `confianca_pos_acao`
-
-Isso permite aprendizado incremental real (confirmar/refutar hipótese), em vez de apenas histórico passivo.
+O trabalho atual é menos “inventar features” e mais:
+- tirar acoplamentos ruins
+- calibrar cadência
+- evitar auto-sabotagem por fallback/timeout/quarentena
+- aumentar evidência longitudinal
 
 ---
 
-## 13) Replay de pensamento (thought chain)
+## Repositório
 
-Novo endpoint:
-- `GET /api/replay/thought-chain?max_rows=300&slow_only=false`
+Remote principal:
+- `git@github.com:bugzoidTM/UltronPro.git`
 
-Reconstrói cadeia por decisão:
-- `classify_input -> route_strategy -> generate_answer -> prm_evaluate -> gate_finalize`
-
-E identifica ponto de quebra:
-- `breakpoint`
-- `break_at`
-- `break_module` (`router|generator|prm|gate|none`)
-
-Útil para:
-- localizar gargalo real de outliers
-- diferenciar problema de geração vs gate vs roteamento
-- priorizar patch de latência sem mexer no que já está estável
-
----
-
-## 14) Observações operacionais recentes
-
-- Outliers lentos continuam concentrando em geração (`break_module=generator`) em casos `canary_qwen` complexos.
-- Orquestrador já validado em tarefa aberta real com execução de múltiplos passos e trilha completa.
-- Reflexion learning já produz ciclos com hipótese confirmada/refutada + recalibração de confiança.
-- PRM-lite permanece em modo observação (não bloqueante), mas agora com sinal por etapa no orquestrador.
+Se este README estiver desatualizado em relação ao deploy, o deploy está certo e o README está errado — então atualize o README.

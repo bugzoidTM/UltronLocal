@@ -2,20 +2,12 @@ version: '3.8'
 
 services:
   ultronpro:
-    image: ultronpro_backend:local
+    image: ultronpro:phase4-lineage-20260319-171533
     ports:
       - "8000:8000"
     environment:
-      - ULTRON_FINETUNE_URL=http://194.113.195.95:8010/train
-      - ULTRON_FINETUNE_URLS=http://194.113.195.95:8010/train
-      - ULTRON_FINETUNE_TOKEN=TOKEN_FORTE_123
-      - ULTRON_FINETUNE_MAX_CONCURRENCY_PER_NODE=2
       - ULTRON_PASSPORT_URL=http://147.93.116.186:18020/passport/issue
       - ULTRON_PASSPORT_FAIL_OPEN=0
-      - ULTRON_FINETUNE_BASE_MODEL=Qwen/Qwen2.5-3B-Instruct
-      - ULTRON_FINETUNE_STRICT_BASE=1
-      - ULTRON_FINETUNE_EPOCHS=5
-      - ULTRON_FINETUNE_AUTOTRIGGER=0
       - ULTRON_AUTONOMY_ENABLED=0
       - ULTRON_JUDGE_ENABLED=0
       - ULTRON_ROADMAP_ENABLED=0
@@ -33,8 +25,6 @@ services:
       - ULTRON_UI_LITE_API=0
       - ULTRON_LOCAL_INFER_URL=http://147.93.116.186:18025
       - METACOG_QWEN_MAIN=1
-      - ULTRON_RUNTIME_AUTO_APPLY_ADAPTER=0
-      - ULTRON_FINETUNE_AUTOTRIGGER=0
       - ULTRON_LOCAL_INFER_TOKEN=TOKEN_FORTE_123
       - OLLAMA_BASE_URL_LOCAL=http://78.138.0.84:11434
       - ULTRON_SANDBOX_URL=http://ultron-sandbox:9000
@@ -52,23 +42,15 @@ services:
     volumes:
       - ultronpro_data:/app/data
     networks:
-      - Nutef
+      - Nutef_attachable
       - ultron_internal
 
   ultronpro_judge:
     image: ultronpro_backend:local
     command: ["python", "-m", "ultronpro.judge_worker"]
     environment:
-      - ULTRON_FINETUNE_URL=http://194.113.195.95:8010/train
-      - ULTRON_FINETUNE_URLS=http://194.113.195.95:8010/train
-      - ULTRON_FINETUNE_TOKEN=TOKEN_FORTE_123
-      - ULTRON_FINETUNE_MAX_CONCURRENCY_PER_NODE=2
       - ULTRON_PASSPORT_URL=http://147.93.116.186:18020/passport/issue
       - ULTRON_PASSPORT_FAIL_OPEN=0
-      - ULTRON_FINETUNE_BASE_MODEL=Qwen/Qwen2.5-3B-Instruct
-      - ULTRON_FINETUNE_STRICT_BASE=1
-      - ULTRON_FINETUNE_EPOCHS=5
-      - ULTRON_FINETUNE_AUTOTRIGGER=0
       - ULTRON_DISABLE_CLOUD_PROVIDERS=1
       - ULTRON_LOCAL_INFER_URL=http://147.93.116.186:18025
       - ULTRON_LOCAL_INFER_TOKEN=TOKEN_FORTE_123
@@ -77,11 +59,11 @@ services:
       - ULTRON_JUDGE_TICK_SEC=300
       - ULTRON_LLM_BLOCKING_CONCURRENCY=1
       - ULTRON_LIGHTRAG_CONCURRENCY=1
-      - ULTRON_LLM_COMPAT_TIMEOUT_SEC=12
-      - ULTRON_LLM_ROUTER_TIMEOUT_SEC=15
-      - ULTRON_OLLAMA_TIMEOUT_SEC=40
-      - ULTRON_LOCAL_INFER_TIMEOUT_SEC=24
-      - ULTRON_LOCAL_INFER_RETRY_TIMEOUT_SEC=36
+      - ULTRON_LLM_COMPAT_TIMEOUT_SEC=25
+      - ULTRON_LLM_ROUTER_TIMEOUT_SEC=35
+      - ULTRON_OLLAMA_TIMEOUT_SEC=90
+      - ULTRON_LOCAL_INFER_TIMEOUT_SEC=45
+      - ULTRON_LOCAL_INFER_RETRY_TIMEOUT_SEC=75
       - ULTRON_PROVIDER_FAILURE_COOLDOWN_SEC=420
     deploy:
       replicas: 1
@@ -90,23 +72,15 @@ services:
     volumes:
       - ultronpro_data:/app/data
     networks:
-      - Nutef
+      - Nutef_attachable
       - ultron_internal
 
   ultronpro_reflexion:
     image: ultronpro_backend:local
     command: ["python", "-m", "ultronpro.reflexion_worker"]
     environment:
-      - ULTRON_FINETUNE_URL=http://194.113.195.95:8010/train
-      - ULTRON_FINETUNE_URLS=http://194.113.195.95:8010/train
-      - ULTRON_FINETUNE_TOKEN=TOKEN_FORTE_123
-      - ULTRON_FINETUNE_MAX_CONCURRENCY_PER_NODE=2
       - ULTRON_PASSPORT_URL=http://147.93.116.186:18020/passport/issue
       - ULTRON_PASSPORT_FAIL_OPEN=0
-      - ULTRON_FINETUNE_BASE_MODEL=Qwen/Qwen2.5-3B-Instruct
-      - ULTRON_FINETUNE_STRICT_BASE=1
-      - ULTRON_FINETUNE_EPOCHS=5
-      - ULTRON_FINETUNE_AUTOTRIGGER=0
       - ULTRON_DISABLE_CLOUD_PROVIDERS=1
       - ULTRON_LOCAL_INFER_URL=http://147.93.116.186:18025
       - ULTRON_LOCAL_INFER_TOKEN=TOKEN_FORTE_123
@@ -115,11 +89,11 @@ services:
       - ULTRON_REFLEXION_TICK_SEC=300
       - ULTRON_LLM_BLOCKING_CONCURRENCY=1
       - ULTRON_LIGHTRAG_CONCURRENCY=1
-      - ULTRON_LLM_COMPAT_TIMEOUT_SEC=12
-      - ULTRON_LLM_ROUTER_TIMEOUT_SEC=15
-      - ULTRON_OLLAMA_TIMEOUT_SEC=30
-      - ULTRON_LOCAL_INFER_TIMEOUT_SEC=20
-      - ULTRON_LOCAL_INFER_RETRY_TIMEOUT_SEC=30
+      - ULTRON_LLM_COMPAT_TIMEOUT_SEC=25
+      - ULTRON_LLM_ROUTER_TIMEOUT_SEC=35
+      - ULTRON_OLLAMA_TIMEOUT_SEC=90
+      - ULTRON_LOCAL_INFER_TIMEOUT_SEC=45
+      - ULTRON_LOCAL_INFER_RETRY_TIMEOUT_SEC=75
       - ULTRON_PROVIDER_FAILURE_COOLDOWN_SEC=420
     deploy:
       replicas: 1
@@ -128,23 +102,15 @@ services:
     volumes:
       - ultronpro_data:/app/data
     networks:
-      - Nutef
+      - Nutef_attachable
       - ultron_internal
 
   ultronpro_roadmap:
     image: ultronpro_backend:local
     command: ["python", "-m", "ultronpro.roadmap_worker"]
     environment:
-      - ULTRON_FINETUNE_URL=http://194.113.195.95:8010/train
-      - ULTRON_FINETUNE_URLS=http://194.113.195.95:8010/train
-      - ULTRON_FINETUNE_TOKEN=TOKEN_FORTE_123
-      - ULTRON_FINETUNE_MAX_CONCURRENCY_PER_NODE=2
       - ULTRON_PASSPORT_URL=http://147.93.116.186:18020/passport/issue
       - ULTRON_PASSPORT_FAIL_OPEN=0
-      - ULTRON_FINETUNE_BASE_MODEL=Qwen/Qwen2.5-3B-Instruct
-      - ULTRON_FINETUNE_STRICT_BASE=1
-      - ULTRON_FINETUNE_EPOCHS=5
-      - ULTRON_FINETUNE_AUTOTRIGGER=0
       - ULTRON_DISABLE_CLOUD_PROVIDERS=1
       - ULTRON_LOCAL_INFER_URL=http://147.93.116.186:18025
       - ULTRON_LOCAL_INFER_TOKEN=TOKEN_FORTE_123
@@ -152,11 +118,11 @@ services:
       - ULTRON_ROADMAP_ENABLED=1
       - ULTRON_LLM_BLOCKING_CONCURRENCY=1
       - ULTRON_LIGHTRAG_CONCURRENCY=1
-      - ULTRON_LLM_COMPAT_TIMEOUT_SEC=12
-      - ULTRON_LLM_ROUTER_TIMEOUT_SEC=15
-      - ULTRON_OLLAMA_TIMEOUT_SEC=20
-      - ULTRON_LOCAL_INFER_TIMEOUT_SEC=15
-      - ULTRON_LOCAL_INFER_RETRY_TIMEOUT_SEC=24
+      - ULTRON_LLM_COMPAT_TIMEOUT_SEC=25
+      - ULTRON_LLM_ROUTER_TIMEOUT_SEC=35
+      - ULTRON_OLLAMA_TIMEOUT_SEC=90
+      - ULTRON_LOCAL_INFER_TIMEOUT_SEC=45
+      - ULTRON_LOCAL_INFER_RETRY_TIMEOUT_SEC=75
       - ULTRON_PROVIDER_FAILURE_COOLDOWN_SEC=300
     deploy:
       replicas: 1
@@ -165,23 +131,15 @@ services:
     volumes:
       - ultronpro_data:/app/data
     networks:
-      - Nutef
+      - Nutef_attachable
       - ultron_internal
 
   ultronpro_agi_path:
     image: ultronpro_backend:local
     command: ["python", "-m", "ultronpro.agi_path_worker"]
     environment:
-      - ULTRON_FINETUNE_URL=http://194.113.195.95:8010/train
-      - ULTRON_FINETUNE_URLS=http://194.113.195.95:8010/train
-      - ULTRON_FINETUNE_TOKEN=TOKEN_FORTE_123
-      - ULTRON_FINETUNE_MAX_CONCURRENCY_PER_NODE=2
       - ULTRON_PASSPORT_URL=http://147.93.116.186:18020/passport/issue
       - ULTRON_PASSPORT_FAIL_OPEN=0
-      - ULTRON_FINETUNE_BASE_MODEL=Qwen/Qwen2.5-3B-Instruct
-      - ULTRON_FINETUNE_STRICT_BASE=1
-      - ULTRON_FINETUNE_EPOCHS=5
-      - ULTRON_FINETUNE_AUTOTRIGGER=0
       - ULTRON_DISABLE_CLOUD_PROVIDERS=1
       - ULTRON_LOCAL_INFER_URL=http://147.93.116.186:18025
       - ULTRON_LOCAL_INFER_TOKEN=TOKEN_FORTE_123
@@ -189,11 +147,11 @@ services:
       - ULTRON_AGI_PATH_ENABLED=1
       - ULTRON_LLM_BLOCKING_CONCURRENCY=1
       - ULTRON_LIGHTRAG_CONCURRENCY=1
-      - ULTRON_LLM_COMPAT_TIMEOUT_SEC=12
-      - ULTRON_LLM_ROUTER_TIMEOUT_SEC=15
-      - ULTRON_OLLAMA_TIMEOUT_SEC=20
-      - ULTRON_LOCAL_INFER_TIMEOUT_SEC=15
-      - ULTRON_LOCAL_INFER_RETRY_TIMEOUT_SEC=24
+      - ULTRON_LLM_COMPAT_TIMEOUT_SEC=25
+      - ULTRON_LLM_ROUTER_TIMEOUT_SEC=35
+      - ULTRON_OLLAMA_TIMEOUT_SEC=90
+      - ULTRON_LOCAL_INFER_TIMEOUT_SEC=45
+      - ULTRON_LOCAL_INFER_RETRY_TIMEOUT_SEC=75
       - ULTRON_PROVIDER_FAILURE_COOLDOWN_SEC=300
     deploy:
       replicas: 1
@@ -202,7 +160,7 @@ services:
     volumes:
       - ultronpro_data:/app/data
     networks:
-      - Nutef
+      - Nutef_attachable
       - ultron_internal
 
   ultron-sandbox:
@@ -233,9 +191,10 @@ services:
 
   ultronpro_infer:
     image: ultronpro_trainer:local
+    ports:
+      - "18025:8025"
     environment:
       - ULTRON_LOCAL_INFER_TOKEN=TOKEN_FORTE_123
-      - ULTRON_FINETUNE_BASE_MODEL=Qwen/Qwen2.5-3B-Instruct
       - ULTRON_INFER_TORCH_THREADS=2
       - ULTRON_INFER_TORCH_INTEROP_THREADS=1
       - OMP_NUM_THREADS=2
@@ -246,7 +205,7 @@ services:
       - ULTRON_INFER_MAX_NEW_TOKENS_DEEP=224
     command: ["uvicorn", "ultronpro.inference_api:app", "--host", "0.0.0.0", "--port", "8025"]
     deploy:
-      replicas: 0
+      replicas: 1
       restart_policy:
         condition: on-failure
       resources:
@@ -259,30 +218,13 @@ services:
     volumes:
       - ultronpro_data:/app/data
     networks:
-      - Nutef
-
-  ultronpro_trainer:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile.trainer
-    image: ultronpro_trainer:local
-    environment:
-      - ULTRON_FINETUNE_BASE_MODEL=Qwen/Qwen2.5-3B-Instruct
-      - ULTRON_FINETUNE_METHOD=qlora
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
-    volumes:
-      - ultronpro_data:/app/data
-    networks:
-      - Nutef
+      - Nutef_attachable
 
 volumes:
   ultronpro_data:
 
 networks:
-  Nutef:
+  Nutef_attachable:
     external: true
   ultron_internal:
     driver: overlay

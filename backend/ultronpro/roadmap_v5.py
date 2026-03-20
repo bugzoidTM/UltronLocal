@@ -2,7 +2,6 @@ import time
 from pathlib import Path
 from typing import Any
 
-from ultronpro import finetune_lora
 
 STATE_PATH = Path('/app/data/roadmap_v5_state.json')
 
@@ -73,7 +72,7 @@ def set_rest(hours: int) -> dict[str, Any]:
 def _phase_name(p: int) -> str:
     return {
         1: 'Fase 1 — Confiabilidade Cognitiva',
-        2: 'Fase 2 — Aprendizado Paramétrico Direcionado',
+        2: 'Fase 2 — Memória e Crítica Interna',
         3: 'Fase 3 — Agência de Longo Horizonte',
         4: 'Fase 4 — Meta-Raciocínio e Generalização',
     }.get(int(p), 'Fase desconhecida')
@@ -104,8 +103,6 @@ def tick(snapshot: dict[str, Any]) -> dict[str, Any]:
     pillars = agi.get('pillars') or {}
     inputs = agi.get('inputs') or {}
     plast = (snapshot or {}).get('plasticity') or {}
-    ft = (snapshot or {}).get('finetune') or {}
-
     phase = int(s.get('phase') or 1)
 
     # Fase 1 -> Fase 2
@@ -116,26 +113,18 @@ def tick(snapshot: dict[str, Any]) -> dict[str, Any]:
             _save(s)
             return {'ok': True, 'triggered': True, 'action': 'phase_advance', 'state': status()}
 
-    # Fase 2: tentar treino automático gradual
+    # Fase 2: consolidar memória, grounding e crítica interna
     if phase == 2:
-        auto_out = finetune_lora.auto_maybe_trigger(plast)
-        if bool(auto_out.get('triggered')):
-            s['last_reason'] = 'finetune_triggered'
-            s['history'] = (s.get('history') or [])[-99:] + [{'ts': now, 'event': 'finetune_triggered', 'job_id': ((auto_out.get('job') or {}).get('id'))}]
-        else:
-            s['last_reason'] = f"phase2_wait_{auto_out.get('reason')}"
-
-        jobs = ft.get('jobs') or []
-        adapters = ft.get('adapters') or []
-        has_completed = any(str(j.get('status') or '') in ('completed', 'running_remote', 'running') for j in jobs)
-        if has_completed or len(adapters) >= 1:
-            _advance(s, 3, 'phase2_training_evidence')
+        context_fitness = float(agi.get('context_fitness') or pillars.get('grounding') or 0.0)
+        if context_fitness >= 78.0 and float(plast.get('hallucination_rate') or 1.0) <= 0.15:
+            _advance(s, 3, 'phase2_cognitive_stability')
             s['last_reason'] = 'advanced_phase_3'
             _save(s)
-            return {'ok': True, 'triggered': True, 'action': 'phase_advance', 'state': status(), 'auto': auto_out}
+            return {'ok': True, 'triggered': True, 'action': 'phase_advance', 'state': status()}
 
+        s['last_reason'] = 'phase2_wait_cognitive_stability'
         _save(s)
-        return {'ok': True, 'triggered': bool(auto_out.get('triggered')), 'action': 'phase2_autotrain', 'auto': auto_out, 'state': status()}
+        return {'ok': True, 'triggered': False, 'action': 'phase2_cognitive_hardening', 'state': status()}
 
     # Fase 3 -> Fase 4
     if phase == 3:

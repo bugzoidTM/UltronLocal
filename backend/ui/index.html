@@ -6,9 +6,7 @@
   <title>UltronPRO — Dashboard</title>
   <meta name="description" content="UltronPRO AGI - Processador de Curiosidade Adaptativo" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='50' font-size='48'%3E%F0%9F%A4%96%3C/text%3E%3C/svg%3E">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- External fonts removed to keep first paint resilient under flaky networks -->
   <style>
     :root {
       --bg-primary: #0a0e17;
@@ -421,7 +419,7 @@
 
     /* Muted text */
     .muted { color: var(--text-muted); font-size: 12px; }
-    .mono { font-family: 'JetBrains Mono', monospace; }
+    .mono { font-family: ui-monospace, 'SFMono-Regular', 'Cascadia Mono', 'Segoe UI Mono', monospace; }
 
     /* Code */
     code {
@@ -449,12 +447,13 @@
       <div class="logo-icon">U</div>
       <span class="logo-text">UltronPRO</span>
     </div>
-    <div class="phase-badge" id="phaseBadge">🧒 Fase 1 — Bebê (AGI 0%)</div>
+    <div class="phase-badge" id="phaseBadge">🧠 Front 5 — Consciência Operacional (carregando)</div>
   </header>
 
   <!-- Tabs -->
   <nav class="tabs">
     <button class="tab active" data-tab="overview">📊 Overview</button>
+    <button class="tab" data-tab="front5">🧠 Front 5</button>
     <button class="tab" data-tab="chat">💬 Chat</button>
     <button class="tab" data-tab="teach">🎓 Ensinar</button>
     <button class="tab" data-tab="graph">🧠 Grafo</button>
@@ -482,8 +481,6 @@
       <div class="card" style="margin-bottom: 20px;">
         <div class="card-body" style="padding: 12px 16px;">
           <div class="muted" id="autonomyOps">Autonomia: carregando...</div>
-          <div class="muted" id="reqScores" style="margin-top:8px">Requisitos 1-8: carregando...</div>
-          <div class="muted" id="sprint2Health" style="margin-top:8px">Sprint 2: carregando...</div>
           <div id="conflictsPreview" class="muted" style="margin-top:10px">Conflitos: carregando...</div>
           <div id="learningAgendaPreview" class="muted" style="margin-top:10px">Learning Agenda: carregando...</div>
           <div id="missionPreview" class="muted" style="margin-top:10px">Mission Control: carregando...</div>
@@ -514,24 +511,13 @@
         </div>
       </div>
 
-      <div class="grid-2" style="margin-bottom: 20px;">
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title"><span class="icon">🎯</span> Currículo da Ambição (Goal Ativo)</div>
-            <button class="btn btn-sm btn-secondary" onclick="loadGoalCurriculum()">🔄 Refresh</button>
-          </div>
-          <div class="card-body">
-            <div id="goalCurriculum" class="muted">(carregando...)</div>
-          </div>
+      <div class="card" style="margin-bottom: 20px;">
+        <div class="card-header">
+          <div class="card-title"><span class="icon">🎯</span> Currículo da Ambição (Goal Ativo)</div>
+          <button class="btn btn-sm btn-secondary" onclick="loadGoalCurriculum()">🔄 Refresh</button>
         </div>
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title"><span class="icon">🧠</span> Teoria da Mente (Intento do Usuário)</div>
-            <button class="btn btn-sm btn-secondary" onclick="loadTomStatus()">🔄 Refresh</button>
-          </div>
-          <div class="card-body">
-            <div id="tomIntent" class="muted">(carregando...)</div>
-          </div>
+        <div class="card-body">
+          <div id="goalCurriculum" class="muted">(carregando...)</div>
         </div>
       </div>
 
@@ -595,6 +581,57 @@
     </div>
 
     <!-- Teach Tab -->
+    <div id="tab-front5" class="tab-content">
+      <div class="grid-2" style="margin-bottom: 20px;">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="icon">🧠</span> Estado integrado</div>
+            <button class="btn btn-sm btn-secondary" onclick="loadFront5Status()">🔄 Refresh</button>
+          </div>
+          <div class="card-body">
+            <div id="front5Status" class="muted">Abra esta aba para carregar os sinais do Front 5.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="icon">📘</span> Relato autobiográfico</div>
+          </div>
+          <div class="card-body">
+            <div id="front5Narrative" class="muted">Abra esta aba para carregar a autobiografia operacional.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-3" style="margin-bottom: 20px;">
+        <div class="stat-card" style="text-align:left;">
+          <div class="stat-value" id="front5IntegrationScore" style="font-size:22px;line-height:1.2;">-</div>
+          <div class="stat-label">Integration proxy</div>
+          <div id="front5IntegrationMeta" class="muted" style="margin-top:8px;font-size:12px;">aguardando carregamento...</div>
+        </div>
+        <div class="stat-card" style="text-align:left;">
+          <div class="stat-value" id="front5BenchmarkScore" style="font-size:22px;line-height:1.2;">-</div>
+          <div class="stat-label">Benchmark operacional</div>
+          <div id="front5BenchmarkMeta" class="muted" style="margin-top:8px;font-size:12px;">aguardando carregamento...</div>
+        </div>
+        <div class="stat-card" style="text-align:left;">
+          <div class="stat-value" id="front5CoherenceScore" style="font-size:22px;line-height:1.2;">-</div>
+          <div class="stat-label">Coerência narrativa</div>
+          <div id="front5CoherenceMeta" class="muted" style="margin-top:8px;font-size:12px;">aguardando carregamento...</div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom: 20px;">
+        <div class="card">
+          <div class="card-header"><div class="card-title"><span class="icon">⚠️</span> Alertas e riscos</div></div>
+          <div class="card-body"><div id="front5Alerts" class="muted">-</div></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title"><span class="icon">💓</span> Marcadores afetivos</div></div>
+          <div class="card-body"><div id="front5Affect" class="muted">-</div></div>
+        </div>
+      </div>
+    </div>
+
     <div id="tab-chat" class="tab-content">
       <div class="card" style="margin-bottom: 20px;">
         <div class="card-header">
@@ -873,6 +910,11 @@
               <label style="display:block; font-weight:600; margin-bottom:6px; color:var(--text-primary);">OpenRouter API Key (OpenRouter.ai)</label>
               <input type="password" name="openrouter_api_key" placeholder="sk-or-v1-..." style="font-family:monospace;">
             </div>
+
+            <div style="margin-bottom: 16px;">
+              <label style="display:block; font-weight:600; margin-bottom:6px; color:var(--text-primary);">Gemini API Key (Google AI Studio)</label>
+              <input type="password" name="gemini_api_key" placeholder="AIza..." style="font-family:monospace;">
+            </div>
             
             <div style="margin-bottom: 16px;">
               <label style="display:block; font-weight:600; margin-bottom:6px; color:var(--text-primary);">LightRAG API Key (Memória Externa)</label>
@@ -905,6 +947,7 @@
         
         // Load data for specific tabs
         if (tab.dataset.tab === 'graph') initGraph();
+        if (tab.dataset.tab === 'front5') loadFront5Status();
         if (tab.dataset.tab === 'chat') {
           const i = document.getElementById('ultronMainChatInput');
           if (i) i.focus();
@@ -1021,26 +1064,15 @@
         const st = window.__statusCache || { stats: {}, agi: {}, tom: {}, next: null };
         const aut = window.__autonomyCache || { budget: {}, state: {}, queued: 0, expired_recent: 0 };
 
-        // Keep placeholders to avoid breaking optional UI blocks
-        const mem = window.__memCache || {};
-        const meta = window.__metaCache || {};
-        const bench = window.__benchCache || { history: [], avg_score: 0 };
-        const benchStatus = window.__benchStatusCache || {};
-        const sprint2 = window.__sprint2Cache || {};
-
         document.getElementById('statExp').textContent = st.stats?.experiences || 0;
         document.getElementById('statTriples').textContent = st.stats?.triples || 0;
         document.getElementById('statAnswered').textContent = st.stats?.questions_answered || 0;
         document.getElementById('statOpen').textContent = st.stats?.questions_open || 0;
 
-        // AGI mode + fase dinâmica
+        // Badge simplificado: menos fantasia de fase, mais estado operacional
         const agiPct = Number(st.agi?.agi_mode_percent || 0);
-        let phase = '🧒 Fase 1 — Bebê';
-        if (agiPct >= 75) phase = '🧠 Fase 4 — Adulta';
-        else if (agiPct >= 55) phase = '🧑 Fase 3 — Adolescente';
-        else if (agiPct >= 35) phase = '🧒 Fase 2 — Criança';
         const pb = document.getElementById('phaseBadge');
-        if (pb) pb.textContent = `${phase} (AGI ${agiPct.toFixed(1)}%)`;
+        if (pb) pb.textContent = `🧠 Estado operacional • AGI ${agiPct.toFixed(1)}%`;
 
         const budget = aut?.budget || {};
         const state = aut?.state || {};
@@ -1049,36 +1081,7 @@
         const breaker = cbUntil > nowMono ? `ON (${cbUntil-nowMono}s)` : 'OFF';
         const ao = document.getElementById('autonomyOps');
         if (ao) {
-          const dq = Number(meta?.decision_quality || 0).toFixed(2);
-          const stuck = Number(meta?.stuck_cycles || 0);
-          const replans = Number(meta?.replans || 0);
-          const avgBench = Number(bench?.avg_score || 0).toFixed(1);
-          const hist = (bench?.history || []).map(h => Number(h.score||0).toFixed(0)).join(',');
-          ao.textContent = `Autonomia: budget ${budget.used_last_minute||0}/${budget.per_minute||'-'} por min • queued ${aut.queued||0} • expired ${aut.expired_recent||0} • circuit breaker ${breaker} • metacog q=${dq}, stuck=${stuck}, replans=${replans} • benchmark avg7=${avgBench}% [${hist}] • memória: uncurated ${mem.uncurated||0}, archived ${mem.archived||0}, distilled ${mem.distilled||0}`;
-        }
-        const req = benchStatus?.requirements_1_8 || {};
-        const reqAvg = Number(benchStatus?.requirements_avg_1_8 || 0).toFixed(1);
-        const rs = document.getElementById('reqScores');
-        if (rs) {
-          const small = Object.entries(req).map(([k,v]) => `${k.replace(/^[0-9]+_/, '').slice(0,12)}=${Number(v||0).toFixed(0)}%`).join(' • ');
-          const s3 = benchStatus?.sprint3_signals || {};
-          const langTrend = (bench?.history || []).map(h => Number(((h.sprint3_signals||{}).language_eval_accuracy||0)*100).toFixed(0)).join(',');
-          rs.textContent = `Requisitos 1-8 avg=${reqAvg}% • ${small || 'rode /api/agi/benchmark/run'} • Sprint3(lang_acc=${Number((s3.language_eval_accuracy||0)*100).toFixed(0)}%, dom_div=${s3.domain_diversity||0}, trend=[${langTrend}])`;
-        }
-        const s2 = document.getElementById('sprint2Health');
-        if (s2) {
-          const t = sprint2?.tom_ab || {};
-          const m = sprint2?.milestones || {};
-          s2.textContent = `Sprint2: ToM A/B lift=${Number(t.lift||0).toFixed(2)} (${t.label||'-'}) • milestones done=${m.milestones_done||0}/${m.milestones_total||0} throughput=${Number((m.throughput_done_rate||0)*100).toFixed(0)}% delayed=${m.delayed_open||0} replan_rate=${Number((m.replan_rate||0)*100).toFixed(0)}%`;
-        }
-        
-        const tom = st.tom || {};
-        const tomEl = document.getElementById('tomIntent');
-        if (tomEl && tom.label) {
-          tomEl.innerHTML = `
-            <div><span class="tag tag-purple">${escHtml(tom.label)}</span> <span class="muted">conf=${Number(tom.confidence || 0).toFixed(2)}</span></div>
-            <div style="margin-top:8px">${escHtml(tom.rationale || '')}</div>
-          `;
+          ao.textContent = `Autonomia: budget ${budget.used_last_minute||0}/${budget.per_minute||'-'} por min • queued ${aut.queued||0} • expired ${aut.expired_recent||0} • circuit breaker ${breaker}`;
         }
 
         currentQ = st.next;
@@ -1809,6 +1812,81 @@
       }
     }
 
+    async function loadFront5Status() {
+      const el = document.getElementById('front5Status');
+      if (!el) return;
+      el.innerHTML = '<span class="muted">Carregando sinais do Front 5...</span>';
+
+      const reqs = await Promise.allSettled([
+        api('/api/meta-observer/status', { timeoutMs: 5000 }),
+        api('/api/affect/status', { timeoutMs: 5000 }),
+        api('/api/self-governance/autobiography', { timeoutMs: 5000 }),
+        api('/api/integration-proxy/status', { timeoutMs: 5000 }),
+        api('/api/operational-consciousness/benchmark/status', { timeoutMs: 5000 }),
+      ]);
+
+      const meta = reqs[0].status === 'fulfilled' ? reqs[0].value : null;
+      const affect = reqs[1].status === 'fulfilled' ? reqs[1].value : null;
+      const narrative = reqs[2].status === 'fulfilled' ? reqs[2].value : null;
+      const proxy = reqs[3].status === 'fulfilled' ? reqs[3].value : null;
+      const bench = reqs[4].status === 'fulfilled' ? reqs[4].value : null;
+
+      const markers = affect?.markers || {};
+      const current = narrative?.current_state || {};
+      const baseline = bench?.baseline?.evaluation || {};
+      const runs = bench?.recent_runs?.items || [];
+      const lastRun = (runs[runs.length - 1] || {}).evaluation || {};
+      const risks = Array.isArray(narrative?.continuity_risks) ? narrative.continuity_risks : [];
+      const alerts = Array.isArray(proxy?.alerts) ? proxy.alerts : [];
+      const failed = [
+        reqs[0].status !== 'fulfilled' ? 'meta-observer' : null,
+        reqs[1].status !== 'fulfilled' ? 'affect' : null,
+        reqs[2].status !== 'fulfilled' ? 'autobiografia' : null,
+        reqs[3].status !== 'fulfilled' ? 'integration-proxy' : null,
+        reqs[4].status !== 'fulfilled' ? 'benchmark' : null,
+      ].filter(Boolean);
+
+      document.getElementById('front5IntegrationScore').textContent = proxy ? Number(proxy.integration_proxy_score || 0).toFixed(2) : 'timeout';
+      document.getElementById('front5IntegrationMeta').textContent = proxy ? `nível=${proxy.integration_level || 'n/a'} • alertas=${alerts.length}` : 'integration proxy indisponível';
+      document.getElementById('front5BenchmarkScore').textContent = (lastRun?.benchmark_score || baseline?.benchmark_score) != null ? Number(lastRun?.benchmark_score || baseline?.benchmark_score || 0).toFixed(2) : 'n/a';
+      document.getElementById('front5BenchmarkMeta').textContent = bench ? `baseline=${Number(baseline?.benchmark_score || 0).toFixed(2)} • runs=${runs.length}` : 'benchmark indisponível';
+      document.getElementById('front5CoherenceScore').textContent = narrative ? Number(current.narrative_coherence_score || 0).toFixed(2) : 'timeout';
+      document.getElementById('front5CoherenceMeta').textContent = narrative ? `arc=${narrative?.dominant_arc || 'n/a'} • promises=${Number(current.pending_promises || 0)}` : 'narrativa indisponível';
+
+      const narrativeEl = document.getElementById('front5Narrative');
+      if (narrativeEl) {
+        narrativeEl.innerHTML = narrative
+          ? `<div>${escHtml(narrative.first_person_report || 'sem relato')}</div><div class="muted" style="margin-top:8px;">posture=${escHtml(narrative.continuity_posture || 'n/a')} • risks=${risks.length}</div>`
+          : '<span class="muted">Autobiografia operacional indisponível no momento.</span>';
+      }
+
+      const alertsEl = document.getElementById('front5Alerts');
+      if (alertsEl) {
+        alertsEl.innerHTML = `
+          <div><strong>Alertas do proxy:</strong> ${alerts.length ? escHtml(alerts.join(' • ')) : '<span class="muted">nenhum</span>'}</div>
+          <div style="margin-top:8px"><strong>Riscos de continuidade:</strong> ${risks.length ? escHtml(risks.join(' • ')) : '<span class="muted">nenhum</span>'}</div>
+          <div style="margin-top:8px"><strong>Falhas de coleta:</strong> ${failed.length ? escHtml(failed.join(' • ')) : '<span class="muted">nenhuma</span>'}</div>
+        `;
+      }
+
+      const affectEl = document.getElementById('front5Affect');
+      if (affectEl) {
+        affectEl.innerHTML = affect
+          ? `confidence=${Number(markers.confidence || 0).toFixed(2)} • threat=${Number(markers.threat || 0).toFixed(2)} • frustration=${Number(markers.frustration || 0).toFixed(2)} • curiosity=${Number(markers.curiosity || 0).toFixed(2)} • posture=${escHtml(affect?.risk_posture || 'n/a')}`
+          : '<span class="muted">Marcadores afetivos indisponíveis.</span>';
+      }
+
+      el.innerHTML = `
+        <div style="display:grid;gap:10px;">
+          <div><span class="tag tag-blue">integração=${proxy ? Number(proxy?.integration_proxy_score || 0).toFixed(2) : 'n/a'}</span> <span class="tag tag-purple">nível=${escHtml(proxy?.integration_level || 'n/a')}</span> <span class="tag tag-green">benchmark=${Number(lastRun?.benchmark_score || baseline?.benchmark_score || 0).toFixed(2)}</span></div>
+          <div><strong>Meta-observer:</strong> uncertainty=${Number(meta?.uncertainty || 0).toFixed(2)} • conflicts=${Number((meta?.conflicts || []).length || 0)} • ignored=${Number((meta?.ignored || []).length || 0)}</div>
+          <div><strong>Affect:</strong> confidence=${Number(markers.confidence || 0).toFixed(2)} • threat=${Number(markers.threat || 0).toFixed(2)} • frustration=${Number(markers.frustration || 0).toFixed(2)} • posture=${escHtml(affect?.risk_posture || 'n/a')}</div>
+          <div><strong>Narrativa:</strong> coherence=${Number(current.narrative_coherence_score || 0).toFixed(2)} • pending_promises=${Number(current.pending_promises || 0)} • arc=${escHtml(narrative?.dominant_arc || 'n/a')}</div>
+          <div><strong>Coleta parcial:</strong> ${failed.length ? escHtml(failed.join(' • ')) : '<span class="muted">nenhuma falha</span>'}</div>
+        </div>
+      `;
+    }
+
     async function loadHorizonStatus() {
       try {
         const hz = await api('/api/horizon/missions?limit=12', { timeoutMs: 9000 });
@@ -2261,21 +2339,32 @@
     });
 
     // === Init ===
+    // Minimal first paint: only core status/feed up front.
     loadStatus();
-    loadSources();
-    // Keep essential dashboard widgets alive even in lite mode
-    loadConflictsSummary();
-    loadLearningMissionSleepPreview();
     loadFeed();
-    // User-facing core cards should render even in lite mode
-    loadGoalCurriculum();
-    loadHorizonStatus();
-    loadPersonaStatus();
-    if (!LITE_MODE) {
-      loadTomStatus();
-      loadLlmUsage();
-      startEventStream();
-    }
+
+    setTimeout(() => {
+      loadConflictsSummary();
+    }, 1500);
+
+    setTimeout(() => {
+      loadSources();
+      loadLearningMissionSleepPreview();
+    }, 3500);
+
+    setTimeout(() => {
+      loadGoalCurriculum();
+      loadHorizonStatus();
+      loadPersonaStatus();
+    }, 6000);
+
+    setTimeout(() => {
+      if (!LITE_MODE) {
+        loadTomStatus();
+        loadLlmUsage();
+        startEventStream();
+      }
+    }, 9000);
 
     let statusIntervalMs = 10000;
     let graphIntervalMs = 6000;
@@ -2309,9 +2398,9 @@
       _timers.push(setInterval(noOverlap('horizon', loadHorizonStatus), slowIntervalMs));
       _timers.push(setInterval(noOverlap('graph', async () => { if (network) graphTick(); }), graphIntervalMs));
       if (!LITE_MODE) {
-        _timers.push(setInterval(noOverlap('tom', loadTomStatus), slowIntervalMs));
-        _timers.push(setInterval(noOverlap('persona', loadPersonaStatus), slowIntervalMs));
-        _timers.push(setInterval(noOverlap('llm', loadLlmUsage), slowIntervalMs));
+        _timers.push(setInterval(noOverlap('tom', loadTomStatus), Math.max(slowIntervalMs, 60000)));
+        _timers.push(setInterval(noOverlap('persona', loadPersonaStatus), Math.max(slowIntervalMs, 60000)));
+        _timers.push(setInterval(noOverlap('llm', loadLlmUsage), Math.max(slowIntervalMs, 60000)));
       }
     }
 
@@ -2348,92 +2437,19 @@
     });
   </script>
 
-<script id="ultron-menu-chat-inject">
-(function(){
-  if (window.__ultronChatTabInjected) return; window.__ultronChatTabInjected = true;
-  function ensure(){
-    if (document.getElementById('ultronChatModal')) return true;
-    const modal=document.createElement('div');
-    modal.id='ultronChatModal';
-    modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:100000;';
-    modal.innerHTML=`<div style="max-width:760px;margin:6vh auto;background:#111a33;border:1px solid #2b3a66;border-radius:12px;padding:14px;color:#e6edf3;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-        <strong>Chat com UltronPro</strong><button id="ultronChatClose" style="background:#0f1730;color:#e6edf3;border:1px solid #2b3a66;border-radius:8px;padding:6px 10px;">Fechar</button>
-      </div>
-      <textarea id="ultronChatInput" placeholder="Pergunte sobre aprendizado, agenda, ciclo de sono..." style="width:100%;min-height:90px;background:#0f1730;color:#e6edf3;border:1px solid #2b3a66;border-radius:8px;padding:8px;"></textarea>
-      <div style="margin-top:8px;display:flex;gap:8px;">
-        <button id="ultronChatSend" style="background:#0f1730;color:#e6edf3;border:1px solid #2b3a66;border-radius:8px;padding:8px 12px;">Enviar</button>
-        <button id="ultronChatWeekly" style="background:#0f1730;color:#e6edf3;border:1px solid #2b3a66;border-radius:8px;padding:8px 12px;">Resumo semanal</button>
-      </div>
-      <pre id="ultronChatOut" style="white-space:pre-wrap;max-height:45vh;overflow:auto;margin-top:10px;background:#0b1020;border:1px solid #2b3a66;border-radius:8px;padding:8px;"></pre>
-    </div>`;
-    document.body.appendChild(modal);
-    document.getElementById('ultronChatClose').onclick=()=>modal.style.display='none';
-    document.getElementById('ultronChatSend').onclick=async()=>{
-      const msg=(document.getElementById('ultronChatInput').value||'').trim(); if(!msg)return;
-      const out=document.getElementById('ultronChatOut'); out.textContent='Processando...';
-      try{
-        const r=await fetch('/api/metacognition/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});
-        const j=await r.json(); out.textContent=j.answer||JSON.stringify(j,null,2);
-      }catch(e){ out.textContent='Erro: '+e; }
-    };
-    document.getElementById('ultronChatWeekly').onclick=async()=>{
-      const out=document.getElementById('ultronChatOut'); out.textContent='Carregando resumo...';
-      try{
-        const r=await fetch('/api/metacognition/weekly-summary'); const j=await r.json(); out.textContent=j.summary||JSON.stringify(j,null,2);
-      }catch(e){ out.textContent='Erro: '+e; }
-    };
-    return true;
-  }
-  function injectTab(){
-    ensure();
-    const all=[...document.querySelectorAll('button,a,div,span')];
-    const overview=all.find(el=> (el.textContent||'').trim()==='Overview');
-    if(!overview) return false;
-    if(document.getElementById('ultronMenuChatTab')) return true;
-    const chat=overview.cloneNode(true);
-    chat.id='ultronMenuChatTab';
-    chat.textContent='💬 Chat';
-    chat.onclick=(e)=>{ e.preventDefault(); e.stopPropagation(); document.getElementById('ultronChatModal').style.display='block'; };
-    if (overview.parentElement){
-      if (overview.nextSibling) overview.parentElement.insertBefore(chat, overview.nextSibling);
-      else overview.parentElement.appendChild(chat);
-      return true;
-    }
-    return false;
-  }
-  let n=0; const iv=setInterval(()=>{ n++; if(injectTab()||n>40) clearInterval(iv); },300);
-})();
-</script>
+<!-- legacy chat injection scripts removed: duplicated DOM hacks and stale metacognition modal -->
 
-<script id="ultron-menu-chat-inject-v2">
-(function(){
-  if(window.__ultronChatTabInjectedV2) return; window.__ultronChatTabInjectedV2=true;
-  function mount(){
-    const nodes=[...document.querySelectorAll('button,a,div,span')];
-    const ov=nodes.find(n=>(n.textContent||'').trim()==='Overview');
-    if(!ov) return false;
-    if(document.getElementById('ultronMenuChatTabV2')) return true;
-    const chat=ov.cloneNode(true); chat.id='ultronMenuChatTabV2'; chat.textContent='💬 Chat';
-    chat.onclick=(e)=>{e.preventDefault();e.stopPropagation();const m=document.getElementById('ultronChatModalV2'); if(m) m.style.display='block';};
-    ov.parentElement.insertBefore(chat, ov.nextSibling);
-    if(!document.getElementById('ultronChatModalV2')){
-      const m=document.createElement('div'); m.id='ultronChatModalV2';
-      m.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:100000;';
-      m.innerHTML=`<div style="max-width:760px;margin:6vh auto;background:#111a33;border:1px solid #2b3a66;border-radius:12px;padding:14px;color:#e6edf3;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><strong>Chat com UltronPro</strong><button id="uclosev2">Fechar</button></div>
-      <textarea id="uaskv2" style="width:100%;min-height:90px;" placeholder="Pergunte ao Ultron..."></textarea>
-      <div style="margin-top:8px;"><button id="usendv2">Enviar</button></div>
-      <pre id="uoutv2" style="white-space:pre-wrap;max-height:45vh;overflow:auto;"></pre></div>`;
-      document.body.appendChild(m);
-      document.getElementById('uclosev2').onclick=()=>m.style.display='none';
-      document.getElementById('usendv2').onclick=async()=>{const msg=(document.getElementById('uaskv2').value||'').trim(); if(!msg)return; const out=document.getElementById('uoutv2'); out.textContent='Processando...'; try{const r=await fetch('/api/metacognition/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})}); const j=await r.json(); out.textContent=j.answer||JSON.stringify(j);}catch(e){out.textContent='Erro: '+e;}};
-    }
-    return true;
-  }
-  let i=0; const iv=setInterval(()=>{i++; if(mount()||i>60) clearInterval(iv);},300);
-})();
-</script>
+</body>
+</html>
+rovider = btn.getAttribute('data-provider') || 'auto';
+      llmHealthCheck(provider);
+    });
+  </script>
+
+<!-- legacy chat injection scripts removed: duplicated DOM hacks and stale metacognition modal -->
+
+</body>
+</html>
 
 </body>
 </html>

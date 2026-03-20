@@ -13,6 +13,7 @@ DEFAULT_SETTINGS = {
     "groq_api_key": "",
     "deepseek_api_key": "",
     "openrouter_api_key": "",
+    "gemini_api_key": "",
     "huggingface_api_key": "",
     "lightrag_api_key": "b9714901186877fe01b1d7cd81ad65d9",  # Auto-discovered
     "lightrag_url": "http://lightrag2_lightrag2.1.ccxtpz7umbbwfjb1ew0ji8lux:9621/api" # Internal Docker network address
@@ -58,7 +59,21 @@ def get_api_key(provider: str) -> str:
         "groq": "groq_api_key",
         "deepseek": "deepseek_api_key",
         "openrouter": "openrouter_api_key",
+        "gemini": "gemini_api_key",
         "huggingface": "huggingface_api_key",
         "lightrag": "lightrag_api_key"
     }
-    return s.get(key_map.get(provider, ""), "")
+    value = s.get(key_map.get(provider, ""), "")
+    if value:
+        return value
+    env_map = {
+        "openai": "OPENAI_API_KEY",
+        "anthropic": "ANTHROPIC_API_KEY",
+        "groq": "GROQ_API_KEY",
+        "deepseek": "DEEPSEEK_API_KEY",
+        "openrouter": "OPENROUTER_API_KEY",
+        "gemini": "GEMINI_API_KEY",
+        "huggingface": "HUGGINGFACE_API_KEY",
+        "lightrag": "LIGHTRAG_API_KEY",
+    }
+    return os.getenv(env_map.get(provider, ""), "")

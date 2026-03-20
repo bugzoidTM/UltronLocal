@@ -655,6 +655,8 @@ def append_structured_episode(
     ok: bool = True,
     latency_ms: int = 0,
     work_context: dict[str, Any] | None = None,
+    quality_eval: dict[str, Any] | None = None,
+    memory_governor: dict[str, Any] | None = None,
     analogia_usada: bool = False,
     analogia_source_episode_id: str = '',
     analogia_foi_util: bool | None = None,
@@ -684,6 +686,9 @@ def append_structured_episode(
                 'finalizou': bool(ok),
             },
             'runtime': dict(work_context or {}),
+            'context_profile': str((work_context or {}).get('context_profile') or ''),
+            'context_fallback': dict((work_context or {}).get('context_fallback') or {}),
+            'context_metrics': dict((work_context or {}).get('context_metrics') or {}),
         },
         'episodic_memory': {
             'problema': str(problem or '')[:2000],
@@ -696,6 +701,14 @@ def append_structured_episode(
         'semantic_memory_ref': {
             'rag_enabled': True,
             'semantic_cache_enabled': True,
+        },
+        'quality_eval': dict(quality_eval or {}),
+        'memory_governor': dict(memory_governor or {}),
+        'memory_statement': {
+            'fact': str((memory_governor or {}).get('fact') or '')[:600],
+            'hypothesis': str((memory_governor or {}).get('hypothesis') or '')[:600],
+            'plan': str((memory_governor or {}).get('plan') or '')[:600],
+            'interpretation': str((memory_governor or {}).get('interpretation') or '')[:600],
         },
         'procedural_memory_ref': {
             'task_type': str(task_type or ''),

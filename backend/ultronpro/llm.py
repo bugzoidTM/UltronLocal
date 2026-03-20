@@ -19,6 +19,7 @@ class SettingsUpdate(BaseModel):
     groq_api_key: Optional[str] = None
     deepseek_api_key: Optional[str] = None
     openrouter_api_key: Optional[str] = None
+    gemini_api_key: Optional[str] = None
     huggingface_api_key: Optional[str] = None
     lightrag_api_key: Optional[str] = None
 
@@ -56,6 +57,7 @@ MODELS = {
     "anthropic_default": {"provider": "anthropic", "model": os.getenv('ANTHROPIC_DEFAULT_MODEL', 'claude-3-5-sonnet-20241022')},
     "deepseek_default": {"provider": "deepseek", "model": os.getenv('DEEPSEEK_DEFAULT_MODEL', 'deepseek-chat')},
     "openrouter_free": {"provider": "openrouter", "model": os.getenv('OPENROUTER_DEFAULT_MODEL', 'google/gemma-2-9b-it:free')},
+    "gemini_default": {"provider": "gemini", "model": os.getenv('GEMINI_DEFAULT_MODEL', 'gemini-3-flash-preview')},
     "hf_free": {"provider": "huggingface", "model": os.getenv('HUGGINGFACE_DEFAULT_MODEL', 'meta-llama/Llama-3.2-1B-Instruct')},
     "local": {"provider": PRIMARY_LOCAL_PROVIDER, "model": PRIMARY_LOCAL_MODEL},
     "canary_qwen": {"provider": CANARY_PROVIDER, "model": CANARY_MODEL}
@@ -67,7 +69,7 @@ ALLOW_OLLAMA_FALLBACK = os.getenv('ULTRON_ALLOW_OLLAMA_FALLBACK', '0') == '1'
 def _is_provider_disabled(provider: str) -> bool:
     p = str(provider or '').strip().lower()
     # global kill-switch for external cloud providers
-    if os.getenv('ULTRON_DISABLE_CLOUD_PROVIDERS', '0') == '1' and p in ('huggingface', 'openrouter', 'groq', 'deepseek', 'openai', 'anthropic'):
+    if os.getenv('ULTRON_DISABLE_CLOUD_PROVIDERS', '0') == '1' and p in ('huggingface', 'openrouter', 'groq', 'deepseek', 'openai', 'anthropic', 'gemini'):
         return True
     env_map = {
         'huggingface': 'ULTRON_DISABLE_HUGGINGFACE',
@@ -76,6 +78,9 @@ def _is_provider_disabled(provider: str) -> bool:
         'deepseek': 'ULTRON_DISABLE_DEEPSEEK',
         'openai': 'ULTRON_DISABLE_OPENAI',
         'anthropic': 'ULTRON_DISABLE_ANTHROPIC',
+        'gemini': 'ULTRON_DISABLE_GEMINI',
+        'ollama_local': 'ULTRON_DISABLE_OLLAMA_LOCAL',
+        'ultron_infer': 'ULTRON_DISABLE_ULTRON_INFER',
     }
     ek = env_map.get(p)
     return bool(ek and os.getenv(ek, '0') == '1')
@@ -90,6 +95,7 @@ class LLMRouter:
             'started_at': int(time.time()),
             'providers': {
                 'openai': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': int(os.getenv('OPENAI_DAILY_LIMIT_TOKENS', '0') or 0)},
+                'gemini': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': int(os.getenv('GEMINI_DAILY_LIMIT_TOKENS', '0') or 0)},
                 'anthropic': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': int(os.getenv('ANTHROPIC_DAILY_LIMIT_TOKENS', '0') or 0)},
                 'groq': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': int(os.getenv('GROQ_TPD_LIMIT', '100000') or 100000)},
                 'deepseek': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': int(os.getenv('DEEPSEEK_DAILY_LIMIT_TOKENS', '0') or 0)},
@@ -117,12 +123,17 @@ class LLMRouter:
             self.usage['last_error'] = {'ts': int(time.time()), 'provider': provider, 'error': em[:220]}
             low = em.lower()
             # global backoff for known external failure states
-            if provider in ('huggingface', 'openrouter', 'groq', 'deepseek', 'openai', 'anthropic'):
+            if provider in ('huggingface', 'openrouter', 'groq', 'deepseek', 'openai', 'anthropic', 'gemini'):
                 if any(t in low for t in ['402', '429', 'rate limit', 'insufficient credits', 'depleted your monthly included credits', 'model_not_supported', 'no endpoints found', 'payment required']):
-                    cool_sec = int(os.getenv('ULTRON_PROVIDER_FAILURE_COOLDOWN_SEC', '900') or 900)
-                    self.fail_cooldown_until[str(provider)] = int(time.time()) + max(60, cool_sec)
+                    if provider == 'gemini':
+                        cool_sec = int(os.getenv('ULTRON_GEMINI_FAILURE_COOLDOWN_SEC', '15') or 15)
+                        self.fail_cooldown_until[str(provider)] = int(time.time()) + max(3, cool_sec)
+                    else:
+                        cool_sec = int(os.getenv('ULTRON_PROVIDER_FAILURE_COOLDOWN_SEC', '900') or 900)
+                        self.fail_cooldown_until[str(provider)] = int(time.time()) + max(60, cool_sec)
                 try:
-                    llm_adapter.maybe_quarantine_provider(provider, em)
+                    if not (provider == 'gemini' and any(t in low for t in ['429', 'rate limit'])):
+                        llm_adapter.maybe_quarantine_provider(provider, em)
                 except Exception:
                     pass
 
@@ -154,7 +165,7 @@ class LLMRouter:
         p = str(provider or 'auto').lower().strip()
         if p == 'auto':
             # prefer explicit providers, fallback to ollama
-            for cand in ('ultron_infer', 'ollama_local', 'huggingface', 'openrouter', 'openai', 'anthropic', 'groq', 'deepseek', 'ollama', 'openclaw_bridge'):
+            for cand in ('gemini', 'ultron_infer', 'ollama_local', 'huggingface', 'openrouter', 'openai', 'anthropic', 'groq', 'deepseek', 'ollama', 'openclaw_bridge'):
                 r = self.healthcheck(cand)
                 if r.get('ok'):
                     return r
@@ -193,6 +204,7 @@ class LLMRouter:
                 'openrouter': 'openrouter_free',
                 'huggingface': 'hf_free',
                 'openai': 'openai_default',
+                'gemini': 'gemini_default',
                 'groq': 'cheap',
                 'anthropic': 'anthropic_default',
                 'deepseek': 'deepseek_default',
@@ -241,6 +253,13 @@ class LLMRouter:
             elif provider == "deepseek":
                 from openai import OpenAI
                 if key: client = OpenAI(api_key=key, base_url="https://api.deepseek.com", timeout=compat_timeout, max_retries=0)
+            elif provider == "gemini":
+                if key:
+                    client = {
+                        'api_key': key,
+                        'base_url': os.getenv('GEMINI_BASE_URL', 'https://generativelanguage.googleapis.com/v1beta'),
+                        'timeout': _env_float('ULTRON_GEMINI_TIMEOUT_SEC', max(router_timeout, 12.0)),
+                    }
             elif provider == "openrouter":
                 from openai import OpenAI
                 if key:
@@ -406,6 +425,8 @@ class LLMRouter:
                         model = MODELS['deep']['model']
                     elif cand == 'openrouter':
                         model = MODELS['openrouter_free']['model']
+                    elif cand == 'gemini':
+                        model = MODELS['gemini_default']['model']
                     elif cand == 'huggingface':
                         model = MODELS['hf_free']['model']
                     elif cand == 'openai':
@@ -431,6 +452,8 @@ class LLMRouter:
         try:
             if provider == "anthropic":
                 return self._call_anthropic(client, model, prompt, system, json_mode)
+            if provider == 'gemini':
+                return self._call_gemini(client, model, prompt, system, json_mode, max_tokens=max_tokens)
             if provider == 'openclaw_bridge':
                 return self._call_openclaw_bridge(client, prompt, system, json_mode, max_tokens=max_tokens)
             if provider in ('ollama', 'ollama_local'):
@@ -453,6 +476,8 @@ class LLMRouter:
                             continue
                         if cand == 'huggingface':
                             return self._call_openai_compat(c, MODELS['hf_free']['model'], prompt, system, json_mode, provider='huggingface', max_tokens=max_tokens)
+                        if cand == 'gemini':
+                            return self._call_gemini(c, MODELS['gemini_default']['model'], prompt, system, json_mode, max_tokens=max_tokens)
                         if cand == 'anthropic':
                             return self._call_anthropic(c, 'claude-3-5-sonnet-20241022', prompt, system, json_mode)
                         if cand == 'deepseek':
@@ -475,6 +500,41 @@ class LLMRouter:
                     self._touch('ollama', ok=False, err=str(e2))
 
             return ""
+
+    def _call_gemini(self, client, model, prompt, system, json_mode, max_tokens: int | None = None):
+        api_key = str((client or {}).get('api_key') or '').strip()
+        base = str((client or {}).get('base_url') or 'https://generativelanguage.googleapis.com/v1beta').rstrip('/')
+        timeout_sec = float((client or {}).get('timeout') or _env_float('ULTRON_GEMINI_TIMEOUT_SEC', 15.0))
+        text_prompt = str(prompt or '')
+        if json_mode:
+            text_prompt += "\n\nReturn ONLY valid JSON."
+        body = {
+            'contents': [{'parts': [{'text': text_prompt}]}],
+            'generationConfig': {
+                'temperature': 0.2,
+                'maxOutputTokens': int(max(32, min(512, int(max_tokens or int(os.getenv('ULTRON_CLOUD_MAX_TOKENS', '220') or 220))))),
+            },
+        }
+        if system:
+            body['systemInstruction'] = {'parts': [{'text': str(system)}]}
+        if json_mode:
+            body['generationConfig']['responseMimeType'] = 'application/json'
+        url = f"{base}/models/{model}:generateContent?key={api_key}"
+        with httpx.Client(timeout=max(8.0, timeout_sec)) as hc:
+            rr = hc.post(url, json=body, headers={'Content-Type': 'application/json'})
+            rr.raise_for_status()
+            data = rr.json() if rr.text else {}
+        text = ''
+        for cand in data.get('candidates', []) or []:
+            content = cand.get('content') or {}
+            for part in content.get('parts', []) or []:
+                if isinstance(part, dict) and part.get('text'):
+                    text += str(part.get('text'))
+        usage = data.get('usageMetadata') or {}
+        tin = int(usage.get('promptTokenCount') or 0)
+        tout = int(usage.get('candidatesTokenCount') or usage.get('outputTokenCount') or 0)
+        self._touch('gemini', ok=True, tin=tin, tout=tout)
+        return text
 
     def _call_openai_compat(self, client, model, prompt, system, json_mode, provider='openai', max_tokens: int | None = None):
         messages = []

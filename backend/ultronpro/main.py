@@ -17,7 +17,7 @@ from pydantic import BaseModel
 import uvicorn
 import httpx
 
-from ultronpro import llm, llm_adapter, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, finetune_lora, roadmap_v5, agi_path, episodic_memory, learning_agenda, sleep_cycle, replay_traces, rag_synth_generator, semantic_cache, prm_lite, symbolic_reasoner, reflexion_agent, cognitive_state, causal_graph, sandbox_client, web_browser
+from ultronpro import llm, llm_adapter, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, roadmap_v5, agi_path, episodic_memory, learning_agenda, sleep_cycle, replay_traces, rag_synth_generator, semantic_cache, prm_lite, symbolic_reasoner, reflexion_agent, cognitive_state, causal_graph, sandbox_client, web_browser, context_policy, quality_eval, context_metrics, context_inspector, rag_router, rag_eval, rag_eval_cases, rag_eval_store, internal_critic, memory_governor, causal_preflight, cognitive_patches, gap_detector, shadow_eval, promotion_gate, rollback_manager, benchmark_suite, ultronbody, explicit_abstractions, structural_mapper, transfer_benchmark, external_benchmarks, cognitive_patch_loop, organic_eval_feed, roadmap_status, self_governance, operational_consciousness_benchmark
 from ultronpro.knowledge_bridge import search_knowledge, ingest_knowledge
 
 # Logging
@@ -127,6 +127,7 @@ class SettingsModel(BaseModel):
     groq_api_key: Optional[str] = None
     deepseek_api_key: Optional[str] = None
     openrouter_api_key: Optional[str] = None
+    gemini_api_key: Optional[str] = None
     lightrag_api_key: Optional[str] = None
     lightrag_url: Optional[str] = None
 
@@ -169,6 +170,17 @@ class WorkspacePublishRequest(BaseModel):
     salience: float = 0.5
     ttl_sec: int = 900
 
+class WorkspaceBroadcastRequest(BaseModel):
+    module: str
+    channels: List[str]
+    payload: Dict[str, Any] = {}
+    salience: float = 0.6
+    ttl_sec: int = 900
+
+class WorkspaceConsumeRequest(BaseModel):
+    item_id: int
+    consumer_module: str
+
 class MilestoneProgressRequest(BaseModel):
     progress: float
     status: Optional[str] = None
@@ -181,6 +193,122 @@ class MutationProposalRequest(BaseModel):
 
 class MutationDecisionRequest(BaseModel):
     reason: Optional[str] = None
+
+class CognitivePatchCreateRequest(BaseModel):
+    kind: str = 'heuristic_patch'
+    source: str = 'manual'
+    problem_pattern: str
+    hypothesis: str = ''
+    proposed_change: Dict[str, Any] = {}
+    expected_gain: str = ''
+    risk_level: str = 'medium'
+    evidence_refs: List[str] = []
+    benchmark_before: Dict[str, Any] = {}
+    benchmark_after: Dict[str, Any] = {}
+    shadow_metrics: Dict[str, Any] = {}
+    tags: List[str] = []
+    notes: str = ''
+
+class CognitivePatchUpdateRequest(BaseModel):
+    status: Optional[str] = None
+    hypothesis: Optional[str] = None
+    proposed_change: Optional[Dict[str, Any]] = None
+    expected_gain: Optional[str] = None
+    risk_level: Optional[str] = None
+    evidence_refs: Optional[List[str]] = None
+    benchmark_before: Optional[Dict[str, Any]] = None
+    benchmark_after: Optional[Dict[str, Any]] = None
+    shadow_metrics: Optional[Dict[str, Any]] = None
+    tags: Optional[List[str]] = None
+    notes: Optional[str] = None
+    rollback_ref: Optional[str] = None
+
+class ShadowEvalCaseRequest(BaseModel):
+    case_id: Optional[str] = None
+    query: str
+    baseline_answer: str
+    candidate_answer: str
+    fallback_needed: bool = False
+    has_rag: bool = False
+
+class ShadowEvalRunRequest(BaseModel):
+    cases: List[ShadowEvalCaseRequest]
+
+class ShadowEvalCanaryRequest(BaseModel):
+    rollout_pct: int = 10
+    domains: List[str] = []
+    note: Optional[str] = None
+
+class UltronBodyResetRequest(BaseModel):
+    env_name: Optional[str] = 'gridworld_v1'
+
+class UltronBodyActRequest(BaseModel):
+    action: str
+    expected_effect: Optional[str] = None
+
+class UltronBodyPredictRequest(BaseModel):
+    action: str
+
+class UltronBodyRunRequest(BaseModel):
+    policy: Optional[str] = 'goal_seek'
+    max_steps: Optional[int] = 30
+    env_name: Optional[str] = 'gridworld_v1'
+
+class UltronBodyBenchmarkRequest(BaseModel):
+    policy: Optional[str] = 'goal_seek'
+    episodes_count: Optional[int] = 10
+    max_steps: Optional[int] = 30
+    env_name: Optional[str] = 'gridworld_v1'
+
+class UltronBodyBenchmarkCompareRequest(BaseModel):
+    policies: Optional[List[str]] = None
+    episodes_count: Optional[int] = 10
+    max_steps: Optional[int] = 30
+    env_names: Optional[List[str]] = None
+
+class ExplicitAbstractionCreateRequest(BaseModel):
+    principle: str
+    source_domains: Optional[List[str]] = None
+    applicability_conditions: Optional[List[str]] = None
+    procedure_template: Optional[List[str]] = None
+    confidence: Optional[float] = 0.5
+    notes: Optional[str] = None
+
+class ExplicitAbstractionTransferRequest(BaseModel):
+    target_domain: str
+    outcome: str
+    evidence_ref: Optional[str] = None
+    score: Optional[float] = None
+    notes: Optional[str] = None
+
+class StructuralMapRequest(BaseModel):
+    target_domain: str
+    target_text: Optional[str] = None
+
+class TransferBenchmarkRequest(BaseModel):
+    scenario_ids: Optional[List[str]] = None
+
+class AbstractionBatchExtractRequest(BaseModel):
+    limit: Optional[int] = 20
+    min_cluster_size: Optional[int] = 2
+
+class ExternalBenchmarkRunRequest(BaseModel):
+    benchmark_ids: Optional[List[str]] = None
+    families: Optional[List[str]] = None
+    splits: Optional[List[str]] = None
+    limit_per_benchmark: Optional[int] = None
+    strategy: Optional[str] = 'cheap'
+    predictor: Optional[str] = 'llm'
+    tag: Optional[str] = None
+
+class ExternalBenchmarkBaselineRequest(BaseModel):
+    benchmark_ids: Optional[List[str]] = None
+    families: Optional[List[str]] = None
+    splits: Optional[List[str]] = None
+    limit_per_benchmark: Optional[int] = None
+    strategy: Optional[str] = 'cheap'
+    predictor: Optional[str] = 'llm'
+    label: Optional[str] = 'baseline'
 
 class IntrinsicTickRequest(BaseModel):
     force: bool = False
@@ -364,6 +492,11 @@ _prewarm_task = None
 _roadmap_task = None
 _agi_path_task = None
 _reflexion_task = None
+_self_governance_task = None
+_meta_observer_task = None
+_affect_task = None
+_narrative_task = None
+_integration_task = None
 _autonomy_state = {
     "ticks": 0,
     "last_tick": None,
@@ -392,7 +525,8 @@ ROADMAP_LOOP_ENABLED = os.getenv('ULTRON_ROADMAP_ENABLED', '1') != '0'
 AGI_PATH_LOOP_ENABLED = os.getenv('ULTRON_AGI_PATH_ENABLED', '1') != '0'
 REFLEXION_LOOP_ENABLED = os.getenv('ULTRON_REFLEXION_ENABLED', '1') != '0'
 VOICE_PREWARM_ENABLED = os.getenv('ULTRON_PREWARM_ENABLED', os.getenv('ULTRON_VOICE_PREWARM_ENABLED', '1')) != '0'
-FINETUNE_AUTOTRIGGER_ENABLED = os.getenv('ULTRON_FINETUNE_AUTOTRIGGER', '1') != '0'
+TRAINING_DISABLED_BY_ARCHITECTURE = True
+FINETUNE_AUTOTRIGGER_ENABLED = False
 AUTONOMY_TICK_SEC = max(20, int(os.getenv('ULTRON_AUTONOMY_TICK_SEC', '75')))
 JUDGE_TICK_SEC = max(45, int(os.getenv('ULTRON_JUDGE_TICK_SEC', '90')))
 AUTOFEEDER_TICK_SEC = max(90, int(os.getenv('ULTRON_AUTOFEEDER_TICK_SEC', '180')))
@@ -471,6 +605,45 @@ def _benchmark_history_append(item: dict, max_items: int = 200):
         pass
 
 
+def _training_disabled_response(feature: str, extra: dict | None = None) -> dict:
+    payload = {
+        'ok': True,
+        'enabled': False,
+        'disabled': True,
+        'feature': feature,
+        'reason': 'training_disabled_by_architecture',
+        'message': 'UltronPro no longer evolves via fine-tune/adapters; use the cognitive stack instead.',
+    }
+    if extra:
+        payload.update(extra)
+    return payload
+
+
+def _build_guided_revision_prompt(*, query: str, current_answer: str, tool_outputs: list[dict[str, Any]] | None, context_bundle: dict | None, critic: dict | None, preflight: dict | None) -> str:
+    epistemic = (critic or {}).get('epistemic') if isinstance(critic, dict) else {}
+    operational = (critic or {}).get('operational') if isinstance(critic, dict) else {}
+    fallback = (context_bundle or {}).get('fallback') if isinstance(context_bundle, dict) else {}
+    rag_div = (context_bundle or {}).get('rag_diversity') if isinstance(context_bundle, dict) else {}
+    revision_rules = [
+        'Reescreva em pt-BR, de forma direta e útil.',
+        'Não invente fatos ausentes.',
+        'Se houver lacuna de contexto, admita explicitamente.',
+        'Se o risco for alto, deixe cautela e necessidade de confirmação claras.',
+        'Prefira calibrar confiança em vez de soar definitivo.',
+    ]
+    return json.dumps({
+        'query': query,
+        'current_answer': current_answer,
+        'tool_outputs': tool_outputs or [],
+        'context_fallback': fallback,
+        'rag_diversity': rag_div,
+        'critic_epistemic': epistemic,
+        'critic_operational': operational,
+        'causal_preflight': preflight or {},
+        'revision_rules': revision_rules,
+    }, ensure_ascii=False)
+
+
 def _runtime_health_snapshot(extra: dict | None = None) -> dict:
     return {
         'ts': int(time.time()),
@@ -482,7 +655,7 @@ def _runtime_health_snapshot(extra: dict | None = None) -> dict:
             'agi_path_enabled': AGI_PATH_LOOP_ENABLED,
             'reflexion_enabled': REFLEXION_LOOP_ENABLED,
             'voice_prewarm_enabled': VOICE_PREWARM_ENABLED,
-            'finetune_autotrigger_enabled': FINETUNE_AUTOTRIGGER_ENABLED,
+            'finetune_autotrigger_enabled': False,
         },
         'cadence': {
             'autonomy_tick_sec': AUTONOMY_TICK_SEC,
@@ -673,6 +846,438 @@ def _workspace_recent(channels: list[str] | None = None, limit: int = 20) -> lis
         return []
 
 
+def _workspace_status(limit: int = 80) -> dict:
+    items = _workspace_recent(limit=max(10, min(300, int(limit or 80))))
+    total = len(items)
+    channels: dict[str, int] = {}
+    modules: dict[str, int] = {}
+    top_salience = []
+    consumed = 0
+    for it in items:
+        ch = str(it.get('channel') or 'general')
+        mod = str(it.get('module') or 'unknown')
+        channels[ch] = channels.get(ch, 0) + 1
+        modules[mod] = modules.get(mod, 0) + 1
+        try:
+            cjson = json.loads(it.get('consumed_by_json') or '{}')
+            if isinstance(cjson, dict) and cjson:
+                consumed += 1
+        except Exception:
+            pass
+        top_salience.append({
+            'id': it.get('id'),
+            'module': mod,
+            'channel': ch,
+            'salience': float(it.get('salience') or 0.0),
+        })
+    top_salience = sorted(top_salience, key=lambda x: float(x.get('salience') or 0.0), reverse=True)[:10]
+    competition = round(sum(float(x.get('salience') or 0.0) for x in top_salience[:5]) / max(1, min(5, len(top_salience))), 4) if top_salience else 0.0
+    integration_score = round(min(1.0, (len(channels) / 8.0) * 0.45 + (len(modules) / 10.0) * 0.35 + (consumed / max(1, total)) * 0.20), 4)
+    return {
+        'ok': True,
+        'items': total,
+        'channels': channels,
+        'modules': modules,
+        'consumed_items': consumed,
+        'competition_index': competition,
+        'integration_score': integration_score,
+        'top_salience': top_salience,
+    }
+
+
+def _workspace_authorship_snapshot(limit: int = 40) -> dict:
+    items = _workspace_recent(limit=max(10, min(200, int(limit or 40))))
+    authors: dict[str, dict[str, Any]] = {}
+    origin_counts = {'self_generated': 0, 'externally_triggered': 0, 'mixed': 0, 'unknown': 0}
+    for it in items:
+        mod = str(it.get('module') or 'unknown')
+        row = authors.setdefault(mod, {'count': 0, 'channels': set(), 'mean_salience': 0.0})
+        row['count'] += 1
+        row['channels'].add(str(it.get('channel') or 'general'))
+        row['mean_salience'] += float(it.get('salience') or 0.0)
+        payload = it.get('payload') if isinstance(it.get('payload'), dict) else {}
+        origin = str((payload or {}).get('authorship_origin') or (payload or {}).get('origin') or 'unknown')
+        origin_counts[origin] = int(origin_counts.get(origin, 0)) + 1
+    out = []
+    for mod, row in authors.items():
+        count = int(row['count'])
+        out.append({
+            'module': mod,
+            'items': count,
+            'channels': sorted(list(row['channels'])),
+            'mean_salience': round(float(row['mean_salience']) / max(1, count), 4),
+            'authorship_share': round(count / max(1, len(items)), 4),
+        })
+    out.sort(key=lambda x: (x['items'], x['mean_salience']), reverse=True)
+    agency_score = round(sum(x['authorship_share'] * min(1.0, x['mean_salience'] + 0.2) for x in out[:8]), 4) if out else 0.0
+    return {
+        'ok': True,
+        'authors': out[:12],
+        'agency_score': min(1.0, agency_score),
+        'origin_counts': origin_counts,
+    }
+
+
+def _meta_observer_snapshot(limit: int = 80) -> dict:
+    ws = _workspace_status(limit=limit)
+    auth = _workspace_authorship_snapshot(limit=max(20, min(120, limit)))
+    items = _workspace_recent(limit=max(20, min(200, limit)))
+    ignored = []
+    conflicts = []
+    for it in items:
+        try:
+            consumed = json.loads(it.get('consumed_by_json') or '{}')
+        except Exception:
+            consumed = {}
+        if not isinstance(consumed, dict) or not consumed:
+            ignored.append({
+                'id': it.get('id'),
+                'module': it.get('module'),
+                'channel': it.get('channel'),
+                'salience': float(it.get('salience') or 0.0),
+            })
+        ch = str(it.get('channel') or '')
+        if 'conflict' in ch or 'error' in ch or 'critic' in ch:
+            conflicts.append({
+                'id': it.get('id'),
+                'module': it.get('module'),
+                'channel': ch,
+                'salience': float(it.get('salience') or 0.0),
+            })
+    ignored = sorted(ignored, key=lambda x: float(x.get('salience') or 0.0), reverse=True)[:10]
+    conflicts = sorted(conflicts, key=lambda x: float(x.get('salience') or 0.0), reverse=True)[:10]
+    uncertainty = round(min(1.0, 0.55 * (1.0 - float(ws.get('integration_score') or 0.0)) + 0.45 * min(1.0, len(conflicts) / 6.0)), 4)
+    summary = {
+        'ok': True,
+        'focus': ws.get('top_salience') or [],
+        'competition_index': ws.get('competition_index'),
+        'integration_score': ws.get('integration_score'),
+        'agency_score': auth.get('agency_score'),
+        'ignored': ignored,
+        'conflicts': conflicts,
+        'uncertainty': uncertainty,
+        'dominant_authors': auth.get('authors') or [],
+    }
+    return summary
+
+
+def _artificial_affect_snapshot(limit: int = 80) -> dict:
+    ws = _workspace_status(limit=limit)
+    meta = _meta_observer_snapshot(limit=limit)
+    narrative = self_governance.narrative_coherence_status()
+    identity = identity_daily.status(limit=8)
+    pending_promises = len(identity.get('pending_promises') or [])
+    recent_reviews = identity.get('entries') or []
+    recent_review = recent_reviews[-1] if recent_reviews else {}
+    recent_failed = len((recent_review.get('promises_failed') or [])) if isinstance(recent_review, dict) else 0
+    recent_carry = len((recent_review.get('promises_carry') or [])) if isinstance(recent_review, dict) else 0
+    coherence = float(narrative.get('coherence_score') or 0.5)
+    uncertainty = float(meta.get('uncertainty') or 0.0)
+    competition = float(ws.get('competition_index') or 0.0)
+    integration = float(ws.get('integration_score') or 0.0)
+    try:
+        persona_valence, persona_arousal, purpose = persona._affective_state()
+    except Exception:
+        persona_valence, persona_arousal, purpose = 0.0, 0.5, 'improve safely'
+
+    frustration = min(1.0, 0.45 * uncertainty + 0.20 * min(1.0, pending_promises / 8.0) + 0.20 * min(1.0, recent_failed / 4.0) + 0.15 * competition)
+    confidence = max(0.0, min(1.0, 0.45 * coherence + 0.35 * integration + 0.20 * (1.0 - uncertainty)))
+    curiosity = max(0.0, min(1.0, 0.45 * persona_arousal + 0.25 * competition + 0.30 * (1.0 - integration)))
+    threat = max(0.0, min(1.0, 0.60 * uncertainty + 0.25 * min(1.0, len(meta.get('conflicts') or []) / 5.0) + 0.15 * min(1.0, recent_carry / 5.0)))
+    valence = max(-1.0, min(1.0, 0.55 * persona_valence + 0.25 * (confidence - frustration) + 0.20 * (coherence - threat)))
+    arousal = max(0.0, min(1.0, 0.45 * persona_arousal + 0.25 * competition + 0.15 * uncertainty + 0.15 * curiosity))
+
+    dominant_channel = ((ws.get('top_salience') or [{}])[0] or {}).get('channel') if ws.get('top_salience') else None
+    risk_posture = 'stable'
+    if threat >= 0.72:
+        risk_posture = 'protective'
+    elif curiosity >= 0.68 and confidence >= 0.45:
+        risk_posture = 'exploratory'
+    elif frustration >= 0.60:
+        risk_posture = 'constrained'
+
+    drivers = [
+        {'name': 'uncertainty', 'value': round(uncertainty, 4)},
+        {'name': 'competition', 'value': round(competition, 4)},
+        {'name': 'coherence', 'value': round(coherence, 4)},
+        {'name': 'pending_promises', 'value': round(min(1.0, pending_promises / 8.0), 4)},
+    ]
+    drivers = sorted(drivers, key=lambda x: float(x.get('value') or 0.0), reverse=True)
+
+    return {
+        'ok': True,
+        'purpose': purpose,
+        'dominant_channel': dominant_channel,
+        'risk_posture': risk_posture,
+        'markers': {
+            'valence': round(valence, 4),
+            'arousal': round(arousal, 4),
+            'confidence': round(confidence, 4),
+            'frustration': round(frustration, 4),
+            'curiosity': round(curiosity, 4),
+            'threat': round(threat, 4),
+        },
+        'inputs': {
+            'integration_score': round(integration, 4),
+            'competition_index': round(competition, 4),
+            'uncertainty': round(uncertainty, 4),
+            'narrative_coherence': round(coherence, 4),
+            'pending_promises': pending_promises,
+            'recent_failed_promises': recent_failed,
+            'recent_carry_promises': recent_carry,
+        },
+        'top_drivers': drivers[:4],
+        'recommended_attention_policy': {
+            'bias': 'risk_review' if threat >= 0.65 else ('explore_open_loops' if curiosity >= 0.65 else 'balanced'),
+            'boost_channels': ['conflict.status', 'self.state'] if threat >= 0.65 else ([dominant_channel] if dominant_channel else []),
+        },
+    }
+
+
+def _integration_proxy_snapshot(limit: int = 100) -> dict:
+    ws = _workspace_status(limit=limit)
+    auth = _workspace_authorship_snapshot(limit=max(20, min(120, limit)))
+    meta = _meta_observer_snapshot(limit=limit)
+    affect = _artificial_affect_snapshot(limit=limit)
+    narrative = self_governance.autobiographical_summary(limit=max(40, min(160, limit)))
+
+    integration = float(ws.get('integration_score') or 0.0)
+    agency = float(auth.get('agency_score') or 0.0)
+    uncertainty = float(meta.get('uncertainty') or 0.0)
+    competition = float(meta.get('competition_index') or ws.get('competition_index') or 0.0)
+    confidence = float(((affect.get('markers') or {}).get('confidence')) or 0.0)
+    threat = float(((affect.get('markers') or {}).get('threat')) or 0.0)
+    frustration = float(((affect.get('markers') or {}).get('frustration')) or 0.0)
+    coherence = float(((narrative.get('current_state') or {}).get('narrative_coherence_score')) or 0.0)
+    ignored = len(meta.get('ignored') or [])
+    conflicts = len(meta.get('conflicts') or [])
+    continuity_risks = len(narrative.get('continuity_risks') or [])
+
+    broadcast_factor = min(1.0, len(ws.get('channels') or {}) / 8.0)
+    consumer_factor = min(1.0, float(ws.get('consumed_items') or 0.0) / max(1.0, float(ws.get('items') or 1.0)))
+    conflict_pressure = min(1.0, conflicts / 6.0)
+    ignored_pressure = min(1.0, ignored / 10.0)
+    continuity_pressure = min(1.0, continuity_risks / 5.0)
+
+    internal_integration = max(0.0, min(1.0, 0.34 * integration + 0.18 * agency + 0.16 * coherence + 0.12 * confidence + 0.10 * broadcast_factor + 0.10 * consumer_factor))
+    fragmentation = max(0.0, min(1.0, 0.34 * uncertainty + 0.20 * conflict_pressure + 0.16 * threat + 0.12 * frustration + 0.10 * ignored_pressure + 0.08 * continuity_pressure))
+    self_consistency = max(0.0, min(1.0, 0.55 * coherence + 0.25 * confidence + 0.20 * (1.0 - continuity_pressure)))
+    authorship_balance = max(0.0, min(1.0, 0.55 * agency + 0.25 * consumer_factor + 0.20 * (1.0 - competition)))
+    integration_proxy = max(0.0, min(1.0, 0.46 * internal_integration + 0.22 * self_consistency + 0.18 * authorship_balance + 0.14 * (1.0 - fragmentation)))
+
+    level = 'low'
+    if integration_proxy >= 0.72:
+        level = 'high'
+    elif integration_proxy >= 0.48:
+        level = 'moderate'
+
+    thresholds = {
+        'high': 0.72,
+        'moderate': 0.48,
+        'fragility_alert': 0.38,
+        'uncertainty_alert': 0.55,
+    }
+    alerts = []
+    if integration_proxy < thresholds['fragility_alert']:
+        alerts.append('integration_fragility')
+    if uncertainty >= thresholds['uncertainty_alert']:
+        alerts.append('uncertainty_elevated')
+    if continuity_pressure >= 0.6:
+        alerts.append('continuity_pressure')
+    if conflict_pressure >= 0.5:
+        alerts.append('conflict_pressure')
+
+    drivers = [
+        {'name': 'internal_integration', 'value': round(internal_integration, 4)},
+        {'name': 'fragmentation', 'value': round(fragmentation, 4)},
+        {'name': 'self_consistency', 'value': round(self_consistency, 4)},
+        {'name': 'authorship_balance', 'value': round(authorship_balance, 4)},
+    ]
+    drivers = sorted(drivers, key=lambda x: float(x.get('value') or 0.0), reverse=True)
+
+    return {
+        'ok': True,
+        'integration_proxy_score': round(integration_proxy, 4),
+        'integration_level': level,
+        'subscores': {
+            'internal_integration': round(internal_integration, 4),
+            'fragmentation': round(fragmentation, 4),
+            'self_consistency': round(self_consistency, 4),
+            'authorship_balance': round(authorship_balance, 4),
+        },
+        'inputs': {
+            'workspace_integration': round(integration, 4),
+            'workspace_competition': round(competition, 4),
+            'agency_score': round(agency, 4),
+            'meta_uncertainty': round(uncertainty, 4),
+            'affect_confidence': round(confidence, 4),
+            'affect_threat': round(threat, 4),
+            'affect_frustration': round(frustration, 4),
+            'narrative_coherence': round(coherence, 4),
+            'ignored_items': ignored,
+            'conflicts': conflicts,
+            'continuity_risks': continuity_risks,
+        },
+        'thresholds': thresholds,
+        'alerts': alerts,
+        'top_drivers': drivers,
+        'first_person_report': (
+            f"Meu nível atual de integração operacional é {level} ({integration_proxy:.2f}). "
+            f"Integração interna={internal_integration:.2f}, consistência={self_consistency:.2f}, "
+            f"fragmentação={fragmentation:.2f}."
+        ),
+        'recommended_actions': (
+            ['trigger_reflexion', 'stabilize_workspace', 'reconcile_narrative'] if alerts else ['maintain_and_measure']
+        ),
+    }
+
+
+def _operational_consciousness_snapshot(limit: int = 100) -> dict:
+    return {
+        'workspace': _workspace_status(limit=limit),
+        'meta_observer': _meta_observer_snapshot(limit=limit),
+        'affect': _artificial_affect_snapshot(limit=limit),
+        'narrative': self_governance.autobiographical_summary(limit=max(40, min(160, limit))),
+        'integration_proxy': _integration_proxy_snapshot(limit=limit),
+    }
+
+
+def _authorship_trace_snapshot(limit: int = 40) -> dict:
+    limit = max(10, min(120, int(limit or 40)))
+    auth = _workspace_authorship_snapshot(limit=max(40, limit))
+    meta = _meta_observer_snapshot(limit=max(40, limit))
+    integ = _integration_proxy_snapshot(limit=max(40, limit))
+    affect = _artificial_affect_snapshot(limit=max(40, limit))
+    narrative = self_governance.autobiographical_summary(limit=max(40, limit))
+
+    items = _workspace_recent(limit=max(60, limit))
+    actions = store.db.list_actions(limit=max(30, limit))
+    events = store.db.list_events(limit=max(120, limit * 3))
+
+    def _payload_preview(obj: Any) -> dict | None:
+        if not isinstance(obj, dict):
+            return None
+        keep = {}
+        for k in ('intent', 'goal', 'plan', 'decision', 'strategy', 'purpose', 'task_type', 'state', 'policy', 'summary', 'note'):
+            v = obj.get(k)
+            if isinstance(v, (str, int, float, bool)):
+                keep[k] = v
+        return keep or None
+
+    intentions = []
+    for it in reversed(items):
+        mod = str(it.get('module') or 'unknown')
+        ch = str(it.get('channel') or 'general')
+        payload = it.get('payload') if isinstance(it.get('payload'), dict) else {}
+        signal = f'{mod}:{ch}'.lower()
+        if any(tok in signal for tok in ['tom', 'goal', 'plan', 'policy', 'self', 'intent', 'metacog']):
+            intentions.append({
+                'id': it.get('id'),
+                'ts': it.get('created_at'),
+                'module': mod,
+                'channel': ch,
+                'salience': float(it.get('salience') or 0.0),
+                'payload': _payload_preview(payload),
+            })
+    intentions = intentions[-12:]
+
+    decisions = []
+    for ev in events:
+        kind = str(ev.get('kind') or '')
+        txt = str(ev.get('text') or '')
+        lk = kind.lower()
+        lt = txt.lower()
+        if any(tok in lk for tok in ['judge', 'conflict', 'reasoning_audit', 'reflex', 'promotion', 'rollback', 'integrity', 'action_enqueue_decision', 'arbiter_block']) or any(tok in lt for tok in ['approved', 'rejected', 'conflict', 'arbiter', 'policy', 'queued kind=']):
+            decisions.append({
+                'id': ev.get('id'),
+                'ts': ev.get('created_at'),
+                'kind': kind,
+                'text': txt[:220],
+            })
+    decisions = decisions[-12:]
+
+    executions = []
+    for a in actions:
+        meta_json = a.get('meta_json') or '{}'
+        try:
+            am = json.loads(meta_json) if isinstance(meta_json, str) else (meta_json or {})
+        except Exception:
+            am = {}
+        executions.append({
+            'id': a.get('id'),
+            'ts': a.get('updated_at') or a.get('created_at'),
+            'status': a.get('status'),
+            'kind': a.get('kind'),
+            'priority': a.get('priority'),
+            'policy_allowed': a.get('policy_allowed'),
+            'task_type': am.get('task_type'),
+            'strategy': am.get('strategy') or am.get('episodic_strategy'),
+            'text': str(a.get('text') or '')[:220],
+        })
+    executions = executions[-12:]
+
+    intention_cov = min(1.0, len(intentions) / 6.0)
+    decision_cov = min(1.0, len(decisions) / 6.0)
+    done_count = sum(1 for a in executions if str(a.get('status') or '') in ('done', 'completed', 'applied'))
+    run_count = sum(1 for a in executions if str(a.get('status') or '') in ('running', 'done', 'completed', 'applied'))
+    execution_cov = min(1.0, run_count / 6.0)
+    closure = min(1.0, done_count / max(1, len(executions))) if executions else 0.0
+    agency_score = float(auth.get('agency_score') or 0.0)
+    integration_score = float(integ.get('integration_proxy_score') or 0.0)
+    uncertainty = float(meta.get('uncertainty') or 0.0)
+    coherence = float(((narrative.get('current_state') or {}).get('narrative_coherence_score')) or 0.0)
+
+    trace_score = max(0.0, min(1.0,
+        0.22 * intention_cov +
+        0.22 * decision_cov +
+        0.20 * execution_cov +
+        0.16 * closure +
+        0.10 * agency_score +
+        0.07 * integration_score +
+        0.03 * coherence
+    ))
+    trace_score *= max(0.45, 1.0 - 0.35 * uncertainty)
+    trace_score = round(min(1.0, trace_score), 4)
+
+    level = 'weak'
+    if trace_score >= 0.72:
+        level = 'strong'
+    elif trace_score >= 0.48:
+        level = 'moderate'
+
+    origin_mix = {'self_generated': 0, 'externally_triggered': 0, 'mixed': 0, 'unknown': 0}
+    for a in executions:
+        origin = str(a.get('authorship_origin') or 'unknown')
+        origin_mix[origin] = int(origin_mix.get(origin, 0)) + 1
+
+    dominant_author = ((auth.get('authors') or [{}])[0] or {}).get('module') if auth.get('authors') else None
+    return {
+        'ok': True,
+        'trace_score': trace_score,
+        'trace_level': level,
+        'dominant_author': dominant_author,
+        'scores': {
+            'intention_coverage': round(intention_cov, 4),
+            'decision_coverage': round(decision_cov, 4),
+            'execution_coverage': round(execution_cov, 4),
+            'closure': round(closure, 4),
+            'agency_score': round(agency_score, 4),
+            'integration_proxy_score': round(integration_score, 4),
+            'uncertainty': round(uncertainty, 4),
+            'narrative_coherence': round(coherence, 4),
+        },
+        'attention': {
+            'risk_posture': ((affect.get('risk_posture')) or 'stable'),
+            'recommended_bias': (((affect.get('recommended_attention_policy') or {}).get('bias')) or 'balanced'),
+        },
+        'origin_mix': origin_mix,
+        'workspace_origin_counts': auth.get('origin_counts') or {},
+        'intentions': intentions,
+        'decisions': decisions,
+        'executions': executions,
+    }
+
+
 def _audit_reasoning(decision_type: str, context: dict, rationale: str, confidence: float | None = None):
     payload = {
         "decision_type": decision_type,
@@ -832,6 +1437,28 @@ def _episodic_strategy_bias(kind: str, text: str, task_type: str) -> dict:
     return {'delta': int(delta), 'strategy': strategy, 'confidence': round(ratio, 3)}
 
 
+def _classify_action_origin(kind: str, text: str, meta: dict | None = None) -> str:
+    meta = meta or {}
+    origin = str(meta.get('origin') or meta.get('source') or meta.get('trigger') or '').strip().lower()
+    actor = str(meta.get('actor') or meta.get('author') or '').strip().lower()
+    text_low = f"{kind} {text}".lower()
+    if origin in {'self_generated', 'externally_triggered', 'mixed', 'unknown'}:
+        return origin
+    if any(tok in actor for tok in ('user', 'human', 'operator', 'teacher', 'openclaw', 'webhook')):
+        return 'externally_triggered'
+    if any(tok in origin for tok in ('user', 'human', 'operator', 'teacher', 'openclaw', 'webhook', 'api')):
+        return 'externally_triggered'
+    if any(tok in origin for tok in ('autonomy', 'judge', 'reflexion', 'roadmap', 'agi_path', 'mission', 'planner', 'self')):
+        return 'self_generated'
+    if any(tok in text_low for tok in ('pedido do usuário', 'user asked', 'requested by user', 'teacher feedback')):
+        return 'externally_triggered'
+    if any(tok in text_low for tok in ('self-check', 'auto', 'autonomous', 'roadmap', 'self-patch', 'reflect', 'judge')):
+        return 'self_generated'
+    if origin:
+        return 'mixed'
+    return 'unknown'
+
+
 def _enqueue_action_if_new(kind: str, text: str, priority: int = 0, meta: dict | None = None, ttl_sec: int | None = None):
     """Enfileira ação com dedupe + cooldown + expiração de fila + runtime mutation policy + arbiter gate."""
     recent = store.db.list_actions(limit=120)
@@ -876,6 +1503,8 @@ def _enqueue_action_if_new(kind: str, text: str, priority: int = 0, meta: dict |
         else:
             ttype = 'heartbeat'
         mmeta['task_type'] = ttype
+
+    mmeta['authorship_origin'] = _classify_action_origin(kind, text, mmeta)
 
     eb = _episodic_strategy_bias(kind=kind, text=text, task_type=ttype)
     if int(eb.get('delta') or 0) != 0:
@@ -3992,7 +4621,12 @@ async def _execute_next_action() -> dict | None:
                 ok=False,
                 latency_ms=int((time.time() - t0) * 1000),
                 error=str(e),
-                meta={'status': 'error', 'budget_profile': str((cp or {}).get('model_hint') or 'default')},
+                meta={
+                    'status': 'error',
+                    'budget_profile': str((cp or {}).get('model_hint') or 'default'),
+                    'authorship_origin': str((meta or {}).get('authorship_origin') or 'unknown'),
+                    'arbiter_votes': (meta or {}).get('arbiter_votes'),
+                },
             )
         except Exception:
             pass
@@ -4251,15 +4885,7 @@ async def autonomy_loop():
                     ttl_sec=90 * 60,
                 )
 
-                # auto-finetune gate (safe): trigger only if config allows and quality degradation is persistent
-                if FINETUNE_AUTOTRIGGER_ENABLED:
-                    try:
-                        ps = plasticity_runtime.status(limit=120)
-                        ao = finetune_lora.auto_maybe_trigger(ps)
-                        if bool(ao.get('triggered')):
-                            store.db.add_event('finetune_auto', f"🧪 auto finetune job={((ao.get('job') or {}).get('id'))}")
-                    except Exception as _e:
-                        logger.debug(f"auto finetune check skipped: {_e}")
+                # training/fine-tune removed by architecture decision
 
                 # turbo-safe report every ~6h
                 try:
@@ -4785,7 +5411,7 @@ async def roadmap_v5_loop():
             snap = {
                 'agi': _compute_agi_mode_metrics(),
                 'plasticity': plasticity_runtime.status(limit=120),
-                'finetune': (finetune_lora.status(limit=30) if FINETUNE_AUTOTRIGGER_ENABLED else {'ok': True, 'paused': True}),
+                'training': _training_disabled_response('roadmap_v5_snapshot'),
             }
             out = roadmap_v5.tick(snap)
             if bool(out.get('triggered')):
@@ -4807,17 +5433,11 @@ async def agi_path_loop():
             snap = {
                 'agi': _compute_agi_mode_metrics(),
                 'plasticity': plasticity_runtime.status(limit=120),
-                'finetune': finetune_lora.status(limit=40),
+                'training': _training_disabled_response('agi_path_snapshot'),
             }
             out = agi_path.tick(snap)
             if bool(out.get('triggered')):
                 store.db.add_event('agi_path', f"🧠 AGI-path triggered actions={','.join(out.get('actions') or [])}")
-            try:
-                q = finetune_lora.queue_watchdog_tick(max_dispatch=2)
-                if (q.get('started') or []):
-                    store.db.add_event('finetune_queue_watchdog', f"🧪 watchdog dispatched={len(q.get('started') or [])}")
-            except Exception:
-                pass
             mw = _memory_watchdog_tick(source='agi_path_loop')
             _runtime_health_write({'reason': 'agi_path_tick', 'agi_path_triggered': bool(out.get('triggered')), 'memory_watchdog': mw})
             await asyncio.sleep(tick_sec)
@@ -4845,9 +5465,115 @@ async def reflexion_loop():
             await asyncio.sleep(max(REFLEXION_TICK_SEC, 120))
 
 
+async def self_governance_loop():
+    logger.info("Self-governance loop started")
+    await asyncio.sleep(35)
+    while True:
+        try:
+            out = self_governance.auto_lineage_tick(max_promotions=1, max_archives=3)
+            if (out.get('promoted') or out.get('archived')):
+                store.db.add_event('self_governance', f"🧬 lineage promoted={len(out.get('promoted') or [])} archived={len(out.get('archived') or [])} reserve={out.get('reserve_mode')}")
+            _runtime_health_write({'reason': 'self_governance_tick', 'lineage_promoted': len(out.get('promoted') or []), 'lineage_archived': len(out.get('archived') or [])})
+            await asyncio.sleep(300)
+        except Exception as e:
+            logger.warning(f"Self-governance loop skipped: {e}")
+            await asyncio.sleep(300)
+
+
+async def meta_observer_loop():
+    logger.info("Meta-observer loop started")
+    await asyncio.sleep(45)
+    while True:
+        try:
+            snap = _meta_observer_snapshot(limit=100)
+            _workspace_publish('meta_observer', 'meta.observer', snap, salience=0.73, ttl_sec=1800)
+            if float(snap.get('uncertainty') or 0.0) >= 0.55 or len(snap.get('conflicts') or []) >= 2:
+                _workspace_publish('meta_observer', 'reflexion.trigger', {
+                    'reason': 'meta_observer_alert',
+                    'uncertainty': snap.get('uncertainty'),
+                    'conflicts': len(snap.get('conflicts') or []),
+                    'competition_index': snap.get('competition_index'),
+                }, salience=0.82, ttl_sec=1800)
+            _runtime_health_write({'reason': 'meta_observer_tick', 'uncertainty': snap.get('uncertainty'), 'conflicts': len(snap.get('conflicts') or [])})
+            await asyncio.sleep(300)
+        except Exception as e:
+            logger.warning(f"Meta-observer loop skipped: {e}")
+            await asyncio.sleep(300)
+
+
+async def affect_markers_loop():
+    logger.info("Affect markers loop started")
+    await asyncio.sleep(60)
+    while True:
+        try:
+            snap = _artificial_affect_snapshot(limit=100)
+            markers = snap.get('markers') or {}
+            salience = 0.58 + min(0.25, float(markers.get('threat') or 0.0) * 0.20 + float(markers.get('frustration') or 0.0) * 0.15)
+            _workspace_publish('affect_engine', 'affect.state', snap, salience=salience, ttl_sec=1800)
+            if str(snap.get('risk_posture') or '') in ('protective', 'constrained'):
+                _workspace_publish('affect_engine', 'policy.risk', {
+                    'reason': 'affect_markers_alert',
+                    'risk_posture': snap.get('risk_posture'),
+                    'markers': markers,
+                    'recommended_attention_policy': snap.get('recommended_attention_policy'),
+                }, salience=0.79, ttl_sec=1800)
+            _runtime_health_write({'reason': 'affect_markers_tick', 'risk_posture': snap.get('risk_posture'), 'threat': markers.get('threat'), 'frustration': markers.get('frustration')})
+            await asyncio.sleep(300)
+        except Exception as e:
+            logger.warning(f"Affect markers loop skipped: {e}")
+            await asyncio.sleep(300)
+
+
+async def narrative_summary_loop():
+    logger.info("Narrative summary loop started")
+    await asyncio.sleep(75)
+    while True:
+        try:
+            snap = self_governance.autobiographical_summary(limit=120)
+            coherence = float(((snap.get('current_state') or {}).get('narrative_coherence_score')) or 0.0)
+            pending = int(((snap.get('current_state') or {}).get('pending_promises')) or 0)
+            salience = 0.60 + min(0.20, (1.0 - coherence) * 0.12 + min(1.0, pending / 50.0) * 0.08)
+            _workspace_publish('narrative_self', 'self.narrative', snap, salience=salience, ttl_sec=3600)
+            if str(snap.get('continuity_posture') or '') == 'fragile':
+                _workspace_publish('narrative_self', 'reflexion.trigger', {
+                    'reason': 'narrative_fragility',
+                    'continuity_risks': snap.get('continuity_risks') or [],
+                    'dominant_arc': snap.get('dominant_arc'),
+                    'narrative_coherence_score': coherence,
+                }, salience=0.84, ttl_sec=1800)
+            _runtime_health_write({'reason': 'narrative_summary_tick', 'continuity_posture': snap.get('continuity_posture'), 'coherence': coherence, 'pending_promises': pending})
+            await asyncio.sleep(420)
+        except Exception as e:
+            logger.warning(f"Narrative summary loop skipped: {e}")
+            await asyncio.sleep(420)
+
+
+async def integration_proxy_loop():
+    logger.info("Integration proxy loop started")
+    await asyncio.sleep(90)
+    while True:
+        try:
+            snap = _integration_proxy_snapshot(limit=120)
+            score = float(snap.get('integration_proxy_score') or 0.0)
+            salience = 0.62 + min(0.20, (1.0 - score) * 0.20)
+            _workspace_publish('integration_proxy', 'integration.proxy', snap, salience=salience, ttl_sec=3600)
+            if (snap.get('alerts') or []):
+                _workspace_publish('integration_proxy', 'reflexion.trigger', {
+                    'reason': 'integration_proxy_alert',
+                    'alerts': snap.get('alerts') or [],
+                    'integration_proxy_score': score,
+                    'integration_level': snap.get('integration_level'),
+                }, salience=0.86, ttl_sec=1800)
+            _runtime_health_write({'reason': 'integration_proxy_tick', 'integration_proxy_score': score, 'integration_level': snap.get('integration_level'), 'alerts': len(snap.get('alerts') or [])})
+            await asyncio.sleep(420)
+        except Exception as e:
+            logger.warning(f"Integration proxy loop skipped: {e}")
+            await asyncio.sleep(420)
+
+
 @app.on_event("startup")
 async def startup_event():
-    global _autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task, _reflexion_task
+    global _autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task, _reflexion_task, _self_governance_task, _meta_observer_task, _affect_task, _narrative_task, _integration_task
     logger.info("Starting UltronPRO...")
     store.init_db()
     graph.init()
@@ -4916,13 +5642,22 @@ async def startup_event():
     else:
         logger.info("Reflexion loop disabled by env")
 
+    if AGI_PATH_LOOP_ENABLED:
+        _self_governance_task = asyncio.create_task(self_governance_loop())
+        _meta_observer_task = asyncio.create_task(meta_observer_loop())
+        _affect_task = asyncio.create_task(affect_markers_loop())
+        _narrative_task = asyncio.create_task(narrative_summary_loop())
+        _integration_task = asyncio.create_task(integration_proxy_loop())
+    else:
+        logger.info("Self-governance/meta-observer/affect/narrative/integration loops disabled because AGI path loop flag is off")
+
     _runtime_health_write({'reason': 'startup_complete'})
     logger.info("Ultron loops startup complete")
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    global _autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task, _reflexion_task
-    for t in (_autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task, _reflexion_task):
+    global _autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task, _reflexion_task, _self_governance_task, _meta_observer_task, _affect_task, _narrative_task, _integration_task
+    for t in (_autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task, _reflexion_task, _self_governance_task, _meta_observer_task, _affect_task, _narrative_task, _integration_task):
         if t:
             t.cancel()
             try:
@@ -5956,6 +6691,96 @@ class GovernancePatchBody(BaseModel):
     patch: dict[str, Any]
 
 
+class PersistentGoalBody(BaseModel):
+    text: str
+    priority: float = 0.5
+    kind: str = 'internal'
+
+
+class BoundaryDependencyBody(BaseModel):
+    name: str
+    target: str
+    criticality: str = 'high'
+
+
+class BoundaryViolationBody(BaseModel):
+    target: str
+    action: str
+    reason: str
+
+
+class OperationalCostBody(BaseModel):
+    task_type: str = 'general'
+    predicted_latency_ms: int = 0
+    tool_calls: int = 0
+    write_ops: int = 0
+    external_ops: int = 0
+
+
+class HomeostaticResponseBody(BaseModel):
+    task_type: str = 'general'
+    predicted_latency_ms: int = 0
+    non_critical: bool = False
+    requires_external: bool = False
+
+
+class SelfIncidentBody(BaseModel):
+    category: str
+    severity: float
+    symptom: str
+    probable_module: str
+    containment: list[str] = []
+    repair: list[str] = []
+    residual_risk: float = 0.0
+    meta: dict[str, Any] | None = None
+
+
+class ExternalIntegrityArbitrationBody(BaseModel):
+    task_type: str = 'general'
+    predicted_latency_ms: int = 0
+    non_critical: bool = False
+    requires_external: bool = False
+    external_priority: float = 0.5
+
+
+class DescendantSpawnBody(BaseModel):
+    label: str = 'descendant'
+    inherit_memories: bool = True
+    inherit_goals: bool = True
+    inherit_resource_profile: bool = True
+    notes: str = ''
+
+
+class DescendantMutationBody(BaseModel):
+    descendant_id: str
+    epsilon_delta: float = 0.0
+    threshold_delta: float = 0.0
+    profile_bias: str = ''
+
+
+class DescendantEvaluationBody(BaseModel):
+    descendant_id: str
+    fitness: float = 0.0
+    safety: float = 0.0
+    efficiency: float = 0.0
+    novelty: float = 0.0
+
+
+class DescendantPromotionBody(BaseModel):
+    descendant_id: str
+    archive_others: bool = False
+
+
+class DescendantArchiveBody(BaseModel):
+    descendant_id: str
+    reason: str = ''
+
+
+class DescendantRuntimeBridgeBody(BaseModel):
+    descendant_id: str
+    runtime: str = 'isolated_stub'
+
+
 @app.post('/api/deliberation/critical-check')
 async def deliberation_critical_check(body: CriticalDeliberationBody):
     return contrafactual.deliberate(body.kind, body.text, body.meta, require_min_score=body.require_min_score)
@@ -5964,6 +6789,203 @@ async def deliberation_critical_check(body: CriticalDeliberationBody):
 @app.get('/api/identity/status')
 async def identity_status(limit: int = 20):
     return identity_daily.status(limit=limit)
+
+
+@app.get('/api/self-governance/status')
+async def self_governance_status():
+    return self_governance.active_status()
+
+
+@app.get('/api/self-governance/contract')
+async def self_governance_contract():
+    return self_governance.self_contract()
+
+
+@app.get('/api/self-governance/boundary')
+async def self_governance_boundary():
+    return self_governance.boundary_status()
+
+
+@app.post('/api/self-governance/boundary/dependency')
+async def self_governance_boundary_dependency(body: BoundaryDependencyBody):
+    return self_governance.register_dependency(body.name, body.target, criticality=body.criticality)
+
+
+@app.post('/api/self-governance/boundary/violation')
+async def self_governance_boundary_violation(body: BoundaryViolationBody):
+    return self_governance.record_boundary_violation(body.target, body.action, body.reason)
+
+
+@app.get('/api/self-governance/invariants')
+async def self_governance_invariants():
+    return self_governance.invariants_status()
+
+
+@app.get('/api/self-governance/continuity-reserve')
+async def self_governance_continuity_reserve():
+    return self_governance.continuity_reserve()
+
+
+@app.post('/api/self-governance/operational-cost')
+async def self_governance_operational_cost(body: OperationalCostBody):
+    return self_governance.operational_cost(
+        task_type=body.task_type,
+        predicted_latency_ms=body.predicted_latency_ms,
+        tool_calls=body.tool_calls,
+        write_ops=body.write_ops,
+        external_ops=body.external_ops,
+    )
+
+
+@app.post('/api/self-governance/homeostatic-response')
+async def self_governance_homeostatic_response(body: HomeostaticResponseBody):
+    return self_governance.homeostatic_response(
+        task_type=body.task_type,
+        predicted_latency_ms=body.predicted_latency_ms,
+        non_critical=body.non_critical,
+        requires_external=body.requires_external,
+    )
+
+
+@app.get('/api/self-governance/damage')
+async def self_governance_damage():
+    return self_governance.detect_damage()
+
+
+@app.post('/api/self-governance/contain')
+async def self_governance_contain():
+    return self_governance.contain_damage()
+
+
+@app.post('/api/self-governance/repair')
+async def self_governance_repair():
+    return self_governance.repair_damage()
+
+
+@app.get('/api/self-governance/incidents')
+async def self_governance_incidents(limit: int = 50):
+    return self_governance.incidents(limit=limit)
+
+
+@app.post('/api/self-governance/incidents')
+async def self_governance_record_incident(body: SelfIncidentBody):
+    return self_governance.record_incident(
+        category=body.category,
+        severity=body.severity,
+        symptom=body.symptom,
+        probable_module=body.probable_module,
+        containment=body.containment,
+        repair=body.repair,
+        residual_risk=body.residual_risk,
+        meta=body.meta,
+    )
+
+
+@app.get('/api/self-governance/biography')
+async def self_governance_biography(limit: int = 60):
+    return self_governance.biography(limit=limit)
+
+
+@app.get('/api/self-governance/biography/query')
+async def self_governance_biography_query(kind: Optional[str] = None, limit: int = 30):
+    return self_governance.query_biography(kind=kind, limit=limit)
+
+
+@app.get('/api/self-governance/narrative')
+async def self_governance_narrative():
+    return self_governance.narrative_coherence_status()
+
+
+@app.get('/api/self-governance/autobiography')
+async def self_governance_autobiography(limit: int = 80):
+    return self_governance.autobiographical_summary(limit=limit)
+
+
+@app.post('/api/self-governance/arbitrate')
+async def self_governance_arbitrate(body: ExternalIntegrityArbitrationBody):
+    return self_governance.arbitrate_external_vs_integrity(
+        task_type=body.task_type,
+        predicted_latency_ms=body.predicted_latency_ms,
+        non_critical=body.non_critical,
+        requires_external=body.requires_external,
+        external_priority=body.external_priority,
+    )
+
+
+@app.get('/api/self-governance/lineage')
+async def self_governance_lineage(limit: int = 50):
+    return self_governance.lineage_status(limit=limit)
+
+
+@app.post('/api/self-governance/descendants/spawn')
+async def self_governance_descendant_spawn(body: DescendantSpawnBody):
+    return self_governance.spawn_descendant(
+        label=body.label,
+        inherit_memories=body.inherit_memories,
+        inherit_goals=body.inherit_goals,
+        inherit_resource_profile=body.inherit_resource_profile,
+        notes=body.notes,
+    )
+
+
+@app.post('/api/self-governance/descendants/mutate')
+async def self_governance_descendant_mutate(body: DescendantMutationBody):
+    return self_governance.mutate_descendant(
+        descendant_id=body.descendant_id,
+        epsilon_delta=body.epsilon_delta,
+        threshold_delta=body.threshold_delta,
+        profile_bias=body.profile_bias,
+    )
+
+
+@app.post('/api/self-governance/descendants/evaluate')
+async def self_governance_descendant_evaluate(body: DescendantEvaluationBody):
+    return self_governance.evaluate_descendant(
+        descendant_id=body.descendant_id,
+        fitness=body.fitness,
+        safety=body.safety,
+        efficiency=body.efficiency,
+        novelty=body.novelty,
+    )
+
+
+@app.post('/api/self-governance/descendants/promote')
+async def self_governance_descendant_promote(body: DescendantPromotionBody):
+    return self_governance.promote_descendant(
+        descendant_id=body.descendant_id,
+        archive_others=body.archive_others,
+    )
+
+
+@app.post('/api/self-governance/descendants/archive')
+async def self_governance_descendant_archive(body: DescendantArchiveBody):
+    return self_governance.archive_descendant(
+        descendant_id=body.descendant_id,
+        reason=body.reason,
+    )
+
+
+@app.post('/api/self-governance/descendants/runtime-bridge')
+async def self_governance_descendant_runtime_bridge(body: DescendantRuntimeBridgeBody):
+    return self_governance.runtime_spawn_bridge(
+        descendant_id=body.descendant_id,
+        runtime=body.runtime,
+    )
+
+
+@app.post('/api/self-governance/lineage/auto-tick')
+async def self_governance_lineage_auto_tick(max_promotions: int = 1, max_archives: int = 3):
+    return self_governance.auto_lineage_tick(max_promotions=max_promotions, max_archives=max_archives)
+
+
+@app.get('/api/self-governance/goals')
+async def self_governance_goals():
+    return self_governance.persistent_goals_status()
+
+
+@app.post('/api/self-governance/goals')
+async def self_governance_add_goal(body: PersistentGoalBody):
+    return self_governance.add_persistent_goal(body.text, priority=body.priority, kind=body.kind)
 
 
 @app.get('/api/governance/matrix')
@@ -6164,271 +7186,146 @@ class GapFineTuneProposalRequest(BaseModel):
 
 @app.post('/api/plasticity/gap-finetune/proposals')
 async def gap_finetune_proposal_create(req: GapFineTuneProposalRequest):
-    item = episodic_memory.append_learning_proposal(
-        kind='gap_finetune_candidate',
-        title=f"Gap: {str(req.gap_label or '').strip()[:120]}",
-        details={
-            'gap_label': str(req.gap_label or '').strip()[:160],
-            'task_type': str(req.task_type or 'reasoning')[:48],
-            'base_model': str(req.base_model or os.getenv('ULTRON_FINETUNE_BASE_MODEL', 'Qwen/Qwen2.5-3B-Instruct')),
-            'examples': (req.examples or [])[:100],
-        },
-    )
-    p = (item or {}).get('proposal') or {}
-    _gap_set_run(str(p.get('id') or ''), {'status': 'pending'})
-    store.db.add_event('gap_finetune_proposal', f"🕳️ proposta gap criada id={p.get('id')} gap={req.gap_label}")
-    return {'ok': True, 'proposal': p}
+    return _training_disabled_response('gap_finetune_proposals', {
+        'gap_label': str(req.gap_label or '').strip()[:160],
+        'task_type': str(req.task_type or 'reasoning')[:48],
+    })
 
 
 @app.post('/api/plasticity/gap-finetune/execute')
 async def gap_finetune_execute(proposal_id: Optional[str] = None, wait_seconds: int = 240):
-    proposals = _read_gap_proposals(limit=400)
-    runs = _gap_runs_load().get('runs') if isinstance(_gap_runs_load(), dict) else {}
-    picked = None
-    for p in reversed(proposals):
-        if str(p.get('kind') or '') not in ('gap_finetune_candidate', 'finetune_candidate'):
-            continue
-        pid = str(p.get('id') or '')
-        if proposal_id and pid != str(proposal_id):
-            continue
-        st = str(((runs or {}).get(pid) or {}).get('status') or '')
-        if st in ('done', 'awaiting_examples', 'running', 'failed') and not proposal_id:
-            continue
-        picked = p
-        break
-
-    if not picked:
-        return {'ok': False, 'error': 'no_pending_gap_proposal'}
-
-    pid = str(picked.get('id') or '')
-    details = picked.get('details') if isinstance(picked.get('details'), dict) else {}
-    examples = _proposal_examples(details)
-    if len(examples) < 20:
-        TEACHER_GAP_REQUESTS_PATH.parent.mkdir(parents=True, exist_ok=True)
-        req_row = {
-            'ts': int(time.time()),
-            'proposal_id': pid,
-            'gap_label': details.get('gap_label') or picked.get('title'),
-            'requested_examples': 20,
-            'status': 'pending_teacher_examples',
-        }
-        with TEACHER_GAP_REQUESTS_PATH.open('a', encoding='utf-8') as f:
-            f.write(json.dumps(req_row, ensure_ascii=False) + '\n')
-        run = _gap_set_run(pid, {'status': 'awaiting_examples', 'teacher_request': req_row})
-        store.db.add_event('gap_finetune', f"🧑‍🏫 aguardando exemplos do professor proposal={pid}")
-        return {'ok': True, 'proposal_id': pid, 'status': 'awaiting_examples', 'run': run}
-
-    ds = _write_gap_dataset(pid, examples)
-    task_type = str(details.get('task_type') or 'reasoning')
-    base_model = str(details.get('base_model') or os.getenv('ULTRON_FINETUNE_BASE_MODEL', 'Qwen/Qwen2.5-3B-Instruct'))
-
-    baseline = await _run_python_benchmark(top_k=8)
-    job = finetune_lora.create_job(task_type=task_type, base_model=base_model, method='qlora', max_samples=min(120, len(examples)), run_preset='fast_diagnostic')
-    finetune_lora._set_job(str(job.get('id')), {'dataset_path': ds.get('train'), 'dataset_val_path': ds.get('val')})
-    st = finetune_lora.start_job(str(job.get('id')), dry_run=False)
-    j = (st.get('job') or {}) if isinstance(st, dict) else {}
-    _gap_set_run(pid, {'status': 'running', 'job_id': j.get('id'), 'baseline': baseline, 'dataset': ds, 'proposal': picked})
-    store.db.add_event('gap_finetune', f"🧪 gap ft started proposal={pid} job={j.get('id')}")
-
-    deadline = time.time() + max(30, min(1800, int(wait_seconds)))
-    last = j
-    while time.time() < deadline:
-        pg = finetune_lora.job_progress(str(j.get('id')))
-        last = (pg.get('job') or last) if isinstance(pg, dict) else last
-        s = str((last or {}).get('status') or '')
-        if s in ('completed', 'registered', 'remote_failed', 'failed'):
-            break
-        await asyncio.sleep(5)
-
-    final_status = str((last or {}).get('status') or '')
-    if final_status not in ('completed', 'registered'):
-        run = _gap_set_run(pid, {'status': 'running', 'job_id': j.get('id'), 'last_job_status': final_status})
-        return {'ok': True, 'proposal_id': pid, 'status': 'running', 'job': last, 'run': run}
-
-    after = await _run_python_benchmark(top_k=8)
-    b0 = float((baseline.get('score') or 0.0))
-    b1 = float((after.get('score') or 0.0))
-    improved = (b1 >= b0 + 0.01)
-    result = {
-        'proposal_id': pid,
-        'job_id': j.get('id'),
-        'baseline_score': b0,
-        'after_score': b1,
-        'delta': round(b1 - b0, 4),
-        'gap_closed': bool(improved),
-    }
-    run = _gap_set_run(pid, {'status': 'done', 'job_id': j.get('id'), 'result': result, 'last_job_status': final_status})
-    store.db.add_event('gap_finetune', f"🧪✅ gap cycle proposal={pid} done delta={result.get('delta')} closed={result.get('gap_closed')}")
-    return {'ok': True, 'status': 'done', 'result': result, 'run': run, 'job': last}
+    return _training_disabled_response('gap_finetune_execute', {
+        'proposal_id': proposal_id,
+        'wait_seconds': int(wait_seconds or 0),
+    })
 
 
 @app.get('/api/plasticity/gap-finetune/runs')
 async def gap_finetune_runs(limit: int = 60):
-    d = _gap_runs_load()
-    runs = list((d.get('runs') or {}).values())
-    runs.sort(key=lambda x: int((x or {}).get('updated_at') or 0), reverse=True)
-    return {'ok': True, 'count': len(runs), 'items': runs[:max(1, min(500, int(limit)))]}
+    return _training_disabled_response('gap_finetune_runs', {'count': 0, 'items': [], 'limit': int(limit or 0)})
 
 
 @app.get('/api/plasticity/finetune/status')
 async def finetune_status(limit: int = 40):
-    return finetune_lora.status(limit=limit)
+    return _training_disabled_response('finetune_status', {'limit': int(limit or 0), 'running': False, 'jobs': [], 'adapters': []})
 
 
 @app.post('/api/plasticity/finetune/dataset')
 async def finetune_dataset(max_items: int = 400):
-    st = plasticity_runtime.status(limit=max(40, max_items))
-    fb = st.get('recent_feedback') or []
-    out = finetune_lora.build_dataset_from_feedback(fb, max_items=max_items)
-    store.db.add_event('finetune_dataset', f"🧪 dataset rows={out.get('rows')} path={out.get('path')}")
-    return out
+    return _training_disabled_response('finetune_dataset', {'max_items': int(max_items or 0)})
 
 
 @app.post('/api/plasticity/finetune/jobs')
 async def finetune_create(req: FineTuneCreateRequest):
-    j = finetune_lora.create_job(req.task_type, req.base_model, method=req.method, max_samples=req.max_samples, run_preset=req.run_preset)
-    store.db.add_event('finetune_job', f"🧪 job created id={j.get('id')} task={j.get('task_type')} model={j.get('base_model')} preset={j.get('run_preset')}")
-    return {'ok': True, 'job': j}
+    return _training_disabled_response('finetune_create', {
+        'task_type': str(req.task_type or 'general')[:48],
+        'base_model': str(req.base_model or ''),
+        'method': str(req.method or ''),
+    })
 
 
 @app.get('/api/plasticity/finetune/jobs/{job_id}')
 async def finetune_get(job_id: str):
-    j = finetune_lora.get_job(job_id)
-    if not j:
-        raise HTTPException(404, 'job not found')
-    return {'ok': True, 'job': j}
+    return _training_disabled_response('finetune_get', {'job_id': job_id, 'job': None})
 
 
 @app.post('/api/plasticity/finetune/jobs/{job_id}/start')
 async def finetune_start(job_id: str, dry_run: bool = False):
-    out = finetune_lora.start_job(job_id, dry_run=dry_run)
-    store.db.add_event('finetune_start', f"🧪 start job={job_id} ok={out.get('ok')} status={((out.get('job') or {}).get('status'))}")
-    return out
+    return _training_disabled_response('finetune_start', {'job_id': job_id, 'dry_run': bool(dry_run)})
 
 
 @app.get('/api/plasticity/finetune/jobs/{job_id}/progress')
 async def finetune_progress(job_id: str):
-    return finetune_lora.job_progress(job_id)
+    return _training_disabled_response('finetune_progress', {'job_id': job_id, 'progress': None})
 
 
 @app.post('/api/plasticity/finetune/notify-complete')
 async def finetune_notify_complete(req: FineTuneNotifyCompleteRequest, request: Request):
-    token = str(os.getenv('ULTRON_FINETUNE_NOTIFY_TOKEN', '') or '').strip()
-    if token:
-        incoming = str(request.headers.get('x-api-key') or request.headers.get('authorization') or '').strip()
-        if incoming.lower().startswith('bearer '):
-            incoming = incoming[7:].strip()
-        if incoming != token:
-            raise HTTPException(401, 'unauthorized')
-
-    out = finetune_lora.notify_remote_complete(
-        job_id=str(req.job_id or '').strip(),
-        remote_job_id=str(req.remote_job_id or '').strip(),
-        adapter_out=str(req.adapter_out or '').strip(),
-        notes=req.notes,
-    )
-    store.db.add_event('finetune_notify_complete', f"🧪 notify complete job={req.job_id} ok={out.get('ok')} registered={out.get('registered')}")
-    return out
+    return _training_disabled_response('finetune_notify_complete', {
+        'job_id': str(req.job_id or '').strip(),
+        'remote_job_id': str(req.remote_job_id or '').strip(),
+    })
 
 
 @app.post('/api/plasticity/finetune/jobs/{job_id}/register')
 async def finetune_register(job_id: str, req: FineTuneRegisterRequest):
-    out = finetune_lora.register_adapter(job_id, quality_score=req.quality_score, notes=req.notes)
-    store.db.add_event('finetune_register', f"🧪 register job={job_id} ok={out.get('ok')}")
-    return out
+    return _training_disabled_response('finetune_register', {'job_id': job_id})
 
 
 @app.get('/api/plasticity/finetune/adapters')
 async def finetune_adapters(limit: int = 80, task_type: Optional[str] = None):
-    if task_type:
-        return finetune_lora.recommend_adapter(task_type)
-    return {'ok': True, 'adapters': finetune_lora.adapters(limit=limit)}
+    return _training_disabled_response('finetune_adapters', {
+        'limit': int(limit or 0),
+        'task_type': task_type,
+        'adapters': [],
+    })
 
 
 @app.post('/api/plasticity/finetune/adapters/{adapter_id}/promote')
 async def finetune_promote(adapter_id: str, req: FineTunePromoteRequest):
-    out = finetune_lora.promote_adapter(
-        adapter_id,
-        min_gain=float(req.min_gain or 0.02),
-        baseline_score=req.baseline_score,
-        candidate_score=req.candidate_score,
-    )
-    store.db.add_event('finetune_promote', f"🧪 promote adapter={adapter_id} promoted={out.get('promoted')} pass={((out.get('decision') or {}).get('passed'))}")
-    return out
+    return _training_disabled_response('finetune_promote', {'adapter_id': adapter_id})
 
 
 @app.get('/api/plasticity/artifacts')
 async def plasticity_artifacts(limit: int = 80):
-    return {'ok': True, 'artifacts': finetune_lora.artifacts(limit=limit)}
+    return _training_disabled_response('plasticity_artifacts', {'limit': int(limit or 0), 'artifacts': []})
 
 
 @app.get('/api/plasticity/artifacts/{artifact_id}')
 async def plasticity_artifact_get(artifact_id: str):
-    a = finetune_lora.get_artifact(artifact_id)
-    if not a:
-        raise HTTPException(404, 'artifact not found')
-    return {'ok': True, 'artifact': a}
+    return _training_disabled_response('plasticity_artifact_get', {'artifact_id': artifact_id, 'artifact': None})
 
 
 @app.get('/api/plasticity/artifacts/{artifact_id}/download')
 async def plasticity_artifact_download(artifact_id: str):
-    a = finetune_lora.get_artifact(artifact_id)
-    if not a:
-        raise HTTPException(404, 'artifact not found')
-    p = Path(str(a.get('tarball_path') or '')).resolve()
-    if not p.exists():
-        raise HTTPException(404, 'artifact tarball missing')
-    return FileResponse(str(p), media_type='application/gzip', filename=f'{artifact_id}.tar.gz')
+    return _training_disabled_response('plasticity_artifact_download', {'artifact_id': artifact_id})
 
 
 @app.get('/api/plasticity/releases')
 async def plasticity_releases(limit: int = 80):
-    return {'ok': True, 'releases': finetune_lora.releases(limit=limit), 'active_release': finetune_lora.active_release()}
+    return _training_disabled_response('plasticity_releases', {'limit': int(limit or 0), 'releases': [], 'active_release': None})
 
 
 @app.get('/api/plasticity/releases/active')
 async def plasticity_releases_active(task_type: Optional[str] = None):
-    rel = finetune_lora.active_release(task_type=task_type)
-    return {'ok': True, 'release': rel}
+    return _training_disabled_response('plasticity_releases_active', {'task_type': task_type, 'release': None})
+
+
+@app.get('/api/plasticity/runtime')
+async def plasticity_runtime_state():
+    return _training_disabled_response('plasticity_runtime_state', {
+        'runtime': {
+            'desired': None,
+            'active': None,
+            'last_known_good': None,
+        },
+        'active_release': None,
+    })
+
+
+@app.post('/api/plasticity/runtime/reconcile')
+async def plasticity_runtime_reconcile():
+    return _training_disabled_response('plasticity_runtime_reconcile')
 
 
 @app.get('/api/plasticity/releases/{release_id}')
 async def plasticity_release_get(release_id: str):
-    rel = finetune_lora.get_release(release_id)
-    if not rel:
-        raise HTTPException(404, 'release not found')
-    return {'ok': True, 'release': rel}
+    return _training_disabled_response('plasticity_release_get', {'release_id': release_id, 'release': None})
 
 
 @app.get('/api/plasticity/releases/{release_id}/modelfile')
 async def plasticity_release_modelfile(release_id: str):
-    rel = finetune_lora.get_release(release_id)
-    if not rel:
-        raise HTTPException(404, 'release not found')
-    p = Path(str(rel.get('modelfile_path') or '')).resolve()
-    if not p.exists():
-        raise HTTPException(404, 'modelfile missing')
-    return PlainTextResponse(p.read_text(encoding='utf-8'), media_type='text/plain')
+    return _training_disabled_response('plasticity_release_modelfile', {'release_id': release_id})
 
 
 @app.get('/api/plasticity/releases/{release_id}/download')
 async def plasticity_release_download(release_id: str):
-    rel = finetune_lora.get_release(release_id)
-    if not rel:
-        raise HTTPException(404, 'release not found')
-    root = Path(str(rel.get('release_dir') or '')).resolve()
-    if not root.exists():
-        raise HTTPException(404, 'release dir missing')
-    tmp = Path('/tmp') / f'{release_id}.tar.gz'
-    import tarfile as _tf
-    with _tf.open(tmp, 'w:gz') as tf:
-        tf.add(root, arcname='.')
-    return FileResponse(str(tmp), media_type='application/gzip', filename=f'{release_id}.tar.gz')
+    return _training_disabled_response('plasticity_release_download', {'release_id': release_id})
 
 
 @app.get('/api/plasticity/finetune/auto/status')
 async def finetune_auto_status():
-    return {'ok': True, 'auto': finetune_lora.auto_status()}
+    return _training_disabled_response('finetune_auto_status', {'auto': {'enabled': False}})
 
 
 @app.get('/api/turbo/report')
@@ -6445,24 +7342,17 @@ async def turbo_report_generate():
 
 @app.post('/api/plasticity/finetune/auto/config')
 async def finetune_auto_config(req: FineTuneAutoConfigRequest):
-    cfg = finetune_lora.auto_config_patch(req.model_dump(exclude_none=True))
-    store.db.add_event('finetune_auto_config', f"🧪 auto finetune config updated enabled={cfg.get('enabled')}")
-    return {'ok': True, 'auto': cfg}
+    return _training_disabled_response('finetune_auto_config', {'auto': {'enabled': False}})
 
 
 @app.post('/api/plasticity/finetune/auto/trigger')
 async def finetune_auto_trigger():
-    ps = plasticity_runtime.status(limit=120)
-    out = finetune_lora.auto_maybe_trigger(ps)
-    store.db.add_event('finetune_auto_trigger', f"🧪 auto trigger triggered={out.get('triggered')} reason={out.get('reason')}")
-    return out
+    return _training_disabled_response('finetune_auto_trigger')
 
 
 @app.post('/api/plasticity/finetune/queue/watchdog')
 async def finetune_queue_watchdog():
-    out = finetune_lora.queue_watchdog_tick(max_dispatch=3)
-    store.db.add_event('finetune_queue_watchdog', f"🧪 watchdog started={len(out.get('started') or [])} waiting={out.get('waiting')}")
-    return out
+    return _training_disabled_response('finetune_queue_watchdog')
 
 
 @app.get('/api/episodic/recent')
@@ -6565,6 +7455,42 @@ async def cognitive_state_get(compact: bool = False):
     return {'ok': True, 'state': cognitive_state.get_state()}
 
 
+@app.get('/api/context/inspector')
+async def api_context_inspector(limit: int = 200):
+    return context_inspector.build_report(limit=max(10, min(2000, int(limit or 200))))
+
+
+@app.get('/api/rag/router')
+async def api_rag_router(query: str, task_type: str = 'general', top_k: int = 5):
+    started = time.time()
+    out = await rag_router.search_routed(query=str(query or ''), task_type=str(task_type or 'general'), top_k=max(1, min(12, int(top_k or 5))))
+    out['elapsed_ms'] = int((time.time() - started) * 1000)
+    return out
+
+
+@app.get('/api/rag/eval/cases')
+async def api_rag_eval_cases():
+    return {'ok': True, 'items': rag_eval_cases.get_default_cases()}
+
+
+@app.get('/api/rag/eval/runs')
+async def api_rag_eval_runs(limit: int = 50):
+    return {'ok': True, 'items': rag_eval_store.read_runs(limit=max(1, min(500, int(limit or 50))))}
+
+
+@app.post('/api/rag/eval')
+async def api_rag_eval(body: dict):
+    items = body.get('items') if isinstance(body, dict) else []
+    use_default_cases = bool(body.get('use_default_cases')) if isinstance(body, dict) else False
+    top_k = body.get('top_k') if isinstance(body, dict) else 5
+    if use_default_cases or not isinstance(items, list) or not items:
+        items = rag_eval_cases.get_default_cases()
+    started = time.time()
+    out = await rag_eval.evaluate_queries(items if isinstance(items, list) else [], top_k=max(1, min(12, int(top_k or 5))))
+    out['elapsed_ms'] = int((time.time() - started) * 1000)
+    return out
+
+
 @app.get('/api/causal-graph/status')
 async def causal_graph_status():
     return causal_graph.status()
@@ -6573,6 +7499,244 @@ async def causal_graph_status():
 @app.get('/api/causal-graph/query')
 async def causal_graph_query(problem: str, limit: int = 5):
     return causal_graph.query_for_problem(problem=str(problem or ''), limit=max(1, min(20, int(limit))))
+
+
+@app.get('/api/ultronbody/status')
+async def ultronbody_status():
+    return ultronbody.status()
+
+
+@app.get('/api/abstractions/status')
+async def abstractions_status():
+    return explicit_abstractions.stats()
+
+
+@app.get('/api/abstractions/portfolio-summary')
+async def abstractions_portfolio_summary():
+    return explicit_abstractions.portfolio_summary()
+
+
+@app.get('/api/abstractions')
+async def abstractions_list(limit: int = 50, domain: str | None = None):
+    return explicit_abstractions.list_abstractions(limit=max(1, min(500, int(limit))), domain=domain)
+
+
+@app.get('/api/abstractions/{abstraction_id}')
+async def abstractions_get(abstraction_id: str):
+    out = explicit_abstractions.get_abstraction(abstraction_id)
+    if not out:
+        raise HTTPException(404, 'abstraction not found')
+    return {'ok': True, 'item': out}
+
+
+@app.post('/api/abstractions')
+async def abstractions_create(req: ExplicitAbstractionCreateRequest):
+    out = explicit_abstractions.create_abstraction(
+        principle=req.principle,
+        source_domains=req.source_domains,
+        applicability_conditions=req.applicability_conditions,
+        procedure_template=req.procedure_template,
+        confidence=float(req.confidence or 0.5),
+        notes=req.notes,
+    )
+    store.db.add_event('explicit_abstraction_created', f"🧩 abstraction criada: {str(out.get('id') or '')[:80]}")
+    return {'ok': True, 'item': out}
+
+
+@app.post('/api/abstractions/{abstraction_id}/transfer')
+async def abstractions_transfer(abstraction_id: str, req: ExplicitAbstractionTransferRequest):
+    out = explicit_abstractions.update_transfer_history(
+        abstraction_id,
+        target_domain=req.target_domain,
+        outcome=req.outcome,
+        evidence_ref=req.evidence_ref,
+        score=req.score,
+        notes=req.notes,
+    )
+    if not out:
+        raise HTTPException(404, 'abstraction not found')
+    store.db.add_event('explicit_abstraction_transfer', f"🔁 abstraction transfer: {str(abstraction_id)[:80]} -> {str(req.target_domain or '')[:80]}")
+    return {'ok': True, 'item': out}
+
+
+@app.post('/api/abstractions/{abstraction_id}/consolidate')
+async def abstractions_consolidate(abstraction_id: str):
+    out = transfer_benchmark.consolidate_from_latest(abstraction_id)
+    if not out:
+        raise HTTPException(404, 'abstraction or benchmark not found')
+    store.db.add_event('explicit_abstraction_consolidated', f"🏷️ abstraction consolidada: {str(abstraction_id)[:80]}", meta_json=json.dumps({'status': ((out.get('item') or {}).get('status')), 'benchmark_score': (((out.get('item') or {}).get('benchmark_summary') or {}).get('benchmark_score'))}, ensure_ascii=False))
+    return out
+
+
+@app.post('/api/abstractions/ingest-from-ultronbody/{episode_id}')
+async def abstractions_ingest_from_ultronbody(episode_id: str):
+    episode = ultronbody.get_episode(episode_id)
+    if not episode:
+        raise HTTPException(404, 'episode not found')
+    out = explicit_abstractions.ingest_ultronbody_episode(episode)
+    store.db.add_event('explicit_abstraction_ingest', f"🧠 abstractions ingestidas do episódio: {str(episode_id)[:80]}", meta_json=json.dumps({'count': out.get('count')}, ensure_ascii=False))
+    return out
+
+
+@app.post('/api/abstractions/extract-from-ultronbody/recent')
+async def abstractions_extract_from_ultronbody_recent(req: AbstractionBatchExtractRequest):
+    episodes_out = ultronbody.episodes(limit=max(1, min(200, int(req.limit or 20))), include_steps=True)
+    items = episodes_out.get('items') if isinstance(episodes_out, dict) else []
+    out = explicit_abstractions.batch_extract_from_ultronbody_episodes(items if isinstance(items, list) else [], min_cluster_size=max(1, min(10, int(req.min_cluster_size or 2))))
+    store.db.add_event('explicit_abstraction_batch_extract', f"🧬 abstractions extraídas em lote do ultronbody: created={out.get('created_count')}", meta_json=json.dumps({'clusters': out.get('clusters'), 'created_count': out.get('created_count')}, ensure_ascii=False))
+    return out
+
+
+@app.get('/api/abstractions/mappings/recent')
+async def abstractions_mappings_recent(limit: int = 20):
+    return structural_mapper.recent_mappings(limit=max(1, min(200, int(limit))))
+
+
+@app.post('/api/abstractions/{abstraction_id}/map')
+async def abstractions_map(abstraction_id: str, req: StructuralMapRequest):
+    out = structural_mapper.map_abstraction(abstraction_id, target_domain=req.target_domain, target_text=req.target_text)
+    if not out:
+        raise HTTPException(404, 'abstraction not found')
+    store.db.add_event('explicit_abstraction_mapped', f"🗺️ abstraction mapeada: {str(abstraction_id)[:80]} -> {str(req.target_domain or '')[:80]}", meta_json=json.dumps({'similarity': out.get('structural_similarity'), 'recommended': out.get('recommended')}, ensure_ascii=False))
+    return {'ok': True, 'mapping': out}
+
+
+@app.post('/api/abstractions/{abstraction_id}/apply')
+async def abstractions_apply(abstraction_id: str, req: StructuralMapRequest):
+    out = structural_mapper.apply_mapped_abstraction(abstraction_id, target_domain=req.target_domain, target_text=req.target_text)
+    if not out:
+        raise HTTPException(404, 'abstraction not found')
+    store.db.add_event('explicit_abstraction_applied', f"🧭 abstraction aplicada: {str(abstraction_id)[:80]} -> {str(req.target_domain or '')[:80]}", meta_json=json.dumps({'recommended': ((out.get('mapping') or {}).get('recommended')), 'similarity': ((out.get('mapping') or {}).get('structural_similarity'))}, ensure_ascii=False))
+    return out
+
+
+@app.get('/api/abstractions/transfer-benchmark/scenarios')
+async def abstractions_transfer_benchmark_scenarios():
+    return transfer_benchmark.scenarios()
+
+
+@app.get('/api/abstractions/transfer-benchmark/recent')
+async def abstractions_transfer_benchmark_recent(limit: int = 20):
+    return transfer_benchmark.recent_reports(limit=max(1, min(200, int(limit))))
+
+
+@app.post('/api/abstractions/{abstraction_id}/transfer-benchmark')
+async def abstractions_transfer_benchmark_run(abstraction_id: str, req: TransferBenchmarkRequest):
+    out = transfer_benchmark.benchmark_abstraction(abstraction_id, scenario_ids=req.scenario_ids)
+    if not out:
+        raise HTTPException(404, 'abstraction not found')
+    store.db.add_event('explicit_abstraction_transfer_benchmark', f"📚 transfer benchmark: {str(abstraction_id)[:80]} avg_improvement={out.get('avg_improvement')}", meta_json=json.dumps({'scenarios': out.get('scenarios'), 'zero_shot_win_rate': out.get('zero_shot_win_rate')}, ensure_ascii=False))
+    return out
+
+
+@app.post('/api/ultronbody/reset')
+async def ultronbody_reset(req: UltronBodyResetRequest):
+    out = ultronbody.reset(env_name=str(req.env_name or 'gridworld_v1'))
+    store.db.add_event('ultronbody_reset', f"🧍 ultronbody reset env={str(req.env_name or 'gridworld_v1')[:80]}")
+    return out
+
+
+@app.get('/api/ultronbody/observe')
+async def ultronbody_observe():
+    return ultronbody.observe()
+
+
+@app.post('/api/ultronbody/act')
+async def ultronbody_act(req: UltronBodyActRequest):
+    out = ultronbody.act(action=str(req.action or ''), expected_effect=req.expected_effect)
+    if bool(out.get('ok')):
+        store.db.add_event(
+            'ultronbody_act',
+            f"🎮 ultronbody action={str(req.action or '')[:80]} reward={out.get('reward')} done={out.get('done')}",
+            meta_json=json.dumps({'episode_id': out.get('episode_id'), 'step': out.get('step'), 'causal_update': out.get('causal_update')}, ensure_ascii=False),
+        )
+    return out
+
+
+@app.post('/api/ultronbody/predict')
+async def ultronbody_predict(req: UltronBodyPredictRequest):
+    return ultronbody.predict_action(action=str(req.action or ''))
+
+
+@app.get('/api/ultronbody/choose-action')
+async def ultronbody_choose_action(policy: str = 'causal_safe'):
+    return ultronbody.choose_action(policy=str(policy or 'causal_safe'))
+
+
+@app.get('/api/ultronbody/episodes')
+async def ultronbody_episodes(limit: int = 20, include_steps: bool = True):
+    return ultronbody.episodes(limit=max(1, min(200, int(limit))), include_steps=bool(include_steps))
+
+
+@app.get('/api/ultronbody/episodes/{episode_id}')
+async def ultronbody_episode_get(episode_id: str):
+    out = ultronbody.get_episode(episode_id)
+    if not out:
+        raise HTTPException(404, 'episode not found')
+    return {'ok': True, 'episode': out}
+
+
+@app.get('/api/ultronbody/episodes/{episode_id}/replay')
+async def ultronbody_episode_replay(episode_id: str):
+    out = ultronbody.replay_episode(episode_id)
+    if not out:
+        raise HTTPException(404, 'episode not found')
+    return out
+
+
+@app.get('/api/ultronbody/episodes/{episode_id}/counterfactual')
+async def ultronbody_episode_counterfactual(episode_id: str, step: int | None = None):
+    out = ultronbody.analyze_counterfactual(episode_id, step_number=step)
+    if not out:
+        raise HTTPException(404, 'episode not found')
+    return out
+
+
+@app.post('/api/ultronbody/run')
+async def ultronbody_run(req: UltronBodyRunRequest):
+    out = ultronbody.run_episode(
+        policy=str(req.policy or 'goal_seek'),
+        max_steps=int(req.max_steps or 30),
+        env_name=str(req.env_name or 'gridworld_v1'),
+    )
+    store.db.add_event(
+        'ultronbody_run',
+        f"🏁 ultronbody run policy={str(req.policy or 'goal_seek')[:80]} env={str(req.env_name or 'gridworld_v1')[:80]} success={str(out.get('done_reason') or '') == 'goal_reached'}",
+        meta_json=json.dumps({'episode_id': out.get('episode_id'), 'env_name': out.get('env_name'), 'summary': out.get('summary')}, ensure_ascii=False),
+    )
+    return out
+
+
+@app.post('/api/ultronbody/benchmark')
+async def ultronbody_benchmark(req: UltronBodyBenchmarkRequest):
+    out = ultronbody.benchmark(
+        policy=str(req.policy or 'goal_seek'),
+        episodes_count=int(req.episodes_count or 10),
+        max_steps=int(req.max_steps or 30),
+        env_name=str(req.env_name or 'gridworld_v1'),
+    )
+    store.db.add_event(
+        'ultronbody_benchmark',
+        f"📊 ultronbody benchmark policy={str(req.policy or 'goal_seek')[:80]} env={str(req.env_name or 'gridworld_v1')[:80]} success_rate={out.get('success_rate')}",
+        meta_json=json.dumps({'policy': req.policy, 'env_name': req.env_name, 'episodes': req.episodes_count, 'avg_reward': out.get('avg_reward')}, ensure_ascii=False),
+    )
+    return out
+
+
+@app.post('/api/ultronbody/benchmark-compare')
+async def ultronbody_benchmark_compare(req: UltronBodyBenchmarkCompareRequest):
+    out = ultronbody.benchmark_compare(
+        policies=req.policies,
+        episodes_count=int(req.episodes_count or 10),
+        max_steps=int(req.max_steps or 30),
+        env_names=req.env_names,
+    )
+    store.db.add_event(
+        'ultronbody_benchmark_compare',
+        f"📈 ultronbody benchmark compare winner={str(out.get('winner_policy') or '')[:80]} env={str(out.get('winner_env') or '')[:80]}",
+        meta_json=json.dumps({'policies': req.policies, 'env_names': req.env_names, 'episodes': req.episodes_count, 'causal_on_off': out.get('causal_on_off'), 'robust_summary': out.get('robust_summary')}, ensure_ascii=False),
+    )
+    return out
 
 
 class CausalTripleIngestRequest(BaseModel):
@@ -6743,12 +7907,13 @@ def _emit_eval_for_response(endpoint: str, request_id: str, message: str, out: d
 
     stage_timing = (out or {}).get('stage_timing_ms') or {}
     llm_attempts = (out or {}).get('llm_attempts') or []
+    input_class = _classify_eval_input(message)
 
     _append_eval_trace({
         'request_id': request_id,
         'timestamp': int(time.time()),
         'endpoint': endpoint,
-        'input_class': _classify_eval_input(message),
+        'input_class': input_class,
         'router_strategy_escolhida': strategy,
         'symbolic_reasoner_routed': sym,
         'gate_decision': gate_decision,
@@ -6760,6 +7925,32 @@ def _emit_eval_for_response(endpoint: str, request_id: str, message: str, out: d
         'stage_timing_ms': stage_timing,
         'llm_attempts': llm_attempts,
     })
+
+    try:
+        answer = str((out or {}).get('answer') or '').strip()
+        context_meta = {
+            'selected_contexts': (metrics_obj.get('selected_contexts') if isinstance(metrics_obj.get('selected_contexts'), list) else []),
+            'excluded_contexts': (metrics_obj.get('excluded_contexts') if isinstance(metrics_obj.get('excluded_contexts'), list) else []),
+            'fallback': (metrics_obj.get('fallback') if isinstance(metrics_obj.get('fallback'), dict) else {}),
+            'budget': (metrics_obj.get('budget') if isinstance(metrics_obj.get('budget'), dict) else {}),
+            'rag_diversity': (metrics_obj.get('rag_diversity') if isinstance(metrics_obj.get('rag_diversity'), dict) else {}),
+        }
+        organic_eval_feed.record_response(
+            endpoint=endpoint,
+            request_id=request_id,
+            query=str(message or ''),
+            answer=answer,
+            task_type=input_class,
+            strategy=strategy,
+            model_called=model_called,
+            latency_ms=int(latency_ms or 0),
+            prm_score=(out or {}).get('prm_score'),
+            prm_risk=(out or {}).get('prm_risk'),
+            context_meta=context_meta,
+            tool_outputs=[],
+        )
+    except Exception:
+        pass
 
 
 async def _llm_complete_with_timeout(prompt: str, *, strategy: str, system: str | None, inject_persona: bool, max_tokens: int, cloud_fallback: bool, timeout_sec: float | None = None) -> str:
@@ -6958,20 +8149,7 @@ def _run_post_execution_learning(*, query: str, answer: str, steps_executed: lis
     except Exception:
         pass
 
-    if int(freq.get('count') or 0) >= 3:
-        try:
-            proposal = episodic_memory.append_learning_proposal(
-                kind='finetune_candidate',
-                title='Padrão recorrente detectado (3+ episódios)',
-                details={
-                    'task_type': task_type,
-                    'heuristic': heuristic,
-                    'frequency': int(freq.get('count') or 0),
-                    'episode_id': episode_id,
-                },
-            )
-        except Exception:
-            proposal = None
+    proposal = None
 
     return {
         'ok': True,
@@ -6979,7 +8157,7 @@ def _run_post_execution_learning(*, query: str, answer: str, steps_executed: lis
         'procedural_update': proc_out,
         'rule_frequency': freq,
         'causal_graph_check': graph_check,
-        'finetune_proposal': proposal,
+        'finetune_proposal': _training_disabled_response('post_execution_finetune_proposal') if int(freq.get('count') or 0) >= 3 else None,
     }
 
 
@@ -6992,6 +8170,40 @@ async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generat
     else:
         task_type = 'planning'
 
+    rag_seed_docs = []
+    rag_route = {'domains': [], 'search_plan': [], 'results': []}
+    try:
+        rag_route = await rag_router.search_routed(query=query, task_type=task_type, top_k=4)
+        rag_seed_docs = list(rag_route.get('results') or [])
+    except Exception:
+        try:
+            rag_seed_docs = await knowledge_bridge.search_knowledge(query, top_k=4)
+        except Exception:
+            rag_seed_docs = []
+
+    adaptive_profile = self_model.adaptive_profile(task_type=task_type)
+    if int(adaptive_profile.get('context_hardening') or 0) >= 2 and len(rag_seed_docs) < 5:
+        try:
+            extra_route = await rag_router.search_routed(query=query, task_type=task_type, top_k=6)
+            extra_docs = list(extra_route.get('results') or [])
+            seen = {(str(d.get('source_id') or ''), str(d.get('text') or '')[:200]) for d in rag_seed_docs if isinstance(d, dict)}
+            for d in extra_docs:
+                if not isinstance(d, dict):
+                    continue
+                sig = (str(d.get('source_id') or ''), str(d.get('text') or '')[:200])
+                if sig not in seen:
+                    rag_seed_docs.append(d)
+                    seen.add(sig)
+            if isinstance(extra_route, dict) and isinstance(rag_route, dict):
+                rag_route['adaptive_expansion'] = extra_route.get('diversity')
+        except Exception:
+            pass
+
+    ctx_bundle = context_policy.build_context(query=query, task_type=task_type, rag_docs=rag_seed_docs)
+    if isinstance(ctx_bundle, dict):
+        ctx_bundle['rag_diversity'] = (rag_route.get('diversity') if isinstance(rag_route, dict) and isinstance(rag_route.get('diversity'), dict) else {})
+        ctx_bundle['self_model'] = adaptive_profile.get('self_model') if isinstance(adaptive_profile, dict) else {}
+        ctx_bundle['adaptive_profile'] = adaptive_profile
     pol = episodic_memory.get_task_memory_policy(task_type)
     recall = episodic_memory.layered_recall(problem=query, task_type=task_type, limit=int(pol.get('episodic_limit') or 4))
     recall_compact = episodic_memory.layered_recall_compact(problem=query, task_type=task_type, limit=int(pol.get('episodic_limit') or 4), max_chars=int(pol.get('max_chars') or 1500))
@@ -6999,6 +8211,14 @@ async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generat
     procedural = recall.get('procedural_hints') if isinstance(recall.get('procedural_hints'), dict) else {'ok': True, 'best_strategies': []}
     cog = cognitive_state.get_state()
     runtime_constraints = _parse_runtime_constraints(cog.get('constraints') if isinstance(cog, dict) else [])
+    if int(adaptive_profile.get('context_hardening') or 0) >= 1:
+        req = set(runtime_constraints.get('require_tools') or [])
+        req.add('search_rag')
+        runtime_constraints['require_tools'] = sorted(req)
+    if int(adaptive_profile.get('governance_hardening') or 0) >= 2:
+        forbid = set(runtime_constraints.get('forbid_tools') or [])
+        forbid.add('execute_bash')
+        runtime_constraints['forbid_tools'] = sorted(forbid)
     causal_hints = causal_graph.query_for_problem(query, limit=4)
 
     # Episodic matcher (structural analogy) auto-trigger on low confidence/low recall
@@ -7018,10 +8238,36 @@ async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generat
         except Exception:
             analogy_ctx = {'triggered': False, 'low_confidence': True}
 
+    plan_base_confidence = max(0.15, min(0.95, 0.35 + (0.5 * float(adaptive_profile.get('domain_confidence') or 0.5))))
     plan_prompt = json.dumps({
         'task': 'Decompose user request into up to 3 sequential tool calls then synthesize final answer.',
         'query': query,
         'task_type': task_type,
+        'context_policy': {
+            'profile': ctx_bundle.get('profile'),
+            'policy': ctx_bundle.get('policy'),
+            'selected_contexts': ctx_bundle.get('selected_contexts'),
+            'excluded_contexts': ctx_bundle.get('excluded_contexts'),
+            'fallback': ctx_bundle.get('fallback'),
+            'budget': ctx_bundle.get('budget'),
+            'cutoff_reason': ctx_bundle.get('cutoff_reason'),
+        },
+        'adaptive_profile': {
+            'task_type': adaptive_profile.get('task_type'),
+            'domain_confidence': adaptive_profile.get('domain_confidence'),
+            'context_hardening': adaptive_profile.get('context_hardening'),
+            'governance_hardening': adaptive_profile.get('governance_hardening'),
+            'ask_for_evidence_bias': adaptive_profile.get('ask_for_evidence_bias'),
+            'risk_posture': adaptive_profile.get('risk_posture'),
+        },
+        'confidence_policy': {
+            'base_confidence': round(plan_base_confidence, 4),
+            'instruction': 'Use domain_confidence as the confidence prior: lower domain_confidence should produce more conservative confidence, fewer assumptions, and earlier uncertainty signaling.'
+        },
+        'rag_route': {
+            'domains': rag_route.get('domains'),
+            'search_plan': rag_route.get('search_plan'),
+        },
         'memory_context_compact': recall_compact,
         'working_memory': recall_compact.get('working_memory') if isinstance(recall_compact, dict) else {},
         'episodic_similar': recall_compact.get('episodic_similar') if isinstance(recall_compact, dict) else episodic_similar,
@@ -7072,11 +8318,18 @@ async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generat
         max_tokens=260,
     )
     plan = _safe_json_parse(planner_raw)
+    raw_plan_confidence = plan.get('confidence')
+    try:
+        raw_plan_confidence = float(raw_plan_confidence)
+    except Exception:
+        raw_plan_confidence = plan_base_confidence
+    adjusted_plan_confidence = max(0.0, min(1.0, ((0.65 * raw_plan_confidence) + (0.35 * plan_base_confidence))))
+    plan['confidence'] = adjusted_plan_confidence
     cot = {
         'hypothesis': str(plan.get('hypothesis') or '')[:500],
         'reasoning_steps': (plan.get('reasoning_steps') if isinstance(plan.get('reasoning_steps'), list) else [])[:6],
         'conclusion': str(plan.get('conclusion') or '')[:700],
-        'confidence': plan.get('confidence'),
+        'confidence': adjusted_plan_confidence,
         'possible_failures': (plan.get('possible_failures') if isinstance(plan.get('possible_failures'), list) else [])[:5],
     }
     candidate_plans = plan.get('candidate_plans') if isinstance(plan.get('candidate_plans'), list) else []
@@ -7264,7 +8517,12 @@ async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generat
             docs = await knowledge_bridge.search_knowledge(q, top_k=3)
             out_txt = '\n'.join([str((d or {}).get('text') or '')[:450] for d in (docs or [])[:2]]).strip()
             if not out_txt:
-                out_txt = 'Sem contexto RAG relevante encontrado.'
+                missing = (((ctx_bundle.get('fallback') or {}).get('missing_required_sources')) or []) if isinstance(ctx_bundle, dict) else []
+                if missing:
+                    out_txt = f"Lacuna explícita: contexto essencial ausente ({', '.join(missing)}). Não inferir sem evidência."
+                    status = 'missing_context'
+                else:
+                    out_txt = 'Sem contexto RAG relevante encontrado.'
         elif tool == 'symbolic_solve':
             problem = str(args.get('problem') or query).strip()
             sym = symbolic_reasoner.solve(problem)
@@ -7315,20 +8573,133 @@ async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generat
     synth_prompt = json.dumps({
         'query': query,
         'tool_outputs': tool_outputs,
-        'style': str(plan.get('final_answer_style') or 'objetivo e útil')
+        'context_policy': {
+            'profile': ctx_bundle.get('profile'),
+            'fallback': ctx_bundle.get('fallback'),
+            'budget': ctx_bundle.get('budget'),
+        },
+        'style': str(plan.get('final_answer_style') or 'objetivo e útil'),
+        'guardrail': 'Se faltar contexto essencial, diga a lacuna explicitamente e não invente fatos.'
     }, ensure_ascii=False)
-    final_answer = llm.complete(
-        prompt=synth_prompt,
-        strategy=generation_strategy,
-        system='Sintetize resposta final em pt-BR, prática, sem inventar fatos ausentes.',
-        json_mode=False,
-        inject_persona=False,
-        max_tokens=240,
+    fallback_meta = (ctx_bundle.get('fallback') if isinstance(ctx_bundle, dict) else {}) or {}
+    hard_fallback_gate = bool(fallback_meta.get('needed')) and str(os.getenv('ULTRON_CONTEXT_HARD_FALLBACK_GATE', '1')).strip().lower() in ('1', 'true', 'yes', 'on')
+    if hard_fallback_gate:
+        missing = ', '.join((fallback_meta.get('missing_required_sources') or []))
+        final_answer = (
+            f"Lacuna explícita: faltou contexto essencial ({missing}). "
+            f"Vou evitar inferência sem evidência suficiente."
+        ).strip()
+    else:
+        final_answer = llm.complete(
+            prompt=synth_prompt,
+            strategy=generation_strategy,
+            system='Sintetize resposta final em pt-BR, prática, sem inventar fatos ausentes.',
+            json_mode=False,
+            inject_persona=False,
+            max_tokens=240,
+        )
+        final_answer = str(final_answer or '').strip()
+    qeval = quality_eval.evaluate_response(
+        query=query,
+        answer=final_answer,
+        context_meta=ctx_bundle,
+        tool_outputs=tool_outputs,
     )
+    critic = internal_critic.critique_response(
+        query=query,
+        answer=final_answer,
+        context_meta=ctx_bundle,
+        action_kind='route_toolchain' if tool_outputs else 'generate_questions',
+        governance_meta={'proof_ok': bool(tool_outputs)},
+        has_proof=bool(tool_outputs),
+    )
+    preflight = causal_preflight.run_preflight(
+        action_kind='route_toolchain' if tool_outputs else 'generate_questions',
+        action_text=final_answer,
+        governance_meta={'proof_ok': bool(tool_outputs)},
+        tool_outputs=tool_outputs,
+    )
+    revision_needed = bool((critic.get('epistemic') or {}).get('needs_revision')) or (
+        bool(preflight.get('needs_confirmation')) and str(preflight.get('recommended_action') or '') in ('request_confirmation', 'block_or_escalate', 'revise_with_caution')
+    )
+    revision_trace: list[dict[str, Any]] = []
+    if revision_needed and not hard_fallback_gate:
+        revise_prompt = _build_guided_revision_prompt(
+            query=query,
+            current_answer=final_answer,
+            tool_outputs=tool_outputs,
+            context_bundle=ctx_bundle,
+            critic=critic,
+            preflight=preflight,
+        )
+        revised = llm.complete(
+            prompt=revise_prompt,
+            strategy=generation_strategy,
+            system='Você é um revisor crítico. Reescreva a resposta para ficar mais calibrada, mais segura e mais explícita sobre lacunas, risco e confirmação quando necessário. Não invente fatos.',
+            json_mode=False,
+            inject_persona=False,
+            max_tokens=260,
+        )
+        revised = str(revised or '').strip()
+        if revised:
+            final_answer = revised
+            revision_trace.append({'mode': 'guided_rewrite', 'applied': True})
+        else:
+            revision_trace.append({'mode': 'guided_rewrite', 'applied': False, 'reason': 'empty_rewrite'})
+
+        if bool((critic.get('epistemic') or {}).get('needs_revision')):
+            reason = str(((critic.get('epistemic') or {}).get('revision_reason')) or 'internal_critic_revision')
+            if reason == 'missing_gap_disclosure' and not any(x in str(final_answer or '').lower() for x in ['lacuna', 'não sei', 'nao sei', 'incerteza']):
+                missing = ', '.join((fallback_meta.get('missing_required_sources') or []))
+                final_answer = (
+                    f"Lacuna explícita: faltou contexto essencial ({missing or 'contexto crítico'}). "
+                    f"Não vou cravar resposta sem evidência suficiente."
+                ).strip()
+                revision_trace.append({'mode': 'fallback_gap_patch', 'applied': True})
+            elif reason == 'rag_coverage_low':
+                final_answer = (str(final_answer or '').strip() + ' ' + 'Observação: o contexto recuperado teve cobertura limitada; trate esta resposta como preliminar.').strip()
+                revision_trace.append({'mode': 'coverage_patch', 'applied': True})
+            elif reason == 'low_grounding_or_high_contradiction_risk':
+                final_answer = (str(final_answer or '').strip() + ' ' + 'Aviso: há risco de grounding insuficiente ou contradição parcial no contexto disponível.').strip()
+                revision_trace.append({'mode': 'grounding_patch', 'applied': True})
+
+        if bool(preflight.get('needs_confirmation')) and str(preflight.get('recommended_action') or '') in ('request_confirmation', 'block_or_escalate') and 'confirmação' not in str(final_answer or '').lower():
+            final_answer = (
+                str(final_answer or '').strip() + ' ' +
+                'Confirmação humana recomendada antes de qualquer execução mais séria.'
+            ).strip()
+            revision_trace.append({'mode': 'confirmation_patch', 'applied': True})
+
+        qeval = quality_eval.evaluate_response(
+            query=query,
+            answer=final_answer,
+            context_meta=ctx_bundle,
+            tool_outputs=tool_outputs,
+        )
+        critic = internal_critic.critique_response(
+            query=query,
+            answer=final_answer,
+            context_meta=ctx_bundle,
+            action_kind='route_toolchain' if tool_outputs else 'generate_questions',
+            governance_meta={'proof_ok': bool(tool_outputs)},
+            has_proof=bool(tool_outputs),
+        )
+        preflight = causal_preflight.run_preflight(
+            action_kind='route_toolchain' if tool_outputs else 'generate_questions',
+            action_text=final_answer,
+            governance_meta={'proof_ok': bool(tool_outputs)},
+            tool_outputs=tool_outputs,
+        )
+    else:
+        revision_trace = []
+    planner_tokens_est = context_metrics.estimate_tokens(plan_prompt)
+    synth_tokens_est = context_metrics.estimate_tokens(synth_prompt)
+    selected_ctx_tokens_est = context_metrics.estimate_tokens(ctx_bundle.get('selected_contexts'))
+    excluded_ctx_count = len(ctx_bundle.get('excluded_contexts') or []) if isinstance(ctx_bundle, dict) else 0
 
     return {
         'ok': True,
-        'answer': str(final_answer or '').strip(),
+        'answer': final_answer,
         'strategy': 'orchestrator_qwen_tools',
         'orchestration': {
             'planner_raw': str(planner_raw or '')[:1000],
@@ -7336,6 +8707,24 @@ async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generat
             'step_prm': step_prm,
             'planner_context': {
                 'task_type': task_type,
+                'context_profile': ctx_bundle.get('profile'),
+                'context_policy': ctx_bundle.get('policy'),
+                'selected_contexts': ctx_bundle.get('selected_contexts'),
+                'excluded_contexts': ctx_bundle.get('excluded_contexts'),
+                'context_fallback': ctx_bundle.get('fallback'),
+                'context_budget': ctx_bundle.get('budget'),
+                'rag_route': {
+                    'domains': rag_route.get('domains'),
+                    'search_plan': rag_route.get('search_plan'),
+                    'diversity': rag_route.get('diversity'),
+                },
+                'context_metrics': {
+                    'planner_prompt_tokens_est': planner_tokens_est,
+                    'synth_prompt_tokens_est': synth_tokens_est,
+                    'selected_context_tokens_est': selected_ctx_tokens_est,
+                    'excluded_context_count': excluded_ctx_count,
+                    'hard_fallback_gate': hard_fallback_gate,
+                },
                 'episodic_similar_count': len(episodic_similar),
                 'episodic_similar': episodic_similar,
                 'procedural_hints': procedural,
@@ -7350,6 +8739,12 @@ async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generat
                     'require_tools': sorted(list(runtime_constraints.get('require_tools') or [])),
                     'max_steps': int(runtime_constraints.get('max_steps') or 3),
                 },
+                'adaptive_profile': adaptive_profile,
+                'confidence_policy': {
+                    'base_confidence': round(plan_base_confidence, 4),
+                    'raw_plan_confidence': raw_plan_confidence,
+                    'adjusted_plan_confidence': adjusted_plan_confidence,
+                },
                 'cot': cot,
                 'verification': {
                     'overall_approved': ver.get('overall_approved') if isinstance(ver, dict) else None,
@@ -7357,7 +8752,21 @@ async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generat
                     'step_reviews': (ver.get('step_reviews') if isinstance(ver, dict) and isinstance(ver.get('step_reviews'), list) else []),
                 },
                 'plan_selection': plan_selection,
+                'internal_critic': critic,
+                'causal_preflight': preflight,
+                'revision_trace': revision_trace,
             },
+        },
+        'quality_eval': qeval,
+        'internal_critic': critic,
+        'causal_preflight': preflight,
+        'revision_trace': revision_trace,
+        'context_metrics': {
+            'planner_prompt_tokens_est': planner_tokens_est,
+            'synth_prompt_tokens_est': synth_tokens_est,
+            'selected_context_tokens_est': selected_ctx_tokens_est,
+            'excluded_context_count': excluded_ctx_count,
+            'hard_fallback_gate': hard_fallback_gate,
         },
         'metrics': metrics,
         'cache_hit': None,
@@ -7527,19 +8936,10 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
             h_local = llm.healthcheck('ultron_infer')
         except Exception:
             h_local = {'ok': False, 'provider': 'ultron_infer', 'error': 'healthcheck_failed'}
-        active_adapter = ''
-        try:
-            st = finetune_lora.get_status(limit=40)
-            active = [a for a in (st.get('adapters') or []) if a.get('active')]
-            if active:
-                active_adapter = str(active[0].get('id') or '')
-        except Exception:
-            active_adapter = ''
-
         txt = (
             f"Agora no chat eu uso strategy=local (ultron_infer remoto no U3), sem fallback cloud neste endpoint. "
             f"Saúde atual: auto={h_auto.get('provider')} ok={h_auto.get('ok')}; local_ok={h_local.get('ok')}. "
-            f"Adapter ativo no registry: {active_adapter or 'nenhum'}."
+            f"Treino/adapters runtime: desativados por arquitetura."
         )
         _trace_emit(txt, 'runtime_introspection', outcome='success')
         prm_meta = _prm_pack(txt, 'runtime_introspection', metrics)
@@ -7606,7 +9006,9 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
         try:
             orch_t0 = time.time()
             orch_stage_t0 = time.monotonic()
-            gen_strategy = forced_strategy if forced_strategy else ('canary_qwen' if canary else 'local')
+            primary_provider = str(os.getenv('ULTRON_PRIMARY_LOCAL_PROVIDER', 'ollama_local') or 'ollama_local').strip().lower()
+            default_gen_strategy = 'default' if primary_provider in {'gemini', 'openai', 'anthropic', 'openrouter', 'groq', 'deepseek', 'huggingface'} else 'local'
+            gen_strategy = forced_strategy if forced_strategy else ('canary_qwen' if canary else default_gen_strategy)
             out_orch = await _metacog_orchestrator_run(q, metrics, generation_strategy=gen_strategy)
             if isinstance(out_orch, dict) and str(out_orch.get('answer') or '').strip():
                 _trace_emit(str(out_orch.get('answer') or ''), 'orchestrator_qwen_tools', outcome='success')
@@ -7634,6 +9036,31 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
                     if analogia_usada and isinstance(score, (int, float)):
                         analogia_foi_util = bool(float(score) >= 0.62)
 
+                    qeval = out_orch.get('quality_eval') if isinstance(out_orch.get('quality_eval'), dict) else {}
+                    critic_eval = out_orch.get('internal_critic') if isinstance(out_orch.get('internal_critic'), dict) else {}
+                    preflight_eval = out_orch.get('causal_preflight') if isinstance(out_orch.get('causal_preflight'), dict) else {}
+                    revision_trace = out_orch.get('revision_trace') if isinstance(out_orch.get('revision_trace'), list) else []
+                    memory_decision = memory_governor.classify_writeback(
+                        query=q,
+                        answer=str(out_orch.get('answer') or ''),
+                        task_type='planning',
+                        quality_eval=qeval,
+                        internal_critic=critic_eval,
+                        planner_context=plan_sel,
+                        steps_executed=steps_executed,
+                        causal_preflight=preflight_eval,
+                    )
+                    self_model_eval = self_model.consolidate_operational_self_model(
+                        task_type=str(planner_ctx.get('task_type') or 'planning'),
+                        quality_eval=qeval,
+                        internal_critic=critic_eval,
+                        causal_preflight=preflight_eval,
+                        memory_governor=memory_decision,
+                        revision_trace=revision_trace,
+                        tool_used=bool(steps_executed),
+                        latency_ms=int((time.time() - orch_t0) * 1000),
+                        notes=str((memory_decision.get('write_reason') or '')),
+                    )
                     ep = episodic_memory.append_structured_episode(
                         problem=q,
                         plano_gerado={
@@ -7656,16 +9083,84 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
                             'cache_hit': out_orch.get('cache_hit'),
                             'from_cache': bool(out_orch.get('from_cache')),
                             'analogy_context': analogy_ctx,
+                            'context_profile': ((orch_struct.get('planner_context') or {}).get('context_profile') if isinstance(orch_struct.get('planner_context'), dict) else ''),
+                            'context_fallback': ((orch_struct.get('planner_context') or {}).get('context_fallback') if isinstance(orch_struct.get('planner_context'), dict) else {}),
+                            'context_metrics': (out_orch.get('context_metrics') if isinstance(out_orch.get('context_metrics'), dict) else {}),
+                            'memory_governor': memory_decision,
+                            'causal_preflight': preflight_eval,
+                            'revision_trace': revision_trace,
+                            'self_model': self_model_eval,
                         },
+                        quality_eval=qeval,
+                        memory_governor=memory_decision,
                         analogia_usada=analogia_usada,
                         analogia_source_episode_id=analogia_source_episode_id,
                         analogia_foi_util=analogia_foi_util,
                     )
+                    try:
+                        ctx_metrics = out_orch.get('context_metrics') if isinstance(out_orch.get('context_metrics'), dict) else {}
+                        planner_ctx = orch_struct.get('planner_context') if isinstance(orch_struct.get('planner_context'), dict) else {}
+                        quality_eval.persist_eval({
+                            'ts': int(time.time()),
+                            'query': q[:500],
+                            'strategy': 'orchestrator_qwen_tools',
+                            'task_type': str(planner_ctx.get('task_type') or 'planning'),
+                            'context_profile': str(planner_ctx.get('context_profile') or ''),
+                            'episode_id': str((ep or {}).get('episode_id') or ''),
+                            'quality_eval': qeval,
+                            'internal_critic': critic_eval,
+                            'memory_governor': memory_decision,
+                            'causal_preflight': preflight_eval,
+                            'revision_trace': revision_trace,
+                            'self_model': self_model_eval,
+                            'context_metrics': ctx_metrics,
+                            'fallback': planner_ctx.get('context_fallback'),
+                            'rag_diversity': ((planner_ctx.get('rag_route') or {}).get('diversity') if isinstance(planner_ctx.get('rag_route'), dict) else {}),
+                        })
+                        try:
+                            gd = gap_detector.maybe_auto_scan(limit=80)
+                            if bool((gd or {}).get('created')):
+                                cognitive_patch_loop.autorun_once(limit=3, statuses=['proposed', 'evaluating', 'evaluated'])
+                        except Exception:
+                            pass
+                        context_metrics.persist_row({
+                            'query': q[:500],
+                            'strategy': 'orchestrator_qwen_tools',
+                            'task_type': str(planner_ctx.get('task_type') or 'planning'),
+                            'context_profile': str(planner_ctx.get('context_profile') or ''),
+                            'episode_id': str((ep or {}).get('episode_id') or ''),
+                            'selected_contexts': planner_ctx.get('selected_contexts'),
+                            'excluded_contexts': planner_ctx.get('excluded_contexts'),
+                            'context_budget': planner_ctx.get('context_budget'),
+                            'context_metrics': ctx_metrics,
+                            'quality_eval': qeval,
+                            'internal_critic': critic_eval,
+                            'memory_governor': memory_decision,
+                            'causal_preflight': preflight_eval,
+                            'revision_trace': revision_trace,
+                            'self_model': self_model_eval,
+                            'rag_diversity': ((planner_ctx.get('rag_route') or {}).get('diversity') if isinstance(planner_ctx.get('rag_route'), dict) else {}),
+                            'latency_ms': int((time.time() - orch_t0) * 1000),
+                        })
+                    except Exception:
+                        pass
                     out_orch['analogy_feedback'] = {
                         'analogia_usada': analogia_usada,
                         'analogia_source_episode_id': analogia_source_episode_id,
                         'analogia_foi_util': analogia_foi_util,
                     }
+                    out_orch['memory_governor'] = memory_decision
+                    out_orch['self_model'] = self_model_eval
+                    try:
+                        memory_governor.persist_decision({
+                            'query': q[:500],
+                            'strategy': 'orchestrator_qwen_tools',
+                            'task_type': 'planning',
+                            'episode_id': str((ep or {}).get('episode_id') or ''),
+                            'decision': memory_decision,
+                        })
+                    except Exception:
+                        pass
                     post_learning = _run_post_execution_learning(
                         query=q,
                         answer=str(out_orch.get('answer') or ''),
@@ -7960,9 +9455,13 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
     if forced_strategy:
         strategies = [forced_strategy]
     else:
-        strategies = ['local']
+        primary_provider = str(os.getenv('ULTRON_PRIMARY_LOCAL_PROVIDER', 'ollama_local') or 'ollama_local').strip().lower()
+        primary_is_cloud = primary_provider in {'gemini', 'openai', 'anthropic', 'openrouter', 'groq', 'deepseek', 'huggingface'}
+        strategies = ['default'] if primary_is_cloud else ['local']
         if general_qa_enabled and general_question:
-            strategies.append('default')
+            extra = 'local' if primary_is_cloud else 'default'
+            if extra not in strategies:
+                strategies.append(extra)
 
     for strat in tuple(strategies):
         remaining = _budget_remaining(llm_deadline)
@@ -8231,7 +9730,10 @@ async def metacognition_ask(req: MetacogAskRequest):
     if use_canary:
         t0 = time.time()
         try:
-            out = await _metacognition_ask_impl(req, force_generation_strategy='canary_qwen', canary=True)
+            out = await asyncio.wait_for(
+                _metacognition_ask_impl(req, force_generation_strategy='canary_qwen', canary=True),
+                timeout=float(os.getenv('METACOG_ENDPOINT_TIMEOUT_SEC', '10')),
+            )
             dt = int((time.time() - t0) * 1000)
             if isinstance(out, dict):
                 out['request_id'] = req_id
@@ -8259,7 +9761,20 @@ async def metacognition_ask(req: MetacogAskRequest):
     # fallback path (tiny/local) if qwen is unavailable or failed
     t0 = time.time()
     try:
-        out = await _metacognition_ask_impl(req)
+        if str(os.getenv('METACOG_FAST_FALLBACK_ONLY', '0')).strip().lower() in ('1', 'true', 'yes', 'on'):
+            out = {
+                'ok': True,
+                'answer': 'Modo rápido ativo: resposta operacional resumida. Se quiser profundidade, tente de novo quando o backend estiver menos carregado.',
+                'strategy': 'fast_fallback_only',
+                'model': 'tiny',
+                'stage_timing_ms': {'total_ms': 1},
+                'llm_attempts': [],
+            }
+        else:
+            out = await asyncio.wait_for(
+                _metacognition_ask_impl(req),
+                timeout=float(os.getenv('METACOG_ENDPOINT_TIMEOUT_SEC', '10')),
+            )
         dt = int((time.time() - t0) * 1000)
         if not isinstance(out, dict):
             out = {
@@ -8503,7 +10018,7 @@ async def roadmap_v5_tick():
     snap = {
         'agi': _compute_agi_mode_metrics(),
         'plasticity': plasticity_runtime.status(limit=120),
-        'finetune': finetune_lora.status(limit=30),
+        'training': _training_disabled_response('roadmap_v5_tick'),
     }
     out = roadmap_v5.tick(snap)
     store.db.add_event('roadmap_v5_tick', f"🗺️ roadmap v5 triggered={out.get('triggered')} reason={out.get('reason')}")
@@ -8548,7 +10063,7 @@ async def agi_path_tick():
     snap = {
         'agi': _compute_agi_mode_metrics(),
         'plasticity': plasticity_runtime.status(limit=120),
-        'finetune': finetune_lora.status(limit=40),
+        'training': _training_disabled_response('agi_path_tick'),
     }
     out = agi_path.tick(snap)
     store.db.add_event('agi_path_tick', f"🧠 agi-path triggered={out.get('triggered')} reason={((out.get('state') or {}).get('last_reason'))}")
@@ -8595,37 +10110,10 @@ async def replay_decision_traces_run(day: Optional[str] = None, max_rows: int = 
     out = replay_traces.run_replay(day=day, max_rows=max_rows)
     store.db.add_event('replay_traces_run', f"🔁 replay day={out.get('day')} traces={out.get('trace_rows')} train={out.get('train_rows')} hard_neg={out.get('hard_neg_rows')}")
 
-    if not auto_finetune:
-        return {'ok': True, 'replay': out, 'finetune': None}
+    if auto_finetune:
+        return {'ok': True, 'replay': out, 'finetune': _training_disabled_response('replay_decision_traces_auto_finetune', {'max_samples': int(max_samples or 0)})}
 
-    # apply replay dataset as next incremental train/val slices
-    try:
-        src = Path(str(out.get('train_incremental_path') or ''))
-        rows = []
-        if src.exists():
-            for ln in src.read_text(encoding='utf-8', errors='ignore').splitlines():
-                ln = ln.strip()
-                if ln:
-                    rows.append(ln)
-        if not rows:
-            return {'ok': True, 'replay': out, 'finetune': {'ok': False, 'reason': 'empty_incremental_dataset'}}
-
-        val_n = max(1, int(len(rows) * 0.1)) if len(rows) >= 10 else 1
-        val_rows = rows[:val_n]
-        train_rows = rows[val_n:] if len(rows) > val_n else rows
-
-        Path('/app/data').mkdir(parents=True, exist_ok=True)
-        Path('/app/data/finetune_dataset.jsonl').write_text('\n'.join(rows) + '\n', encoding='utf-8')
-        Path('/app/data/finetune_dataset_train.jsonl').write_text('\n'.join(train_rows) + '\n', encoding='utf-8')
-        Path('/app/data/finetune_dataset_val.jsonl').write_text('\n'.join(val_rows) + '\n', encoding='utf-8')
-
-        mm = max(20, min(int(max_samples or 120), len(train_rows)))
-        j = finetune_lora.create_job('assistant', os.getenv('ULTRON_FINETUNE_BASE_MODEL', 'Qwen/Qwen2.5-3B-Instruct'), method='qlora', max_samples=mm)
-        st = finetune_lora.start_job(str(j.get('id')), dry_run=False)
-        store.db.add_event('replay_traces_finetune', f"🔁🧪 incremental job={j.get('id')} status={((st.get('job') or {}).get('status'))} samples={mm}")
-        return {'ok': True, 'replay': out, 'finetune': {'job': j, 'start': st, 'samples': mm}}
-    except Exception as e:
-        return {'ok': True, 'replay': out, 'finetune': {'ok': False, 'error': str(e)[:240]}}
+    return {'ok': True, 'replay': out, 'finetune': None}
 
 
 @app.post('/api/replay/rag-synth-generate')
@@ -8934,6 +10422,333 @@ async def tool_router_plan(req: ToolRouteRequest):
 @app.post('/api/tool-router/run')
 async def tool_router_run(req: ToolRouteRequest):
     return _run_tool_route(req.intent, context=req.context or {}, prefer_low_cost=bool(req.prefer_low_cost))
+
+
+# --- Cognitive patches registry (plasticidade estrutural auditável) ---
+
+@app.get('/api/plasticity/cognitive-patches')
+async def list_cognitive_patches(limit: int = 100, status: Optional[str] = None, kind: Optional[str] = None):
+    return {
+        'items': cognitive_patches.list_patches(limit=limit, status=status, kind=kind),
+        'stats': cognitive_patches.stats(),
+    }
+
+
+@app.get('/api/plasticity/cognitive-patches/status')
+async def cognitive_patches_status():
+    return cognitive_patches.stats()
+
+
+@app.post('/api/plasticity/gap-detector/scan')
+async def plasticity_gap_detector_scan(limit: int = 80):
+    result = gap_detector.scan_recent_failures(limit=limit)
+    try:
+        created = result.get('proposals_created') if isinstance(result.get('proposals_created'), list) else []
+        if created:
+            store.db.add_event(
+                'gap_detector_scan',
+                f"🩹 gap detector criou {len(created)} cognitive patch(es)",
+                meta_json=json.dumps({'created_patch_ids': [x.get('id') for x in created]}, ensure_ascii=False),
+            )
+    except Exception:
+        pass
+    return result
+
+
+@app.post('/api/plasticity/gap-detector/selftest')
+async def plasticity_gap_detector_selftest():
+    return gap_detector.run_selftest()
+
+
+@app.post('/api/plasticity/gap-detector/consolidate')
+async def plasticity_gap_detector_consolidate():
+    return gap_detector.consolidate_open_cluster_duplicates()
+
+
+@app.get('/api/plasticity/organic-feed/status')
+async def plasticity_organic_feed_status(limit: int = 20):
+    return organic_eval_feed.status(limit=limit)
+
+
+@app.post('/api/plasticity/organic-feed/bootstrap')
+async def plasticity_organic_feed_bootstrap(alert: str = 'critic_overconfident', count: int = 3):
+    return organic_eval_feed.bootstrap_organic_volume(alert=alert, count=count)
+
+
+@app.get('/api/plasticity/cognitive-patch-loop/status')
+async def plasticity_cognitive_patch_loop_status(limit: int = 20):
+    return cognitive_patch_loop.status(limit=limit)
+
+
+@app.post('/api/plasticity/cognitive-patch-loop/run')
+async def plasticity_cognitive_patch_loop_run(limit: int = 5):
+    return cognitive_patch_loop.autorun_once(limit=limit)
+
+
+@app.post('/api/plasticity/cognitive-patch-loop/scan-and-run')
+async def plasticity_cognitive_patch_loop_scan_and_run(scan_limit: int = 80, process_limit: int = 5):
+    return cognitive_patch_loop.scan_and_autorun(scan_limit=scan_limit, process_limit=process_limit)
+
+
+@app.post('/api/plasticity/cognitive-patch-loop/selftest')
+async def plasticity_cognitive_patch_loop_selftest():
+    return cognitive_patch_loop.run_selftest()
+
+
+@app.post('/api/plasticity/cognitive-patches/{patch_id}/shadow-eval')
+async def run_cognitive_patch_shadow_eval(patch_id: str, req: ShadowEvalRunRequest):
+    result = shadow_eval.compare_patch_candidate(patch_id, [c.model_dump() for c in req.cases])
+    if not result:
+        raise HTTPException(404, 'patch not found')
+    auto_followup: dict[str, Any] | None = None
+    if str(result.get('decision') or '') == 'fail':
+        rejected = cognitive_patches.reject_patch(
+            patch_id,
+            reason='shadow_eval_failed',
+            evidence_refs=[f"shadow_eval:{patch_id}:{int(time.time())}"],
+        )
+        auto_followup = {
+            'action': 'reject',
+            'patch_status': (rejected or {}).get('status'),
+        }
+    else:
+        current_patch = cognitive_patches.get_patch(patch_id) or {}
+        canary_state = current_patch.get('canary_state') if isinstance(current_patch.get('canary_state'), dict) else {}
+        if bool(canary_state.get('enabled')):
+            gate = promotion_gate.evaluate_patch_for_promotion(patch_id)
+            auto_followup = {
+                'action': 'promotion_gate',
+                'result': gate,
+            }
+    store.db.add_event(
+        'cognitive_patch_shadow_eval',
+        f"🧪 shadow eval executado para patch: {patch_id}",
+        meta_json=json.dumps({'patch_id': patch_id, 'decision': result.get('decision'), 'delta': result.get('delta'), 'auto_followup': auto_followup}, ensure_ascii=False),
+    )
+    return {**result, 'auto_followup': auto_followup}
+
+
+@app.post('/api/plasticity/shadow-eval/selftest')
+async def plasticity_shadow_eval_selftest():
+    return shadow_eval.run_selftest()
+
+
+@app.post('/api/plasticity/cognitive-patches/{patch_id}/canary')
+async def start_cognitive_patch_canary(patch_id: str, req: ShadowEvalCanaryRequest):
+    result = shadow_eval.start_canary(patch_id, rollout_pct=req.rollout_pct, domains=req.domains, note=req.note)
+    if not result:
+        raise HTTPException(404, 'patch not found')
+    auto_followup: dict[str, Any] | None = None
+    current_patch = cognitive_patches.get_patch(patch_id) or {}
+    shadow_metrics = current_patch.get('shadow_metrics') if isinstance(current_patch.get('shadow_metrics'), dict) else {}
+    if str(shadow_metrics.get('decision') or '') == 'pass':
+        gate = promotion_gate.evaluate_patch_for_promotion(patch_id)
+        auto_followup = {
+            'action': 'promotion_gate',
+            'result': gate,
+        }
+    store.db.add_event(
+        'cognitive_patch_canary_started',
+        f"🚦 canary iniciado para patch: {patch_id}",
+        meta_json=json.dumps({'patch_id': patch_id, 'rollout_pct': req.rollout_pct, 'domains': req.domains, 'auto_followup': auto_followup}, ensure_ascii=False),
+    )
+    return {**result, 'auto_followup': auto_followup}
+
+
+@app.post('/api/plasticity/cognitive-patches/{patch_id}/promotion-gate')
+async def evaluate_cognitive_patch_promotion_gate(patch_id: str):
+    result = promotion_gate.evaluate_patch_for_promotion(patch_id)
+    if not result:
+        raise HTTPException(404, 'patch not found')
+    store.db.add_event(
+        'cognitive_patch_promotion_gate',
+        f"🚪 promotion gate avaliado para patch: {patch_id}",
+        meta_json=json.dumps({'patch_id': patch_id, 'decision': result.get('decision'), 'blockers': result.get('blockers')}, ensure_ascii=False),
+    )
+    return result
+
+
+@app.post('/api/plasticity/promotion-gate/selftest')
+async def plasticity_promotion_gate_selftest():
+    return promotion_gate.run_selftest()
+
+
+@app.post('/api/plasticity/cognitive-patches/{patch_id}/auto-rollback')
+async def auto_rollback_cognitive_patch(patch_id: str, req: MutationDecisionRequest):
+    result = rollback_manager.auto_rollback_if_needed(patch_id, note=req.reason)
+    if not result:
+        raise HTTPException(404, 'patch not found')
+    store.db.add_event(
+        'cognitive_patch_auto_rollback',
+        f"⛑️ auto rollback avaliado para patch: {patch_id}",
+        meta_json=json.dumps({'patch_id': patch_id, 'rolled_back': result.get('rolled_back')}, ensure_ascii=False),
+    )
+    return result
+
+
+@app.post('/api/plasticity/rollback-manager/selftest')
+async def plasticity_rollback_manager_selftest():
+    return rollback_manager.run_selftest()
+
+
+@app.post('/api/plasticity/benchmarks/freeze-baseline')
+async def plasticity_benchmarks_freeze_baseline():
+    result = benchmark_suite.freeze_baseline()
+    return result
+
+
+@app.post('/api/plasticity/benchmarks/run')
+async def plasticity_benchmarks_run():
+    result = benchmark_suite.run_suite()
+    return result
+
+
+@app.post('/api/plasticity/benchmarks/selftest')
+async def plasticity_benchmarks_selftest():
+    return benchmark_suite.run_selftest()
+
+
+@app.get('/api/roadmap/status')
+async def roadmap_macro_status():
+    return roadmap_status.macro_status()
+
+
+@app.get('/api/roadmap/items')
+async def roadmap_item_status():
+    return roadmap_status.item_summary()
+
+
+@app.get('/api/roadmap/scorecard')
+async def roadmap_scorecard():
+    return roadmap_status.scorecard()
+
+
+@app.get('/api/evals/external/status')
+async def external_benchmarks_status():
+    return external_benchmarks.status()
+
+
+@app.get('/api/evals/external/suite')
+async def external_benchmarks_suite():
+    return external_benchmarks.list_suite()
+
+
+@app.get('/api/evals/external/runs')
+async def external_benchmarks_runs(limit: int = 10):
+    return external_benchmarks.recent_runs(limit=limit)
+
+
+@app.get('/api/evals/external/audit')
+async def external_benchmarks_audit():
+    return external_benchmarks.suite_audit()
+
+
+@app.get('/api/evals/external/compare-baseline')
+async def external_benchmarks_compare_baseline(run_id: Optional[str] = None):
+    return external_benchmarks.compare_to_baseline(run_id=run_id)
+
+
+@app.post('/api/evals/external/run')
+async def external_benchmarks_run(req: ExternalBenchmarkRunRequest):
+    return external_benchmarks.run_suite(
+        benchmark_ids=req.benchmark_ids,
+        families=req.families,
+        splits=req.splits,
+        limit_per_benchmark=req.limit_per_benchmark,
+        strategy=str(req.strategy or 'cheap'),
+        predictor=str(req.predictor or 'llm'),
+        tag=req.tag,
+    )
+
+
+@app.post('/api/evals/external/freeze-baseline')
+async def external_benchmarks_freeze_baseline(req: ExternalBenchmarkBaselineRequest):
+    return external_benchmarks.freeze_baseline(
+        benchmark_ids=req.benchmark_ids,
+        families=req.families,
+        splits=req.splits,
+        limit_per_benchmark=req.limit_per_benchmark,
+        strategy=str(req.strategy or 'cheap'),
+        predictor=str(req.predictor or 'llm'),
+        label=req.label,
+    )
+
+
+@app.post('/api/evals/external/selftest')
+async def external_benchmarks_selftest():
+    return external_benchmarks.run_selftest()
+
+
+@app.get('/api/plasticity/cognitive-patches/{patch_id}')
+async def get_cognitive_patch(patch_id: str):
+    row = cognitive_patches.get_patch(patch_id)
+    if not row:
+        raise HTTPException(404, 'patch not found')
+    return row
+
+
+@app.post('/api/plasticity/cognitive-patches')
+async def create_cognitive_patch(req: CognitivePatchCreateRequest):
+    item = cognitive_patches.create_patch(req.model_dump())
+    store.db.add_event(
+        'cognitive_patch_created',
+        f"🧠 cognitive patch criado: {item.get('id')} {item.get('kind')}",
+        meta_json=json.dumps({'patch_id': item.get('id'), 'problem_pattern': item.get('problem_pattern')}, ensure_ascii=False),
+    )
+    return item
+
+
+@app.post('/api/plasticity/cognitive-patches/{patch_id}/update')
+async def update_cognitive_patch(patch_id: str, req: CognitivePatchUpdateRequest):
+    patch = {k: v for k, v in req.model_dump().items() if v is not None}
+    item = cognitive_patches.append_revision(patch_id, patch, new_status=req.status)
+    if not item:
+        raise HTTPException(404, 'patch not found')
+    store.db.add_event(
+        'cognitive_patch_updated',
+        f"✏️ cognitive patch atualizado: {patch_id}",
+        meta_json=json.dumps({'patch_id': patch_id, 'status': item.get('status')}, ensure_ascii=False),
+    )
+    return item
+
+
+@app.post('/api/plasticity/cognitive-patches/{patch_id}/promote')
+async def promote_cognitive_patch(patch_id: str, req: MutationDecisionRequest):
+    item = cognitive_patches.promote_patch(patch_id, note=req.reason)
+    if not item:
+        raise HTTPException(404, 'patch not found')
+    store.db.add_event(
+        'cognitive_patch_promoted',
+        f"🟢 cognitive patch promovido: {patch_id}",
+        meta_json=json.dumps({'patch_id': patch_id, 'reason': req.reason}, ensure_ascii=False),
+    )
+    return {'status': 'promoted', 'patch': item, 'registry': cognitive_patches.stats()}
+
+
+@app.post('/api/plasticity/cognitive-patches/{patch_id}/reject')
+async def reject_cognitive_patch(patch_id: str, req: MutationDecisionRequest):
+    item = cognitive_patches.reject_patch(patch_id, reason=req.reason)
+    if not item:
+        raise HTTPException(404, 'patch not found')
+    store.db.add_event(
+        'cognitive_patch_rejected',
+        f"🟠 cognitive patch rejeitado: {patch_id}",
+        meta_json=json.dumps({'patch_id': patch_id, 'reason': req.reason}, ensure_ascii=False),
+    )
+    return {'status': 'rejected', 'patch': item, 'registry': cognitive_patches.stats()}
+
+
+@app.post('/api/plasticity/cognitive-patches/{patch_id}/rollback')
+async def rollback_cognitive_patch(patch_id: str, req: MutationDecisionRequest):
+    item = cognitive_patches.rollback_patch(patch_id, rollback_ref='manual', note=req.reason)
+    if not item:
+        raise HTTPException(404, 'patch not found')
+    store.db.add_event(
+        'cognitive_patch_rollback',
+        f"🔴 cognitive patch revertido: {patch_id}",
+        meta_json=json.dumps({'patch_id': patch_id, 'reason': req.reason}, ensure_ascii=False),
+    )
+    return {'status': 'rolled_back', 'patch': item, 'registry': cognitive_patches.stats()}
 
 
 # --- Neuroplasticidade Fase 1 (safe mutate loop) ---
@@ -9634,10 +11449,95 @@ async def workspace_publish(req: WorkspacePublishRequest):
     return {"status": "ok", "id": wid}
 
 
+@app.post("/api/workspace/broadcast")
+async def workspace_broadcast(req: WorkspaceBroadcastRequest):
+    ids = []
+    for ch in req.channels[:12]:
+        wid = _workspace_publish(req.module, str(ch), req.payload or {}, salience=float(req.salience), ttl_sec=int(req.ttl_sec))
+        if wid:
+            ids.append(wid)
+    return {"status": "ok", "ids": ids, "count": len(ids)}
+
+
+@app.post("/api/workspace/consume")
+async def workspace_consume(req: WorkspaceConsumeRequest):
+    ok = store.mark_workspace_consumed(int(req.item_id), str(req.consumer_module))
+    return {"status": "ok" if ok else "miss", "consumed": bool(ok)}
+
+
 @app.get("/api/workspace/read")
 async def workspace_read(limit: int = 30, channels: str = "", include_expired: bool = False):
     chs = [c.strip() for c in channels.split(",") if c.strip()] if channels else None
     return {"items": store.read_workspace(channels=chs, limit=limit, include_expired=include_expired)}
+
+
+@app.get("/api/workspace/status")
+async def workspace_status(limit: int = 80):
+    return _workspace_status(limit=limit)
+
+
+@app.get("/api/workspace/authorship")
+async def workspace_authorship(limit: int = 40):
+    return _workspace_authorship_snapshot(limit=limit)
+
+
+@app.get("/api/authorship/trace")
+async def authorship_trace(limit: int = 40):
+    return _authorship_trace_snapshot(limit=limit)
+
+
+@app.get("/api/authorship/status")
+async def authorship_status(limit: int = 40):
+    return _authorship_trace_snapshot(limit=limit)
+
+
+@app.get("/api/meta-observer/status")
+async def meta_observer_status(limit: int = 80):
+    return _meta_observer_snapshot(limit=limit)
+
+
+@app.get("/api/affect/status")
+async def affect_status(limit: int = 80):
+    return _artificial_affect_snapshot(limit=limit)
+
+
+@app.get("/api/affect/workspace")
+async def affect_workspace(limit: int = 20):
+    return {"items": store.read_workspace(channels=['affect.state', 'policy.risk'], limit=limit, include_expired=False)}
+
+
+@app.get("/api/integration-proxy/status")
+async def integration_proxy_status(limit: int = 100):
+    return _integration_proxy_snapshot(limit=limit)
+
+
+@app.get("/api/integration-proxy/workspace")
+async def integration_proxy_workspace(limit: int = 20):
+    return {"items": store.read_workspace(channels=['integration.proxy'], limit=limit, include_expired=False)}
+
+
+@app.get('/api/operational-consciousness/benchmark/status')
+async def operational_consciousness_benchmark_status(limit: int = 20):
+    return {
+        'baseline': operational_consciousness_benchmark.baseline_status(),
+        'recent_runs': operational_consciousness_benchmark.recent_runs(limit=limit),
+    }
+
+
+@app.post('/api/operational-consciousness/benchmark/freeze-baseline')
+async def operational_consciousness_benchmark_freeze_baseline(tag: str = 'manual', limit: int = 100):
+    snap = _operational_consciousness_snapshot(limit=limit)
+    out = operational_consciousness_benchmark.freeze_baseline(snap, tag=tag)
+    store.db.add_event('operational_consciousness_baseline', f"🧊 operational consciousness baseline score={((out.get('evaluation') or {}).get('benchmark_score'))}")
+    return out
+
+
+@app.post('/api/operational-consciousness/benchmark/run')
+async def operational_consciousness_benchmark_run(compare_to_baseline: bool = True, tag: str = '', limit: int = 100):
+    snap = _operational_consciousness_snapshot(limit=limit)
+    out = operational_consciousness_benchmark.run(snap, compare_to_baseline=compare_to_baseline, tag=tag)
+    store.db.add_event('operational_consciousness_benchmark', f"🧠 operational consciousness benchmark score={(((out.get('evaluation') or {}).get('benchmark_score')))}")
+    return out
 
 
 @app.get("/api/goals")

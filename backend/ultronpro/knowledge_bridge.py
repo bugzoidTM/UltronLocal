@@ -148,12 +148,10 @@ def _extract_context_any(data) -> str:
     if isinstance(data, list):
         return "\n".join([_extract_context_any(x) for x in data[:6] if _extract_context_any(x)])
     if isinstance(data, dict):
-        # chaves comuns em variações de API
         for k in ("context", "response", "result", "answer", "text", "content"):
             v = data.get(k)
             if v:
                 return _extract_context_any(v)
-        # fallback: serializa campos curtos
         parts = []
         for k, v in list(data.items())[:8]:
             sv = _extract_context_any(v)
@@ -161,6 +159,110 @@ def _extract_context_any(data) -> str:
                 parts.append(f"{k}: {sv}")
         return "\n".join(parts)
     return str(data)
+
+
+def _collect_candidate_texts(data, depth: int = 0) -> list[dict]:
+    if depth > 5 or data is None:
+        return []
+    out: list[dict] = []
+    if isinstance(data, str):
+        s = data.strip()
+        if len(s) >= 40:
+            out.append({'text': s, 'meta': {}})
+        return out
+    if isinstance(data, list):
+        for item in data[:20]:
+            out.extend(_collect_candidate_texts(item, depth + 1))
+        return out
+    if isinstance(data, dict):
+        meta = {}
+        for mk in ('id', 'doc_id', 'source', 'source_id', 'file_path', 'title', 'chunk_id'):
+            if data.get(mk) is not None:
+                meta[mk] = data.get(mk)
+        for key in ('chunks', 'results', 'items', 'data', 'matches', 'documents', 'contexts', 'sources'):
+            if isinstance(data.get(key), list):
+                for item in data.get(key)[:20]:
+                    out.extend(_collect_candidate_texts(item, depth + 1))
+        for key in ('context', 'response', 'result', 'answer', 'text', 'content', 'summary'):
+            val = data.get(key)
+            if isinstance(val, str) and len(val.strip()) >= 40:
+                out.append({'text': val.strip(), 'meta': meta})
+            elif isinstance(val, (dict, list)):
+                out.extend(_collect_candidate_texts(val, depth + 1))
+        return out
+    return out
+
+
+def _split_text_chunks(text: str, chunk_size: int = 700, overlap: int = 120) -> list[str]:
+    raw = str(text or '').strip()
+    if not raw:
+        return []
+    paras = [p.strip() for p in re.split(r'\n\s*\n+', raw) if p.strip()]
+    if not paras:
+        paras = [raw]
+    chunks: list[str] = []
+    buf = ''
+    for para in paras:
+        if len(para) <= chunk_size:
+            cand = (buf + '\n\n' + para).strip() if buf else para
+            if len(cand) <= chunk_size:
+                buf = cand
+            else:
+                if buf:
+                    chunks.append(buf)
+                buf = para
+        else:
+            if buf:
+                chunks.append(buf)
+                buf = ''
+            for i in range(0, len(para), max(1, chunk_size - overlap)):
+                piece = para[i:i + chunk_size].strip()
+                if len(piece) >= 80:
+                    chunks.append(piece)
+    if buf:
+        chunks.append(buf)
+    return chunks[:24]
+
+
+def _normalize_hits(query: str, data, top_k: int) -> List[Dict]:
+    candidates = _collect_candidate_texts(data)
+    if not candidates:
+        context = _extract_context_any(data)
+        if context:
+            candidates = [{'text': context, 'meta': {}}]
+
+    hits: list[Dict] = []
+    for cand in candidates[:12]:
+        base_text = str(cand.get('text') or '').strip()
+        meta = dict(cand.get('meta') or {})
+        for idx, chunk in enumerate(_split_text_chunks(base_text)):
+            score = _relevance_score(query, chunk)
+            qscore = _quality_score(chunk, str(meta.get('source') or meta.get('source_id') or 'lightrag'))
+            combined = round((0.7 * score) + (0.3 * qscore), 4)
+            if combined < float(os.getenv('ULTRON_LIGHTRAG_MIN_SEARCH_SCORE', '0.08') or 0.08):
+                continue
+            hits.append({
+                'text': chunk[:1600],
+                'source_id': str(meta.get('source_id') or meta.get('doc_id') or meta.get('id') or 'lightrag'),
+                'score': combined,
+                'lexical_score': score,
+                'quality_score': qscore,
+                'type': 'experience',
+                'task_type': _infer_task_type(chunk),
+                'title': str(meta.get('title') or '')[:160],
+                'chunk_id': f"{meta.get('chunk_id') or meta.get('id') or 'chunk'}:{idx}",
+            })
+    dedup: list[Dict] = []
+    seen = set()
+    for h in sorted(hits, key=lambda x: float(x.get('score') or 0.0), reverse=True):
+        sig = (str(h.get('source_id') or ''), str(h.get('text') or '')[:240])
+        if sig in seen:
+            continue
+        seen.add(sig)
+        dedup.append(h)
+        if len(dedup) >= max(1, int(top_k)):
+            break
+    return dedup
 
 
 async def search_knowledge(query: str, top_k: int = 5) -> List[Dict]:
@@ -173,7 +275,7 @@ async def search_knowledge(query: str, top_k: int = 5) -> List[Dict]:
     base = url.rstrip("/")
     payload = {
         "query": query,
-        "mode": "mix",
+        "mode": str(os.getenv('ULTRON_LIGHTRAG_QUERY_MODE', 'naive')).strip() or 'naive',
         "top_k": int(top_k),
         "only_need_context": True,
     }
@@ -181,6 +283,7 @@ async def search_knowledge(query: str, top_k: int = 5) -> List[Dict]:
     endpoints = [f"{base}/query", f"{base}/query/data"]
 
     try:
+        timeout_s = float(os.getenv('ULTRON_LIGHTRAG_SEARCH_TIMEOUT', '8') or 8)
         async with httpx.AsyncClient() as client:
             last_err = None
             for ep in endpoints:
@@ -189,26 +292,33 @@ async def search_knowledge(query: str, top_k: int = 5) -> List[Dict]:
                         ep,
                         headers={"X-API-Key": key},
                         json=payload,
-                        timeout=20.0,
+                        timeout=timeout_s,
                     )
                     if resp.status_code >= 400:
                         last_err = f"{ep} -> {resp.status_code}"
                         continue
 
                     data = resp.json()
+                    hits = _normalize_hits(query, data, top_k=int(top_k))
+                    if hits:
+                        return hits
                     context = _extract_context_any(data)
                     if not context:
                         continue
 
                     text = str(context)
                     ttype = _infer_task_type(text)
-                    score = _relevance_score(query, text)
+                    score = round((0.7 * _relevance_score(query, text)) + (0.3 * _quality_score(text, 'lightrag')), 4)
                     return [{
-                        "text": text[:2500],
+                        "text": text[:1600],
                         "source_id": "lightrag",
                         "score": score,
+                        "lexical_score": _relevance_score(query, text),
+                        "quality_score": _quality_score(text, 'lightrag'),
                         "type": "experience",
                         "task_type": ttype,
+                        "chunk_id": "fallback:0",
+                        "title": "",
                     }]
                 except Exception as e:
                     last_err = str(e)
