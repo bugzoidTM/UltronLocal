@@ -496,7 +496,7 @@ _Atualização 2026-03-19: já existia base operacional de workspace global no c
 Observação conceitual: esta fase é inspirada por ideias de acesso global, integração, metacognição e autorrelato, mas não deve ser tratada como prova de consciência fenomenal. Global workspace e metacognição são boas inspirações arquiteturais; métricas tipo phi entram apenas como proxies exploratórios.
 
 ## 5.1 Espaço de trabalho global
-_Status: [EM ANDAMENTO 62%]_
+_Status: [EM ANDAMENTO 63%]_
 
 ### Objetivo
 Criar um núcleo compartilhado de foco atual, acessível por todos os módulos relevantes.
@@ -508,16 +508,16 @@ Criar um núcleo compartilhado de foco atual, acessível por todos os módulos r
 - [FEITO] Persistência temporal curta com snapshots
 
 ### Critério de pronto
-- [EM ANDAMENTO 55%] planner/reflexion/judge/self-model/TOM/metacognition já escrevem ou observam o mesmo espaço operacional; ainda falta fechar causal engine e cobertura total de consumidores
+- [EM ANDAMENTO 60%] planner/reflexion/judge/self-model/TOM/metacognition já escrevem ou observam o mesmo espaço operacional; agora o ciclo de aprendizagem autônoma (`autofeeder`/sync LightRAG) também publica em `learning.ingest`, `learning.agenda` e `learning.lightrag_sync`; ainda falta fechar causal engine e cobertura total de consumidores
 
 ## 5.2 Atenção competitiva e broadcast global
-_Status: [EM ANDAMENTO 56%]_
+_Status: [EM ANDAMENTO 59%]_
 
 - [FEITO] Score de saliência por item
 - [EM ANDAMENTO 46%] Fatores de saliência agora podem receber viés de atenção vindo de `affect.state`/`policy.risk`
 - [EM ANDAMENTO 42%] Mecanismo de seleção top-k via `top_salience`/`competition_index`
 - [FEITO] Broadcast para módulos consumidores
-- [EM ANDAMENTO 48%] Registro do que ganhou e do que foi ignorado
+- [EM ANDAMENTO 54%] Registro do que ganhou e do que foi ignorado; eventos de aprendizado recente agora entram no workspace e passam a competir por saliência com outros fluxos operacionais
 
 ## 5.3 Sentido de agência e autoria
 _Status: [EM ANDAMENTO 63%]_
@@ -554,20 +554,20 @@ _Status: [EM ANDAMENTO 32%]_
 - [EM ANDAMENTO 20%] Integração com planner e causal engine
 
 ## 5.7 Observador de segunda ordem
-_Status: [EM ANDAMENTO 68%]_
+_Status: [EM ANDAMENTO 71%]_
 
 - [EM ANDAMENTO 68%] `reflexion_agent`, `internal_critic` e metacognição parcial já existem
 - [FEITO] Módulo `meta_observer` explícito
 - [FEITO] Relatório periódico do foco/competição/autoria/incerteza/conflitos disponível por endpoint dedicado
-- [EM ANDAMENTO 48%] Encaminhamento sistemático para reflexion via publicação de `reflexion.trigger`
+- [EM ANDAMENTO 54%] Encaminhamento sistemático para reflexion via publicação de `reflexion.trigger`; `meta_observer` agora também enxerga snapshot explícito de aprendizado recente
 
 ## 5.8 Eu narrativo contínuo
-_Status: [EM ANDAMENTO 62%]_
+_Status: [EM ANDAMENTO 65%]_
 
 - [EM ANDAMENTO 55%] `identity_daily` e registros parciais já dão embrião autobiográfico
 - [FEITO] `autobiographical_summary`
 - [EM ANDAMENTO 60%] atualização após promoções, crises, reparos e transferências
-- [EM ANDAMENTO 45%] uso em decisões importantes via publicação contínua em `self.narrative`
+- [EM ANDAMENTO 52%] uso em decisões importantes via publicação contínua em `self.narrative`; narrativa agora carrega `learning_recent` e publica `self.learning` quando há aquisição autônoma recente
 
 ## 5.9 Proxy de integração interna
 _Status: [EM ANDAMENTO 74%]_

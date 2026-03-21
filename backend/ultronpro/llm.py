@@ -42,9 +42,9 @@ def _env_int(name: str, default: int) -> int:
 
 # LLM Routing Strategy
 PRIMARY_LOCAL_PROVIDER = os.getenv('ULTRON_PRIMARY_LOCAL_PROVIDER', 'ollama_local').strip().lower() or 'ollama_local'
-PRIMARY_LOCAL_MODEL = os.getenv('ULTRON_PRIMARY_LOCAL_MODEL', os.getenv('OLLAMA_CANARY_MODEL', 'qwen2.5:3b-instruct-q4_K_M'))
+PRIMARY_LOCAL_MODEL = os.getenv('ULTRON_PRIMARY_LOCAL_MODEL', os.getenv('ULTRON_INFER_MODEL_NAME', os.getenv('ULTRON_OLLAMA_LOCAL_MODEL', os.getenv('OLLAMA_CANARY_MODEL', 'local-fallback'))))
 CANARY_PROVIDER = os.getenv('ULTRON_CANARY_PROVIDER', PRIMARY_LOCAL_PROVIDER).strip().lower() or PRIMARY_LOCAL_PROVIDER
-CANARY_MODEL = os.getenv('ULTRON_CANARY_MODEL_NAME', os.getenv('OLLAMA_CANARY_MODEL', 'qwen2.5:7b-instruct-q4_K_M'))
+CANARY_MODEL = os.getenv('ULTRON_CANARY_MODEL_NAME', os.getenv('ULTRON_PRIMARY_LOCAL_MODEL', os.getenv('ULTRON_INFER_MODEL_NAME', os.getenv('ULTRON_OLLAMA_LOCAL_MODEL', os.getenv('OLLAMA_CANARY_MODEL', 'local-fallback')))))
 PREFER_ULTRON_INFER = os.getenv('ULTRON_PREFER_ULTRON_INFER', '0') == '1'
 
 MODELS = {
@@ -347,7 +347,7 @@ class LLMRouter:
                     ol = self._get_client('ollama_local')
                     if ol:
                         provider = 'ollama_local'
-                        model = os.getenv('OLLAMA_CANARY_MODEL', MODELS['canary_qwen']['model'])
+                        model = os.getenv('ULTRON_OLLAMA_LOCAL_MODEL', MODELS['local']['model'])
                         client = ol
                     else:
                         ui = self._get_client('ultron_infer')
@@ -364,13 +364,13 @@ class LLMRouter:
                 first = self._get_client(first_provider)
                 if first:
                     provider = first_provider
-                    model = MODELS['local']['model'] if first_provider == 'ultron_infer' else os.getenv('OLLAMA_CANARY_MODEL', MODELS['canary_qwen']['model'])
+                    model = MODELS['local']['model'] if first_provider == 'ultron_infer' else os.getenv('ULTRON_OLLAMA_LOCAL_MODEL', MODELS['local']['model'])
                     client = first
                 else:
                     second = self._get_client(second_provider)
                     if second:
                         provider = second_provider
-                        model = MODELS['local']['model'] if second_provider == 'ultron_infer' else os.getenv('OLLAMA_CANARY_MODEL', MODELS['canary_qwen']['model'])
+                        model = MODELS['local']['model'] if second_provider == 'ultron_infer' else os.getenv('ULTRON_OLLAMA_LOCAL_MODEL', MODELS['local']['model'])
                         client = second
                     else:
                         client = self._get_client(provider)
@@ -397,7 +397,7 @@ class LLMRouter:
                 ol = self._get_client('ollama_local')
                 if ol:
                     provider = 'ollama_local'
-                    model = os.getenv('OLLAMA_CANARY_MODEL', MODELS['canary_qwen']['model'])
+                    model = os.getenv('ULTRON_OLLAMA_LOCAL_MODEL', MODELS['local']['model'])
                     client = ol
                 else:
                     # economic hard-fallback: local ultron_infer before paid/rate-limited cloud
@@ -465,7 +465,7 @@ class LLMRouter:
             self._touch(provider, ok=False, err=str(e))
             logger.error(f"LLM Call Error ({provider}/{model}): {e}")
 
-            # retry on alternative providers before touching local
+            # retry on alternative providers first, then use configured local fallback.
             if cloud_fallback:
                 for cand in llm_adapter.provider_priority(task_type=task_type, budget_mode=budget_mode):
                     if cand in ('ollama_local', 'ultron_infer') or cand == provider:
@@ -487,6 +487,23 @@ class LLMRouter:
                         if cand == 'groq':
                             return self._call_openai_compat(c, MODELS['cheap']['model'], prompt, system, json_mode, provider='groq', max_tokens=max_tokens)
                         return self._call_openai_compat(c, 'gpt-4o-mini', prompt, system, json_mode, provider='openai', max_tokens=max_tokens)
+                    except Exception:
+                        continue
+
+                local_retry_order = []
+                primary_local = str(PRIMARY_LOCAL_PROVIDER or '').strip().lower()
+                for cand in [primary_local, 'ultron_infer', 'ollama_local']:
+                    if cand and cand not in local_retry_order and cand != provider:
+                        local_retry_order.append(cand)
+                for cand in local_retry_order:
+                    try:
+                        c = self._get_client(cand)
+                        if not c:
+                            continue
+                        if cand == 'ultron_infer':
+                            return self._call_ultron_infer(c, MODELS['local']['model'], prompt, system, json_mode, max_tokens=max_tokens)
+                        if cand in ('ollama_local', 'ollama'):
+                            return self._call_ollama(c, MODELS['local']['model'], prompt, system, json_mode, max_tokens=max_tokens, provider_label=cand)
                     except Exception as e2:
                         self._touch(cand, ok=False, err=str(e2))
                         continue

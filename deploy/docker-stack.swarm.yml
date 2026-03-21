@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   ultronpro:
-    image: ultronpro:phase5-gemini-20260319-222213
+    image: ultronpro:phase4-lineage-20260319-171533
     ports:
       - target: 8000
         published: 8000
@@ -14,7 +14,8 @@ services:
       - ULTRON_PRIMARY_LOCAL_PROVIDER=gemini
       - ULTRON_CANARY_PROVIDER=gemini
       - OLLAMA_BASE_URL_LOCAL=http://78.138.0.84:11434
-      - OLLAMA_CANARY_MODEL=qwen2.5:3b-instruct-q4_K_M
+      - ULTRON_INFER_MODEL_NAME=ultron_infer
+      - ULTRON_OLLAMA_LOCAL_MODEL=ollama_local
       - GEMINI_DEFAULT_MODEL=gemini-3-flash-preview
       - GEMINI_API_KEY=AIzaSyCaghCwHlT6dBI5dc2xGbnMewUkPeQRLq4
       - ULTRON_DISABLE_OLLAMA_LOCAL=1
@@ -64,7 +65,7 @@ services:
         - traefik.http.routers.ultronpro.tls.certresolver=letsencryptresolver
         - traefik.http.services.ultronpro.loadbalancer.server.port=8000
   ultronpro_autonomy:
-    image: ultronpro_backend:local
+    image: ultronpro:phase4-lineage-20260319-171533
     command: ["python", "-m", "ultronpro.autonomy_worker"]
     environment:
       - METACOG_QWEN_MAIN=0
@@ -72,7 +73,8 @@ services:
       - ULTRON_PRIMARY_LOCAL_PROVIDER=gemini
       - ULTRON_CANARY_PROVIDER=gemini
       - OLLAMA_BASE_URL_LOCAL=http://78.138.0.84:11434
-      - OLLAMA_CANARY_MODEL=qwen2.5:3b-instruct-q4_K_M
+      - ULTRON_INFER_MODEL_NAME=ultron_infer
+      - ULTRON_OLLAMA_LOCAL_MODEL=ollama_local
       - GEMINI_DEFAULT_MODEL=gemini-3-flash-preview
       - GEMINI_API_KEY=AIzaSyCaghCwHlT6dBI5dc2xGbnMewUkPeQRLq4
       - ULTRON_DISABLE_OLLAMA_LOCAL=1
@@ -101,7 +103,7 @@ services:
         condition: on-failure
 
   ultronpro_judge:
-    image: ultronpro_backend:local
+    image: ultronpro:phase4-lineage-20260319-171533
     command: ["python", "-m", "ultronpro.judge_worker"]
     environment:
       - METACOG_QWEN_MAIN=0
@@ -109,7 +111,8 @@ services:
       - ULTRON_PRIMARY_LOCAL_PROVIDER=gemini
       - ULTRON_CANARY_PROVIDER=gemini
       - OLLAMA_BASE_URL_LOCAL=http://78.138.0.84:11434
-      - OLLAMA_CANARY_MODEL=qwen2.5:3b-instruct-q4_K_M
+      - ULTRON_INFER_MODEL_NAME=ultron_infer
+      - ULTRON_OLLAMA_LOCAL_MODEL=ollama_local
       - GEMINI_DEFAULT_MODEL=gemini-3-flash-preview
       - GEMINI_API_KEY=AIzaSyCaghCwHlT6dBI5dc2xGbnMewUkPeQRLq4
       - ULTRON_DISABLE_OLLAMA_LOCAL=1
@@ -137,7 +140,7 @@ services:
         condition: on-failure
 
   ultronpro_reflexion:
-    image: ultronpro_backend:local
+    image: ultronpro:phase4-lineage-20260319-171533
     command: ["python", "-m", "ultronpro.reflexion_worker"]
     environment:
       - METACOG_QWEN_MAIN=0
@@ -145,7 +148,8 @@ services:
       - ULTRON_PRIMARY_LOCAL_PROVIDER=gemini
       - ULTRON_CANARY_PROVIDER=gemini
       - OLLAMA_BASE_URL_LOCAL=http://78.138.0.84:11434
-      - OLLAMA_CANARY_MODEL=qwen2.5:3b-instruct-q4_K_M
+      - ULTRON_INFER_MODEL_NAME=ultron_infer
+      - ULTRON_OLLAMA_LOCAL_MODEL=ollama_local
       - GEMINI_DEFAULT_MODEL=gemini-3-flash-preview
       - GEMINI_API_KEY=AIzaSyCaghCwHlT6dBI5dc2xGbnMewUkPeQRLq4
       - ULTRON_DISABLE_OLLAMA_LOCAL=1
@@ -173,7 +177,7 @@ services:
         condition: on-failure
 
   ultronpro_roadmap:
-    image: ultronpro_backend:local
+    image: ultronpro:phase4-lineage-20260319-171533
     command: ["python", "-m", "ultronpro.roadmap_worker"]
     environment:
       - METACOG_QWEN_MAIN=0
@@ -181,7 +185,8 @@ services:
       - ULTRON_PRIMARY_LOCAL_PROVIDER=gemini
       - ULTRON_CANARY_PROVIDER=gemini
       - OLLAMA_BASE_URL_LOCAL=http://78.138.0.84:11434
-      - OLLAMA_CANARY_MODEL=qwen2.5:3b-instruct-q4_K_M
+      - ULTRON_INFER_MODEL_NAME=ultron_infer
+      - ULTRON_OLLAMA_LOCAL_MODEL=ollama_local
       - GEMINI_DEFAULT_MODEL=gemini-3-flash-preview
       - GEMINI_API_KEY=AIzaSyCaghCwHlT6dBI5dc2xGbnMewUkPeQRLq4
       - ULTRON_DISABLE_OLLAMA_LOCAL=1
@@ -208,7 +213,7 @@ services:
         condition: on-failure
 
   ultronpro_agi_path:
-    image: ultronpro_backend:local
+    image: ultronpro:phase4-lineage-20260319-171533
     command: ["python", "-m", "ultronpro.agi_path_worker"]
     environment:
       - METACOG_QWEN_MAIN=0
@@ -216,7 +221,8 @@ services:
       - ULTRON_PRIMARY_LOCAL_PROVIDER=gemini
       - ULTRON_CANARY_PROVIDER=gemini
       - OLLAMA_BASE_URL_LOCAL=http://78.138.0.84:11434
-      - OLLAMA_CANARY_MODEL=qwen2.5:3b-instruct-q4_K_M
+      - ULTRON_INFER_MODEL_NAME=ultron_infer
+      - ULTRON_OLLAMA_LOCAL_MODEL=ollama_local
       - GEMINI_DEFAULT_MODEL=gemini-3-flash-preview
       - GEMINI_API_KEY=AIzaSyCaghCwHlT6dBI5dc2xGbnMewUkPeQRLq4
       - ULTRON_DISABLE_OLLAMA_LOCAL=1

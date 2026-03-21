@@ -918,6 +918,47 @@ def _workspace_authorship_snapshot(limit: int = 40) -> dict:
     }
 
 
+def _learning_recent_snapshot(limit: int = 24) -> dict:
+    try:
+        events = store.db.list_events(limit=max(12, min(120, limit * 4)))
+    except Exception:
+        events = []
+    learn_kinds = {
+        'autofeeder_ingest', 'lightrag_sync', 'lightrag_absorb', 'learning_agenda',
+        'curiosity_probe_auto_ingest', 'explicit_abstraction_ingest'
+    }
+    picked = [e for e in events if str(e.get('kind') or '') in learn_kinds]
+    picked = picked[-max(1, int(limit)):]
+    sources = []
+    kind_counts: dict[str, int] = {}
+    items = []
+    for e in picked:
+        kind = str(e.get('kind') or '')
+        kind_counts[kind] = int(kind_counts.get(kind) or 0) + 1
+        txt = str(e.get('text') or '')
+        src = None
+        for marker in ('de ', 'source=', 'topic=', 'url='):
+            idx = txt.find(marker)
+            if idx >= 0:
+                src = txt[idx:idx+120]
+                break
+        if src:
+            sources.append(src)
+        items.append({
+            'id': e.get('id'),
+            'kind': kind,
+            'text': txt[:220],
+            'created_at': e.get('created_at'),
+        })
+    return {
+        'ok': True,
+        'recent_learning_count': len(picked),
+        'kind_counts': kind_counts,
+        'recent_sources': sources[-8:],
+        'items': items[-8:],
+    }
+
+
 def _meta_observer_snapshot(limit: int = 80) -> dict:
     ws = _workspace_status(limit=limit)
     auth = _workspace_authorship_snapshot(limit=max(20, min(120, limit)))
@@ -957,6 +998,7 @@ def _meta_observer_snapshot(limit: int = 80) -> dict:
         'conflicts': conflicts,
         'uncertainty': uncertainty,
         'dominant_authors': auth.get('authors') or [],
+        'learning_recent': _learning_recent_snapshot(limit=max(8, min(24, limit // 3 or 8))),
     }
     return summary
 
@@ -1052,6 +1094,8 @@ def _integration_proxy_snapshot(limit: int = 100) -> dict:
     ignored = len(meta.get('ignored') or [])
     conflicts = len(meta.get('conflicts') or [])
     continuity_risks = len(narrative.get('continuity_risks') or [])
+    learning_recent = _learning_recent_snapshot(limit=max(10, min(24, limit // 4 or 10)))
+    learning_factor = min(1.0, float(learning_recent.get('recent_learning_count') or 0.0) / 8.0)
 
     broadcast_factor = min(1.0, len(ws.get('channels') or {}) / 8.0)
     consumer_factor = min(1.0, float(ws.get('consumed_items') or 0.0) / max(1.0, float(ws.get('items') or 1.0)))
@@ -1059,7 +1103,7 @@ def _integration_proxy_snapshot(limit: int = 100) -> dict:
     ignored_pressure = min(1.0, ignored / 10.0)
     continuity_pressure = min(1.0, continuity_risks / 5.0)
 
-    internal_integration = max(0.0, min(1.0, 0.34 * integration + 0.18 * agency + 0.16 * coherence + 0.12 * confidence + 0.10 * broadcast_factor + 0.10 * consumer_factor))
+    internal_integration = max(0.0, min(1.0, 0.30 * integration + 0.16 * agency + 0.14 * coherence + 0.10 * confidence + 0.10 * broadcast_factor + 0.10 * consumer_factor + 0.10 * learning_factor))
     fragmentation = max(0.0, min(1.0, 0.34 * uncertainty + 0.20 * conflict_pressure + 0.16 * threat + 0.12 * frustration + 0.10 * ignored_pressure + 0.08 * continuity_pressure))
     self_consistency = max(0.0, min(1.0, 0.55 * coherence + 0.25 * confidence + 0.20 * (1.0 - continuity_pressure)))
     authorship_balance = max(0.0, min(1.0, 0.55 * agency + 0.25 * consumer_factor + 0.20 * (1.0 - competition)))
@@ -1092,6 +1136,7 @@ def _integration_proxy_snapshot(limit: int = 100) -> dict:
         {'name': 'fragmentation', 'value': round(fragmentation, 4)},
         {'name': 'self_consistency', 'value': round(self_consistency, 4)},
         {'name': 'authorship_balance', 'value': round(authorship_balance, 4)},
+        {'name': 'learning_factor', 'value': round(learning_factor, 4)},
     ]
     drivers = sorted(drivers, key=lambda x: float(x.get('value') or 0.0), reverse=True)
 
@@ -1114,10 +1159,12 @@ def _integration_proxy_snapshot(limit: int = 100) -> dict:
             'affect_threat': round(threat, 4),
             'affect_frustration': round(frustration, 4),
             'narrative_coherence': round(coherence, 4),
+            'learning_factor': round(learning_factor, 4),
             'ignored_items': ignored,
             'conflicts': conflicts,
             'continuity_risks': continuity_risks,
         },
+        'learning_recent': learning_recent,
         'thresholds': thresholds,
         'alerts': alerts,
         'top_drivers': drivers,
@@ -5349,6 +5396,22 @@ async def autofeeder_loop():
                         kind='learning_agenda',
                         text=f"🧭 agenda domain={agenda_top} source={result.source_id}"
                     )
+                _workspace_publish('autofeeder', 'learning.ingest', {
+                    'source_id': result.source_id,
+                    'title': result.title,
+                    'modality': result.modality,
+                    'agenda_domain': agenda_top,
+                    'triples_added': int(triples_added or 0),
+                    'rag_ok': bool(rag_ok),
+                    'preview': str(result.text or '')[:240],
+                }, salience=0.74 if rag_ok else 0.67, ttl_sec=3600)
+                if agenda_top:
+                    _workspace_publish('autofeeder', 'learning.agenda', {
+                        'domain': agenda_top,
+                        'source_id': result.source_id,
+                        'title': result.title,
+                        'rag_ok': bool(rag_ok),
+                    }, salience=0.71, ttl_sec=2400)
                 logger.info(
                     f"Autofeeder: Ingested from {result.source_id} (exp_id={exp_id}, extracted={triples_extracted}, added={triples_added})"
                 )
@@ -5368,6 +5431,12 @@ async def autofeeder_loop():
                         kind="lightrag_sync",
                         text=f"🔗 Sincronizado do LightRAG: {doc['summary'][:80]} (+{triples_added} triplas)"
                     )
+                    _workspace_publish('autofeeder', 'learning.lightrag_sync', {
+                        'doc_id': str(doc.get('id') or '')[:80],
+                        'summary': str(doc.get('summary') or '')[:240],
+                        'triples_added': int(triples_added or 0),
+                        'source_id': f"lightrag:{str(doc.get('id') or '')[:8]}",
+                    }, salience=0.72, ttl_sec=3600)
                     logger.info(
                         f"Autofeeder: Synced from LightRAG doc {doc['id'][:8]} (exp_id={exp_id}, added={triples_added})"
                     )
@@ -5530,10 +5599,14 @@ async def narrative_summary_loop():
     while True:
         try:
             snap = self_governance.autobiographical_summary(limit=120)
+            learning_recent = _learning_recent_snapshot(limit=12)
+            snap['learning_recent'] = learning_recent
             coherence = float(((snap.get('current_state') or {}).get('narrative_coherence_score')) or 0.0)
             pending = int(((snap.get('current_state') or {}).get('pending_promises')) or 0)
             salience = 0.60 + min(0.20, (1.0 - coherence) * 0.12 + min(1.0, pending / 50.0) * 0.08)
             _workspace_publish('narrative_self', 'self.narrative', snap, salience=salience, ttl_sec=3600)
+            if int(learning_recent.get('recent_learning_count') or 0) > 0:
+                _workspace_publish('narrative_self', 'self.learning', learning_recent, salience=0.70, ttl_sec=2400)
             if str(snap.get('continuity_posture') or '') == 'fragile':
                 _workspace_publish('narrative_self', 'reflexion.trigger', {
                     'reason': 'narrative_fragility',
@@ -8004,7 +8077,7 @@ def _direct_canary_generate(prompt: str, max_tokens: int = 220) -> str:
         except Exception:
             return ''
     base = os.getenv('OLLAMA_BASE_URL_LOCAL', os.getenv('OLLAMA_BASE_URL', 'http://127.0.0.1:11434')).rstrip('/')
-    model = os.getenv('OLLAMA_CANARY_MODEL', 'qwen2.5:7b-instruct-q4_K_M')
+    model = os.getenv('ULTRON_CANARY_MODEL_NAME', os.getenv('ULTRON_PRIMARY_LOCAL_MODEL', os.getenv('ULTRON_INFER_MODEL_NAME', os.getenv('ULTRON_OLLAMA_LOCAL_MODEL', 'local-fallback'))))
     payload = {
         'model': model,
         'prompt': str(prompt or ''),
@@ -9721,9 +9794,13 @@ def _canary_maybe_disable() -> str | None:
 async def metacognition_ask(req: MetacogAskRequest):
     global _CANARY_DISABLED_UNTIL_TS, _CANARY_DISABLE_REASON
     req_id = f"req_{int(time.time()*1000)}_{secrets.token_hex(4)}"
+    q = str(req.message or '').strip()
+    ql = q.lower()
+
+    # Fast-path for simple identity questions so the frontend chat never depends on
     cfg = _canary_cfg()
     now = int(time.time())
-    qwen_main_enabled = str(os.getenv('METACOG_QWEN_MAIN', '1')).strip().lower() in ('1', 'true', 'yes', 'on')
+    qwen_main_enabled = str(os.getenv('METACOG_QWEN_MAIN', '0')).strip().lower() in ('1', 'true', 'yes', 'on')
     canary_allowed = bool(cfg['enabled']) and now >= int(_CANARY_DISABLED_UNTIL_TS or 0)
     use_canary = qwen_main_enabled or (canary_allowed and (random.random() < max(0.0, min(1.0, cfg['rate']))))
 
@@ -9758,23 +9835,15 @@ async def metacognition_ask(req: MetacogAskRequest):
             except Exception:
                 pass
 
-    # fallback path (tiny/local) if qwen is unavailable or failed
+    # fallback path: always run the real metacognition pipeline.
+    # Do not short-circuit with canned answers; intelligence features
+    # like RAG, semantic cache and normal provider fallback must remain active.
     t0 = time.time()
     try:
-        if str(os.getenv('METACOG_FAST_FALLBACK_ONLY', '0')).strip().lower() in ('1', 'true', 'yes', 'on'):
-            out = {
-                'ok': True,
-                'answer': 'Modo rápido ativo: resposta operacional resumida. Se quiser profundidade, tente de novo quando o backend estiver menos carregado.',
-                'strategy': 'fast_fallback_only',
-                'model': 'tiny',
-                'stage_timing_ms': {'total_ms': 1},
-                'llm_attempts': [],
-            }
-        else:
-            out = await asyncio.wait_for(
-                _metacognition_ask_impl(req),
-                timeout=float(os.getenv('METACOG_ENDPOINT_TIMEOUT_SEC', '10')),
-            )
+        out = await asyncio.wait_for(
+            _metacognition_ask_impl(req),
+            timeout=float(os.getenv('METACOG_ENDPOINT_TIMEOUT_SEC', '10')),
+        )
         dt = int((time.time() - t0) * 1000)
         if not isinstance(out, dict):
             out = {

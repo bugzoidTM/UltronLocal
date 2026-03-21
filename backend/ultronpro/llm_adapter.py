@@ -203,8 +203,8 @@ def provider_priority(*, task_type: str, budget_mode: str) -> list[str]:
 def provider_default_model(provider: str) -> str:
     pv = str(provider or '').strip().lower()
     model_map = {
-        'ollama_local': os.getenv('OLLAMA_CANARY_MODEL', 'qwen2.5:7b-instruct-q4_K_M'),
-        'ultron_infer': os.getenv('OLLAMA_CANARY_MODEL', 'qwen2.5:3b-instruct-q4_K_M'),
+        'ollama_local': os.getenv('ULTRON_OLLAMA_LOCAL_MODEL', os.getenv('ULTRON_PRIMARY_LOCAL_MODEL', os.getenv('OLLAMA_CANARY_MODEL', 'llama3.2'))),
+        'ultron_infer': os.getenv('ULTRON_INFER_MODEL_NAME', os.getenv('ULTRON_PRIMARY_LOCAL_MODEL', os.getenv('OLLAMA_CANARY_MODEL', 'local-infer'))),
         'openai': os.getenv('OPENAI_DEFAULT_MODEL', 'gpt-4o-mini'),
         'anthropic': os.getenv('ANTHROPIC_DEFAULT_MODEL', 'claude-3-5-sonnet-20241022'),
         'openrouter': os.getenv('OPENROUTER_DEFAULT_MODEL', 'google/gemma-2-9b-it:free'),
