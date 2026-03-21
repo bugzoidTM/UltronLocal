@@ -9298,7 +9298,7 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
     ]
     symbolic_exception = any(t in ql for t in symbolic_exception_terms)
     external_fact_question = (
-        (('?' in q) or ('qual ' in ql) or ('quem ' in ql) or ('quando ' in ql))
+        (('?' in q) or ('qual ' in ql) or ('quem ' in ql) or ('quando ' in ql) or ('o que ' in ql) or ('oq ' in ql))
         and (
             any(t in ql for t in external_fact_terms)
             or any(t in ql for t in external_ranking_terms)
@@ -9307,23 +9307,7 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
         and (not symbolic_exception)
         and (input_class not in ('logic', 'math', 'planning', 'code'))
     )
-    if (not bypass_insufficient_gate) and external_fact_question:
-        stage_timing_ms['gate_external_fact_ms'] = int((time.monotonic() - req_started) * 1000)
-        ans_gate = (
-            "Não tenho informação confiável sobre isso. "
-            "Para questões fora do domínio operacional, recomendo consultar uma fonte específica."
-        )
-        _trace_emit(ans_gate, 'insufficient_confidence', outcome='fallback')
-        prm_meta = _prm_pack(ans_gate, 'insufficient_confidence', metrics)
-        return {
-            'ok': True,
-            'answer': ans_gate,
-            'strategy': 'insufficient_confidence',
-            'metrics': metrics,
-            'cache_hit': cache_hit,
-            'from_cache': from_cache,
-            **prm_meta,
-        }
+    sensitive_evidence_required = bool(any(t in ql for t in high_risk_terms))
 
     # Semantic cache lookup (skip on runtime/status/health/metrics or high/critical risk class)
     cache_skip_lookup = (risk_class in ('high', 'critical')) or (intent_label in ('runtime', 'status', 'health', 'metrics'))
@@ -9360,10 +9344,10 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
         'openrouter', 'groq', 'deepseek', 'lightrag', 'ultronpro',
         'finetune', 'notify-complete', 'run_preset', 'fast_diagnostic', 'adapter'
     ]
-    # only route to RAG for operational/domain intent; avoid forcing RAG on generic world questions
+    # only route to RAG for operational/domain intent; also force RAG for sensitive factual queries
     import re
     q_tokens = set(re.findall(r"[a-zA-ZÀ-ÿ0-9_\-]{3,}", ql))
-    factual_intent = False
+    factual_intent = bool(sensitive_evidence_required)
     for t in factual_terms:
         tt = str(t).strip().lower()
         if ' ' in tt or '-' in tt or '_' in tt:
@@ -9388,7 +9372,8 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
             best = rag_hits_sorted[0]
 
         best_score = float((best or {}).get('score') or 0.0)
-        if best and best_score >= 0.5:
+        min_rag_score = 0.62 if sensitive_evidence_required else 0.5
+        if best and best_score >= min_rag_score:
             ctx = str(best.get('text') or '').strip()
             source_id = str(best.get('source_id') or 'lightrag')
             short_ctx = (ctx[:1000] + '...') if len(ctx) > 1000 else ctx
@@ -9396,6 +9381,7 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
                 f"Pergunta: {q}\n"
                 f"Contexto recuperado ({source_id}, score={best_score:.2f}):\n{short_ctx}\n\n"
                 "Responda em português, de forma objetiva, usando apenas o contexto acima. "
+                "Cite explicitamente a fonte e traga um trecho ou formulação ancorada no contexto. "
                 "Se faltar dado no contexto, diga isso explicitamente."
             )
             rag_ans = ''
@@ -9441,6 +9427,26 @@ async def _metacognition_ask_impl(req: MetacogAskRequest, force_generation_strat
                 _trace_emit(out, 'rag_context_direct', outcome='success')
                 prm_meta = _prm_pack(out, 'rag_context_direct', {**metrics, 'rag': {'used': True, 'score': best_score, 'source': source_id}})
                 return {'ok': True, 'answer': out, 'strategy': 'rag_context_direct', 'metrics': {**metrics, 'rag': {'used': True, 'score': best_score, 'source': source_id}}, 'cache_hit': cache_hit, 'from_cache': from_cache, **prm_meta}
+
+    if (not bypass_insufficient_gate) and sensitive_evidence_required:
+        stage_timing_ms['gate_sensitive_evidence_ms'] = int((time.monotonic() - req_started) * 1000)
+        ans_gate = (
+            "Não tenho informação confiável suficiente para responder com segurança. "
+            "Não encontrei evidência documental forte no LightRAG para ancorar essa resposta."
+        )
+        _trace_emit(ans_gate, 'insufficient_confidence', outcome='fallback')
+        prm_meta = _prm_pack(ans_gate, 'insufficient_confidence', {**metrics, 'rag': {'used': True, 'score': best_score if 'best_score' in locals() else 0.0}})
+        return {
+            'ok': True,
+            'answer': ans_gate,
+            'strategy': 'insufficient_confidence',
+            'metrics': {**metrics, 'rag': {'used': True, 'score': best_score if 'best_score' in locals() else 0.0}},
+            'cache_hit': cache_hit,
+            'from_cache': from_cache,
+            'stage_timing_ms': {**stage_timing_ms, 'total_ms': int((time.monotonic() - req_started) * 1000)},
+            'llm_attempts': llm_attempts,
+            **prm_meta,
+        }
 
     short_msg = (len(q) <= 20 and len(q.split()) <= 4)
 
