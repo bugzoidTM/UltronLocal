@@ -1,24 +1,23 @@
 {
   "enabled": true,
   "state": "paused",
-  "lag_sec": 0.0,
-  "max_lag_sec": 22.984,
-  "consecutive_lag": 0,
-  "paused_until": 1777669365.4615834,
+  "lag_sec": 74.079,
+  "max_lag_sec": 74.079,
+  "consecutive_lag": 1,
+  "paused_until": 1777672870.0647209,
   "last_pause_reason": "event_loop_lag",
-  "last_pause_at": 1777669275.4615834,
+  "last_pause_at": 1777672780.0647209,
   "last_slow_request": null,
-  "blocked_loops": 31,
-  "last_blocked_loop": "autonomy_loop",
-  "last_log_at": 1777669305.4863627,
+  "blocked_loops": 9,
+  "last_blocked_loop": "no_cloud_campaign_loop",
+  "last_log_at": 1777672780.0647209,
   "foreground_active": 0,
-  "last_foreground_path": "/api/chat/stream",
-  "last_foreground_at": 1777669240.2811074,
-  "last_foreground_elapsed_sec": 23.906,
+  "last_foreground_path": null,
+  "last_foreground_at": 0.0,
+  "last_foreground_elapsed_sec": 0.0,
   "last_pause_details": {
-    "lag_sec": 8.734,
-    "consecutive_lag": 2
+    "lag_sec": 74.079,
+    "consecutive_lag": 1
   },
   "paused": true,
-  "paused_for_sec": 33.85073161125183
-}
+  "paused_for_sec": 89.99799

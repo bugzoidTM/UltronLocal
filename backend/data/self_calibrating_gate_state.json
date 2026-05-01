@@ -8,26 +8,6 @@
   },
   "calibration_history": [
     {
-      "ts": 1776527431,
-      "old_thresholds": {
-        "min_delta": 0.0425,
-        "max_regressed_cases": 0,
-        "max_domain_regression_delta": -0.02,
-        "require_canary": true,
-        "min_canary_rollout_pct": 5
-      },
-      "new_thresholds": {
-        "min_delta": 0.0425,
-        "max_regressed_cases": 0,
-        "max_domain_regression_delta": -0.02,
-        "require_canary": true,
-        "min_canary_rollout_pct": 5
-      },
-      "sample_size": 7,
-      "successes": 4,
-      "failures": 1
-    },
-    {
       "ts": 1776529281,
       "old_thresholds": {
         "min_delta": 0.0425,
@@ -2006,6 +1986,26 @@
       "sample_size": 9,
       "successes": 6,
       "failures": 1
+    },
+    {
+      "ts": 1777672306,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
     }
   ],
   "patch_outcomes": [
@@ -2073,6 +2073,6 @@
       "result": "rollback"
     }
   ],
-  "calibration_count": 260,
-  "updated_at": 1777667883
+  "calibration_count": 261,
+  "updated_at": 1777672306
 }

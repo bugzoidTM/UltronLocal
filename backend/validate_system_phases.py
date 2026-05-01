@@ -129,6 +129,24 @@ def validate_phase_9_8():
     except Exception as e:
         print(f"Erro ao validar Fase 8/9: {e}")
 
+def validate_standard_benchmarks():
+    section("Fase de Integração — Benchmarks Padronizados (ARC, MMLU, HellaSwag proxies)")
+    try:
+        from ultronpro import external_benchmarks
+        audit = external_benchmarks.suite_audit()
+        print(f"Suite Encontrada: {audit.get('suite')} (v{audit.get('version')})")
+        print(f"Total de Casos Disponíveis: {audit.get('count')}")
+        print("Benchmarks Identificados:")
+        for bench, count in audit.get('benchmark_counts', {}).items():
+            print(f" - {bench}: {count} itens")
+        print("Famílias:")
+        for fam, count in audit.get('family_counts', {}).items():
+            print(f" - {fam}: {count} itens")
+            
+        print("\n>>> PROVA CONCRETA: Os benchmarks padronizados (proxies públicos) já estão disponíveis na suite e mapeados por external_benchmarks.py para uso como baseline quantitativa.")
+    except Exception as e:
+        print(f"Erro ao validar Benchmarks Externos: {e}")
+
 if __name__ == "__main__":
     print(f"ULTRONPRO SYSTEM VALIDATION - {time.strftime('%Y-%m-%d %H:%M:%S')}")
     validate_phase_6()
@@ -136,6 +154,7 @@ if __name__ == "__main__":
     validate_phase_11()
     validate_phase_10()
     validate_phase_9_8()
+    validate_standard_benchmarks()
     print(f"\n{'='*60}")
     print(" FIM DA VALIDAÇÃO")
     print(f"{'='*60}")

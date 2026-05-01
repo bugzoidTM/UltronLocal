@@ -1,0 +1,86 @@
+{
+  "ok": true,
+  "ts": 1777672694,
+  "label": "baseline",
+  "suite": "external_public_eval_v1",
+  "version": 1,
+  "predictor": "llm",
+  "strategy": "local",
+  "overall_accuracy": 0.0,
+  "total": 9,
+  "correct": 0,
+  "selection": {
+    "benchmarks": [
+      "arc_easy_partial",
+      "hellaswag_partial",
+      "mmlu_partial"
+    ],
+    "families": [
+      "academic_mcq",
+      "commonsense_next_step",
+      "science_qa"
+    ],
+    "splits": [
+      "dev",
+      "test",
+      "validation"
+    ],
+    "limit_per_benchmark": null,
+    "count": 9
+  },
+  "by_benchmark": {
+    "arc_easy_partial": {
+      "total": 3,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "hellaswag_partial": {
+      "total": 3,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "mmlu_partial": {
+      "total": 3,
+      "correct": 0,
+      "accuracy": 0.0
+    }
+  },
+  "by_family": {
+    "science_qa": {
+      "total": 3,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "commonsense_next_step": {
+      "total": 3,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "academic_mcq": {
+      "total": 3,
+      "correct": 0,
+      "accuracy": 0.0
+    }
+  },
+  "by_split": {
+    "dev": {
+      "total": 3,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "validation": {
+      "total": 3,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "test": {
+      "total": 3,
+      "correct": 0,
+      "accuracy": 0.0
+    }
+  },
+  "source_run_id": "extb_75d41257ee",
+  "comparability_note": "Harness público comparável inicial. Esta versão usa um subset manual pequeno e transparente inspirado em benchmarks públicos (ARC-Easy style, HellaSwag style, MMLU style). Serve para infraestrutura, histórico e protocolo. Não substitui ainda uma execução oficial/abrangente dos benchmarks completos.",
+  "comparability_tier": "proxy_subset",
+  "officiality": "non_official_subset"
+}

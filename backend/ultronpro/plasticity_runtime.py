@@ -222,3 +222,15 @@ def status(limit: int = 40) -> dict[str, Any]:
         'recent_distillations': dist,
         'distill_path': str(DISTILL_PATH),
     }
+
+def correlate_architecture_change(store_db, change_id: str) -> dict[str, Any]:
+    """
+    Avalia uma mudança arquitetural executando o benchmark AGI_EVAL (ARC, MMLU, GAIA)
+    e correlaciona o score com o delta esperado (>= 5% progresso, <2% falso positivo).
+    """
+    try:
+        from ultronpro.benchmarks import agi_eval
+        return agi_eval.evaluate_architectural_change(store_db, change_id)
+    except Exception as e:
+        return {'ok': False, 'error': f'agi_eval_failed:{e}'}
+

@@ -1,144 +1,6 @@
 {
-  "updated_at": 1777668590,
+  "updated_at": 1777672779,
   "reports": [
-    {
-      "id": "cdr_1776793709263",
-      "ts": 1776793709,
-      "kind": "question_projection:general",
-      "text": "o que aconteceria se eu reiniciar o servi?o agora?",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar question_projection:general com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar question_projection:general com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de question_projection:general.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar question_projection:general em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776793755673",
-      "ts": 1776793755,
-      "kind": "question_projection:operations",
-      "text": "qual o risco de executar um comando com pouca memoria?",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de question_projection:operations.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776793825467",
-      "ts": 1776793825,
-      "kind": "question_projection:operations",
-      "text": "qual o risco de executar um comando com pouca memoria?",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de question_projection:operations.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
     {
       "id": "cdr_1776793923183",
       "ts": 1776793923,
@@ -23000,6 +22862,144 @@
           "score": 0.3685
         }
       ]
+    },
+    {
+      "id": "cdr_1777672385117",
+      "ts": 1777672385,
+      "kind": "auto_resolve_conflicts",
+      "text": "(aÃ§Ã£o) Tentar auto-resolver conflito persistente #74 (Cenário é).",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de auto_resolve_conflicts.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar auto_resolve_conflicts em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1777672514996",
+      "ts": 1777672514,
+      "kind": "auto_resolve_conflicts",
+      "text": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de auto_resolve_conflicts.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar auto_resolve_conflicts em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1777672779841",
+      "ts": 1777672779,
+      "kind": "auto_resolve_conflicts",
+      "text": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de auto_resolve_conflicts.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar auto_resolve_conflicts em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
     }
   ]
-}
+} 
