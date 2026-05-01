@@ -43,20 +43,50 @@ Só vale como concluído quando houver:
 
 ---
 
+## Painel único de maturidade — 2026-05-01
+
+Estados de maturidade usados daqui em diante:
+
+- `Implementado`: existe caminho de código.
+- `Integrado`: o caminho está conectado ao runtime, API, loop ou ledger relevante.
+- `Testado localmente`: passou por teste local, hard eval ou smoke controlado.
+- `Validado externamente`: passou por benchmark externo real, com histórico longitudinal e comparação contra baseline compatível.
+
+Gate duro: nenhum front pode passar de `80%` enquanto não estiver em `Validado externamente`. Implementação, integração e teste local não bastam para maturidade acima desse teto.
+
+Evidência executada nesta rodada:
+
+- `external_benchmarks.run_suite(predictor="llm", strategy="cheap")` na runtime do app, Python 3.12: `extb_9cadc133b2`, `0/9`, accuracy `0.0`, baseline compatível `0.0`, delta `0.0`.
+- Repetição diagnóstica em Python 3.14 após instalar clientes mínimos: `extb_a20d921e9f`, `4/9`, accuracy `0.4444`; não conta como maturidade da runtime porque diverge do ambiente do app.
+- `hard_cognitive_core_eval`: `9.0/10`, chat não-LLM `8/8`, mas probe externo sem nuvem `0/3` (`extb_aa04d27994`).
+- `longitudinal_harness.run_cycle(curriculum_limit=6)`: status `watch`, success_rate `0.3333`, generalização `0.0`, ledger `promotion_ready=false`.
+- `pressure_benchmark.run_selftest()`: baseline `0.3333`, memory blackout `0.0`, retention `0.0`; a full suite anterior `pb_suite_ffd58d9e` com `0.85` não foi reproduzida nesta rodada e uma nova execução completa excedeu timeout.
+- Pytest focal: `15 passed` em `backend/test_external_factual_routing.py`, `backend/test_external_verification_loop.py`, `backend/test_epistemic_ledger.py`; `test_causal_gate.py` legado falha na coleta por importar `process_query` inexistente.
+
+| Front | Estado máximo validado | Status aplicado | Evidência bloqueante |
+| --- | --- | ---: | --- |
+| Front 1 — Plasticidade estrutural real | Testado localmente | 80% | hard eval local forte, mas sem validação externa/longitudinal consolidada |
+| Front 2 — Modelo de mundo causal | Testado localmente | 72% | pressure selftest atual reteve `0.0` sob memory blackout |
+| Front 3 — Generalização entre domínios | Testado localmente | 62% | benchmark externo da runtime ficou `0/9`; longitudinal generalization `0.0` |
+| Front 4 — Automanutenção e individuação | Integrado | 68% | longitudinal em `watch`; blackout de memória não sustentou capacidade |
+| Front 5 — Consciência operacional integrada | Integrado | 66% | proxies integrados, mas ledger ainda bloqueia evidência externa/longitudinal |
+
+---
+
 ## Auditoria epistêmica — 2026-05-01 (Atualização)
 
-Status geral do roadmap: 79%
+Status geral do roadmap: 72%
 
 Evidência executada nesta auditoria de stress e verdade:
 
 - [FEITO] **Shift Epistemológico de Telemetria:** O `benchmark_suite.py` agora coleta latência real e tokens verdadeiros por fallback live, abandonando métricas randomizadas ("telemetria de vaidade").
-- [FEITO] **Maturidade sob Pressão:** Novo `pressure_benchmark.py` injeta falhas (provider dropout, blackout de memória, starvation de contexto, adversarial framing). O sistema atingiu `85.0%` de retenção de capacidade (Threshold 72%), classificado formalmente como `MATURE`.
+- [EM ANDAMENTO 55%] **Maturidade sob Pressão:** `pressure_benchmark.py` injeta falhas (provider dropout, blackout de memória, starvation de contexto, adversarial framing). A full suite anterior `pb_suite_ffd58d9e` atingiu `85.0%`, mas a rodada curta atual na runtime Python 3.12 ficou em baseline `0.3333`, memory blackout `0.0`, retention `0.0`; portanto não sustenta maturidade atual.
 - [FEITO] **Remoção de Autojuiz:** `longitudinal_harness.py` não valida mais a identidade verificando strings hardcoded (`answer == gold`); o LLM agora deve provar o conhecimento de resiliência e deriva causal via MCQ aberto ancorado em literatura externa (Pearl 2009, Amodei 2016, etc).
-- [EM ANDAMENTO 62%] Benchmark factual externo: harness público existe e passou `9/9`, mas é `proxy_subset` não oficial.
-- [EM ANDAMENTO 55%] Probe longitudinal de simulação mental passou em 6 ciclos isolados, mas ainda não substitui o critério de 30-50+ ciclos vivos.
-- [EM ANDAMENTO 85%] Harness longitudinal integrado atualizado para validação externa, aguardando ciclos longos em background sem nuvem quebrada para consolidar a generalização contínua.
+- [EM ANDAMENTO 45%] Benchmark factual externo: harness público existe, mas a runtime do app marcou `0/9` em `extb_9cadc133b2`; a repetição Python 3.14 marcou `4/9`, porém não conta como maturidade por divergência de ambiente.
+- [EM ANDAMENTO 45%] Probe longitudinal de simulação mental/currículo permanece em `watch`: rodada atual `success_rate=0.3333`, generalização `0.0`, sem promoção no ledger.
+- [EM ANDAMENTO 60%] Harness longitudinal integrado atualizado para validação externa, mas ainda bloqueado por evidência externa e longitudinal insuficiente (`promotion_ready=false`).
 
-Conclusão da auditoria de stress: O paradigma mudou. A métrica saiu de "quantidade de código interno" para "capacidade de responder corretamente a verdades externas enquanto o provider falha e a memória apaga". O sistema reteve 85% da sua clareza sob ataque sintético.
+Conclusão da auditoria de stress: O paradigma mudou de vez. A métrica saiu de "quantidade de código interno" para "capacidade de responder corretamente a verdades externas enquanto provider, memória e ambiente real falham". Nesta rodada, a runtime atual não reteve maturidade externa suficiente; por isso o roadmap foi rebaixado e nenhum front permanece acima de `80%`.
 
 ---
 
@@ -92,7 +122,7 @@ Conclusão da auditoria de stress: O paradigma mudou. A métrica saiu de "quanti
 - [EM ANDAMENTO 68%] Fase 13 permanece implementada, mas a validação longitudinal foi reclassificada: a auditoria de 2026-05-01 validou probe isolado de 6 ciclos, ainda insuficiente para sustentar `FEITO 100%` em convergência de competências.
 
 ## Front 1 — Plasticidade estrutural real
-_Status do front: 82%_
+_Status do front: 80%_
 
 Meta 10/10:
 
@@ -103,10 +133,10 @@ Meta 10/10:
 - persistir ganho
 - fazer rollback se piorar
 
-**Leitura atual:** front está funcional e testado em loop local, com shadow eval, canário, gate e ledger epistêmico integrados. A auditoria de 2026-05-01 rebaixa o front porque o benchmark interno ainda mostra regressão em `debugging` e a validação longitudinal/externa é curta demais para sustentar `100%`.
+**Leitura atual:** front está funcional e testado em loop local, com shadow eval, canário, gate e ledger epistêmico integrados. A auditoria de 2026-05-01 aplica teto de `80%`: há hard eval forte, mas a validação externa da runtime e o histórico longitudinal ainda não sustentam promoção acima desse limite.
 
 ## Front 2 — Modelo de mundo causal
-_Status do front: 78%_
+_Status do front: 72%_
 
 Meta 10/10:
 
@@ -116,10 +146,10 @@ Meta 10/10:
 - revisar relações causais
 - usar causalidade para escolher planos melhores
 
-**Leitura atual:** há módulos causais, contrafactuais e anti-Mirage implementados, e a hard eval anterior trouxe evidência útil de transferência. A auditoria de 2026-05-01 mantém o front abaixo de maturidade alta porque o harness longitudinal ainda está em `watch`, a generalização zero-shot falhou e o critério de surpresa decrescente em ciclos vivos não foi atingido.
+**Leitura atual:** há módulos causais, contrafactuais e anti-Mirage implementados, e a hard eval trouxe evidência útil de transferência. A auditoria de 2026-05-01 rebaixa o front porque o harness longitudinal segue em `watch` e o `pressure_benchmark.run_selftest()` atual reteve `0.0` sob memory blackout.
 
 ## Front 3 — Generalização entre domínios
-_Status do front: 72%_
+_Status do front: 62%_
 
 Meta 10/10:
 
@@ -128,10 +158,10 @@ Meta 10/10:
 - medir ganho vs baseline
 - consolidar abstrações multi-domínio
 
-**Leitura atual:** compilador, abstrações e mapper existem e têm testes locais. A auditoria rebaixa o front porque a evidência pública segue em `proxy_subset`, o harness longitudinal marcou sucesso agregado baixo e os testes zero-shot do próprio harness não passaram.
+**Leitura atual:** compilador, abstrações e mapper existem e têm testes locais. A auditoria rebaixa o front porque o benchmark externo da runtime marcou `0/9`, a evidência pública segue em `proxy_subset`, o harness longitudinal marcou generalização `0.0` e os testes zero-shot do próprio harness não passaram.
 
 ## Front 4 — Automanutenção e individuação
-_Status do front: 76%_
+_Status do front: 68%_
 
 Meta 10/10:
 
@@ -144,10 +174,10 @@ Meta 10/10:
 - manter identidade operacional
 - priorizar capacidade futura de agir
 
-**Leitura atual:** self-governance, self-model, homeostasis, healer e predição de degradação estão integrados. A auditoria de 2026-05-01 rebaixa o front porque o self-healer passou em E2E local, mas ainda não demonstrou correções recorrentes verificadas em produção, e o modelo preditivo ainda foi validado em histórico sintético curto.
+**Leitura atual:** self-governance, self-model, homeostasis, healer e predição de degradação estão integrados. A auditoria de 2026-05-01 rebaixa o front porque resiliência local isolada não bastou: o ciclo longitudinal está em `watch`, o blackout de memória reteve `0.0` e ainda não há correções recorrentes verificadas em produção.
 
 ## Front 5 — Consciência operacional integrada
-_Status do front: 70%_
+_Status do front: 66%_
 
 Meta 10/10:
 
@@ -160,12 +190,12 @@ Meta 10/10:
 - manter um eu narrativo contínuo
 - medir integração interna por proxies úteis, sem confundir isso com prova de consciência forte
 
-**Leitura atual:** o Global Workspace operacional existe e integra sinais relevantes, mas a auditoria rebaixa o front porque integração arquitetural não é prova de consciência operacional robusta. O ledger do núcleo cognitivo está bloqueado por evidência externa/longitudinal insuficiente e o harness longitudinal marcou `watch`.
+**Leitura atual:** o Global Workspace operacional existe e integra sinais relevantes, mas a auditoria rebaixa o front porque integração arquitetural não é prova de consciência operacional robusta. O ledger do núcleo cognitivo continua bloqueado por evidência externa/longitudinal insuficiente e o harness longitudinal marcou `watch`.
 
 ---
 
 # Fase 1 — Plasticidade estrutural real
-_Status da fase: 82%_
+_Status da fase: 80%_
 
 ## 1.1 Registro durável de patches cognitivos
 _Status: [EM ANDAMENTO 90%]_
@@ -236,7 +266,7 @@ _Status: [FEITO 100%]_
 ---
 
 # Fase 2 — Modelo de mundo causal
-_Status da fase: 78%_
+_Status da fase: 72%_
 
 ## 2.1 Corpo mínimo / ambiente de interação
 _Status: [EM ANDAMENTO 80%]_
@@ -289,7 +319,7 @@ _Status: [EM ANDAMENTO 60%]_
 ---
 
 # Fase 3 — Generalização entre domínios
-_Status da fase: 72%_
+_Status da fase: 62%_
 
 ## 3.1 Biblioteca de abstrações explícitas
 _Status: [EM ANDAMENTO 70%]_
@@ -338,21 +368,21 @@ _Status: [EM ANDAMENTO 88%]_
 - [EM ANDAMENTO 88%] Score de generalidade
 
 ## 3.6 Benchmarks externos comparáveis
-_Status: [EM ANDAMENTO 72%]_
+_Status: [EM ANDAMENTO 48%]_
 
 - [FEITO] Harness externo inicial implementado
 - [FEITO] Baseline congelável
 - [FEITO] Histórico persistido de runs
 - [EM ANDAMENTO 78%] subset comparável inspirado em ARC/HellaSwag/MMLU agora com famílias, splits, lineage, tier de comparabilidade e seleção reproduzível
-- [EM ANDAMENTO 70%] comparação pareada contra baseline congelado por benchmark/família/split
+- [EM ANDAMENTO 55%] comparação pareada contra baseline congelado por benchmark/família/split; última runtime compatível: `extb_9cadc133b2`, current `0.0`, baseline `0.0`, delta `0.0`
 - [EM ANDAMENTO 72%] auditoria estrutural do suite + selftest oracle
-- [EM ANDAMENTO 55%] execução comparável recorrente agora aparece em runs persistidos, mas o probe MCQ sem nuvem ficou 0/3 quando `ultron_infer` local estava offline
+- [EM ANDAMENTO 35%] execução comparável recorrente agora aparece em runs persistidos, mas a runtime do app ficou `0/9` no benchmark externo proxy e o probe MCQ sem nuvem ficou `0/3`
 - [PENDENTE] rodar ciclo comparável mais fiel/licenciado e ampliar validade pública
 
 ---
 
 # Fase 4 — Automanutenção, individuação e continuidade
-_Status da fase: 76%_
+_Status da fase: 68%_
 
 _Atualização 2026-03-19: deploy da Fase 4 estabilizado no serviço principal via stack spec. Rotas `/api/self-governance/*`, storage dedicado, camada de linhagem/descendência, bridge de runtime preparado e autoavaliação/promoção mínima estão ativas em produção._
 
@@ -539,7 +569,7 @@ _Status: [EM ANDAMENTO 70%]_
 ---
 
 # Fase 5 — Consciência operacional integrada
-_Status da fase: [EM ANDAMENTO 70%]_
+_Status da fase: [EM ANDAMENTO 66%]_
 
 _Atualização 2026-03-19: já existia base operacional de workspace global no código (`global_workspace` no store, publicações de `self_model`, `tom`, `judge`, `metacognition` e loop Roadmap V5). Agora também há `meta_observer` explícito com endpoint próprio e publicação periódica no workspace; status, broadcast, consumo e autoria do workspace estão validados em produção. Nesta rodada, entrou também uma camada explícita de marcadores afetivos artificiais com snapshot composto, endpoint próprio e publicação periódica em `affect.state`/`policy.risk`, conectando narrativa, incerteza, competição e promessas pendentes ao workspace global. Além disso, foi adicionada uma autobiografia operacional contínua com resumo narrativo explícito, `first_person_report`, postura de continuidade, riscos de continuidade e publicação periódica em `self.narrative`. Agora também existe um proxy explícito de integração interna, combinando workspace, meta-observer, afetos e narrativa em um score operacional observável e publicável em `integration.proxy`. Por fim, foi criado um benchmark operacional inicial persistido, com baseline congelável, runs comparáveis e score integrado para foco, autoria, ignorados, surpresa interna, autobiografia e modelagem do outro. Também foi constatado que o frontend estava conceitualmente defasado em relação ao Front 5; a UI foi limpa de blocos legados de sprint/fase antiga, ganhou aba própria de Front 5 com lazy-load e deixou de pré-carregar na home os endpoints mais pesados de autobiografia/integração/benchmark._
 
@@ -650,6 +680,7 @@ _Status: [EM ANDAMENTO 90%]_
 - [FEITO] Expor status macro por fase/front
 - [FEITO] Expor itens FEITO / EM ANDAMENTO / PENDENTE
 - [FEITO] Expor percentuais reais
+- [FEITO] Criar painel único de maturidade com estados `Implementado`, `Integrado`, `Testado localmente` e `Validado externamente`
 - [FEITO] Visualização de Logs Homeostáticos no Dashboard UX
 - [FEITO] Tornar a leitura do roadmap robusta em runtime com fallback embarcado no backend, suportando ambientes Windows e Cloud.
 - [FEITO] Executive Instrumentation: métricas de 'alinhamento de meta' vs 'ação executada' integradas ao loop via `executive_instrumentation.py`.
@@ -670,6 +701,7 @@ _Status: [EM ANDAMENTO 85%]_
 _Status: [EM ANDAMENTO 60%]_
 
 - [FEITO] Definir score por front baseado em progresso do roadmap e benchmarks.
+- [FEITO] Aplicar teto duro: nenhum front pode passar de `80%` sem teste externo, histórico longitudinal e comparação contra baseline.
 - [EM ANDAMENTO 40%] Vincular score a benchmarks longitudinais.
 - [EM ANDAMENTO 50%] Atualizar score conforme evidência real de alinhamento executivo.
 
