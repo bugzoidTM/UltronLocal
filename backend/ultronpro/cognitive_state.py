@@ -5,7 +5,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-STATE_PATH = Path('/app/data/cognitive_state.json')
+STATE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'cognitive_state.json'
 
 DEFAULT_STATE = {
     'beliefs': {},

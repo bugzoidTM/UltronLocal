@@ -8,10 +8,10 @@ from typing import Any
 
 import httpx
 
-BENCHMARK_PATH = Path('/app/data/generalization_benchmark.json')
-RECENT_SOURCES_PATH = Path('/app/data/analogy_recent_sources.json')
-BENCHMARK_COUNTS_PATH = Path('/app/data/analogy_benchmark_counts.json')
-DECISIONS_LOG_PATH = Path('/app/data/analogy_decisions.jsonl')
+BENCHMARK_PATH = Path(__file__).resolve().parent.parent / 'data' / 'generalization_benchmark.json'
+RECENT_SOURCES_PATH = Path(__file__).resolve().parent.parent / 'data' / 'analogy_recent_sources.json'
+BENCHMARK_COUNTS_PATH = Path(__file__).resolve().parent.parent / 'data' / 'analogy_benchmark_counts.json'
+DECISIONS_LOG_PATH = Path(__file__).resolve().parent.parent / 'data' / 'analogy_decisions.jsonl'
 
 CASES = [
     # Domínio: Biologia

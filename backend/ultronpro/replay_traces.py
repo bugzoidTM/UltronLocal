@@ -6,8 +6,8 @@ import json
 import time
 import datetime as dt
 
-TRACE_DIR = Path('/app/data/decision_traces')
-REPLAY_DIR = Path('/app/data/replay')
+TRACE_DIR = Path(__file__).resolve().parent.parent / 'data' / 'decision_traces'
+REPLAY_DIR = Path(__file__).resolve().parent.parent / 'data' / 'replay'
 TRAIN_INC_PATH = REPLAY_DIR / 'train_incremental.jsonl'
 HARD_NEG_PATH = REPLAY_DIR / 'hard_negatives.jsonl'
 STATE_PATH = REPLAY_DIR / 'replay_state.json'
@@ -173,7 +173,7 @@ def run_replay(day: str | None = None, max_rows: int = 300) -> dict[str, Any]:
 
 
 def _eval_trace_path() -> Path:
-    p = Path('/app/data/eval_traces.jsonl')
+    p = Path(__file__).resolve().parent.parent / 'data' / 'eval_traces.jsonl'
     if p.exists():
         return p
     alt = Path('/root/.openclaw/workspace/UltronPro/backend/data/eval_traces.jsonl')

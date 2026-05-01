@@ -1,0 +1,31 @@
+{
+  "created_at": 1774115651,
+  "updated_at": 1774128099,
+  "latent": {
+    "curiosity": 0.5110364209707018,
+    "risk_appetite": 0.30878373368883993,
+    "exploration": 0.4855670120655422,
+    "coherence_bias": 0.817948986520279
+  },
+  "noise_scale": 0.12,
+  "last_policy": {
+    "ts": 1774128099,
+    "policy": {
+      "id": "p1",
+      "actions": [
+        "auto_resolve_conflicts",
+        "curate_memory",
+        "invent_procedure"
+      ],
+      "weights": {
+        "maintain_question_queue": 0.6861651287062969,
+        "generate_analogy_hypothesis": 0.6715453278114907,
+        "invent_procedure": 0.8988919755457572,
+        "unsupervised_discovery": 0.7877428939873314,
+        "auto_resolve_conflicts": 0.9356265698890288,
+        "curate_memory": 0.9253283671676579
+      },
+      "score": 1.7469
+    }
+  }
+}

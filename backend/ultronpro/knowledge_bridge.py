@@ -66,8 +66,8 @@ def _relevance_score(query: str, text: str) -> float:
     return round(float(score), 4)
 
 
-_INGEST_STATE_PATH = Path('/app/data/rag_ingest_state.json')
-_QUARANTINE_PATH = Path('/app/data/rag_ingest_quarantine.jsonl')
+_INGEST_STATE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'rag_ingest_state.json'
+_QUARANTINE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'rag_ingest_quarantine.jsonl'
 
 
 def _text_hash(s: str) -> str:

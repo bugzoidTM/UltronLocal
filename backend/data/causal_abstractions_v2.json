@@ -1,0 +1,4851 @@
+{
+  "version": 2,
+  "abstractions": [
+    {
+      "id": "abs_1776628935_6925",
+      "domain": "action_done",
+      "action_kind": "action_done",
+      "created_at": 1776628935,
+      "name": "Sucesso_Atomico_Ação",
+      "causal_structure": "Ação realizada com sucesso devido à combinação de grupo de tamanho adequado e ausência de surpresa",
+      "applicability_conditions": {
+        "domínio": "action_done",
+        "grupo_tamanho": "257",
+        "taxa_surpresa": "0.25"
+      },
+      "testable_prediction": "Em operações de ação com grupo de tamanho 257 e taxa de surpresa 0.25, a taxa de sucesso é > 80%",
+      "generalization_suggestion": "Esta abstração pode ser generalizada para outros domínios onde a combinação de grupo de tamanho adequado e ausência de surpresa é relevante, como em operações de arquivo ou processamento de dados.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 377,
+      "confirmation_count": 377,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946348,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946348,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776946350,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776628936_9787",
+      "domain": "action_done",
+      "action_kind": "action_done",
+      "created_at": 1776628936,
+      "name": "Verificação de Condições Anteriores",
+      "causal_structure": {
+        "antecedentes": [
+          "Verificar condições anteriores"
+        ],
+        "consequente": [
+          "Realizar ação atual com sucesso"
+        ]
+      },
+      "applicability_conditions": "",
+      "testable_prediction": "",
+      "generalization_suggestion": "",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 367,
+      "confirmation_count": 367,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946348,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946348,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776946350,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776632625_297a",
+      "domain": "action_done",
+      "action_kind": "action_done",
+      "created_at": 1776632625,
+      "name": "AutoResolve_Conflitos",
+      "causal_structure": "Ação de auto-resolver conflitos com múltiplas tentativas garante sucesso em operações de grupo grande",
+      "applicability_conditions": {
+        "domain": "action_done",
+        "group_size": ">= 200",
+        "success_rate": ">= 0.9"
+      },
+      "testable_prediction": "Em operações de grupo com 250+ elementos, usar auto-resolver de conflitos com 3+ tentativas resulta em sucesso > 90%",
+      "generalization_suggestion": "Essa abstração pode ser generalizada para outros domínios que envolvem operações de grupo com conflitos, como 'Merge de Branches' em desenvolvimento de software",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 347,
+      "confirmation_count": 347,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897691,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946348,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946348,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776946350,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776633536_589a",
+      "domain": "action_done",
+      "action_kind": "action_done",
+      "created_at": 1776633536,
+      "name": "Resolução de Conflitos Automática",
+      "causal_structure": {
+        "antecedentes": [
+          "grupo de tamanho grande",
+          "ação de resolução de conflitos"
+        ],
+        "consequência": [
+          "sucesso",
+          "baixa taxa de surpresa"
+        ]
+      },
+      "applicability_conditions": {
+        "domínio": "action_done",
+        "tamanho do grupo": "grande (> 200)",
+        "ação": "resolução de conflitos automática"
+      },
+      "testable_prediction": "em operações de resolução de conflitos com grupo de tamanho grande, a taxa de sucesso é > 90%",
+      "generalization_suggestion": "Essa abstração pode ser generalizada para outros domínios que envolvem resolução de conflitos em grupos grandes, como resolução de conflitos em sistemas de controle de versão.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 337,
+      "confirmation_count": 337,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897691,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946348,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946348,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776946350,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776633795_6332",
+      "domain": "action_done",
+      "action_kind": "action_done",
+      "created_at": 1776633795,
+      "name": "Auto-Resolução de Conflitos",
+      "causal_structure": {
+        "input": [
+          "conflitos_potenciais"
+        ],
+        "process": [
+          "auto_resolução"
+        ],
+        "output": [
+          "sucesso_da_resolução"
+        ]
+      },
+      "applicability_conditions": "",
+      "testable_prediction": "",
+      "generalization_suggestion": "",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 327,
+      "confirmation_count": 327,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897691,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946348,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776946350,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776642030_b47a",
+      "domain": "self_introspection",
+      "action_kind": "sleep_cycle",
+      "created_at": 1776642030,
+      "name": "Sleep_Cycle_Seguro",
+      "causal_structure": {
+        "condição": "group_size >= 4",
+        "ação": "sleep_cycle",
+        "resultado": "success_rate >= 1.0"
+      },
+      "applicability_conditions": {
+        "domain": "self_introspection",
+        "task_type": "self_introspection"
+      },
+      "testable_prediction": "em operações de self_introspection com group_size >= 4, sleep_cycle resulta em success_rate >= 0.9",
+      "generalization_suggestion": "abstrair para outros domínios com tarefas de auto-reflexão, onde o uso de sleep_cycle pode garantir sucesso com group_size >= 4",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 383,
+      "confirmation_count": 383,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776946346,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776946346,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657502,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657503,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657504,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658584,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658586,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659825,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667773,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1777667775,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776647268_428d",
+      "domain": "action_done",
+      "action_kind": "action_done",
+      "created_at": 1776647268,
+      "name": "AutoResolve_Conflicts",
+      "causal_structure": {
+        "precond": "group_size > 100",
+        "mechanism": "2 tentativas de auto-resolver conflitos",
+        "consequence": "success_rate > 0.9"
+      },
+      "applicability_conditions": {
+        "domain": "action_done",
+        "action_kind": "action_done",
+        "threshold": "success_rate > 0.9"
+      },
+      "testable_prediction": "em operações de arquivo com auto-resolve de conflitos, threshold de risco 0.7 resulta em sucesso > 80%",
+      "generalization_suggestion": "abstrair para outros domínios com operações de arquivo e auto-resolve de conflitos",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 267,
+      "confirmation_count": 267,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897691,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946348,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776946350,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776648946_0c7c",
+      "domain": "self_introspection",
+      "action_kind": "sleep_cycle",
+      "created_at": 1776648946,
+      "name": "Sleep_Cycle_Segurança",
+      "causal_structure": {
+        "precondição": "grupo tamanho 6",
+        "ação": "ciclo de sono",
+        "consequência": "taxa de sucesso 100%",
+        "mechanismo": "controle de grupo para evitar sobrecarga"
+      },
+      "applicability_conditions": {
+        "domínio": "self_introspection",
+        "tamanho do grupo": "6",
+        "ação": "ciclo de sono"
+      },
+      "testable_prediction": "em grupos de 6, o uso de ciclo de sono resulta em sucesso 100% em episódios de self_introspection",
+      "generalization_suggestion": "essa estrutura causal pode ser abstraída para outros domínios que envolvem grupos de tamanho fixo e ações de controle de sobrecarga, como sistemas de gerenciamento de recursos",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 374,
+      "confirmation_count": 374,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776946346,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776946346,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657502,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657503,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657504,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658584,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658586,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659825,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667773,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1777667775,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776652365_5a5e",
+      "domain": "meta_reasoning",
+      "action_kind": "auto_resolve_conflicts",
+      "created_at": 1776652365,
+      "name": "Auto_Resolve_Conflicts_Success",
+      "causal_structure": "A utilização da ferramenta 'auto_resolve_conflicts' em um grupo grande (106) com decisões de alta qualidade e baixa latência resulta em resolução eficaz de conflitos, minimizando surpresas.",
+      "applicability_conditions": "Contextos onde decisões são revisadas em grupo, com alta qualidade de input e ferramentas de resolução automatizadas disponíveis.",
+      "testable_prediction": "Em grupos de decisão com pelo menos 100 participantes e qualidade de input classificada como 'strong', a taxa de sucesso na resolução de conflitos usando 'auto_resolve_conflicts' será superior a 95%.",
+      "generalization_suggestion": "Essa lógica pode ser aplicada a outros domínios que envolvem resolução de conflitos em grupo, como mediação de disputas ou decisões colaborativas em ambientes corporativos.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 131,
+      "confirmation_count": 131,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776856336,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776856337,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776856337,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776856337,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776856337,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776856337,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776856337,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776856337,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776856337,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776877976,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776877977,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776877977,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776877977,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776877977,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776877977,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776889477,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776889477,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776889477,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776889477,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776889477,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776889477,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776696030_bef4",
+      "domain": "action_done",
+      "action_kind": "action_done",
+      "created_at": 1776696030,
+      "name": "Evidência_Tripla_Segura",
+      "causal_structure": "Solicitar evidência tripla antes de tomar decisão crítica",
+      "applicability_conditions": {
+        "domain": "action_done",
+        "success_rate": "> 0.9",
+        "mean_surprise": "< 0.5"
+      },
+      "testable_prediction": "Em operações de arquivo com rollback, solicitar evidência tripla aumenta a taxa de sucesso em 95%",
+      "generalization_suggestion": "Esta abstração pode ser generalizada para outros domínios que envolvem tomada de decisão crítica, como diagnóstico médico ou análise financeira",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 227,
+      "confirmation_count": 227,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897691,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946348,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776946350,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776696036_21d3",
+      "domain": "self_introspection",
+      "action_kind": "sleep_cycle",
+      "created_at": 1776696036,
+      "name": "Consistência de Ciclo de Sono",
+      "causal_structure": {
+        "condição": "grupo de tamanho fixo",
+        "ação": "ciclo de sono",
+        "resultado": "sucesso garantido"
+      },
+      "applicability_conditions": {
+        "grupo de tamanho fixo": true,
+        "tamanho do grupo": 9,
+        "ação de ciclo de sono": "sleep_cycle"
+      },
+      "testable_prediction": "em grupos de 9 pessoas, o uso do ciclo de sono 'sleep_cycle' resulta em sucesso garantido",
+      "generalization_suggestion": "Essa estrutura causal pode ser abstraída para outros domínios onde a consistência de grupo é crucial, como em processos de decisão coletiva ou em sistemas de controle de qualidade.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 347,
+      "confirmation_count": 347,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776946346,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776946346,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657502,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657503,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657504,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658584,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658586,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659825,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667773,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1777667775,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776696040_3cc1",
+      "domain": "self_introspection",
+      "action_kind": "episodic_compiler",
+      "created_at": 1776696040,
+      "name": "Revisão_Cognitiva_Autônoma",
+      "causal_structure": {
+        "revisão_cognitiva": {
+          "aplicação": "episodic_compiler",
+          "parâmetros": {
+            "grupo_tamanho": "4",
+            "taxa_de_sucesso": "1.0",
+            "taxa_de_surpresa": "0.15"
+          },
+          "condições": {
+            "domínio": "self_introspection",
+            "ação_tipo": "episodic_compiler"
+          }
+        }
+      },
+      "applicability_conditions": {
+        "domínio": "self_introspection",
+        "ação_tipo": "episodic_compiler",
+        "grupo_tamanho": "4",
+        "taxa_de_sucesso": ">= 0.9",
+        "taxa_de_surpresa": "<= 0.3"
+      },
+      "testable_prediction": "Em operações de auto-introspecção com grupo de tamanho 4 e taxa de sucesso >= 0.9, a aplicação do episodic_compiler resulta em sucesso com taxa >= 0.9 e taxa de surpresa <= 0.3.",
+      "generalization_suggestion": "Essa estrutura causal pode ser abstraída para outros domínios que envolvem revisão cognitiva autônoma, como por exemplo, revisão de código em projetos de desenvolvimento de software.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 338,
+      "confirmation_count": 338,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776946346,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776946347,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657502,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657503,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657504,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658586,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659825,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667773,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1777667775,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776701609_9788",
+      "domain": "action_done",
+      "action_kind": "action_done",
+      "created_at": 1776701609,
+      "name": "Ciclo_Gerenciamento_Projetos_Sucesso",
+      "causal_structure": "A execução da ação 'action_done' em um ciclo de gerenciamento de projetos, com um grupo coeso e bem definido, leva a um status de sucesso garantido quando as condições de planejamento e comunicação são atendidas.",
+      "applicability_conditions": "O grupo deve ser homogêneo e ter clareza nas funções e responsabilidades, além de um planejamento prévio bem estruturado.",
+      "testable_prediction": "Em ciclos de gerenciamento de projetos com grupos de pelo menos 300 membros e planejamento claro, a taxa de sucesso será superior a 95% com uma taxa de surpresa inferior a 0.3.",
+      "generalization_suggestion": "Esta estrutura causal pode ser aplicada a outros domínios de projeto, como desenvolvimento de software e eventos, onde a clareza de funções e planejamento são críticos para o sucesso.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 217,
+      "confirmation_count": 217,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897691,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946348,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776946350,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776701616_5d4a",
+      "domain": "self_introspection",
+      "action_kind": "sleep_cycle",
+      "created_at": 1776701616,
+      "name": "Ciclo_Sono_Eficaz",
+      "causal_structure": "A implementação de ciclos de sono adequados promove a recuperação cognitiva e emocional, resultando em decisões mais claras e eficazes durante a auto-introspecção.",
+      "applicability_conditions": "Contextos onde a qualidade do sono pode ser controlada e monitorada, e onde a introspecção é necessária para a tomada de decisões.",
+      "testable_prediction": "Em grupos de indivíduos que implementam ciclos de sono adequados, a taxa de sucesso em decisões de auto-introspecção será superior a 90% com uma taxa de surpresa inferior a 0.2.",
+      "generalization_suggestion": "Esta lógica pode ser aplicada a outros domínios que envolvem recuperação cognitiva, como aprendizado e desempenho em tarefas complexas, onde o descanso adequado é um fator crítico.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 334,
+      "confirmation_count": 334,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776946346,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776946347,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657502,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657503,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657504,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658586,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659825,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667773,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1777667775,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776701624_5191",
+      "domain": "self_introspection",
+      "action_kind": "episodic_compiler",
+      "created_at": 1776701624,
+      "name": "Episódio_Sucesso_Self_Introspection",
+      "causal_structure": "A combinação de um grupo coeso (6 participantes) e a utilização de um compilador episódico para decisões, resultando em uma alta taxa de aceitação e qualidade forte das ações.",
+      "applicability_conditions": "A aplicação é segura em contextos de introspecção pessoal onde a coesão do grupo é mantida e as ferramentas de compilação episódica estão disponíveis.",
+      "testable_prediction": "Em sessões de introspecção com grupos de 6 pessoas usando um compilador episódico, a taxa de sucesso será superior a 90% com uma média de surpresa abaixo de 0.2.",
+      "generalization_suggestion": "Essa lógica pode ser aplicada a outros domínios onde a colaboração em grupo e a análise de decisões são críticas, como em ambientes de brainstorming ou feedback em equipe.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 324,
+      "confirmation_count": 324,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776946346,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776946347,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657502,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657503,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657504,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658586,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659825,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667773,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1777667775,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776702404_c4eb",
+      "domain": "action_done",
+      "action_kind": "action_done",
+      "created_at": 1776702404,
+      "name": "Ação_Done_Sucesso",
+      "causal_structure": "A execução da ação foi realizada em um ambiente controlado com um grupo grande, resultando em uma taxa de sucesso de 100% e baixa surpresa, indicando que as condições e expectativas estavam alinhadas.",
+      "applicability_conditions": "A estrutura deve ser aplicada em contextos onde o grupo é grande (superior a 300) e as ações são previsíveis e bem compreendidas pelos participantes.",
+      "testable_prediction": "Em ações realizadas em grupos de pelo menos 300 participantes, a taxa de sucesso será superior a 95% quando a surpresa média for inferior a 0.3.",
+      "generalization_suggestion": "Essa lógica pode ser aplicada a outros domínios onde a previsibilidade das ações e o tamanho do grupo são fatores críticos para o sucesso, como em treinamentos em equipe ou operações em larga escala.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 207,
+      "confirmation_count": 207,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897691,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946348,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776946350,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776702416_ded0",
+      "domain": "self_introspection",
+      "action_kind": "episodic_compiler",
+      "created_at": 1776702416,
+      "name": "Self_Introspection_Success",
+      "causal_structure": "A aplicação sistemática de um compilador episódico que permite a reflexão sobre decisões passadas, resultando em um aprendizado contínuo e adaptação das estratégias de decisão.",
+      "applicability_conditions": "Contextos onde a introspecção é relevante e as decisões podem ser analisadas com base em episódios anteriores, com um grupo de pelo menos 10 participantes para garantir diversidade de experiências.",
+      "testable_prediction": "Em contextos de auto-introspecção, a utilização de um compilador episódico em grupos de 10 ou mais resultará em uma taxa de sucesso de 100% em decisões reflexivas.",
+      "generalization_suggestion": "Esta lógica pode ser aplicada em outros domínios que envolvem aprendizado a partir de experiências passadas, como treinamento de equipes em ambientes de alta pressão ou feedback em processos de tomada de decisão em grupo.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 308,
+      "confirmation_count": 308,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776946346,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776946347,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657502,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657503,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657504,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658586,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658586,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659825,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1777667775,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776719970_749b",
+      "domain": "self_introspection",
+      "action_kind": "sleep_cycle",
+      "created_at": 1776719970,
+      "name": "Sleep_Cycle_Optimização",
+      "causal_structure": {
+        "antecedentes": [
+          "group_size >= 10"
+        ],
+        "condição": "action_kind == 'sleep_cycle'",
+        "consequência": "success_rate >= 0.9"
+      },
+      "applicability_conditions": {
+        "domain": "self_introspection",
+        "group_size": ">= 10",
+        "action_kind": "sleep_cycle"
+      },
+      "testable_prediction": "Em grupos de 10 ou mais, a taxa de sucesso de um ciclo de sono é maior que 90%.",
+      "generalization_suggestion": "Esta abstração pode ser generalizada para outros domínios que envolvem otimização de processos em grupos grandes, como otimização de fluxos de trabalho em sistemas de produção.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 298,
+      "confirmation_count": 298,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776946346,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776946347,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657502,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657503,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657504,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658586,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658586,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659825,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1777667775,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776719978_5910",
+      "domain": "self_introspection",
+      "action_kind": "episodic_compiler",
+      "created_at": 1776719978,
+      "name": "Self_Introspection_Episodic_Compilation",
+      "causal_structure": {
+        "regra": "EPISÓDIO_Compilador_Episódico: SEMPRE utilizar o Compilador Episódico para compilar episódios de auto-reflexão.",
+        "condicionais": [
+          {
+            "condição": "DOMÍNIO: self_introspection",
+            "valor": "VERDADEIRO"
+          },
+          {
+            "condição": "TAMANHO_DA_GRUPO: >= 12",
+            "valor": "VERDADEIRO"
+          }
+        ]
+      },
+      "applicability_conditions": {
+        "DOMÍNIO": "self_introspection",
+        "TAMANHO_DA_GRUPO": "> 12",
+        "SUCESSO_RATE": ">= 0.9",
+        "MÉDIA_SURPRESA": "< 0.3"
+      },
+      "testable_prediction": "Em operações de auto-reflexão com grupo de tamanho >= 12 e sucesso rate >= 0.9, o uso do Compilador Episódico resulta em sucesso rate >= 0.95.",
+      "generalization_suggestion": "Esta estrutura causal pode ser abstraída para outros domínios de auto-reflexão, desde que o tamanho do grupo e o sucesso rate sejam adequados.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 288,
+      "confirmation_count": 288,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776946346,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776946347,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657502,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657503,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657504,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658586,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658586,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659825,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1777667775,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776791806_05b7",
+      "domain": "action_done",
+      "action_kind": "action_done",
+      "created_at": 1776791806,
+      "name": "Ação Realizada com Sucesso",
+      "causal_structure": "Realização da ação com sucesso está relacionada à ausência de obstáculos e condições favoráveis",
+      "applicability_conditions": {
+        "domain": "action_done",
+        "group_size": "grande",
+        "success_rate": "100%",
+        "mean_surprise": "baixa"
+      },
+      "testable_prediction": "Em operações de ação com grupo de tamanho 222, sucesso é garantido quando a taxa de surpresa é inferior a 0,5",
+      "generalization_suggestion": "Essa estrutura causal pode ser abstraída para outros domínios onde a realização de ações depende de condições favoráveis e ausência de obstáculos",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 167,
+      "confirmation_count": 167,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897691,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946348,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776946350,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776791812_3a5a",
+      "domain": "self_introspection",
+      "action_kind": "sleep_cycle",
+      "created_at": 1776791812,
+      "name": "Sleep_Cycle_Optimization",
+      "causal_structure": {
+        "antecedentes": [
+          "group_size >= 16"
+        ],
+        "condição": "sleep_cycle",
+        "consequência": "success_rate >= 1.0"
+      },
+      "applicability_conditions": {
+        "domain": "self_introspection",
+        "task_type": "self_introspection"
+      },
+      "testable_prediction": "Em operações de introspecção de si mesmo, com grupo de tamanho >= 16 e uso de sleep_cycle, a taxa de sucesso é >= 1.0",
+      "generalization_suggestion": "Essa estrutura causal pode ser generalizada para outros domínios que envolvem otimização de ciclos de sono, como em sistemas de gerenciamento de energia ou em aplicações de saúde e bem-estar.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 238,
+      "confirmation_count": 238,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776946346,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776946347,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657502,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657503,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657504,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658586,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658586,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659825,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1777667775,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776796028_4dd7",
+      "domain": "action_done",
+      "action_kind": "action_done",
+      "created_at": 1776796028,
+      "name": "Success_Guaranteed_Action",
+      "causal_structure": "Ação realizada com sucesso quando o grupo de tamanho fixo é pequeno e a taxa de surpresa é baixa",
+      "applicability_conditions": {
+        "group_size": "pequeno",
+        "mean_surprise": "baixo"
+      },
+      "testable_prediction": "Em operações de ação com grupo de tamanho 215 e taxa de surpresa 0.25, a taxa de sucesso é > 99%",
+      "generalization_suggestion": "Essa estrutura causal pode ser abstraída para outros domínios onde a ação realizada tenha um impacto direto e previsível",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 157,
+      "confirmation_count": 157,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897691,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946348,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776946350,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776799832_d9ce",
+      "domain": "hard_eval_compiler_probe_1776799825",
+      "action_kind": "guarded_validation",
+      "created_at": 1776799832,
+      "name": "Validacao_Atomica",
+      "causal_structure": "Validacao_Atomica = (Inspecionar_Estado) ∧ (Aplicar_Garda_de_Cobertura) ∧ (Validar_Resultado)",
+      "applicability_conditions": {
+        "coverage_gate": true,
+        "rollback": true,
+        "no_external_llm": true
+      },
+      "testable_prediction": "Em operações de avaliação hard compiler, com precondição de cobertura de 100% e rollback habilitado, a taxa de sucesso é > 95%",
+      "generalization_suggestion": "Essa estrutura causal pode ser abstraída para outros domínios de avaliação de compiladores, substituindo a precondição de cobertura por outras métricas de qualidade de código.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 5,
+      "confirmation_count": 5,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776799833,
+          "confirmed": true,
+          "surprise": 0.05,
+          "ok": true
+        },
+        {
+          "ts": 1776799833,
+          "confirmed": true,
+          "surprise": 0.05,
+          "ok": true
+        },
+        {
+          "ts": 1776799833,
+          "confirmed": true,
+          "surprise": 0.05,
+          "ok": true
+        },
+        {
+          "ts": 1776799833,
+          "confirmed": true,
+          "surprise": 0.05,
+          "ok": true
+        },
+        {
+          "ts": 1776799833,
+          "confirmed": true,
+          "surprise": 0.05,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776799833,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776799851_2ac7",
+      "domain": "hard_eval_deterministic_1776799851",
+      "action_kind": "no_llm_compile",
+      "created_at": 1776799851,
+      "name": "Hard_Eval_Deterministic__No_Llm_Compile",
+      "causal_structure": "No dominio hard eval deterministic 1776799851, a acao no llm compile tende a success quando as condicoes observaveis (coverage_gate, latency_ms, rollback) sustentam a sequencia observe -> guard -> validate.",
+      "applicability_conditions": "Reusar apenas quando o dominio for hard eval deterministic 1776799851 ou estruturalmente equivalente, com as condicoes (coverage_gate, latency_ms, rollback) verificadas antes da acao.",
+      "testable_prediction": "Em novos episodios de hard eval deterministic 1776799851 com no llm compile e baixa surpresa, as mesmas condicoes (coverage_gate, latency_ms, rollback) devem preservar sucesso operacional acima do baseline.",
+      "generalization_suggestion": "Transferir pela estrutura causal das precondicoes, guardas e evidencias, nao pelo nome literal da tarefa.",
+      "status": "hypothesis",
+      "version": 1.0,
+      "test_count": 0,
+      "confirmation_count": 0,
+      "refutation_count": 0,
+      "confirmation_rate": 0.0,
+      "test_history": [],
+      "last_tested_at": 0,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776800403_8f8e",
+      "domain": "hard_eval_abstraction_1776800403",
+      "action_kind": "guarded_validation",
+      "created_at": 1776800403,
+      "name": "Hard_Eval_Abstraction_17_Guarded_Validation",
+      "causal_structure": "No dominio hard eval abstraction 1776800403, a acao guarded validation tende a success quando as condicoes observaveis (coverage_gate, latency_ms, no_external_llm, regression, rollback) sustentam a sequencia observe state -> apply coverage gate -> validate result.",
+      "applicability_conditions": "Reusar apenas quando o dominio for hard eval abstraction 1776800403 ou estruturalmente equivalente, com as condicoes (coverage_gate, latency_ms, no_external_llm, regression, rollback) verificadas antes da acao.",
+      "testable_prediction": "Em novos episodios de hard eval abstraction 1776800403 com guarded validation e baixa surpresa, as mesmas condicoes (coverage_gate, latency_ms, no_external_llm, regression, rollback) devem preservar sucesso operacional acima do baseline.",
+      "generalization_suggestion": "Transferir pela estrutura causal das precondicoes, guardas e evidencias, nao pelo nome literal da tarefa.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 5,
+      "confirmation_count": 5,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776800403,
+          "confirmed": true,
+          "surprise": 0.05,
+          "ok": true
+        },
+        {
+          "ts": 1776800403,
+          "confirmed": true,
+          "surprise": 0.05,
+          "ok": true
+        },
+        {
+          "ts": 1776800403,
+          "confirmed": true,
+          "surprise": 0.05,
+          "ok": true
+        },
+        {
+          "ts": 1776800403,
+          "confirmed": true,
+          "surprise": 0.05,
+          "ok": true
+        },
+        {
+          "ts": 1776800403,
+          "confirmed": true,
+          "surprise": 0.05,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776800403,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776800552_e637",
+      "domain": "hard_eval_abstraction_1776800552",
+      "action_kind": "guarded_validation",
+      "created_at": 1776800552,
+      "name": "Hard_Eval_Abstractio_Guarded_Validation_9859af",
+      "causal_structure": "No dominio hard eval abstraction 1776800552, a acao guarded validation tende a success quando as condicoes observaveis (coverage_gate, latency_ms, no_external_llm, regression, rollback) sustentam a sequencia observe state -> apply coverage gate -> validate result.",
+      "applicability_conditions": "Reusar apenas quando o dominio for hard eval abstraction 1776800552 ou estruturalmente equivalente, com as condicoes (coverage_gate, latency_ms, no_external_llm, regression, rollback) verificadas antes da acao.",
+      "testable_prediction": "Em novos episodios de hard eval abstraction 1776800552 com guarded validation e baixa surpresa, as mesmas condicoes (coverage_gate, latency_ms, no_external_llm, regression, rollback) devem preservar sucesso operacional acima do baseline.",
+      "generalization_suggestion": "Transferir pela estrutura causal das precondicoes, guardas e evidencias, nao pelo nome literal da tarefa.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 5,
+      "confirmation_count": 5,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776800552,
+          "confirmed": true,
+          "surprise": 0.05,
+          "ok": true
+        },
+        {
+          "ts": 1776800552,
+          "confirmed": true,
+          "surprise": 0.05,
+          "ok": true
+        },
+        {
+          "ts": 1776800552,
+          "confirmed": true,
+          "surprise": 0.05,
+          "ok": true
+        },
+        {
+          "ts": 1776800552,
+          "confirmed": true,
+          "surprise": 0.05,
+          "ok": true
+        },
+        {
+          "ts": 1776800552,
+          "confirmed": true,
+          "surprise": 0.05,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776800552,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776819169_e3e5",
+      "domain": "meta_reasoning",
+      "action_kind": "auto_resolve_conflicts",
+      "created_at": 1776819169,
+      "name": "Meta_Reasoning_Auto_Resolve_Conflic_ff7a9d",
+      "causal_structure": "No dominio meta reasoning, a acao auto resolve conflicts tende a success quando as condicoes observaveis (estado observavel equivalente) sustentam a sequencia auto resolve conflicts.",
+      "applicability_conditions": "Reusar apenas quando o dominio for meta reasoning ou estruturalmente equivalente, com as condicoes (estado observavel equivalente) verificadas antes da acao.",
+      "testable_prediction": "Em novos episodios de meta reasoning com auto resolve conflicts e baixa surpresa, as mesmas condicoes (estado observavel equivalente) devem preservar sucesso operacional acima do baseline.",
+      "generalization_suggestion": "Transferir pela estrutura causal das precondicoes, guardas e evidencias, nao pelo nome literal da tarefa.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 41,
+      "confirmation_count": 41,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776856337,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776856337,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776856337,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776856337,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776856337,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776856337,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776856337,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776856337,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776856337,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776877976,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776877977,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776877977,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776877977,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776877977,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776877977,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776889477,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776889477,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776889477,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776889477,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776889477,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776889477,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776819174_2d8b",
+      "domain": "action_done",
+      "action_kind": "action_done",
+      "created_at": 1776819174,
+      "name": "Ação Concluída com Baixa Taxa de Surpresa",
+      "causal_structure": {
+        "antecedentes": [
+          "Ação concluída",
+          "Taxa de surpresa baixa"
+        ],
+        "consequência": "Sucesso garantido"
+      },
+      "applicability_conditions": {
+        "domínio": "action_done",
+        "condições": [
+          "Ação concluída",
+          "Taxa de surpresa < 0.5"
+        ]
+      },
+      "testable_prediction": "Em operações de ação concluída com taxa de surpresa < 0.5, a probabilidade de sucesso é > 90%",
+      "generalization_suggestion": "Esta abstração pode ser generalizada para outros domínios onde a conclusão de ações é um fator crítico, como em processos de produção ou operações de manutenção.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 147,
+      "confirmation_count": 147,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897691,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946348,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776946350,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776819182_5b78",
+      "domain": "self_introspection",
+      "action_kind": "episodic_compiler",
+      "created_at": 1776819182,
+      "name": "Self_Introspection_Episodic_Compiler",
+      "causal_structure": "Uso do Episodic Compiler com grupo de tamanho fixo e sucesso garantido em operações de introspecção",
+      "applicability_conditions": "Domínio fechado 'self_introspection', grupo de tamanho fixo (20), sucesso garantido e baixa taxa de surpresa",
+      "testable_prediction": "Em operações de introspecção com grupo de tamanho fixo (20), o uso do Episodic Compiler resulta em sucesso > 90%",
+      "generalization_suggestion": "Esta abstração pode ser generalizada para outros domínios de introspecção, como 'self_monitoring' ou 'self_evaluation', substituindo o grupo de tamanho fixo por um parâmetro de ajuste adaptativo",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 198,
+      "confirmation_count": 198,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776946346,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776946347,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657502,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657503,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657504,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658586,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658586,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659825,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1777667775,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776820184_4091",
+      "domain": "action_done",
+      "action_kind": "action_done",
+      "created_at": 1776820184,
+      "name": "Success_Atomica",
+      "causal_structure": "Execução de ação única e imediata após verificação de condições prévias",
+      "applicability_conditions": {
+        "domain": "action_done",
+        "group_size": "pequeno a médio",
+        "success_rate": "100%",
+        "mean_surprise": "baixa"
+      },
+      "testable_prediction": "Em operações de ação única, com grupo de tamanho 100, a taxa de sucesso é > 95%",
+      "generalization_suggestion": "Esta abstração pode ser aplicada a outros domínios onde a execução de ações únicas e imediatas é crucial, como em sistemas de controle de fluxo de trabalho ou em processos de automação.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 137,
+      "confirmation_count": 137,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897691,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946348,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776946350,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776820191_447f",
+      "domain": "self_introspection",
+      "action_kind": "episodic_compiler",
+      "created_at": 1776820191,
+      "name": "Self_Introspection_Episodic_Compiler_b99081",
+      "causal_structure": "No dominio self introspection, a acao episodic compiler tende a success quando as condicoes observaveis (estado observavel equivalente) sustentam a sequencia episodic compiler.",
+      "applicability_conditions": "Reusar apenas quando o dominio for self introspection ou estruturalmente equivalente, com as condicoes (estado observavel equivalente) verificadas antes da acao.",
+      "testable_prediction": "Em novos episodios de self introspection com episodic compiler e baixa surpresa, as mesmas condicoes (estado observavel equivalente) devem preservar sucesso operacional acima do baseline.",
+      "generalization_suggestion": "Transferir pela estrutura causal das precondicoes, guardas e evidencias, nao pelo nome literal da tarefa.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 178,
+      "confirmation_count": 178,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776946346,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776946347,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657503,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657503,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657504,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658586,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658586,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659825,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659825,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1777667775,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776856338_b18e",
+      "domain": "action_done",
+      "action_kind": "action_done",
+      "created_at": 1776856338,
+      "name": "Action_Done_Action_Done_e40b97",
+      "causal_structure": "No dominio action done, a acao action done tende a success quando as condicoes observaveis (estado observavel equivalente) sustentam a sequencia action done.",
+      "applicability_conditions": "Reusar apenas quando o dominio for action done ou estruturalmente equivalente, com as condicoes (estado observavel equivalente) verificadas antes da acao.",
+      "testable_prediction": "Em novos episodios de action done com action done e baixa surpresa, as mesmas condicoes (estado observavel equivalente) devem preservar sucesso operacional acima do baseline.",
+      "generalization_suggestion": "Transferir pela estrutura causal das precondicoes, guardas e evidencias, nao pelo nome literal da tarefa.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 127,
+      "confirmation_count": 127,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897691,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946348,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776946350,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776856349_0239",
+      "domain": "self_introspection",
+      "action_kind": "sleep_cycle",
+      "created_at": 1776856349,
+      "name": "Self_Introspection_Sleep_Cycle_15e726",
+      "causal_structure": "No dominio self introspection, a acao sleep cycle tende a success quando as condicoes observaveis (estado observavel equivalente) sustentam a sequencia sleep cycle.",
+      "applicability_conditions": "Reusar apenas quando o dominio for self introspection ou estruturalmente equivalente, com as condicoes (estado observavel equivalente) verificadas antes da acao.",
+      "testable_prediction": "Em novos episodios de self introspection com sleep cycle e baixa surpresa, as mesmas condicoes (estado observavel equivalente) devem preservar sucesso operacional acima do baseline.",
+      "generalization_suggestion": "Transferir pela estrutura causal das precondicoes, guardas e evidencias, nao pelo nome literal da tarefa.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 148,
+      "confirmation_count": 148,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776946346,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1776946347,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657503,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657503,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777657504,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658585,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658586,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777658586,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659823,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659824,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659825,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777659826,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667774,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1777667775,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1777667775,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776887792_6b94",
+      "domain": "action_done",
+      "action_kind": "action_done",
+      "created_at": 1776887792,
+      "name": "Ação_Efetiva_Segura",
+      "causal_structure": "Execução de ações com baixo nível de surpresa e alta taxa de sucesso, indicando um processo bem definido e controlado",
+      "applicability_conditions": "Domínio fechado, grupo de tamanho moderado (30-40), ações de natureza semelhante à 'action_done'",
+      "testable_prediction": "Em operações de 'action_done' com grupo de tamanho entre 30 e 40, taxas de surpresa abaixo de 0.3 resultarão em taxas de sucesso superiores a 95%",
+      "generalization_suggestion": "Esta abstração pode ser generalizada para outros domínios de ações controladas, como 'operações financeiras' ou 'gestão de projetos', onde a minimização da surpresa e a maximização da taxa de sucesso são cruciais",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 107,
+      "confirmation_count": 107,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897691,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946348,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776946350,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1776888263_8c32",
+      "domain": "action_done",
+      "action_kind": "action_done",
+      "created_at": 1776888263,
+      "name": "Ação Concluída com Baixa Surpresa",
+      "causal_structure": "Execução de ação concluída com sucesso e baixa taxa de surpresa",
+      "applicability_conditions": {
+        "domain": "action_done",
+        "success_rate": ">= 0.9",
+        "mean_surprise": "<= 0.3"
+      },
+      "testable_prediction": "Em operações de ação concluída, com sucesso e baixa taxa de surpresa, a probabilidade de sucesso é > 90%",
+      "generalization_suggestion": "Esta abstração pode ser generalizada para outros domínios onde a execução de ações é concluída com sucesso e baixa taxa de surpresa, como por exemplo, em operações de arquivo ou em sistemas de gerenciamento de tarefas.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 77,
+      "confirmation_count": 77,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897690,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776897691,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906022,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906023,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906024,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776906025,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946348,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946349,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        },
+        {
+          "ts": 1776946350,
+          "confirmed": true,
+          "surprise": 0.25,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1776946350,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
+    }
+  ]
+}

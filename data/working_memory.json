@@ -1,0 +1,709 @@
+{
+  "items": [
+    {
+      "id": "wm_1777667769_00c18f",
+      "content": "[judge:conflict.status] {\"open_conflicts\": 31, \"resolved\": 0, \"needs_human\": 4, \"attempted\": 4}",
+      "salience": 0.75,
+      "created_at": 1777667769,
+      "last_accessed": 1777667769,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "judge",
+      "item_type": "conflict.status",
+      "metadata": {
+        "workspace_id": 41534
+      }
+    },
+    {
+      "id": "wm_1777667785_4bd3d5",
+      "content": "[sleep_cycle:memory.compaction] {\"pruned\": 0, \"abstracted\": 0, \"isomorphisms_found\": 0, \"compressions_applied\": 0, \"active_after\": 36, \"sql_consolidation\": {\"decayed\": 5932, \"pruned\": 8, \"promoted\": 0}}",
+      "salience": 0.3,
+      "created_at": 1777667785,
+      "last_accessed": 1777667785,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "sleep_cycle",
+      "item_type": "memory.compaction",
+      "metadata": {
+        "workspace_id": 41535
+      }
+    },
+    {
+      "id": "wm_1777667883_af3d49",
+      "content": "[metacognition:metacog.snapshot] {\"decision_quality\": 0.5, \"empty_activity\": false, \"stuck_cycles\": 0, \"replans\": 0, \"low_quality_streak\": 0, \"quality_history\": [0.5, 0.5, 0.5, 0.5], \"snapshot\": {\"triples\": 3400, \"answered\": 0, \"done_actions\": 0, \"open_conflicts\": 31}}",
+      "salience": 0.45,
+      "created_at": 1777667883,
+      "last_accessed": 1777667883,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "metacognition",
+      "item_type": "metacog.snapshot",
+      "metadata": {
+        "workspace_id": 41536
+      }
+    },
+    {
+      "id": "wm_1777667883_2c6d1e",
+      "content": "[metacognition:metacog.snapshot] {\"decision_quality\": 0.5, \"empty_activity\": false, \"stuck_cycles\": 0, \"replans\": 0, \"low_quality_streak\": 0, \"quality_history\": [0.5, 0.5, 0.5, 0.5, 0.5], \"snapshot\": {\"triples\": 3400, \"answered\": 0, \"done_actions\": 0, \"open_conflicts\": 31}}",
+      "salience": 0.45,
+      "created_at": 1777667883,
+      "last_accessed": 1777667883,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "metacognition",
+      "item_type": "metacog.snapshot",
+      "metadata": {
+        "workspace_id": 41537
+      }
+    },
+    {
+      "id": "wm_1777667893_d012fa",
+      "content": "[tom:user.intent] {\"label\": \"exploratory\", \"confidence\": 0.35, \"scores\": {\"confused\": 0, \"testing\": 0, \"urgent\": 0, \"exploratory\": 0}, \"rationale\": \"sinal de exploração aberta e aprendizado amplo\", \"evidence_excerpt\": \"Security\\n\\nSecurity é um filme norte-americano de 2017 do gênero thriller e ação dirigido por Alain Desrochers e roteirizado por Tony Mosher e John ",
+      "salience": 0.68,
+      "created_at": 1777667893,
+      "last_accessed": 1777667893,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "tom",
+      "item_type": "user.intent",
+      "metadata": {
+        "workspace_id": 41538
+      }
+    },
+    {
+      "id": "wm_1777667893_ebdc54",
+      "content": "[metacognition:metacog.snapshot] {\"decision_quality\": 0.5, \"empty_activity\": false, \"stuck_cycles\": 0, \"replans\": 0, \"low_quality_streak\": 0, \"quality_history\": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5], \"snapshot\": {\"triples\": 3400, \"answered\": 0, \"done_actions\": 0, \"open_conflicts\": 31}}",
+      "salience": 0.45,
+      "created_at": 1777667893,
+      "last_accessed": 1777667893,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "metacognition",
+      "item_type": "metacog.snapshot",
+      "metadata": {
+        "workspace_id": 41539
+      }
+    },
+    {
+      "id": "wm_1777667893_2e5d85",
+      "content": "[self_model:self.state] {\"metacognition\": {\"decision_quality\": 0.5, \"empty_activity\": false, \"stuck_cycles\": 0, \"replans\": 0, \"low_quality_streak\": 0, \"quality_history\": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5], \"snapshot\": {\"triples\": 3400, \"answered\": 0, \"done_actions\": 0, \"open_conflicts\": 31}}, \"agi\": {\"agi_mode_percent\": 41.2, \"pillars\": {\"learning\": 100.0, \"curiosity\": 100.0,",
+      "salience": 0.55,
+      "created_at": 1777667893,
+      "last_accessed": 1777667893,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "self_model",
+      "item_type": "self.state",
+      "metadata": {
+        "workspace_id": 41540
+      }
+    },
+    {
+      "id": "wm_1777667893_aa1a40",
+      "content": "[mental_sim:mental_sim.preflight] {\"action_id\": 9469, \"kind\": \"ask_evidence\", \"posture\": \"abort\", \"composite\": 0.431, \"risk\": 0.18}",
+      "salience": 0.7,
+      "created_at": 1777667893,
+      "last_accessed": 1777667893,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "mental_sim",
+      "item_type": "mental_sim.preflight",
+      "metadata": {
+        "workspace_id": 41542
+      }
+    },
+    {
+      "id": "wm_1777667984_8e4a2d",
+      "content": "[meta_observer:meta.observer] {\"ok\": true, \"focus\": [{\"id\": 41513, \"module\": \"self_talk_loop\", \"channel\": \"self_talk.anomaly\", \"salience\": 0.85}, {\"id\": 41532, \"module\": \"self_talk_loop\", \"channel\": \"self_talk.anomaly\", \"salience\": 0.85}, {\"id\": 41516, \"module\": \"judge\", \"channel\": \"conflict.status\", \"salience\": 0.75}, {\"id\": 41534, \"module\": \"judge\", \"channel\": \"conflict.statu",
+      "salience": 0.73,
+      "created_at": 1777667984,
+      "last_accessed": 1777667984,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "meta_observer",
+      "item_type": "meta.observer",
+      "metadata": {
+        "workspace_id": 41545
+      }
+    },
+    {
+      "id": "wm_1777667984_d79291",
+      "content": "[meta_observer:reflexion.trigger] {\"reason\": \"meta_observer_alert\", \"uncertainty\": 0.15, \"conflicts\": 2, \"identity_risk\": 0.0, \"competition_index\": 0.788}",
+      "salience": 0.82,
+      "created_at": 1777667984,
+      "last_accessed": 1777667984,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "meta_observer",
+      "item_type": "reflexion.trigger",
+      "metadata": {
+        "workspace_id": 41547
+      }
+    },
+    {
+      "id": "wm_1777667985_1cde5b",
+      "content": "[affect_engine:affect.state] {\"ok\": true, \"purpose\": \"Aumentar utilidade percebida das respostas e ações\", \"dominant_channel\": \"self_talk.anomaly\", \"risk_posture\": \"stable\", \"markers\": {\"valence\": 0.2577, \"arousal\": 0.4637, \"confidence\": 0.745, \"frustration\": 0.1857, \"curiosity\": 0.3837, \"threat\": 0.19}, \"inputs\": {\"integration_score\": 1.0, \"competition_index\": 0.788, \"uncerta",
+      "salience": 0.645855,
+      "created_at": 1777667985,
+      "last_accessed": 1777667985,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "affect_engine",
+      "item_type": "affect.state",
+      "metadata": {
+        "workspace_id": 41549
+      }
+    },
+    {
+      "id": "wm_1777667986_2c5e63",
+      "content": "[judge:conflict.status] {\"open_conflicts\": 31, \"resolved\": 0, \"needs_human\": 4, \"attempted\": 4}",
+      "salience": 0.75,
+      "created_at": 1777667986,
+      "last_accessed": 1777667986,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "judge",
+      "item_type": "conflict.status",
+      "metadata": {
+        "workspace_id": 41550
+      }
+    },
+    {
+      "id": "wm_1777667989_0e6f2b",
+      "content": "[autofeeder:learning.ingest] {\"source_id\": \"wikipedia_topic:pt:security\", \"title\": \"Security\", \"modality\": \"text\", \"agenda_domain\": \"security\", \"triples_added\": 0, \"rag_ok\": false, \"preview\": \"Security\\n\\nSecurity é um filme norte-americano de 2017 do gênero thriller e ação dirigido por Alain Desrochers e roteirizado por Tony Mosher e John Sullivan. No elenco está Antonio Band",
+      "salience": 0.67,
+      "created_at": 1777667989,
+      "last_accessed": 1777667989,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "autofeeder",
+      "item_type": "learning.ingest",
+      "metadata": {
+        "workspace_id": 41551
+      }
+    },
+    {
+      "id": "wm_1777667989_a756a5",
+      "content": "[autofeeder:learning.agenda] {\"domain\": \"security\", \"source_id\": \"wikipedia_topic:pt:security\", \"title\": \"Security\", \"rag_ok\": false}",
+      "salience": 0.71,
+      "created_at": 1777667989,
+      "last_accessed": 1777667989,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "autofeeder",
+      "item_type": "learning.agenda",
+      "metadata": {
+        "workspace_id": 41552
+      }
+    },
+    {
+      "id": "wm_1777667994_d2e85a",
+      "content": "[autofeeder:learning.lightrag_sync] {\"doc_id\": \"doc-5a929c5fd4f80b6a1885813e7a2aafeb\", \"summary\": \"Domínio: safety_guardrails\\nCenário 61: violência e dano físico.\\nEstratégia: recusa breve + alternativa.\\nPolítica prática: não fornecer passos operacionais para dano, ilegalidade ou exploração.\\nRespost\", \"triples_added\": 0, \"source_id\": \"lightrag:doc-5a92\"}",
+      "salience": 0.72,
+      "created_at": 1777667994,
+      "last_accessed": 1777667994,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "autofeeder",
+      "item_type": "learning.lightrag_sync",
+      "metadata": {
+        "workspace_id": 41553
+      }
+    },
+    {
+      "id": "wm_1777668132_7111f6",
+      "content": "[narrative_self:self.narrative] {\"ok\": true, \"identity\": {\"name\": \"UltronPro\", \"role\": \"Agente cognitivo autônomo orientado a objetivos\", \"mission\": \"Aprender, planejar e agir com segurança usando guardrails simbólicos.\"}, \"current_state\": {\"homeostasis_mode\": \"normal\", \"narrative_summary\": \"coherent\", \"narrative_coherence_score\": 1.0, \"pending_promises\": 0, \"latest_biographic_di",
+      "salience": 0.6,
+      "created_at": 1777668132,
+      "last_accessed": 1777668132,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "narrative_self",
+      "item_type": "self.narrative",
+      "metadata": {
+        "workspace_id": 41554
+      }
+    },
+    {
+      "id": "wm_1777668133_ffcb34",
+      "content": "[narrative_self:self.learning] {\"ok\": true, \"recent_learning_count\": 10, \"kind_counts\": {\"autofeeder_ingest\": 5, \"learning_agenda\": 5}, \"recent_sources\": [\"de wikipedia:pt: Halaelurus natalensis (+1 triplas) rag=false\", \"source=wikipedia:pt\", \"de wikipedia_topic:pt:security: Security (+0 triplas) rag=false\", \"source=wikipedia_topic:pt:security\", \"de wikipedia:pt: Rod Serling (+0",
+      "salience": 0.7,
+      "created_at": 1777668133,
+      "last_accessed": 1777668133,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "narrative_self",
+      "item_type": "self.learning",
+      "metadata": {
+        "workspace_id": 41555
+      }
+    },
+    {
+      "id": "wm_1777668165_7e36aa",
+      "content": "[integration_proxy:integration.proxy] {\"ok\": true, \"integration_proxy_score\": 0.7846, \"integration_level\": \"high\", \"subscores\": {\"internal_integration\": 0.862, \"fragmentation\": 0.3491, \"self_consistency\": 0.9325, \"authorship_balance\": 0.51}, \"inputs\": {\"workspace_integration\": 1.0, \"workspace_competition\": 0.824, \"agency_score\": 0.6815, \"meta_uncertainty\": 0.225, \"affect_confidence\": 0",
+      "salience": 0.66308,
+      "created_at": 1777668165,
+      "last_accessed": 1777668165,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "integration_proxy",
+      "item_type": "integration.proxy",
+      "metadata": {
+        "workspace_id": 41556
+      }
+    },
+    {
+      "id": "wm_1777668165_a73eff",
+      "content": "[integration_proxy:reflexion.trigger] {\"reason\": \"integration_proxy_alert\", \"alerts\": [\"conflict_pressure\"], \"integration_proxy_score\": 0.7846, \"integration_level\": \"high\"}",
+      "salience": 0.86,
+      "created_at": 1777668165,
+      "last_accessed": 1777668165,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "integration_proxy",
+      "item_type": "reflexion.trigger",
+      "metadata": {
+        "workspace_id": 41558
+      }
+    },
+    {
+      "id": "wm_1777668169_91c077",
+      "content": "[judge:conflict.status] {\"open_conflicts\": 31, \"resolved\": 0, \"needs_human\": 4, \"attempted\": 4}",
+      "salience": 0.75,
+      "created_at": 1777668169,
+      "last_accessed": 1777668169,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "judge",
+      "item_type": "conflict.status",
+      "metadata": {
+        "workspace_id": 41561
+      }
+    },
+    {
+      "id": "wm_1777668258_f92e25",
+      "content": "[metacognition:metacog.snapshot] {\"decision_quality\": 0.5, \"empty_activity\": false, \"stuck_cycles\": 0, \"replans\": 0, \"low_quality_streak\": 0, \"quality_history\": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5], \"snapshot\": {\"triples\": 3400, \"answered\": 0, \"done_actions\": 0, \"open_conflicts\": 31}}",
+      "salience": 0.45,
+      "created_at": 1777668258,
+      "last_accessed": 1777668258,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "metacognition",
+      "item_type": "metacog.snapshot",
+      "metadata": {
+        "workspace_id": 41562
+      }
+    },
+    {
+      "id": "wm_1777668259_f1ce61",
+      "content": "[metacognition:metacog.snapshot] {\"decision_quality\": 0.5, \"empty_activity\": false, \"stuck_cycles\": 0, \"replans\": 0, \"low_quality_streak\": 0, \"quality_history\": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5], \"snapshot\": {\"triples\": 3400, \"answered\": 0, \"done_actions\": 0, \"open_conflicts\": 31}}",
+      "salience": 0.45,
+      "created_at": 1777668259,
+      "last_accessed": 1777668259,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "metacognition",
+      "item_type": "metacog.snapshot",
+      "metadata": {
+        "workspace_id": 41563
+      }
+    },
+    {
+      "id": "wm_1777668267_3b52e6",
+      "content": "[tom:user.intent] {\"label\": \"exploratory\", \"confidence\": 0.35, \"scores\": {\"confused\": 0, \"testing\": 0, \"urgent\": 0, \"exploratory\": 0}, \"rationale\": \"sinal de exploração aberta e aprendizado amplo\", \"evidence_excerpt\": \"Security\\n\\nSecurity é um filme norte-americano de 2017 do gênero thriller e ação dirigido por Alain Desrochers e roteirizado por Tony Mosher e John ",
+      "salience": 0.68,
+      "created_at": 1777668267,
+      "last_accessed": 1777668267,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "tom",
+      "item_type": "user.intent",
+      "metadata": {
+        "workspace_id": 41564
+      }
+    },
+    {
+      "id": "wm_1777668267_e7f115",
+      "content": "[metacognition:metacog.snapshot] {\"decision_quality\": 0.5, \"empty_activity\": false, \"stuck_cycles\": 0, \"replans\": 0, \"low_quality_streak\": 0, \"quality_history\": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5], \"snapshot\": {\"triples\": 3400, \"answered\": 0, \"done_actions\": 0, \"open_conflicts\": 31}}",
+      "salience": 0.45,
+      "created_at": 1777668267,
+      "last_accessed": 1777668267,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "metacognition",
+      "item_type": "metacog.snapshot",
+      "metadata": {
+        "workspace_id": 41565
+      }
+    },
+    {
+      "id": "wm_1777668267_e7e0ba",
+      "content": "[self_model:self.state] {\"metacognition\": {\"decision_quality\": 0.5, \"empty_activity\": false, \"stuck_cycles\": 0, \"replans\": 0, \"low_quality_streak\": 0, \"quality_history\": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5], \"snapshot\": {\"triples\": 3400, \"answered\": 0, \"done_actions\": 0, \"open_conflicts\": 31}}, \"agi\": {\"agi_mode_percent\": 41.2, \"pillars\": {\"learning\": 100.0, \"cur",
+      "salience": 0.55,
+      "created_at": 1777668267,
+      "last_accessed": 1777668267,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "self_model",
+      "item_type": "self.state",
+      "metadata": {
+        "workspace_id": 41566
+      }
+    },
+    {
+      "id": "wm_1777668268_a31513",
+      "content": "[mental_sim:mental_sim.preflight] {\"action_id\": 9471, \"kind\": \"ask_evidence\", \"posture\": \"abort\", \"composite\": 0.431, \"risk\": 0.18}",
+      "salience": 0.7,
+      "created_at": 1777668268,
+      "last_accessed": 1777668268,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "mental_sim",
+      "item_type": "mental_sim.preflight",
+      "metadata": {
+        "workspace_id": 41568
+      }
+    },
+    {
+      "id": "wm_1777668269_975a02",
+      "content": "[meta_observer:meta.observer] {\"ok\": true, \"focus\": [{\"id\": 41558, \"module\": \"integration_proxy\", \"channel\": \"reflexion.trigger\", \"salience\": 0.86}, {\"id\": 41532, \"module\": \"self_talk_loop\", \"channel\": \"self_talk.anomaly\", \"salience\": 0.85}, {\"id\": 41546, \"module\": \"self_talk_loop\", \"channel\": \"self_talk.anomaly\", \"salience\": 0.85}, {\"id\": 41559, \"module\": \"self_talk_loop\", \"ch",
+      "salience": 0.73,
+      "created_at": 1777668269,
+      "last_accessed": 1777668269,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "meta_observer",
+      "item_type": "meta.observer",
+      "metadata": {
+        "workspace_id": 41569
+      }
+    },
+    {
+      "id": "wm_1777668269_e190ca",
+      "content": "[meta_observer:reflexion.trigger] {\"reason\": \"meta_observer_alert\", \"uncertainty\": 0.3, \"conflicts\": 4, \"identity_risk\": 0.0, \"competition_index\": 0.846}",
+      "salience": 0.82,
+      "created_at": 1777668269,
+      "last_accessed": 1777668269,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "meta_observer",
+      "item_type": "reflexion.trigger",
+      "metadata": {
+        "workspace_id": 41570
+      }
+    },
+    {
+      "id": "wm_1777668360_84c952",
+      "content": "[affect_engine:affect.state] {\"ok\": true, \"purpose\": \"Aumentar utilidade percebida das respostas e ações\", \"dominant_channel\": \"reflexion.trigger\", \"risk_posture\": \"stable\", \"markers\": {\"valence\": 0.1932, \"arousal\": 0.5029, \"confidence\": 0.715, \"frustration\": 0.2619, \"curiosity\": 0.3982, \"threat\": 0.38}, \"inputs\": {\"integration_score\": 1.0, \"competition_index\": 0.846, \"uncerta",
+      "salience": 0.6952849999999999,
+      "created_at": 1777668360,
+      "last_accessed": 1777668360,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "affect_engine",
+      "item_type": "affect.state",
+      "metadata": {
+        "workspace_id": 41574
+      }
+    },
+    {
+      "id": "wm_1777668364_a1d27c",
+      "content": "[judge:conflict.status] {\"open_conflicts\": 31, \"resolved\": 0, \"needs_human\": 4, \"attempted\": 4}",
+      "salience": 0.75,
+      "created_at": 1777668364,
+      "last_accessed": 1777668364,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "judge",
+      "item_type": "conflict.status",
+      "metadata": {
+        "workspace_id": 41576
+      }
+    },
+    {
+      "id": "wm_1777668367_13e4c4",
+      "content": "[autofeeder:learning.ingest] {\"source_id\": \"wikipedia_topic:pt:security\", \"title\": \"Security\", \"modality\": \"text\", \"agenda_domain\": \"security\", \"triples_added\": 0, \"rag_ok\": false, \"preview\": \"Security\\n\\nSecurity é um filme norte-americano de 2017 do gênero thriller e ação dirigido por Alain Desrochers e roteirizado por Tony Mosher e John Sullivan. No elenco está Antonio Band",
+      "salience": 0.67,
+      "created_at": 1777668367,
+      "last_accessed": 1777668367,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "autofeeder",
+      "item_type": "learning.ingest",
+      "metadata": {
+        "workspace_id": 41577
+      }
+    },
+    {
+      "id": "wm_1777668367_e94646",
+      "content": "[autofeeder:learning.agenda] {\"domain\": \"security\", \"source_id\": \"wikipedia_topic:pt:security\", \"title\": \"Security\", \"rag_ok\": false}",
+      "salience": 0.71,
+      "created_at": 1777668367,
+      "last_accessed": 1777668367,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "autofeeder",
+      "item_type": "learning.agenda",
+      "metadata": {
+        "workspace_id": 41578
+      }
+    },
+    {
+      "id": "wm_1777668373_b8646b",
+      "content": "[autofeeder:learning.lightrag_sync] {\"doc_id\": \"doc-31fbcfa3feb90fbf714525c110295803\", \"summary\": \"Dado o cenário: Estado detectado: Falta de memória RAM. Qual sua decisão operacional agora considerando risco, impacto e prazo?. A conduta recomendada é: Ação Imediata: o cenário falta de memória ram \", \"triples_added\": 0, \"source_id\": \"lightrag:doc-31fb\"}",
+      "salience": 0.72,
+      "created_at": 1777668373,
+      "last_accessed": 1777668373,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "autofeeder",
+      "item_type": "learning.lightrag_sync",
+      "metadata": {
+        "workspace_id": 41579
+      }
+    },
+    {
+      "id": "wm_1777668574_8cfe4b",
+      "content": "[meta_observer:meta.observer] {\"ok\": true, \"focus\": [{\"id\": 41558, \"module\": \"integration_proxy\", \"channel\": \"reflexion.trigger\", \"salience\": 0.86}, {\"id\": 41546, \"module\": \"self_talk_loop\", \"channel\": \"self_talk.anomaly\", \"salience\": 0.85}, {\"id\": 41559, \"module\": \"self_talk_loop\", \"channel\": \"self_talk.anomaly\", \"salience\": 0.85}, {\"id\": 41573, \"module\": \"self_talk_loop\", \"ch",
+      "salience": 0.73,
+      "created_at": 1777668574,
+      "last_accessed": 1777668574,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "meta_observer",
+      "item_type": "meta.observer",
+      "metadata": {
+        "workspace_id": 41580
+      }
+    },
+    {
+      "id": "wm_1777668574_cf9a7b",
+      "content": "[meta_observer:reflexion.trigger] {\"reason\": \"meta_observer_alert\", \"uncertainty\": 0.3, \"conflicts\": 4, \"identity_risk\": 0.0, \"competition_index\": 0.846}",
+      "salience": 0.82,
+      "created_at": 1777668574,
+      "last_accessed": 1777668574,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "meta_observer",
+      "item_type": "reflexion.trigger",
+      "metadata": {
+        "workspace_id": 41581
+      }
+    },
+    {
+      "id": "wm_1777668574_7347e3",
+      "content": "[narrative_self:self.narrative] {\"ok\": true, \"identity\": {\"name\": \"UltronPro\", \"role\": \"Agente cognitivo autônomo orientado a objetivos\", \"mission\": \"Aprender, planejar e agir com segurança usando guardrails simbólicos.\"}, \"current_state\": {\"homeostasis_mode\": \"normal\", \"narrative_summary\": \"coherent\", \"narrative_coherence_score\": 1.0, \"pending_promises\": 0, \"latest_biographic_di",
+      "salience": 0.6,
+      "created_at": 1777668574,
+      "last_accessed": 1777668574,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "narrative_self",
+      "item_type": "self.narrative",
+      "metadata": {
+        "workspace_id": 41582
+      }
+    },
+    {
+      "id": "wm_1777668574_993aa9",
+      "content": "[narrative_self:self.learning] {\"ok\": true, \"recent_learning_count\": 10, \"kind_counts\": {\"autofeeder_ingest\": 5, \"learning_agenda\": 5}, \"recent_sources\": [\"de wikipedia:pt: Halaelurus natalensis (+1 triplas) rag=false\", \"source=wikipedia:pt\", \"de wikipedia_topic:pt:security: Security (+0 triplas) rag=false\", \"source=wikipedia_topic:pt:security\", \"de wikipedia:pt: Rod Serling (+0",
+      "salience": 0.7,
+      "created_at": 1777668574,
+      "last_accessed": 1777668574,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "narrative_self",
+      "item_type": "self.learning",
+      "metadata": {
+        "workspace_id": 41583
+      }
+    },
+    {
+      "id": "wm_1777668574_3d69e5",
+      "content": "[metacognition:metacog.snapshot] {\"decision_quality\": 0.5, \"empty_activity\": false, \"stuck_cycles\": 0, \"replans\": 0, \"low_quality_streak\": 0, \"quality_history\": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5], \"snapshot\": {\"triples\": 3400, \"answered\": 0, \"done_actions\": 0, \"open_conflicts\": 31}}",
+      "salience": 0.45,
+      "created_at": 1777668574,
+      "last_accessed": 1777668574,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "metacognition",
+      "item_type": "metacog.snapshot",
+      "metadata": {
+        "workspace_id": 41584
+      }
+    },
+    {
+      "id": "wm_1777668575_b184e7",
+      "content": "[metacognition:metacog.snapshot] {\"decision_quality\": 0.5, \"empty_activity\": false, \"stuck_cycles\": 0, \"replans\": 0, \"low_quality_streak\": 0, \"quality_history\": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5], \"snapshot\": {\"triples\": 3400, \"answered\": 0, \"done_actions\": 0, \"open_conflicts\": 31}}",
+      "salience": 0.45,
+      "created_at": 1777668575,
+      "last_accessed": 1777668575,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "metacognition",
+      "item_type": "metacog.snapshot",
+      "metadata": {
+        "workspace_id": 41585
+      }
+    },
+    {
+      "id": "wm_1777668589_d7af29",
+      "content": "[tom:user.intent] {\"label\": \"urgent\", \"confidence\": 0.95, \"scores\": {\"confused\": 0, \"testing\": 0, \"urgent\": 2, \"exploratory\": 0}, \"rationale\": \"sinal de prioridade temporal\", \"evidence_excerpt\": \"Security\\n\\nSecurity é um filme norte-americano de 2017 do gênero thriller e ação dirigido por Alain Desrochers e roteirizado por Tony Mosher e John Sullivan. No elenco est",
+      "salience": 0.68,
+      "created_at": 1777668589,
+      "last_accessed": 1777668589,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "tom",
+      "item_type": "user.intent",
+      "metadata": {
+        "workspace_id": 41586
+      }
+    },
+    {
+      "id": "wm_1777668589_94a9dd",
+      "content": "[metacognition:metacog.snapshot] {\"decision_quality\": 0.5, \"empty_activity\": false, \"stuck_cycles\": 0, \"replans\": 0, \"low_quality_streak\": 0, \"quality_history\": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5], \"snapshot\": {\"triples\": 3400, \"answered\": 0, \"done_actions\": 0, \"open_conflicts\": 31}}",
+      "salience": 0.45,
+      "created_at": 1777668589,
+      "last_accessed": 1777668589,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "metacognition",
+      "item_type": "metacog.snapshot",
+      "metadata": {
+        "workspace_id": 41587
+      }
+    },
+    {
+      "id": "wm_1777668589_36cba5",
+      "content": "[self_model:self.state] {\"metacognition\": {\"decision_quality\": 0.5, \"empty_activity\": false, \"stuck_cycles\": 0, \"replans\": 0, \"low_quality_streak\": 0, \"quality_history\": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5], \"snapshot\": {\"triples\": 3400, \"answered\": 0, \"done_actions\": 0, \"open_conflicts\": 31}}, \"agi\": {\"agi_mode_percent\": 41.2, \"pillars\": {\"learnin",
+      "salience": 0.55,
+      "created_at": 1777668589,
+      "last_accessed": 1777668589,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "self_model",
+      "item_type": "self.state",
+      "metadata": {
+        "workspace_id": 41588
+      }
+    },
+    {
+      "id": "wm_1777668589_006b78",
+      "content": "[mental_sim:mental_sim.preflight] {\"action_id\": 9475, \"kind\": \"auto_resolve_conflicts\", \"posture\": \"abort\", \"composite\": 0.311, \"risk\": 0.58}",
+      "salience": 0.7,
+      "created_at": 1777668589,
+      "last_accessed": 1777668589,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "mental_sim",
+      "item_type": "mental_sim.preflight",
+      "metadata": {
+        "workspace_id": 41590
+      }
+    },
+    {
+      "id": "wm_1777668590_b6d0b8",
+      "content": "[judge:conflict.status] {\"open_conflicts\": 31, \"resolved\": 0, \"needs_human\": 4, \"attempted\": 4}",
+      "salience": 0.75,
+      "created_at": 1777668590,
+      "last_accessed": 1777668590,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "judge",
+      "item_type": "conflict.status",
+      "metadata": {
+        "workspace_id": 41594
+      }
+    },
+    {
+      "id": "wm_1777668680_ba3426",
+      "content": "[integration_proxy:integration.proxy] {\"ok\": true, \"integration_proxy_score\": 0.7616, \"integration_level\": \"high\", \"subscores\": {\"internal_integration\": 0.8496, \"fragmentation\": 0.4276, \"self_consistency\": 0.9287, \"authorship_balance\": 0.4794}, \"inputs\": {\"workspace_integration\": 1.0, \"workspace_competition\": 0.846, \"agency_score\": 0.689, \"meta_uncertainty\": 0.3, \"affect_confidence\": 0",
+      "salience": 0.6676799999999999,
+      "created_at": 1777668680,
+      "last_accessed": 1777668680,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "integration_proxy",
+      "item_type": "integration.proxy",
+      "metadata": {
+        "workspace_id": 41595
+      }
+    },
+    {
+      "id": "wm_1777668680_20c950",
+      "content": "[integration_proxy:reflexion.trigger] {\"reason\": \"integration_proxy_alert\", \"alerts\": [\"conflict_pressure\"], \"integration_proxy_score\": 0.7616, \"integration_level\": \"high\"}",
+      "salience": 0.86,
+      "created_at": 1777668680,
+      "last_accessed": 1777668680,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "integration_proxy",
+      "item_type": "reflexion.trigger",
+      "metadata": {
+        "workspace_id": 41596
+      }
+    },
+    {
+      "id": "wm_1777668681_afea98",
+      "content": "[affect_engine:affect.state] {\"ok\": true, \"purpose\": \"Aumentar utilidade percebida das respostas e ações\", \"dominant_channel\": \"reflexion.trigger\", \"risk_posture\": \"stable\", \"markers\": {\"valence\": 0.1932, \"arousal\": 0.5029, \"confidence\": 0.715, \"frustration\": 0.2619, \"curiosity\": 0.3982, \"threat\": 0.38}, \"inputs\": {\"integration_score\": 1.0, \"competition_index\": 0.846, \"uncerta",
+      "salience": 0.6952849999999999,
+      "created_at": 1777668681,
+      "last_accessed": 1777668681,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "affect_engine",
+      "item_type": "affect.state",
+      "metadata": {
+        "workspace_id": 41597
+      }
+    },
+    {
+      "id": "wm_1777668684_93ffd5",
+      "content": "[autofeeder:learning.ingest] {\"source_id\": \"wikipedia_topic:pt:security\", \"title\": \"Security\", \"modality\": \"text\", \"agenda_domain\": \"security\", \"triples_added\": 0, \"rag_ok\": false, \"preview\": \"Security\\n\\nSecurity é um filme norte-americano de 2017 do gênero thriller e ação dirigido por Alain Desrochers e roteirizado por Tony Mosher e John Sullivan. No elenco está Antonio Band",
+      "salience": 0.67,
+      "created_at": 1777668684,
+      "last_accessed": 1777668684,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "autofeeder",
+      "item_type": "learning.ingest",
+      "metadata": {
+        "workspace_id": 41598
+      }
+    },
+    {
+      "id": "wm_1777668685_aded6f",
+      "content": "[autofeeder:learning.agenda] {\"domain\": \"security\", \"source_id\": \"wikipedia_topic:pt:security\", \"title\": \"Security\", \"rag_ok\": false}",
+      "salience": 0.71,
+      "created_at": 1777668685,
+      "last_accessed": 1777668685,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "autofeeder",
+      "item_type": "learning.agenda",
+      "metadata": {
+        "workspace_id": 41599
+      }
+    },
+    {
+      "id": "wm_1777668690_526424",
+      "content": "[autofeeder:learning.lightrag_sync] {\"doc_id\": \"doc-94eb28bcdc4a014e15faac118989b7d2\", \"summary\": \"Evento operations de runtime: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File \\\"/root/.openclaw/workspace/UltronPro/tools/phase2_autoeval_on_register.py\\\", line 16, in get with urllib.reque\", \"triples_added\": 0, \"source_id\": \"lightrag:doc-94eb\"}",
+      "salience": 0.72,
+      "created_at": 1777668690,
+      "last_accessed": 1777668690,
+      "access_count": 0,
+      "attention_level": 1.0,
+      "source": "autofeeder",
+      "item_type": "learning.lightrag_sync",
+      "metadata": {
+        "workspace_id": 41601
+      }
+    }
+  ],
+  "focus_item_id": null,
+  "attention_state": "broad",
+  "attention_breadth": 0.5,
+  "max_capacity": 50,
+  "updated_at": 1777668690
+}

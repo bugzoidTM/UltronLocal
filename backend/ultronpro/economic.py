@@ -6,7 +6,7 @@ import json
 import random
 import time
 
-PATH = Path('/app/data/economic_primitives.json')
+PATH = Path(__file__).resolve().parent.parent / 'data' / 'economic_primitives.json'
 
 PROFILES = ['cheap', 'balanced', 'deep']
 

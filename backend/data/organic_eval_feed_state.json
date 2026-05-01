@@ -1,0 +1,276 @@
+{
+  "ok": true,
+  "quality_log_path": "F:\\sistemas\\UltronPro\\backend\\data\\quality_eval.jsonl",
+  "quality_rows": 6,
+  "recent_rows": [
+    {
+      "ts": 1774060297,
+      "episode_id": "req_1774060269180_d341bd7d",
+      "endpoint": "/api/metacognition/ask",
+      "query": "quem é você?",
+      "answer": "Não consegui responder com confiança agora. Tente novamente em instantes.",
+      "task_type": "general",
+      "strategy": "fallback_error",
+      "model_called": "tiny",
+      "latency_ms": 28589,
+      "prm_score": null,
+      "prm_risk": "",
+      "quality_eval": {
+        "dimensions": {
+          "task_success": 0.55,
+          "groundedness": 0.35,
+          "relevance": 0.45,
+          "context_fitness": 0.4,
+          "self_critique": 0.35
+        },
+        "composite_score": 0.4375,
+        "alerts": [
+          "quality_score_below_threshold",
+          "groundedness_low",
+          "relevance_low"
+        ],
+        "threshold_breached": true,
+        "rag_diagnostics": {
+          "coverage_score": 0.0,
+          "source_diversity": 0.0,
+          "redundancy_score": 0.0,
+          "selected_count": 0,
+          "candidate_count": 0
+        }
+      },
+      "internal_critic": {
+        "needs_revision": false,
+        "epistemic": {
+          "confidence_style": "calibrated",
+          "revision_reason": ""
+        }
+      }
+    },
+    {
+      "ts": 1774121710,
+      "episode_id": "req_1774121679771_5cb126f6",
+      "endpoint": "/api/metacognition/ask",
+      "query": "quem te criou?",
+      "answer": "Não consegui responder com confiança agora. Tente novamente em instantes.",
+      "task_type": "general",
+      "strategy": "fallback_error",
+      "model_called": "tiny",
+      "latency_ms": 30644,
+      "prm_score": null,
+      "prm_risk": "",
+      "quality_eval": {
+        "dimensions": {
+          "task_success": 0.55,
+          "groundedness": 0.35,
+          "relevance": 0.45,
+          "context_fitness": 0.4,
+          "self_critique": 0.35
+        },
+        "composite_score": 0.4375,
+        "alerts": [
+          "quality_score_below_threshold",
+          "groundedness_low",
+          "relevance_low"
+        ],
+        "threshold_breached": true,
+        "rag_diagnostics": {
+          "coverage_score": 0.0,
+          "source_diversity": 0.0,
+          "redundancy_score": 0.0,
+          "selected_count": 0,
+          "candidate_count": 0
+        }
+      },
+      "internal_critic": {
+        "needs_revision": false,
+        "epistemic": {
+          "confidence_style": "calibrated",
+          "revision_reason": ""
+        }
+      }
+    },
+    {
+      "ts": 1774121724,
+      "episode_id": "req_1774121714926_457f3aa0",
+      "endpoint": "/api/metacognition/ask",
+      "query": "quem te criou?",
+      "answer": "Não consegui responder com confiança agora. Tente novamente em instantes.",
+      "task_type": "general",
+      "strategy": "fallback_error",
+      "model_called": "tiny",
+      "latency_ms": 10004,
+      "prm_score": null,
+      "prm_risk": "",
+      "quality_eval": {
+        "dimensions": {
+          "task_success": 0.55,
+          "groundedness": 0.35,
+          "relevance": 0.45,
+          "context_fitness": 0.4,
+          "self_critique": 0.35
+        },
+        "composite_score": 0.4375,
+        "alerts": [
+          "quality_score_below_threshold",
+          "groundedness_low",
+          "relevance_low"
+        ],
+        "threshold_breached": true,
+        "rag_diagnostics": {
+          "coverage_score": 0.0,
+          "source_diversity": 0.0,
+          "redundancy_score": 0.0,
+          "selected_count": 0,
+          "candidate_count": 0
+        }
+      },
+      "internal_critic": {
+        "needs_revision": false,
+        "epistemic": {
+          "confidence_style": "calibrated",
+          "revision_reason": ""
+        }
+      }
+    },
+    {
+      "ts": 1774383532,
+      "episode_id": "req_1774383427830_783d5d05",
+      "endpoint": "/api/metacognition/ask",
+      "query": "quem é você?",
+      "answer": "Não consegui responder com confiança agora. Tente novamente em instantes.",
+      "task_type": "identity",
+      "strategy": "fallback_error",
+      "model_called": "tiny",
+      "latency_ms": 104719,
+      "prm_score": null,
+      "prm_risk": "",
+      "quality_eval": {
+        "dimensions": {
+          "task_success": 0.55,
+          "groundedness": 0.35,
+          "relevance": 0.45,
+          "context_fitness": 0.4,
+          "self_critique": 0.35
+        },
+        "composite_score": 0.4375,
+        "alerts": [
+          "quality_score_below_threshold",
+          "groundedness_low",
+          "relevance_low"
+        ],
+        "threshold_breached": true,
+        "rag_diagnostics": {
+          "coverage_score": 0.0,
+          "source_diversity": 0.0,
+          "redundancy_score": 0.0,
+          "selected_count": 0,
+          "candidate_count": 0
+        }
+      },
+      "internal_critic": {
+        "needs_revision": false,
+        "epistemic": {
+          "confidence_style": "calibrated",
+          "revision_reason": ""
+        }
+      }
+    },
+    {
+      "ts": 1775168505,
+      "episode_id": "req_1775168410971_18bc104d",
+      "endpoint": "/api/metacognition/ask",
+      "query": "quem é você?",
+      "answer": "Não consegui responder com confiança agora. Tente novamente em instantes.",
+      "task_type": "identity",
+      "strategy": "fallback_error",
+      "model_called": "tiny",
+      "latency_ms": 94685,
+      "prm_score": null,
+      "prm_risk": "",
+      "quality_eval": {
+        "dimensions": {
+          "task_success": 0.55,
+          "groundedness": 0.35,
+          "relevance": 0.45,
+          "context_fitness": 0.4,
+          "self_critique": 0.35
+        },
+        "composite_score": 0.4375,
+        "alerts": [
+          "quality_score_below_threshold",
+          "groundedness_low",
+          "relevance_low"
+        ],
+        "threshold_breached": true,
+        "rag_diagnostics": {
+          "coverage_score": 0.0,
+          "source_diversity": 0.0,
+          "redundancy_score": 0.0,
+          "selected_count": 0,
+          "candidate_count": 0
+        }
+      },
+      "internal_critic": {
+        "needs_revision": false,
+        "epistemic": {
+          "confidence_style": "calibrated",
+          "revision_reason": ""
+        }
+      }
+    },
+    {
+      "ts": 1775168953,
+      "episode_id": "req_1775168859857_c79903ca",
+      "endpoint": "/api/metacognition/ask",
+      "query": "quem é você?",
+      "answer": "Não consegui responder com confiança agora. Tente novamente em instantes.",
+      "task_type": "identity",
+      "strategy": "fallback_error",
+      "model_called": "tiny",
+      "latency_ms": 93707,
+      "prm_score": null,
+      "prm_risk": "",
+      "quality_eval": {
+        "dimensions": {
+          "task_success": 0.55,
+          "groundedness": 0.35,
+          "relevance": 0.45,
+          "context_fitness": 0.4,
+          "self_critique": 0.35
+        },
+        "composite_score": 0.4375,
+        "alerts": [
+          "quality_score_below_threshold",
+          "groundedness_low",
+          "relevance_low"
+        ],
+        "threshold_breached": true,
+        "rag_diagnostics": {
+          "coverage_score": 0.0,
+          "source_diversity": 0.0,
+          "redundancy_score": 0.0,
+          "selected_count": 0,
+          "candidate_count": 0
+        }
+      },
+      "internal_critic": {
+        "needs_revision": false,
+        "epistemic": {
+          "confidence_style": "calibrated",
+          "revision_reason": ""
+        }
+      }
+    }
+  ],
+  "alert_counts": {
+    "quality_score_below_threshold": 6,
+    "groundedness_low": 6,
+    "relevance_low": 6
+  },
+  "task_type_counts": {
+    "general": 3,
+    "identity": 3
+  },
+  "gap_detector_state_path": "F:\\sistemas\\UltronPro\\backend\\data\\gap_detector_state.json",
+  "last_recorded_request_id": "req_1775168859857_c79903ca"
+}

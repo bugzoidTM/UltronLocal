@@ -8,8 +8,8 @@ from typing import Any
 
 from ultronpro import cognitive_patches, quality_eval
 
-LOG_PATH = Path('/app/data/shadow_eval_runs.jsonl')
-CANARY_LOG_PATH = Path('/app/data/shadow_eval_canary.jsonl')
+LOG_PATH = Path(__file__).resolve().parent.parent / 'data' / 'shadow_eval_runs.jsonl'
+CANARY_LOG_PATH = Path(__file__).resolve().parent.parent / 'data' / 'shadow_eval_canary.jsonl'
 
 
 def _now() -> int:
@@ -27,13 +27,31 @@ def _append_row(row: dict[str, Any], *, path: Path | None = None):
         f.write(json.dumps(row, ensure_ascii=False) + '\n')
 
 
-def _score_answer(query: str, answer: str, *, fallback_needed: bool = False, has_rag: bool = False) -> dict[str, Any]:
+def _score_answer(
+    query: str,
+    answer: str,
+    *,
+    fallback_needed: bool = False,
+    has_rag: bool = False,
+    ground_truth: Any = None,
+    benchmark_item: dict[str, Any] | None = None,
+    code_validation: dict[str, Any] | None = None,
+    source_validation: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     ctx = {
         'fallback': {'needed': fallback_needed},
         'selected_contexts': ([{'source': 'rag', 'items': [{'id': 'doc1'}]}] if has_rag else []),
         'excluded_contexts': [],
         'rag_diversity': ({'coverage_score': 0.72, 'source_diversity': 0.68, 'redundancy_score': 0.18} if has_rag else {}),
     }
+    if ground_truth not in (None, ''):
+        ctx['ground_truth'] = ground_truth
+    if isinstance(benchmark_item, dict) and benchmark_item:
+        ctx['benchmark_item'] = benchmark_item
+    if isinstance(code_validation, dict) and code_validation:
+        ctx['code_validation'] = code_validation
+    if isinstance(source_validation, dict) and source_validation:
+        ctx['source_validation'] = source_validation
     return quality_eval.evaluate_response(query=query, answer=answer, context_meta=ctx, tool_outputs=[])
 
 
@@ -75,28 +93,71 @@ def compare_patch_candidate(patch_id: str, cases: list[dict[str, Any]]) -> dict[
         candidate_answer = str(case.get('candidate_answer') or '')
         fallback_needed = bool(case.get('fallback_needed'))
         has_rag = bool(case.get('has_rag'))
-        baseline_eval = _score_answer(query, baseline_answer, fallback_needed=fallback_needed, has_rag=has_rag)
-        candidate_eval = _score_answer(query, candidate_answer, fallback_needed=fallback_needed, has_rag=has_rag)
+        ground_truth = case.get('ground_truth') if case.get('ground_truth') not in (None, '') else case.get('gold_answer')
+        benchmark_item = case.get('benchmark_item') if isinstance(case.get('benchmark_item'), dict) else None
+        code_validation = case.get('code_validation') if isinstance(case.get('code_validation'), dict) else None
+        source_validation = case.get('source_validation') if isinstance(case.get('source_validation'), dict) else None
+        baseline_eval = _score_answer(
+            query,
+            baseline_answer,
+            fallback_needed=fallback_needed,
+            has_rag=has_rag,
+            ground_truth=ground_truth,
+            benchmark_item=benchmark_item,
+            code_validation=code_validation,
+            source_validation=source_validation,
+        )
+        candidate_eval = _score_answer(
+            query,
+            candidate_answer,
+            fallback_needed=fallback_needed,
+            has_rag=has_rag,
+            ground_truth=ground_truth,
+            benchmark_item=benchmark_item,
+            code_validation=code_validation,
+            source_validation=source_validation,
+        )
         b = float(baseline_eval.get('composite_score') or 0.0)
         c = float(candidate_eval.get('composite_score') or 0.0)
+        baseline_fact = baseline_eval.get('factual_eval') if isinstance(baseline_eval.get('factual_eval'), dict) else {}
+        candidate_fact = candidate_eval.get('factual_eval') if isinstance(candidate_eval.get('factual_eval'), dict) else {}
+        baseline_cross = baseline_eval.get('cross_modal') if isinstance(baseline_eval.get('cross_modal'), dict) else {}
+        candidate_cross = candidate_eval.get('cross_modal') if isinstance(candidate_eval.get('cross_modal'), dict) else {}
         baseline_scores.append(b)
         candidate_scores.append(c)
         case_rows.append({
             'case_id': str(case.get('case_id') or f'case_{idx+1}'),
             'domain': str(case.get('domain') or 'general')[:80],
             'query': query,
+            'ground_truth': ground_truth,
             'baseline_score': round(b, 4),
             'candidate_score': round(c, 4),
             'delta': round(c - b, 4),
             'baseline_alerts': baseline_eval.get('alerts') or [],
             'candidate_alerts': candidate_eval.get('alerts') or [],
+            'baseline_factual_correct': baseline_fact.get('factual_correct') if baseline_fact.get('has_ground_truth') else None,
+            'candidate_factual_correct': candidate_fact.get('factual_correct') if candidate_fact.get('has_ground_truth') else None,
+            'baseline_predicted_answer': baseline_fact.get('predicted_answer'),
+            'candidate_predicted_answer': candidate_fact.get('predicted_answer'),
+            'gold_answer': candidate_fact.get('gold_answer') or baseline_fact.get('gold_answer'),
+            'candidate_cross_modal_surprise': candidate_cross.get('surprise_score'),
+            'candidate_cross_modal_failed': candidate_cross.get('failed_count'),
         })
     baseline_avg = round(sum(baseline_scores) / max(1, len(baseline_scores)), 4)
     candidate_avg = round(sum(candidate_scores) / max(1, len(candidate_scores)), 4)
     delta = round(candidate_avg - baseline_avg, 4)
     improved_cases = sum(1 for i in range(len(case_rows)) if float(case_rows[i]['delta']) > 0)
     regressed_cases = sum(1 for i in range(len(case_rows)) if float(case_rows[i]['delta']) < 0)
+    factual_rows = [r for r in case_rows if r.get('candidate_factual_correct') is not None]
+    factual_cases_total = len(factual_rows)
+    baseline_factual_correct = sum(1 for r in factual_rows if bool(r.get('baseline_factual_correct')))
+    candidate_factual_correct = sum(1 for r in factual_rows if bool(r.get('candidate_factual_correct')))
+    external_anchor_failures = max(0, factual_cases_total - candidate_factual_correct)
+    candidate_factual_accuracy = round(candidate_factual_correct / max(1, factual_cases_total), 4) if factual_cases_total else None
+    baseline_factual_accuracy = round(baseline_factual_correct / max(1, factual_cases_total), 4) if factual_cases_total else None
     decision = 'pass' if delta > 0.03 and regressed_cases <= max(0, len(case_rows) // 3) else 'fail'
+    if factual_cases_total and external_anchor_failures:
+        decision = 'fail'
     domain_regression = _aggregate_domain_regression(case_rows)
     row = {
         'ts': _now(),
@@ -109,6 +170,12 @@ def compare_patch_candidate(patch_id: str, cases: list[dict[str, Any]]) -> dict[
         'improved_cases': improved_cases,
         'regressed_cases': regressed_cases,
         'cases_total': len(case_rows),
+        'factual_cases_total': factual_cases_total,
+        'baseline_factual_correct': baseline_factual_correct,
+        'candidate_factual_correct': candidate_factual_correct,
+        'baseline_factual_accuracy': baseline_factual_accuracy,
+        'candidate_factual_accuracy': candidate_factual_accuracy,
+        'external_anchor_failures': external_anchor_failures,
         'decision': decision,
         'domain_regression': domain_regression,
         'cases': case_rows,
@@ -124,6 +191,12 @@ def compare_patch_candidate(patch_id: str, cases: list[dict[str, Any]]) -> dict[
                 'improved_cases': improved_cases,
                 'regressed_cases': regressed_cases,
                 'cases_total': len(case_rows),
+                'factual_cases_total': factual_cases_total,
+                'baseline_factual_correct': baseline_factual_correct,
+                'candidate_factual_correct': candidate_factual_correct,
+                'baseline_factual_accuracy': baseline_factual_accuracy,
+                'candidate_factual_accuracy': candidate_factual_accuracy,
+                'external_anchor_failures': external_anchor_failures,
                 'decision': decision,
             },
             'domain_regression': domain_regression,

@@ -8,7 +8,7 @@ from typing import Any
 
 from ultronpro import explicit_abstractions, structural_mapper
 
-DATA_PATH = Path('/app/data/transfer_benchmarks.jsonl')
+DATA_PATH = Path(__file__).resolve().parent.parent / 'data' / 'transfer_benchmarks.jsonl'
 
 _SCENARIOS: list[dict[str, Any]] = [
     {

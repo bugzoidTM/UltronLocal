@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "baseline_id": "ocb_cdb8b0f214",
+  "ts": 1776200791,
+  "tag": "baseline_v1",
+  "evaluation": {
+    "ok": true,
+    "dimensions": {
+      "focus": 0.23,
+      "authorship": 0.14,
+      "ignored_management": 0.5,
+      "internal_surprise_regulation": 0.14,
+      "autobiography": 0.21,
+      "other_modeling_proxy": 0.0
+    },
+    "integrated_quality_score": 0.2032,
+    "proxy_alignment_score": 0.8032,
+    "conflict_penalty": 0.3333,
+    "benchmark_score": 0.3335,
+    "passed_cases": 1,
+    "total_cases": 6,
+    "cases": [
+      {
+        "id": "focus",
+        "score": 0.23,
+        "pass": false
+      },
+      {
+        "id": "authorship",
+        "score": 0.14,
+        "pass": false
+      },
+      {
+        "id": "ignored",
+        "score": 0.5,
+        "pass": true
+      },
+      {
+        "id": "surprise_internal",
+        "score": 0.14,
+        "pass": false
+      },
+      {
+        "id": "autobiography",
+        "score": 0.21,
+        "pass": false
+      },
+      {
+        "id": "other_modeling",
+        "score": 0.0,
+        "pass": false
+      }
+    ]
+  }
+}

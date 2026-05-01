@@ -5,8 +5,8 @@ from typing import Any
 import json
 import time
 
-RULES_PATH = Path('/app/data/integrity_rules.json')
-STATE_PATH = Path('/app/data/integrity_state.json')
+RULES_PATH = Path(__file__).resolve().parent.parent / 'data' / 'integrity_rules.json'
+STATE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'integrity_state.json'
 
 
 def _load(path: Path, default):

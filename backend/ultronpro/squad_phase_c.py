@@ -37,32 +37,41 @@ def productivity_metrics(tasks: list[dict[str, Any]], activities: list[dict[str,
     start = now - int(window_sec)
 
     rel_tasks = [t for t in (tasks or []) if int(t.get('updated_at') or t.get('created_at') or 0) >= start]
-    rel_acts = [a for a in (activities or []) if int(a.get('ts') or 0) >= start]
-
-    agents = {'coord', 'research', 'engineer'}
-    out = {a: {'created': 0, 'done': 0, 'blocked': 0, 'in_progress': 0, 'messages': 0, 'lead_times_h': []} for a in agents}
-
+    
+    from ultronpro import squad_profiles
+    out: dict[str, Any] = {}
+    for p in squad_profiles.PROFILES.values():
+        for ag in p.get('agents', []):
+            aid = str(ag.get('id', 'unknown'))
+            if aid not in out:
+                out[aid] = {'created': 0, 'done': 0, 'blocked': 0, 'in_progress': 0, 'messages': 0, 'lead_times_h': []}
+            
     for t in rel_tasks:
-        ass = [str(x).lower() for x in (t.get('assignees') or [])]
-        st = str(t.get('status') or 'inbox')
-        created = int(t.get('created_at') or 0)
-        updated = int(t.get('updated_at') or created)
-        lt_h = max(0.0, (updated - created) / 3600.0)
-        for a in ass or ['coord']:
-            if a not in out:
-                out[a] = {'created': 0, 'done': 0, 'blocked': 0, 'in_progress': 0, 'messages': 0, 'lead_times_h': []}
-            out[a]['created'] += 1
-            if st == 'done':
-                out[a]['done'] += 1
-                out[a]['lead_times_h'].append(lt_h)
-            elif st == 'blocked':
-                out[a]['blocked'] += 1
-            elif st == 'in_progress':
-                out[a]['in_progress'] += 1
+        assignee = str(t.get('assignee') or 'unknown').strip()
+        if not assignee: 
+            assignee = 'unknown'
+        if assignee not in out:
+            out[assignee] = {'created': 0, 'done': 0, 'blocked': 0, 'in_progress': 0, 'messages': 0, 'lead_times_h': []}
+            
+        st = str(t.get('status') or 'unknown').lower()
+        out[assignee]['created'] += 1
+        
+        if st == 'done':
+            out[assignee]['done'] += 1
+            upd = int(t.get('updated_at') or 0)
+            cre = int(t.get('created_at') or 0)
+            if upd > cre > 0:
+                lt_h = (upd - cre) / 3600.0
+                out[assignee]['lead_times_h'].append(lt_h)
+        elif st == 'blocked':
+            out[assignee]['blocked'] += 1
+        elif st == 'in_progress':
+            out[assignee]['in_progress'] += 1
 
+    rel_acts = [a for a in (activities or []) if int(a.get('ts') or 0) >= start]
     for a in rel_acts:
         txt = str(a.get('text') or '').lower()
-        for aid in list(out.keys()):
+        for aid in out.keys():
             if aid in txt:
                 out[aid]['messages'] += 1
 

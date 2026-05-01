@@ -8,7 +8,7 @@ from typing import Any
 
 from ultronpro import knowledge_bridge
 
-OUT_DIR = Path('/app/data/replay')
+OUT_DIR = Path(__file__).resolve().parent.parent / 'data' / 'replay'
 DRYRUN_PATH = OUT_DIR / 'rag_synth_dryrun.jsonl'
 LATEST_PATH = OUT_DIR / 'rag_synth_latest.jsonl'
 MIXED_PATH = OUT_DIR / 'train_mixed_70synth_30real.jsonl'

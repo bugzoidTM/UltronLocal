@@ -1,0 +1,184 @@
+{
+  "errors": {
+    "a5e63b03c677": {
+      "id": "a5e63b03c677",
+      "timestamp": 1776200020,
+      "module": "_test_healable.py",
+      "function": "function_with_timeout_bug",
+      "lineno": 10,
+      "exception_type": "ConnectTimeout",
+      "message": "Connection timed out",
+      "traceback_lines": [
+        "Traceback (most recent call last):",
+        "  File \"F:\\sistemas\\UltronPro\\backend\\ultronpro\\_test_healable.py\", line 10, in function_with_timeout_bug",
+        "    response = httpx.get(\"http://127.0.0.1:9999/test\", timeout=0.1)",
+        "httpx.ConnectTimeout: Connection timed out"
+      ],
+      "source_context": [
+        "6:     \"\"\"This function catches ConnectError but not ConnectTimeout.\"\"\"",
+        "7:     try:",
+        "8:         response = httpx.get(\"http://127.0.0.1:9999/test\", timeout=0.1)",
+        "9:         return response.text",
+        "10:     except httpx.ConnectError:",
+        "11:         return \"connection failed\"",
+        "12: ",
+        "13: def function_with_uninitialized_var():",
+        "14:     \"\"\"This function uses 'results' before initializing it.\"\"\"",
+        "15:     for i in range(5):"
+      ],
+      "frequency": 2
+    },
+    "ae707d321a2f": {
+      "id": "ae707d321a2f",
+      "timestamp": 1776200020,
+      "module": "_test_healable.py",
+      "function": "function_with_uninitialized_var",
+      "lineno": 18,
+      "exception_type": "FakeNameError",
+      "message": "name 'results' is not defined",
+      "traceback_lines": [
+        "Traceback (most recent call last):",
+        "  File \"F:\\sistemas\\UltronPro\\backend\\ultronpro\\_test_healable.py\", line 18, in function_with_uninitialized_var",
+        "    results.append(i * 2)",
+        "NameError: name 'results' is not defined"
+      ],
+      "source_context": [
+        "14:     \"\"\"This function uses 'results' before initializing it.\"\"\"",
+        "15:     for i in range(5):",
+        "16:         results.append(i * 2)",
+        "17:     return results",
+        "18: ",
+        "19: def function_with_json_bug(text):",
+        "20:     \"\"\"This function calls json.loads without protection.\"\"\"",
+        "21:     data = json.loads(text)",
+        "22:     return data.get(\"value\", \"none\")",
+        "23: "
+      ],
+      "frequency": 2
+    },
+    "28eabe23e48c": {
+      "id": "28eabe23e48c",
+      "timestamp": 1776776265,
+      "module": "working_memory.py",
+      "function": "working_memory_status",
+      "lineno": 18,
+      "exception_type": "AttributeError",
+      "message": "module 'ultronpro.working_memory' has no attribute 'get_status'",
+      "traceback_lines": [
+        "  File \"C:\\Users\\eleni\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fastapi\\routing.py\", line 278, in app",
+        "    raw_response = await run_endpoint_function(",
+        "                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"C:\\Users\\eleni\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fastapi\\routing.py\", line 191, in run_endpoint_function",
+        "    return await dependant.call(**values)",
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"F:\\sistemas\\UltronPro\\backend\\ultronpro\\api\\working_memory.py\", line 18, in working_memory_status",
+        "    return working_memory.get_status()",
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "AttributeError: module 'ultronpro.working_memory' has no attribute 'get_status'"
+      ],
+      "source_context": [
+        "14: ",
+        "15: @router.get('/api/working-memory/status')",
+        "16: async def working_memory_status():",
+        "17:     \"\"\"Retorna status da memÃ³ria de trabalho.\"\"\"",
+        "18:     return working_memory.get_status()",
+        "19: ",
+        "20: ",
+        "21: @router.get('/api/working-memory/context')",
+        "22: async def working_memory_context(max_tokens: int = 2000):",
+        "23:     \"\"\"Retorna contexto da memÃ³ria de trabalho para prompts.\"\"\""
+      ],
+      "frequency": 1
+    },
+    "494218993f15": {
+      "id": "494218993f15",
+      "timestamp": 1776776397,
+      "module": "vision.py",
+      "function": "vision_clear_cache",
+      "lineno": 69,
+      "exception_type": "AttributeError",
+      "message": "module 'ultronpro.vision' has no attribute 'clear_cache'",
+      "traceback_lines": [
+        "  File \"C:\\Users\\eleni\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fastapi\\routing.py\", line 278, in app",
+        "    raw_response = await run_endpoint_function(",
+        "                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"C:\\Users\\eleni\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\fastapi\\routing.py\", line 191, in run_endpoint_function",
+        "    return await dependant.call(**values)",
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"F:\\sistemas\\UltronPro\\backend\\ultronpro\\api\\vision.py\", line 69, in vision_clear_cache",
+        "    vision.clear_cache()",
+        "    ^^^^^^^^^^^^^^^^^^",
+        "AttributeError: module 'ultronpro.vision' has no attribute 'clear_cache'"
+      ],
+      "source_context": [
+        "65: ",
+        "66: @router.post('/api/vision/clear-cache')",
+        "67: async def vision_clear_cache():",
+        "68:     \"\"\"Limpa cache de visÃµes.\"\"\"",
+        "69:     vision.clear_cache()",
+        "70:     return {'ok': True}",
+        "71: ",
+        "72: "
+      ],
+      "frequency": 1
+    },
+    "d29f527b7105": {
+      "id": "d29f527b7105",
+      "timestamp": 1776776433,
+      "module": "vision.py",
+      "function": "__init__",
+      "lineno": 51,
+      "exception_type": "AttributeError",
+      "message": "module 'ultronpro.settings' has no attribute 'get'",
+      "traceback_lines": [
+        "  File \"F:\\sistemas\\UltronPro\\backend\\ultronpro\\api\\vision.py\", line 69, in vision_clear_cache",
+        "    vision.get_vision_system().clear_cache()",
+        "    ^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"F:\\sistemas\\UltronPro\\backend\\ultronpro\\vision.py\", line 307, in get_vision_system",
+        "    _vision_system = VisionSystem()",
+        "                     ^^^^^^^^^^^^^^",
+        "  File \"F:\\sistemas\\UltronPro\\backend\\ultronpro\\vision.py\", line 51, in __init__",
+        "    self.provider = provider or settings.get(\"VISION_PROVIDER\") or self.DEFAULT_PROVIDER",
+        "                                ^^^^^^^^^^^^",
+        "AttributeError: module 'ultronpro.settings' has no attribute 'get'"
+      ],
+      "source_context": [
+        "47:     DEFAULT_PROVIDER = \"openai\"",
+        "48:     DEFAULT_MODEL = \"gpt-4o\"",
+        "49:     ",
+        "50:     def __init__(self, provider: str | None = None, model: str | None = None):",
+        "51:         self.provider = provider or settings.get(\"VISION_PROVIDER\") or self.DEFAULT_PROVIDER",
+        "52:         self.model = model or settings.get(\"VISION_MODEL\") or self.DEFAULT_MODEL",
+        "53:         self._cache = self._load_cache()",
+        "54: ",
+        "55:     def _load_cache(self) -> dict:",
+        "56:         if not VISION_CACHE_PATH.exists():"
+      ],
+      "frequency": 1
+    }
+  },
+  "history": [
+    {
+      "id": "heal_1776200020_a5e63b",
+      "error_id": "a5e63b03c677",
+      "timestamp": 1776200020,
+      "module": "_test_healable.py",
+      "original_code": "\"\"\"Test module with intentional bugs for self-healer testing.\"\"\"\nimport httpx\nimport json\n\ndef function_with_timeout_bug():\n    \"\"\"This function catches ConnectError but not ConnectTimeout.\"\"\"\n    try:\n        response = httpx.get(\"http://127.0.0.1:9999/test\", timeout=0.1)\n        return response.text\n    except httpx.ConnectError:\n        return \"connection failed\"\n\ndef function_with_uninitialized_var():\n    \"\"\"This function uses 'results' before initializing it.\"\"\"\n    for i in range(5):\n        results.append(i * 2)\n    return results\n\ndef function_with_json_bug(text):\n    \"\"\"This function calls json.loads without protection.\"\"\"\n    data = json.loads(text)\n    return data.get(\"value\", \"none\")\n",
+      "fixed_code": "\"\"\"Test module with intentional bugs for self-healer testing.\"\"\"\nimport httpx\nimport json\n\ndef function_with_timeout_bug():\n    \"\"\"This function catches ConnectError but not ConnectTimeout.\"\"\"\n    try:\n        response = httpx.get(\"http://127.0.0.1:9999/test\", timeout=0.1)\n        return response.text\n    except (httpx.ConnectError, httpx.ConnectTimeout, httpx.TimeoutException):\n        return \"connection failed\"\n\ndef function_with_uninitialized_var():\n    \"\"\"This function uses 'results' before initializing it.\"\"\"\n    for i in range(5):\n        results.append(i * 2)\n    return results\n\ndef function_with_json_bug(text):\n    \"\"\"This function calls json.loads without protection.\"\"\"\n    data = json.loads(text)\n    return data.get(\"value\", \"none\")\n",
+      "fix_strategy": "deterministic",
+      "fix_description": "Adicionado httpx.ConnectTimeout, httpx.TimeoutException ao except na linha 10",
+      "syntax_valid": true,
+      "import_valid": true,
+      "applied": false,
+      "rolled_back": true,
+      "verified": true,
+      "verification_result": "fix_effective"
+    }
+  ],
+  "fix_counts": {
+    "_test_healable.py": [
+      1776200020.0929902
+    ]
+  },
+  "updated_at": 1776776433
+}

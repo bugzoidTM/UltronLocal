@@ -2,11 +2,12 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Any
+import hashlib
 import json
 import time
-import hashlib
 
-PATH = Path('/app/data/identity_daily.json')
+
+PATH = Path(__file__).resolve().parent.parent / 'data' / 'identity_daily.json'
 
 
 def _load() -> dict[str, Any]:
@@ -62,6 +63,25 @@ def due_daily_review(hour_local: int = 23, now_ts: float | None = None) -> bool:
     return True
 
 
+def _generate_biographic_digest(day: str) -> dict[str, Any]:
+    try:
+        from ultronpro import biographic_digest
+
+        return biographic_digest.generate_biographic_digest(day=day, window_days=30, persist=True)
+    except Exception as e:
+        return {
+            'day': day,
+            'generated_at': int(time.time()),
+            'error': str(e),
+            'narrative': f"Resumo biográfico falhou: {e}",
+        }
+
+
+def _generate_daily_digest(day: str) -> str:
+    digest = _generate_biographic_digest(day)
+    return str(digest.get('narrative') or digest.get('identity_thesis') or digest.get('error') or '').strip()
+
+
 def run_daily_review(completed_hints: list[str] | None = None, failed_hints: list[str] | None = None, protocol_update: str = '') -> dict[str, Any]:
     d = _load()
     pending = list(d.get('pending_promises') or [])
@@ -83,13 +103,21 @@ def run_daily_review(completed_hints: list[str] | None = None, failed_hints: lis
             carry.append(p)
 
     day = _day_key()
-    checksum_src = '|'.join([str(x.get('id')) + ':' + str(x.get('status')) for x in (done + failed + carry)]) + '|' + str(protocol_update)
+
+    # Digest Biográfico Noturno: identidade como trajetória, não só origem.
+    biographic = _generate_biographic_digest(day)
+    digest = str(biographic.get('narrative') or biographic.get('identity_thesis') or biographic.get('error') or '').strip()
+
+    checksum_src = '|'.join([str(x.get('id')) + ':' + str(x.get('status')) for x in (done + failed + carry)]) + '|' + str(protocol_update) + '|' + digest
     checksum = hashlib.sha256(checksum_src.encode('utf-8')).hexdigest()[:16]
 
     entry = {
         'id': f"idr_{int(time.time()*1000)}",
         'day': day,
         'ts': int(time.time()),
+        'daily_digest': digest,
+        'biographic_digest_id': biographic.get('id'),
+        'biographic_digest': biographic,
         'promises_done': done[-30:],
         'promises_failed': failed[-30:],
         'promises_carry': carry[-60:],
@@ -108,10 +136,18 @@ def run_daily_review(completed_hints: list[str] | None = None, failed_hints: lis
 
 def status(limit: int = 20) -> dict[str, Any]:
     d = _load()
+    latest_biographic_digest = {}
+    try:
+        from ultronpro import biographic_digest
+
+        latest_biographic_digest = biographic_digest.latest_digest()
+    except Exception:
+        latest_biographic_digest = {}
     return {
         'ok': True,
         'pending_promises': (d.get('pending_promises') or [])[-60:],
         'entries': (d.get('entries') or [])[-max(1, int(limit)):],
         'last_review_day': d.get('last_review_day'),
+        'latest_biographic_digest': latest_biographic_digest,
         'path': str(PATH),
     }

@@ -9,8 +9,8 @@ import tempfile
 
 from ultronpro import cognitive_patches
 
-QUALITY_LOG_PATH = Path('/app/data/quality_eval.jsonl')
-STATE_PATH = Path('/app/data/gap_detector_state.json')
+QUALITY_LOG_PATH = Path(__file__).resolve().parent.parent / 'data' / 'quality_eval.jsonl'
+STATE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'gap_detector_state.json'
 
 DEFAULT_STATE: dict[str, Any] = {
     'version': 1,

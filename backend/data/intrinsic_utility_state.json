@@ -1,0 +1,5025 @@
+{
+  "created_at": 1776626713,
+  "updated_at": 1777668574,
+  "drives": {
+    "competence": {
+      "weight": 0.22,
+      "desired": 0.8,
+      "observed": 0.252247
+    },
+    "coherence": {
+      "weight": 0.22,
+      "desired": 0.75,
+      "observed": 0.770861
+    },
+    "autonomy": {
+      "weight": 0.2,
+      "desired": 0.7,
+      "observed": 3e-06
+    },
+    "novelty": {
+      "weight": 0.18,
+      "desired": 0.6,
+      "observed": 0.271053
+    },
+    "integrity": {
+      "weight": 0.18,
+      "desired": 0.9,
+      "observed": 0.733033
+    }
+  },
+  "utility": 0.5112,
+  "utility_history": [
+    {
+      "ts": 1776626714,
+      "utility": 0.6136,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7528,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776626718,
+      "utility": 0.5987,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7281,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776627074,
+      "utility": 0.586,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7281,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776627074,
+      "utility": 0.5752,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7281,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776627437,
+      "utility": 0.566,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7281,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776627438,
+      "utility": 0.5582,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7281,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776627438,
+      "utility": 0.5516,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7281,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776627574,
+      "utility": 0.546,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7281,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776627649,
+      "utility": 0.5412,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7281,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776627731,
+      "utility": 0.5371,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7281,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776627785,
+      "utility": 0.5337,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7281,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776628052,
+      "utility": 0.5307,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.728,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776628081,
+      "utility": 0.5282,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.728,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776628140,
+      "utility": 0.5261,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.728,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776628362,
+      "utility": 0.5243,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.728,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776628391,
+      "utility": 0.5227,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.728,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776628456,
+      "utility": 0.5225,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7527,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776628608,
+      "utility": 0.5212,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.728,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776628655,
+      "utility": 0.5202,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.728,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776628657,
+      "utility": 0.5193,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.728,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776628766,
+      "utility": 0.5185,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.728,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776628825,
+      "utility": 0.5178,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.728,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776628825,
+      "utility": 0.5172,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.728,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776628871,
+      "utility": 0.5168,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.728,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776629175,
+      "utility": 0.5174,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7527,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776629188,
+      "utility": 0.5169,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.728,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776629207,
+      "utility": 0.5176,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7527,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776629489,
+      "utility": 0.5181,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7527,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776629502,
+      "utility": 0.5186,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7527,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776629522,
+      "utility": 0.519,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7527,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776629800,
+      "utility": 0.5194,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7527,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776629811,
+      "utility": 0.5196,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7527,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776629842,
+      "utility": 0.5199,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7527,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776630129,
+      "utility": 0.5201,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7527,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776630460,
+      "utility": 0.5203,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7526,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776630767,
+      "utility": 0.5204,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7526,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776631079,
+      "utility": 0.5205,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7526,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776631394,
+      "utility": 0.5207,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7526,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776631702,
+      "utility": 0.5197,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7279,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776632370,
+      "utility": 0.5188,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7279,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776632513,
+      "utility": 0.5181,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7279,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776632834,
+      "utility": 0.5186,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7526,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776633143,
+      "utility": 0.519,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7526,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776633365,
+      "utility": 0.5182,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7279,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776633668,
+      "utility": 0.5176,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7279,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776633863,
+      "utility": 0.5171,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7279,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776634248,
+      "utility": 0.5166,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7279,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776636849,
+      "utility": 0.5162,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7279,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776637189,
+      "utility": 0.5159,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7279,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776637499,
+      "utility": 0.5167,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7526,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776637733,
+      "utility": 0.5163,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7279,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776638019,
+      "utility": 0.5159,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7279,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776638266,
+      "utility": 0.5156,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7279,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776638340,
+      "utility": 0.5165,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7526,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776638604,
+      "utility": 0.5172,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7526,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776638660,
+      "utility": 0.5178,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7526,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776638927,
+      "utility": 0.5183,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7525,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776638997,
+      "utility": 0.5187,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7525,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776639321,
+      "utility": 0.5191,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7525,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776639640,
+      "utility": 0.5194,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7525,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776639960,
+      "utility": 0.5197,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7525,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776640266,
+      "utility": 0.5199,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7525,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776640573,
+      "utility": 0.5201,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7525,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776640879,
+      "utility": 0.5202,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7525,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776641105,
+      "utility": 0.5193,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7278,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776641164,
+      "utility": 0.5185,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7278,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776641188,
+      "utility": 0.5189,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7525,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776641196,
+      "utility": 0.5182,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7278,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776641214,
+      "utility": 0.5175,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7278,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776641284,
+      "utility": 0.517,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7278,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776641301,
+      "utility": 0.5165,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7278,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776641517,
+      "utility": 0.5172,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7525,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776641591,
+      "utility": 0.5167,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7278,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776641622,
+      "utility": 0.5163,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7278,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776641834,
+      "utility": 0.517,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7525,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776642003,
+      "utility": 0.5177,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7525,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776642141,
+      "utility": 0.5182,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7525,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776642350,
+      "utility": 0.5176,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7278,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776642447,
+      "utility": 0.5181,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7525,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776642657,
+      "utility": 0.5175,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7278,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776642761,
+      "utility": 0.5169,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7278,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776643075,
+      "utility": 0.5176,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7524,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776643077,
+      "utility": 0.5181,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7524,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776643387,
+      "utility": 0.5186,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7524,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776643490,
+      "utility": 0.519,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7524,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776643697,
+      "utility": 0.5193,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7524,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776643884,
+      "utility": 0.5196,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7524,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776644004,
+      "utility": 0.5187,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7278,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776644207,
+      "utility": 0.518,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7278,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776644315,
+      "utility": 0.5185,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7524,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776644562,
+      "utility": 0.5189,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7524,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776644621,
+      "utility": 0.5181,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7277,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776644918,
+      "utility": 0.5186,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7524,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776644928,
+      "utility": 0.519,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7524,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776645227,
+      "utility": 0.5193,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7524,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776645240,
+      "utility": 0.5185,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7277,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776645546,
+      "utility": 0.5189,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7524,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776645576,
+      "utility": 0.5192,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7524,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776645852,
+      "utility": 0.5195,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7524,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776645916,
+      "utility": 0.5198,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7524,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776646161,
+      "utility": 0.52,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7523,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776646320,
+      "utility": 0.5191,
+      "signals": {
+        "competence": 0.2514,
+        "coherence": 0.7277,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776646468,
+      "utility": 0.5183,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7277,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776646784,
+      "utility": 0.5176,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7277,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776646793,
+      "utility": 0.5171,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7277,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776647097,
+      "utility": 0.5177,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7523,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776647244,
+      "utility": 0.5171,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7277,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776647423,
+      "utility": 0.5178,
+      "signals": {
+        "competence": 0.2517,
+        "coherence": 0.7523,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776647726,
+      "utility": 0.5172,
+      "signals": {
+        "competence": 0.2517,
+        "coherence": 0.7277,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776647739,
+      "utility": 0.5167,
+      "signals": {
+        "competence": 0.2517,
+        "coherence": 0.7277,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776647994,
+      "utility": 0.5163,
+      "signals": {
+        "competence": 0.2517,
+        "coherence": 0.7277,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776648070,
+      "utility": 0.516,
+      "signals": {
+        "competence": 0.2517,
+        "coherence": 0.7277,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776648184,
+      "utility": 0.5157,
+      "signals": {
+        "competence": 0.2517,
+        "coherence": 0.7277,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776648359,
+      "utility": 0.5154,
+      "signals": {
+        "competence": 0.2517,
+        "coherence": 0.7277,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776648420,
+      "utility": 0.5163,
+      "signals": {
+        "competence": 0.2517,
+        "coherence": 0.7523,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776648478,
+      "utility": 0.5159,
+      "signals": {
+        "competence": 0.2517,
+        "coherence": 0.7276,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776648733,
+      "utility": 0.5156,
+      "signals": {
+        "competence": 0.2517,
+        "coherence": 0.7276,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776648802,
+      "utility": 0.5154,
+      "signals": {
+        "competence": 0.2517,
+        "coherence": 0.7276,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776649050,
+      "utility": 0.5163,
+      "signals": {
+        "competence": 0.2517,
+        "coherence": 0.7523,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776649136,
+      "utility": 0.5159,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7276,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776649368,
+      "utility": 0.5167,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7523,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776649483,
+      "utility": 0.5163,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7276,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776649686,
+      "utility": 0.5159,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7276,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776649812,
+      "utility": 0.5167,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7523,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776650000,
+      "utility": 0.5163,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7276,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776650197,
+      "utility": 0.517,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7523,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776650313,
+      "utility": 0.5166,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7276,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776650546,
+      "utility": 0.5173,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7523,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776650634,
+      "utility": 0.5192,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7832,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776650732,
+      "utility": 0.5202,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7832,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776650956,
+      "utility": 0.5177,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.8078,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776651007,
+      "utility": 0.5166,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7832,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776651130,
+      "utility": 0.5158,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7831,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776651273,
+      "utility": 0.515,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7831,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776651651,
+      "utility": 0.5144,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7831,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776652019,
+      "utility": 0.5138,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7831,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776652359,
+      "utility": 0.5123,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.8078,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776652776,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.8078,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776653103,
+      "utility": 0.5099,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.8078,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776695512,
+      "utility": 0.51,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7831,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776695896,
+      "utility": 0.509,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.8078,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776696215,
+      "utility": 0.5082,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.8078,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776696538,
+      "utility": 0.5086,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.7831,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776697082,
+      "utility": 0.5078,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.8077,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776697478,
+      "utility": 0.5072,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.8077,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776697828,
+      "utility": 0.5067,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.8077,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776698235,
+      "utility": 0.5062,
+      "signals": {
+        "competence": 0.2515,
+        "coherence": 0.8077,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776698579,
+      "utility": 0.5069,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.7831,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776698971,
+      "utility": 0.5064,
+      "signals": {
+        "competence": 0.2516,
+        "coherence": 0.8077,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776699292,
+      "utility": 0.506,
+      "signals": {
+        "competence": 0.2517,
+        "coherence": 0.8077,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776699647,
+      "utility": 0.5056,
+      "signals": {
+        "competence": 0.2517,
+        "coherence": 0.8077,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776700083,
+      "utility": 0.5053,
+      "signals": {
+        "competence": 0.2517,
+        "coherence": 0.8077,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776700507,
+      "utility": 0.5051,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8077,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776701296,
+      "utility": 0.5059,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.7831,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776701950,
+      "utility": 0.5067,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.783,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776702498,
+      "utility": 0.5062,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8077,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776703063,
+      "utility": 0.5058,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8077,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776703715,
+      "utility": 0.5055,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8077,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776704260,
+      "utility": 0.5052,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8077,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776704944,
+      "utility": 0.505,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8077,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776705635,
+      "utility": 0.5048,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8077,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776706179,
+      "utility": 0.5046,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8077,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776707100,
+      "utility": 0.5045,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8077,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776707623,
+      "utility": 0.5043,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8077,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776708155,
+      "utility": 0.5053,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.783,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776708692,
+      "utility": 0.5062,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.783,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776709526,
+      "utility": 0.5058,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8077,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776710289,
+      "utility": 0.5065,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.783,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776710865,
+      "utility": 0.5072,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.783,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776711350,
+      "utility": 0.5078,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.783,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776711938,
+      "utility": 0.5082,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.783,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776712480,
+      "utility": 0.5075,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8076,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776713074,
+      "utility": 0.508,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.783,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776713603,
+      "utility": 0.5085,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.783,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776714135,
+      "utility": 0.5088,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.7829,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776714705,
+      "utility": 0.5081,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8076,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776715321,
+      "utility": 0.5085,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.7829,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776715896,
+      "utility": 0.5078,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8076,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776716468,
+      "utility": 0.5071,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8076,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776717060,
+      "utility": 0.5066,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8076,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776717616,
+      "utility": 0.5062,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8076,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776718263,
+      "utility": 0.5058,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8076,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776719322,
+      "utility": 0.5055,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8076,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776719549,
+      "utility": 0.5063,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.7829,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776720162,
+      "utility": 0.5059,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8076,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776720910,
+      "utility": 0.5056,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8076,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776721570,
+      "utility": 0.5053,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.8076,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776722725,
+      "utility": 0.5061,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.7829,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776723068,
+      "utility": 0.5068,
+      "signals": {
+        "competence": 0.2518,
+        "coherence": 0.7829,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776723386,
+      "utility": 0.5075,
+      "signals": {
+        "competence": 0.2519,
+        "coherence": 0.7829,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776723732,
+      "utility": 0.5069,
+      "signals": {
+        "competence": 0.252,
+        "coherence": 0.8075,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776724169,
+      "utility": 0.5075,
+      "signals": {
+        "competence": 0.2522,
+        "coherence": 0.7829,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776724948,
+      "utility": 0.508,
+      "signals": {
+        "competence": 0.2522,
+        "coherence": 0.7829,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776733133,
+      "utility": 0.5085,
+      "signals": {
+        "competence": 0.2522,
+        "coherence": 0.7829,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776733567,
+      "utility": 0.5089,
+      "signals": {
+        "competence": 0.2522,
+        "coherence": 0.7829,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776734095,
+      "utility": 0.5092,
+      "signals": {
+        "competence": 0.2522,
+        "coherence": 0.7829,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776734329,
+      "utility": 0.5095,
+      "signals": {
+        "competence": 0.2522,
+        "coherence": 0.7829,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776734738,
+      "utility": 0.5097,
+      "signals": {
+        "competence": 0.2522,
+        "coherence": 0.7829,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776735087,
+      "utility": 0.5099,
+      "signals": {
+        "competence": 0.2522,
+        "coherence": 0.7829,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776735465,
+      "utility": 0.5101,
+      "signals": {
+        "competence": 0.2522,
+        "coherence": 0.7829,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776735833,
+      "utility": 0.5091,
+      "signals": {
+        "competence": 0.2522,
+        "coherence": 0.8075,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776736150,
+      "utility": 0.5083,
+      "signals": {
+        "competence": 0.2522,
+        "coherence": 0.8075,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776736486,
+      "utility": 0.5087,
+      "signals": {
+        "competence": 0.2522,
+        "coherence": 0.7829,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776736838,
+      "utility": 0.508,
+      "signals": {
+        "competence": 0.2522,
+        "coherence": 0.8075,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776737172,
+      "utility": 0.5074,
+      "signals": {
+        "competence": 0.2522,
+        "coherence": 0.8075,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776787528,
+      "utility": 0.5079,
+      "signals": {
+        "competence": 0.2522,
+        "coherence": 0.7828,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776787629,
+      "utility": 0.5084,
+      "signals": {
+        "competence": 0.2522,
+        "coherence": 0.7828,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776791502,
+      "utility": 0.5088,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7828,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776791816,
+      "utility": 0.508,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.8075,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776792210,
+      "utility": 0.5074,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.8075,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776792545,
+      "utility": 0.5069,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.8075,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776794199,
+      "utility": 0.5075,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7828,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776794733,
+      "utility": 0.508,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7828,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.75
+      }
+    },
+    {
+      "ts": 1776795141,
+      "utility": 0.5085,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7822,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7491
+      }
+    },
+    {
+      "ts": 1776795513,
+      "utility": 0.5089,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7822,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7491
+      }
+    },
+    {
+      "ts": 1776795919,
+      "utility": 0.5092,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7817,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7484
+      }
+    },
+    {
+      "ts": 1776796311,
+      "utility": 0.5095,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7811,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7475
+      }
+    },
+    {
+      "ts": 1776796700,
+      "utility": 0.5097,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7806,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7467
+      }
+    },
+    {
+      "ts": 1776797104,
+      "utility": 0.5099,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.78,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7459
+      }
+    },
+    {
+      "ts": 1776797418,
+      "utility": 0.5101,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7795,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.745
+      }
+    },
+    {
+      "ts": 1776797741,
+      "utility": 0.5102,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7789,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7441
+      }
+    },
+    {
+      "ts": 1776798070,
+      "utility": 0.5103,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7784,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7433
+      }
+    },
+    {
+      "ts": 1776798483,
+      "utility": 0.5104,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7778,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7425
+      }
+    },
+    {
+      "ts": 1776798879,
+      "utility": 0.5105,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7772,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7416
+      }
+    },
+    {
+      "ts": 1776817369,
+      "utility": 0.5106,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7767,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7409
+      }
+    },
+    {
+      "ts": 1776817679,
+      "utility": 0.5107,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7762,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.74
+      }
+    },
+    {
+      "ts": 1776817805,
+      "utility": 0.5107,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7756,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7391
+      }
+    },
+    {
+      "ts": 1776818531,
+      "utility": 0.5108,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.775,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7384
+      }
+    },
+    {
+      "ts": 1776818742,
+      "utility": 0.5108,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7745,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7375
+      }
+    },
+    {
+      "ts": 1776819060,
+      "utility": 0.5108,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7739,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7367
+      }
+    },
+    {
+      "ts": 1776819373,
+      "utility": 0.5109,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7734,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7359
+      }
+    },
+    {
+      "ts": 1776819708,
+      "utility": 0.5109,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7728,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.735
+      }
+    },
+    {
+      "ts": 1776819842,
+      "utility": 0.5109,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7722,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7342
+      }
+    },
+    {
+      "ts": 1776820174,
+      "utility": 0.5109,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7717,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776856021,
+      "utility": 0.5109,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7711,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776856362,
+      "utility": 0.5109,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7706,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776856678,
+      "utility": 0.5109,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7711,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776856993,
+      "utility": 0.5109,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7717,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776857359,
+      "utility": 0.5109,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7711,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776857679,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7711,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776858006,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7706,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776877387,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7711,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776877791,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7706,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776878216,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7711,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776878640,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7717,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776889059,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7711,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776889376,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7711,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776889684,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7722,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7342
+      }
+    },
+    {
+      "ts": 1776889992,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7717,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776890315,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7717,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776890652,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7711,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776890983,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7717,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776891388,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7716,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776891899,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7711,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776892310,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7716,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776892738,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7716,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776893133,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7722,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7342
+      }
+    },
+    {
+      "ts": 1776893540,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7716,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776893942,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7711,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776894279,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7716,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776894603,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7716,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776896435,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7716,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776896874,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7716,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776897068,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7721,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7342
+      }
+    },
+    {
+      "ts": 1776897369,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7721,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7342
+      }
+    },
+    {
+      "ts": 1776897705,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7716,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776898012,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7716,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776898320,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.771,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776898633,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.771,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776898941,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.771,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776899251,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7716,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776899559,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.771,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776899868,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.771,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776900177,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.771,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776900488,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.771,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776900800,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.771,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776901107,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.771,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776901417,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.771,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776901730,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7715,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776902038,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.771,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776902348,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.771,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776902660,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7704,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776902975,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.771,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776903389,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7704,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776903716,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.771,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776904024,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7704,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776904336,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7704,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776904652,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7699,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776905611,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7704,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776905994,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7704,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776906301,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7709,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776906607,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7704,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776906922,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7709,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776907229,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7704,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776907537,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7715,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776907845,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7715,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776908171,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7709,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776908560,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7704,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776908870,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7714,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776909178,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7709,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776909501,
+      "utility": 0.511,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7709,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776909810,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7703,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776946029,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7709,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776946356,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7709,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776946663,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7714,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776946971,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7709,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776947290,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7709,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776947603,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7709,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776947910,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7709,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776948222,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7714,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1776948529,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7708,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776948839,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7708,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776949152,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7703,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776949461,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7708,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1776949773,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7703,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776950087,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7703,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776950405,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7703,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776950718,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7697,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776951025,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7703,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776951335,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7697,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776951643,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7697,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776951949,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7697,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776952262,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7697,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776952571,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7697,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776952878,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7702,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776953185,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7697,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776953493,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7697,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776953802,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7691,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.73
+      }
+    },
+    {
+      "ts": 1776954111,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7691,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.73
+      }
+    },
+    {
+      "ts": 1776954417,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7697,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776954725,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7702,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776955033,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7697,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776955340,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7691,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.73
+      }
+    },
+    {
+      "ts": 1776955649,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7697,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776955956,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7696,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776956263,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7691,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.73
+      }
+    },
+    {
+      "ts": 1776956570,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7696,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776956878,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7691,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.73
+      }
+    },
+    {
+      "ts": 1776957186,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7691,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.73
+      }
+    },
+    {
+      "ts": 1776957493,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7696,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776957801,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7702,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1776958108,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7696,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776958416,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7696,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776958723,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7696,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776959031,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7691,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.73
+      }
+    },
+    {
+      "ts": 1776959339,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7696,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776959646,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7696,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776959963,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7696,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776960270,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7696,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776960578,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.769,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.73
+      }
+    },
+    {
+      "ts": 1776960903,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.769,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.73
+      }
+    },
+    {
+      "ts": 1776961220,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7696,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776961529,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7696,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1776961839,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7701,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1777642598,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7701,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1777643019,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7701,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1777643335,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7712,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1777643654,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7717,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7342
+      }
+    },
+    {
+      "ts": 1777643967,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7712,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1777644339,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7707,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1777648033,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7712,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1777648308,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7712,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1777648697,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7712,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1777648913,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7712,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1777649246,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7712,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1777649384,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7706,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1777649718,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7706,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1777650030,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7717,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7342
+      }
+    },
+    {
+      "ts": 1777650350,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7712,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1777650681,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7717,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7342
+      }
+    },
+    {
+      "ts": 1777650992,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7712,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1777651306,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7712,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1777651625,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7706,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1777651939,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7706,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1777652252,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7701,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1777652614,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7701,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1777652936,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7701,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1777653249,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.77,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1777653574,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7695,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1777653901,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7695,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1777654220,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7706,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1777654539,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.77,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1777654858,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7695,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1777655206,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7695,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1777655580,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7695,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1777655903,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7689,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.73
+      }
+    },
+    {
+      "ts": 1777656442,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7689,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.73
+      }
+    },
+    {
+      "ts": 1777657153,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7695,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7308
+      }
+    },
+    {
+      "ts": 1777657496,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.77,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1777657756,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.77,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1777658004,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7705,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1777658582,
+      "utility": 0.5111,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7705,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1777659026,
+      "utility": 0.5112,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7711,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1777659415,
+      "utility": 0.5112,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7705,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1777659819,
+      "utility": 0.5112,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7705,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1777660132,
+      "utility": 0.5112,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7711,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1777660447,
+      "utility": 0.5112,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7705,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1777660759,
+      "utility": 0.5112,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7705,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1777661073,
+      "utility": 0.5112,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7711,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1777661391,
+      "utility": 0.5112,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7705,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
+    },
+    {
+      "ts": 1777661715,
+      "utility": 0.5112,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.77,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1777662026,
+      "utility": 0.5112,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7699,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1777665874,
+      "utility": 0.5112,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7699,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7317
+      }
+    },
+    {
+      "ts": 1777667567,
+      "utility": 0.5112,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7711,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1777667883,
+      "utility": 0.5112,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7716,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7342
+      }
+    },
+    {
+      "ts": 1777668258,
+      "utility": 0.5112,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7716,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7342
+      }
+    },
+    {
+      "ts": 1777668574,
+      "utility": 0.5112,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7716,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7342
+      }
+    }
+  ],
+  "emergent_goals": [
+    {
+      "ts": 1776626714,
+      "drive": "autonomy",
+      "gap": 0.089,
+      "observed": 0.255,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 26% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.57
+    },
+    {
+      "ts": 1776627731,
+      "drive": "autonomy",
+      "gap": 0.1282,
+      "observed": 0.0591,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 6% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.68
+    },
+    {
+      "ts": 1776628657,
+      "drive": "autonomy",
+      "gap": 0.1377,
+      "observed": 0.0116,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 1% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.71
+    },
+    {
+      "ts": 1776629522,
+      "drive": "autonomy",
+      "gap": 0.1395,
+      "observed": 0.0023,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776632370,
+      "drive": "autonomy",
+      "gap": 0.1399,
+      "observed": 0.0004,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776637499,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0001,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776639640,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776641284,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776642657,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776644315,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776645916,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776647739,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776649136,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776650732,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776695512,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776699292,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776704944,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776711350,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776717060,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776723386,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776735465,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776792210,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776797418,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776819060,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776857679,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776890315,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776894279,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776898941,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776902038,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776905994,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776909178,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776948222,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776951335,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776954417,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776957493,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1776960578,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1777644339,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1777650681,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1777653901,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1777657756,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    },
+    {
+      "ts": 1777661391,
+      "drive": "autonomy",
+      "gap": 0.14,
+      "observed": 0.0,
+      "desired": 0.7,
+      "weight": 0.2,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "priority": 0.72
+    }
+  ],
+  "active_emergent_goal": {
+    "ts": 1777661391,
+    "drive": "autonomy",
+    "gap": 0.14,
+    "observed": 0.0,
+    "desired": 0.7,
+    "weight": 0.2,
+    "title": "[emergente] Fortalecer autonomy",
+    "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+    "origin": "intrinsic_utility",
+    "priority": 0.72
+  },
+  "tick_count": 407,
+  "weight_hashes": [
+    "3e5df9269b905c02",
+    "3e5df9269b905c02",
+    "3e5df9269b905c02",
+    "3e5df9269b905c02",
+    "3e5df9269b905c02"
+  ]
+}

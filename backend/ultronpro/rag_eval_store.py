@@ -5,7 +5,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-LOG_PATH = Path('/app/data/rag_eval_runs.jsonl')
+LOG_PATH = Path(__file__).resolve().parent.parent / 'data' / 'rag_eval_runs.jsonl'
 
 
 def persist_run(report: dict[str, Any]) -> None:

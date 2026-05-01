@@ -7,7 +7,7 @@ from typing import Any
 
 from ultronpro import cognitive_patches, shadow_eval, promotion_gate, rollback_manager, gap_detector
 
-LOOP_LOG_PATH = Path('/app/data/cognitive_patch_loop_runs.jsonl')
+LOOP_LOG_PATH = Path(__file__).resolve().parent.parent / 'data' / 'cognitive_patch_loop_runs.jsonl'
 
 
 def _now() -> int:

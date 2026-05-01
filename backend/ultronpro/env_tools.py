@@ -7,7 +7,7 @@ import os
 import subprocess
 import time
 
-SANDBOX_ROOT = Path('/app/data/sandbox')
+SANDBOX_ROOT = Path(__file__).resolve().parent.parent / 'data' / 'sandbox'
 HISTORY_PATH = SANDBOX_ROOT / 'history.json'
 
 

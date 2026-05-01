@@ -8,7 +8,7 @@ from typing import Any
 
 from ultronpro import embeddings
 
-CACHE_PATH = Path('/app/data/semantic_cache.json')
+CACHE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'semantic_cache.json'
 EXACT_TTL_SEC = 24 * 3600
 SEMANTIC_TTL_SEC = 12 * 3600
 SEMANTIC_THRESHOLD = 0.92

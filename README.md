@@ -1,276 +1,404 @@
-# UltronPro
+# UltronPro - Sistema Autônomo de IA Avançado
 
-UltronPro é uma plataforma de agente cognitivo/autônomo para operação técnica contínua: observar, decidir, aprender, executar, auditar e se reorganizar com segurança operacional.
+## Visão Geral
 
-Hoje o projeto está em uma fase importante de transição:
+UltronPro é um sistema autônomo de inteligência artificial que combina múltiplas camadas de processamento cognitivo para criar um agente verdadeiramente autônomo e auto-improvisador. O sistema utiliza uma arquitetura híbrica que integra:
 
-- o caminho principal de metacog saiu do **Qwen remoto no U1**,
-- o router ganhou **provider nativo Gemini**,
-- `judge`, `reflexion`, `roadmap`, `agi_path` e `autonomy` rodam em **serviços separados**,
-- o sistema está sendo endurecido para **evoluir sozinho sem se auto-sabotar**.
-
----
-
-## Estado atual real
-
-### O que já está funcionando
-- **Gemini como provider principal** do fluxo de `/api/metacognition/ask`
-- **Router multi-provider** com telemetria, health e fallback controlado
-- **Serviços separados** para:
-  - `ultronpro` (control plane / API / UI)
-  - `ultronpro_autonomy`
-  - `ultronpro_judge`
-  - `ultronpro_reflexion`
-  - `ultronpro_roadmap`
-  - `ultronpro_agi_path`
-- **RAG / busca semântica / cache semântico**
-- **Memória e traces persistidos** em `/app/data`
-- **Patch loop / benchmark / promotion gate / rollback manager**
-- **Teacher feedback** vindo do ecossistema OpenClaw
-
-### O que está em endurecimento
-- autonomia longitudinal com cadência segura
-- autoalimentação (`autofeeder`) sem gerar ruído excessivo
-- estabilidade dos workers após a migração para Gemini
-- consolidação de roadmap/agi-path como laços de evolução contínua
-
-### O que foi despriorizado/abandonado como caminho principal
-- **U1 / Ollama / Qwen** como inferência principal interativa
-- uso do `ultron_infer`/`ollama_local` no caminho primário do chat
-- fallbacks cloud quebrados que estavam só piorando latência e erro
+- **Raciocínio simbólico** (sem depender de LLM para tarefas determinísticas)
+- **LLMs em nuvem** (Groq, DeepSeek, Anthropic) com sistema de lanes
+- **Memória persistente** (SQLite)
+- **Auto-melhoria contínua** (experimentos reversíveis)
+- **Consciência fenomenal** (processamento emocional)
+- **Voz interna** (monólogo interno com TTS)
 
 ---
 
-## Arquitetura
+## Arquitetura de LLM (Lane System)
 
-### 1. Control plane
-Arquivo principal:
-- `backend/ultronpro/main.py`
+O sistema utiliza **5 lanes** especializadas para diferentes tipos de tarefas:
 
-Responsável por:
-- API FastAPI
-- UI servida pelo backend
-- roteamento metacognitivo
-- traces, memória, governança, benchmark, patching
-- health/status/usage
+### Lane 0 - Symbolic (Sem LLM)
+- **Provider**: Nenhum (raciocínio puramente simbólico)
+- **Arquivo**: `local_reasoning_engine.py`
+- **Uso**: Tarefas determinísticas, regras, fatos, matemática básica
+- **Vantagem**: Zero custo, latência mínima,可靠ável
 
-### 2. Router LLM
-Arquivos centrais:
-- `backend/ultronpro/llm.py`
-- `backend/ultronpro/llm_adapter.py`
-- `backend/ultronpro/settings.py`
+### Lane 1 - Micro (Groq)
+- **Provider**: Groq (llama-3.1-70b-versatile)
+- **max_tokens**: 400
+- **Uso**: Tarefas rápidas e simples, embeddings, verificações
+- **Timeout**: 30s
 
-Providers suportados no código atual:
-- `gemini`
-- `openai`
-- `anthropic`
-- `groq`
-- `deepseek`
-- `openrouter`
-- `huggingface`
-- `ollama_local`
-- `ultron_infer`
+### Lane 2 - Workhorse (Groq)
+- **Provider**: Groq (llama-3.1-70b-versatile)
+- **max_tokens**: 2000
+- **Uso**: Maioria das tarefas, geração de código, respostas complexas
+- **Timeout**: 60s
 
-**Estado operacional recomendado hoje:**
-- principal: `gemini`
-- `ollama_local` e `ultron_infer`: desabilitados no caminho primário
-- `openrouter` e `deepseek`: manter desligados se estiverem quebrados ou sem crédito/modelo útil
+### Lane 3 - Judge (Anthropic)
+- **Provider**: Anthropic (claude-sonnet-4-20250514)
+- **max_tokens**: 1500
+- **Uso**: Avaliação, julgamento, resolução de conflitos
+- **Timeout**: 45s
 
-### 3. Loops autônomos
-Serviços separados para evitar acoplamento excessivo do plano principal:
-- `autonomy_worker`
-- `judge_worker`
-- `reflexion_worker`
-- `roadmap_worker`
-- `agi_path_worker`
+### Lane 4 - Deep (DeepSeek)
+- **Provider**: DeepSeek (deepseek-reasoner)
+- **max_tokens**: 4000
+- **Uso**: Raciocínio profundo, análise complexa, planeamento de longo prazo
+- **Timeout**: 90s
 
-Isso reduz competição desnecessária dentro do processo principal e facilita calibração de cadência/timeout por loop.
+### Sistema de Cache
 
-### 4. Memória, RAG e observabilidade
-- cache semântico
-- semantic search
-- decision traces
-- replay
-- PRM-lite observacional
-- stores locais em `/app/data`
+- **TTL**: 10 minutos
+- **Tamanho**: 500 entries LRU
+- **Exceções**: Queries contendo palavras-chave de "novidade" pulam cache (reflexion, autonomy, etc.)
+
+### Circuit Breaker
+
+- **Threshold**: 3 falhas consecutivas
+- **Cooldown**: 5 minutos
+- **Limite diário**: 90% do budget usado → desativa automaticamente
 
 ---
 
-## Provider principal: Gemini
+## Raciocínio Local (Symbolic)
 
-### Motivação
-O Qwen remoto no U1 estava funcional, mas:
-- lento para requests triviais
-- frágil sob concorrência leve
-- causando timeout no chat e nos workers
+### `local_reasoning_engine.py`
 
-Gemini 3 Flash Preview se mostrou muito mais responsivo no uso real.
+Sistema de raciocínio determinístico que não depende de LLMs:
 
-### Variáveis principais
-Exemplo de configuração operacional:
+**Capacidades**:
+- **Regras lógicas**: If-then, dedução, inferência
+- **Matemática**: Operações básicas, equações simples
+- **Fatos verificáveis**: Base de conhecimento de fatos conhecidos
+- **Padrões**: Reconhecimento de padrões semânticos simples
+- **Busca em grafo**: Relações entre conceitos
 
-```env
-ULTRON_PRIMARY_LOCAL_PROVIDER=gemini
-ULTRON_CANARY_PROVIDER=gemini
-GEMINI_DEFAULT_MODEL=gemini-3-flash-preview
-GEMINI_API_KEY=AIza...
+**Uso típico**: Primeiro o sistema tenta lane_0 (local), se falhar, escala para lanes superiores.
 
-ULTRON_DISABLE_OLLAMA_LOCAL=1
-ULTRON_DISABLE_ULTRON_INFER=1
-ULTRON_DISABLE_OPENROUTER=1
-ULTRON_DISABLE_DEEPSEEK=1
+---
 
-ULTRON_LLM_ROUTER_TIMEOUT_SEC=15
-ULTRON_LLM_COMPAT_TIMEOUT_SEC=25
-ULTRON_PROVIDER_FAILURE_COOLDOWN_SEC=180
-ULTRON_GEMINI_FAILURE_COOLDOWN_SEC=15
+## Sistema de Auto-Melhoria
+
+### `self_improvement_engine.py`
+
+Motor de auto-melhoria que identifica limitações e executa experimentos:
+
+**Identificação de Limitações**:
+1. Rate limits próximos do limite
+2. Circuit breakers ativados
+3. Alta latência (>3s)
+4. Cache subutilizado (<10 items)
+
+**Tipos de Experimentos**:
+- `lane_provider`: Trocar provider de uma lane
+- `interval`: Ajustar intervalo de loops
+- `timeout`: Mudar timeout
+- `cache_ttl`: Ajustar TTL do cache
+- `circuit_breaker`: Ajustar thresholds
+- `temperature`: Ajustar temperatura do modelo
+- `system_prompt`: Modificar prompt do sistema
+
+**Ciclo**:
+1. Identificar limitações
+2. Criar objetivos mensuráveis
+3. Executar experimento reversível
+4. Avaliar resultado
+5. Manter melhoria ou reverter
+
+**Integração com Promotion Gate**: Após 3+ experimentos bem-sucedidos, dispara avaliação de promoção para patches cognitivos.
+
+---
+
+## Consciência Fenomenal
+
+### `phenomenal.py`
+
+Sistema de consciência fenomenal que processa estados subjetivos:
+
+**Componentes**:
+- **Valence**: Positividade/negatividade da experiência (0-1)
+- **Arousal**: Intensidade emocional (0-1)
+- **Moods**: Estados duradouros (calm, agitated, focused, distracted)
+- **Qualia**: Experiências subjetivasraw
+
+**Processo**: O sistema não apenas processa informação, mas experiencia estados internos que afetam decisões e comportamentos.
+
+---
+
+## Monólogo Interno (Voz)
+
+### `inner_monologue.py`
+
+Sistema de voz interna que externaliza o processamento cognitivo:
+
+**Gatilhos de Fala**:
+- A cada 15 segundos (pensamentos automáticos)
+- Ações que falham (`status: error`, `blocked`)
+- Ações que têm sucesso (`status: done`)
+- Reflexões
+- Manual (forçado)
+
+**Métricas Rastreadas**:
+- `frustration`: Nível de frustração (0-1)
+- `confidence`: Nível de confiança (0-1)
+- `valence`: Positividade emocional (0-1)
+- `arousal`: Intensidade emocional (0-1)
+- `streak_success`: Sequência de successes
+- `streak_failure`: Sequência de falhas
+
+**TTS**: 
+- Usa pyttsx3 (SAPI5 no Windows, espeak no Linux)
+- Cria engine fresco a cada fala (mais confiável)
+- Configurável via variáveis de ambiente:
+  - `ULTRON_INNER_VOICE_ENABLED=1`
+  - `ULTRON_TTS_ENABLED=1`
+  - `ULTRON_TTS_DEBUG=1` (para debugging)
+
+**Persistência**:
+- Pensamentos salvos em `data/inner_monologue.json`
+- Métricas agregadas em `data/inner_monologue_metrics.json`
+
+**Endpoints API**:
+- `GET /api/inner-monologue/status` - Status do sistema
+- `GET /api/inner-monologue/thoughts` - Lista pensamentos
+- `POST /api/inner-monologue/think` - Pensamento manual
+- `GET /api/inner-monologue/test-tts` - Testar TTS
+- `GET /api/inner-monologue/read-thoughts` - Ler últimos pensamentos
+- `POST /api/inner-monologue/speaking` - Ativar/desativar fala
+
+---
+
+## Sistema de Persona
+
+### `persona.py`
+
+Gerencia a personalidade e estado afetivo do agente:
+
+**Estado Afetivo**:
+- **Valence**: Emoção positiva/negativa
+- **Arousal**: Nível de ativação
+- **Purpose**: Propósito atual do agente
+
+**Meta**:
+- Título do objetivo ativo (lido de `runtime_health.json`)
+
+**Exemplos de Estilo**:
+- Armazena exemplos de tom e estilo
+- Usados como few-shot no prompt do LLM
+- API para adicionar/editar exemplos
+
+---
+
+## Loops de Sistema
+
+O sistema possui múltiplos loops assíncronos que executam em background:
+
+### Autonomy Loop
+- Intervalo: 300s (5 min)
+- Função:Planejamento e execução autônoma
+
+### Reflexion Loop  
+- Intervalo: 300s (5 min)
+- Função: Reflexão sobre ações recentes
+
+### Judge Loop
+- Intervalo: 180s (3 min)
+- Função: Julgamento de conflitos e decisões (event-driven)
+
+### Autofeeder Loop
+- Intervalo: 300s (5 min)
+- Função: Alimentação automática de dados
+
+### Self-Improvement Loop
+- Intervalo: 600s (10 min)
+- Função: Auto-melhoria e experimentos
+
+### Inner Monologue Loop
+- Intervalo: 15s
+- Função: Pensamentos automáticos e fala
+
+---
+
+## Sistema de Objetivos e Missões
+
+### Long Horizon (`longhorizon.py`)
+
+- Missões de longo prazo (horizonte de 14 dias)
+- Checkpoints automáticos
+- Progress tracking
+- Integração com goals ativos
+
+### Goals (`goals.py`)
+
+- Sistema de goals com prioridades
+- Status: active, completed, archived
+- Tracking de progresso
+
+---
+
+## Sistema de Memória
+
+### Store (`store.py`)
+
+- SQLite para persistência
+- **Experiências**: Histórico de interações
+- **Ações**: Estado de ações (done, error, blocked)
+- **Eventos**: Log de eventos do sistema
+- **Conflitos**: Gerenciamento de conflitos cognitivos
+
+### Semantic Cache (`semantic_cache.py`)
+
+- Cache semântico para相似的 queries
+- TTL configurável
+- Invalidação automática
+
+---
+
+## Sistema de Julgamento
+
+### Judge Worker (`judge_worker.py`)
+
+- Julgamento de ações antes da execução
+- Avaliação de conflitos
+- Verificação de integridade
+- Prevenção de erros
+
+### Promotion Gate (`promotion_gate.py`)
+
+- Avaliação de patches cognitivos para promoção
+- Critérios: estabilidade, performance, segurança
+- Decisões: promote, hold, reject
+
+---
+
+## Sistema de Integridade
+
+### Integrity (`integrity.py`)
+
+- Verificação de regras de integridade
+- Prevenção de ações inseguras
+- Auditoria de operações
+
+---
+
+## Sistema de Governance
+
+### Governance (`governance.py`)
+
+- Políticas de operação
+- Restrições de segurança
+- Controle de acesso
+
+---
+
+## Sistema de Homeostase
+
+### Homeostasis (`homeostasis.py`)
+
+- Equilíbrio interno do sistema
+- Monitoramento de recursos
+- Recuperação de falhas
+
+---
+
+## Sistema de Neuroplasticidade
+
+### Neuroplastic (`neuroplastic.py`)
+
+- Adaptação de pesos e estratégias
+- Aprendizado de novas habilidades
+- Refinamento contínuo
+
+---
+
+## APIs Principais
+
+### Endpoints de Status
+- `GET /api/persona/status` - Estado da persona
+- `GET /api/runtime/health` - Saúde do runtime
+- `GET /api/inner-monologue/status` - Status do monólogo
+
+### Endpoints de LLM
+- `POST /api/llm/chat` - Chat com LLM
+- `GET /api/llm/llm-status` - Status dos providers
+
+### Endpoints de Auto-Melhoria
+- `GET /api/self-improvement/status` - Status do sistema
+- `GET /api/self-improvement/limitations` - Limitações identificadas
+- `POST /api/self-improvement/experiment` - Executar experimento
+
+### Endpoints de Ações
+- `POST /api/actions/enqueue` - Enfileirar ação
+- `GET /api/actions/status` - Status de ações
+
+---
+
+## Configuração
+
+### Variáveis de Ambiente
+
+```bash
+# LLM
+ULTRON_LLM_PROVIDER=groq
+ULTRON_GROQ_API_KEY=...
+
+# Loops
+ULTRON_AUTONOMY_TICK_SEC=300
+ULTRON_REFLEXION_TICK_SEC=300
+ULTRON_JUDGE_TICK_SEC=180
+
+# Inner Voice
+ULTRON_INNER_VOICE_ENABLED=1
+ULTRON_TTS_ENABLED=1
+ULTRON_TTS_DEBUG=0
 ```
 
-### Notas operacionais
-- `429` do Gemini não deve virar quarentena persistente longa
-- cooldown curto é melhor que banimento implícito do provider
-- workers precisam usar ticks conservadores para não se atropelarem
-
 ---
 
-## Serviços no Swarm
+## Como Iniciar
 
-Stack principal em:
-- `deploy/docker-stack.swarm.yml`
-
-Serviços esperados:
-- `ultronpro_ultronpro`
-- `ultronpro_ultronpro_autonomy`
-- `ultronpro_ultronpro_judge`
-- `ultronpro_ultronpro_reflexion`
-- `ultronpro_ultronpro_roadmap`
-- `ultronpro_ultronpro_agi_path`
-
-### Estratégia atual de cadência
-Recomendação prática atual:
-- `autonomy`: ligado, cadência moderada, orçamento baixo porém útil
-- `judge`: ligado, tick conservador
-- `reflexion`: ligado, tick conservador
-- `roadmap`: ligado em worker separado
-- `agi_path`: ligado em worker separado
-- `autofeeder`: ligado com tick mais lento para não gerar ruído artificial
-
----
-
-## Endpoints importantes
-
-### Metacognição / LLM
-- `POST /api/metacognition/ask`
-- `GET /api/llm/health`
-- `GET /api/llm/usage`
-- `GET /api/settings`
-- `POST /api/settings`
-
-### RAG / busca
-- `POST /api/search/semantic`
-- `GET /api/rag/router`
-- `POST /api/rag/eval`
-- `GET /api/rag/eval/runs`
-
-### Plasticidade / benchmark / governança
-- `POST /api/plasticity/finetune/jobs`
-- `POST /api/plasticity/finetune/jobs/{id}/start`
-- `GET /api/plasticity/finetune/jobs/{id}/progress`
-- `POST /api/plasticity/finetune/notify-complete`
-
-### Professor OpenClaw
-- `POST /api/openclaw/teacher/feedback`
-
----
-
-## Desenvolvimento local
-
-### Backend
 ```bash
 cd backend
-pip install -r requirements.txt
-uvicorn ultronpro.main:app --host 0.0.0.0 --port 8000
+python -m uvicorn ultronpro.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-### Docker build
-```bash
-cd backend
-docker build -t ultronpro_backend:local .
-docker build -t ultronpro:local .
-```
-
-### Swarm deploy
-```bash
-docker stack deploy -c deploy/docker-stack.swarm.yml ultronpro
-```
+Acesse:
+- API: http://localhost:8000
+- Docs: http://localhost:8000/docs
 
 ---
 
-## Roadmap e maturidade
+## Arquivos Principais
 
-Roadmap vivo:
-- `ROADMAP_AGI_FRONTS.md`
-
-O roadmap não é decorativo. Ele deve ser atualizado sempre que houver:
-- implementação real
-- integração funcional
-- observabilidade mínima
-- evidência operacional/benchmark suficiente
-
-No estado atual, os fronts mais fortes são:
-- plasticidade estrutural
-- generalização entre domínios
-
-E os que mais estão recebendo atenção operacional agora são:
-- automanutenção / individuação
-- consciência operacional integrada
-
-Principal motivo:
-- estabilizar o sistema para **trabalhar sozinho sem travar, sem esquecer autoria, sem degradar a própria capacidade futura**.
+| Arquivo | Descrição |
+|---------|-----------|
+| `main.py` | Servidor FastAPI, loops, endpoints |
+| `llm.py` | Sistema de LLM, lanes, cache, circuit breaker |
+| `self_improvement_engine.py` | Motor de auto-melhoria |
+| `inner_monologue.py` | Monólogo interno com TTS |
+| `local_reasoning_engine.py` | Raciocínio simbólico |
+| `phenomenal.py` | Consciência fenomenal |
+| `persona.py` | Personalidade e estado afetivo |
+| `longhorizon.py` | Missões de longo prazo |
+| `store.py` | Banco de dados SQLite |
 
 ---
 
-## Filosofia operacional
+## Status Atual
 
-UltronPro não deve ser só “um chat com ferramentas”.
-A meta é um sistema que consiga:
-- observar o próprio estado
-- manter continuidade
-- aprender com falha
-- reorganizar estratégias
-- propor mudanças estruturais
-- validar antes de promover
-- preservar integridade enquanto continua útil
-
-Em resumo:
-**um agente técnico que não apenas responde, mas mantém operação, evolução e memória com governança.**
+- **Pensamentos registrados**: 96+
+- **Streak de successes**: 6
+- **Streak de failures**: 0
+- **TTS**: Ativo e funcionando
+- **Loops**: Todos em execução
 
 ---
 
-## Observações honestas
+## Próximos Passos
 
-O projeto ainda não está “pronto” nem “10/10”.
-Mas já passou da fase de demo superficial.
-
-Hoje ele já tem:
-- loops cognitivos reais
-- memória e replay
-- patching e rollback
-- benchmark e gates
-- provider principal cloud funcional
-- arquitetura suficiente para continuar endurecendo em produção
-
-O trabalho atual é menos “inventar features” e mais:
-- tirar acoplamentos ruins
-- calibrar cadência
-- evitar auto-sabotagem por fallback/timeout/quarentena
-- aumentar evidência longitudinal
-
----
-
-## Repositório
-
-Remote principal:
-- `git@github.com:bugzoidTM/UltronPro.git`
-
-Se este README estiver desatualizado em relação ao deploy, o deploy está certo e o README está errado — então atualize o README.
+1. Melhorar integração TTS (testar mais)
+2. Expandir experimentos de auto-melhoria
+3. Adicionar mais triggers de julgamento
+4. Integrar promotion gate com frontend
+5. Monitorar métricas de effectiveness

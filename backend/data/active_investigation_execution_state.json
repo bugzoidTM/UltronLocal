@@ -1,0 +1,33 @@
+{
+  "ts": 1777669263,
+  "ok": false,
+  "executed": true,
+  "injected": false,
+  "investigation_id": "inv_891c9c678d",
+  "query": "tou com dor de barriga",
+  "reason": "no_structured_coverage",
+  "missing_slots": [
+    "aresta_causal_relevante",
+    "fato_estruturado_recuperavel"
+  ],
+  "experiment": {
+    "kind": "causal_transfer_prior_validation",
+    "target_route": "unknown:general",
+    "query_terms": [
+      "barriga",
+      "com",
+      "dor",
+      "tou"
+    ],
+    "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+    "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+  },
+  "sandbox": {
+    "ok": false,
+    "error": "sandbox_unreachable:ConnectError",
+    "returncode": -1,
+    "stderr": "[Errno 11001] getaddrinfo failed"
+  },
+  "error": "sandbox_unreachable:ConnectError",
+  "duration_ms": 2863.63
+}

@@ -5,7 +5,7 @@ from typing import Any
 import json
 import time
 
-PATH = Path('/app/data/grounding_claims.json')
+PATH = Path(__file__).resolve().parent.parent / 'data' / 'grounding_claims.json'
 
 
 def _load() -> dict[str, Any]:

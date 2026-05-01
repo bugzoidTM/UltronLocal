@@ -5,11 +5,11 @@ from typing import Any
 import json
 import time
 
-PROJECTS_PATH = Path('/app/data/projects_state.json')
-PLAYBOOKS_PATH = Path('/app/data/recovery_playbooks.json')
-MEMORY_PATH = Path('/app/data/project_memory_index.json')
-ABSTRACTIONS_PATH = Path('/app/data/project_memory_abstractions.json')
-RUN_STATE_PATH = Path('/app/data/project_run_state.json')
+PROJECTS_PATH = Path(__file__).resolve().parent.parent / 'data' / 'projects_state.json'
+PLAYBOOKS_PATH = Path(__file__).resolve().parent.parent / 'data' / 'recovery_playbooks.json'
+MEMORY_PATH = Path(__file__).resolve().parent.parent / 'data' / 'project_memory_index.json'
+ABSTRACTIONS_PATH = Path(__file__).resolve().parent.parent / 'data' / 'project_memory_abstractions.json'
+RUN_STATE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'project_run_state.json'
 
 
 def _load(path: Path, default):

@@ -95,7 +95,7 @@ class CuriosityProcessor:
     Aprende quais perguntas geram respostas úteis e ajusta sua estratégia.
     """
     
-    def __init__(self, state_path: str | Path = "/app/data/curiosity_state.json"):
+    def __init__(self, state_path: str | Path = str(Path(__file__).resolve().parent.parent / 'data' / 'curiosity_state.json')):
         self.state_path = Path(state_path)
         self.templates: dict[str, QuestionTemplate] = {}
         self.concept_mentions: dict[str, int] = {}  # concept -> mention count

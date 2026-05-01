@@ -5,7 +5,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-LOG_PATH = Path('/app/data/memory_governor.jsonl')
+LOG_PATH = Path(__file__).resolve().parent.parent / 'data' / 'memory_governor.jsonl'
 
 
 STABLE_PREFERENCE_TERMS = [

@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Any
 
 
-STATE_PATH = Path('/app/data/roadmap_v5_state.json')
+STATE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'roadmap_v5_state.json'
 
 
 def _default() -> dict[str, Any]:

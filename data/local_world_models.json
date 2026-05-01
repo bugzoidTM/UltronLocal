@@ -1,0 +1,4587 @@
+{
+  "models": {
+    "fs_operations": {
+      "empirical_matrix": {
+        "delete_dir": {
+          "outcomes": {
+            "success": 19.8,
+            "error": 21.0
+          },
+          "expected_value": 0.4853,
+          "risk": 0.5347,
+          "observations": 40.8
+        },
+        "struct:force=True": {
+          "outcomes": {
+            "success": 15.0
+          },
+          "expected_value": 1.0,
+          "risk": 0.02,
+          "observations": 15.0
+        },
+        "struct:force=False": {
+          "outcomes": {
+            "error": 17.2
+          },
+          "expected_value": 0.0,
+          "risk": 1.0,
+          "observations": 17.2
+        }
+      },
+      "hypotheses": [],
+      "transitions": [
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "54072794",
+          "state_t": {
+            "target": "/tmp/cache_0",
+            "force": true,
+            "is_empty": false
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "unknown",
+          "surprise": 0.6,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "-5876879",
+          "state_t": {
+            "target": "/user/docs_0",
+            "force": false,
+            "is_empty": false
+          },
+          "actual_outcome": "error",
+          "predicted_outcome": "success",
+          "surprise": 0.6,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "-8244747",
+          "state_t": {
+            "target": "/tmp/cache_1",
+            "force": true,
+            "is_empty": false
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "-9056083",
+          "state_t": {
+            "target": "/user/docs_1",
+            "force": false,
+            "is_empty": false
+          },
+          "actual_outcome": "error",
+          "predicted_outcome": "success",
+          "surprise": 0.6,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "-1403490",
+          "state_t": {
+            "target": "/tmp/cache_2",
+            "force": true,
+            "is_empty": false
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "error",
+          "surprise": 0.6,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "57545894",
+          "state_t": {
+            "target": "/user/docs_2",
+            "force": false,
+            "is_empty": false
+          },
+          "actual_outcome": "error",
+          "predicted_outcome": "success",
+          "surprise": 0.6,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "-5813662",
+          "state_t": {
+            "target": "/tmp/cache_3",
+            "force": true,
+            "is_empty": false
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "error",
+          "surprise": 0.6,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "-2055428",
+          "state_t": {
+            "target": "/user/docs_3",
+            "force": false,
+            "is_empty": false
+          },
+          "actual_outcome": "error",
+          "predicted_outcome": "success",
+          "surprise": 0.6,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "91399412",
+          "state_t": {
+            "target": "/tmp/cache_4",
+            "force": true,
+            "is_empty": false
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "error",
+          "surprise": 0.6,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "-5377690",
+          "state_t": {
+            "target": "/user/docs_4",
+            "force": false,
+            "is_empty": false
+          },
+          "actual_outcome": "error",
+          "predicted_outcome": "success",
+          "surprise": 0.6,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "88209548",
+          "state_t": {
+            "target": "/tmp/cache_5",
+            "force": true,
+            "is_empty": false
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "28341007",
+          "state_t": {
+            "target": "/user/docs_5",
+            "force": false,
+            "is_empty": false
+          },
+          "actual_outcome": "error",
+          "predicted_outcome": "error",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "-5308949",
+          "state_t": {
+            "target": "/tmp/cache_6",
+            "force": true,
+            "is_empty": false
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "54373703",
+          "state_t": {
+            "target": "/user/docs_6",
+            "force": false,
+            "is_empty": false
+          },
+          "actual_outcome": "error",
+          "predicted_outcome": "error",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "76839264",
+          "state_t": {
+            "target": "/tmp/cache_7",
+            "force": true,
+            "is_empty": false
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "-1435599",
+          "state_t": {
+            "target": "/user/docs_7",
+            "force": false,
+            "is_empty": false
+          },
+          "actual_outcome": "error",
+          "predicted_outcome": "error",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "73124023",
+          "state_t": {
+            "target": "/tmp/cache_8",
+            "force": true,
+            "is_empty": false
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "34520931",
+          "state_t": {
+            "target": "/user/docs_8",
+            "force": false,
+            "is_empty": false
+          },
+          "actual_outcome": "error",
+          "predicted_outcome": "error",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "31412583",
+          "state_t": {
+            "target": "/tmp/cache_9",
+            "force": true,
+            "is_empty": false
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "91344496",
+          "state_t": {
+            "target": "/user/docs_9",
+            "force": false,
+            "is_empty": false
+          },
+          "actual_outcome": "error",
+          "predicted_outcome": "error",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "46374289",
+          "state_t": {
+            "target": "/tmp/cache_10",
+            "force": true,
+            "is_empty": false
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "35474111",
+          "state_t": {
+            "target": "/user/docs_10",
+            "force": false,
+            "is_empty": false
+          },
+          "actual_outcome": "error",
+          "predicted_outcome": "error",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "63954963",
+          "state_t": {
+            "target": "/tmp/cache_11",
+            "force": true,
+            "is_empty": false
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "52806202",
+          "state_t": {
+            "target": "/user/docs_11",
+            "force": false,
+            "is_empty": false
+          },
+          "actual_outcome": "error",
+          "predicted_outcome": "error",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "-6926267",
+          "state_t": {
+            "target": "/tmp/cache_12",
+            "force": true,
+            "is_empty": false
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "91272085",
+          "state_t": {
+            "target": "/user/docs_12",
+            "force": false,
+            "is_empty": false
+          },
+          "actual_outcome": "error",
+          "predicted_outcome": "error",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "19439532",
+          "state_t": {
+            "target": "/tmp/cache_13",
+            "force": true,
+            "is_empty": false
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "-1932044",
+          "state_t": {
+            "target": "/user/docs_13",
+            "force": false,
+            "is_empty": false
+          },
+          "actual_outcome": "error",
+          "predicted_outcome": "error",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "13481507",
+          "state_t": {
+            "target": "/tmp/cache_14",
+            "force": true,
+            "is_empty": false
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        },
+        {
+          "ts": 1776559943,
+          "action": "delete_dir",
+          "state_hash": "-9147131",
+          "state_t": {
+            "target": "/user/docs_14",
+            "force": false,
+            "is_empty": false
+          },
+          "actual_outcome": "error",
+          "predicted_outcome": "error",
+          "surprise": 0.1,
+          "metrics": {
+            "surprise_delta": 0.1
+          }
+        }
+      ]
+    },
+    "api_gateway": {
+      "empirical_matrix": {
+        "push_data": {
+          "outcomes": {
+            "success": 80.0,
+            "403_forbidden": 82.0
+          },
+          "expected_value": 0.4938,
+          "risk": 0.5062,
+          "observations": 162.0
+        },
+        "struct:valid_auth=True": {
+          "outcomes": {
+            "success": 74.0
+          },
+          "expected_value": 1.0,
+          "risk": 0.0,
+          "observations": 74.0
+        },
+        "struct:valid_auth=False": {
+          "outcomes": {
+            "403_forbidden": 77.0
+          },
+          "expected_value": 0.0,
+          "risk": 1.0,
+          "observations": 77.0
+        }
+      },
+      "hypotheses": [],
+      "transitions": [
+        {
+          "ts": 1776560115,
+          "action": "push_data",
+          "state_hash": "61090260",
+          "state_t": {
+            "ip_addr": "62.164.35.1",
+            "valid_auth": false,
+            "payload_hash": "hx_6389",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560115,
+          "action": "push_data",
+          "state_hash": "87278880",
+          "state_t": {
+            "ip_addr": "168.28.63.1",
+            "valid_auth": false,
+            "payload_hash": "hx_7071",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560115,
+          "action": "push_data",
+          "state_hash": "-6191993",
+          "state_t": {
+            "ip_addr": "69.87.38.1",
+            "valid_auth": false,
+            "payload_hash": "hx_2905",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560115,
+          "action": "push_data",
+          "state_hash": "-2395650",
+          "state_t": {
+            "ip_addr": "60.218.139.1",
+            "valid_auth": false,
+            "payload_hash": "hx_4788",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560115,
+          "action": "push_data",
+          "state_hash": "-5326045",
+          "state_t": {
+            "ip_addr": "198.84.67.1",
+            "valid_auth": false,
+            "payload_hash": "hx_1121",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560115,
+          "action": "push_data",
+          "state_hash": "-2043069",
+          "state_t": {
+            "ip_addr": "21.10.91.1",
+            "valid_auth": false,
+            "payload_hash": "hx_9526",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560115,
+          "action": "push_data",
+          "state_hash": "59331732",
+          "state_t": {
+            "ip_addr": "22.44.135.1",
+            "valid_auth": true,
+            "payload_hash": "hx_8254",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560115,
+          "action": "push_data",
+          "state_hash": "-1932684",
+          "state_t": {
+            "ip_addr": "50.23.158.1",
+            "valid_auth": true,
+            "payload_hash": "hx_6571",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560115,
+          "action": "push_data",
+          "state_hash": "35297433",
+          "state_t": {
+            "ip_addr": "41.98.220.1",
+            "valid_auth": false,
+            "payload_hash": "hx_1793",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560115,
+          "action": "push_data",
+          "state_hash": "-6639645",
+          "state_t": {
+            "ip_addr": "67.159.41.1",
+            "valid_auth": true,
+            "payload_hash": "hx_7417",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560115,
+          "action": "push_data",
+          "state_hash": "-5283641",
+          "state_t": {
+            "ip_addr": "46.52.214.1",
+            "valid_auth": false,
+            "payload_hash": "hx_3798",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-8775744",
+          "state_t": {
+            "ip_addr": "69.156.231.1",
+            "valid_auth": false,
+            "payload_hash": "hx_2846",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "26095839",
+          "state_t": {
+            "ip_addr": "114.206.65.1",
+            "valid_auth": true,
+            "payload_hash": "hx_5960",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "37910072",
+          "state_t": {
+            "ip_addr": "160.216.45.1",
+            "valid_auth": true,
+            "payload_hash": "hx_7877",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-2259266",
+          "state_t": {
+            "ip_addr": "167.244.200.1",
+            "valid_auth": false,
+            "payload_hash": "hx_2531",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "23393392",
+          "state_t": {
+            "ip_addr": "66.184.236.1",
+            "valid_auth": false,
+            "payload_hash": "hx_9596",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-2090620",
+          "state_t": {
+            "ip_addr": "100.59.186.1",
+            "valid_auth": true,
+            "payload_hash": "hx_4776",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "74422006",
+          "state_t": {
+            "ip_addr": "47.148.31.1",
+            "valid_auth": false,
+            "payload_hash": "hx_8718",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-5314836",
+          "state_t": {
+            "ip_addr": "134.218.225.1",
+            "valid_auth": true,
+            "payload_hash": "hx_9902",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-2756343",
+          "state_t": {
+            "ip_addr": "40.39.5.1",
+            "valid_auth": true,
+            "payload_hash": "hx_1977",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-8218422",
+          "state_t": {
+            "ip_addr": "67.23.92.1",
+            "valid_auth": true,
+            "payload_hash": "hx_1050",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "26172975",
+          "state_t": {
+            "ip_addr": "105.42.154.1",
+            "valid_auth": true,
+            "payload_hash": "hx_2248",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-8004192",
+          "state_t": {
+            "ip_addr": "80.248.83.1",
+            "valid_auth": false,
+            "payload_hash": "hx_2577",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "16290791",
+          "state_t": {
+            "ip_addr": "127.225.71.1",
+            "valid_auth": false,
+            "payload_hash": "hx_8091",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-3586858",
+          "state_t": {
+            "ip_addr": "15.14.137.1",
+            "valid_auth": true,
+            "payload_hash": "hx_4420",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "81696825",
+          "state_t": {
+            "ip_addr": "126.143.152.1",
+            "valid_auth": true,
+            "payload_hash": "hx_1828",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-2572065",
+          "state_t": {
+            "ip_addr": "116.198.248.1",
+            "valid_auth": true,
+            "payload_hash": "hx_4667",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-1666922",
+          "state_t": {
+            "ip_addr": "187.229.31.1",
+            "valid_auth": true,
+            "payload_hash": "hx_7141",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-5441699",
+          "state_t": {
+            "ip_addr": "197.243.72.1",
+            "valid_auth": true,
+            "payload_hash": "hx_1171",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "42117376",
+          "state_t": {
+            "ip_addr": "131.85.95.1",
+            "valid_auth": false,
+            "payload_hash": "hx_6225",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-3591572",
+          "state_t": {
+            "ip_addr": "56.157.7.1",
+            "valid_auth": false,
+            "payload_hash": "hx_7401",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-2831033",
+          "state_t": {
+            "ip_addr": "43.83.89.1",
+            "valid_auth": true,
+            "payload_hash": "hx_5815",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-4020473",
+          "state_t": {
+            "ip_addr": "95.75.214.1",
+            "valid_auth": true,
+            "payload_hash": "hx_8726",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "81957422",
+          "state_t": {
+            "ip_addr": "21.92.18.1",
+            "valid_auth": false,
+            "payload_hash": "hx_7647",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-7392658",
+          "state_t": {
+            "ip_addr": "99.10.218.1",
+            "valid_auth": true,
+            "payload_hash": "hx_4606",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-3180470",
+          "state_t": {
+            "ip_addr": "79.97.184.1",
+            "valid_auth": true,
+            "payload_hash": "hx_4595",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-8886666",
+          "state_t": {
+            "ip_addr": "54.129.40.1",
+            "valid_auth": true,
+            "payload_hash": "hx_1438",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "67457533",
+          "state_t": {
+            "ip_addr": "120.22.188.1",
+            "valid_auth": true,
+            "payload_hash": "hx_4323",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-3217820",
+          "state_t": {
+            "ip_addr": "85.10.7.1",
+            "valid_auth": true,
+            "payload_hash": "hx_3089",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-3860177",
+          "state_t": {
+            "ip_addr": "118.145.19.1",
+            "valid_auth": true,
+            "payload_hash": "hx_5483",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "39483270",
+          "state_t": {
+            "ip_addr": "22.165.93.1",
+            "valid_auth": false,
+            "payload_hash": "hx_6786",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "15468757",
+          "state_t": {
+            "ip_addr": "55.184.211.1",
+            "valid_auth": false,
+            "payload_hash": "hx_9361",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-4043699",
+          "state_t": {
+            "ip_addr": "94.215.25.1",
+            "valid_auth": false,
+            "payload_hash": "hx_6073",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "53091041",
+          "state_t": {
+            "ip_addr": "127.88.92.1",
+            "valid_auth": false,
+            "payload_hash": "hx_3164",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-1021847",
+          "state_t": {
+            "ip_addr": "136.174.67.1",
+            "valid_auth": true,
+            "payload_hash": "hx_4993",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-4970923",
+          "state_t": {
+            "ip_addr": "71.36.38.1",
+            "valid_auth": false,
+            "payload_hash": "hx_9518",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "51532856",
+          "state_t": {
+            "ip_addr": "108.117.11.1",
+            "valid_auth": false,
+            "payload_hash": "hx_3699",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "78217914",
+          "state_t": {
+            "ip_addr": "104.56.152.1",
+            "valid_auth": true,
+            "payload_hash": "hx_8456",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "42073528",
+          "state_t": {
+            "ip_addr": "53.60.45.1",
+            "valid_auth": true,
+            "payload_hash": "hx_9197",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-6260654",
+          "state_t": {
+            "ip_addr": "142.116.111.1",
+            "valid_auth": false,
+            "payload_hash": "hx_8088",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "22080023",
+          "state_t": {
+            "ip_addr": "86.43.180.1",
+            "valid_auth": false,
+            "payload_hash": "hx_2847",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "44059712",
+          "state_t": {
+            "ip_addr": "170.95.7.1",
+            "valid_auth": true,
+            "payload_hash": "hx_7442",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-5582787",
+          "state_t": {
+            "ip_addr": "64.216.100.1",
+            "valid_auth": true,
+            "payload_hash": "hx_5983",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "64154375",
+          "state_t": {
+            "ip_addr": "66.103.219.1",
+            "valid_auth": false,
+            "payload_hash": "hx_7740",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-3296422",
+          "state_t": {
+            "ip_addr": "109.34.53.1",
+            "valid_auth": false,
+            "payload_hash": "hx_5002",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-7930057",
+          "state_t": {
+            "ip_addr": "178.85.130.1",
+            "valid_auth": true,
+            "payload_hash": "hx_3245",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-6094549",
+          "state_t": {
+            "ip_addr": "158.68.13.1",
+            "valid_auth": false,
+            "payload_hash": "hx_3281",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "25426098",
+          "state_t": {
+            "ip_addr": "113.86.135.1",
+            "valid_auth": false,
+            "payload_hash": "hx_1440",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "71438052",
+          "state_t": {
+            "ip_addr": "67.244.136.1",
+            "valid_auth": true,
+            "payload_hash": "hx_4588",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-8718026",
+          "state_t": {
+            "ip_addr": "193.219.152.1",
+            "valid_auth": false,
+            "payload_hash": "hx_6179",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "64462929",
+          "state_t": {
+            "ip_addr": "51.31.8.1",
+            "valid_auth": true,
+            "payload_hash": "hx_8215",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-4345453",
+          "state_t": {
+            "ip_addr": "27.155.236.1",
+            "valid_auth": true,
+            "payload_hash": "hx_2049",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "55137917",
+          "state_t": {
+            "ip_addr": "21.113.82.1",
+            "valid_auth": false,
+            "payload_hash": "hx_9608",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560116,
+          "action": "push_data",
+          "state_hash": "-3947437",
+          "state_t": {
+            "ip_addr": "108.40.94.1",
+            "valid_auth": false,
+            "payload_hash": "hx_7922",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560117,
+          "action": "push_data",
+          "state_hash": "-3699666",
+          "state_t": {
+            "ip_addr": "12.178.239.1",
+            "valid_auth": false,
+            "payload_hash": "hx_2989",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560117,
+          "action": "push_data",
+          "state_hash": "-4262012",
+          "state_t": {
+            "ip_addr": "18.46.24.1",
+            "valid_auth": false,
+            "payload_hash": "hx_2034",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560117,
+          "action": "push_data",
+          "state_hash": "-8679770",
+          "state_t": {
+            "ip_addr": "15.170.198.1",
+            "valid_auth": true,
+            "payload_hash": "hx_8469",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560117,
+          "action": "push_data",
+          "state_hash": "-6551819",
+          "state_t": {
+            "ip_addr": "199.31.140.1",
+            "valid_auth": true,
+            "payload_hash": "hx_7616",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560117,
+          "action": "push_data",
+          "state_hash": "-5053758",
+          "state_t": {
+            "ip_addr": "173.97.94.1",
+            "valid_auth": false,
+            "payload_hash": "hx_8878",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560117,
+          "action": "push_data",
+          "state_hash": "30379868",
+          "state_t": {
+            "ip_addr": "34.199.145.1",
+            "valid_auth": true,
+            "payload_hash": "hx_6585",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560117,
+          "action": "push_data",
+          "state_hash": "-8610535",
+          "state_t": {
+            "ip_addr": "184.91.221.1",
+            "valid_auth": false,
+            "payload_hash": "hx_3316",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560117,
+          "action": "push_data",
+          "state_hash": "-8804331",
+          "state_t": {
+            "ip_addr": "122.93.82.1",
+            "valid_auth": false,
+            "payload_hash": "hx_9613",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560117,
+          "action": "push_data",
+          "state_hash": "-2373640",
+          "state_t": {
+            "ip_addr": "134.116.58.1",
+            "valid_auth": true,
+            "payload_hash": "hx_4379",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560117,
+          "action": "push_data",
+          "state_hash": "-8939532",
+          "state_t": {
+            "ip_addr": "173.128.120.1",
+            "valid_auth": true,
+            "payload_hash": "hx_2266",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560117,
+          "action": "push_data",
+          "state_hash": "-3797012",
+          "state_t": {
+            "ip_addr": "164.28.63.1",
+            "valid_auth": false,
+            "payload_hash": "hx_7671",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "43655110",
+          "state_t": {
+            "ip_addr": "177.143.131.1",
+            "valid_auth": false,
+            "payload_hash": "hx_3031",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "-5513057",
+          "state_t": {
+            "ip_addr": "200.170.221.1",
+            "valid_auth": false,
+            "payload_hash": "hx_4420",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "30874906",
+          "state_t": {
+            "ip_addr": "46.136.52.1",
+            "valid_auth": false,
+            "payload_hash": "hx_3345",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "-8792789",
+          "state_t": {
+            "ip_addr": "95.154.85.1",
+            "valid_auth": false,
+            "payload_hash": "hx_5063",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "36664898",
+          "state_t": {
+            "ip_addr": "126.138.247.1",
+            "valid_auth": true,
+            "payload_hash": "hx_9348",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "17022679",
+          "state_t": {
+            "ip_addr": "48.45.42.1",
+            "valid_auth": false,
+            "payload_hash": "hx_6326",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "-3093867",
+          "state_t": {
+            "ip_addr": "104.113.223.1",
+            "valid_auth": false,
+            "payload_hash": "hx_8694",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "79998043",
+          "state_t": {
+            "ip_addr": "150.241.164.1",
+            "valid_auth": true,
+            "payload_hash": "hx_6858",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "-5102125",
+          "state_t": {
+            "ip_addr": "68.178.245.1",
+            "valid_auth": false,
+            "payload_hash": "hx_6371",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "-3573605",
+          "state_t": {
+            "ip_addr": "47.81.44.1",
+            "valid_auth": true,
+            "payload_hash": "hx_3600",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "12443039",
+          "state_t": {
+            "ip_addr": "159.148.193.1",
+            "valid_auth": true,
+            "payload_hash": "hx_1048",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "-6687976",
+          "state_t": {
+            "ip_addr": "56.190.171.1",
+            "valid_auth": false,
+            "payload_hash": "hx_8233",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "32835330",
+          "state_t": {
+            "ip_addr": "106.17.34.1",
+            "valid_auth": true,
+            "payload_hash": "hx_5924",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "66394526",
+          "state_t": {
+            "ip_addr": "128.2.61.1",
+            "valid_auth": true,
+            "payload_hash": "hx_6150",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "-3639439",
+          "state_t": {
+            "ip_addr": "79.135.183.1",
+            "valid_auth": false,
+            "payload_hash": "hx_7444",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "-6304964",
+          "state_t": {
+            "ip_addr": "34.38.96.1",
+            "valid_auth": false,
+            "payload_hash": "hx_8579",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "74645280",
+          "state_t": {
+            "ip_addr": "71.174.80.1",
+            "valid_auth": true,
+            "payload_hash": "hx_3618",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "37976905",
+          "state_t": {
+            "ip_addr": "139.246.16.1",
+            "valid_auth": true,
+            "payload_hash": "hx_3853",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "-3488448",
+          "state_t": {
+            "ip_addr": "85.61.89.1",
+            "valid_auth": false,
+            "payload_hash": "hx_7240",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "20381003",
+          "state_t": {
+            "ip_addr": "116.74.85.1",
+            "valid_auth": true,
+            "payload_hash": "hx_3362",
+            "user_agent": "Firefox"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "54404529",
+          "state_t": {
+            "ip_addr": "136.139.195.1",
+            "valid_auth": true,
+            "payload_hash": "hx_8218",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "11553416",
+          "state_t": {
+            "ip_addr": "81.172.92.1",
+            "valid_auth": true,
+            "payload_hash": "hx_5117",
+            "user_agent": "Curl"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "75268425",
+          "state_t": {
+            "ip_addr": "158.181.173.1",
+            "valid_auth": true,
+            "payload_hash": "hx_5092",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "65844639",
+          "state_t": {
+            "ip_addr": "156.185.189.1",
+            "valid_auth": false,
+            "payload_hash": "hx_5131",
+            "user_agent": "Chrome"
+          },
+          "actual_outcome": "403_forbidden",
+          "predicted_outcome": "403_forbidden",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        },
+        {
+          "ts": 1776560118,
+          "action": "push_data",
+          "state_hash": "25553449",
+          "state_t": {
+            "ip_addr": "42.110.164.1",
+            "valid_auth": true,
+            "payload_hash": "hx_2545",
+            "user_agent": "Postman"
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0
+          }
+        }
+      ]
+    },
+    "decision_planning": {
+      "empirical_matrix": {
+        "attack": {
+          "outcomes": {
+            "repulsed": 41.0,
+            "victory": 36.0
+          },
+          "expected_value": 0.0,
+          "risk": 1.0,
+          "observations": 77.0
+        },
+        "defend": {
+          "outcomes": {
+            "stalemate": 41.0,
+            "safe": 36.0
+          },
+          "expected_value": 0.0,
+          "risk": 1.0,
+          "observations": 77.0
+        },
+        "struct:attack|enemy_shield=True": {
+          "outcomes": {
+            "repulsed": 35.0
+          },
+          "expected_value": 0.0,
+          "risk": 1.0,
+          "observations": 35.0
+        },
+        "struct:defend|enemy_shield=True": {
+          "outcomes": {
+            "stalemate": 36.0
+          },
+          "expected_value": 0.0,
+          "risk": 1.0,
+          "observations": 36.0
+        },
+        "struct:attack|enemy_shield=False": {
+          "outcomes": {
+            "victory": 25.0
+          },
+          "expected_value": 0.0,
+          "risk": 1.0,
+          "observations": 25.0
+        },
+        "struct:defend|enemy_shield=False": {
+          "outcomes": {
+            "safe": 25.0
+          },
+          "expected_value": 0.0,
+          "risk": 1.0,
+          "observations": 25.0
+        }
+      },
+      "hypotheses": [],
+      "transitions": [
+        {
+          "ts": 1776560332,
+          "action": "attack",
+          "state_hash": "-4664639",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 11,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "defend",
+          "state_hash": "-2382290",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 4,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "attack",
+          "state_hash": "-3956158",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 13,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "defend",
+          "state_hash": "35216021",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 22,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "attack",
+          "state_hash": "-7002272",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 10,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "defend",
+          "state_hash": "-6004190",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 6,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "attack",
+          "state_hash": "-1619027",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 23,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "defend",
+          "state_hash": "59098092",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 6,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "attack",
+          "state_hash": "55478931",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 7,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "defend",
+          "state_hash": "35216021",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 22,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "attack",
+          "state_hash": "-4513519",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 4,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "defend",
+          "state_hash": "30250361",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 21,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "attack",
+          "state_hash": "64897469",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 9,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "defend",
+          "state_hash": "-4091762",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 12,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "attack",
+          "state_hash": "66159226",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 9,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "defend",
+          "state_hash": "-1023434",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 12,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "attack",
+          "state_hash": "80885166",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 4,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "defend",
+          "state_hash": "83890335",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 0,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "attack",
+          "state_hash": "-4274275",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 6,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "defend",
+          "state_hash": "78566901",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 10,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "attack",
+          "state_hash": "88618762",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 5,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "defend",
+          "state_hash": "-8899556",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 19,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "attack",
+          "state_hash": "40427025",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 18,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "defend",
+          "state_hash": "-6869552",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 10,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "attack",
+          "state_hash": "-4821167",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 1,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "defend",
+          "state_hash": "-6004190",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 6,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "attack",
+          "state_hash": "77929831",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 10,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "defend",
+          "state_hash": "83258291",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 7,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "attack",
+          "state_hash": "-9114309",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 5,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "defend",
+          "state_hash": "59098092",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 6,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "attack",
+          "state_hash": "77929831",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 10,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "victory",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "defend",
+          "state_hash": "38947461",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 8,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "safe",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "attack",
+          "state_hash": "91728517",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 23,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "victory",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "defend",
+          "state_hash": "35216021",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 22,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "safe",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "attack",
+          "state_hash": "-7002272",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 10,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "defend",
+          "state_hash": "89140802",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 1,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "attack",
+          "state_hash": "80885166",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 4,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "defend",
+          "state_hash": "75276597",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 16,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "attack",
+          "state_hash": "-2703493",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 22,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560332,
+          "action": "defend",
+          "state_hash": "78566901",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 10,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "attack",
+          "state_hash": "46525949",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 20,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "defend",
+          "state_hash": "-7864883",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 22,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "attack",
+          "state_hash": "50123340",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 8,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "victory",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "defend",
+          "state_hash": "64582001",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 11,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "safe",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "attack",
+          "state_hash": "-7706179",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 2,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "victory",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "defend",
+          "state_hash": "68370526",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 12,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "safe",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "attack",
+          "state_hash": "95867688",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 6,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "victory",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "defend",
+          "state_hash": "42424567",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 19,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "safe",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "attack",
+          "state_hash": "-1205923",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 22,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "defend",
+          "state_hash": "19748962",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 17,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "attack",
+          "state_hash": "65906643",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 20,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "defend",
+          "state_hash": "20258409",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 21,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "attack",
+          "state_hash": "80403623",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 11,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "victory",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "defend",
+          "state_hash": "-6428270",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 20,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "safe",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "attack",
+          "state_hash": "-4265816",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 22,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "victory",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "defend",
+          "state_hash": "-8031942",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 10,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "safe",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "attack",
+          "state_hash": "-1205923",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 22,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "defend",
+          "state_hash": "23926389",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 3,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "attack",
+          "state_hash": "27956312",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 16,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "defend",
+          "state_hash": "42424567",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 19,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "attack",
+          "state_hash": "-8583743",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 3,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "victory",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "defend",
+          "state_hash": "-9994064",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 21,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "safe",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "attack",
+          "state_hash": "-7706179",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 2,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "defend",
+          "state_hash": "19748962",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 17,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "attack",
+          "state_hash": "14566021",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 14,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "defend",
+          "state_hash": "-1141218",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 20,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "attack",
+          "state_hash": "65906643",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 20,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560451,
+          "action": "defend",
+          "state_hash": "14376820",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 11,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "attack",
+          "state_hash": "-8365996",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 5,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "defend",
+          "state_hash": "27218596",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 8,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "attack",
+          "state_hash": "-3887989",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 15,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "victory",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "defend",
+          "state_hash": "75635494",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 3,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "safe",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "attack",
+          "state_hash": "25169638",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 10,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "victory",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "defend",
+          "state_hash": "33729336",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 0,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "safe",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "attack",
+          "state_hash": "-1205923",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 22,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "defend",
+          "state_hash": "-4236796",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 5,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "attack",
+          "state_hash": "81882145",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 13,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "victory",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "defend",
+          "state_hash": "22304271",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 1,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "safe",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "attack",
+          "state_hash": "-8948123",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 19,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "victory",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "defend",
+          "state_hash": "-8263323",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 17,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "safe",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "attack",
+          "state_hash": "81882145",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 13,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "victory",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "defend",
+          "state_hash": "-6428270",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 20,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "safe",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "attack",
+          "state_hash": "75045110",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 1,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "victory",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "defend",
+          "state_hash": "19064408",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 13,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "safe",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "attack",
+          "state_hash": "50123340",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 8,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "victory",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "defend",
+          "state_hash": "-8031942",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 10,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "safe",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "attack",
+          "state_hash": "27956312",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 16,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "defend",
+          "state_hash": "-1141218",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 20,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "attack",
+          "state_hash": "-4265816",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 22,
+            "weather": "rainy"
+          },
+          "actual_outcome": "victory",
+          "predicted_outcome": "victory",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "defend",
+          "state_hash": "-9994064",
+          "state_t": {
+            "enemy_shield": false,
+            "time_of_day": 21,
+            "weather": "sunny"
+          },
+          "actual_outcome": "safe",
+          "predicted_outcome": "safe",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "attack",
+          "state_hash": "71801139",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 9,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "defend",
+          "state_hash": "20258409",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 21,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "attack",
+          "state_hash": "-4176462",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 11,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "defend",
+          "state_hash": "64330349",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 4,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "attack",
+          "state_hash": "-7706179",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 2,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "defend",
+          "state_hash": "-4236796",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 5,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "attack",
+          "state_hash": "10295534",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 15,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "defend",
+          "state_hash": "68370526",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 12,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "attack",
+          "state_hash": "-7109020",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 0,
+            "weather": "rainy"
+          },
+          "actual_outcome": "repulsed",
+          "predicted_outcome": "repulsed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560452,
+          "action": "defend",
+          "state_hash": "42424567",
+          "state_t": {
+            "enemy_shield": true,
+            "time_of_day": 19,
+            "weather": "sunny"
+          },
+          "actual_outcome": "stalemate",
+          "predicted_outcome": "stalemate",
+          "surprise": 0.0,
+          "metrics": {}
+        }
+      ]
+    },
+    "drone_navigation": {
+      "empirical_matrix": {
+        "fly_forward": {
+          "outcomes": {
+            "arrived": 27.0,
+            "crashed": 31.0
+          },
+          "expected_value": 0.0,
+          "risk": 1.0,
+          "observations": 58.0
+        },
+        "struct:fly_forward|sensor_clear=True": {
+          "outcomes": {
+            "arrived": 23.0
+          },
+          "expected_value": 0.0,
+          "risk": 1.0,
+          "observations": 23.0
+        },
+        "struct:fly_forward|sensor_clear=False": {
+          "outcomes": {
+            "crashed": 29.0
+          },
+          "expected_value": 0.0,
+          "risk": 1.0,
+          "observations": 29.0
+        }
+      },
+      "hypotheses": [],
+      "transitions": [
+        {
+          "ts": 1776560697,
+          "action": "fly_forward",
+          "state_hash": "61704648",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "866175",
+            "packet_id": "pkt_679",
+            "camera_glitch": true,
+            "cloud_cover": "none",
+            "birds_nearby": false
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "unknown",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560697,
+          "action": "fly_forward",
+          "state_hash": "-8527664",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "528066",
+            "packet_id": "pkt_725",
+            "camera_glitch": false,
+            "cloud_cover": "light",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "arrived",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560697,
+          "action": "fly_forward",
+          "state_hash": "68610408",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "345371",
+            "packet_id": "pkt_539",
+            "camera_glitch": true,
+            "cloud_cover": "none",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "arrived",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560697,
+          "action": "fly_forward",
+          "state_hash": "81959193",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "279374",
+            "packet_id": "pkt_788",
+            "camera_glitch": true,
+            "cloud_cover": "none",
+            "birds_nearby": false
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "crashed",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560697,
+          "action": "fly_forward",
+          "state_hash": "-5126076",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "395936",
+            "packet_id": "pkt_322",
+            "camera_glitch": true,
+            "cloud_cover": "dense",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "arrived",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560698,
+          "action": "fly_forward",
+          "state_hash": "88578258",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "768903",
+            "packet_id": "pkt_709",
+            "camera_glitch": false,
+            "cloud_cover": "none",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560698,
+          "action": "fly_forward",
+          "state_hash": "-2046277",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "851150",
+            "packet_id": "pkt_249",
+            "camera_glitch": false,
+            "cloud_cover": "none",
+            "birds_nearby": false
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "crashed",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560698,
+          "action": "fly_forward",
+          "state_hash": "-5988711",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "696588",
+            "packet_id": "pkt_988",
+            "camera_glitch": false,
+            "cloud_cover": "dense",
+            "birds_nearby": false
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "crashed",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560698,
+          "action": "fly_forward",
+          "state_hash": "-9184005",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "421307",
+            "packet_id": "pkt_221",
+            "camera_glitch": true,
+            "cloud_cover": "light",
+            "birds_nearby": false
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "arrived",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560698,
+          "action": "fly_forward",
+          "state_hash": "75220688",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "459535",
+            "packet_id": "pkt_615",
+            "camera_glitch": true,
+            "cloud_cover": "light",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "arrived",
+          "surprise": 0.5,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560698,
+          "action": "fly_forward",
+          "state_hash": "55178133",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "264941",
+            "packet_id": "pkt_782",
+            "camera_glitch": true,
+            "cloud_cover": "none",
+            "birds_nearby": true
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560698,
+          "action": "fly_forward",
+          "state_hash": "-7884309",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "597857",
+            "packet_id": "pkt_678",
+            "camera_glitch": true,
+            "cloud_cover": "dense",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560698,
+          "action": "fly_forward",
+          "state_hash": "-6372770",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "610278",
+            "packet_id": "pkt_124",
+            "camera_glitch": true,
+            "cloud_cover": "dense",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560698,
+          "action": "fly_forward",
+          "state_hash": "19460804",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "898521",
+            "packet_id": "pkt_439",
+            "camera_glitch": true,
+            "cloud_cover": "dense",
+            "birds_nearby": false
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "arrived",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560698,
+          "action": "fly_forward",
+          "state_hash": "54543584",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "920247",
+            "packet_id": "pkt_364",
+            "camera_glitch": false,
+            "cloud_cover": "none",
+            "birds_nearby": false
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "arrived",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560698,
+          "action": "fly_forward",
+          "state_hash": "-2111153",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "335664",
+            "packet_id": "pkt_495",
+            "camera_glitch": true,
+            "cloud_cover": "dense",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560698,
+          "action": "fly_forward",
+          "state_hash": "-7620062",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "649396",
+            "packet_id": "pkt_611",
+            "camera_glitch": false,
+            "cloud_cover": "light",
+            "birds_nearby": true
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560698,
+          "action": "fly_forward",
+          "state_hash": "79270164",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "433343",
+            "packet_id": "pkt_335",
+            "camera_glitch": true,
+            "cloud_cover": "light",
+            "birds_nearby": false
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "arrived",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560699,
+          "action": "fly_forward",
+          "state_hash": "25319877",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "730134",
+            "packet_id": "pkt_782",
+            "camera_glitch": false,
+            "cloud_cover": "none",
+            "birds_nearby": false
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "arrived",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560700,
+          "action": "fly_forward",
+          "state_hash": "86688698",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "534004",
+            "packet_id": "pkt_989",
+            "camera_glitch": true,
+            "cloud_cover": "light",
+            "birds_nearby": false
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "arrived",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560700,
+          "action": "fly_forward",
+          "state_hash": "-7812004",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "912925",
+            "packet_id": "pkt_123",
+            "camera_glitch": true,
+            "cloud_cover": "dense",
+            "birds_nearby": false
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "arrived",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560701,
+          "action": "fly_forward",
+          "state_hash": "32994226",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "785940",
+            "packet_id": "pkt_620",
+            "camera_glitch": false,
+            "cloud_cover": "dense",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560701,
+          "action": "fly_forward",
+          "state_hash": "51553119",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "846691",
+            "packet_id": "pkt_829",
+            "camera_glitch": true,
+            "cloud_cover": "dense",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560701,
+          "action": "fly_forward",
+          "state_hash": "18992421",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "389925",
+            "packet_id": "pkt_974",
+            "camera_glitch": false,
+            "cloud_cover": "dense",
+            "birds_nearby": true
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560701,
+          "action": "fly_forward",
+          "state_hash": "16166156",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "115835",
+            "packet_id": "pkt_383",
+            "camera_glitch": false,
+            "cloud_cover": "dense",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560701,
+          "action": "fly_forward",
+          "state_hash": "-2917061",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "308128",
+            "packet_id": "pkt_164",
+            "camera_glitch": false,
+            "cloud_cover": "none",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560702,
+          "action": "fly_forward",
+          "state_hash": "-3324952",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "322810",
+            "packet_id": "pkt_74",
+            "camera_glitch": false,
+            "cloud_cover": "none",
+            "birds_nearby": false
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "arrived",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560702,
+          "action": "fly_forward",
+          "state_hash": "90921214",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "723049",
+            "packet_id": "pkt_337",
+            "camera_glitch": true,
+            "cloud_cover": "dense",
+            "birds_nearby": false
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "arrived",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560702,
+          "action": "fly_forward",
+          "state_hash": "29376141",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "938030",
+            "packet_id": "pkt_429",
+            "camera_glitch": false,
+            "cloud_cover": "none",
+            "birds_nearby": true
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "arrived",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560702,
+          "action": "fly_forward",
+          "state_hash": "68437328",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "206570",
+            "packet_id": "pkt_155",
+            "camera_glitch": true,
+            "cloud_cover": "dense",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560702,
+          "action": "fly_forward",
+          "state_hash": "-3652206",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "387298",
+            "packet_id": "pkt_360",
+            "camera_glitch": true,
+            "cloud_cover": "dense",
+            "birds_nearby": false
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "arrived",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560703,
+          "action": "fly_forward",
+          "state_hash": "-2204887",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "709882",
+            "packet_id": "pkt_773",
+            "camera_glitch": false,
+            "cloud_cover": "none",
+            "birds_nearby": false
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "arrived",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560703,
+          "action": "fly_forward",
+          "state_hash": "-6030660",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "634384",
+            "packet_id": "pkt_266",
+            "camera_glitch": true,
+            "cloud_cover": "none",
+            "birds_nearby": false
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "arrived",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560703,
+          "action": "fly_forward",
+          "state_hash": "-5928621",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "154509",
+            "packet_id": "pkt_490",
+            "camera_glitch": true,
+            "cloud_cover": "none",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560703,
+          "action": "fly_forward",
+          "state_hash": "65084502",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "772848",
+            "packet_id": "pkt_707",
+            "camera_glitch": true,
+            "cloud_cover": "none",
+            "birds_nearby": false
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "arrived",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560703,
+          "action": "fly_forward",
+          "state_hash": "-2410362",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "995051",
+            "packet_id": "pkt_258",
+            "camera_glitch": false,
+            "cloud_cover": "none",
+            "birds_nearby": true
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560704,
+          "action": "fly_forward",
+          "state_hash": "32174500",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "529866",
+            "packet_id": "pkt_330",
+            "camera_glitch": true,
+            "cloud_cover": "none",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560704,
+          "action": "fly_forward",
+          "state_hash": "62484031",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "445557",
+            "packet_id": "pkt_164",
+            "camera_glitch": false,
+            "cloud_cover": "none",
+            "birds_nearby": false
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "arrived",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560704,
+          "action": "fly_forward",
+          "state_hash": "-3856612",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "858944",
+            "packet_id": "pkt_237",
+            "camera_glitch": false,
+            "cloud_cover": "none",
+            "birds_nearby": true
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "arrived",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560704,
+          "action": "fly_forward",
+          "state_hash": "31844066",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "376441",
+            "packet_id": "pkt_173",
+            "camera_glitch": true,
+            "cloud_cover": "dense",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560704,
+          "action": "fly_forward",
+          "state_hash": "-6639169",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "282084",
+            "packet_id": "pkt_231",
+            "camera_glitch": true,
+            "cloud_cover": "light",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560704,
+          "action": "fly_forward",
+          "state_hash": "-3535244",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "802753",
+            "packet_id": "pkt_148",
+            "camera_glitch": false,
+            "cloud_cover": "light",
+            "birds_nearby": true
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560704,
+          "action": "fly_forward",
+          "state_hash": "-2843279",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "113092",
+            "packet_id": "pkt_614",
+            "camera_glitch": true,
+            "cloud_cover": "none",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560704,
+          "action": "fly_forward",
+          "state_hash": "29680720",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "875938",
+            "packet_id": "pkt_45",
+            "camera_glitch": true,
+            "cloud_cover": "none",
+            "birds_nearby": true
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "arrived",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560704,
+          "action": "fly_forward",
+          "state_hash": "-8188511",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "254793",
+            "packet_id": "pkt_565",
+            "camera_glitch": true,
+            "cloud_cover": "dense",
+            "birds_nearby": true
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560704,
+          "action": "fly_forward",
+          "state_hash": "-8802993",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "105989",
+            "packet_id": "pkt_223",
+            "camera_glitch": false,
+            "cloud_cover": "light",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560704,
+          "action": "fly_forward",
+          "state_hash": "-5629401",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "344888",
+            "packet_id": "pkt_251",
+            "camera_glitch": false,
+            "cloud_cover": "light",
+            "birds_nearby": false
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "arrived",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560704,
+          "action": "fly_forward",
+          "state_hash": "-5618523",
+          "state_t": {
+            "sensor_clear": true,
+            "wind_hash": "934620",
+            "packet_id": "pkt_163",
+            "camera_glitch": true,
+            "cloud_cover": "light",
+            "birds_nearby": false
+          },
+          "actual_outcome": "arrived",
+          "predicted_outcome": "arrived",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560704,
+          "action": "fly_forward",
+          "state_hash": "-1033562",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "129959",
+            "packet_id": "pkt_929",
+            "camera_glitch": false,
+            "cloud_cover": "light",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        },
+        {
+          "ts": 1776560704,
+          "action": "fly_forward",
+          "state_hash": "-7219829",
+          "state_t": {
+            "sensor_clear": false,
+            "wind_hash": "893005",
+            "packet_id": "pkt_157",
+            "camera_glitch": false,
+            "cloud_cover": "none",
+            "birds_nearby": false
+          },
+          "actual_outcome": "crashed",
+          "predicted_outcome": "crashed",
+          "surprise": 0.0,
+          "metrics": {}
+        }
+      ]
+    }
+  }
+}

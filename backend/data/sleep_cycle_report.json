@@ -1,0 +1,89 @@
+{
+  "ok": true,
+  "ts": 1777667772,
+  "episodes_total": 37,
+  "active_after": 36,
+  "pruned": 0,
+  "abstracted": 0,
+  "abstractions_tested": 78,
+  "sql_consolidation": {
+    "decayed": 5932,
+    "pruned": 8,
+    "promoted": 0
+  },
+  "causal_gap_investigation": {
+    "ok": false,
+    "enabled": true,
+    "epistemic_gap_perception": {
+      "ok": true,
+      "enabled": true,
+      "seeded": 0,
+      "reason": "pending_queue_not_empty"
+    },
+    "pending_before": 3,
+    "executed": 3,
+    "injected": 0,
+    "failed": 3,
+    "coverage_delta_edges": 0,
+    "coverage_gained": false,
+    "items": [
+      {
+        "investigation_id": "inv_15b1941413",
+        "ok": false,
+        "injected": false,
+        "error": "sandbox_unreachable:ConnectError",
+        "experiment_kind": "causal_transfer_prior_validation",
+        "target_route": "unknown:self",
+        "query_terms": [
+          "agi",
+          "voce"
+        ],
+        "edge": {}
+      },
+      {
+        "investigation_id": "inv_d87cf6bddb",
+        "ok": false,
+        "injected": false,
+        "error": "sandbox_unreachable:ConnectError",
+        "experiment_kind": "causal_graph_enrichment",
+        "target_route": "unknown",
+        "query_terms": [],
+        "edge": {}
+      },
+      {
+        "investigation_id": "inv_dcca5c18a8",
+        "ok": false,
+        "injected": false,
+        "error": "sandbox_unreachable:ConnectError",
+        "experiment_kind": "causal_transfer_prior_validation",
+        "target_route": "unknown:general",
+        "query_terms": [
+          "baixo",
+          "grau",
+          "incerteza",
+          "que",
+          "significa"
+        ],
+        "edge": {}
+      }
+    ],
+    "reason": null
+  },
+  "epistemic_gap_perception": {
+    "ok": true,
+    "enabled": true,
+    "seeded": 0,
+    "reason": "pending_queue_not_empty"
+  },
+  "coverage_delta_edges": 0,
+  "coverage_gained": false,
+  "retention_days": 14,
+  "max_active_rows": 3000,
+  "recent_abstraction_hours": 48,
+  "min_group_episodes": 3,
+  "paths": {
+    "episodic_active": "F:\\sistemas\\UltronPro\\backend\\data\\episodic_memory.jsonl",
+    "episodic_archive": "F:\\sistemas\\UltronPro\\backend\\data\\episodic_memory_archive.jsonl",
+    "abstractions": "F:\\sistemas\\UltronPro\\backend\\data\\episodic_abstractions.json"
+  }
+}

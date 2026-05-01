@@ -1,13 +1,16 @@
 from __future__ import annotations
 
 import json
+import logging
 import time
 from pathlib import Path
 from typing import Any
 
 from ultronpro import llm, cognitive_state, causal_graph, store
 
-TRACE_PATH = Path('/app/data/eval_traces.jsonl')
+logger = logging.getLogger("uvicorn")
+
+TRACE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'eval_traces.jsonl'
 try:
     _has_trace = TRACE_PATH.exists()
 except Exception:
@@ -19,11 +22,11 @@ if not _has_trace:
             TRACE_PATH = _alt
     except Exception:
         pass
-STATE_PATH = Path('/app/data/reflexion_state.json')
-LOG_PATH = Path('/app/data/reflexion_decisions.jsonl')
-PROPOSALS_PATH = Path('/app/data/reflexion_proposals.jsonl')
-LEARNING_PATH = Path('/app/data/reflexion_learning.jsonl')
-LEARNING_PROPOSALS_PATH = Path('/app/data/learning_proposals.jsonl')
+STATE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'reflexion_state.json'
+LOG_PATH = Path(__file__).resolve().parent.parent / 'data' / 'reflexion_decisions.jsonl'
+PROPOSALS_PATH = Path(__file__).resolve().parent.parent / 'data' / 'reflexion_proposals.jsonl'
+LEARNING_PATH = Path(__file__).resolve().parent.parent / 'data' / 'reflexion_learning.jsonl'
+LEARNING_PROPOSALS_PATH = Path(__file__).resolve().parent.parent / 'data' / 'learning_proposals.jsonl'
 
 DEFAULTS = {
     'enabled': True,
@@ -40,7 +43,7 @@ DEFAULTS = {
     'curiosity_probe_interval': 5,
 }
 
-PRM_STATE_PATH = Path('/app/data/prm_lite_state.json')
+PRM_STATE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'prm_lite_state.json'
 PRM_LOW_MIN = 0.40
 PRM_LOW_MAX = 0.80
 PRM_MED_MIN = 0.20
@@ -499,14 +502,26 @@ def tick(force: bool = False) -> dict[str, Any]:
     cog = cognitive_state.compact_for_prompt(max_chars=800)
     prompt = _build_prompt(rows, agg, thr, cog_state=cog)
     system = 'You are Ultron Reflexion Agent. Output ONLY valid JSON. Be conservative and factual.'
-    raw = llm.complete(prompt=prompt, strategy='metacog_canary_qwen', system=system, json_mode=False, inject_persona=False, max_tokens=260)
-    dec = _safe_parse_json(raw)
-
+    
+    # Tentar LLM cloud com fallback determinístico
+    dec = None
+    try:
+        # Lane 1 micro: loops usam provider barato
+        raw = llm.complete(prompt=prompt, strategy='reflexion_loop', system=system, json_mode=False, inject_persona=False, max_tokens=260)
+        dec = _safe_parse_json(raw)
+    except Exception as e:
+        logger.warning(f"Reflexion LLM unavailable: {e}. Using deterministic fallback.")
+    
+    # Fallback determinístico: analisar métricas diretamente
+    if dec is None:
+        action, conf, reason, hypothesis = _deterministic_reflexion(agg, rows)
+        dec = {'action': action, 'confidence': conf, 'reason': reason, 'hypothesis': hypothesis}
+    
     action = str(dec.get('action') or 'none').strip()
     conf = float(dec.get('confidence') or 0.0)
     reason = str(dec.get('reason') or '').strip()[:500]
     hypothesis = str(dec.get('hypothesis') or reason or 'No explicit hypothesis').strip()[:700]
-    applied: dict[str, Any] = {'type': 'none'}
+    applied: dict[str, Any] = {'type': 'none', 'llm_used': dec is not None}
 
     auto_thr = float(st.get('auto_apply_confidence_threshold') or 0.7)
     human_thr = float(st.get('human_approval_confidence_threshold') or 0.7)
@@ -621,6 +636,65 @@ def status() -> dict[str, Any]:
             'learning': str(LEARNING_PATH),
             'learning_proposals': str(LEARNING_PROPOSALS_PATH),
             'prm_state': str(PRM_STATE_PATH),
-            'cognitive_state': '/app/data/cognitive_state.json',
+            'cognitive_state': str(Path(__file__).resolve().parent.parent / 'data' / 'cognitive_state.json'),
         }
     }
+
+
+def _deterministic_reflexion(agg: dict, rows: list[dict]) -> tuple[str, float, str, str]:
+    """
+    Fallback determinístico para reflexion.
+    
+    Analisa métricas agregadas diretamente sem LLM.
+    Retorna: (action, confidence, reason, hypothesis)
+    """
+    total_traces = int(agg.get('total', 0))
+    if total_traces == 0:
+        return 'none', 0.3, 'No traces to analyze (deterministic fallback)', 'Sistema ocioso'
+    
+    # Calcular taxa de sucesso
+    successes = int(agg.get('successes', 0))
+    failures = int(agg.get('failures', 0))
+    success_rate = successes / max(1, total_traces)
+    
+    # Detectar problemas por padrões determinísticos
+    problem_categories = []
+    
+    if success_rate < 0.5:
+        problem_categories.append('low_success_rate')
+    
+    if failures > successes:
+        problem_categories.append('failure_dominant')
+    
+    # Calcular variância de latência
+    latencies = [r.get('latency_ms', 0) for r in rows if isinstance(r, dict)]
+    if latencies:
+        avg_lat = sum(latencies) / len(latencies)
+        high_lat_count = sum(1 for l in latencies if l > avg_lat * 2)
+        if high_lat_count > len(latencies) * 0.3:
+            problem_categories.append('high_latency_variance')
+    
+    # Determinar ação baseado em regras
+    if 'low_success_rate' in problem_categories:
+        return (
+            'flag_problem_category',
+            0.6,
+            f'Deterministic: success_rate={success_rate:.0%}, failures={failures} (fallback)',
+            f'Baixa taxa de sucesso detectada: {success_rate:.0%}. Necessária investigação.'
+        )
+    
+    if 'failure_dominant' in problem_categories:
+        return (
+            'flag_problem_category',
+            0.5,
+            f'Deterministic: failures={failures} > successes={successes} (fallback)',
+            f'Falhas dominam: {failures} contra {successes} acertos.'
+        )
+    
+    # Nenhum problema crítico
+    return (
+        'none',
+        0.8,
+        f'Deterministic: nominal state (success_rate={success_rate:.0%})',
+        f'Sistema em estado nominal. Taxa de sucesso: {success_rate:.0%}.'
+    )

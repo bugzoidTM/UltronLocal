@@ -7,11 +7,11 @@ import os
 import sqlite3
 import time
 
-CONFIG_PATH = Path('/app/data/persona_config.json')
-EXAMPLES_PATH = Path('/app/data/persona_examples.json')
-INTRINSIC_PATH = Path('/app/data/purpose_state.json')
-EMERGENCE_PATH = Path('/app/data/emergence_state.json')
-DB_PATH = Path(os.getenv('ULTRONPRO_DB_PATH', '/app/data/ultron.db'))
+CONFIG_PATH = Path(__file__).resolve().parent.parent / 'data' / 'persona_config.json'
+EXAMPLES_PATH = Path(__file__).resolve().parent.parent / 'data' / 'persona_examples.json'
+INTRINSIC_PATH = Path(__file__).resolve().parent.parent / 'data' / 'purpose_state.json'
+EMERGENCE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'emergence_state.json'
+DB_PATH = Path(os.getenv('ULTRONPRO_DB_PATH', str(Path(__file__).resolve().parent.parent / 'data' / 'ultron.db')))
 
 
 def _load(path: Path, default):
@@ -63,6 +63,18 @@ def save_config(patch: dict[str, Any]) -> dict[str, Any]:
 
 
 def _active_goal() -> str:
+    # Try runtime_health.json first (authoritative source)
+    try:
+        HEALTH_PATH = Path(__file__).resolve().parent.parent / 'data' / 'runtime_health.json'
+        if HEALTH_PATH.exists():
+            st = json.loads(HEALTH_PATH.read_text(encoding='utf-8'))
+            ag = st.get('active_goal')
+            if ag:
+                return str(ag)[:200]
+    except Exception:
+        pass
+    
+    # Fallback: query database
     if not DB_PATH.exists():
         return 'none'
     try:

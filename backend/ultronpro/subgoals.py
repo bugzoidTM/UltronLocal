@@ -7,7 +7,7 @@ import time
 
 from ultronpro import llm
 
-PATH = Path('/app/data/subgoal_dag.json')
+PATH = Path(__file__).resolve().parent.parent / 'data' / 'subgoal_dag.json'
 SUBGOAL_TYPES = ('clarification', 'execution', 'validation', 'consolidation')
 
 

@@ -128,7 +128,7 @@ def _compute_selection_metrics(*, selected: list[dict[str, Any]], candidates: li
     }
 
 
-def _diversity_select(results: list[dict[str, Any]], top_k: int) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+def _diversity_select(results: list[dict[str, Any]], top_k: int, homeostasis_mode: str = 'normal') -> tuple[list[dict[str, Any]], dict[str, Any]]:
     source_cap = max(1, int(os.getenv('ULTRON_RAG_SOURCE_CAP', '2') or 2))
     domain_penalty = float(os.getenv('ULTRON_RAG_DOMAIN_PENALTY', '0.08') or 0.08)
     source_penalty = float(os.getenv('ULTRON_RAG_SOURCE_PENALTY', '0.12') or 0.12)
@@ -136,6 +136,21 @@ def _diversity_select(results: list[dict[str, Any]], top_k: int) -> tuple[list[d
     new_domain_bonus = float(os.getenv('ULTRON_RAG_NEW_DOMAIN_BONUS', '0.06') or 0.06)
     new_source_bonus = float(os.getenv('ULTRON_RAG_NEW_SOURCE_BONUS', '0.05') or 0.05)
     semantic_dup_penalty = float(os.getenv('ULTRON_RAG_SEMANTIC_DUP_PENALTY', '0.12') or 0.12)
+
+    if homeostasis_mode == 'repair':
+        domain_penalty = 0.02
+        source_penalty = 0.02
+        new_source_bonus = 0.01
+        new_domain_bonus = 0.01
+        semantic_dup_penalty = 0.05  # favorece convergência e informações confirmadas
+        top_k = max(1, top_k - 1)
+    elif homeostasis_mode in ('investigative', 'curious'):
+        domain_penalty = 0.20
+        source_penalty = 0.20
+        new_source_bonus = 0.15
+        new_domain_bonus = 0.15
+        semantic_dup_penalty = 0.25  # força exploração ampla de contexto
+        top_k = min(12, top_k + 2)
 
     source_counts: dict[str, int] = {}
     domain_counts: dict[str, int] = {}
@@ -212,7 +227,7 @@ def _diversity_select(results: list[dict[str, Any]], top_k: int) -> tuple[list[d
     }
 
 
-async def search_routed(query: str, task_type: str = 'general', top_k: int = 5) -> dict[str, Any]:
+async def search_routed(query: str, task_type: str = 'general', top_k: int = 5, homeostasis_mode: str = 'normal') -> dict[str, Any]:
     domains = infer_domains(query=query, task_type=task_type)
     max_domains = max(1, min(int(top_k or 5), int(os.getenv('ULTRON_RAG_MAX_DOMAINS', '2') or 2)))
     domains = domains[:max_domains]
@@ -240,7 +255,7 @@ async def search_routed(query: str, task_type: str = 'general', top_k: int = 5) 
         seen.add(sig)
         deduped.append(d)
 
-    selected, diversity = _diversity_select(deduped, top_k=max(1, int(top_k or 5)))
+    selected, diversity = _diversity_select(deduped, top_k=max(1, int(top_k or 5)), homeostasis_mode=homeostasis_mode)
     diversity.update(_compute_selection_metrics(selected=selected, candidates=deduped, requested_domains=domains))
     return {
         'domains': domains,

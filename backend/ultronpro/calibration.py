@@ -7,7 +7,7 @@ import time
 
 from ultronpro import self_model
 
-PATH = Path('/app/data/calibration_state.json')
+PATH = Path(__file__).resolve().parent.parent / 'data' / 'calibration_state.json'
 
 
 def _default() -> dict[str, Any]:

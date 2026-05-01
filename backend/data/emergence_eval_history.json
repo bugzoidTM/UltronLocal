@@ -1,0 +1,80 @@
+[
+  {
+    "ts": 1774115651,
+    "latent": {
+      "curiosity": 0.49771484561214446,
+      "risk_appetite": 0.30122756448734694,
+      "exploration": 0.5098588609220029,
+      "coherence_bias": 0.6701656222603927
+    },
+    "chosen_policy": {
+      "id": "p2",
+      "actions": [
+        "auto_resolve_conflicts",
+        "invent_procedure",
+        "generate_analogy_hypothesis"
+      ],
+      "weights": {
+        "maintain_question_queue": 0.5930174432473114,
+        "generate_analogy_hypothesis": 0.8193220722544772,
+        "invent_procedure": 0.8814214481354711,
+        "unsupervised_discovery": 0.8178383640098708,
+        "auto_resolve_conflicts": 1.0373356006330432,
+        "curate_memory": 0.8181241389449934
+      },
+      "score": 1.694
+    }
+  },
+  {
+    "ts": 1774116355,
+    "latent": {
+      "curiosity": 0.4868796762627989,
+      "risk_appetite": 0.30504019576395747,
+      "exploration": 0.5313621224909773,
+      "coherence_bias": 0.7725905323543885
+    },
+    "chosen_policy": {
+      "id": "p2",
+      "actions": [
+        "auto_resolve_conflicts",
+        "curate_memory",
+        "unsupervised_discovery"
+      ],
+      "weights": {
+        "maintain_question_queue": 0.6486407745296907,
+        "generate_analogy_hypothesis": 0.7894044407676922,
+        "invent_procedure": 0.7497189063328544,
+        "unsupervised_discovery": 0.800460885962317,
+        "auto_resolve_conflicts": 1.0782476642386538,
+        "curate_memory": 0.8379715822828746
+      },
+      "score": 1.7635
+    }
+  },
+  {
+    "ts": 1774128099,
+    "latent": {
+      "curiosity": 0.5110364209707018,
+      "risk_appetite": 0.30878373368883993,
+      "exploration": 0.4855670120655422,
+      "coherence_bias": 0.817948986520279
+    },
+    "chosen_policy": {
+      "id": "p1",
+      "actions": [
+        "auto_resolve_conflicts",
+        "curate_memory",
+        "invent_procedure"
+      ],
+      "weights": {
+        "maintain_question_queue": 0.6861651287062969,
+        "generate_analogy_hypothesis": 0.6715453278114907,
+        "invent_procedure": 0.8988919755457572,
+        "unsupervised_discovery": 0.7877428939873314,
+        "auto_resolve_conflicts": 0.9356265698890288,
+        "curate_memory": 0.9253283671676579
+      },
+      "score": 1.7469
+    }
+  }
+]

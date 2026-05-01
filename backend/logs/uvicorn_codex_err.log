@@ -1,0 +1,495 @@
+INFO:     Will watch for changes in these directories: ['F:\\sistemas\\UltronPro\\backend']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [13428] using WatchFiles
+INFO:     Started server process [6156]
+INFO:     Waiting for application startup.
+INFO:     Starting UltronPRO...
+INFO:     Loaded settings. LightRAG URL: https://lightrag.nutef.com
+INFO:     [META] Unidade de Reflexão Metacognitiva Unificada iniciada.
+INFO:     [SELF-TALK] OODA loop started (interval=180s)
+INFO:     Ultron loops startup complete
+INFO:     Operational Memory initialized: session=e7e9639ab2fa
+INFO:     Background guard started (lag_pause=2.00s, pause=90s, slow_request=4.00s)
+INFO:     Autofeeder started
+INFO:     Autonomy loop started
+INFO:     Judge loop started
+INFO:     Recursive self-improvement loop started
+INFO:     Voice prewarm loop started
+INFO:     Roadmap V5 orchestrator loop started
+INFO:     AGI path loop started
+INFO:     Self-improvement loop started
+INFO:     Reflexion loop started
+INFO:     Self-governance loop started
+INFO:     Meta-observer loop started
+INFO:     Affect markers loop started
+INFO:     Narrative summary loop started
+INFO:     Integration proxy loop started
+INFO:     \U0001f634 Sleep cycle loop started (interval=21600s)
+INFO:     \U0001fa79 Healer verify loop started
+INFO:     \u2697\ufe0f Active Discovery loop started
+INFO:     No-cloud campaign loop started
+INFO:     Application startup complete.
+INFO:     Background bootstrap disabled by env
+INFO:     Background source backfill disabled by env
+INFO:     Background recovery: ok
+INFO:     Phenomenal consciousness activated: already_active
+INFO:     WebExplorer: Iniciando (ULTRON_WEB_EXPLORER=1, interval=900s, max_links=1)
+INFO:     WebExplorer: Motor de exploração iniciado em background.
+INFO:     WebExplorer: Iniciando Puppeteer Bridge local...
+INFO:     UltronPro: [Há algo que você quer me pergu] thinking...
+INFO:     LocalReasoning: ESCALATE to LLM (no local resolution)
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop judge_loop for 77.0s (reason=event_loop_lag)
+WARNING:  Background guard: pausing loop judge_loop for 37.0s (reason=event_loop_lag)
+INFO:     Voice prewarm skipped because local model backends are disabled
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:     extract_triples (Attempt 1/3): calling LLM for 250 chars...
+INFO:     [SELF-TALK] Tick #1: posture=anomaly, action=alert_and_simulate
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 590 chars.
+WARNING:  extract_triples: attempt 1 failed to yield valid triples. Retrying...
+INFO:     extract_triples (Attempt 2/3): calling LLM for 250 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 593 chars.
+WARNING:  extract_triples: attempt 2 failed to yield valid triples. Retrying...
+INFO:     extract_triples (Attempt 3/3): calling LLM for 250 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 597 chars.
+WARNING:  extract_triples: attempt 3 failed to yield valid triples. Retrying...
+INFO:     extract_triples: returning 0 triples (empty/failed after retries)
+INFO:     Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=3230, extracted=0, added=0)
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents/doc-1b98d3c34017d3d4cfe1a13117e4c4d0 "HTTP/1.1 404 Not Found"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 253 chars...
+INFO:     [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+INFO:     [META] Ciclo finalizado. Status: NOMINAL
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 582 chars.
+WARNING:  extract_triples: attempt 1 failed to yield valid triples. Retrying...
+INFO:     extract_triples (Attempt 2/3): calling LLM for 253 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 459 chars.
+INFO:     extract_triples: processing 5 items from LLM on attempt 2
+INFO:     extract_triples: returning 5 triples
+INFO:     add_triple: {'subject': 'Cenário', 'predicate': 'está caracterizado por', 'object': 'Ciclo de sono interrompido', 'confidence': 0.85} from exp_3232
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'Ciclo de sono interrompido', 'predicate': 'causa', 'object': 'Instabilidade', 'confidence': 0.85} from exp_3232
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'Instabilidade', 'predicate': 'é caracterizada por', 'object': 'Análise', 'confidence': 0.85} from exp_3232
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'Análise', 'predicate': 'é recomendada para', 'object': 'Ação', 'confidence': 0.85} from exp_3232
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'Ação', 'predicate': 'é necessária para', 'object': 'Mitigar risco', 'confidence': 0.85} from exp_3232
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Synced from LightRAG doc doc-1b98 (exp_id=3232, added=5)
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://duckduckgo.com/html/?q=RLHF+vs+DPO+for+LLM+optimization "HTTP/1.1 302 Moved Temporarily"
+INFO:httpx:HTTP Request: GET https://html.duckduckgo.com/html/?q=RLHF+vs+DPO+for+LLM+optimization "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:9010/browse "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop affect_markers_loop for 62.1s (reason=event_loop_lag)
+WARNING:  Background guard: pausing loop affect_markers_loop for 22.1s (reason=event_loop_lag)
+INFO:     [SELF-TALK] Tick #2: posture=anomaly, action=alert_and_simulate
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop sleep_cycle_loop for 90.0s (reason=event_loop_lag)
+WARNING:  Background guard: pausing loop sleep_cycle_loop for 60.0s (reason=event_loop_lag)
+WARNING:  Background guard: pausing loop healer_verify_loop for 29.9s (reason=event_loop_lag)
+INFO:     Voice prewarm skipped because local model backends are disabled
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     [AutobioRouter] self_event ingested: kind=abstraction_promoted module=episodic_compiler
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     [AutobioRouter] self_event ingested: kind=abstraction_promoted module=episodic_compiler
+INFO:     extract_triples (Attempt 1/3): calling LLM for 250 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 590 chars.
+WARNING:  extract_triples: attempt 1 failed to yield valid triples. Retrying...
+INFO:     extract_triples (Attempt 2/3): calling LLM for 250 chars...
+INFO:     [AutobioRouter] self_event ingested: kind=abstraction_promoted module=episodic_compiler
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 592 chars.
+WARNING:  extract_triples: attempt 2 failed to yield valid triples. Retrying...
+INFO:     extract_triples (Attempt 3/3): calling LLM for 250 chars...
+INFO:     [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+INFO:     [META] Ciclo finalizado. Status: NOMINAL
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 592 chars.
+WARNING:  extract_triples: attempt 3 failed to yield valid triples. Retrying...
+INFO:     extract_triples: returning 0 triples (empty/failed after retries)
+INFO:     Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=3233, extracted=0, added=0)
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents/doc-9a56b83d3f3a4e7461b2a46487ab64dc "HTTP/1.1 404 Not Found"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 253 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 591 chars.
+INFO:     extract_triples: processing 5 items from LLM on attempt 1
+INFO:     extract_triples: returning 5 triples
+INFO:     add_triple: {'subject': 'Cenário', 'predicate': 'indicar', 'object': 'SLA crítico estourado', 'confidence': 0.85} from exp_3234
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'SLA crítico estourado', 'predicate': 'indicar', 'object': 'risco operacional imediato', 'confidence': 0.85} from exp_3234
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'SLA crítico estourado', 'predicate': 'causar', 'object': 'Alerta do Sistema', 'confidence': 0.85} from exp_3234
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'Alerta do Sistema', 'predicate': 'recomendar', 'object': 'Parar a ação', 'confidence': 0.85} from exp_3234
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'Risco operacional imediato', 'predicate': 'considerar', 'object': 'Decisão operacional', 'confidence': 0.85} from exp_3234
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Synced from LightRAG doc doc-9a56 (exp_id=3234, added=5)
+INFO:     [AutobioRouter] self_event ingested: kind=sleep_cycle_completed module=sleep_cycle
+INFO:     \U0001f634 Sleep cycle: pruned=0 abstracted=3 sql={'decayed': 24113, 'pruned': 4329, 'promoted': 0}
+INFO:     [SELF-TALK] Tick #3: posture=anomaly, action=alert_and_simulate
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+ERROR:    LLM Call Error (groq/llama-3.3-70b-versatile): Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01j2fr3g0afrg83zk90sz12hqk` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99617, Requested 786. Please try again in 5m48.191999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+INFO:httpx:HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+ERROR:    LLM Call Error (openrouter/google/gemma-3-12b-it:free): Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'google/gemma-3-12b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name': 'Google AI Studio', 'is_byok': False}}, 'user_id': 'user_2ueUNny652rbn7mWgMS36MQqu4O'}
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  WatchFiles detected changes in 'ultronpro\active_investigation.py'. Reloading...
+WARNING:  Background guard: pausing loop self_talk_loop for 77.3s (reason=event_loop_lag)
+WARNING:  Background guard: pausing loop self_talk_loop for 47.3s (reason=event_loop_lag)
+WARNING:  Background guard: pausing loop self_talk_loop for 17.3s (reason=event_loop_lag)
+INFO:     [SELF-TALK] Tick #4: posture=anomaly, action=alert_and_simulate
+INFO:     Voice prewarm skipped because local model backends are disabled
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop autofeeder_loop for 82.1s (reason=event_loop_lag)
+WARNING:  Background guard: pausing loop autofeeder_loop for 52.1s (reason=event_loop_lag)
+WARNING:  Background guard: pausing loop autofeeder_loop for 22.1s (reason=event_loop_lag)
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     Shutting down
+INFO:     extract_triples (Attempt 1/3): calling LLM for 250 chars...
+INFO:     Waiting for application shutdown.
+INFO:     Shutdown complete
+INFO:     Application shutdown complete.
+INFO:     Finished server process [6156]
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 592 chars.
+WARNING:  extract_triples: attempt 1 failed to yield valid triples. Retrying...
+INFO:     extract_triples (Attempt 2/3): calling LLM for 250 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 591 chars.
+WARNING:  extract_triples: attempt 2 failed to yield valid triples. Retrying...
+INFO:     extract_triples (Attempt 3/3): calling LLM for 250 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 590 chars.
+WARNING:  extract_triples: attempt 3 failed to yield valid triples. Retrying...
+INFO:     extract_triples: returning 0 triples (empty/failed after retries)
+INFO:     [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+INFO:     [META] Ciclo finalizado. Status: NOMINAL
+WARNING:  WatchFiles detected changes in 'ultronpro\cognitive_response.py', 'ultronpro\epistemic_curiosity.py'. Reloading...
+INFO:     Started server process [10936]
+INFO:     Waiting for application startup.
+INFO:     Starting UltronPRO...
+INFO:     Loaded settings. LightRAG URL: https://lightrag.nutef.com
+INFO:     [META] Unidade de Reflexão Metacognitiva Unificada iniciada.
+INFO:     [SELF-TALK] OODA loop started (interval=180s)
+INFO:     Ultron loops startup complete
+INFO:     Operational Memory initialized: session=b00650715bfa
+INFO:     Background guard started (lag_pause=2.00s, pause=90s, slow_request=4.00s)
+INFO:     Autofeeder started
+INFO:     Autonomy loop started
+INFO:     Judge loop started
+INFO:     Recursive self-improvement loop started
+INFO:     Voice prewarm loop started
+INFO:     Roadmap V5 orchestrator loop started
+INFO:     AGI path loop started
+INFO:     Self-improvement loop started
+INFO:     Reflexion loop started
+INFO:     Self-governance loop started
+INFO:     Meta-observer loop started
+INFO:     Affect markers loop started
+INFO:     Narrative summary loop started
+INFO:     Integration proxy loop started
+INFO:     \U0001f634 Sleep cycle loop started (interval=21600s)
+INFO:     \U0001fa79 Healer verify loop started
+INFO:     \u2697\ufe0f Active Discovery loop started
+INFO:     No-cloud campaign loop started
+INFO:     Application startup complete.
+INFO:     Shutdown complete
+ERROR:    Traceback (most recent call last):
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 686, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 741, in lifespan
+    await receive()
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\site-packages\uvicorn\lifespan\on.py", line 137, in receive
+    return await self.receive_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\asyncio\queues.py", line 158, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+INFO:     Started server process [13936]
+INFO:     Waiting for application startup.
+INFO:     Starting UltronPRO...
+INFO:     Loaded settings. LightRAG URL: https://lightrag.nutef.com
+INFO:     [META] Unidade de Reflexão Metacognitiva Unificada iniciada.
+INFO:     [SELF-TALK] OODA loop started (interval=180s)
+INFO:     Ultron loops startup complete
+INFO:     Operational Memory initialized: session=decc35f115e2
+INFO:     Background guard started (lag_pause=2.00s, pause=90s, slow_request=4.00s)
+INFO:     Autofeeder started
+INFO:     Autonomy loop started
+INFO:     Judge loop started
+INFO:     Recursive self-improvement loop started
+INFO:     Voice prewarm loop started
+INFO:     Roadmap V5 orchestrator loop started
+INFO:     AGI path loop started
+INFO:     Self-improvement loop started
+INFO:     Reflexion loop started
+INFO:     Self-governance loop started
+INFO:     Meta-observer loop started
+INFO:     Affect markers loop started
+INFO:     Narrative summary loop started
+INFO:     Integration proxy loop started
+INFO:     \U0001f634 Sleep cycle loop started (interval=21600s)
+INFO:     \U0001fa79 Healer verify loop started
+INFO:     \u2697\ufe0f Active Discovery loop started
+INFO:     No-cloud campaign loop started
+INFO:     Application startup complete.
+INFO:     Background bootstrap disabled by env
+INFO:     Background source backfill disabled by env
+INFO:     Background recovery: ok
+INFO:     Phenomenal consciousness activated: already_active
+INFO:     WebExplorer: Iniciando (ULTRON_WEB_EXPLORER=1, interval=900s, max_links=1)
+INFO:     WebExplorer: Motor de exploração iniciado em background.
+INFO:     WebExplorer: Iniciando Puppeteer Bridge local...
+WARNING:  WatchFiles detected changes in 'ultronpro\core\learned_intent.py'. Reloading...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Shutdown complete
+INFO:     Application shutdown complete.
+INFO:     Finished server process [13936]
+WARNING:  WatchFiles detected changes in 'ultronpro\cognitive_response.py', 'ultronpro\active_investigation.py'. Reloading...
+INFO:     Started server process [12804]
+INFO:     Waiting for application startup.
+INFO:     Starting UltronPRO...
+INFO:     Loaded settings. LightRAG URL: https://lightrag.nutef.com
+INFO:     [META] Unidade de Reflexão Metacognitiva Unificada iniciada.
+INFO:     [SELF-TALK] OODA loop started (interval=180s)
+INFO:     Ultron loops startup complete
+INFO:     Operational Memory initialized: session=975c1cce5c2e
+INFO:     Background guard started (lag_pause=2.00s, pause=90s, slow_request=4.00s)
+INFO:     Autofeeder started
+INFO:     Autonomy loop started
+INFO:     Judge loop started
+INFO:     Recursive self-improvement loop started
+INFO:     Voice prewarm loop started
+INFO:     Roadmap V5 orchestrator loop started
+INFO:     AGI path loop started
+INFO:     Self-improvement loop started
+INFO:     Reflexion loop started
+INFO:     Self-governance loop started
+INFO:     Meta-observer loop started
+INFO:     Affect markers loop started
+INFO:     Narrative summary loop started
+INFO:     Integration proxy loop started
+INFO:     \U0001f634 Sleep cycle loop started (interval=21600s)
+INFO:     \U0001fa79 Healer verify loop started
+INFO:     \u2697\ufe0f Active Discovery loop started
+INFO:     No-cloud campaign loop started
+INFO:     Application startup complete.
+INFO:     Background bootstrap disabled by env
+INFO:     Background source backfill disabled by env
+INFO:     Shutdown complete
+ERROR:    Traceback (most recent call last):
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 686, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 741, in lifespan
+    await receive()
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\site-packages\uvicorn\lifespan\on.py", line 137, in receive
+    return await self.receive_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\asyncio\queues.py", line 158, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+INFO:     Started server process [5964]
+INFO:     Waiting for application startup.
+INFO:     Starting UltronPRO...
+INFO:     Loaded settings. LightRAG URL: https://lightrag.nutef.com
+INFO:     [META] Unidade de Reflexão Metacognitiva Unificada iniciada.
+INFO:     [SELF-TALK] OODA loop started (interval=180s)
+INFO:     Ultron loops startup complete
+INFO:     Operational Memory initialized: session=5994d3b71584
+INFO:     Background guard started (lag_pause=2.00s, pause=90s, slow_request=4.00s)
+INFO:     Autofeeder started
+INFO:     Autonomy loop started
+INFO:     Judge loop started
+INFO:     Recursive self-improvement loop started
+INFO:     Voice prewarm loop started
+INFO:     Roadmap V5 orchestrator loop started
+INFO:     AGI path loop started
+INFO:     Self-improvement loop started
+INFO:     Reflexion loop started
+INFO:     Self-governance loop started
+INFO:     Meta-observer loop started
+INFO:     Affect markers loop started
+INFO:     Narrative summary loop started
+INFO:     Integration proxy loop started
+INFO:     \U0001f634 Sleep cycle loop started (interval=21600s)
+INFO:     \U0001fa79 Healer verify loop started
+INFO:     \u2697\ufe0f Active Discovery loop started
+INFO:     No-cloud campaign loop started
+INFO:     Application startup complete.
+INFO:     Background bootstrap disabled by env
+INFO:     Background source backfill disabled by env
+INFO:     Background recovery: ok
+INFO:     Phenomenal consciousness activated: already_active
+INFO:     WebExplorer: Iniciando (ULTRON_WEB_EXPLORER=1, interval=900s, max_links=1)
+INFO:     WebExplorer: Motor de exploração iniciado em background.
+INFO:     WebExplorer: Iniciando Puppeteer Bridge local...
+INFO:     UltronPro: [Quais evidencias internas voce] thinking...
+INFO:     LocalReasoning: ESCALATE to LLM (no local resolution)
+INFO:     UltronPro: [quem é você?] thinking...
+INFO:     LocalReasoning: ESCALATE to LLM (no local resolution)
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop judge_loop for 90.0s (reason=event_loop_lag)
+WARNING:  Background guard: pausing loop judge_loop for 60.0s (reason=event_loop_lag)
+WARNING:  Background guard: pausing loop judge_loop for 29.9s (reason=event_loop_lag)
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:     Voice prewarm skipped because local model backends are disabled
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:     [SELF-TALK] Tick #1: posture=anomaly, action=alert_and_simulate
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 250 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 591 chars.
+WARNING:  extract_triples: attempt 1 failed to yield valid triples. Retrying...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples (Attempt 2/3): calling LLM for 250 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 593 chars.
+WARNING:  extract_triples: attempt 2 failed to yield valid triples. Retrying...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples (Attempt 3/3): calling LLM for 250 chars...
+INFO:     [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+INFO:     [META] Ciclo finalizado. Status: NOMINAL
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 591 chars.
+WARNING:  extract_triples: attempt 3 failed to yield valid triples. Retrying...
+INFO:     extract_triples: returning 0 triples (empty/failed after retries)
+INFO:     Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=3236, extracted=0, added=0)
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents/doc-7734a73e4ef6bcb652aabc8249e2c1b1 "HTTP/1.1 404 Not Found"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 253 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 554 chars.
+WARNING:  extract_triples: attempt 1 failed to yield valid triples. Retrying...
+INFO:     extract_triples (Attempt 2/3): calling LLM for 253 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 587 chars.
+WARNING:  extract_triples: attempt 2 failed to yield valid triples. Retrying...
+INFO:     extract_triples (Attempt 3/3): calling LLM for 253 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 603 chars.
+WARNING:  extract_triples: attempt 3 failed to yield valid triples. Retrying...
+INFO:     extract_triples: returning 0 triples (empty/failed after retries)
+INFO:     Autofeeder: Synced from LightRAG doc doc-7734 (exp_id=3237, added=0)
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://duckduckgo.com/html/?q=RLHF+vs+DPO+for+LLM+optimization "HTTP/1.1 302 Moved Temporarily"
+INFO:httpx:HTTP Request: GET https://html.duckduckgo.com/html/?q=RLHF+vs+DPO+for+LLM+optimization "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:9010/browse "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     [SELF-TALK] Tick #2: posture=anomaly, action=alert_and_simulate
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     [AutobioRouter] self_event ingested: kind=abstraction_promoted module=episodic_compiler
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     [AutobioRouter] self_event ingested: kind=abstraction_promoted module=episodic_compiler
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     [AutobioRouter] self_event ingested: kind=sleep_cycle_completed module=sleep_cycle
+INFO:     \U0001f634 Sleep cycle: pruned=0 abstracted=2 sql={'decayed': 19792, 'pruned': 228, 'promoted': 0}
+WARNING:  Background guard: pausing loop healer_verify_loop for 75.2s (reason=event_loop_lag)
+WARNING:  Background guard: pausing loop healer_verify_loop for 45.2s (reason=event_loop_lag)
+WARNING:  Background guard: pausing loop healer_verify_loop for 15.2s (reason=event_loop_lag)
+INFO:     Voice prewarm skipped because local model backends are disabled
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+INFO:     Reflexion triggered by workspace: workspace_trigger

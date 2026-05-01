@@ -14,6 +14,7 @@ class Store:
     def __init__(self, db_path: str | Path):
         self.path = Path(db_path)
         self.path.parent.mkdir(parents=True, exist_ok=True)
+        self._mem_self_state = None
         self._init()
 
     def _conn(self) -> sqlite3.Connection:
@@ -127,13 +128,35 @@ class Store:
                 CREATE TABLE IF NOT EXISTS goals(
                   id INTEGER PRIMARY KEY AUTOINCREMENT,
                   created_at REAL NOT NULL,
-                  status TEXT NOT NULL, -- open|active|done|archived
+                  updated_at REAL,
+                  status TEXT NOT NULL, -- open|active|done|archived|failed
                   title TEXT NOT NULL,
                   description TEXT,
-                  priority INTEGER NOT NULL DEFAULT 0
+                  priority INTEGER NOT NULL DEFAULT 0,
+                  max_attempts INTEGER NOT NULL DEFAULT 5,
+                  attempts_count INTEGER NOT NULL DEFAULT 0,
+                  meta_json TEXT
                 )
                 """
             )
+            c.execute(
+                """
+                CREATE TABLE IF NOT EXISTS goal_attempts(
+                  id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  goal_id INTEGER NOT NULL,
+                  created_at REAL NOT NULL,
+                  plan_json TEXT,
+                  result_json TEXT,
+                  success INTEGER NOT NULL,
+                  error_text TEXT,
+                  reward REAL,
+                  duration_ms INTEGER,
+                  meta_json TEXT,
+                  FOREIGN KEY(goal_id) REFERENCES goals(id)
+                )
+                """
+            )
+
             c.execute(
                 """
                 CREATE TABLE IF NOT EXISTS goal_milestones(
@@ -310,6 +333,36 @@ class Store:
                 )
                 """
             )
+            c.execute(
+                """
+                CREATE TABLE IF NOT EXISTS self_state(
+                  id INTEGER PRIMARY KEY CHECK (id = 1),
+                  created_at REAL NOT NULL,
+                  updated_at REAL NOT NULL,
+                  state_json TEXT NOT NULL
+                )
+                """
+            )
+            c.execute(
+                """
+                CREATE TABLE IF NOT EXISTS autobiographical_memories(
+                  id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  created_at REAL NOT NULL,
+                  memory_type TEXT NOT NULL, -- short_term, episodic, semantic, procedural
+                  importance REAL NOT NULL DEFAULT 0.5,
+                  decay_rate REAL NOT NULL DEFAULT 0.01,
+                  text TEXT NOT NULL,
+                  content_json TEXT,
+                  embedding_json TEXT,
+                  last_recalled_at REAL,
+                  recall_count INTEGER NOT NULL DEFAULT 0
+                )
+                """
+            )
+            try:
+                c.execute("ALTER TABLE autobiographical_memories ADD COLUMN embedding_json TEXT")
+            except Exception:
+                pass
 
             # lightweight migrations (add columns if upgrading)
 
@@ -1336,13 +1389,39 @@ class Store:
     ) -> int:
         now = _ts()
         exp = now + max(30, int(ttl_sec or 900))
+        
+        affect_bias = 0.0
         with self._conn() as c:
+            # 1) Calculate affect/policy attention bias
+            try:
+                row_aff = c.execute("SELECT payload_json FROM global_workspace WHERE channel='affect.state' AND (expires_at IS NULL OR expires_at > ?) ORDER BY id DESC LIMIT 1", (now,)).fetchone()
+                if row_aff and row_aff[0]:
+                    import json
+                    aff = json.loads(row_aff[0])
+                    # High arousal/threat raises overall salience floor / sensitivity
+                    ar = float(aff.get('arousal') or 0.5)
+                    th = float(aff.get('threat') or 0.0)
+                    affect_bias += (ar - 0.5) * 0.15 + (th * 0.20)
+                
+                row_pol = c.execute("SELECT payload_json FROM global_workspace WHERE channel='policy.risk' AND (expires_at IS NULL OR expires_at > ?) ORDER BY id DESC LIMIT 1", (now,)).fetchone()
+                if row_pol and row_pol[0]:
+                    import json
+                    pol = json.loads(row_pol[0])
+                    # High risk policy favors cautious or threat-oriented channels
+                    rt = float(pol.get('risk_tolerance') or 0.5)
+                    if channel in ('causal.assessment', 'integrity.alert', 'homeostasis.vital'):
+                        affect_bias += (1.0 - rt) * 0.25
+            except Exception:
+                pass
+            
+            final_salience = max(0.0, min(1.0, float(salience) + affect_bias))
+
             cur = c.execute(
                 """
                 INSERT INTO global_workspace(created_at,module,channel,payload_json,salience,ttl_sec,expires_at,consumed_by_json)
                 VALUES(?,?,?,?,?,?,?,?)
                 """,
-                (now, (module or 'unknown')[:60], (channel or 'general')[:80], payload_json, float(salience), int(ttl_sec), exp, '{}'),
+                (now, (module or 'unknown')[:60], (channel or 'general')[:80], payload_json, final_salience, int(ttl_sec), exp, '{}'),
             )
             return int(cur.lastrowid)
 
@@ -1391,6 +1470,39 @@ class Store:
                 d = {}
             d[(consumer_module or 'unknown')[:60]] = _ts()
             c.execute("UPDATE global_workspace SET consumed_by_json=? WHERE id=?", (__import__('json').dumps(d, ensure_ascii=False), int(item_id)))
+
+    def cleanup_workspace(self, max_items: int = 150) -> int:
+        """
+        Global Attention Mechanism (Fase 5.6).
+        Limpa o lixo do workspace: 
+        1. Remove expirados.
+        2. Aplica decaimento de saliência (saliency decay).
+        3. Poda itens de baixa saliência se exceder max_items.
+        """
+        now = _ts()
+        with self._conn() as c:
+            # 1. Deletar expirados
+            c.execute("DELETE FROM global_workspace WHERE expires_at IS NOT NULL AND expires_at < ?", (now,))
+            deleted_expired = c.rowcount
+            
+            # 2. Saliency Decay: Itens antigos perdem relevância (10% a cada ciclo de cleanup)
+            # Exceto se forem 'integrity.alert' ou 'causal.assessment' críticos (salience > 0.8)
+            c.execute("UPDATE global_workspace SET salience = salience * 0.9 WHERE salience < 0.8 AND created_at < ?", (now - 300,))
+            
+            # 3. Poda por volume (Keep only the top N saliency)
+            count_row = c.execute("SELECT COUNT(*) FROM global_workspace").fetchone()
+            count = count_row[0] if count_row else 0
+            
+            deleted_low = 0
+            if count > max_items:
+                # Delimitar o ID do item que marca o fim do top N
+                threshold_row = c.execute("SELECT salience FROM global_workspace ORDER BY salience DESC LIMIT 1 OFFSET ?", (int(max_items),)).fetchone()
+                if threshold_row:
+                    threshold = threshold_row[0]
+                    c.execute("DELETE FROM global_workspace WHERE salience <= ? AND salience < 0.8", (threshold,))
+                    deleted_low = c.rowcount
+            
+            return deleted_expired + deleted_low
 
     # --- questions
     def list_open_questions(self, limit: int = 50) -> list[str]:
@@ -2193,10 +2305,206 @@ class Store:
         if conflict_id:
             self.mark_conflict_questioned(int(conflict_id))
 
+    def get_self_state(self) -> dict[str, Any]:
+        if self._mem_self_state is not None:
+            return self._mem_self_state
+        with self._conn() as c:
+            row = c.execute("SELECT state_json FROM self_state WHERE id=1").fetchone()
+            if row and row[0]:
+                import json
+                try:
+                    self._mem_self_state = json.loads(row[0])
+                except Exception:
+                    pass
+        if self._mem_self_state is None:
+            self._mem_self_state = {
+                'confidence': 0.5,
+                'uncertainty': 0.5,
+                'total_cost': 0.0,
+                'success_streak': 0,
+                'failure_streak': 0,
+            }
+        return self._mem_self_state
+
+    def update_self_state_metrics(self, success: bool, cost_latency: float, confidence: float, domain: str = 'general') -> None:
+        state = self.get_self_state()
+        if success:
+            state['success_streak'] = state.get('success_streak', 0) + 1
+            state['failure_streak'] = 0
+            state['uncertainty'] = max(0.0, state.get('uncertainty', 0.5) * 0.95)
+        else:
+            state['failure_streak'] = state.get('failure_streak', 0) + 1
+            state['success_streak'] = 0
+            state['uncertainty'] = min(1.0, state.get('uncertainty', 0.5) + 0.1)
+        
+        cur_conf = state.get('confidence', 0.5)
+        state['confidence'] = round((cur_conf * 0.9) + (confidence * 0.1), 4)
+        state['total_cost'] = state.get('total_cost', 0.0) + float(cost_latency)
+        
+        import json
+        state_json = json.dumps(state)
+        now = _ts()
+        with self._conn() as c:
+            c.execute(
+                """
+                INSERT INTO self_state(id, created_at, updated_at, state_json)
+                VALUES(1, ?, ?, ?)
+                ON CONFLICT(id) DO UPDATE SET updated_at=excluded.updated_at, state_json=excluded.state_json
+                """,
+                (now, now, state_json)
+            )
+        self._mem_self_state = state
+
+    # --- autobiographical memories (metacognição persistente) ---
+    def add_autobiographical_memory(
+        self,
+        text: str,
+        memory_type: str = 'short_term',
+        importance: float = 0.5,
+        decay_rate: float = 0.01,
+        content_json: str | None = None
+    ) -> int:
+        now = _ts()
+        with self._conn() as c:
+            cur = c.execute(
+                """
+                INSERT INTO autobiographical_memories(created_at, memory_type, importance, decay_rate, text, content_json, recall_count)
+                VALUES(?,?,?,?,?,?,?)
+                """,
+                (now, (memory_type or 'short_term')[:30], float(importance), float(decay_rate), (text or '')[:8000], content_json, 0)
+            )
+            return int(cur.lastrowid)
+
+    def list_autobiographical_memories(self, memory_type: str | None = None, limit: int = 50, min_importance: float = 0.0) -> list[dict[str, Any]]:
+        with self._conn() as c:
+            q = "SELECT * FROM autobiographical_memories WHERE importance >= ?"
+            params: list[Any] = [float(min_importance)]
+            if memory_type:
+                q += " AND memory_type = ?"
+                params.append(memory_type)
+            q += " ORDER BY importance DESC, id DESC LIMIT ?"
+            params.append(int(limit))
+            rows = c.execute(q, tuple(params)).fetchall()
+        return [dict(r) for r in rows][::-1]
+
+    def bump_memory_recall(self, memory_id: int):
+        now = _ts()
+        with self._conn() as c:
+            c.execute(
+                "UPDATE autobiographical_memories SET recall_count = recall_count + 1, last_recalled_at = ?, importance = MIN(1.0, importance + 0.05) WHERE id = ?",
+                (now, int(memory_id))
+            )
+
+    def consolidate_memories_cycle(self) -> dict[str, Any]:
+        """
+        Simula a consolidação do sono/noturna:
+        1. Aplica decaimento (decay_rate) a todas as memórias.
+        2. Remove memórias com importância < 0.05.
+        3. Promove 'short_term' para 'episodic' ou 'semantic' se importância > 0.8.
+        """
+        now = _ts()
+        stats = {'decayed': 0, 'pruned': 0, 'promoted': 0}
+        with self._conn() as c:
+            # 1. Aplicar decaimento
+            cur = c.execute(
+                "UPDATE autobiographical_memories SET importance = importance - decay_rate WHERE memory_type <> 'semantic'"
+            )
+            stats['decayed'] = cur.rowcount if cur else 0
+
+            # 2. Prunar memórias irrelevantes
+            cur = c.execute("DELETE FROM autobiographical_memories WHERE importance <= 0.05 AND recall_count < 2")
+            stats['pruned'] = cur.rowcount if cur else 0
+
+            # 3. Promoção heurística: se foi lembrada muito ou tem alta relevância
+            # Short-term -> Episodic (se tem contexto episódico ou foi lembrada)
+            cur = c.execute(
+                "UPDATE autobiographical_memories SET memory_type = 'episodic' WHERE memory_type = 'short_term' AND (importance > 0.7 OR recall_count > 3)"
+            )
+            stats['promoted'] = cur.rowcount if cur else 0
+
+            # Promoção para Semantic (conhecimento cristalizado)
+            cur = c.execute(
+                "UPDATE autobiographical_memories SET memory_type = 'semantic', decay_rate = 0.001 WHERE memory_type = 'episodic' AND importance > 0.9 AND recall_count > 10"
+            )
+            stats['promoted'] += cur.rowcount if cur else 0
+
+            return stats
+    
+    def get_memory_stats(self) -> dict[str, Any]:
+        with self._conn() as c:
+            rows = c.execute("SELECT memory_type, COUNT(*) as count, AVG(importance) as avg_imp FROM autobiographical_memories GROUP BY memory_type").fetchall()
+            return {r['memory_type']: {'count': r['count'], 'avg_importance': r['avg_imp']} for r in rows}
+
+    def update_autobiographical_memory_embedding(self, memory_id: int, embedding_json: str):
+        with self._conn() as c:
+            c.execute(
+                "UPDATE autobiographical_memories SET embedding_json = ? WHERE id = ?",
+                (embedding_json, int(memory_id))
+            )
+
+    def list_memories_without_embeddings(self, limit: int = 50) -> list[dict[str, Any]]:
+        with self._conn() as c:
+            rows = c.execute(
+                "SELECT id, text FROM autobiographical_memories WHERE embedding_json IS NULL AND text IS NOT NULL AND length(text) > 5 ORDER BY id DESC LIMIT ?",
+                (limit,)
+            ).fetchall()
+        return [dict(r) for r in rows]
+
+    def search_autobiographical_memories_context(self, embedding: list[float], limit: int = 5, min_importance: float = 0.3) -> list[dict[str, Any]]:
+        """
+        Busca memórias autobiográficas por similaridade vetorial (cosinesim).
+        Como o SQLite base não tem suporte nativo, realizamos o cálculo em memória 
+        ou via plugin se disponível. Aqui fazemos uma busca heurística por importância 
+        enquanto o motor de busca vetorial real (FAISS/Chromadb) não é integrado no core.
+        """
+    def create_goal(self, title: str, description: str, priority: int = 0, status: str = 'open', max_attempts: int = 5) -> int:
+        with self._conn() as c:
+            cursor = c.execute(
+                "INSERT INTO goals(created_at, updated_at, status, title, description, priority, max_attempts) VALUES(?,?,?,?,?,?,?)",
+                (_ts(), _ts(), status, title, description, int(priority), int(max_attempts))
+            )
+            return cursor.lastrowid
+
+    def get_active_goals(self, limit: int = 10) -> list[dict[str, Any]]:
+        with self._conn() as c:
+            rows = c.execute(
+                "SELECT * FROM goals WHERE status IN ('open', 'active') ORDER BY priority DESC, created_at ASC LIMIT ?",
+                (limit,)
+            ).fetchall()
+            return [dict(r) for r in rows]
+
+    def update_goal_status(self, goal_id: int, status: str, meta_json: str | None = None):
+        with self._conn() as c:
+            c.execute(
+                "UPDATE goals SET status=?, updated_at=?, meta_json=? WHERE id=?",
+                (status, _ts(), meta_json, int(goal_id))
+            )
+
+    def add_goal_attempt(self, goal_id: int, plan_json: str, success: bool, error_text: str | None = None, reward: float = 0.0, duration_ms: int = 0, result_json: str | None = None):
+        with self._conn() as c:
+            c.execute(
+                "INSERT INTO goal_attempts(goal_id, created_at, plan_json, success, error_text, reward, duration_ms, result_json) VALUES(?,?,?,?,?,?,?,?)",
+                (int(goal_id), _ts(), plan_json, 1 if success else 0, error_text, float(reward), int(duration_ms), result_json)
+            )
+            c.execute(
+                "UPDATE goals SET attempts_count = attempts_count + 1, updated_at=? WHERE id=?",
+                (_ts(), int(goal_id))
+            )
+
+    def get_goal_history(self, goal_id: int, limit: int = 50) -> list[dict[str, Any]]:
+        with self._conn() as c:
+            rows = c.execute(
+                "SELECT * FROM goal_attempts WHERE goal_id=? ORDER BY created_at DESC LIMIT ?",
+                (int(goal_id), limit)
+            ).fetchall()
+            return [dict(r) for r in rows]
+
+
+
 import os
 
 # Singleton Instance
-DB_PATH = os.getenv("ULTRONPRO_DB_PATH", "/app/data/ultron.db")
+DB_PATH = os.getenv("ULTRONPRO_DB_PATH", str(Path(__file__).resolve().parent.parent / 'data' / 'ultron.db'))
 db = Store(DB_PATH)
 
 # Module-level wrappers for compatibility
@@ -2209,6 +2517,9 @@ def get_stats():
 
 def add_experience(text: str, source_id: str = None, modality: str = "text", **kwargs):
     return db.add_experience(user_id=None, text=text, source_id=source_id, modality=modality, **kwargs)
+
+def list_experiences(limit: int = 30):
+    return db.list_experiences(limit=limit)
 
 def get_question(qid: int):
     return db.get_question(qid)
@@ -2332,3 +2643,21 @@ def update_milestone_progress(milestone_id: int, progress: float, status: str | 
 
 # Backwards compatibility alias
 add_triple = add_or_reinforce_triple
+
+def get_self_state() -> dict[str, Any]:
+    return db.get_self_state()
+
+def update_self_state_metrics(success: bool, cost_latency: float, confidence: float, domain: str = 'general') -> None:
+    return db.update_self_state_metrics(success, cost_latency, confidence, domain=domain)
+
+def add_autobiographical_memory(text: str, memory_type: str = 'short_term', importance: float = 0.5, decay_rate: float = 0.01, content_json: str | None = None):
+    return db.add_autobiographical_memory(text, memory_type=memory_type, importance=importance, decay_rate=decay_rate, content_json=content_json)
+
+def list_autobiographical_memories(memory_type: str | None = None, limit: int = 50, min_importance: float = 0.0):
+    return db.list_autobiographical_memories(memory_type=memory_type, limit=limit, min_importance=min_importance)
+
+def consolidate_memories():
+    return db.consolidate_memories_cycle()
+
+def get_memory_stats():
+    return db.get_memory_stats()

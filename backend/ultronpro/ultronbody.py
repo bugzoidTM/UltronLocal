@@ -8,7 +8,7 @@ from typing import Any
 
 from ultronpro import causal_graph
 
-BODY_ROOT = Path('/app/data/ultronbody')
+BODY_ROOT = Path(__file__).resolve().parent.parent / 'data' / 'ultronbody'
 STATE_PATH = BODY_ROOT / 'state.json'
 EPISODES_PATH = BODY_ROOT / 'episodes.jsonl'
 BENCHMARKS_PATH = BODY_ROOT / 'benchmarks.jsonl'

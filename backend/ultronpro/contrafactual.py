@@ -5,7 +5,7 @@ from typing import Any
 import json
 import time
 
-PATH = Path('/app/data/critical_deliberation.json')
+PATH = Path(__file__).resolve().parent.parent / 'data' / 'critical_deliberation.json'
 
 CRITICAL_KINDS = {
     'execute_procedure_active',

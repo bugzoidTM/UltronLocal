@@ -5,7 +5,7 @@ from typing import Any
 import json
 import time
 
-STATE_PATH = Path('/app/data/purpose_state.json')
+STATE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'purpose_state.json'
 
 
 def _default_state() -> dict[str, Any]:
@@ -90,6 +90,23 @@ def update_drives(st: dict[str, Any], signals: dict[str, Any]) -> dict[str, Any]
 
 
 def synthesize_intrinsic_goal(st: dict[str, Any]) -> dict[str, Any]:
+    # Delegate to intrinsic_utility (emergent, experience-driven) when available
+    try:
+        from ultronpro import intrinsic_utility
+        emergent = intrinsic_utility.derive_goals()
+        if emergent and isinstance(emergent, dict) and emergent.get('title'):
+            return {
+                'title': str(emergent.get('title') or '')[:160],
+                'description': str(emergent.get('description') or '')[:500],
+                'drive': str(emergent.get('drive') or 'competence'),
+                'intrinsic_reward': float(emergent.get('gap') or 0.0),
+                'priority': int(max(3, min(7, round(3 + float(emergent.get('priority') or 0.5) * 4)))),
+                'origin': 'intrinsic_utility',
+            }
+    except Exception:
+        pass
+
+    # Fallback: original template-based logic
     d = st.get('drives') or {}
 
     candidates = [

@@ -6,12 +6,20 @@ import time
 from pathlib import Path
 from typing import Any
 
-GRAPH_PATH = Path('/app/data/causal_graph.json')
-EDGE_LOG_PATH = Path('/app/data/causal_graph_edges.jsonl')
+GRAPH_PATH = Path(__file__).resolve().parent.parent / 'data' / 'causal_graph.json'
+EDGE_LOG_PATH = Path(__file__).resolve().parent.parent / 'data' / 'causal_graph_edges.jsonl'
 
 CAUSAL_PREDICATES = {
     'causa', 'resulta_em', 'implica', 'leva_a', 'provoca', 'depende_de',
     'requer', 'bloqueia', 'melhora', 'degrada', 'ativa', 'inibe'
+}
+
+INTERVENTIONAL_SOURCES = {
+    'reflexion_confirmed',
+    'mpc_planner_real',
+    'no_cloud_campaign_runner',
+    'active_investigation_executor',
+    'autonomous_executor',
 }
 
 
@@ -104,10 +112,19 @@ def upsert_edge(*, cause: str, effect: str, condition: str = '', evidence: dict[
             'support': 0,
             'confidence': 0.5,
             'severity': _infer_severity(b),
+            'knowledge_type': 'observational',
             'sources': [],
             'last_evidence': None,
             'updated_at': 0,
         }
+        
+    k_type = 'observational'
+    if source in INTERVENTIONAL_SOURCES:
+        k_type = 'interventional_weak'
+        if confidence >= 0.82 and cur.get('support', 0) >= 3:
+            k_type = 'interventional_strong'
+    
+    cur['knowledge_type'] = k_type
     cur['support'] = int(cur.get('support') or 0) + 1
     cur['confidence'] = round(min(0.99, max(float(cur.get('confidence') or 0.5), float(confidence or 0.5)) + 0.02), 4)
     cur['severity'] = max(int(cur.get('severity') or 1), _infer_severity(b))
@@ -155,6 +172,7 @@ def apply_delta_update(*, cause: str, effect: str, condition: str = '', category
             'support': 0,
             'confidence': 0.6,
             'severity': _infer_severity(b),
+            'knowledge_type': 'observational',
             'sources': [],
             'last_evidence': None,
             'updated_at': 0,
@@ -162,6 +180,13 @@ def apply_delta_update(*, cause: str, effect: str, condition: str = '', category
         before = 0.6
 
     cat = str(category or '').strip().lower()
+    k_type = 'observational'
+    if source in INTERVENTIONAL_SOURCES:
+        k_type = 'interventional_weak'
+        if before >= 0.8 and cur.get('support', 0) >= 3:
+            k_type = 'interventional_strong'
+            
+    cur['knowledge_type'] = k_type
     after = before
     if cat == 'confirmed':
         after = min(0.99, before + 0.05)
@@ -272,6 +297,10 @@ def query_for_problem(problem: str, limit: int = 5) -> dict[str, Any]:
             'confidence': e.get('confidence'),
             'severity': int(e.get('severity') or 1),
             'support': e.get('support'),
+            'knowledge_type': e.get('knowledge_type'),
+            'sources': e.get('sources') if isinstance(e.get('sources'), list) else [],
+            'updated_at': e.get('updated_at'),
+            'last_evidence': e.get('last_evidence') if isinstance(e.get('last_evidence'), dict) else {},
         })
     return {'ok': True, 'count': len(items), 'items': items}
 
@@ -310,10 +339,17 @@ def evaluate_step_risk(query: str, step: dict[str, Any] | None) -> dict[str, Any
         conf = float((e or {}).get('confidence') or 0.0)
         cause = str((e or {}).get('cause') or '')
         effect = str((e or {}).get('effect') or '')
+        k_type = str((e or {}).get('knowledge_type') or 'observational')
+        
+        if k_type == 'observational':
+            # Conhecimento observacional alimenta hipóteses, não ações críticas!
+            warnings.append({'cause': cause, 'effect': effect, 'severity': sev, 'confidence': conf, 'knowledge_type': k_type, 'note': 'observational only'})
+            continue
+            
         if sev >= 3 and conf > 0.7:
-            vetoes.append({'cause': cause, 'effect': effect, 'severity': sev, 'confidence': conf})
-        elif sev == 2:
-            warnings.append({'cause': cause, 'effect': effect, 'severity': sev, 'confidence': conf})
+            vetoes.append({'cause': cause, 'effect': effect, 'severity': sev, 'confidence': conf, 'knowledge_type': k_type})
+        elif sev >= 2:
+            warnings.append({'cause': cause, 'effect': effect, 'severity': sev, 'confidence': conf, 'knowledge_type': k_type})
     return {
         'ok': True,
         'risk_score': float(r.get('risk_score') or 0.0),

@@ -8,8 +8,8 @@ import sqlite3
 import statistics
 import time
 
-EXPERIMENTS_PATH = Path('/app/data/project_experiments.json')
-DB_PATH = os.getenv('ULTRONPRO_DB_PATH', '/app/data/ultron.db')
+EXPERIMENTS_PATH = Path(__file__).resolve().parent.parent / 'data' / 'project_experiments.json'
+DB_PATH = os.getenv('ULTRONPRO_DB_PATH', str(Path(__file__).resolve().parent.parent / 'data' / 'ultron.db'))
 
 
 def _load() -> list[dict[str, Any]]:
@@ -105,7 +105,7 @@ def _safe_benchmark_sqlite() -> dict[str, Any]:
 
 
 def _suggest_sql_artifact(metrics: dict[str, Any], project_id: str) -> str:
-    out_dir = Path('/app/data/procedure_artifacts')
+    out_dir = Path(__file__).resolve().parent.parent / 'data' / 'procedure_artifacts'
     out_dir.mkdir(parents=True, exist_ok=True)
     ts = int(time.time())
     fp = out_dir / f'project_{project_id}_{ts}_db_optimize.sql'

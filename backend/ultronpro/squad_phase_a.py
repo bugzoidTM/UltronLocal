@@ -1,47 +1,23 @@
 from __future__ import annotations
-
 import json
 import os
 import time
 from pathlib import Path
 from typing import Any
+from ultronpro import squad_profiles
 
-DATA_DIR = Path('/app/data')
+DATA_DIR = Path(__file__).resolve().parent.parent / 'data'
 STATE_PATH = DATA_DIR / 'squad_phase_a.json'
 MEM_DIR = DATA_DIR / 'memory' / 'agents'
 
 
 DEFAULT = {
     'enabled': True,
+    'profile_id': 'general',
     'interval_min': 15,
     'standup_hour_utc': 2,
     'last_standup_day': '',
-    'agents': [
-        {
-            'id': 'coord',
-            'name': 'Ultron-Coor',
-            'role': 'Coordinator',
-            'purpose': 'Orquestrar prioridades, delegar, destravar bloqueios.',
-            'heartbeat_minute_offset': 0,
-            'tools': ['planner', 'goals', 'project_kernel', 'integrity'],
-        },
-        {
-            'id': 'research',
-            'name': 'Ultron-Research',
-            'role': 'Research & Grounding',
-            'purpose': 'Buscar evidência confiável, validar fontes e reduzir alucinação.',
-            'heartbeat_minute_offset': 5,
-            'tools': ['verify_source_headless', 'sql_explorer', 'conflicts'],
-        },
-        {
-            'id': 'engineer',
-            'name': 'Ultron-Engineer',
-            'role': 'Execution & Refactor',
-            'purpose': 'Validar hipóteses via Python sandbox e propor melhorias no código.',
-            'heartbeat_minute_offset': 10,
-            'tools': ['execute_python_sandbox', 'filesystem_audit', 'project_experiment_cycle'],
-        },
-    ],
+    'agents': squad_profiles.get_profile('general')['agents'],
     'last_heartbeats': {},
 }
 
@@ -177,3 +153,25 @@ def standup_from_events(events: list[dict[str, Any]], window_sec: int = 86400) -
             'recent': [str(e.get('text') or '')[:180] for e in recent[-10:]],
         },
     }
+
+
+def switch_profile(profile_id: str) -> dict[str, Any]:
+    profile = squad_profiles.get_profile(profile_id)
+    st = _load()
+    st['profile_id'] = profile_id
+    st['agents'] = profile['agents']
+    # Clear old heartbeats when switching squad structure significantly
+    st['last_heartbeats'] = {}
+    _save(st)
+    _ensure_working_files(st)
+    return {
+        'ok': True,
+        'profile_id': profile_id,
+        'profile_name': profile['name'],
+        'agents': st['agents']
+    }
+
+
+def get_current_profile_id() -> str:
+    st = _load()
+    return str(st.get('profile_id') or 'general')

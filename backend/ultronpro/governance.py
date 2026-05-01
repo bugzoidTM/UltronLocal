@@ -5,7 +5,7 @@ from typing import Any
 import json
 import time
 
-PATH = Path('/app/data/governance_matrix.json')
+PATH = Path(__file__).resolve().parent.parent / 'data' / 'governance_matrix.json'
 
 DEFAULT = {
     'updated_at': int(time.time()),

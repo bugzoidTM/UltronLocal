@@ -14,7 +14,7 @@ class PolicyVerdict:
     matched_norms: list[dict[str, Any]]
 
 
-RULES_PATH = Path('/app/data/policy_rules.json')
+RULES_PATH = Path(__file__).resolve().parent.parent / 'data' / 'policy_rules.json'
 
 
 def _load_runtime_rules() -> dict[str, Any]:

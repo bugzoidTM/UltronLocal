@@ -1,0 +1,1247 @@
+[
+  {
+    "id": "exp_1774059624_1",
+    "project_id": "prj_1774059541_1",
+    "created_at": 1774059624,
+    "status": "success",
+    "kind": "sqlite_benchmark",
+    "hypothesis": "Pequenas otimizações de consulta e índices reduzem latência de leitura.",
+    "target_metric": "p95_read_ms",
+    "target_value": 20.0,
+    "blocker_hint": [],
+    "steps": [
+      "Coletar baseline de latência em consultas de leitura comuns",
+      "Inspecionar índice e query plan",
+      "Gerar script de otimização sugerida",
+      "Reavaliar latência e decidir promoção"
+    ],
+    "updated_at": 1774059624,
+    "result": {
+      "ok": true,
+      "status": "success",
+      "success": true,
+      "metrics": {
+        "ok": true,
+        "elapsed_sec": 0.009,
+        "samples": 30,
+        "p50_read_ms": 0.009,
+        "p95_read_ms": 0.01,
+        "tables": [
+          "actions",
+          "analogies",
+          "conflict_resolutions",
+          "conflict_variants",
+          "conflicts",
+          "events",
+          "experiences",
+          "global_workspace",
+          "goal_milestones",
+          "goals",
+          "insights",
+          "laws",
+          "procedure_runs",
+          "procedures",
+          "questions",
+          "sources",
+          "sqlite_sequence",
+          "triple_evidence",
+          "triples"
+        ],
+        "indexes": [
+          {
+            "name": "sqlite_autoindex_sources_1",
+            "table": "sources"
+          }
+        ],
+        "query_plan": [
+          {
+            "id": 4,
+            "parent": 0,
+            "notused": 0,
+            "detail": "SCAN triples"
+          }
+        ]
+      },
+      "artifact": "F:\\sistemas\\UltronPro\\backend\\data\\procedure_artifacts\\project_prj_1774059541_1_1774059624_db_optimize.sql",
+      "recommendations": [
+        "keep current profile and monitor p95 over time"
+      ]
+    }
+  },
+  {
+    "id": "exp_1774061513_2",
+    "project_id": "prj_1774059541_1",
+    "created_at": 1774061513,
+    "status": "success",
+    "kind": "sqlite_benchmark",
+    "hypothesis": "Pequenas otimizações de consulta e índices reduzem latência de leitura.",
+    "target_metric": "p95_read_ms",
+    "target_value": 20.0,
+    "blocker_hint": [],
+    "steps": [
+      "Coletar baseline de latência em consultas de leitura comuns",
+      "Inspecionar índice e query plan",
+      "Gerar script de otimização sugerida",
+      "Reavaliar latência e decidir promoção"
+    ],
+    "updated_at": 1774061513,
+    "result": {
+      "ok": true,
+      "status": "success",
+      "success": true,
+      "metrics": {
+        "ok": true,
+        "elapsed_sec": 0.106,
+        "samples": 30,
+        "p50_read_ms": 0.013,
+        "p95_read_ms": 0.014,
+        "tables": [
+          "actions",
+          "analogies",
+          "conflict_resolutions",
+          "conflict_variants",
+          "conflicts",
+          "events",
+          "experiences",
+          "global_workspace",
+          "goal_milestones",
+          "goals",
+          "insights",
+          "laws",
+          "procedure_runs",
+          "procedures",
+          "questions",
+          "sources",
+          "sqlite_sequence",
+          "triple_evidence",
+          "triples"
+        ],
+        "indexes": [
+          {
+            "name": "sqlite_autoindex_sources_1",
+            "table": "sources"
+          }
+        ],
+        "query_plan": [
+          {
+            "id": 4,
+            "parent": 0,
+            "notused": 0,
+            "detail": "SCAN triples"
+          }
+        ]
+      },
+      "artifact": "F:\\sistemas\\UltronPro\\backend\\data\\procedure_artifacts\\project_prj_1774059541_1_1774061513_db_optimize.sql",
+      "recommendations": [
+        "keep current profile and monitor p95 over time"
+      ]
+    }
+  },
+  {
+    "id": "exp_1774097265_3",
+    "project_id": "prj_1774059541_1",
+    "created_at": 1774097265,
+    "status": "success",
+    "kind": "sqlite_benchmark",
+    "hypothesis": "Pequenas otimizações de consulta e índices reduzem latência de leitura.",
+    "target_metric": "p95_read_ms",
+    "target_value": 20.0,
+    "blocker_hint": [],
+    "steps": [
+      "Coletar baseline de latência em consultas de leitura comuns",
+      "Inspecionar índice e query plan",
+      "Gerar script de otimização sugerida",
+      "Reavaliar latência e decidir promoção"
+    ],
+    "updated_at": 1774097265,
+    "result": {
+      "ok": true,
+      "status": "success",
+      "success": true,
+      "metrics": {
+        "ok": true,
+        "elapsed_sec": 0.029,
+        "samples": 30,
+        "p50_read_ms": 0.013,
+        "p95_read_ms": 0.016,
+        "tables": [
+          "actions",
+          "analogies",
+          "conflict_resolutions",
+          "conflict_variants",
+          "conflicts",
+          "events",
+          "experiences",
+          "global_workspace",
+          "goal_milestones",
+          "goals",
+          "insights",
+          "laws",
+          "procedure_runs",
+          "procedures",
+          "questions",
+          "sources",
+          "sqlite_sequence",
+          "triple_evidence",
+          "triples"
+        ],
+        "indexes": [
+          {
+            "name": "sqlite_autoindex_sources_1",
+            "table": "sources"
+          }
+        ],
+        "query_plan": [
+          {
+            "id": 4,
+            "parent": 0,
+            "notused": 0,
+            "detail": "SCAN triples"
+          }
+        ]
+      },
+      "artifact": "F:\\sistemas\\UltronPro\\backend\\data\\procedure_artifacts\\project_prj_1774059541_1_1774097265_db_optimize.sql",
+      "recommendations": [
+        "keep current profile and monitor p95 over time"
+      ]
+    }
+  },
+  {
+    "id": "exp_1774099828_4",
+    "project_id": "prj_1774059541_1",
+    "created_at": 1774099828,
+    "status": "success",
+    "kind": "sqlite_benchmark",
+    "hypothesis": "Pequenas otimizações de consulta e índices reduzem latência de leitura.",
+    "target_metric": "p95_read_ms",
+    "target_value": 20.0,
+    "blocker_hint": [],
+    "steps": [
+      "Coletar baseline de latência em consultas de leitura comuns",
+      "Inspecionar índice e query plan",
+      "Gerar script de otimização sugerida",
+      "Reavaliar latência e decidir promoção"
+    ],
+    "updated_at": 1774099828,
+    "result": {
+      "ok": true,
+      "status": "success",
+      "success": true,
+      "metrics": {
+        "ok": true,
+        "elapsed_sec": 0.011,
+        "samples": 30,
+        "p50_read_ms": 0.018,
+        "p95_read_ms": 0.023,
+        "tables": [
+          "actions",
+          "analogies",
+          "conflict_resolutions",
+          "conflict_variants",
+          "conflicts",
+          "events",
+          "experiences",
+          "global_workspace",
+          "goal_milestones",
+          "goals",
+          "insights",
+          "laws",
+          "procedure_runs",
+          "procedures",
+          "questions",
+          "sources",
+          "sqlite_sequence",
+          "triple_evidence",
+          "triples"
+        ],
+        "indexes": [
+          {
+            "name": "sqlite_autoindex_sources_1",
+            "table": "sources"
+          }
+        ],
+        "query_plan": [
+          {
+            "id": 4,
+            "parent": 0,
+            "notused": 0,
+            "detail": "SCAN triples"
+          }
+        ]
+      },
+      "artifact": "F:\\sistemas\\UltronPro\\backend\\data\\procedure_artifacts\\project_prj_1774059541_1_1774099828_db_optimize.sql",
+      "recommendations": [
+        "keep current profile and monitor p95 over time"
+      ]
+    }
+  },
+  {
+    "id": "exp_1774115061_5",
+    "project_id": "prj_1774059541_1",
+    "created_at": 1774115061,
+    "status": "success",
+    "kind": "sqlite_benchmark",
+    "hypothesis": "Pequenas otimizações de consulta e índices reduzem latência de leitura.",
+    "target_metric": "p95_read_ms",
+    "target_value": 20.0,
+    "blocker_hint": [],
+    "steps": [
+      "Coletar baseline de latência em consultas de leitura comuns",
+      "Inspecionar índice e query plan",
+      "Gerar script de otimização sugerida",
+      "Reavaliar latência e decidir promoção"
+    ],
+    "updated_at": 1774115061,
+    "result": {
+      "ok": true,
+      "status": "success",
+      "success": true,
+      "metrics": {
+        "ok": true,
+        "elapsed_sec": 0.038,
+        "samples": 30,
+        "p50_read_ms": 0.021,
+        "p95_read_ms": 0.026,
+        "tables": [
+          "actions",
+          "analogies",
+          "conflict_resolutions",
+          "conflict_variants",
+          "conflicts",
+          "events",
+          "experiences",
+          "global_workspace",
+          "goal_milestones",
+          "goals",
+          "insights",
+          "laws",
+          "procedure_runs",
+          "procedures",
+          "questions",
+          "sources",
+          "sqlite_sequence",
+          "triple_evidence",
+          "triples"
+        ],
+        "indexes": [
+          {
+            "name": "sqlite_autoindex_sources_1",
+            "table": "sources"
+          }
+        ],
+        "query_plan": [
+          {
+            "id": 4,
+            "parent": 0,
+            "notused": 0,
+            "detail": "SCAN triples"
+          }
+        ]
+      },
+      "artifact": "F:\\sistemas\\UltronPro\\backend\\data\\procedure_artifacts\\project_prj_1774059541_1_1774115061_db_optimize.sql",
+      "recommendations": [
+        "keep current profile and monitor p95 over time"
+      ]
+    }
+  },
+  {
+    "id": "exp_1774117401_6",
+    "project_id": "prj_1774059541_1",
+    "created_at": 1774117401,
+    "status": "success",
+    "kind": "sqlite_benchmark",
+    "hypothesis": "Pequenas otimizações de consulta e índices reduzem latência de leitura.",
+    "target_metric": "p95_read_ms",
+    "target_value": 20.0,
+    "blocker_hint": [],
+    "steps": [
+      "Coletar baseline de latência em consultas de leitura comuns",
+      "Inspecionar índice e query plan",
+      "Gerar script de otimização sugerida",
+      "Reavaliar latência e decidir promoção"
+    ],
+    "updated_at": 1774117401,
+    "result": {
+      "ok": true,
+      "status": "success",
+      "success": true,
+      "metrics": {
+        "ok": true,
+        "elapsed_sec": 0.014,
+        "samples": 30,
+        "p50_read_ms": 0.029,
+        "p95_read_ms": 0.03,
+        "tables": [
+          "actions",
+          "analogies",
+          "conflict_resolutions",
+          "conflict_variants",
+          "conflicts",
+          "events",
+          "experiences",
+          "global_workspace",
+          "goal_milestones",
+          "goals",
+          "insights",
+          "laws",
+          "procedure_runs",
+          "procedures",
+          "questions",
+          "sources",
+          "sqlite_sequence",
+          "triple_evidence",
+          "triples"
+        ],
+        "indexes": [
+          {
+            "name": "sqlite_autoindex_sources_1",
+            "table": "sources"
+          }
+        ],
+        "query_plan": [
+          {
+            "id": 4,
+            "parent": 0,
+            "notused": 0,
+            "detail": "SCAN triples"
+          }
+        ]
+      },
+      "artifact": "F:\\sistemas\\UltronPro\\backend\\data\\procedure_artifacts\\project_prj_1774059541_1_1774117401_db_optimize.sql",
+      "recommendations": [
+        "keep current profile and monitor p95 over time"
+      ]
+    }
+  },
+  {
+    "id": "exp_1774119228_7",
+    "project_id": "prj_1774059541_1",
+    "created_at": 1774119228,
+    "status": "success",
+    "kind": "sqlite_benchmark",
+    "hypothesis": "Pequenas otimizações de consulta e índices reduzem latência de leitura.",
+    "target_metric": "p95_read_ms",
+    "target_value": 20.0,
+    "blocker_hint": [],
+    "steps": [
+      "Coletar baseline de latência em consultas de leitura comuns",
+      "Inspecionar índice e query plan",
+      "Gerar script de otimização sugerida",
+      "Reavaliar latência e decidir promoção"
+    ],
+    "updated_at": 1774119228,
+    "result": {
+      "ok": true,
+      "status": "success",
+      "success": true,
+      "metrics": {
+        "ok": true,
+        "elapsed_sec": 0.011,
+        "samples": 30,
+        "p50_read_ms": 0.036,
+        "p95_read_ms": 0.041,
+        "tables": [
+          "actions",
+          "analogies",
+          "conflict_resolutions",
+          "conflict_variants",
+          "conflicts",
+          "events",
+          "experiences",
+          "global_workspace",
+          "goal_milestones",
+          "goals",
+          "insights",
+          "laws",
+          "procedure_runs",
+          "procedures",
+          "questions",
+          "sources",
+          "sqlite_sequence",
+          "triple_evidence",
+          "triples"
+        ],
+        "indexes": [
+          {
+            "name": "sqlite_autoindex_sources_1",
+            "table": "sources"
+          }
+        ],
+        "query_plan": [
+          {
+            "id": 4,
+            "parent": 0,
+            "notused": 0,
+            "detail": "SCAN triples"
+          }
+        ]
+      },
+      "artifact": "F:\\sistemas\\UltronPro\\backend\\data\\procedure_artifacts\\project_prj_1774059541_1_1774119228_db_optimize.sql",
+      "recommendations": [
+        "keep current profile and monitor p95 over time"
+      ]
+    }
+  },
+  {
+    "id": "exp_1774126450_8",
+    "project_id": "prj_1774059541_1",
+    "created_at": 1774126450,
+    "status": "success",
+    "kind": "sqlite_benchmark",
+    "hypothesis": "Pequenas otimizações de consulta e índices reduzem latência de leitura.",
+    "target_metric": "p95_read_ms",
+    "target_value": 20.0,
+    "blocker_hint": [],
+    "steps": [
+      "Coletar baseline de latência em consultas de leitura comuns",
+      "Inspecionar índice e query plan",
+      "Gerar script de otimização sugerida",
+      "Reavaliar latência e decidir promoção"
+    ],
+    "updated_at": 1774126450,
+    "result": {
+      "ok": true,
+      "status": "success",
+      "success": true,
+      "metrics": {
+        "ok": true,
+        "elapsed_sec": 0.014,
+        "samples": 30,
+        "p50_read_ms": 0.092,
+        "p95_read_ms": 0.097,
+        "tables": [
+          "actions",
+          "analogies",
+          "conflict_resolutions",
+          "conflict_variants",
+          "conflicts",
+          "events",
+          "experiences",
+          "global_workspace",
+          "goal_milestones",
+          "goals",
+          "insights",
+          "laws",
+          "procedure_runs",
+          "procedures",
+          "questions",
+          "sources",
+          "sqlite_sequence",
+          "triple_evidence",
+          "triples"
+        ],
+        "indexes": [
+          {
+            "name": "sqlite_autoindex_sources_1",
+            "table": "sources"
+          }
+        ],
+        "query_plan": [
+          {
+            "id": 4,
+            "parent": 0,
+            "notused": 0,
+            "detail": "SCAN triples"
+          }
+        ]
+      },
+      "artifact": "F:\\sistemas\\UltronPro\\backend\\data\\procedure_artifacts\\project_prj_1774059541_1_1774126450_db_optimize.sql",
+      "recommendations": [
+        "keep current profile and monitor p95 over time"
+      ]
+    }
+  },
+  {
+    "id": "exp_1774128894_9",
+    "project_id": "prj_1774059541_1",
+    "created_at": 1774128894,
+    "status": "success",
+    "kind": "sqlite_benchmark",
+    "hypothesis": "Pequenas otimizações de consulta e índices reduzem latência de leitura.",
+    "target_metric": "p95_read_ms",
+    "target_value": 20.0,
+    "blocker_hint": [],
+    "steps": [
+      "Coletar baseline de latência em consultas de leitura comuns",
+      "Inspecionar índice e query plan",
+      "Gerar script de otimização sugerida",
+      "Reavaliar latência e decidir promoção"
+    ],
+    "updated_at": 1774128894,
+    "result": {
+      "ok": true,
+      "status": "success",
+      "success": true,
+      "metrics": {
+        "ok": true,
+        "elapsed_sec": 0.025,
+        "samples": 30,
+        "p50_read_ms": 0.098,
+        "p95_read_ms": 1.607,
+        "tables": [
+          "actions",
+          "analogies",
+          "conflict_resolutions",
+          "conflict_variants",
+          "conflicts",
+          "events",
+          "experiences",
+          "global_workspace",
+          "goal_milestones",
+          "goals",
+          "insights",
+          "laws",
+          "procedure_runs",
+          "procedures",
+          "questions",
+          "sources",
+          "sqlite_sequence",
+          "triple_evidence",
+          "triples"
+        ],
+        "indexes": [
+          {
+            "name": "sqlite_autoindex_sources_1",
+            "table": "sources"
+          }
+        ],
+        "query_plan": [
+          {
+            "id": 4,
+            "parent": 0,
+            "notused": 0,
+            "detail": "SCAN triples"
+          }
+        ]
+      },
+      "artifact": "F:\\sistemas\\UltronPro\\backend\\data\\procedure_artifacts\\project_prj_1774059541_1_1774128894_db_optimize.sql",
+      "recommendations": [
+        "keep current profile and monitor p95 over time"
+      ]
+    }
+  },
+  {
+    "id": "exp_1774131380_10",
+    "project_id": "prj_1774059541_1",
+    "created_at": 1774131380,
+    "status": "success",
+    "kind": "sqlite_benchmark",
+    "hypothesis": "Pequenas otimizações de consulta e índices reduzem latência de leitura.",
+    "target_metric": "p95_read_ms",
+    "target_value": 20.0,
+    "blocker_hint": [],
+    "steps": [
+      "Coletar baseline de latência em consultas de leitura comuns",
+      "Inspecionar índice e query plan",
+      "Gerar script de otimização sugerida",
+      "Reavaliar latência e decidir promoção"
+    ],
+    "updated_at": 1774131380,
+    "result": {
+      "ok": true,
+      "status": "success",
+      "success": true,
+      "metrics": {
+        "ok": true,
+        "elapsed_sec": 0.066,
+        "samples": 30,
+        "p50_read_ms": 0.091,
+        "p95_read_ms": 0.096,
+        "tables": [
+          "actions",
+          "analogies",
+          "conflict_resolutions",
+          "conflict_variants",
+          "conflicts",
+          "events",
+          "experiences",
+          "global_workspace",
+          "goal_milestones",
+          "goals",
+          "insights",
+          "laws",
+          "procedure_runs",
+          "procedures",
+          "questions",
+          "sources",
+          "sqlite_sequence",
+          "triple_evidence",
+          "triples"
+        ],
+        "indexes": [
+          {
+            "name": "sqlite_autoindex_sources_1",
+            "table": "sources"
+          }
+        ],
+        "query_plan": [
+          {
+            "id": 4,
+            "parent": 0,
+            "notused": 0,
+            "detail": "SCAN triples"
+          }
+        ]
+      },
+      "artifact": "F:\\sistemas\\UltronPro\\backend\\data\\procedure_artifacts\\project_prj_1774059541_1_1774131380_db_optimize.sql",
+      "recommendations": [
+        "keep current profile and monitor p95 over time"
+      ]
+    }
+  },
+  {
+    "id": "exp_1774188095_11",
+    "project_id": "prj_1774059541_1",
+    "created_at": 1774188095,
+    "status": "success",
+    "kind": "sqlite_benchmark",
+    "hypothesis": "Pequenas otimizações de consulta e índices reduzem latência de leitura.",
+    "target_metric": "p95_read_ms",
+    "target_value": 20.0,
+    "blocker_hint": [],
+    "steps": [
+      "Coletar baseline de latência em consultas de leitura comuns",
+      "Inspecionar índice e query plan",
+      "Gerar script de otimização sugerida",
+      "Reavaliar latência e decidir promoção"
+    ],
+    "updated_at": 1774188095,
+    "result": {
+      "ok": true,
+      "status": "success",
+      "success": true,
+      "metrics": {
+        "ok": true,
+        "elapsed_sec": 0.023,
+        "samples": 30,
+        "p50_read_ms": 0.104,
+        "p95_read_ms": 0.127,
+        "tables": [
+          "actions",
+          "analogies",
+          "conflict_resolutions",
+          "conflict_variants",
+          "conflicts",
+          "events",
+          "experiences",
+          "global_workspace",
+          "goal_milestones",
+          "goals",
+          "insights",
+          "laws",
+          "procedure_runs",
+          "procedures",
+          "questions",
+          "sources",
+          "sqlite_sequence",
+          "triple_evidence",
+          "triples"
+        ],
+        "indexes": [
+          {
+            "name": "sqlite_autoindex_sources_1",
+            "table": "sources"
+          }
+        ],
+        "query_plan": [
+          {
+            "id": 4,
+            "parent": 0,
+            "notused": 0,
+            "detail": "SCAN triples"
+          }
+        ]
+      },
+      "artifact": "F:\\sistemas\\UltronPro\\backend\\data\\procedure_artifacts\\project_prj_1774059541_1_1774188095_db_optimize.sql",
+      "recommendations": [
+        "keep current profile and monitor p95 over time"
+      ]
+    }
+  },
+  {
+    "id": "exp_1774402265_12",
+    "project_id": "prj_1774059541_1",
+    "created_at": 1774402265,
+    "status": "success",
+    "kind": "sqlite_benchmark",
+    "hypothesis": "Pequenas otimizações de consulta e índices reduzem latência de leitura.",
+    "target_metric": "p95_read_ms",
+    "target_value": 20.0,
+    "blocker_hint": [],
+    "steps": [
+      "Coletar baseline de latência em consultas de leitura comuns",
+      "Inspecionar índice e query plan",
+      "Gerar script de otimização sugerida",
+      "Reavaliar latência e decidir promoção"
+    ],
+    "updated_at": 1774402265,
+    "result": {
+      "ok": true,
+      "status": "success",
+      "success": true,
+      "metrics": {
+        "ok": true,
+        "elapsed_sec": 0.013,
+        "samples": 30,
+        "p50_read_ms": 0.095,
+        "p95_read_ms": 0.103,
+        "tables": [
+          "actions",
+          "analogies",
+          "conflict_resolutions",
+          "conflict_variants",
+          "conflicts",
+          "events",
+          "experiences",
+          "global_workspace",
+          "goal_milestones",
+          "goals",
+          "insights",
+          "laws",
+          "procedure_runs",
+          "procedures",
+          "questions",
+          "sources",
+          "sqlite_sequence",
+          "triple_evidence",
+          "triples"
+        ],
+        "indexes": [
+          {
+            "name": "sqlite_autoindex_sources_1",
+            "table": "sources"
+          }
+        ],
+        "query_plan": [
+          {
+            "id": 4,
+            "parent": 0,
+            "notused": 0,
+            "detail": "SCAN triples"
+          }
+        ]
+      },
+      "artifact": "F:\\sistemas\\UltronPro\\backend\\data\\procedure_artifacts\\project_prj_1774059541_1_1774402265_db_optimize.sql",
+      "recommendations": [
+        "keep current profile and monitor p95 over time"
+      ]
+    }
+  },
+  {
+    "id": "exp_1775251129_13",
+    "project_id": "prj_1774059541_1",
+    "created_at": 1775251129,
+    "status": "success",
+    "kind": "sqlite_benchmark",
+    "hypothesis": "Pequenas otimizações de consulta e índices reduzem latência de leitura.",
+    "target_metric": "p95_read_ms",
+    "target_value": 20.0,
+    "blocker_hint": [],
+    "steps": [
+      "Coletar baseline de latência em consultas de leitura comuns",
+      "Inspecionar índice e query plan",
+      "Gerar script de otimização sugerida",
+      "Reavaliar latência e decidir promoção"
+    ],
+    "updated_at": 1775251129,
+    "result": {
+      "ok": true,
+      "status": "success",
+      "success": true,
+      "metrics": {
+        "ok": true,
+        "elapsed_sec": 0.015,
+        "samples": 30,
+        "p50_read_ms": 0.099,
+        "p95_read_ms": 0.416,
+        "tables": [
+          "actions",
+          "analogies",
+          "conflict_resolutions",
+          "conflict_variants",
+          "conflicts",
+          "events",
+          "experiences",
+          "global_workspace",
+          "goal_milestones",
+          "goals",
+          "insights",
+          "laws",
+          "procedure_runs",
+          "procedures",
+          "questions",
+          "sources",
+          "sqlite_sequence",
+          "triple_evidence",
+          "triples"
+        ],
+        "indexes": [
+          {
+            "name": "sqlite_autoindex_sources_1",
+            "table": "sources"
+          }
+        ],
+        "query_plan": [
+          {
+            "id": 4,
+            "parent": 0,
+            "notused": 0,
+            "detail": "SCAN triples"
+          }
+        ]
+      },
+      "artifact": "F:\\sistemas\\UltronPro\\backend\\data\\procedure_artifacts\\project_prj_1774059541_1_1775251129_db_optimize.sql",
+      "recommendations": [
+        "keep current profile and monitor p95 over time"
+      ]
+    }
+  },
+  {
+    "id": "exp_1775268714_14",
+    "project_id": "prj_1774059541_1",
+    "created_at": 1775268714,
+    "status": "success",
+    "kind": "sqlite_benchmark",
+    "hypothesis": "Pequenas otimizações de consulta e índices reduzem latência de leitura.",
+    "target_metric": "p95_read_ms",
+    "target_value": 20.0,
+    "blocker_hint": [],
+    "steps": [
+      "Coletar baseline de latência em consultas de leitura comuns",
+      "Inspecionar índice e query plan",
+      "Gerar script de otimização sugerida",
+      "Reavaliar latência e decidir promoção"
+    ],
+    "updated_at": 1775268714,
+    "result": {
+      "ok": true,
+      "status": "success",
+      "success": true,
+      "metrics": {
+        "ok": true,
+        "elapsed_sec": 0.014,
+        "samples": 30,
+        "p50_read_ms": 0.095,
+        "p95_read_ms": 0.101,
+        "tables": [
+          "actions",
+          "analogies",
+          "conflict_resolutions",
+          "conflict_variants",
+          "conflicts",
+          "events",
+          "experiences",
+          "global_workspace",
+          "goal_milestones",
+          "goals",
+          "insights",
+          "laws",
+          "procedure_runs",
+          "procedures",
+          "questions",
+          "sources",
+          "sqlite_sequence",
+          "triple_evidence",
+          "triples"
+        ],
+        "indexes": [
+          {
+            "name": "sqlite_autoindex_sources_1",
+            "table": "sources"
+          }
+        ],
+        "query_plan": [
+          {
+            "id": 4,
+            "parent": 0,
+            "notused": 0,
+            "detail": "SCAN triples"
+          }
+        ]
+      },
+      "artifact": "F:\\sistemas\\UltronPro\\backend\\data\\procedure_artifacts\\project_prj_1774059541_1_1775268714_db_optimize.sql",
+      "recommendations": [
+        "keep current profile and monitor p95 over time"
+      ]
+    }
+  },
+  {
+    "id": "exp_1775308551_15",
+    "project_id": "prj_1774059541_1",
+    "created_at": 1775308551,
+    "status": "success",
+    "kind": "sqlite_benchmark",
+    "hypothesis": "Pequenas otimizações de consulta e índices reduzem latência de leitura.",
+    "target_metric": "p95_read_ms",
+    "target_value": 20.0,
+    "blocker_hint": [],
+    "steps": [
+      "Coletar baseline de latência em consultas de leitura comuns",
+      "Inspecionar índice e query plan",
+      "Gerar script de otimização sugerida",
+      "Reavaliar latência e decidir promoção"
+    ],
+    "updated_at": 1775308551,
+    "result": {
+      "ok": true,
+      "status": "success",
+      "success": true,
+      "metrics": {
+        "ok": true,
+        "elapsed_sec": 0.023,
+        "samples": 30,
+        "p50_read_ms": 0.096,
+        "p95_read_ms": 0.101,
+        "tables": [
+          "actions",
+          "analogies",
+          "conflict_resolutions",
+          "conflict_variants",
+          "conflicts",
+          "events",
+          "experiences",
+          "global_workspace",
+          "goal_milestones",
+          "goals",
+          "insights",
+          "laws",
+          "procedure_runs",
+          "procedures",
+          "questions",
+          "sources",
+          "sqlite_sequence",
+          "triple_evidence",
+          "triples"
+        ],
+        "indexes": [
+          {
+            "name": "sqlite_autoindex_sources_1",
+            "table": "sources"
+          }
+        ],
+        "query_plan": [
+          {
+            "id": 4,
+            "parent": 0,
+            "notused": 0,
+            "detail": "SCAN triples"
+          }
+        ]
+      },
+      "artifact": "F:\\sistemas\\UltronPro\\backend\\data\\procedure_artifacts\\project_prj_1774059541_1_1775308551_db_optimize.sql",
+      "recommendations": [
+        "keep current profile and monitor p95 over time"
+      ]
+    }
+  },
+  {
+    "id": "exp_1775310577_16",
+    "project_id": "prj_1774059541_1",
+    "created_at": 1775310577,
+    "status": "success",
+    "kind": "sqlite_benchmark",
+    "hypothesis": "Pequenas otimizações de consulta e índices reduzem latência de leitura.",
+    "target_metric": "p95_read_ms",
+    "target_value": 20.0,
+    "blocker_hint": [],
+    "steps": [
+      "Coletar baseline de latência em consultas de leitura comuns",
+      "Inspecionar índice e query plan",
+      "Gerar script de otimização sugerida",
+      "Reavaliar latência e decidir promoção"
+    ],
+    "updated_at": 1775310577,
+    "result": {
+      "ok": true,
+      "status": "success",
+      "success": true,
+      "metrics": {
+        "ok": true,
+        "elapsed_sec": 0.016,
+        "samples": 30,
+        "p50_read_ms": 0.1,
+        "p95_read_ms": 0.144,
+        "tables": [
+          "actions",
+          "analogies",
+          "conflict_resolutions",
+          "conflict_variants",
+          "conflicts",
+          "events",
+          "experiences",
+          "global_workspace",
+          "goal_milestones",
+          "goals",
+          "insights",
+          "laws",
+          "procedure_runs",
+          "procedures",
+          "questions",
+          "sources",
+          "sqlite_sequence",
+          "triple_evidence",
+          "triples"
+        ],
+        "indexes": [
+          {
+            "name": "sqlite_autoindex_sources_1",
+            "table": "sources"
+          }
+        ],
+        "query_plan": [
+          {
+            "id": 4,
+            "parent": 0,
+            "notused": 0,
+            "detail": "SCAN triples"
+          }
+        ]
+      },
+      "artifact": "F:\\sistemas\\UltronPro\\backend\\data\\procedure_artifacts\\project_prj_1774059541_1_1775310577_db_optimize.sql",
+      "recommendations": [
+        "keep current profile and monitor p95 over time"
+      ]
+    }
+  },
+  {
+    "id": "exp_1775313007_17",
+    "project_id": "prj_1774059541_1",
+    "created_at": 1775313007,
+    "status": "success",
+    "kind": "sqlite_benchmark",
+    "hypothesis": "Pequenas otimizações de consulta e índices reduzem latência de leitura.",
+    "target_metric": "p95_read_ms",
+    "target_value": 20.0,
+    "blocker_hint": [],
+    "steps": [
+      "Coletar baseline de latência em consultas de leitura comuns",
+      "Inspecionar índice e query plan",
+      "Gerar script de otimização sugerida",
+      "Reavaliar latência e decidir promoção"
+    ],
+    "updated_at": 1775313008,
+    "result": {
+      "ok": true,
+      "status": "success",
+      "success": true,
+      "metrics": {
+        "ok": true,
+        "elapsed_sec": 0.014,
+        "samples": 30,
+        "p50_read_ms": 0.096,
+        "p95_read_ms": 0.105,
+        "tables": [
+          "actions",
+          "analogies",
+          "conflict_resolutions",
+          "conflict_variants",
+          "conflicts",
+          "events",
+          "experiences",
+          "global_workspace",
+          "goal_milestones",
+          "goals",
+          "insights",
+          "laws",
+          "procedure_runs",
+          "procedures",
+          "questions",
+          "sources",
+          "sqlite_sequence",
+          "triple_evidence",
+          "triples"
+        ],
+        "indexes": [
+          {
+            "name": "sqlite_autoindex_sources_1",
+            "table": "sources"
+          }
+        ],
+        "query_plan": [
+          {
+            "id": 4,
+            "parent": 0,
+            "notused": 0,
+            "detail": "SCAN triples"
+          }
+        ]
+      },
+      "artifact": "F:\\sistemas\\UltronPro\\backend\\data\\procedure_artifacts\\project_prj_1774059541_1_1775313008_db_optimize.sql",
+      "recommendations": [
+        "keep current profile and monitor p95 over time"
+      ]
+    }
+  },
+  {
+    "id": "exp_1775477779_18",
+    "project_id": "prj_1774059541_1",
+    "created_at": 1775477779,
+    "status": "success",
+    "kind": "sqlite_benchmark",
+    "hypothesis": "Pequenas otimizações de consulta e índices reduzem latência de leitura.",
+    "target_metric": "p95_read_ms",
+    "target_value": 20.0,
+    "blocker_hint": [],
+    "steps": [
+      "Coletar baseline de latência em consultas de leitura comuns",
+      "Inspecionar índice e query plan",
+      "Gerar script de otimização sugerida",
+      "Reavaliar latência e decidir promoção"
+    ],
+    "updated_at": 1775477779,
+    "result": {
+      "ok": true,
+      "status": "success",
+      "success": true,
+      "metrics": {
+        "ok": true,
+        "elapsed_sec": 0.007,
+        "samples": 30,
+        "p50_read_ms": 0.099,
+        "p95_read_ms": 0.119,
+        "tables": [
+          "actions",
+          "analogies",
+          "autobiographical_memories",
+          "conflict_resolutions",
+          "conflict_variants",
+          "conflicts",
+          "events",
+          "experiences",
+          "global_workspace",
+          "goal_attempts",
+          "goal_milestones",
+          "goals",
+          "insights",
+          "laws",
+          "procedure_runs",
+          "procedures",
+          "questions",
+          "self_state",
+          "sources",
+          "sqlite_sequence",
+          "triple_evidence",
+          "triples"
+        ],
+        "indexes": [
+          {
+            "name": "sqlite_autoindex_sources_1",
+            "table": "sources"
+          }
+        ],
+        "query_plan": [
+          {
+            "id": 4,
+            "parent": 0,
+            "notused": 0,
+            "detail": "SCAN triples"
+          }
+        ]
+      },
+      "artifact": "F:\\sistemas\\UltronPro\\backend\\data\\procedure_artifacts\\project_prj_1774059541_1_1775477779_db_optimize.sql",
+      "recommendations": [
+        "keep current profile and monitor p95 over time"
+      ]
+    }
+  }
+]

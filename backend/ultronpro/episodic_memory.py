@@ -4,12 +4,12 @@ import os
 from pathlib import Path
 from typing import Any
 
-EPISODIC_PATH = Path('/app/data/episodic_memory.jsonl')
-EPISODIC_STRUCTURED_PATH = Path('/app/data/episodic_memory_structured.jsonl')
-PROCEDURAL_PATH = Path('/app/data/procedural_memory.jsonl')
-WORKING_STATE_PATH = Path('/app/data/working_memory_state.json')
-AUDIT_PATH = Path('/app/data/episodic_audit.jsonl')
-LEARNING_PROPOSALS_PATH = Path('/app/data/learning_proposals.jsonl')
+EPISODIC_PATH = Path(__file__).resolve().parent.parent / 'data' / 'episodic_memory.jsonl'
+EPISODIC_STRUCTURED_PATH = Path(__file__).resolve().parent.parent / 'data' / 'episodic_memory_structured.jsonl'
+PROCEDURAL_PATH = Path(__file__).resolve().parent.parent / 'data' / 'procedural_memory.jsonl'
+WORKING_STATE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'working_memory_state.json'
+AUDIT_PATH = Path(__file__).resolve().parent.parent / 'data' / 'episodic_audit.jsonl'
+LEARNING_PROPOSALS_PATH = Path(__file__).resolve().parent.parent / 'data' / 'learning_proposals.jsonl'
 
 
 def _tokens(text: str) -> set[str]:
@@ -48,7 +48,7 @@ def _append_audit(row: dict[str, Any]):
         f.write(json.dumps(row, ensure_ascii=False) + '\n')
 
 
-def append_episode(*, action_id: int, kind: str, text: str, task_type: str, strategy: str, ok: bool, latency_ms: int, error: str = '', meta: dict[str, Any] | None = None):
+def append_episode(*, action_id: int, kind: str, text: str, task_type: str, strategy: str, ok: bool, latency_ms: int, error: str = '', meta: dict[str, Any] | None = None, authorship_origin: str = 'unknown', arbiter_votes: dict[str, Any] | None = None):
     EPISODIC_PATH.parent.mkdir(parents=True, exist_ok=True)
     _meta = dict(meta or {})
     now = int(time.time())
@@ -102,6 +102,8 @@ def append_episode(*, action_id: int, kind: str, text: str, task_type: str, stra
         'tool': tool,
         'outcome': outcome,
         'quality': quality,
+        'authorship_origin': str(authorship_origin or 'unknown'),
+        'arbiter_votes': dict(arbiter_votes or {}),
         'meta': _meta,
     }
 
@@ -189,7 +191,7 @@ def recent_structured(limit: int = 120) -> list[dict[str, Any]]:
     return rows
 
 
-def find_similar_structured(problem: str, task_type: str = 'planning', limit: int = 5) -> list[dict[str, Any]]:
+def find_similar_structured(problem: str, task_type: str = 'planning', limit: int = 5, homeostasis_mode: str = 'normal') -> list[dict[str, Any]]:
     q = _tokens(f"{task_type} {problem}")
     now = int(time.time())
     out: list[tuple[float, dict[str, Any]]] = []
@@ -204,10 +206,17 @@ def find_similar_structured(problem: str, task_type: str = 'planning', limit: in
             continue
         sim = inter / max(1, len(q | et))
         ok_bonus = 0.15 if bool(e.get('ok')) else -0.08
+        if homeostasis_mode == 'repair':
+            ok_bonus = 0.45 if bool(e.get('ok')) else -0.40  # prioriza memórias de sucesso e penaliza falhas quando em repair
+        elif homeostasis_mode in ('investigative', 'curious'):
+            ok_bonus = 0.05 if bool(e.get('ok')) else 0.0  # tolerante a falhas para exploração ampla
+
         prm = epi.get('prm_score_final')
         prm_bonus = 0.0
         if isinstance(prm, (int, float)):
             prm_bonus = max(-0.1, min(0.2, float(prm) - 0.5))
+            if homeostasis_mode == 'repair':
+                prm_bonus *= 1.5
 
         # recency bonus (0..0.08): prioriza episódios recentes sem sobrepor similaridade
         ets = int(e.get('ts') or 0)
@@ -545,10 +554,16 @@ def get_task_memory_policy(task_type: str = 'planning') -> dict[str, Any]:
     return {'task_type': t, **policies.get(t, policies['general'])}
 
 
-def layered_recall(problem: str, task_type: str = 'planning', limit: int = 3) -> dict[str, Any]:
+def layered_recall(problem: str, task_type: str = 'planning', limit: int = 3, homeostasis_mode: str = 'normal') -> dict[str, Any]:
     pol = get_task_memory_policy(task_type)
     eff_limit = max(1, min(int(pol.get('episodic_limit') or 3), int(limit or pol.get('episodic_limit') or 3)))
-    epis = find_similar_structured(problem=problem, task_type=task_type, limit=eff_limit)
+    
+    if homeostasis_mode == 'repair':
+        eff_limit = max(1, eff_limit - 1)
+    elif homeostasis_mode in ('investigative', 'curious'):
+        eff_limit = eff_limit + 1
+        
+    epis = find_similar_structured(problem=problem, task_type=task_type, limit=eff_limit, homeostasis_mode=homeostasis_mode)
     proc = procedural_hints(task_type=task_type, limit=int(pol.get('procedural_limit') or 180))
     wm = working_memory_get('default')
     top_strategy = None
@@ -566,8 +581,8 @@ def layered_recall(problem: str, task_type: str = 'planning', limit: int = 3) ->
     }
 
 
-def layered_recall_compact(problem: str, task_type: str = 'planning', limit: int = 3, max_chars: int = 1800) -> dict[str, Any]:
-    base = layered_recall(problem=problem, task_type=task_type, limit=limit)
+def layered_recall_compact(problem: str, task_type: str = 'planning', limit: int = 3, max_chars: int = 1800, homeostasis_mode: str = 'normal') -> dict[str, Any]:
+    base = layered_recall(problem=problem, task_type=task_type, limit=limit, homeostasis_mode=homeostasis_mode)
     pol = base.get('policy') if isinstance(base.get('policy'), dict) else get_task_memory_policy(task_type)
     wm = base.get('working_memory') if isinstance(base.get('working_memory'), dict) else {}
     epis = base.get('episodic_similar') if isinstance(base.get('episodic_similar'), list) else []
@@ -650,6 +665,13 @@ def append_structured_episode(
     resultado: str,
     prm_score_final: float | None,
     hipotese_pos_hoc: str,
+    # Componentes Causais Estruturados Fixos:
+    contexto_entrada: dict[str, Any] | None = None,
+    acao_granular: dict[str, Any] | None = None,
+    resultado_objetivo: dict[str, Any] | None = None,
+    contrafactual_estimado: dict[str, Any] | None = None,
+    surpresa_calculada: float = 0.0,
+    invariante_instanciado: str = '',
     task_type: str = 'planning',
     strategy: str = 'orchestrator_qwen_tools',
     ok: bool = True,
@@ -660,6 +682,8 @@ def append_structured_episode(
     analogia_usada: bool = False,
     analogia_source_episode_id: str = '',
     analogia_foi_util: bool | None = None,
+    authorship_origin: str = 'unknown',
+    arbiter_votes: dict[str, Any] | None = None,
 ):
     EPISODIC_STRUCTURED_PATH.parent.mkdir(parents=True, exist_ok=True)
     now = int(time.time())
@@ -677,6 +701,8 @@ def append_structured_episode(
         'analogia_usada': bool(analogia_usada),
         'analogia_source_episode_id': str(analogia_source_episode_id or ''),
         'analogia_foi_util': (bool(analogia_foi_util) if isinstance(analogia_foi_util, bool) else None),
+        'authorship_origin': str(authorship_origin or 'unknown'),
+        'arbiter_votes': dict(arbiter_votes or {}),
         # Camadas de memória explícitas
         'working_memory': {
             'contexto_imediato': str(problem or '')[:1200],
@@ -697,6 +723,13 @@ def append_structured_episode(
             'resultado': str(resultado or '')[:2400],
             'prm_score_final': (float(prm_score_final) if prm_score_final is not None else None),
             'hipotese_pos_hoc': str(hipotese_pos_hoc or '')[:1200],
+            # Componentes Substratos para o Generalizador:
+            'contexto_entrada': dict(contexto_entrada or {}),
+            'acao_granular': dict(acao_granular or {}),
+            'resultado_objetivo': dict(resultado_objetivo or {}),
+            'contrafactual_estimado': dict(contrafactual_estimado or {}),
+            'surpresa_calculada': float(surpresa_calculada),
+            'invariante_instanciado': str(invariante_instanciado or ''),
         },
         'semantic_memory_ref': {
             'rag_enabled': True,
@@ -738,6 +771,55 @@ def append_structured_episode(
             latency_ms=int(latency_ms or 0),
             source_episode_id=episode_id,
         )
+    except Exception:
+        pass
+
+    # ── Ciclo Hipótese-Teste-Revisão automático ──
+    # Cada episódio armazenado testa automaticamente todas as abstrações
+    # aplicáveis ao seu domínio. Confirmações promovem, refutações descartam.
+    try:
+        from ultronpro import episodic_compiler
+        ep_domain = str((contexto_entrada or {}).get('preflight_domain_mode') or task_type or 'general')
+        ep_surprise = float(surpresa_calculada)
+        episodic_compiler.auto_test_applicable(
+            domain=ep_domain,
+            episode_data=row,
+            episode_ok=bool(ok),
+            episode_surprise=ep_surprise
+        )
+    except Exception:
+        pass
+
+    # ── Causal Maturity Assessment (periódico) ──
+    # A cada ~20 episódios, avalia se o sistema generalizou via holdout causal.
+    try:
+        from ultronpro import causal_maturity, local_world_models
+        ep_count = len(recent_structured(limit=50))
+        if ep_count > 0 and ep_count % 20 == 0:
+            all_eps = recent_structured(limit=500)
+            ep_domain = str((contexto_entrada or {}).get('preflight_domain_mode') or task_type or 'general')
+
+            def _predict_fn(ctx: dict) -> dict:
+                """Predição baseada no world model local para avaliação de maturidade."""
+                domain_mode = str(ctx.get('preflight_domain_mode') or 'interacoes_codigo')
+                family = 'ultronbody' if 'ultronbody' in domain_mode else 'interacoes_codigo'
+                pred = local_world_models.predict_local_model(
+                    family_name=family,
+                    state_t=ctx,
+                    action='execute_python'
+                )
+                if pred:
+                    return {
+                        'predicted_ok': pred.get('predicted_outcome') in ('increase', 'ok', 'success'),
+                        'confidence': pred.get('confidence', 0.5),
+                    }
+                return {'predicted_ok': None, 'confidence': 0.0}
+
+            causal_maturity.run_maturity_assessment(
+                episodes=all_eps,
+                predict_fn=_predict_fn,
+                domain=ep_domain
+            )
     except Exception:
         pass
 

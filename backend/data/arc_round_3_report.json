@@ -1,0 +1,748 @@
+{
+  "score": 0.4,
+  "solved": 8,
+  "total": 20,
+  "solved_ids": [
+    "blind_001",
+    "blind_005",
+    "blind_009",
+    "blind_010",
+    "blind_011",
+    "blind_012",
+    "blind_013",
+    "blind_015"
+  ],
+  "failed_ids": [
+    "blind_002",
+    "blind_003",
+    "blind_004",
+    "blind_006",
+    "blind_007",
+    "blind_008",
+    "blind_014",
+    "blind_016",
+    "blind_017",
+    "blind_018",
+    "blind_019",
+    "blind_020"
+  ],
+  "diagnosis_summary": {
+    "solved": 20
+  },
+  "results": [
+    {
+      "ok": true,
+      "task_id": "blind_001",
+      "output_grid": [
+        [
+          7,
+          6,
+          5
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "winning_hypothesis": [
+        "reflect_h"
+      ],
+      "reasoning": "Indu\u00e7\u00e3o simb\u00f3lica baseada em invariantes estruturais (Zero API).",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "reflect_h"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "pure_symbolic",
+      "llm_calls": 0,
+      "elapsed_s": 0.0019991397857666016,
+      "graded_correct": true
+    },
+    {
+      "ok": true,
+      "task_id": "blind_002",
+      "output_grid": [
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "winning_hypothesis": [],
+      "reasoning": "Indu\u00e7\u00e3o simb\u00f3lica baseada em invariantes estruturais (Zero API).",
+      "hypotheses_tried": [
+        {
+          "sequence": [],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "pure_symbolic",
+      "llm_calls": 0,
+      "elapsed_s": 0.003997087478637695,
+      "graded_correct": false
+    },
+    {
+      "ok": true,
+      "task_id": "blind_003",
+      "output_grid": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "winning_hypothesis": [],
+      "reasoning": "Indu\u00e7\u00e3o simb\u00f3lica baseada em invariantes estruturais (Zero API).",
+      "hypotheses_tried": [
+        {
+          "sequence": [],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "pure_symbolic",
+      "llm_calls": 0,
+      "elapsed_s": 0.0015273094177246094,
+      "graded_correct": false
+    },
+    {
+      "ok": true,
+      "task_id": "blind_004",
+      "output_grid": [
+        [
+          3,
+          3,
+          0
+        ],
+        [
+          3,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "winning_hypothesis": [
+        "rotate_90",
+        "reflect_h"
+      ],
+      "reasoning": "Indu\u00e7\u00e3o simb\u00f3lica baseada em invariantes estruturais (Zero API).",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "rotate_90",
+            "reflect_h"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "pure_symbolic",
+      "llm_calls": 0,
+      "elapsed_s": 0.0020041465759277344,
+      "graded_correct": false
+    },
+    {
+      "ok": true,
+      "task_id": "blind_005",
+      "output_grid": [
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ]
+      ],
+      "winning_hypothesis": [
+        "fill"
+      ],
+      "reasoning": "Indu\u00e7\u00e3o simb\u00f3lica baseada em invariantes estruturais (Zero API).",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "fill"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "pure_symbolic",
+      "llm_calls": 0,
+      "elapsed_s": 0.004529476165771484,
+      "graded_correct": true
+    },
+    {
+      "ok": true,
+      "task_id": "blind_006",
+      "output_grid": [
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "winning_hypothesis": [],
+      "reasoning": "Indu\u00e7\u00e3o simb\u00f3lica baseada em invariantes estruturais (Zero API).",
+      "hypotheses_tried": [
+        {
+          "sequence": [],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "pure_symbolic",
+      "llm_calls": 0,
+      "elapsed_s": 0.0010004043579101562,
+      "graded_correct": false
+    },
+    {
+      "ok": true,
+      "task_id": "blind_007",
+      "output_grid": [
+        [
+          3,
+          0,
+          5,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          5,
+          0,
+          0
+        ],
+        [
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        [
+          4,
+          4,
+          5,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          5,
+          0,
+          0
+        ]
+      ],
+      "winning_hypothesis": [],
+      "reasoning": "Indu\u00e7\u00e3o simb\u00f3lica baseada em invariantes estruturais (Zero API).",
+      "hypotheses_tried": [
+        {
+          "sequence": [],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "pure_symbolic",
+      "llm_calls": 0,
+      "elapsed_s": 0.0029947757720947266,
+      "graded_correct": false
+    },
+    {
+      "ok": true,
+      "task_id": "blind_008",
+      "output_grid": [
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "winning_hypothesis": [],
+      "reasoning": "Indu\u00e7\u00e3o simb\u00f3lica baseada em invariantes estruturais (Zero API).",
+      "hypotheses_tried": [
+        {
+          "sequence": [],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "pure_symbolic",
+      "llm_calls": 0,
+      "elapsed_s": 0.0030024051666259766,
+      "graded_correct": false
+    },
+    {
+      "ok": true,
+      "task_id": "blind_009",
+      "output_grid": [
+        [
+          3,
+          3,
+          0,
+          4
+        ],
+        [
+          0,
+          0,
+          0,
+          4
+        ]
+      ],
+      "winning_hypothesis": [],
+      "reasoning": "Indu\u00e7\u00e3o simb\u00f3lica baseada em invariantes estruturais (Zero API).",
+      "hypotheses_tried": [
+        {
+          "sequence": [],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "pure_symbolic",
+      "llm_calls": 0,
+      "elapsed_s": 0.0010013580322265625,
+      "graded_correct": true
+    },
+    {
+      "ok": true,
+      "task_id": "blind_010",
+      "output_grid": [
+        [
+          5,
+          7
+        ],
+        [
+          6,
+          8
+        ]
+      ],
+      "winning_hypothesis": [
+        "rotate_90",
+        "reflect_h"
+      ],
+      "reasoning": "Indu\u00e7\u00e3o simb\u00f3lica baseada em invariantes estruturais (Zero API).",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "rotate_90",
+            "reflect_h"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "pure_symbolic",
+      "llm_calls": 0,
+      "elapsed_s": 0.001001596450805664,
+      "graded_correct": true
+    },
+    {
+      "ok": true,
+      "task_id": "blind_011",
+      "output_grid": [
+        [
+          2
+        ]
+      ],
+      "winning_hypothesis": [
+        "crop"
+      ],
+      "reasoning": "Indu\u00e7\u00e3o simb\u00f3lica baseada em invariantes estruturais (Zero API).",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "crop"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "pure_symbolic",
+      "llm_calls": 0,
+      "elapsed_s": 0.0,
+      "graded_correct": true
+    },
+    {
+      "ok": true,
+      "task_id": "blind_012",
+      "output_grid": [
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ]
+      ],
+      "winning_hypothesis": [
+        "scale_3"
+      ],
+      "reasoning": "Indu\u00e7\u00e3o simb\u00f3lica baseada em invariantes estruturais (Zero API).",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "scale_3"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "pure_symbolic",
+      "llm_calls": 0,
+      "elapsed_s": 0.0010025501251220703,
+      "graded_correct": true
+    },
+    {
+      "ok": true,
+      "task_id": "blind_013",
+      "output_grid": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "winning_hypothesis": [
+        "rotate_90",
+        "reflect_v"
+      ],
+      "reasoning": "Indu\u00e7\u00e3o simb\u00f3lica baseada em invariantes estruturais (Zero API).",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "rotate_90",
+            "reflect_v"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "pure_symbolic",
+      "llm_calls": 0,
+      "elapsed_s": 0.0010027885437011719,
+      "graded_correct": true
+    },
+    {
+      "ok": true,
+      "task_id": "blind_014",
+      "output_grid": [
+        [
+          3,
+          3,
+          4
+        ],
+        [
+          3,
+          4,
+          4
+        ]
+      ],
+      "winning_hypothesis": [],
+      "reasoning": "Indu\u00e7\u00e3o simb\u00f3lica baseada em invariantes estruturais (Zero API).",
+      "hypotheses_tried": [
+        {
+          "sequence": [],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "pure_symbolic",
+      "llm_calls": 0,
+      "elapsed_s": 0.00900411605834961,
+      "graded_correct": false
+    },
+    {
+      "ok": true,
+      "task_id": "blind_015",
+      "output_grid": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          0
+        ]
+      ],
+      "winning_hypothesis": [
+        "reflect_v"
+      ],
+      "reasoning": "Indu\u00e7\u00e3o simb\u00f3lica baseada em invariantes estruturais (Zero API).",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "reflect_v"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "pure_symbolic",
+      "llm_calls": 0,
+      "elapsed_s": 0.0,
+      "graded_correct": true
+    },
+    {
+      "ok": true,
+      "task_id": "blind_016",
+      "output_grid": [
+        [
+          2,
+          0,
+          2
+        ],
+        [
+          0,
+          2,
+          0
+        ],
+        [
+          2,
+          0,
+          2
+        ]
+      ],
+      "winning_hypothesis": [
+        "rotate_90"
+      ],
+      "reasoning": "Indu\u00e7\u00e3o simb\u00f3lica baseada em invariantes estruturais (Zero API).",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "rotate_90"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "pure_symbolic",
+      "llm_calls": 0,
+      "elapsed_s": 0.0005238056182861328,
+      "graded_correct": false
+    },
+    {
+      "ok": true,
+      "task_id": "blind_017",
+      "output_grid": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "winning_hypothesis": [],
+      "reasoning": "Indu\u00e7\u00e3o simb\u00f3lica baseada em invariantes estruturais (Zero API).",
+      "hypotheses_tried": [
+        {
+          "sequence": [],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "pure_symbolic",
+      "llm_calls": 0,
+      "elapsed_s": 0.0015306472778320312,
+      "graded_correct": false
+    },
+    {
+      "ok": true,
+      "task_id": "blind_018",
+      "output_grid": [
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ]
+      ],
+      "winning_hypothesis": [],
+      "reasoning": "Indu\u00e7\u00e3o simb\u00f3lica baseada em invariantes estruturais (Zero API).",
+      "hypotheses_tried": [
+        {
+          "sequence": [],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "pure_symbolic",
+      "llm_calls": 0,
+      "elapsed_s": 0.008611679077148438,
+      "graded_correct": false
+    },
+    {
+      "ok": true,
+      "task_id": "blind_019",
+      "output_grid": [
+        [
+          7,
+          8,
+          9
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "winning_hypothesis": [],
+      "reasoning": "Indu\u00e7\u00e3o simb\u00f3lica baseada em invariantes estruturais (Zero API).",
+      "hypotheses_tried": [
+        {
+          "sequence": [],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "pure_symbolic",
+      "llm_calls": 0,
+      "elapsed_s": 0.0015246868133544922,
+      "graded_correct": false
+    },
+    {
+      "ok": true,
+      "task_id": "blind_020",
+      "output_grid": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "winning_hypothesis": [
+        "rotate_90"
+      ],
+      "reasoning": "Indu\u00e7\u00e3o simb\u00f3lica baseada em invariantes estruturais (Zero API).",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "rotate_90"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "pure_symbolic",
+      "llm_calls": 0,
+      "elapsed_s": 0.0,
+      "graded_correct": false
+    }
+  ]
+}

@@ -9,8 +9,8 @@ from typing import Any
 from ultronpro import quality_eval
 
 SUITE_PATH = Path(__file__).resolve().parent / 'benchmarks' / 'domain_suite_v1.json'
-BASELINE_PATH = Path('/app/data/benchmark_baselines/domain_suite_v1_baseline.json')
-RUNS_PATH = Path('/app/data/benchmark_runs/domain_suite_v1_runs.jsonl')
+BASELINE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'benchmark_baselines/domain_suite_v1_baseline.json'
+RUNS_PATH = Path(__file__).resolve().parent.parent / 'data' / 'benchmark_runs/domain_suite_v1_runs.jsonl'
 
 
 def _now() -> int:

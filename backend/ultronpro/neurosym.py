@@ -5,7 +5,7 @@ from typing import Any
 import json
 import time
 
-PROOFS_PATH = Path('/app/data/neurosym_proofs.json')
+PROOFS_PATH = Path(__file__).resolve().parent.parent / 'data' / 'neurosym_proofs.json'
 
 
 def _load() -> list[dict[str, Any]]:

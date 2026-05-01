@@ -1,0 +1,85 @@
+{
+  "s1": {
+    "task_id": "mmlu_001",
+    "question": "Na lógica proposicional, a negação de 'P e Q' é equivalente a:",
+    "gold_answer": "B",
+    "raw_response": "{\"answer\":\"B\"}",
+    "predicted_answer": "B",
+    "correct": true,
+    "arrow": "seta1"
+  },
+  "s2": {
+    "patch_id": "cp_a1ef097c9d0f",
+    "patch": {
+      "id": "cp_a1ef097c9d0f",
+      "created_at": 1774227059,
+      "updated_at": 1774227059,
+      "kind": "heuristic_patch",
+      "source": "plasticity_loop_test",
+      "problem_pattern": "academic_mcq: falha em raciocínio lógico formal (De Morgan / leis biológicas)",
+      "hypothesis": "Injetar regra de De Morgan e vocabulário formal melhora acerto em MCQ de lógica.",
+      "proposed_change": {
+        "alert": "groundedness_low",
+        "task_type": "academic_mcq",
+        "rule": "Em perguntas de lógica formal ou ciência, use o gabarito de De Morgan, leis da lógica e nomenclatura biológica correta. Responda com a letra da alternativa correta sem prose. Para negação de conjunção: 'não (P e Q)' = 'não P OU não Q' (De Morgan)."
+      },
+      "expected_gain": "acerto em mmlu_001 e similares",
+      "risk_level": "low",
+      "status": "proposed",
+      "evidence_refs": [],
+      "benchmark_before": {
+        "task_id": "mmlu_001",
+        "gold": "B",
+        "predicted": "B",
+        "correct": true,
+        "sample_queries": [
+          "Na lógica proposicional, a negação de 'P e Q' é equivalente a:"
+        ]
+      },
+      "benchmark_after": {},
+      "promoted_at": null,
+      "rollback_ref": null,
+      "shadow_metrics": {},
+      "domain_regression": {},
+      "canary_state": {},
+      "tags": [],
+      "notes": ""
+    },
+    "arrow": "seta2"
+  },
+  "s3": {
+    "patch_id": "cp_a1ef097c9d0f",
+    "baseline_score": 0.975,
+    "candidate_score": 0.975,
+    "delta": 0.0,
+    "gate_decision": "hold",
+    "gate_blockers": [
+      "delta_below_threshold"
+    ],
+    "promoted": false,
+    "arrow": "seta3"
+  },
+  "s4": {
+    "task_id": "mmlu_001",
+    "gold_answer": "B",
+    "round1_answer": "B",
+    "round1_correct": true,
+    "round2_answer": "B",
+    "round2_correct": true,
+    "patch_promoted": false,
+    "improvement": false,
+    "regression": false,
+    "raw_response": "{\"answer\":\"B\"}",
+    "arrow": "seta4"
+  },
+  "checks": {
+    "S1 tarefa rodou": true,
+    "S2 patch criado": true,
+    "S3 patch avaliado com ancora": true,
+    "S3 delta > 0 (candidato melhor)": false,
+    "S3 patch promovido": false,
+    "S4 segunda rodada executou": true,
+    "S4 melhoria real observada": false
+  },
+  "verdict": "LOOP INTERROMPIDO NA SETA 3.\nBlockers: ['delta_below_threshold'].\nPromotion gate bloqueou por delta insuficiente ou canary."
+}

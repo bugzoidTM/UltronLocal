@@ -1,0 +1,677 @@
+{
+  "updated_at": 1776722760,
+  "active_project_id": "prj_1774059541_1",
+  "projects": [
+    {
+      "id": "prj_1774059541_1",
+      "title": "Modelar taxonomia de erros cognitivos em decisões",
+      "objective": "Catalogar vieses e estratégias de mitigação para melhorar qualidade decisória.",
+      "scope": "Seed from active goal",
+      "status": "active",
+      "created_at": 1774059541,
+      "updated_at": 1776722760,
+      "sla_hours": 72,
+      "milestone_due_at": 1774318741,
+      "progress": 1.0,
+      "blockers": [],
+      "risk_level": "medium",
+      "last_checkpoint_at": 1776722760,
+      "kpi": {
+        "advance_week": 1.0,
+        "blocked_hours": 11.0,
+        "cost_score": 0.0,
+        "stuck_cycles": 0.0
+      },
+      "checkpoints": [
+        {
+          "ts": 1774059541,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774059541,
+          "signal": "project_tick",
+          "note": "tick done=2 blocked=1 errors=0",
+          "progress_delta": 0.0010999999999999998
+        },
+        {
+          "ts": 1774059541,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.0010999999999999998
+        },
+        {
+          "ts": 1774059624,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_experiment_cycle",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774059625,
+          "signal": "atomic_commit",
+          "note": "project_experiment_cycle_done",
+          "progress_delta": 0.01
+        },
+        {
+          "ts": 1774061054,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774061054,
+          "signal": "project_tick",
+          "note": "tick done=13 blocked=2 errors=0",
+          "progress_delta": 0.0184
+        },
+        {
+          "ts": 1774061054,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.0184
+        },
+        {
+          "ts": 1774061513,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_experiment_cycle",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774061513,
+          "signal": "atomic_commit",
+          "note": "project_experiment_cycle_done",
+          "progress_delta": 0.01
+        },
+        {
+          "ts": 1774097184,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774097185,
+          "signal": "project_tick",
+          "note": "tick done=23 blocked=2 errors=0",
+          "progress_delta": 0.0364
+        },
+        {
+          "ts": 1774097185,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.0364
+        },
+        {
+          "ts": 1774097265,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_experiment_cycle",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774097265,
+          "signal": "atomic_commit",
+          "note": "project_experiment_cycle_done",
+          "progress_delta": 0.01
+        },
+        {
+          "ts": 1774099674,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774099674,
+          "signal": "project_tick",
+          "note": "tick done=38 blocked=2 errors=0",
+          "progress_delta": 0.0634
+        },
+        {
+          "ts": 1774099675,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.0634
+        },
+        {
+          "ts": 1774099828,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_experiment_cycle",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774099828,
+          "signal": "atomic_commit",
+          "note": "project_experiment_cycle_done",
+          "progress_delta": 0.01
+        },
+        {
+          "ts": 1774101266,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774101266,
+          "signal": "project_tick",
+          "note": "tick done=56 blocked=2 errors=0",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1774101266,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1774114906,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774114906,
+          "signal": "project_tick",
+          "note": "tick done=62 blocked=2 errors=0",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1774114906,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1774115061,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_experiment_cycle",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774115061,
+          "signal": "atomic_commit",
+          "note": "project_experiment_cycle_done",
+          "progress_delta": 0.01
+        },
+        {
+          "ts": 1774116908,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774116908,
+          "signal": "project_tick",
+          "note": "tick done=82 blocked=4 errors=0",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1774116909,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1774117401,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_experiment_cycle",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774117401,
+          "signal": "atomic_commit",
+          "note": "project_experiment_cycle_done",
+          "progress_delta": 0.01
+        },
+        {
+          "ts": 1774118571,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774118571,
+          "signal": "project_tick",
+          "note": "tick done=85 blocked=5 errors=0",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1774118571,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1774119228,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_experiment_cycle",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774119228,
+          "signal": "atomic_commit",
+          "note": "project_experiment_cycle_done",
+          "progress_delta": 0.01
+        },
+        {
+          "ts": 1774124975,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774124975,
+          "signal": "project_tick",
+          "note": "tick done=63 blocked=12 errors=0",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1774124975,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1774126450,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_experiment_cycle",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774126450,
+          "signal": "atomic_commit",
+          "note": "project_experiment_cycle_done",
+          "progress_delta": 0.01
+        },
+        {
+          "ts": 1774126700,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774126700,
+          "signal": "project_tick",
+          "note": "tick done=64 blocked=12 errors=0",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1774126701,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1774128728,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774128728,
+          "signal": "project_tick",
+          "note": "tick done=64 blocked=13 errors=0",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1774128728,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1774128894,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_experiment_cycle",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774128894,
+          "signal": "atomic_commit",
+          "note": "project_experiment_cycle_done",
+          "progress_delta": 0.01
+        },
+        {
+          "ts": 1774131300,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774131300,
+          "signal": "project_tick",
+          "note": "tick done=64 blocked=15 errors=0",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1774131300,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1774131380,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_experiment_cycle",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774131380,
+          "signal": "atomic_commit",
+          "note": "project_experiment_cycle_done",
+          "progress_delta": 0.01
+        },
+        {
+          "ts": 1774188095,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_experiment_cycle",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774188095,
+          "signal": "atomic_commit",
+          "note": "project_experiment_cycle_done",
+          "progress_delta": 0.01
+        },
+        {
+          "ts": 1774191425,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774191425,
+          "signal": "project_tick",
+          "note": "tick done=77 blocked=4 errors=0",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1774191425,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1774401508,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774401508,
+          "signal": "project_tick",
+          "note": "tick done=89 blocked=1 errors=0",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1774401508,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1774402265,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_experiment_cycle",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1774402265,
+          "signal": "atomic_commit",
+          "note": "project_experiment_cycle_done",
+          "progress_delta": 0.01
+        },
+        {
+          "ts": 1775248896,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1775248896,
+          "signal": "project_tick",
+          "note": "tick done=56 blocked=3 errors=0",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1775248896,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1775251129,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_experiment_cycle",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1775251129,
+          "signal": "atomic_commit",
+          "note": "project_experiment_cycle_done",
+          "progress_delta": 0.01
+        },
+        {
+          "ts": 1775252336,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1775252336,
+          "signal": "project_tick",
+          "note": "tick done=70 blocked=2 errors=0",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1775252336,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1775266684,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1775266684,
+          "signal": "project_tick",
+          "note": "tick done=68 blocked=13 errors=0",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1775266684,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1775268714,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_experiment_cycle",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1775268714,
+          "signal": "atomic_commit",
+          "note": "project_experiment_cycle_done",
+          "progress_delta": 0.01
+        },
+        {
+          "ts": 1775269317,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1775269317,
+          "signal": "project_tick",
+          "note": "tick done=67 blocked=11 errors=0",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1775269317,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1775307921,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1775307921,
+          "signal": "project_tick",
+          "note": "tick done=65 blocked=8 errors=0",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1775307921,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1775308551,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_experiment_cycle",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1775308551,
+          "signal": "atomic_commit",
+          "note": "project_experiment_cycle_done",
+          "progress_delta": 0.01
+        },
+        {
+          "ts": 1775309508,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1775309508,
+          "signal": "project_tick",
+          "note": "tick done=71 blocked=5 errors=0",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1775309508,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1775310577,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_experiment_cycle",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1775310577,
+          "signal": "atomic_commit",
+          "note": "project_experiment_cycle_done",
+          "progress_delta": 0.01
+        },
+        {
+          "ts": 1775311346,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1775311346,
+          "signal": "project_tick",
+          "note": "tick done=73 blocked=3 errors=0",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1775311346,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1775313007,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_experiment_cycle",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1775313008,
+          "signal": "atomic_commit",
+          "note": "project_experiment_cycle_done",
+          "progress_delta": 0.01
+        },
+        {
+          "ts": 1775313367,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1775313367,
+          "signal": "project_tick",
+          "note": "tick done=71 blocked=5 errors=0",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1775313367,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.07
+        },
+        {
+          "ts": 1775477779,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_experiment_cycle",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1775477779,
+          "signal": "atomic_commit",
+          "note": "project_experiment_cycle_done",
+          "progress_delta": 0.01
+        },
+        {
+          "ts": 1776701335,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1776701335,
+          "signal": "project_tick",
+          "note": "tick done=32 blocked=0 errors=0",
+          "progress_delta": 0.0576
+        },
+        {
+          "ts": 1776701335,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.0576
+        },
+        {
+          "ts": 1776722760,
+          "signal": "atomic_begin",
+          "note": "atomic_begin:project_management_tick",
+          "progress_delta": 0.0
+        },
+        {
+          "ts": 1776722760,
+          "signal": "project_tick",
+          "note": "tick done=22 blocked=0 errors=0",
+          "progress_delta": 0.039599999999999996
+        },
+        {
+          "ts": 1776722760,
+          "signal": "atomic_commit",
+          "note": "project_management_tick_done",
+          "progress_delta": 0.039599999999999996
+        }
+      ]
+    }
+  ]
+}

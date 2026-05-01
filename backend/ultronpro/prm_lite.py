@@ -6,7 +6,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-STATE_PATH = Path('/app/data/prm_lite_state.json')
+STATE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'prm_lite_state.json'
 MAX_RECENT = 500
 
 DEFAULT_WEIGHTS = {

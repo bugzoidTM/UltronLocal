@@ -4,7 +4,7 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-from ultronpro import cognitive_patches, shadow_eval
+from ultronpro import cognitive_patches, epistemic_ledger, external_benchmarks, shadow_eval
 
 DEFAULT_THRESHOLDS: dict[str, Any] = {
     'min_delta': 0.03,
@@ -12,6 +12,9 @@ DEFAULT_THRESHOLDS: dict[str, Any] = {
     'max_domain_regression_delta': -0.02,
     'require_canary': True,
     'min_canary_rollout_pct': 5,
+    'min_external_factual_accuracy': 1.0,
+    'max_external_anchor_failures': 0,
+    'min_external_anchor_cases': 1,
 }
 
 
@@ -19,12 +22,21 @@ def evaluate_patch_for_promotion(patch_id: str, thresholds: dict[str, Any] | Non
     patch = cognitive_patches.get_patch(patch_id)
     if not patch:
         return None
-    th = dict(DEFAULT_THRESHOLDS)
-    th.update(thresholds or {})
+    # Self-calibrating: derive thresholds from experience when no override
+    if thresholds:
+        th = dict(DEFAULT_THRESHOLDS)
+        th.update(thresholds)
+    else:
+        try:
+            from ultronpro import self_calibrating_gate
+            th = self_calibrating_gate.calibrated_thresholds()
+        except Exception:
+            th = dict(DEFAULT_THRESHOLDS)
 
     shadow_metrics = patch.get('shadow_metrics') if isinstance(patch.get('shadow_metrics'), dict) else {}
     domain_regression = patch.get('domain_regression') if isinstance(patch.get('domain_regression'), dict) else {}
     canary_state = patch.get('canary_state') if isinstance(patch.get('canary_state'), dict) else {}
+    factual_gate = external_benchmarks.evaluate_patch_external_factual_evidence(patch)
 
     delta = float(shadow_metrics.get('delta') or 0.0)
     regressed_cases = int(shadow_metrics.get('regressed_cases') or 0)
@@ -66,8 +78,44 @@ def evaluate_patch_for_promotion(patch_id: str, thresholds: dict[str, Any] | Non
         else:
             reasons.append('canary_ok')
 
+    if bool(factual_gate.get('has_external_anchor')):
+        factual_cases = int(factual_gate.get('cases_total') or 0)
+        factual_accuracy = float(factual_gate.get('candidate_factual_accuracy') or 0.0)
+        factual_failures = int(factual_gate.get('external_anchor_failures') or 0)
+        if factual_cases < int(th.get('min_external_anchor_cases') or 1):
+            blockers.append('external_factual_cases_too_few')
+        else:
+            reasons.append('external_factual_cases_ok')
+        if factual_accuracy < float(th.get('min_external_factual_accuracy') or 1.0):
+            blockers.append('external_factual_accuracy_below_threshold')
+        else:
+            reasons.append('external_factual_accuracy_ok')
+        if factual_failures > int(th.get('max_external_anchor_failures') or 0):
+            blockers.append('external_anchor_failures')
+        else:
+            reasons.append('external_anchor_failures_ok')
+    elif bool(factual_gate.get('requires_external_anchor')):
+        blockers.append('missing_external_factual_anchor')
+
+    ledger_gate = epistemic_ledger.record_patch_promotion_evidence(
+        patch,
+        factual_gate=factual_gate,
+        shadow_metrics=shadow_metrics,
+        canary_state=canary_state,
+        domain_regression=domain_regression,
+    )
+    if bool(ledger_gate.get('promotion_ready')):
+        reasons.append('epistemic_ledger_ready')
+    else:
+        blockers.extend([f"epistemic_ledger:{x}" for x in (ledger_gate.get('blockers') or ['not_ready'])])
+
     if blockers:
-        if any(x.startswith('domain_regression:') for x in blockers) or 'too_many_regressed_cases' in blockers:
+        hard_reject = {
+            'too_many_regressed_cases',
+            'external_factual_accuracy_below_threshold',
+            'external_anchor_failures',
+        }
+        if any(x.startswith('domain_regression:') for x in blockers) or any(x in hard_reject for x in blockers):
             decision = 'reject'
         else:
             decision = 'hold'
@@ -89,6 +137,8 @@ def evaluate_patch_for_promotion(patch_id: str, thresholds: dict[str, Any] | Non
             'worst_domain_delta': worst_domain_delta,
             'canary_enabled': bool(canary_state.get('enabled')),
             'canary_rollout_pct': int(canary_state.get('rollout_pct') or 0),
+            'external_factual': factual_gate,
+            'epistemic_ledger': ledger_gate,
         },
     }
 
@@ -117,12 +167,16 @@ def run_selftest() -> dict[str, Any]:
     old_patch_state = cognitive_patches.STATE_PATH
     old_shadow_log = shadow_eval.LOG_PATH
     old_canary_log = shadow_eval.CANARY_LOG_PATH
+    old_ledger_log = epistemic_ledger.LEDGER_LOG_PATH
+    old_ledger_state = epistemic_ledger.LEDGER_STATE_PATH
     with tempfile.TemporaryDirectory(prefix='promotion-gate-') as td:
         base = Path(td)
         cognitive_patches.PATCHES_PATH = base / 'cognitive_patches.jsonl'
         cognitive_patches.STATE_PATH = base / 'cognitive_patches_state.json'
         shadow_eval.LOG_PATH = base / 'shadow_eval_runs.jsonl'
         shadow_eval.CANARY_LOG_PATH = base / 'shadow_eval_canary.jsonl'
+        epistemic_ledger.LEDGER_LOG_PATH = base / 'epistemic_ledger.jsonl'
+        epistemic_ledger.LEDGER_STATE_PATH = base / 'epistemic_ledger_state.json'
         try:
             patch = cognitive_patches.create_patch({
                 'kind': 'confidence_patch',
@@ -156,3 +210,5 @@ def run_selftest() -> dict[str, Any]:
             cognitive_patches.STATE_PATH = old_patch_state
             shadow_eval.LOG_PATH = old_shadow_log
             shadow_eval.CANARY_LOG_PATH = old_canary_log
+            epistemic_ledger.LEDGER_LOG_PATH = old_ledger_log
+            epistemic_ledger.LEDGER_STATE_PATH = old_ledger_state

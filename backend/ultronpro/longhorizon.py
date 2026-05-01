@@ -5,7 +5,7 @@ from typing import Any
 import json
 import time
 
-STATE_PATH = Path('/app/data/long_horizon_state.json')
+STATE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'long_horizon_state.json'
 
 
 def _default() -> dict[str, Any]:

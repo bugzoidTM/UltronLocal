@@ -1,0 +1,53 @@
+{
+  "notified": {
+    "retry_blocked:root_1774097915:root_1774097915_clarify": {
+      "ts": 1774098297,
+      "event_type": "retry_blocked",
+      "mission_id": "",
+      "root_id": "root_1774097915",
+      "node_id": "root_1774097915_clarify",
+      "status": "executed"
+    },
+    "milestone_reached:root_1774097915:root_1774097915_execute": {
+      "ts": 1774120942,
+      "event_type": "milestone_reached",
+      "mission_id": "mis_1774100162_1",
+      "root_id": "root_1774097915",
+      "node_id": "root_1774097915_execute",
+      "status": "executed"
+    },
+    "milestone_reached:root_1774097915:root_1774097915_validate": {
+      "ts": 1774120987,
+      "event_type": "milestone_reached",
+      "mission_id": "mis_1774100162_1",
+      "root_id": "root_1774097915",
+      "node_id": "root_1774097915_validate",
+      "status": "executed"
+    },
+    "milestone_reached:root_1774097915:root_1774097915_consolidate": {
+      "ts": 1774121316,
+      "event_type": "milestone_reached",
+      "mission_id": "mis_1774100162_1",
+      "root_id": "root_1774097915",
+      "node_id": "root_1774097915_consolidate",
+      "status": "executed"
+    },
+    "goal_completed:root_1774097915": {
+      "ts": 1774121316,
+      "event_type": "goal_completed",
+      "mission_id": "mis_1774100162_1",
+      "root_id": "root_1774097915",
+      "node_id": null,
+      "status": "executed"
+    },
+    "critical_error:::": {
+      "ts": 1776787522,
+      "event_type": "critical_error",
+      "mission_id": null,
+      "root_id": null,
+      "node_id": null,
+      "status": "executed"
+    }
+  },
+  "updated_at": 1776787522
+}

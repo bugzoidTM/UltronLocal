@@ -1,0 +1,100 @@
+{
+  "updated_at": 1777668680,
+  "tasks": [
+    {
+      "id": "tsk_1774059301_1",
+      "title": "[LEARNING] Expandir cobertura em security",
+      "description": "Gap=0.9985 priority=0.9985 coverage=0.0015",
+      "status": "inbox",
+      "task_type": "learning_agenda",
+      "assignees": [
+        "researcher",
+        "manager"
+      ],
+      "created_at": 1774059301,
+      "updated_at": 1777668680,
+      "due_at": 1774145701,
+      "escalate_at": 1774188901,
+      "sla_level": "standard_24h",
+      "escalated": true,
+      "priority": 9
+    },
+    {
+      "id": "tsk_1774059301_2",
+      "title": "[LEARNING] Expandir cobertura em distributed-systems",
+      "description": "Gap=0.9982 priority=0.9982 coverage=0.0018",
+      "status": "inbox",
+      "task_type": "learning_agenda",
+      "assignees": [
+        "researcher",
+        "manager"
+      ],
+      "created_at": 1774059301,
+      "updated_at": 1777668680,
+      "due_at": 1774145701,
+      "escalate_at": 1774188901,
+      "sla_level": "standard_24h",
+      "escalated": true,
+      "priority": 9
+    },
+    {
+      "id": "tsk_1774059301_3",
+      "title": "[LEARNING] Expandir cobertura em economics",
+      "description": "Gap=0.9988 priority=0.8989 coverage=0.0012",
+      "status": "inbox",
+      "task_type": "learning_agenda",
+      "assignees": [
+        "researcher",
+        "manager"
+      ],
+      "created_at": 1774059301,
+      "updated_at": 1777668680,
+      "due_at": 1774145701,
+      "escalate_at": 1774188901,
+      "sla_level": "standard_24h",
+      "escalated": true,
+      "priority": 9
+    }
+  ],
+  "messages": [],
+  "activities": [
+    {
+      "ts": 1774059301,
+      "type": "task_created",
+      "text": "Learning agenda task: [LEARNING] Expandir cobertura em security",
+      "task_id": "tsk_1774059301_1"
+    },
+    {
+      "ts": 1774059301,
+      "type": "task_created",
+      "text": "Learning agenda task: [LEARNING] Expandir cobertura em distributed-systems",
+      "task_id": "tsk_1774059301_2"
+    },
+    {
+      "ts": 1774059301,
+      "type": "task_created",
+      "text": "Learning agenda task: [LEARNING] Expandir cobertura em economics",
+      "task_id": "tsk_1774059301_3"
+    },
+    {
+      "ts": 1774188910,
+      "type": "task_escalated",
+      "text": "SLA estourado: [LEARNING] Expandir cobertura em security",
+      "task_id": "tsk_1774059301_1"
+    },
+    {
+      "ts": 1774188910,
+      "type": "task_escalated",
+      "text": "SLA estourado: [LEARNING] Expandir cobertura em distributed-systems",
+      "task_id": "tsk_1774059301_2"
+    },
+    {
+      "ts": 1774188910,
+      "type": "task_escalated",
+      "text": "SLA estourado: [LEARNING] Expandir cobertura em economics",
+      "task_id": "tsk_1774059301_3"
+    }
+  ],
+  "subscriptions": {},
+  "notifications": []
+}

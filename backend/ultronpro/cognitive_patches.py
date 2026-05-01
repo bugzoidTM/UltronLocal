@@ -6,8 +6,8 @@ import hashlib
 from pathlib import Path
 from typing import Any
 
-PATCHES_PATH = Path('/app/data/cognitive_patches.jsonl')
-STATE_PATH = Path('/app/data/cognitive_patches_state.json')
+PATCHES_PATH = Path(__file__).resolve().parent.parent / 'data' / 'cognitive_patches.jsonl'
+STATE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'cognitive_patches_state.json'
 
 DEFAULT_STATE: dict[str, Any] = {
     'version': 1,

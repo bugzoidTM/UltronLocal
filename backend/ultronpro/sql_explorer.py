@@ -1,11 +1,12 @@
 from __future__ import annotations
+from pathlib import Path
 
 import os
 import re
 import sqlite3
 from typing import Any
 
-DB_PATH = os.getenv('ULTRONPRO_DB_PATH', '/app/data/ultron.db')
+DB_PATH = os.getenv('ULTRONPRO_DB_PATH', str(Path(__file__).resolve().parent.parent / 'data' / 'ultron.db'))
 
 _DENY_RE = re.compile(
     r"\b(insert|update|delete|drop|alter|create|replace|attach|detach|vacuum|reindex|analyze|truncate|grant|revoke|begin|commit|rollback)\b",

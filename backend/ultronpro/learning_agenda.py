@@ -3,7 +3,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-STATE_PATH = Path('/app/data/learning_agenda.json')
+STATE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'learning_agenda.json'
 
 
 def _default() -> dict[str, Any]:

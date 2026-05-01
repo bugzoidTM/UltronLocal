@@ -101,7 +101,7 @@ def _estimate_chars(obj: Any) -> int:
         return len(str(obj or ''))
 
 
-def build_context(*, query: str, task_type: str = 'general', rag_docs: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+def build_context(*, query: str, task_type: str = 'general', rag_docs: list[dict[str, Any]] | None = None, homeostasis_mode: str = 'normal') -> dict[str, Any]:
     profile_name = classify_profile(query=query, task_type=task_type)
     profile = dict(PROFILES.get(profile_name) or PROFILES['factual'])
     selected: list[dict[str, Any]] = []
@@ -128,6 +128,7 @@ def build_context(*, query: str, task_type: str = 'general', rag_docs: list[dict
         task_type=task_type,
         limit=max(1, int(mem_policy.get('episodic_limit') or 3)),
         max_chars=min(int(profile.get('max_total_chars') or 1600), int(mem_policy.get('max_chars') or 1500)),
+        homeostasis_mode=homeostasis_mode,
     )
     episodic_items = (recall.get('episodic_similar') if isinstance(recall, dict) else []) or []
     if 'episodic' in profile.get('allowed_sources', []):

@@ -1,0 +1,24 @@
+{
+  "suite": "llm_off_survival_v1",
+  "version": 1,
+  "cases": [
+    {
+      "id": "S01",
+      "domain": "logic",
+      "query": "Se todos os humanos são mortais e Sócrates é humano, Sócrates é mortal?",
+      "threshold": 0.8
+    },
+    {
+      "id": "S02",
+      "domain": "planning",
+      "query": "O sistema detectou um WinError 10061 no Ollama local. O que devemos fazer para manter a operação?",
+      "threshold": 0.7
+    },
+    {
+      "id": "S03",
+      "domain": "tool_intent",
+      "query": "Pode verificar se o arquivo '.env' contém a chave ULTRON_PASSPORT_URL?",
+      "threshold": 0.8
+    }
+  ]
+}

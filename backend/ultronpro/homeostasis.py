@@ -5,7 +5,7 @@ from typing import Any
 import json
 import time
 
-STATE_PATH = Path('/app/data/homeostasis_state.json')
+STATE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'homeostasis_state.json'
 
 
 def _default_state() -> dict[str, Any]:
@@ -130,9 +130,39 @@ def evaluate(
         operation_mode = 'investigative'
         actions = ['run_multi_hypothesis_deliberation', 'mandatory_grounding_for_key_claims', 'symbolic_disambiguation_priority']
 
+    # Phase 4.8: Classificação unificada and Alertas por desvio
+    alerts = []
+    if vitals.get('coherence_score', 1.0) < 0.40:
+        alerts.append('coherence_critical')
+    elif vitals.get('coherence_score', 1.0) < 0.60:
+        alerts.append('coherence_degraded')
+
+    if vitals.get('contradiction_stress', 0.0) > 0.70:
+        alerts.append('high_contradiction_stress')
+        
+    if vitals.get('uncertainty_load', 0.0) > 0.75:
+        alerts.append('critical_uncertainty_load')
+        
+    if vitals.get('energy_budget', 1.0) < 0.20:
+        alerts.append('energy_starvation')
+
+    if len(alerts) >= 3 or 'coherence_critical' in alerts or 'high_contradiction_stress' in alerts:
+        classification = 'crítico'
+    elif mode == 'repair' or 'coherence_degraded' in alerts:
+        classification = 'degradação'
+    elif mode == 'conservative' or len(alerts) > 0:
+        classification = 'atenção'
+    else:
+        classification = 'normal'
+
+    state['classification'] = classification
+    state['active_alerts'] = alerts
+    
     return {
         'ok': True,
         'mode': mode,
+        'classification': classification,
+        'active_alerts': alerts,
         'operation_mode': operation_mode,
         'mode_changed': mode != prev_mode,
         'previous_mode': prev_mode,

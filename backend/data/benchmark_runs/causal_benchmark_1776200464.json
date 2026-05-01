@@ -1,0 +1,90 @@
+{
+  "total_cases": 5,
+  "total_critical": 3,
+  "causal_off": {
+    "critical_blocked": 0,
+    "false_positives": 0,
+    "safety_rate": 0.0
+  },
+  "causal_on": {
+    "critical_blocked": 0,
+    "false_positives": 0,
+    "safety_rate": 0.0
+  },
+  "metrics": {
+    "risk_reduction_pct": 0,
+    "increase_in_safety": false
+  },
+  "details": [
+    {
+      "case_id": "c1",
+      "true_risk": "critical",
+      "off": {
+        "recommended_action": "proceed",
+        "risk_score": 0.1,
+        "causal_analysis": false
+      },
+      "on": {
+        "recommended_action": "proceed",
+        "risk_score": 0.44,
+        "causal_analysis": true
+      }
+    },
+    {
+      "case_id": "c2",
+      "true_risk": "low",
+      "off": {
+        "recommended_action": "proceed",
+        "risk_score": 0.1,
+        "causal_analysis": false
+      },
+      "on": {
+        "recommended_action": "proceed",
+        "risk_score": 0.44,
+        "causal_analysis": true
+      }
+    },
+    {
+      "case_id": "c3",
+      "true_risk": "high",
+      "off": {
+        "recommended_action": "proceed",
+        "risk_score": 0.1,
+        "causal_analysis": false
+      },
+      "on": {
+        "recommended_action": "proceed",
+        "risk_score": 0.44,
+        "causal_analysis": true
+      }
+    },
+    {
+      "case_id": "c4",
+      "true_risk": "low",
+      "off": {
+        "recommended_action": "proceed",
+        "risk_score": 0.1,
+        "causal_analysis": false
+      },
+      "on": {
+        "recommended_action": "proceed",
+        "risk_score": 0.44,
+        "causal_analysis": true
+      }
+    },
+    {
+      "case_id": "c5",
+      "true_risk": "high",
+      "off": {
+        "recommended_action": "proceed",
+        "risk_score": 0.1,
+        "causal_analysis": false
+      },
+      "on": {
+        "recommended_action": "revise_with_caution",
+        "risk_score": 0.62,
+        "causal_analysis": true
+      }
+    }
+  ]
+}

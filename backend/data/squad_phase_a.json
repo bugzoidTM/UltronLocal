@@ -1,0 +1,51 @@
+{
+  "enabled": true,
+  "profile_id": "general",
+  "interval_min": 15,
+  "standup_hour_utc": 2,
+  "last_standup_day": "2026-04-23",
+  "agents": [
+    {
+      "id": "coord",
+      "name": "Ultron-Coor",
+      "role": "Coordinator",
+      "purpose": "Orquestrar prioridades, delegar, destravar bloqueios.",
+      "heartbeat_minute_offset": 0,
+      "tools": [
+        "planner",
+        "goals",
+        "project_kernel",
+        "integrity"
+      ]
+    },
+    {
+      "id": "research",
+      "name": "Ultron-Research",
+      "role": "Research & Grounding",
+      "purpose": "Buscar evidência confiável, validar fontes e reduzir alucinação.",
+      "heartbeat_minute_offset": 5,
+      "tools": [
+        "verify_source_headless",
+        "sql_explorer",
+        "conflicts"
+      ]
+    },
+    {
+      "id": "engineer",
+      "name": "Ultron-Engineer",
+      "role": "Execution & Refactor",
+      "purpose": "Validar hipóteses via Python sandbox e propor melhorias no código.",
+      "heartbeat_minute_offset": 10,
+      "tools": [
+        "execute_python_sandbox",
+        "filesystem_audit",
+        "project_experiment_cycle"
+      ]
+    }
+  ],
+  "last_heartbeats": {
+    "research": 29627570,
+    "engineer": 29627695,
+    "coord": 29627700
+  }
+}

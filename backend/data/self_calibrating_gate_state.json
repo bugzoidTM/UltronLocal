@@ -1,0 +1,2078 @@
+{
+  "thresholds": {
+    "min_delta": 0.0475,
+    "max_regressed_cases": 0,
+    "max_domain_regression_delta": -0.02,
+    "require_canary": true,
+    "min_canary_rollout_pct": 5
+  },
+  "calibration_history": [
+    {
+      "ts": 1776527431,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776529281,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776531139,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776533007,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776534869,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776536787,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776538658,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776540527,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776542408,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776544266,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776546131,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776548011,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776550490,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776552309,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776554152,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776556014,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776557885,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776559872,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776561853,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776563753,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776565731,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776601398,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776604592,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776606511,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776608440,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776620248,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776622124,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776626356,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776628362,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776630460,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776632370,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776634248,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776636849,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776638660,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776640573,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776642447,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776644315,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776646161,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776647994,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776649812,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776651651,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776695512,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776697478,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776699292,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776701296,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776703715,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776705635,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776707623,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776709526,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776711350,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776713603,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776715896,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776718263,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776720162,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776722725,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776724948,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776733133,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776735087,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776737172,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776787528,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776791502,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776794199,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776796311,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776798483,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776817369,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776819373,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776856021,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776858006,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776877387,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776889059,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 7,
+      "successes": 4,
+      "failures": 1
+    },
+    {
+      "ts": 1776890983,
+      "old_thresholds": {
+        "min_delta": 0.0425,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1776893133,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1776896435,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1776898320,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1776900177,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1776902038,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1776904024,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1776905994,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1776907845,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1776909810,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1776946029,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1776947910,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1776949773,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1776951643,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1776953493,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1776955340,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1776957186,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1776959031,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1776960904,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1777642598,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1777648033,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1777650030,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1777651939,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1777653901,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1777655903,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1777657756,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1777659819,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1777661715,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1777665874,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1777667883,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    }
+  ],
+  "patch_outcomes": [
+    {
+      "patch_id": "success_0",
+      "action": "promote",
+      "delta": 0.05,
+      "regressed_cases": 0,
+      "cases_total": 3,
+      "ts": 1000,
+      "result": "success"
+    },
+    {
+      "patch_id": "success_1",
+      "action": "promote",
+      "delta": 0.060000000000000005,
+      "regressed_cases": 0,
+      "cases_total": 3,
+      "ts": 1001,
+      "result": "success"
+    },
+    {
+      "patch_id": "success_2",
+      "action": "promote",
+      "delta": 0.07,
+      "regressed_cases": 0,
+      "cases_total": 3,
+      "ts": 1002,
+      "result": "success"
+    },
+    {
+      "patch_id": "success_3",
+      "action": "promote",
+      "delta": 0.08,
+      "regressed_cases": 0,
+      "cases_total": 3,
+      "ts": 1003,
+      "result": "success"
+    },
+    {
+      "patch_id": "cp_d072237dbf96",
+      "action": "promote",
+      "delta": 0.2925,
+      "regressed_cases": 0,
+      "cases_total": 1,
+      "ts": 1776889271,
+      "result": "success"
+    },
+    {
+      "patch_id": "cp_75a80ef715bc",
+      "action": "promote",
+      "delta": 0.1175,
+      "regressed_cases": 0,
+      "cases_total": 1,
+      "ts": 1776889271,
+      "result": "success"
+    },
+    {
+      "patch_id": "failure_0",
+      "action": "promote",
+      "delta": 0.02,
+      "regressed_cases": 2,
+      "cases_total": 3,
+      "ts": 1010,
+      "result": "rollback"
+    }
+  ],
+  "calibration_count": 260,
+  "updated_at": 1777667883
+}

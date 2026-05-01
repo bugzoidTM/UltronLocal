@@ -5,9 +5,9 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
-CONTEXT_LOG = Path('/app/data/context_metrics.jsonl')
-QUALITY_LOG = Path('/app/data/quality_eval.jsonl')
-RAG_EVAL_LOG = Path('/app/data/rag_eval_runs.jsonl')
+CONTEXT_LOG = Path(__file__).resolve().parent.parent / 'data' / 'context_metrics.jsonl'
+QUALITY_LOG = Path(__file__).resolve().parent.parent / 'data' / 'quality_eval.jsonl'
+RAG_EVAL_LOG = Path(__file__).resolve().parent.parent / 'data' / 'rag_eval_runs.jsonl'
 
 
 def _read_jsonl(path: Path, limit: int = 200) -> list[dict[str, Any]]:

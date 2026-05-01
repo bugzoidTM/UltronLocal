@@ -1,0 +1,33 @@
+{
+  "generated_at": 1777667567,
+  "mode": "turbo_safe",
+  "autonomy": {
+    "actions_window": 220,
+    "done_rate": 0.0,
+    "error_rate": 0.0,
+    "blocked_rate": 0.1818
+  },
+  "plasticity": {
+    "feedback_total": 0,
+    "failure_rate": 0.0,
+    "hallucination_rate": 0.0
+  },
+  "economic": {
+    "epsilon": 0.05,
+    "mix_recent": {
+      "cheap": 0,
+      "balanced": 80,
+      "deep": 0
+    }
+  },
+  "calibration": {
+    "brier": null,
+    "overconfidence_gap": null
+  },
+  "mission_control": {
+    "total": 3,
+    "by_status": {
+      "inbox": 3
+    }
+  }
+}

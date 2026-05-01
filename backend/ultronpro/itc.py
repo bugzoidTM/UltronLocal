@@ -8,9 +8,9 @@ import time
 
 from ultronpro import llm
 
-HISTORY_PATH = Path('/app/data/itc_history.json')
-POLICY_PATH = Path('/app/data/itc_policy.json')
-CHECKPOINT_PATH = Path('/app/data/itc_checkpoint.json')
+HISTORY_PATH = Path(__file__).resolve().parent.parent / 'data' / 'itc_history.json'
+POLICY_PATH = Path(__file__).resolve().parent.parent / 'data' / 'itc_policy.json'
+CHECKPOINT_PATH = Path(__file__).resolve().parent.parent / 'data' / 'itc_checkpoint.json'
 
 
 ARMS = [

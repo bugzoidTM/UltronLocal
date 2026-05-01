@@ -4,7 +4,7 @@ from typing import Any
 import json
 
 
-STATE_PATH = Path('/app/data/agi_path_state.json')
+STATE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'agi_path_state.json'
 
 
 def _default() -> dict[str, Any]:

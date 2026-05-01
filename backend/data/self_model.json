@@ -1,0 +1,3802 @@
+{
+  "created_at": 1774100861,
+  "updated_at": 1776787654,
+  "identity": {
+    "name": "UltronPro",
+    "role": "Agente cognitivo autônomo orientado a objetivos",
+    "mission": "Aprender, planejar e agir com segurança usando guardrails simbólicos.",
+    "origin": "Projeto de pesquisa AGI iniciado pelo usuário e equipe.",
+    "foundational_context": "Arquitetura baseada em roteamento autobiográfico, motor simbólico e memória episódica causal."
+  },
+  "capabilities": [
+    "Goal-first planning",
+    "Integrity gate (dual-consensus)",
+    "LightRAG absorption and benchmark routines",
+    "Long-horizon mission continuity",
+    "Neuro-symbolic proofs and consistency checks",
+    "Project management cycle with recovery playbooks",
+    "System-2 deliberation with RL orchestration",
+    "Tool routing with fallback chains"
+  ],
+  "limits": [
+    "Cannot guarantee truth beyond available evidence",
+    "Critical actions constrained by policy/causal/integrity guardrails",
+    "May fail under poor retrieval quality from external KB"
+  ],
+  "tooling": [
+    "LightRAG bridge",
+    "causal precheck",
+    "integrity",
+    "itc",
+    "neurosym proofs",
+    "policy.py",
+    "project kernel",
+    "tool router"
+  ],
+  "recent_changes": [
+    {
+      "ts": 1774100861,
+      "stats": {
+        "experiences": 27,
+        "questions_open": 7,
+        "questions_answered": 0,
+        "triples": 7
+      },
+      "notes": [
+        "experiences=27",
+        "triples=7",
+        "questions_open=7"
+      ]
+    },
+    {
+      "ts": 1774127216,
+      "stats": {
+        "experiences": 113,
+        "questions_open": 34,
+        "questions_answered": 0,
+        "triples": 101
+      },
+      "notes": [
+        "experiences=113",
+        "triples=101",
+        "questions_open=34"
+      ]
+    },
+    {
+      "ts": 1775495251,
+      "stats": {
+        "experiences": 1543,
+        "questions_open": 212,
+        "questions_answered": 0,
+        "triples": 1229
+      },
+      "notes": [
+        "experiences=1543",
+        "triples=1229",
+        "questions_open=212"
+      ]
+    },
+    {
+      "ts": 1776604620,
+      "stats": {
+        "experiences": 2756,
+        "questions_open": 422,
+        "questions_answered": 0,
+        "triples": 2590
+      },
+      "notes": [
+        "experiences=2756",
+        "triples=2590",
+        "questions_open=422"
+      ]
+    },
+    {
+      "ts": 1776641224,
+      "stats": {
+        "experiences": 2949,
+        "questions_open": 442,
+        "questions_answered": 0,
+        "triples": 2853
+      },
+      "notes": [
+        "experiences=2949",
+        "triples=2853",
+        "questions_open=442"
+      ]
+    }
+  ],
+  "causal": {
+    "strategy_outcomes": {
+      "auto_resolve_conflicts": {
+        "count": 795,
+        "success": 795,
+        "error": 0,
+        "lat_total_ms": 7659587.0,
+        "lat_avg_ms": 9634.701,
+        "success_rate": 1.0,
+        "bayes_rate": 0.9987,
+        "confidence": 0.9975,
+        "updated_at": 1776787654,
+        "uncertainty": 0.0025,
+        "std_dev": 0.0013
+      },
+      "local": {
+        "count": 50,
+        "success": 50,
+        "error": 0,
+        "success_rate": 1.0,
+        "bayes_rate": 0.9808,
+        "confidence": 1.0,
+        "updated_at": 1774401166
+      }
+    },
+    "task_outcomes": {
+      "review": {
+        "count": 795,
+        "success": 795,
+        "error": 0,
+        "lat_total_ms": 7659587.0,
+        "lat_avg_ms": 9634.701,
+        "success_rate": 1.0,
+        "bayes_rate": 0.9987,
+        "confidence": 0.9975,
+        "updated_at": 1776787654,
+        "uncertainty": 0.0025,
+        "std_dev": 0.0013
+      },
+      "test_autonomy_cycle": {
+        "count": 50,
+        "success": 50,
+        "error": 0,
+        "success_rate": 1.0,
+        "bayes_rate": 0.9808,
+        "confidence": 1.0,
+        "updated_at": 1774401166
+      }
+    },
+    "budget_profile_outcomes": {
+      "default": {
+        "count": 845,
+        "success": 845,
+        "error": 0,
+        "lat_total_ms": 7659587.0,
+        "lat_avg_ms": 9064.6,
+        "success_rate": 1.0,
+        "bayes_rate": 0.9988,
+        "confidence": 0.9976,
+        "updated_at": 1776787654,
+        "uncertainty": 0.0024,
+        "std_dev": 0.0012
+      }
+    },
+    "recent_events": [
+      {
+        "ts": 1775438696,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5945,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775438974,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7069,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775439248,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6268,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775439510,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6628,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775472917,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7081,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775473550,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 10954,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775473720,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 10741,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775474327,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 13063,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775475149,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5709,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775476155,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9253,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775477101,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6297,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775477746,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6231,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775478421,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6098,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775480720,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5648,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775481722,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5808,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775485045,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8849,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775488634,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 12895,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775493060,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 15941,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775495564,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6577,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775495880,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7300,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775496193,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7433,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775496301,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 11392,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775496592,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 12087,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775496912,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7706,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775497224,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6294,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775497525,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 11730,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775497652,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6235,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775497787,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 11990,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775498106,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6531,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775498290,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 13340,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775498420,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 11953,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775498731,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7253,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775499041,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6018,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775499357,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8693,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775499667,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5718,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775500075,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6517,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775500391,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7240,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775500609,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6227,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775500920,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6664,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775501237,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9551,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775501371,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 11775,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775501682,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6123,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775501994,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4903,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775502303,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5855,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775502617,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6104,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775502929,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6264,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775503238,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5442,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775503554,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5709,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775503875,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5462,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775504192,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4697,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775504508,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5222,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775504828,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4815,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775505143,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9226,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775505459,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6536,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775505771,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5544,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775506083,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8703,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775506402,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8371,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775506712,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5152,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775507021,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5715,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775507331,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6202,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775507640,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5458,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775507953,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9285,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775508266,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9218,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775508578,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8234,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775508888,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5799,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775509200,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8771,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775509510,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5553,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775509830,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9522,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775510141,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5176,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775510450,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5487,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775510761,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6639,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775511071,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5892,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775511380,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5971,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775511694,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5394,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775512006,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8821,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775512315,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5962,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775512628,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5982,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775512939,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6473,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775513249,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5674,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775513560,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6210,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775513869,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5676,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775514180,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6159,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775514490,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6124,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775514804,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9202,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775515113,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5852,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775515423,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5481,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775515733,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5840,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775516044,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5675,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775516358,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5651,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775516690,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6298,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775517012,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6210,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775517322,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5771,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775517636,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7554,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775517951,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6149,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775518263,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6300,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775518578,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9409,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775518892,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5767,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775519206,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5508,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775519518,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5927,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775519836,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6386,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775520148,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4494,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775520462,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6031,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775520783,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6093,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775521094,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5110,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775521413,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8434,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775562468,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 17334,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775562789,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6680,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775563098,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4341,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775563413,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9187,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775563724,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5646,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775564040,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5960,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775564357,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7330,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775564670,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6144,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775564981,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5820,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775565302,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 17216,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775565612,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6273,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775565922,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5740,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775566231,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5255,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775566542,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6921,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775566854,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6912,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775567179,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 20588,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775567513,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 29721,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775567825,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7991,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775568151,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8901,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775568458,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 501,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775568765,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 392,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775569104,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 17001,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775569435,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 26532,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775569741,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 606,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775570046,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 374,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775570352,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 392,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775570676,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 18116,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775571025,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 19414,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775571338,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5910,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775571651,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6223,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775571963,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6118,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775572277,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4931,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775572587,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6003,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775572906,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7646,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775573224,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6484,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775573535,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5310,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775573844,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5553,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775574157,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9164,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775574470,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6565,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775574791,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5687,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775575111,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5642,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775575422,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6304,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775575733,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6271,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775576047,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9204,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775576361,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6571,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775576675,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5471,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775577000,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 20127,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775577306,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 488,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775577610,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 284,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775577921,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6220,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775578238,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7027,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775578549,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5914,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775578862,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8698,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775579176,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9300,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775579490,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6137,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775579805,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6612,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775580122,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6723,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775580433,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5477,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775580746,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7077,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775581062,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9292,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775581375,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6245,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775581688,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6595,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775581999,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5407,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775582316,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 11112,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775582629,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6718,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775582944,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9630,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775583261,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6276,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775583573,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6074,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775583887,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6264,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775584198,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6069,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775584510,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5858,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775584827,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6032,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775585143,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5985,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775585453,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5442,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775585768,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9530,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775586085,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 11432,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775586398,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6271,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775586715,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6652,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775587027,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5892,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775587339,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6127,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775587648,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4130,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775587964,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 10228,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775588277,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6893,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775588588,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6105,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775588903,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9742,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775589214,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6164,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775589528,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6608,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775589844,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9108,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775590169,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8128,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775590486,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6855,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775590806,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 10384,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775591119,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7129,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775591439,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6989,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775591755,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9221,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775592066,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6228,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775592378,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6837,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775592694,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6654,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775593008,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9501,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775593328,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6387,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775593645,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6805,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775593965,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6300,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775594278,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5983,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775594601,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6685,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775594917,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5500,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775595249,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5823,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775595565,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5880,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1775595882,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 10294,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776186941,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 12859,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776187265,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8141,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776187580,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6324,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776187931,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6941,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776188248,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6012,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776188561,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5936,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776188886,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 11008,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776189204,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6121,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776189319,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 11484,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776189638,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 10796,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776189950,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7179,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776190225,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 12342,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776190523,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 12387,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776190849,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6879,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776191167,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 10858,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776191482,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8923,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776191800,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6602,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776192116,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8601,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776192432,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7402,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776192747,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7182,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776193000,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 12953,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776193443,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 10159,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776193761,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7298,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776194080,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7309,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776194398,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7464,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776194759,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 13857,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776195077,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9202,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776195431,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 12362,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776195750,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9770,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776196063,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6642,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776197415,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9793,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776197728,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5221,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776198743,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 11497,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776199134,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 16851,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776199386,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 27139,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776199707,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7759,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776208807,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5267,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776209123,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8902,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776209767,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5072,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776213477,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 20157,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776214100,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 364,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776215855,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 13448,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776217481,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 583,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776217793,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 2881,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776218407,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 358,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776388332,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4157,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776388643,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3860,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776389274,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3654,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776391433,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9656,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776428000,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 10317,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776428313,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4646,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776429551,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8402,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776430200,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3672,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776430517,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8127,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776431160,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4724,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776431479,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8522,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776436860,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5376,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776437484,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5996,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776438760,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 763,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776439388,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 13439,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776439722,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 24574,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776444069,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3920,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776444387,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8586,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776445029,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5202,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776445347,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3598,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776450943,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4077,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776451254,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3267,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776453111,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8403,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776453422,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3823,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776457792,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5395,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776475555,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 12137,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776475887,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 21161,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776514802,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5228,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776515113,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4425,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776517022,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7674,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776517350,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 13507,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776517990,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 16782,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776518302,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4002,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776518948,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 21138,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776519281,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 26179,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776519908,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 882,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776520221,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5322,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776520845,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 458,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776522118,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5617,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776522763,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 21034,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776523093,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 21408,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776523730,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 1780,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776524037,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 394,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776524670,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 2970,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776535529,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 11955,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776535845,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3834,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776536486,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3774,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776541169,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3457,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776541484,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4177,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776542108,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3068,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776548020,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 1345,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776548331,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 385,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776548980,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 20033,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776551174,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 19729,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776551574,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 42006,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776552320,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 600,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776552650,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 38658,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776553215,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 21952,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776559124,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 23764,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776559317,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 19426,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776559559,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 15113,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776560004,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 15172,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776560186,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 22162,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776560317,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 16968,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776560459,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 19881,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776562497,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7726,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776562812,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3731,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776563453,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 11846,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776563765,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4660,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776565984,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 17040,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776566093,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 10989,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776566311,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 15393,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776602250,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 10989,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776604936,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6770,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776605247,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3398,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776605885,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3745,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776606208,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3591,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776606879,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4264,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776607196,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3990,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776620884,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3772,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776621194,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3231,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776621824,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7891,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776622142,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 10711,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776627500,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3617,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776627500,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4155,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776627506,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9527,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776627633,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 25353,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776627635,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 27047,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776627721,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 24638,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776627780,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 31175,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776628153,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7274,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776628466,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 2906,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776628794,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8111,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776629188,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4344,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776629541,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5960,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776629819,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5506,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776630147,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5930,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776632428,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 24699,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776632533,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8410,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776633160,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7105,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776633446,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 11223,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776633718,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 12372,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776637515,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7083,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776637749,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6772,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776638040,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8448,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776638625,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6584,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776639021,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8563,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776641178,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4005,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776641640,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9321,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776642461,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 6467,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776643086,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5265,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776643396,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3936,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776646329,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3454,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776646478,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3296,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776646796,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3529,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776647259,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 3948,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776647438,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4196,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776647769,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8262,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776648014,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8723,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776648383,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5918,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776648492,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4631,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776648750,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 10210,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776649068,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 10511,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776649385,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9938,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776649494,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4993,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776649700,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8067,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776649827,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 8777,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776650012,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5999,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776650570,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 9467,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776650759,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 14795,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776650973,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4300,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776651151,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7154,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776651666,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7764,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776698246,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 4196,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776698984,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 2474,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776699309,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 7049,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776700125,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 829,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776714942,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 14800,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776723077,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 998,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776723396,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 656,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776723779,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 1372,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776724297,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 2158,
+        "notes": "action_done"
+      },
+      {
+        "ts": 1776787654,
+        "strategy": "auto_resolve_conflicts",
+        "task_type": "review",
+        "budget_profile": "default",
+        "ok": true,
+        "latency_ms": 5680,
+        "notes": "action_done"
+      }
+    ]
+  },
+  "operational": {
+    "strengths": [],
+    "weaknesses": [],
+    "failure_patterns": [],
+    "confidence_by_domain": {},
+    "risk_posture": {
+      "avg_quality": 0.0,
+      "avg_risk": 0.0,
+      "avg_grounding": 0.0,
+      "avg_revision_rate": 0.0,
+      "avg_confirmation_rate": 0.0
+    },
+    "signals": {
+      "episodes": 0,
+      "tool_backed": 0,
+      "critic_revisions": 0,
+      "confirmation_needed": 0,
+      "high_risk": 0,
+      "low_grounding": 0,
+      "rag_coverage_low": 0
+    },
+    "recent_assessments": []
+  },
+  "predictive": {
+    "avg_surprise": 0.0,
+    "recent_predictions": []
+  }
+}

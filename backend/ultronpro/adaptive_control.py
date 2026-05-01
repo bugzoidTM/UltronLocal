@@ -5,7 +5,7 @@ from typing import Any
 import json
 import time
 
-PATH = Path('/app/data/adaptive_control.json')
+PATH = Path(__file__).resolve().parent.parent / 'data' / 'adaptive_control.json'
 
 
 def _default() -> dict[str, Any]:

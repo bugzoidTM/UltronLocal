@@ -1,9 +1,10 @@
+from pathlib import Path
 import json
 import os
 import logging
 from typing import Dict
 
-SETTINGS_FILE = "/app/data/settings.json"
+SETTINGS_FILE = str(Path(__file__).resolve().parent.parent / 'data' / 'settings.json')
 logger = logging.getLogger("uvicorn")
 
 # Default settings with discovered LightRAG key
@@ -13,10 +14,13 @@ DEFAULT_SETTINGS = {
     "groq_api_key": "",
     "deepseek_api_key": "",
     "openrouter_api_key": "",
-    "gemini_api_key": "",
+    "gemini_api_key": "AIzaSyAsBSMVCiOwDbxTKuY27zLXv06rS-ucJLU",
     "huggingface_api_key": "",
+    "nvidia_api_key": "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",
+    "github_api_key": "",
+    "ollama_api_key": "",
     "lightrag_api_key": "b9714901186877fe01b1d7cd81ad65d9",  # Auto-discovered
-    "lightrag_url": "http://lightrag2_lightrag2.1.ccxtpz7umbbwfjb1ew0ji8lux:9621/api" # Internal Docker network address
+    "lightrag_url": "http://127.0.0.1:9621/api" # Internal Docker network address
 }
 
 def load_settings() -> Dict[str, str]:
@@ -61,6 +65,9 @@ def get_api_key(provider: str) -> str:
         "openrouter": "openrouter_api_key",
         "gemini": "gemini_api_key",
         "huggingface": "huggingface_api_key",
+        "nvidia": "nvidia_api_key",
+        "github": "github_api_key",
+        "ollama": "ollama_api_key",
         "lightrag": "lightrag_api_key"
     }
     value = s.get(key_map.get(provider, ""), "")
@@ -74,6 +81,9 @@ def get_api_key(provider: str) -> str:
         "openrouter": "OPENROUTER_API_KEY",
         "gemini": "GEMINI_API_KEY",
         "huggingface": "HUGGINGFACE_API_KEY",
+        "nvidia": "NVIDIA_API_KEY",
+        "github": "GITHUB_API_KEY",
+        "ollama": "OLLAMA_API_KEY",
         "lightrag": "LIGHTRAG_API_KEY",
     }
     return os.getenv(env_map.get(provider, ""), "")

@@ -7,8 +7,8 @@ import math
 import random
 import time
 
-STATE_PATH = Path('/app/data/emergence_state.json')
-EVAL_PATH = Path('/app/data/emergence_eval_history.json')
+STATE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'emergence_state.json'
+EVAL_PATH = Path(__file__).resolve().parent.parent / 'data' / 'emergence_eval_history.json'
 
 
 def _load(path: Path, default):

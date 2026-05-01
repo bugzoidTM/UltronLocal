@@ -8,23 +8,23 @@ from typing import Any
 
 from ultronpro import economic, homeostasis, identity_daily, self_model
 
-LEDGER_PATH = Path('/app/data/self_governance/incidents.jsonl')
-BIO_PATH = Path('/app/data/self_governance/biography.jsonl')
-GOALS_PATH = Path('/app/data/self_governance/persistent_goals.json')
-BOUNDARY_PATH = Path('/app/data/self_governance/boundary_state.json')
-LINEAGE_PATH = Path('/app/data/self_governance/lineage_registry.json')
+LEDGER_PATH = Path(__file__).resolve().parent.parent / 'data' / 'self_governance/incidents.jsonl'
+BIO_PATH = Path(__file__).resolve().parent.parent / 'data' / 'self_governance/biography.jsonl'
+GOALS_PATH = Path(__file__).resolve().parent.parent / 'data' / 'self_governance/persistent_goals.json'
+BOUNDARY_PATH = Path(__file__).resolve().parent.parent / 'data' / 'self_governance/boundary_state.json'
+LINEAGE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'self_governance/lineage_registry.json'
 
 
 ROOT_MEMORYS = [
-    {'name': 'self_model', 'kind': 'critical', 'path': '/app/data/self_model.json'},
-    {'name': 'identity_daily', 'kind': 'critical', 'path': '/app/data/identity_daily.json'},
-    {'name': 'homeostasis_state', 'kind': 'critical', 'path': '/app/data/homeostasis_state.json'},
-    {'name': 'economic_primitives', 'kind': 'operational', 'path': '/app/data/economic_primitives.json'},
+    {'name': 'self_model', 'kind': 'critical', 'path': str(Path(__file__).resolve().parent.parent / 'data' / 'self_model.json')},
+    {'name': 'identity_daily', 'kind': 'critical', 'path': str(Path(__file__).resolve().parent.parent / 'data' / 'identity_daily.json')},
+    {'name': 'homeostasis_state', 'kind': 'critical', 'path': str(Path(__file__).resolve().parent.parent / 'data' / 'homeostasis_state.json')},
+    {'name': 'economic_primitives', 'kind': 'operational', 'path': str(Path(__file__).resolve().parent.parent / 'data' / 'economic_primitives.json')},
 ]
 
 BOUNDARY_RULES = [
-    {'id': 'self_data', 'scope': 'self', 'patterns': ['/app/data/self_', '/app/data/homeostasis', '/app/data/identity_', '/app/data/economic_']},
-    {'id': 'memory_data', 'scope': 'memory', 'patterns': ['/app/data/', '/app/indexes/', '/app/cache/']},
+    {'id': 'self_data', 'scope': 'self', 'patterns': [str(Path(__file__).resolve().parent.parent / 'data' / 'self_'), str(Path(__file__).resolve().parent.parent / 'data' / 'homeostasis'), str(Path(__file__).resolve().parent.parent / 'data' / 'identity_'), str(Path(__file__).resolve().parent.parent / 'data' / 'economic_')]},
+    {'id': 'memory_data', 'scope': 'memory', 'patterns': [str(Path(__file__).resolve().parent.parent / 'data' / ''), str(Path(__file__).resolve().parent.parent / 'indexes' / ''), str(Path(__file__).resolve().parent.parent / 'cache' / '')]},
     {'id': 'tooling_runtime', 'scope': 'tooling', 'patterns': ['/app/bin/', '/usr/bin/', '/usr/local/bin/']},
     {'id': 'environment_external', 'scope': 'environment', 'patterns': ['http://', 'https://', 'ssh://', 's3://']},
 ]
@@ -131,6 +131,54 @@ def bootstrap_storage() -> dict[str, Any]:
             'lineage': str(LINEAGE_PATH),
         },
     }
+
+def backup_root_memories(label: str = '') -> dict[str, Any]:
+    import shutil
+    from datetime import datetime
+    
+    backup_id = f"bmem_{_now()}_{uuid.uuid4().hex[:6]}"
+    backup_dir = Path(__file__).resolve().parent.parent / 'data' / 'self_governance' / 'backups' / backup_id
+    backup_dir.mkdir(parents=True, exist_ok=True)
+    
+    saved_files = []
+    for mem in ROOT_MEMORYS:
+        source = Path(mem['path'])
+        if source.exists():
+            dest = backup_dir / source.name
+            shutil.copy2(source, dest)
+            saved_files.append(str(dest))
+            
+    meta = {
+        'id': backup_id,
+        'ts': _now(),
+        'date': datetime.now().isoformat(),
+        'label': str(label or 'manual_backup')[:80],
+        'files': saved_files
+    }
+    _save_json(backup_dir / 'meta.json', meta)
+    _append_jsonl(BIO_PATH, {'ts': _now(), 'type': 'root_memories_backed_up', 'backup_id': backup_id, 'label': meta['label']})
+    
+    return {'ok': True, 'backup_id': backup_id, 'files_backed_up': len(saved_files)}
+
+def restore_root_memories(backup_id: str) -> dict[str, Any]:
+    import shutil
+    
+    backup_dir = Path(__file__).resolve().parent.parent / 'data' / 'self_governance' / 'backups' / str(backup_id)
+    if not backup_dir.exists() or not (backup_dir / 'meta.json').exists():
+        return {'ok': False, 'error': 'backup_not_found'}
+        
+    restored = []
+    for mem in ROOT_MEMORYS:
+        source_in_bkp = backup_dir / Path(mem['path']).name
+        if source_in_bkp.exists():
+            dest = Path(mem['path'])
+            shutil.copy2(source_in_bkp, dest)
+            restored.append(str(dest))
+            
+    _append_jsonl(BIO_PATH, {'ts': _now(), 'type': 'root_memories_restored', 'backup_id': backup_id})
+    return {'ok': True, 'backup_id': backup_id, 'files_restored': len(restored)}
+
+
 
 
 def _resource_profile() -> dict[str, Any]:
@@ -473,6 +521,9 @@ def detect_damage() -> dict[str, Any]:
     if len(inv.get('violations') or []) > 0:
         module = 'identity_contract'
         symptom = 'violação de invariante de identidade'
+    elif len(vio.get('recent_violations') or []) > 3:
+        module = 'boundary_guard'
+        symptom = 'violações consistentes de fronteira detectadas'
     elif float((hs_v.get('contradiction_stress') or 0.0)) > 0.65:
         module = 'homeostasis'
         symptom = 'stress contraditório elevado'
@@ -498,13 +549,21 @@ def contain_damage() -> dict[str, Any]:
     det = detect_damage()
     sev = float(det.get('severity_score') or 0.0)
     actions = ['log_and_monitor']
+    quarantined_patch = None
     if sev >= 0.75:
         actions = ['freeze_promotions', 'prefer_safe_fallbacks', 'block_high_cost_actions', 'quarantine_recent_changes']
+        # Execute explicit quarantine
+        from ultronpro import cognitive_patches
+        active_patches = cognitive_patches.list_patches(status='promoted')
+        if active_patches:
+            latest = active_patches[-1]
+            cognitive_patches.rollback_patch(latest['id'], rollback_ref='quarantine', note='Containment action due to critical damage score')
+            quarantined_patch = latest['id']
     elif sev >= 0.5:
         actions = ['prefer_safe_fallbacks', 'increase_confirmation_threshold', 'reduce_parallelism']
     elif sev >= 0.3:
         actions = ['increase_monitoring', 'prefer_balanced_profile']
-    return {'ok': True, 'severity_score': sev, 'containment_actions': actions, 'detector': det}
+    return {'ok': True, 'severity_score': sev, 'containment_actions': actions, 'quarantined_patch': quarantined_patch, 'detector': det}
 
 
 def repair_damage() -> dict[str, Any]:
@@ -552,6 +611,7 @@ def autobiographical_summary(limit: int = 80) -> dict[str, Any]:
     identity = sm.get('identity') if isinstance(sm.get('identity'), dict) else {}
     pending = ids.get('pending_promises') if isinstance(ids.get('pending_promises'), list) else []
     latest_review = ((ids.get('entries') or [])[-1] if (ids.get('entries') or []) else {}) if isinstance(ids, dict) else {}
+    latest_biographic_digest = ids.get('latest_biographic_digest') if isinstance(ids.get('latest_biographic_digest'), dict) else {}
 
     recent = rows[-12:]
     event_counts: dict[str, int] = {}
@@ -598,6 +658,8 @@ def autobiographical_summary(limit: int = 80) -> dict[str, Any]:
         dominant_arc = 'repair_and_recovery'
     if latest_review and str(latest_review.get('protocol_update') or '').strip():
         dominant_arc = 'protocol_learning'
+    if latest_biographic_digest and (latest_biographic_digest.get('benchmarks') or latest_biographic_digest.get('corrections')):
+        dominant_arc = 'trajectory_integration'
 
     mode = str(hs.get('mode') or 'normal')
     coherence = float(narrative.get('narrative_coherence_score') or 0.0)
@@ -617,6 +679,8 @@ def autobiographical_summary(limit: int = 80) -> dict[str, Any]:
         'narrative_summary': narrative.get('summary'),
         'narrative_coherence_score': coherence,
         'pending_promises': len(pending),
+        'latest_biographic_digest_id': latest_biographic_digest.get('id'),
+        'latest_biographic_digest': latest_biographic_digest.get('narrative'),
     }
     continuity_risks = []
     if coherence < 0.45:
@@ -630,7 +694,7 @@ def autobiographical_summary(limit: int = 80) -> dict[str, Any]:
 
     if continuity_risks:
         continuity_posture = 'fragile'
-    elif dominant_arc in ('lineage_adaptation', 'protocol_learning'):
+    elif dominant_arc in ('lineage_adaptation', 'protocol_learning', 'trajectory_integration'):
         continuity_posture = 'adaptive'
     else:
         continuity_posture = 'stable'
@@ -642,6 +706,8 @@ def autobiographical_summary(limit: int = 80) -> dict[str, Any]:
         f"e coerência narrativa {coherence:.2f}. "
         f"Tenho {len(pending)} promessas pendentes e {len(crises)} sinais recentes de crise/reparo relevantes."
     )
+    if latest_biographic_digest.get('narrative'):
+        first_person += " " + str(latest_biographic_digest.get('narrative'))
 
     return {
         'ok': True,
@@ -651,6 +717,7 @@ def autobiographical_summary(limit: int = 80) -> dict[str, Any]:
         'continuity_posture': continuity_posture,
         'continuity_risks': continuity_risks,
         'latest_protocol_update': str((latest_review.get('protocol_update') or '')).strip(),
+        'latest_biographic_digest': latest_biographic_digest,
         'recent_event_counts': event_counts,
         'recent_highlights': highlights[-8:],
         'recent_crises': crises,

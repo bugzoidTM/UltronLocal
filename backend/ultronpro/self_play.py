@@ -6,7 +6,7 @@ import json
 import random
 import time
 
-PATH = Path('/app/data/self_play_history.json')
+PATH = Path(__file__).resolve().parent.parent / 'data' / 'self_play_history.json'
 
 
 def _load() -> dict[str, Any]:

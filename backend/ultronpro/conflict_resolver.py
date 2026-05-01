@@ -167,17 +167,14 @@ def analyze_conflict(
             prompt,
             system="Você é um árbitro de conhecimento imparcial. Responda apenas em JSON válido.",
             json_mode=True,
+            cloud_fallback=True,
         )
         
         data = _parse_llm_response(response)
         if not data:
-            return ResolutionResult(
-                resolved=False,
-                confidence=0.0,
-                reasoning='LLM indisponível/sem JSON válido para análise de conflito.',
-                needs_human=True,
-                strategy='llm_unavailable',
-            )
+            # FALLBACK DETERMÍNÍSTICO: usar regra de confiança de fonte
+            logger.warning("LLM unavailable for conflict resolution - using deterministic fallback")
+            return _resolve_deterministically(conflict, variants, related_triples)
 
         chosen = data.get("chosen", "").strip()
         confidence = float(data.get("confidence", 0))
@@ -394,3 +391,62 @@ class ConflictResolver:
                 )
         
         return results
+
+
+def _resolve_deterministically(conflict: dict, variants: list[dict], 
+                                related_triples: list[dict] = None) -> ResolutionResult:
+    """
+    Fallback determinístico para resolução de conflitos.
+    
+    Usa apenas código - não depende de LLM cloud.
+    Aplica regras de confiança de fonte e coerência.
+    """
+    import logging
+    logger = logging.getLogger("uvicorn")
+    
+    if not variants:
+        return ResolutionResult(
+            resolved=False,
+            confidence=0.0,
+            reasoning='Sem variantes para analisar (fallback determinístico)',
+            strategy='deterministic_fallback',
+            needs_human=True,
+        )
+    
+    # Regra 1: Escolher variante com maior source_trust
+    best_variant = max(variants, key=lambda v: float(v.get('source_trust', 0.5)))
+    chosen_object = best_variant.get('object', '')
+    source_trust = float(best_variant.get('source_trust', 0.5))
+    
+    # Regra 2: Verificar coerência com triplas relacionadas
+    coherence_bonus = 0.0
+    if related_triples:
+        obj_lower = chosen_object.lower()
+        for t in related_triples[:5]:
+            txt = f"{t.get('subject', '')} {t.get('predicate', '')} {t.get('object', '')}".lower()
+            if obj_lower in txt:
+                coherence_bonus += 0.1
+    
+    # Calcular confiança final
+    confidence = min(0.7, source_trust + coherence_bonus)
+    
+    # Se confiança muito baixa, marcar para revisão humana
+    if confidence < 0.4:
+        return ResolutionResult(
+            resolved=False,
+            confidence=confidence,
+            reasoning=f'Fallback determinístico: confiança baixa ({confidence:.2f}). Necessária revisão humana.',
+            strategy='deterministic_low_confidence',
+            needs_human=True,
+        )
+    
+    logger.info(f"Conflict resolved deterministically: {best_variant.get('subject', '?')} -> {chosen_object} (trust={source_trust:.2f})")
+    
+    return ResolutionResult(
+        resolved=True,
+        chosen_object=chosen_object,
+        confidence=confidence,
+        reasoning=f'Fallback determinístico: escolhido por source_trust={source_trust:.2f}, coerência={coherence_bonus:.2f}',
+        strategy='deterministic_fallback',
+        needs_human=False,
+    )

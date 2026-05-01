@@ -8,7 +8,7 @@ from typing import Any
 
 from ultronpro import cognitive_patches, shadow_eval
 
-LEDGER_PATH = Path('/app/data/cognitive_rollbacks.jsonl')
+LEDGER_PATH = Path(__file__).resolve().parent.parent / 'data' / 'cognitive_rollbacks.jsonl'
 
 
 def _now() -> int:
@@ -91,6 +91,43 @@ def auto_rollback_if_needed(patch_id: str, thresholds: dict[str, Any] | None = N
         'rolled_back': True,
         'detection': detected,
         'ledger': ledger,
+    }
+
+
+def monitor_longitudinal_regressions(time_window_hours: int = 24) -> dict[str, Any]:
+    """
+    Avalia a sanidade a longo prazo de patches promovidos cruzando
+    com o benchmark externo/longitudinal, aplicando rollback preventivo.
+    """
+    from ultronpro import benchmark_correlation
+    
+    # Run the correlation check first
+    correlation_report = benchmark_correlation.measure_patch_external_correlation()
+    
+    thresholds = {
+        'max_delta_drop': -0.05,
+    }
+    
+    rolled_back_count = 0
+    actions = []
+    
+    for p_report in correlation_report.get('patches', []):
+        if not p_report.get('global_aligned'):
+            if p_report.get('external_global_delta', 0.0) < thresholds['max_delta_drop']:
+                # The external benchmark heavily regressed after this patch!
+                pid = p_report['patch_id']
+                rb_result = auto_rollback_if_needed(pid, thresholds={'max_delta_drop': 0.0}, note="longitudinal external regression detected via benchmark suite")
+                
+                if rb_result and rb_result.get('rolled_back'):
+                    rolled_back_count += 1
+                actions.append(rb_result)
+                
+    return {
+        'ok': True,
+        'ts': _now(),
+        'rolled_back_count': rolled_back_count,
+        'correlation_score': correlation_report.get('correlation_score'),
+        'actions': actions
     }
 
 

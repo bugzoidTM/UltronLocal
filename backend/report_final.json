@@ -1,0 +1,27 @@
+﻿METRICS: {
+  "local_triples": {},
+  "experiences": {}
+}
+WEB EVENTS: {None: 1000}
+provider_health.json
+{
+  "gemini": "EMPTY/TIMEOUT",
+  "groq": "EMPTY/TIMEOUT",
+  "nvidia": "EMPTY/TIMEOUT"
+}
+llm_provider_quarantine.json
+{
+  "updated_at": 1776194338,
+  "providers": {
+    "openrouter": {
+      "until": 1776196138,
+      "reason": "Error code: 429 - {'error': {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit",
+      "updated_at": 1776194338
+    },
+    "groq": {
+      "until": 1776196015,
+      "reason": "Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01j2fr3g0afrg83zk90sz12hqk` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99744,",
+      "updated_at": 1776194215
+    }
+  }
+}

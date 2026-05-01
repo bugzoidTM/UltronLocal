@@ -7,7 +7,7 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
-DATA_PATH = Path('/app/data/explicit_abstractions.json')
+DATA_PATH = Path(__file__).resolve().parent.parent / 'data' / 'explicit_abstractions.json'
 
 
 def _now() -> int:

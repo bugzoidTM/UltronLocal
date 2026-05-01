@@ -1,0 +1,83 @@
+{
+  "patterns": {
+    "e2e59d90a092": {
+      "pattern_id": "e2e59d90a092",
+      "trigger": "test_action:test_context",
+      "root_cause": "unknown_root_cause",
+      "symptoms": [
+        "Test error for validation",
+        "Test error for validation",
+        "Test error for validation"
+      ],
+      "frequency": 3,
+      "first_seen": 1775251871.9494572,
+      "last_seen": 1775253077.410806,
+      "success_count": 0,
+      "failure_count": 2
+    }
+  },
+  "lessons": {
+    "e2e59d90a092": {
+      "lesson_id": "lesson_e2e59d90a092",
+      "pattern_id": "e2e59d90a092",
+      "description": "Corre\u00e7\u00e3o para Ajustar timeout para falha: unknown_root_cause",
+      "correction_applied": "Ajustar timeout para falha: unknown_root_cause",
+      "verification": "Avaliar se 'test_action' ainda falha",
+      "effectiveness": 0.0,
+      "times_applied": 0,
+      "times_verified": 0
+    }
+  },
+  "corrections": [
+    {
+      "correction_id": "corr_1775252622_e2e59d",
+      "pattern_id": "e2e59d90a092",
+      "type": "param_adjust",
+      "param": "",
+      "before": 30,
+      "after": 45,
+      "reason": "Ajustar timeout para falha: unknown_root_cause",
+      "applied_at": 1775252622.8797863,
+      "verified": false,
+      "effectiveness": 0.0
+    },
+    {
+      "correction_id": "corr_1775253077_e2e59d",
+      "pattern_id": "e2e59d90a092",
+      "type": "param_adjust",
+      "param": "",
+      "before": 30,
+      "after": 45,
+      "reason": "Ajustar timeout para falha: unknown_root_cause",
+      "applied_at": 1775253077.411807,
+      "verified": false,
+      "effectiveness": 0.0
+    }
+  ],
+  "log": [
+    {
+      "action": "test_action",
+      "context": "test_context",
+      "success": false,
+      "error": "Test error for validation",
+      "timestamp": 1775251871.9494572,
+      "metadata": {}
+    },
+    {
+      "action": "test_action",
+      "context": "test_context",
+      "success": false,
+      "error": "Test error for validation",
+      "timestamp": 1775252622.8777835,
+      "metadata": {}
+    },
+    {
+      "action": "test_action",
+      "context": "test_context",
+      "success": false,
+      "error": "Test error for validation",
+      "timestamp": 1775253077.410806,
+      "metadata": {}
+    }
+  ]
+}

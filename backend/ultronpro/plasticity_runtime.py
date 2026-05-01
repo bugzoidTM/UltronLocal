@@ -9,8 +9,8 @@ import re
 
 from ultronpro import llm, economic
 
-PATH = Path('/app/data/plasticity_runtime.json')
-DISTILL_PATH = Path('/app/data/memory_distillations.json')
+PATH = Path(__file__).resolve().parent.parent / 'data' / 'plasticity_runtime.json'
+DISTILL_PATH = Path(__file__).resolve().parent.parent / 'data' / 'memory_distillations.json'
 
 
 def _default() -> dict[str, Any]:

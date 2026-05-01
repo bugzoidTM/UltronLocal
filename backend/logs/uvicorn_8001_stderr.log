@@ -1,0 +1,55 @@
+INFO:     Started server process [13876]
+INFO:     Waiting for application startup.
+INFO:     Starting UltronPRO...
+INFO:     Loaded settings. LightRAG URL: https://lightrag.nutef.com
+INFO:     [META] Unidade de Reflexão Metacognitiva Unificada iniciada.
+INFO:     [SELF-TALK] OODA loop started (interval=180s)
+INFO:     Ultron loops startup complete
+INFO:     Operational Memory initialized: session=dd34afec4dfe
+INFO:     Background guard started (lag_pause=2.00s, pause=90s, slow_request=4.00s)
+INFO:     Autofeeder started
+INFO:     Autonomy loop started
+INFO:     Judge loop started
+INFO:     Recursive self-improvement loop started
+INFO:     Voice prewarm loop started
+INFO:     Roadmap V5 orchestrator loop started
+INFO:     AGI path loop started
+INFO:     Self-improvement loop started
+INFO:     Reflexion loop started
+INFO:     Self-governance loop started
+INFO:     Meta-observer loop started
+INFO:     Affect markers loop started
+INFO:     Narrative summary loop started
+INFO:     Integration proxy loop started
+INFO:     😴 Sleep cycle loop started (interval=21600s)
+INFO:     🩹 Healer verify loop started
+INFO:     ⚗️ Active Discovery loop started
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+INFO:     Background bootstrap disabled by env
+INFO:     Background source backfill disabled by env
+INFO:     Background recovery: ok
+INFO:     Phenomenal consciousness activated: already_active
+INFO:     WebExplorer: Iniciando (ULTRON_WEB_EXPLORER=1, interval=900s, max_links=1)
+INFO:     WebExplorer: Motor de exploração iniciado em background.
+INFO:     WebExplorer: Iniciando Puppeteer Bridge local...
+INFO:httpx:HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+ERROR:    LLM Call Error (openrouter/google/gemma-3-12b-it:free): Error code: 429 - {'error': {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1776816000000'}, 'provider_name': None}}, 'user_id': 'user_2ueUNny652rbn7mWgMS36MQqu4O'}
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     MentalSim: Scenario 'action:ask_evidence:8385' created with 1 hypotheses → chosen: hyp_1776794222_0
+INFO:     MentalSim: Learned from scenario 'action:ask_evidence:8385': surprise=0.80, lessons=3, competencies=0
+WARNING:  Background guard: pausing loop judge_loop for 90.0s (reason=event_loop_lag)
+INFO:     UltronPro: [quem é você?] thinking...
+INFO:     LocalReasoning: ESCALATE to LLM (no local resolution)
+INFO:     UltronPro: [qual o risco de executar um co] thinking...
+INFO:     LocalReasoning: ESCALATE to LLM (no local resolution)
+INFO:     LocalReasoning: ESCALATE to LLM (no local resolution)
+INFO:     LocalReasoning: ESCALATE to LLM (no local resolution)
+INFO:     LocalReasoning: ESCALATE to LLM (no local resolution)
+INFO:     LocalReasoning: ESCALATE to LLM (no local resolution)
+WARNING:  Background guard: pausing loop integration_proxy_loop for 60.0s (reason=event_loop_lag)

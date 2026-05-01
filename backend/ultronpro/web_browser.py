@@ -1,17 +1,34 @@
 from __future__ import annotations
 
-import html
+import sys
+
+import asyncio
 import json
+import os
+import html
 import re
+import random
 from typing import Any
 from urllib.parse import parse_qs, quote_plus, unquote, urlparse
 
 import httpx
+try:
+    from bs4 import BeautifulSoup
+except Exception:
+    BeautifulSoup = None
 
 from ultronpro import source_probe
 
+_UA_LIST = [
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0'
+]
+
 _DDG_HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122 Safari/537.36 UltronPro/0.1',
+    'User-Agent': random.choice(_UA_LIST),
 }
 
 
@@ -20,6 +37,32 @@ def _clean(s: str) -> str:
     t = re.sub(r'<[^>]+>', ' ', t)
     t = re.sub(r'\s+', ' ', t).strip()
     return t
+
+
+def extract_json_ld(html_content: str) -> list[dict[str, Any]]:
+    """Extrai blocos <script type="application/ld+json"> do HTML."""
+    if not html_content:
+        return []
+    if BeautifulSoup is None:
+        return []
+    
+    results = []
+    try:
+        soup = BeautifulSoup(html_content, 'html.parser')
+        scripts = soup.find_all('script', type='application/ld+json')
+        for script in scripts:
+            try:
+                data = json.loads(script.string or '')
+                if isinstance(data, list):
+                    results.extend([x for x in data if isinstance(x, dict)])
+                elif isinstance(data, dict):
+                    results.append(data)
+            except (json.JSONDecodeError, TypeError):
+                continue
+    except Exception:
+        pass
+    return results
+
 
 
 def _resolve_ddg_redirect(url: str) -> str:
@@ -140,3 +183,51 @@ def extract_structured(url: str, schema: dict[str, Any] | list[str] | str) -> di
         'data': data,
         'schema_fields': fields[:20],
     }
+
+
+async def browse_url_puppeteer(url: str, wait_until: str = 'networkidle2', timeout_ms: int = 30000) -> dict[str, Any]:
+    """Navega em uma URL usando o Puppeteer Bridge (Node.js) e extrai o conteúdo renderizado.
+    
+    Evita as falhas do asyncio.SelectorEventLoop do Windows pois o Node.js 
+    roda isolado em um microserviço acessível via HTTP nativo.
+    """
+    results = {
+        'ok': False,
+        'url': url,
+        'html': '',
+        'text': '',
+        'json_ld': [],
+        'error': None
+    }
+
+    port = int(os.environ.get('PUPPETEER_BRIDGE_PORT', '9010'))
+    bridge_url = f"http://127.0.0.1:{port}/browse"
+
+    try:
+        async with httpx.AsyncClient(timeout=timeout_ms / 1000 + 5.0) as client:
+            resp = await client.post(bridge_url, json={
+                "url": url,
+                "wait_until": wait_until,
+                "timeout_ms": timeout_ms,
+                "max_chars": 20000
+            })
+            resp.raise_for_status()
+            data = resp.json()
+
+            if not data.get('ok'):
+                results['error'] = data.get('error', 'bridge_error')
+                return results
+
+            results['status'] = data.get('status', 0)
+            results['html'] = data.get('html', '')
+            results['title'] = data.get('title', '')
+            results['text'] = data.get('text', '')
+            results['json_ld'] = extract_json_ld(results['html'])
+            results['ok'] = True
+            
+    except httpx.ConnectError:
+        results['error'] = 'puppeteer_bridge_not_running'
+    except Exception as e:
+        results['error'] = f"puppeteer_bridge_error: {type(e).__name__} {e}"
+        
+    return results

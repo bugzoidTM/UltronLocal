@@ -1,0 +1,164 @@
+INFO:     Started server process [4412]
+INFO:     Waiting for application startup.
+INFO:     Starting UltronPRO...
+INFO:     Loaded settings. LightRAG URL: https://lightrag.nutef.com
+INFO:     [META] Unidade de Reflexão Metacognitiva Unificada iniciada.
+INFO:     [SELF-TALK] OODA loop started (interval=180s)
+INFO:     Ultron loops startup complete
+INFO:     Operational Memory initialized: session=75377bd9c457
+INFO:     Background guard started (lag_pause=2.00s, pause=90s, slow_request=4.00s)
+INFO:     Autofeeder started
+INFO:     Autonomy loop started
+INFO:     Judge loop started
+INFO:     Recursive self-improvement loop started
+INFO:     Voice prewarm loop started
+INFO:     Roadmap V5 orchestrator loop started
+INFO:     AGI path loop started
+INFO:     Self-improvement loop started
+INFO:     Reflexion loop started
+INFO:     Self-governance loop started
+INFO:     Meta-observer loop started
+INFO:     Affect markers loop started
+INFO:     Narrative summary loop started
+INFO:     Integration proxy loop started
+INFO:     \U0001f634 Sleep cycle loop started (interval=21600s)
+INFO:     \U0001fa79 Healer verify loop started
+INFO:     \u2697\ufe0f Active Discovery loop started
+INFO:     Application startup complete.
+ERROR:    [Errno 10048] error while attempting to bind on address ('127.0.0.1', 8000): [winerror 10048] normalmente é permitida apenas uma utilização de cada endereço de soquete (protocolo/endereço de rede/porta)
+INFO:     Waiting for application shutdown.
+ERROR:    Traceback (most recent call last):
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 732, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 611, in __aexit__
+    await self._router.shutdown()
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 719, in shutdown
+    await handler()
+  File "F:\sistemas\UltronPro\backend\ultronpro\main.py", line 6155, in shutdown_event
+    await t
+  File "F:\sistemas\UltronPro\backend\ultronpro\main.py", line 5249, in autofeeder_loop
+    await asyncio.sleep(_loop_start_delay('autofeeder_loop', 150))  # Wait before first fetch
+                        ^^^^^^^^^^^^^^^^^
+NameError: name '_loop_start_delay' is not defined
+
+ERROR:    Application shutdown failed. Exiting.
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-15' coro=<self_improvement_loop() done, defined at F:\sistemas\UltronPro\backend\ultronpro\main.py:6036> exception=NameError("name '_loop_start_delay' is not defined")>
+Traceback (most recent call last):
+  File "F:\sistemas\UltronPro\backend\ultronpro\main.py", line 6039, in self_improvement_loop
+    await asyncio.sleep(_loop_start_delay('self_improvement_loop', 300))  # Espera inicial
+                        ^^^^^^^^^^^^^^^^^
+NameError: name '_loop_start_delay' is not defined
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-16' coro=<reflexion_loop() done, defined at F:\sistemas\UltronPro\backend\ultronpro\main.py:5447> exception=NameError("name '_loop_start_delay' is not defined")>
+Traceback (most recent call last):
+  File "F:\sistemas\UltronPro\backend\ultronpro\main.py", line 5449, in reflexion_loop
+    await asyncio.sleep(_loop_start_delay('reflexion_loop', 180))
+                        ^^^^^^^^^^^^^^^^^
+NameError: name '_loop_start_delay' is not defined
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-17' coro=<self_governance_loop() done, defined at F:\sistemas\UltronPro\backend\ultronpro\main.py:5493> exception=NameError("name '_loop_start_delay' is not defined")>
+Traceback (most recent call last):
+  File "F:\sistemas\UltronPro\backend\ultronpro\main.py", line 5495, in self_governance_loop
+    await asyncio.sleep(_loop_start_delay('self_governance_loop', 270))
+                        ^^^^^^^^^^^^^^^^^
+NameError: name '_loop_start_delay' is not defined
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-18' coro=<meta_observer_loop() done, defined at F:\sistemas\UltronPro\backend\ultronpro\main.py:5510> exception=NameError("name '_loop_start_delay' is not defined")>
+Traceback (most recent call last):
+  File "F:\sistemas\UltronPro\backend\ultronpro\main.py", line 5512, in meta_observer_loop
+    await asyncio.sleep(_loop_start_delay('meta_observer_loop', 300))
+                        ^^^^^^^^^^^^^^^^^
+NameError: name '_loop_start_delay' is not defined
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-19' coro=<affect_markers_loop() done, defined at F:\sistemas\UltronPro\backend\ultronpro\main.py:5548> exception=NameError("name '_loop_start_delay' is not defined")>
+Traceback (most recent call last):
+  File "F:\sistemas\UltronPro\backend\ultronpro\main.py", line 5550, in affect_markers_loop
+    await asyncio.sleep(_loop_start_delay('affect_markers_loop', 330))
+                        ^^^^^^^^^^^^^^^^^
+NameError: name '_loop_start_delay' is not defined
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-20' coro=<narrative_summary_loop() done, defined at F:\sistemas\UltronPro\backend\ultronpro\main.py:5573> exception=NameError("name '_loop_start_delay' is not defined")>
+Traceback (most recent call last):
+  File "F:\sistemas\UltronPro\backend\ultronpro\main.py", line 5575, in narrative_summary_loop
+    await asyncio.sleep(_loop_start_delay('narrative_summary_loop', 360))
+                        ^^^^^^^^^^^^^^^^^
+NameError: name '_loop_start_delay' is not defined
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-21' coro=<integration_proxy_loop() done, defined at F:\sistemas\UltronPro\backend\ultronpro\main.py:5603> exception=NameError("name '_loop_start_delay' is not defined")>
+Traceback (most recent call last):
+  File "F:\sistemas\UltronPro\backend\ultronpro\main.py", line 5605, in integration_proxy_loop
+    await asyncio.sleep(_loop_start_delay('integration_proxy_loop', 390))
+                        ^^^^^^^^^^^^^^^^^
+NameError: name '_loop_start_delay' is not defined
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-22' coro=<sleep_cycle_loop() done, defined at F:\sistemas\UltronPro\backend\ultronpro\main.py:5630> exception=NameError("name '_loop_start_delay' is not defined")>
+Traceback (most recent call last):
+  File "F:\sistemas\UltronPro\backend\ultronpro\main.py", line 5633, in sleep_cycle_loop
+    await asyncio.sleep(_loop_start_delay('sleep_cycle_loop', 420))  # esperar sistema estabilizar
+                        ^^^^^^^^^^^^^^^^^
+NameError: name '_loop_start_delay' is not defined
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-23' coro=<healer_verify_loop() done, defined at F:\sistemas\UltronPro\backend\ultronpro\main.py:5692> exception=NameError("name '_loop_start_delay' is not defined")>
+Traceback (most recent call last):
+  File "F:\sistemas\UltronPro\backend\ultronpro\main.py", line 5695, in healer_verify_loop
+    await asyncio.sleep(_loop_start_delay('healer_verify_loop', 450))  # esperar para dar tempo dos fixes agirem
+                        ^^^^^^^^^^^^^^^^^
+NameError: name '_loop_start_delay' is not defined
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-24' coro=<active_discovery_loop() done, defined at F:\sistemas\UltronPro\backend\ultronpro\main.py:5724> exception=NameError("name '_loop_start_delay' is not defined")>
+Traceback (most recent call last):
+  File "F:\sistemas\UltronPro\backend\ultronpro\main.py", line 5728, in active_discovery_loop
+    await asyncio.sleep(_loop_start_delay('active_discovery_loop', 480))  # Esperar o sistema estabilizar
+                        ^^^^^^^^^^^^^^^^^
+NameError: name '_loop_start_delay' is not defined
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-5' coro=<mission_control_loop() done, defined at F:\sistemas\UltronPro\backend\ultronpro\main.py:4622> exception=NameError("name '_loop_start_delay' is not defined")>
+Traceback (most recent call last):
+  File "F:\sistemas\UltronPro\backend\ultronpro\main.py", line 4624, in mission_control_loop
+    await asyncio.sleep(_loop_start_delay('mission_control_loop', 60))
+                        ^^^^^^^^^^^^^^^^^
+NameError: name '_loop_start_delay' is not defined
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-7' coro=<autonomy_loop() done, defined at F:\sistemas\UltronPro\backend\ultronpro\main.py:4639> exception=NameError("name '_loop_start_delay' is not defined")>
+Traceback (most recent call last):
+  File "F:\sistemas\UltronPro\backend\ultronpro\main.py", line 4642, in autonomy_loop
+    await asyncio.sleep(_loop_start_delay('autonomy_loop', 90))
+                        ^^^^^^^^^^^^^^^^^
+NameError: name '_loop_start_delay' is not defined
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-8' coro=<judge_loop() done, defined at F:\sistemas\UltronPro\backend\ultronpro\main.py:5230> exception=NameError("name '_loop_start_delay' is not defined")>
+Traceback (most recent call last):
+  File "F:\sistemas\UltronPro\backend\ultronpro\main.py", line 5233, in judge_loop
+    await asyncio.sleep(_loop_start_delay('judge_loop', 120))
+                        ^^^^^^^^^^^^^^^^^
+NameError: name '_loop_start_delay' is not defined
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-9' coro=<_recursive_si_loop() done, defined at F:\sistemas\UltronPro\backend\ultronpro\main.py:6100> exception=NameError("name '_loop_start_delay' is not defined")>
+Traceback (most recent call last):
+  File "F:\sistemas\UltronPro\backend\ultronpro\main.py", line 6103, in _recursive_si_loop
+    await asyncio.sleep(_loop_start_delay('recursive_si_loop', 600))  # Espera inicial
+                        ^^^^^^^^^^^^^^^^^
+NameError: name '_loop_start_delay' is not defined
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-11' coro=<voice_prewarm_loop() done, defined at F:\sistemas\UltronPro\backend\ultronpro\main.py:5357> exception=NameError("name '_loop_start_delay' is not defined")>
+Traceback (most recent call last):
+  File "F:\sistemas\UltronPro\backend\ultronpro\main.py", line 5360, in voice_prewarm_loop
+    await asyncio.sleep(_loop_start_delay('voice_prewarm_loop', 180))
+                        ^^^^^^^^^^^^^^^^^
+NameError: name '_loop_start_delay' is not defined
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-12' coro=<roadmap_v5_loop() done, defined at F:\sistemas\UltronPro\backend\ultronpro\main.py:5388> exception=NameError("name '_loop_start_delay' is not defined")>
+Traceback (most recent call last):
+  File "F:\sistemas\UltronPro\backend\ultronpro\main.py", line 5390, in roadmap_v5_loop
+    await asyncio.sleep(_loop_start_delay('roadmap_v5_loop', 210))
+                        ^^^^^^^^^^^^^^^^^
+NameError: name '_loop_start_delay' is not defined
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-13' coro=<agi_path_loop() done, defined at F:\sistemas\UltronPro\backend\ultronpro\main.py:5412> exception=NameError("name '_loop_start_delay' is not defined")>
+Traceback (most recent call last):
+  File "F:\sistemas\UltronPro\backend\ultronpro\main.py", line 5414, in agi_path_loop
+    await asyncio.sleep(_loop_start_delay('agi_path_loop', 240))
+                        ^^^^^^^^^^^^^^^^^
+NameError: name '_loop_start_delay' is not defined

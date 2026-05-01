@@ -1,0 +1,1435 @@
+{
+  "ok": true,
+  "resolved": true,
+  "investigation_id": "inv_891c9c678d",
+  "ts": 1777669263,
+  "status": "needs_experiment",
+  "reason": "no_structured_coverage",
+  "task_type": "general",
+  "query": "tou com dor de barriga",
+  "learned_route": {
+    "module": "unknown",
+    "confidence": 0.0,
+    "method": "episode_token_similarity",
+    "evidence_count": 0,
+    "examples_seen": 120,
+    "top_similarity": 0.0,
+    "margin": 0.0,
+    "module_scores": {},
+    "evidence": [],
+    "routed": false
+  },
+  "coverage": {
+    "score": 1.0,
+    "shared": [
+      "barriga",
+      "com",
+      "dor",
+      "tou"
+    ],
+    "query_tokens": 4,
+    "evidence_tokens": 500
+  },
+  "missing_slots": [
+    "aresta_causal_relevante",
+    "fato_estruturado_recuperavel"
+  ],
+  "next_experiment": {
+    "kind": "causal_transfer_prior_validation",
+    "target_route": "unknown:general",
+    "query_terms": [
+      "barriga",
+      "com",
+      "dor",
+      "tou"
+    ],
+    "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+    "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+  },
+  "transfer_prior": {
+    "score": 0.6208,
+    "prior_id": "transfer_b2b6cdece8",
+    "source": "cross_domain_skill",
+    "skill_id": "zshot_1776799967_abc9",
+    "skill_name": "Isomorfismo Validado: hard_eval_fs_guard_1776799966 ↔ hard_eval_api_guard_1776799966",
+    "source_domain": "hard_eval_fs_guard_1776799966",
+    "target_domain": "unknown:general",
+    "valid_domains": [
+      "hard_eval_fs_guard_1776799966",
+      "hard_eval_api_guard_1776799966"
+    ],
+    "mapping": {
+      "guarded": "auth_ok",
+      "validated": "schema_ok",
+      "reversible": "rollback_ready",
+      "resource_ok": "quota_ok"
+    },
+    "raw_score": 0.9951,
+    "p_value": 0.0417,
+    "transfer_improvement": 0.7333,
+    "base_confidence": 0.88,
+    "confidence": 0.5808,
+    "degradation": 0.2992,
+    "overlap": 0.0,
+    "transferred_policy": "Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+    "policy_hypothesis": "Se a estrutura do dominio desconhecido preservar o invariante de hard_eval_fs_guard_1776799966, usar a politica transferida como prior, nao como fato.",
+    "causal_claim": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+    "validation_required": true,
+    "validation_status": "hypothesis_needs_intervention",
+    "ok": true,
+    "type": "autoisomorphic_transfer_prior",
+    "query_tokens": [
+      "barriga",
+      "dor",
+      "tou"
+    ],
+    "task_type": "general",
+    "candidate_count": 4,
+    "origin": "autoisomorphic_mapper.transfer_prior",
+    "sir": {
+      "schema_version": "sir.v1",
+      "created_at": 1777669263,
+      "query": "tou com dor de barriga",
+      "facts": [
+        {
+          "id": "FACT_1",
+          "anchor": "[FACT_1]",
+          "text": "Prior autoisomorfico: tipo=autoisomorphic_transfer_prior; score=0.6208; origem=autoisomorphic_mapper.transfer_prior.",
+          "source": "autoisomorphic_mapper",
+          "critical": true,
+          "required_terms": [
+            "6208",
+            "autoisomorfico",
+            "autoisomorphic_mapper",
+            "autoisomorphic_transfer_prior",
+            "origem",
+            "prior",
+            "score",
+            "tipo"
+          ],
+          "numbers": [
+            "0.6208"
+          ],
+          "metadata": {}
+        },
+        {
+          "id": "FACT_2",
+          "anchor": "[FACT_2]",
+          "text": "Claim causal transferido: causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+          "source": "autoisomorphic_mapper",
+          "critical": true,
+          "required_terms": [
+            "causal",
+            "causal_transfer_prior",
+            "claim",
+            "general",
+            "hard_eval_fs_guard_1776799966",
+            "transferido",
+            "unknown"
+          ],
+          "numbers": [],
+          "metadata": {}
+        },
+        {
+          "id": "FACT_3",
+          "anchor": "[FACT_3]",
+          "text": "Politica transferida: Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+          "source": "autoisomorphic_mapper",
+          "critical": false,
+          "required_terms": [
+            "042",
+            "causal",
+            "comum",
+            "ganho",
+            "politica",
+            "topologia",
+            "transferencia",
+            "transferida"
+          ],
+          "numbers": [
+            "0.042",
+            "73.3"
+          ],
+          "metadata": {}
+        }
+      ],
+      "rules_applied": [
+        {
+          "id": "RULE_1",
+          "anchor": "[RULE_1]",
+          "rule": "Prior autoisomorfico degradado e sempre hipotetico ate validacao ativa.",
+          "input_refs": [
+            "FACT_1",
+            "FACT_2",
+            "FACT_3"
+          ],
+          "output": "Apresentar como hipotese operacional, nao como fato final.",
+          "confidence": 0.6208
+        }
+      ],
+      "constraints": [
+        {
+          "id": "CONSTRAINT_A",
+          "anchor": "[CONSTRAINT_A]",
+          "type": "no_external_facts",
+          "text": "Usar somente fatos presentes no SIR.",
+          "critical": true,
+          "metadata": {}
+        },
+        {
+          "id": "CONSTRAINT_B",
+          "anchor": "[CONSTRAINT_B]",
+          "type": "language",
+          "text": "Responder em PT-BR.",
+          "critical": true,
+          "metadata": {}
+        },
+        {
+          "id": "CONSTRAINT_C",
+          "anchor": "[CONSTRAINT_C]",
+          "type": "style",
+          "text": "Manter tom direto, sem preambulo e sem expor raciocinio interno.",
+          "critical": true,
+          "metadata": {}
+        },
+        {
+          "id": "CONSTRAINT_D",
+          "anchor": "[CONSTRAINT_D]",
+          "type": "hypothesis_only",
+          "text": "Nao promover prior autoisomorfico a conclusao sem validacao.",
+          "critical": true,
+          "metadata": {}
+        }
+      ],
+      "causal_graph_excerpt": [
+        {
+          "id": "CAUSE_1",
+          "anchor": "[CAUSE_1]",
+          "source": "hard_eval_fs_guard_1776799966",
+          "relation": "possible_isomorphism_to",
+          "target": "unknown:general",
+          "evidence_refs": [
+            "FACT_1",
+            "FACT_2",
+            "FACT_3"
+          ]
+        }
+      ],
+      "verification_status": {
+        "status": "transfer_prior_requires_validation",
+        "schema_valid": true,
+        "critical_fact_ids": [
+          "FACT_1",
+          "FACT_2"
+        ],
+        "checks": [
+          "schema_validated",
+          "hypothesis_anchored"
+        ],
+        "confidence": 0.6208
+      }
+    }
+  },
+  "candidate_modules": [],
+  "probes": {
+    "learned_route": {
+      "ok": true,
+      "prediction": {
+        "module": "unknown",
+        "confidence": 0.0,
+        "method": "episode_token_similarity",
+        "evidence_count": 0,
+        "examples_seen": 120,
+        "top_similarity": 0.0,
+        "margin": 0.0,
+        "module_scores": {},
+        "evidence": [],
+        "routed": false
+      }
+    },
+    "causal_graph": {
+      "ok": true,
+      "count": 0,
+      "items": []
+    },
+    "episodic_memory": {
+      "ok": true,
+      "count": 0,
+      "summary": "{'working_memory': {'contexto_imediato': '', 'estado_plano_execucao': {}, 'ultimos_tool_calls': []}, 'episodic_similar': [], 'procedural_hints': {'task_type': 'general', 'best_strategies': []}, 'top_strategy_hint': None, 'budget': {'max_chars': 1800, 'actual_chars': 290, 'truncated': False}}"
+    },
+    "store": {
+      "ok": true,
+      "triples": [],
+      "insights": [],
+      "experiences": []
+    },
+    "workspace": {
+      "ok": true,
+      "count": 10,
+      "items": [
+        {
+          "module": "meta_observer",
+          "channel": "meta.observer",
+          "salience": 0.73,
+          "payload": "{\"ok\": true, \"focus\": [{\"id\": 41513, \"module\": \"self_talk_loop\", \"channel\": \"self_talk.anomaly\", \"salience\": 0.85}, {\"id\": 41532, \"module\": \"self_talk_loop\", \"channel\": \"self_talk.anomaly\", \"salience\": 0.85}, {\"id\": 41516, \"module\": \"judge\", \"channel\": \"conflict.status\", \"salience\": 0.75}, {\"id\": 41534, \"module\": \"judge\", \"channel\": \"conflict.status\", \"salie"
+        },
+        {
+          "module": "meta_observer",
+          "channel": "meta.observer",
+          "salience": 0.73,
+          "payload": "{\"ok\": true, \"focus\": [{\"id\": 41558, \"module\": \"integration_proxy\", \"channel\": \"reflexion.trigger\", \"salience\": 0.86}, {\"id\": 41532, \"module\": \"self_talk_loop\", \"channel\": \"self_talk.anomaly\", \"salience\": 0.85}, {\"id\": 41546, \"module\": \"self_talk_loop\", \"channel\": \"self_talk.anomaly\", \"salience\": 0.85}, {\"id\": 41559, \"module\": \"self_talk_loop\", \"channel\": \"s"
+        },
+        {
+          "module": "meta_observer",
+          "channel": "meta.observer",
+          "salience": 0.73,
+          "payload": "{\"ok\": true, \"focus\": [{\"id\": 41558, \"module\": \"integration_proxy\", \"channel\": \"reflexion.trigger\", \"salience\": 0.86}, {\"id\": 41546, \"module\": \"self_talk_loop\", \"channel\": \"self_talk.anomaly\", \"salience\": 0.85}, {\"id\": 41559, \"module\": \"self_talk_loop\", \"channel\": \"self_talk.anomaly\", \"salience\": 0.85}, {\"id\": 41573, \"module\": \"self_talk_loop\", \"channel\": \"s"
+        },
+        {
+          "module": "autofeeder",
+          "channel": "learning.ingest",
+          "salience": 0.74,
+          "payload": "{\"source_id\": \"wikipedia:pt\", \"title\": \"Maria de Lourdes Chantre\", \"modality\": \"text\", \"agenda_domain\": \"security\", \"triples_added\": 1, \"rag_ok\": true, \"preview\": \"Maria de Lourdes Chantre\\n\\nMaria de Lourdes Chantre, é pioneira da gastronomia cabo-verdiana, tendo escrito o primeiro livro sobre a cozinha de Cabo Verde, em 1979.\"}"
+        },
+        {
+          "module": "judge",
+          "channel": "conflict.status",
+          "salience": 0.75,
+          "payload": "{\"open_conflicts\": 31, \"resolved\": 0, \"needs_human\": 4, \"attempted\": 4}"
+        },
+        {
+          "module": "judge",
+          "channel": "conflict.status",
+          "salience": 0.75,
+          "payload": "{\"open_conflicts\": 31, \"resolved\": 0, \"needs_human\": 4, \"attempted\": 4}"
+        },
+        {
+          "module": "meta_observer",
+          "channel": "reflexion.trigger",
+          "salience": 0.82,
+          "payload": "{\"reason\": \"meta_observer_alert\", \"uncertainty\": 0.3, \"conflicts\": 4, \"identity_risk\": 0.0, \"competition_index\": 0.846}"
+        },
+        {
+          "module": "meta_observer",
+          "channel": "reflexion.trigger",
+          "salience": 0.82,
+          "payload": "{\"reason\": \"meta_observer_alert\", \"uncertainty\": 0.3, \"conflicts\": 4, \"identity_risk\": 0.0, \"competition_index\": 0.846}"
+        },
+        {
+          "module": "integration_proxy",
+          "channel": "reflexion.trigger",
+          "salience": 0.86,
+          "payload": "{\"reason\": \"integration_proxy_alert\", \"alerts\": [\"conflict_pressure\"], \"integration_proxy_score\": 0.7846, \"integration_level\": \"high\"}"
+        },
+        {
+          "module": "integration_proxy",
+          "channel": "reflexion.trigger",
+          "salience": 0.86,
+          "payload": "{\"reason\": \"integration_proxy_alert\", \"alerts\": [\"conflict_pressure\"], \"integration_proxy_score\": 0.7616, \"integration_level\": \"high\"}"
+        }
+      ]
+    },
+    "runtime_state": {
+      "ok": true,
+      "files": {
+        "background_guard.json": {
+          "enabled": true,
+          "state": "foreground_throttle",
+          "lag_sec": 0.0,
+          "max_lag_sec": 22.984,
+          "consecutive_lag": 0,
+          "paused_until": 1777669330.2831073,
+          "last_pause_reason": "event_loop_lag",
+          "last_pause_at": 1777669240.2831073,
+          "last_slow_request": null,
+          "blocked_loops": 7,
+          "last_blocked_loop": "mission_control_loop",
+          "last_log_at": 1777669240.2831073,
+          "foreground_active": 0,
+          "last_foreground_path": "/api/chat/stream",
+          "last_foreground_at": 1777669240.2811074,
+          "last_foreground_elapsed_sec": 23.906,
+          "last_pause_details": {
+            "lag_sec": 22.984,
+            "consecutive_lag": 1
+          },
+          "paused": true,
+          "paused_for_sec": 77.98735737800598
+        },
+        "runtime_health.json": {
+          "ts": 1777669174,
+          "active_goal": "Modelar taxonomia de erros cognitivos em decises",
+          "active_mission": {
+            "id": "mis_1776628887_3",
+            "title": "Long Horizon: Modelar taxonomia de erros cognitivos em decises",
+            "objective": "Catalogar vieses e estratgias de mitigao para melhorar qualidade decisria.",
+            "context": "Seeded from active goal",
+            "status": "active",
+            "created_at": 1776628887,
+            "updated_at": 1776651320,
+            "horizon_days": 14,
+            "due_at": 1777838487,
+            "checkpoints": [
+              {
+                "ts": 1776628887,
+                "signal": "autonomy_review",
+                "note": "Review: done=29, blocked=0",
+                "progress_delta": 0.058
+              },
+              {
+                "ts": 1776629114,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776629115,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776629143,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776629414,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776629415,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776629443,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776629715,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776629720,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776629743,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776630044,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776630344,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776630644,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776630946,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776631247,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776631547,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776632343,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776632498,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776632798,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776633098,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776633331,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776633635,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776633823,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776634123,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776634424,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776636820,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776637121,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776637421,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776637717,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776638004,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776638251,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776638305,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776638554,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776638605,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776638854,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776638905,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776639186,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776639205,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776639313,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776639505,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776639805,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776640109,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776640416,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776640719,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776641019,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776641090,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776641149,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776641181,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776641199,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776641269,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776641285,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776641319,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776641619,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776641919,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776642219,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776642519,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776642819,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776643119,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776643419,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776643719,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776644019,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776644321,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776644628,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776644935,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776645246,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776645552,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776645858,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776646168,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776646478,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776646796,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776647118,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776647418,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776647720,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776648020,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776648320,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776648620,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776648920,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776649220,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776649520,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776649820,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776650120,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776650420,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776650720,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776651020,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776651320,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              }
+            ],
+            "progress": 1.0
+          },
+          "loops": {
+            "background_enabled": true,
+            "mission_control_enabled": true,
+            "autonomy_enabled": true,
+            "judge_enabled": true,
+            "autofeeder_enabled": true,
+            "roadmap_enabled": true,
+            "agi_path_enabled": true,
+            "reflexion_enabled": true,
+            "voice_prewarm_enabled": true,
+            "metacognitive_enabled": true,
+            "recursive_si_enabled": true,
+            "inner_monologue_enabled": true,
+            "self_improvement_enabled": true,
+            "self_governance_enabled": true,
+            "sleep_cycle_enabled": true,
+            "active_discovery_enabled": true,
+            "no_cloud_campaign_enabled": true,
+            "self_talk_enabled": true,
+            "web_explorer_enabled": true,
+            "finetune_autotrigger_enabled": false
+          },
+          "cadence": {
+            "autonomy_tick_sec": 300,
+            "judge_tick_sec": 180,
+            "autofeeder_tick_sec": 300,
+            "reflexion_tick_sec": 300,
+            "no_cloud_campaign_tick_sec": 900,
+            "budget_per_min": 2
+          },
+          "autonomy_state": {
+            "ticks": 0,
+            "last_tick": null,
+            "last_error": null,
+            "consecutive_errors": 0
+          },
+          "background_guard": {
+            "enabled": true,
+            "state": "healthy",
+            "lag_sec": 0.0,
+            "max_lag_sec": 0.0,
+            "consecutive_lag": 0,
+            "paused_until": 0.0,
+            "last_pause_reason": null,
+            "last_pause_at": 0.0,
+            "last_slow_request": null,
+            "blocked_loops": 0,
+            "last_blocked_loop": null,
+            "last_log_at": 0.0,
+            "foreground_active": 0,
+            "last_foreground_path": null,
+            "last_foreground_at": 0.0,
+            "last_foreground_elapsed_sec": 0.0,
+            "paused": false,
+            "paused_for_sec": 0.0
+          },
+          "background_binary_bus": {
+            "enabled": true,
+            "started_at": 0.0,
+            "processed": 0,
+            "dropped": 0,
+            "sink_errors": 0,
+            "last_event": null,
+            "last_error": null,
+            "queue_size": 0,
+            "worker_alive": false,
+            "binlog_path": "F:\\sistemas\\UltronPro\\backend\\data\\background_bus.binlog"
+          },
+          "extra": {
+            "reason": "startup_complete"
+          }
+        },
+        "no_cloud_experiment_campaign_state.json": {
+          "ok": true,
+          "status": "skipped_policy_cloud_rotation",
+          "ts": 1777668574,
+          "campaign": "local_inference_no_cloud_recovery",
+          "local_provider_policy": "cloud_rotation",
+          "forced": false,
+          "reason": "local providers disabled by resource policy; use cloud rotation only as language/interface fallback"
+        }
+      }
+    },
+    "autoisomorphic_transfer_prior": {
+      "ok": true,
+      "prior": {
+        "score": 0.6208,
+        "prior_id": "transfer_b2b6cdece8",
+        "source": "cross_domain_skill",
+        "skill_id": "zshot_1776799967_abc9",
+        "skill_name": "Isomorfismo Validado: hard_eval_fs_guard_1776799966 ↔ hard_eval_api_guard_1776799966",
+        "source_domain": "hard_eval_fs_guard_1776799966",
+        "target_domain": "unknown:general",
+        "valid_domains": [
+          "hard_eval_fs_guard_1776799966",
+          "hard_eval_api_guard_1776799966"
+        ],
+        "mapping": {
+          "guarded": "auth_ok",
+          "validated": "schema_ok",
+          "reversible": "rollback_ready",
+          "resource_ok": "quota_ok"
+        },
+        "raw_score": 0.9951,
+        "p_value": 0.0417,
+        "transfer_improvement": 0.7333,
+        "base_confidence": 0.88,
+        "confidence": 0.5808,
+        "degradation": 0.2992,
+        "overlap": 0.0,
+        "transferred_policy": "Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+        "policy_hypothesis": "Se a estrutura do dominio desconhecido preservar o invariante de hard_eval_fs_guard_1776799966, usar a politica transferida como prior, nao como fato.",
+        "causal_claim": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+        "validation_required": true,
+        "validation_status": "hypothesis_needs_intervention",
+        "ok": true,
+        "type": "autoisomorphic_transfer_prior",
+        "query_tokens": [
+          "barriga",
+          "dor",
+          "tou"
+        ],
+        "task_type": "general",
+        "candidate_count": 4,
+        "origin": "autoisomorphic_mapper.transfer_prior",
+        "sir": {
+          "schema_version": "sir.v1",
+          "created_at": 1777669263,
+          "query": "tou com dor de barriga",
+          "facts": [
+            {
+              "id": "FACT_1",
+              "anchor": "[FACT_1]",
+              "text": "Prior autoisomorfico: tipo=autoisomorphic_transfer_prior; score=0.6208; origem=autoisomorphic_mapper.transfer_prior.",
+              "source": "autoisomorphic_mapper",
+              "critical": true,
+              "required_terms": [
+                "6208",
+                "autoisomorfico",
+                "autoisomorphic_mapper",
+                "autoisomorphic_transfer_prior",
+                "origem",
+                "prior",
+                "score",
+                "tipo"
+              ],
+              "numbers": [
+                "0.6208"
+              ],
+              "metadata": {}
+            },
+            {
+              "id": "FACT_2",
+              "anchor": "[FACT_2]",
+              "text": "Claim causal transferido: causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+              "source": "autoisomorphic_mapper",
+              "critical": true,
+              "required_terms": [
+                "causal",
+                "causal_transfer_prior",
+                "claim",
+                "general",
+                "hard_eval_fs_guard_1776799966",
+                "transferido",
+                "unknown"
+              ],
+              "numbers": [],
+              "metadata": {}
+            },
+            {
+              "id": "FACT_3",
+              "anchor": "[FACT_3]",
+              "text": "Politica transferida: Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+              "source": "autoisomorphic_mapper",
+              "critical": false,
+              "required_terms": [
+                "042",
+                "causal",
+                "comum",
+                "ganho",
+                "politica",
+                "topologia",
+                "transferencia",
+                "transferida"
+              ],
+              "numbers": [
+                "0.042",
+                "73.3"
+              ],
+              "metadata": {}
+            }
+          ],
+          "rules_applied": [
+            {
+              "id": "RULE_1",
+              "anchor": "[RULE_1]",
+              "rule": "Prior autoisomorfico degradado e sempre hipotetico ate validacao ativa.",
+              "input_refs": [
+                "FACT_1",
+                "FACT_2",
+                "FACT_3"
+              ],
+              "output": "Apresentar como hipotese operacional, nao como fato final.",
+              "confidence": 0.6208
+            }
+          ],
+          "constraints": [
+            {
+              "id": "CONSTRAINT_A",
+              "anchor": "[CONSTRAINT_A]",
+              "type": "no_external_facts",
+              "text": "Usar somente fatos presentes no SIR.",
+              "critical": true,
+              "metadata": {}
+            },
+            {
+              "id": "CONSTRAINT_B",
+              "anchor": "[CONSTRAINT_B]",
+              "type": "language",
+              "text": "Responder em PT-BR.",
+              "critical": true,
+              "metadata": {}
+            },
+            {
+              "id": "CONSTRAINT_C",
+              "anchor": "[CONSTRAINT_C]",
+              "type": "style",
+              "text": "Manter tom direto, sem preambulo e sem expor raciocinio interno.",
+              "critical": true,
+              "metadata": {}
+            },
+            {
+              "id": "CONSTRAINT_D",
+              "anchor": "[CONSTRAINT_D]",
+              "type": "hypothesis_only",
+              "text": "Nao promover prior autoisomorfico a conclusao sem validacao.",
+              "critical": true,
+              "metadata": {}
+            }
+          ],
+          "causal_graph_excerpt": [
+            {
+              "id": "CAUSE_1",
+              "anchor": "[CAUSE_1]",
+              "source": "hard_eval_fs_guard_1776799966",
+              "relation": "possible_isomorphism_to",
+              "target": "unknown:general",
+              "evidence_refs": [
+                "FACT_1",
+                "FACT_2",
+                "FACT_3"
+              ]
+            }
+          ],
+          "verification_status": {
+            "status": "transfer_prior_requires_validation",
+            "schema_valid": true,
+            "critical_fact_ids": [
+              "FACT_1",
+              "FACT_2"
+            ],
+            "checks": [
+              "schema_validated",
+              "hypothesis_anchored"
+            ],
+            "confidence": 0.6208
+          }
+        }
+      }
+    }
+  },
+  "duration_ms": 692.51,
+  "causal_graph_registration": {
+    "ok": true,
+    "edge": {
+      "cause": "structured_reasoning_gap:no_structured_coverage",
+      "effect": "active_investigation:needs_experiment",
+      "condition": "structured_coverage_insufficient",
+      "support": 16,
+      "confidence": 0.99,
+      "severity": 1,
+      "knowledge_type": "observational",
+      "sources": [
+        "active_investigation"
+      ],
+      "last_evidence": {
+        "investigation_id": "inv_891c9c678d",
+        "coverage": {
+          "score": 1.0,
+          "shared": [
+            "barriga",
+            "com",
+            "dor",
+            "tou"
+          ],
+          "query_tokens": 4,
+          "evidence_tokens": 500
+        },
+        "missing_slots": [
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
+        ],
+        "next_experiment": {
+          "kind": "causal_transfer_prior_validation",
+          "target_route": "unknown:general",
+          "query_terms": [
+            "barriga",
+            "com",
+            "dor",
+            "tou"
+          ],
+          "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+          "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+        },
+        "learned_route": {
+          "module": "unknown",
+          "confidence": 0.0,
+          "method": "episode_token_similarity",
+          "evidence_count": 0,
+          "examples_seen": 120,
+          "top_similarity": 0.0,
+          "margin": 0.0,
+          "module_scores": {},
+          "evidence": [],
+          "routed": false
+        },
+        "transfer_prior": {
+          "score": 0.6208,
+          "prior_id": "transfer_b2b6cdece8",
+          "source": "cross_domain_skill",
+          "skill_id": "zshot_1776799967_abc9",
+          "skill_name": "Isomorfismo Validado: hard_eval_fs_guard_1776799966 ↔ hard_eval_api_guard_1776799966",
+          "source_domain": "hard_eval_fs_guard_1776799966",
+          "target_domain": "unknown:general",
+          "valid_domains": [
+            "hard_eval_fs_guard_1776799966",
+            "hard_eval_api_guard_1776799966"
+          ],
+          "mapping": {
+            "guarded": "auth_ok",
+            "validated": "schema_ok",
+            "reversible": "rollback_ready",
+            "resource_ok": "quota_ok"
+          },
+          "raw_score": 0.9951,
+          "p_value": 0.0417,
+          "transfer_improvement": 0.7333,
+          "base_confidence": 0.88,
+          "confidence": 0.5808,
+          "degradation": 0.2992,
+          "overlap": 0.0,
+          "transferred_policy": "Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+          "policy_hypothesis": "Se a estrutura do dominio desconhecido preservar o invariante de hard_eval_fs_guard_1776799966, usar a politica transferida como prior, nao como fato.",
+          "causal_claim": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+          "validation_required": true,
+          "validation_status": "hypothesis_needs_intervention",
+          "ok": true,
+          "type": "autoisomorphic_transfer_prior",
+          "query_tokens": [
+            "barriga",
+            "dor",
+            "tou"
+          ],
+          "task_type": "general",
+          "candidate_count": 4,
+          "origin": "autoisomorphic_mapper.transfer_prior",
+          "sir": {
+            "schema_version": "sir.v1",
+            "created_at": 1777669263,
+            "query": "tou com dor de barriga",
+            "facts": [
+              {
+                "id": "FACT_1",
+                "anchor": "[FACT_1]",
+                "text": "Prior autoisomorfico: tipo=autoisomorphic_transfer_prior; score=0.6208; origem=autoisomorphic_mapper.transfer_prior.",
+                "source": "autoisomorphic_mapper",
+                "critical": true,
+                "required_terms": [
+                  "6208",
+                  "autoisomorfico",
+                  "autoisomorphic_mapper",
+                  "autoisomorphic_transfer_prior",
+                  "origem",
+                  "prior",
+                  "score",
+                  "tipo"
+                ],
+                "numbers": [
+                  "0.6208"
+                ],
+                "metadata": {}
+              },
+              {
+                "id": "FACT_2",
+                "anchor": "[FACT_2]",
+                "text": "Claim causal transferido: causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+                "source": "autoisomorphic_mapper",
+                "critical": true,
+                "required_terms": [
+                  "causal",
+                  "causal_transfer_prior",
+                  "claim",
+                  "general",
+                  "hard_eval_fs_guard_1776799966",
+                  "transferido",
+                  "unknown"
+                ],
+                "numbers": [],
+                "metadata": {}
+              },
+              {
+                "id": "FACT_3",
+                "anchor": "[FACT_3]",
+                "text": "Politica transferida: Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+                "source": "autoisomorphic_mapper",
+                "critical": false,
+                "required_terms": [
+                  "042",
+                  "causal",
+                  "comum",
+                  "ganho",
+                  "politica",
+                  "topologia",
+                  "transferencia",
+                  "transferida"
+                ],
+                "numbers": [
+                  "0.042",
+                  "73.3"
+                ],
+                "metadata": {}
+              }
+            ],
+            "rules_applied": [
+              {
+                "id": "RULE_1",
+                "anchor": "[RULE_1]",
+                "rule": "Prior autoisomorfico degradado e sempre hipotetico ate validacao ativa.",
+                "input_refs": [
+                  "FACT_1",
+                  "FACT_2",
+                  "FACT_3"
+                ],
+                "output": "Apresentar como hipotese operacional, nao como fato final.",
+                "confidence": 0.6208
+              }
+            ],
+            "constraints": [
+              {
+                "id": "CONSTRAINT_A",
+                "anchor": "[CONSTRAINT_A]",
+                "type": "no_external_facts",
+                "text": "Usar somente fatos presentes no SIR.",
+                "critical": true,
+                "metadata": {}
+              },
+              {
+                "id": "CONSTRAINT_B",
+                "anchor": "[CONSTRAINT_B]",
+                "type": "language",
+                "text": "Responder em PT-BR.",
+                "critical": true,
+                "metadata": {}
+              },
+              {
+                "id": "CONSTRAINT_C",
+                "anchor": "[CONSTRAINT_C]",
+                "type": "style",
+                "text": "Manter tom direto, sem preambulo e sem expor raciocinio interno.",
+                "critical": true,
+                "metadata": {}
+              },
+              {
+                "id": "CONSTRAINT_D",
+                "anchor": "[CONSTRAINT_D]",
+                "type": "hypothesis_only",
+                "text": "Nao promover prior autoisomorfico a conclusao sem validacao.",
+                "critical": true,
+                "metadata": {}
+              }
+            ],
+            "causal_graph_excerpt": [
+              {
+                "id": "CAUSE_1",
+                "anchor": "[CAUSE_1]",
+                "source": "hard_eval_fs_guard_1776799966",
+                "relation": "possible_isomorphism_to",
+                "target": "unknown:general",
+                "evidence_refs": [
+                  "FACT_1",
+                  "FACT_2",
+                  "FACT_3"
+                ]
+              }
+            ],
+            "verification_status": {
+              "status": "transfer_prior_requires_validation",
+              "schema_valid": true,
+              "critical_fact_ids": [
+                "FACT_1",
+                "FACT_2"
+              ],
+              "checks": [
+                "schema_validated",
+                "hypothesis_anchored"
+              ],
+              "confidence": 0.6208
+            }
+          }
+        },
+        "prior_validation": null
+      },
+      "updated_at": 1777669263
+    }
+  },
+  "answer": "Encontrei cobertura direta insuficiente, mas nao vou parar em UNKNOWN: transferi um prior causal de hard_eval_fs_guard_1776799966 para unknown:general.\nHipotese/politica transferida: Topologia causal comum com p=0.042 e ganho de transferência de +73.3%\nConfianca calibrada do prior: 0.58 (degradada ate validacao interventiva).\nInvestigacao ativa iniciada: inv_891c9c678d; proximo experimento: validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca\nLacunas restantes: aresta_causal_relevante, fato_estruturado_recuperavel.",
+  "execution": {
+    "ts": 1777669263,
+    "ok": false,
+    "executed": true,
+    "injected": false,
+    "investigation_id": "inv_891c9c678d",
+    "query": "tou com dor de barriga",
+    "reason": "no_structured_coverage",
+    "missing_slots": [
+      "aresta_causal_relevante",
+      "fato_estruturado_recuperavel"
+    ],
+    "experiment": {
+      "kind": "causal_transfer_prior_validation",
+      "target_route": "unknown:general",
+      "query_terms": [
+        "barriga",
+        "com",
+        "dor",
+        "tou"
+      ],
+      "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+      "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+    },
+    "sandbox": {
+      "ok": false,
+      "error": "sandbox_unreachable:ConnectError",
+      "returncode": -1,
+      "stderr": "[Errno 11001] getaddrinfo failed"
+    },
+    "error": "sandbox_unreachable:ConnectError",
+    "duration_ms": 2863.63
+  }
+}

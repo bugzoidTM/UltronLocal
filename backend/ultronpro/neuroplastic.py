@@ -5,9 +5,9 @@ from typing import Any
 import json
 import time
 
-PENDING_PATH = Path('/app/data/mutations_pending.json')
-HISTORY_PATH = Path('/app/data/mutations_history.json')
-ACTIVE_PATH = Path('/app/data/runtime_mutations_active.json')
+PENDING_PATH = Path(__file__).resolve().parent.parent / 'data' / 'mutations_pending.json'
+HISTORY_PATH = Path(__file__).resolve().parent.parent / 'data' / 'mutations_history.json'
+ACTIVE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'runtime_mutations_active.json'
 
 
 def _load(path: Path, default):

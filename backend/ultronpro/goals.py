@@ -23,7 +23,7 @@ class Goal:
 class GoalPlanner:
     """Goal creation & planning with proactive non-deterministic ambition."""
 
-    def __init__(self, state_path: str | Path = "/app/data/ambition_state.json"):
+    def __init__(self, state_path: str | Path = str(Path(__file__).resolve().parent.parent / 'data' / 'ambition_state.json')):
         self.state_path = Path(state_path)
         self.cooldown_sec = 6 * 3600
 

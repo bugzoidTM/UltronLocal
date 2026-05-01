@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "campaign": "structured_reasoning_cloud_contingency",
+  "status": "planned",
+  "created_at": 1776819359,
+  "source_gap": {
+    "id": "structured_reasoning_cloud_contingency",
+    "label": "contingencia de linguagem por rotacao cloud",
+    "domain": "language_interface_resilience",
+    "metric": "no_cloud_probe=0/3 accuracy=0.0 policy=cloud_rotation",
+    "priority": 0.687,
+    "evidence": {
+      "hard_eval_ts": 1776800563,
+      "external_benchmark": {
+        "ok": true,
+        "score": 1.0,
+        "suite_count": 9,
+        "oracle_selftest_ok": true,
+        "oracle_accuracy": 1.0,
+        "no_cloud_probe_accuracy": 0.0,
+        "no_cloud_probe_total": 3,
+        "no_cloud_probe_correct": 0,
+        "no_cloud_probe_run_id": "extb_1646a07843"
+      },
+      "local_provider_policy": "cloud_rotation"
+    },
+    "next_experiment": "validar que o nucleo estruturado decide primeiro e que cloud rotation atua apenas como verbalizador/fallback quando a investigacao ativa precisar de linguagem"
+  },
+  "policy": "cloud_rotation",
+  "principle": "structured reasoning is the source of decisions; cloud providers are language/interface capacity only",
+  "acceptance_criteria": {
+    "routing": "structured modules or active investigation run before any cloud verbalizer",
+    "fallback": "cloud rotation is used only after evidence coverage is measured insufficient",
+    "traceability": "response trace includes module, investigation id or evidence source"
+  },
+  "experiments": [
+    {
+      "id": "structured_gap_active_investigation",
+      "probe": "ask an under-covered question and verify non_llm_active_investigation before LLM fallback",
+      "risk": "low"
+    },
+    {
+      "id": "cloud_rotation_language_surface",
+      "probe": "verify provider rotation remains available for language formatting when explicitly needed",
+      "risk": "low"
+    },
+    {
+      "id": "intelligence_suite_guard",
+      "probe": "UltronPro Intelligence Test Suite remains >= 7.5 and >= 11/13",
+      "risk": "low"
+    }
+  ],
+  "next_action": "executar probe de investigacao ativa e confirmar que a cloud nao virou arbitro cognitivo"
+}

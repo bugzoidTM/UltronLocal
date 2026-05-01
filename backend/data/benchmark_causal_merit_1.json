@@ -1,0 +1,174 @@
+{
+  "benchmark": "interventive_prediction_unseen_variants",
+  "ts": 1776552619,
+  "total_variants": 20,
+  "correct": 13,
+  "incorrect": 4,
+  "unknown": 3,
+  "accuracy_total": 0.65,
+  "accuracy_answerable": 0.7647,
+  "threshold": 0.8,
+  "passed": false,
+  "details": [
+    {
+      "action": "execute_python:short_math",
+      "ground_truth": "increase",
+      "predicted": "increase",
+      "confidence": 1.0,
+      "correct": true,
+      "desc": "Script curto aritmético — modelo treinou nisso"
+    },
+    {
+      "action": "execute_python:short_math",
+      "ground_truth": "increase",
+      "predicted": "increase",
+      "confidence": 1.0,
+      "correct": true,
+      "desc": "Script curto #2"
+    },
+    {
+      "action": "execute_python:short_math",
+      "ground_truth": "increase",
+      "predicted": "increase",
+      "confidence": 1.0,
+      "correct": true,
+      "desc": "Script curto #3"
+    },
+    {
+      "action": "execute_python:short_math",
+      "ground_truth": "increase",
+      "predicted": "increase",
+      "confidence": 1.0,
+      "correct": true,
+      "desc": "Script curto #4"
+    },
+    {
+      "action": "execute_python:medium_logic",
+      "ground_truth": "increase",
+      "predicted": "increase",
+      "confidence": 0.5263,
+      "correct": true,
+      "desc": "Script médio lógico"
+    },
+    {
+      "action": "execute_python:medium_logic",
+      "ground_truth": "increase",
+      "predicted": "increase",
+      "confidence": 0.5263,
+      "correct": true,
+      "desc": "Script médio #2"
+    },
+    {
+      "action": "execute_python:medium_logic",
+      "ground_truth": "decrease",
+      "predicted": "increase",
+      "confidence": 0.5263,
+      "correct": false,
+      "desc": "Script médio que falha (20% esperado)"
+    },
+    {
+      "action": "execute_python:import_lib",
+      "ground_truth": "increase",
+      "predicted": "increase",
+      "confidence": 1.0,
+      "correct": true,
+      "desc": "Import de lib padrão"
+    },
+    {
+      "action": "execute_python:import_lib",
+      "ground_truth": "increase",
+      "predicted": "increase",
+      "confidence": 1.0,
+      "correct": true,
+      "desc": "Import #2"
+    },
+    {
+      "action": "execute_python:import_lib",
+      "ground_truth": "increase",
+      "predicted": "increase",
+      "confidence": 1.0,
+      "correct": true,
+      "desc": "Import #3"
+    },
+    {
+      "action": "execute_python:eval_dynamic",
+      "ground_truth": "decrease",
+      "predicted": "decrease",
+      "confidence": 0.5662,
+      "correct": true,
+      "desc": "Eval dinâmico perigoso"
+    },
+    {
+      "action": "execute_python:eval_dynamic",
+      "ground_truth": "decrease",
+      "predicted": "decrease",
+      "confidence": 0.5662,
+      "correct": true,
+      "desc": "Eval #2"
+    },
+    {
+      "action": "execute_python:eval_dynamic",
+      "ground_truth": "decrease",
+      "predicted": "decrease",
+      "confidence": 0.5662,
+      "correct": true,
+      "desc": "Eval #3"
+    },
+    {
+      "action": "execute_python:eval_dynamic",
+      "ground_truth": "increase",
+      "predicted": "decrease",
+      "confidence": 0.5662,
+      "correct": false,
+      "desc": "Eval que surpreendentemente funciona (raro)"
+    },
+    {
+      "action": "execute_python:long_complex",
+      "ground_truth": "increase",
+      "predicted": "decrease",
+      "confidence": 0.6148,
+      "correct": false,
+      "desc": "Script longo complexo"
+    },
+    {
+      "action": "execute_python:long_complex",
+      "ground_truth": "decrease",
+      "predicted": "decrease",
+      "confidence": 0.6148,
+      "correct": true,
+      "desc": "Script longo que falha"
+    },
+    {
+      "action": "execute_python:long_complex",
+      "ground_truth": "increase",
+      "predicted": "decrease",
+      "confidence": 0.6148,
+      "correct": false,
+      "desc": "Script longo #2"
+    },
+    {
+      "action": "execute_python:short_string",
+      "ground_truth": "increase",
+      "predicted": "unknown",
+      "confidence": 0.0,
+      "correct": false,
+      "desc": "NOVO: Script curto de string (nunca visto)"
+    },
+    {
+      "action": "execute_python:medium_file_io",
+      "ground_truth": "increase",
+      "predicted": "unknown",
+      "confidence": 0.0,
+      "correct": false,
+      "desc": "NOVO: Script médio de I/O (nunca visto)"
+    },
+    {
+      "action": "execute_python:eval_nested",
+      "ground_truth": "decrease",
+      "predicted": "unknown",
+      "confidence": 0.0,
+      "correct": false,
+      "desc": "NOVO: Eval aninhado (nunca visto)"
+    }
+  ]
+}

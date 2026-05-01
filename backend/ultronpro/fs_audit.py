@@ -5,7 +5,7 @@ from typing import Any
 import os
 
 
-def scan_tree(root: str = '/app/ultronpro', limit: int = 400) -> dict[str, Any]:
+def scan_tree(root: str = str(Path(__file__).resolve().parent.parent / 'ultronpro'), limit: int = 400) -> dict[str, Any]:
     rp = Path(root)
     if not rp.exists():
         return {'ok': False, 'error': 'root_not_found', 'root': root}

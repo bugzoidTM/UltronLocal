@@ -1,0 +1,18 @@
+{
+  "updated_at": 1774059292,
+  "critical_actions": [
+    "execute_procedure_active",
+    "prune_memory",
+    "invent_procedure"
+  ],
+  "require_causal_precheck": [
+    "execute_procedure_active",
+    "prune_memory",
+    "invent_procedure",
+    "auto_resolve_conflicts"
+  ],
+  "min_neural_confidence": 0.4,
+  "min_symbolic_consistency": 0.7,
+  "require_proof_for_critical": true,
+  "absolute_veto_actions": []
+}

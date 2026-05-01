@@ -3,12 +3,14 @@ import logging
 import subprocess
 import uuid
 import json
+import hashlib
+from collections import OrderedDict
 from pathlib import Path
 from typing import Dict, Optional, Any
 import httpx
 import time
 from ultronpro.settings import get_api_key
-from ultronpro import persona, llm_adapter
+from ultronpro import persona, llm_adapter, provider_policy
 
 # --- API Models ---
 from pydantic import BaseModel
@@ -40,36 +42,192 @@ def _env_int(name: str, default: int) -> int:
         return int(default)
 
 
+def _provider_failure_cooldown_sec(provider: str, error_text: str) -> int:
+    pv = str(provider or '').strip().lower()
+    low = str(error_text or '').lower()
+    rate_limited = any(t in low for t in ['429', 'rate limit', 'quota', 'too many requests'])
+    transient = any(t in low for t in ['504', 'timeout', 'timed out', 'inference_busy_retry', 'busy'])
+
+    if pv == 'gemini':
+        if rate_limited:
+            return max(60, _env_int('ULTRON_GEMINI_RATE_LIMIT_COOLDOWN_SEC', 300))
+        return max(3, _env_int('ULTRON_GEMINI_FAILURE_COOLDOWN_SEC', 15))
+    if pv == 'ultron_infer':
+        return max(5, _env_int('ULTRON_INFER_FAILURE_COOLDOWN_SEC', 20))
+    if pv in ('ollama_local', 'ollama'):
+        return max(5, _env_int('ULTRON_OLLAMA_FAILURE_COOLDOWN_SEC', 20))
+    if transient and not rate_limited:
+        return max(30, _env_int('ULTRON_PROVIDER_TRANSIENT_COOLDOWN_SEC', 120))
+    return max(60, _env_int('ULTRON_PROVIDER_FAILURE_COOLDOWN_SEC', 900))
+
+
 # LLM Routing Strategy
-PRIMARY_LOCAL_PROVIDER = os.getenv('ULTRON_PRIMARY_LOCAL_PROVIDER', 'ollama_local').strip().lower() or 'ollama_local'
-PRIMARY_LOCAL_MODEL = os.getenv('ULTRON_PRIMARY_LOCAL_MODEL', os.getenv('ULTRON_INFER_MODEL_NAME', os.getenv('ULTRON_OLLAMA_LOCAL_MODEL', os.getenv('OLLAMA_CANARY_MODEL', 'local-fallback'))))
+PRIMARY_LOCAL_PROVIDER = os.getenv('ULTRON_PRIMARY_LOCAL_PROVIDER', 'ultron_infer').strip().lower() or 'ultron_infer'
+PRIMARY_LOCAL_MODEL = os.getenv('ULTRON_PRIMARY_LOCAL_MODEL', os.getenv('ULTRON_INFER_MODEL_NAME', os.getenv('ULTRON_OLLAMA_LOCAL_MODEL', os.getenv('OLLAMA_CANARY_MODEL', 'qwen2.5:3b-instruct-q4_K_M'))))
 CANARY_PROVIDER = os.getenv('ULTRON_CANARY_PROVIDER', PRIMARY_LOCAL_PROVIDER).strip().lower() or PRIMARY_LOCAL_PROVIDER
-CANARY_MODEL = os.getenv('ULTRON_CANARY_MODEL_NAME', os.getenv('ULTRON_PRIMARY_LOCAL_MODEL', os.getenv('ULTRON_INFER_MODEL_NAME', os.getenv('ULTRON_OLLAMA_LOCAL_MODEL', os.getenv('OLLAMA_CANARY_MODEL', 'local-fallback')))))
-PREFER_ULTRON_INFER = os.getenv('ULTRON_PREFER_ULTRON_INFER', '0') == '1'
+CANARY_MODEL = os.getenv('ULTRON_CANARY_MODEL_NAME', os.getenv('ULTRON_PRIMARY_LOCAL_MODEL', os.getenv('ULTRON_INFER_MODEL_NAME', os.getenv('ULTRON_OLLAMA_LOCAL_MODEL', os.getenv('OLLAMA_CANARY_MODEL', 'qwen2.5:3b-instruct-q4_K_M')))))
+PREFER_ULTRON_INFER = os.getenv('ULTRON_PREFER_ULTRON_INFER', '1') == '1'
 
 MODELS = {
     "default": {"provider": PRIMARY_LOCAL_PROVIDER, "model": PRIMARY_LOCAL_MODEL},
-    "cheap": {"provider": "groq", "model": os.getenv('GROQ_DEFAULT_MODEL', 'llama-3.3-70b-versatile')},
+    "cheap": {"provider": "github_models", "model": os.getenv('GITHUB_MODELS_DEFAULT_MODEL', 'gpt-4o-mini')},
     "reasoning": {"provider": PRIMARY_LOCAL_PROVIDER, "model": PRIMARY_LOCAL_MODEL},
     "creative": {"provider": PRIMARY_LOCAL_PROVIDER, "model": PRIMARY_LOCAL_MODEL},
     "deep": {"provider": PRIMARY_LOCAL_PROVIDER, "model": PRIMARY_LOCAL_MODEL},
     "openai_default": {"provider": "openai", "model": os.getenv('OPENAI_DEFAULT_MODEL', 'gpt-4o-mini')},
     "anthropic_default": {"provider": "anthropic", "model": os.getenv('ANTHROPIC_DEFAULT_MODEL', 'claude-3-5-sonnet-20241022')},
     "deepseek_default": {"provider": "deepseek", "model": os.getenv('DEEPSEEK_DEFAULT_MODEL', 'deepseek-chat')},
-    "openrouter_free": {"provider": "openrouter", "model": os.getenv('OPENROUTER_DEFAULT_MODEL', 'google/gemma-2-9b-it:free')},
-    "gemini_default": {"provider": "gemini", "model": os.getenv('GEMINI_DEFAULT_MODEL', 'gemini-3-flash-preview')},
+    "openrouter_free": {"provider": "openrouter", "model": os.getenv('OPENROUTER_DEFAULT_MODEL', 'google/gemma-3-12b-it:free')},
+    "gemini_default": {"provider": "gemini", "model": os.getenv('GEMINI_DEFAULT_MODEL', 'gemini-2.0-flash')},
     "hf_free": {"provider": "huggingface", "model": os.getenv('HUGGINGFACE_DEFAULT_MODEL', 'meta-llama/Llama-3.2-1B-Instruct')},
     "local": {"provider": PRIMARY_LOCAL_PROVIDER, "model": PRIMARY_LOCAL_MODEL},
-    "canary_qwen": {"provider": CANARY_PROVIDER, "model": CANARY_MODEL}
+    "canary_qwen": {"provider": CANARY_PROVIDER, "model": CANARY_MODEL},
+    "nvidia": {"provider": "nvidia", "model": os.getenv('NVIDIA_DEFAULT_MODEL', 'meta/llama-3.1-8b-instruct')},
+    "github_models": {"provider": "github_models", "model": os.getenv('GITHUB_MODELS_DEFAULT_MODEL', 'gpt-4o-mini')}
 }
 
 ALLOW_OLLAMA_FALLBACK = os.getenv('ULTRON_ALLOW_OLLAMA_FALLBACK', '0') == '1'
+LLM_CACHE_ENABLED = os.getenv('ULTRON_LLM_CACHE_ENABLED', '1') == '1'
+LLM_CACHE_MAX_ENTRIES = _env_int('ULTRON_LLM_CACHE_MAX_ENTRIES', 512)
+LLM_CACHE_TTL_SEC = _env_float('ULTRON_LLM_CACHE_TTL_SEC', 900.0)
+LLM_CACHE_MIN_PROMPT_CHARS = _env_int('ULTRON_LLM_CACHE_MIN_PROMPT_CHARS', 16)
+LLM_CACHE_MAX_PROMPT_CHARS = _env_int('ULTRON_LLM_CACHE_MAX_PROMPT_CHARS', 12000)
+
+
+class _TTLResponseCache:
+    def __init__(self, max_entries: int = 512, ttl_sec: float = 900.0):
+        self.max_entries = max(8, int(max_entries or 512))
+        self.ttl_sec = max(5.0, float(ttl_sec or 900.0))
+        self._store: OrderedDict[str, tuple[float, str]] = OrderedDict()
+        self.hits = 0
+        self.misses = 0
+        self.stales = 0
+        self.writes = 0
+
+    def _prune(self) -> None:
+        now = time.time()
+        stale_keys = [k for k, (exp, _) in self._store.items() if exp <= now]
+        for k in stale_keys:
+            self._store.pop(k, None)
+            self.stales += 1
+        while len(self._store) > self.max_entries:
+            self._store.popitem(last=False)
+
+    def get(self, key: str) -> str | None:
+        if not key:
+            return None
+        item = self._store.get(key)
+        if not item:
+            self.misses += 1
+            return None
+        exp, value = item
+        if exp <= time.time():
+            self._store.pop(key, None)
+            self.misses += 1
+            self.stales += 1
+            return None
+        self._store.move_to_end(key)
+        self.hits += 1
+        return value
+
+    def set(self, key: str, value: str) -> None:
+        if not key or not isinstance(value, str) or not value.strip():
+            return
+        self._store[key] = (time.time() + self.ttl_sec, value)
+        self._store.move_to_end(key)
+        self.writes += 1
+        self._prune()
+
+    def status(self) -> dict[str, Any]:
+        self._prune()
+        return {
+            'enabled': True,
+            'backend': 'memory',
+            'entries': len(self._store),
+            'max_entries': self.max_entries,
+            'ttl_sec': self.ttl_sec,
+            'hits': self.hits,
+            'misses': self.misses,
+            'stales': self.stales,
+            'writes': self.writes,
+        }
+
+
+def _build_response_cache():
+    return _TTLResponseCache(max_entries=LLM_CACHE_MAX_ENTRIES, ttl_sec=LLM_CACHE_TTL_SEC)
+
+
+def _response_cache_status() -> dict[str, Any]:
+    try:
+        st = _RESPONSE_CACHE.status()
+    except Exception as e:
+        st = {'enabled': bool(LLM_CACHE_ENABLED), 'backend': 'memory', 'error': str(e)[:180]}
+    st.setdefault('configured_backend', 'memory')
+    st.setdefault('ttl_sec', LLM_CACHE_TTL_SEC)
+    st.setdefault('min_prompt_chars', LLM_CACHE_MIN_PROMPT_CHARS)
+    st.setdefault('max_prompt_chars', LLM_CACHE_MAX_PROMPT_CHARS)
+    return st
+
+
+_RESPONSE_CACHE = _build_response_cache()
+
+
+def _normalize_cache_text(text: str | None) -> str:
+    t = ' '.join(str(text or '').strip().split())
+    return t[:LLM_CACHE_MAX_PROMPT_CHARS]
+
+
+def _cache_key(prompt: str, strategy: str, system: str | None, json_mode: bool, max_tokens: int | None, cloud_fallback: bool, input_class: str | None, inject_persona: bool) -> str:
+    norm_prompt = _normalize_cache_text(prompt)
+    norm_system = _normalize_cache_text(system)
+    if len(norm_prompt) < LLM_CACHE_MIN_PROMPT_CHARS:
+        return ''
+    payload = {
+        'prompt': norm_prompt,
+        'system': norm_system,
+        'strategy': str(strategy or 'default'),
+        'json_mode': bool(json_mode),
+        'max_tokens': int(max_tokens or 0),
+        'cloud_fallback': bool(cloud_fallback),
+        'input_class': str(input_class or ''),
+        'inject_persona': bool(inject_persona),
+        'primary_local_provider': str(PRIMARY_LOCAL_PROVIDER or ''),
+        'primary_local_model': str(PRIMARY_LOCAL_MODEL or ''),
+    }
+    raw = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(',', ':'))
+    return hashlib.sha256(raw.encode('utf-8')).hexdigest()
+
+
+def _cacheable_request(strategy: str, prompt: str, json_mode: bool, max_tokens: int | None) -> bool:
+    if not LLM_CACHE_ENABLED:
+        return False
+    if json_mode:
+        return False
+    if not str(prompt or '').strip():
+        return False
+    if int(max_tokens or 0) > 512:
+        return False
+    return str(strategy or 'default') in {'default', 'reasoning', 'creative', 'deep', 'cheap', 'local'}
+
+
+def _is_cacheable_response(text: str) -> bool:
+    s = str(text or '').strip()
+    if not s:
+        return False
+    low = s.lower()
+    noisy_markers = (
+        'temporariamente saturada',
+        'falhou ou expirou',
+        'não houve verbalização local disponível',
+        'excedeu o orçamento global',
+        'rate limit',
+        'busy_retry')
+    return not any(m in low for m in noisy_markers)
 
 
 def _is_provider_disabled(provider: str) -> bool:
     p = str(provider or '').strip().lower()
-    # global kill-switch for external cloud providers
-    if os.getenv('ULTRON_DISABLE_CLOUD_PROVIDERS', '0') == '1' and p in ('huggingface', 'openrouter', 'groq', 'deepseek', 'openai', 'anthropic', 'gemini'):
+    if os.getenv('ULTRON_DISABLE_CLOUD_PROVIDERS', '0') == '1' and p in ('huggingface', 'openrouter', 'groq', 'deepseek', 'openai', 'anthropic', 'gemini', 'nvidia', 'github_models'):
         return True
     env_map = {
         'huggingface': 'ULTRON_DISABLE_HUGGINGFACE',
@@ -79,11 +237,64 @@ def _is_provider_disabled(provider: str) -> bool:
         'openai': 'ULTRON_DISABLE_OPENAI',
         'anthropic': 'ULTRON_DISABLE_ANTHROPIC',
         'gemini': 'ULTRON_DISABLE_GEMINI',
+        'nvidia': 'ULTRON_DISABLE_NVIDIA',
+        'github_models': 'ULTRON_DISABLE_GITHUB_MODELS',
+        'ollama_cloud': 'ULTRON_DISABLE_OLLAMA_CLOUD',
         'ollama_local': 'ULTRON_DISABLE_OLLAMA_LOCAL',
         'ultron_infer': 'ULTRON_DISABLE_ULTRON_INFER',
     }
     ek = env_map.get(p)
     return bool(ek and os.getenv(ek, '0') == '1')
+
+
+def _provider_has_key(provider: str) -> bool:
+    p = str(provider or '').strip().lower()
+    if p in ( 'ultron_infer', 'openclaw_bridge'):
+        return True
+    try:
+        return bool(str(get_api_key(p) or '').strip())
+    except Exception:
+        return False
+
+
+def _model_for_provider_task(provider: str, task_type: str, strategy: str) -> str:
+    p = str(provider or '').strip().lower()
+    tt = str(task_type or 'general').strip().lower()
+    st = str(strategy or 'default').strip().lower()
+
+    if p == 'gemini':
+        if tt in ('planning_long', 'reasoning_complex') or st in ('deep', 'reasoning'):
+            return os.getenv('GEMINI_REASONING_MODEL', os.getenv('GEMINI_DEFAULT_MODEL', 'gemini-2.0-flash'))
+        return os.getenv('GEMINI_FAST_MODEL', os.getenv('GEMINI_DEFAULT_MODEL', 'gemini-2.0-flash'))
+    if p == 'openrouter':
+        if tt in ('routine', 'general') or st == 'cheap':
+            return os.getenv('OPENROUTER_CHEAP_MODEL', os.getenv('OPENROUTER_DEFAULT_MODEL', 'google/gemma-3-12b-it:free'))
+        return os.getenv('OPENROUTER_REASONING_MODEL', os.getenv('OPENROUTER_DEFAULT_MODEL', 'google/gemma-3-12b-it:free'))
+    if p == 'huggingface':
+        if tt in ('routine', 'general') or st == 'cheap':
+            return os.getenv('HUGGINGFACE_CHEAP_MODEL', os.getenv('HUGGINGFACE_DEFAULT_MODEL', 'meta-llama/Llama-3.2-1B-Instruct'))
+        return os.getenv('HUGGINGFACE_REASONING_MODEL', os.getenv('HUGGINGFACE_DEFAULT_MODEL', 'meta-llama/Llama-3.2-1B-Instruct'))
+    if p == 'deepseek':
+        return os.getenv('DEEPSEEK_REASONING_MODEL', os.getenv('DEEPSEEK_DEFAULT_MODEL', 'deepseek-chat'))
+    if p == 'groq':
+        if tt in ('planning_long', 'reasoning_complex') or st in ('deep', 'reasoning'):
+            return os.getenv('GROQ_REASONING_MODEL', os.getenv('GROQ_DEFAULT_MODEL', 'llama-3.3-70b-versatile'))
+        return os.getenv('GROQ_FAST_MODEL', os.getenv('GROQ_DEFAULT_MODEL', 'llama-3.3-70b-versatile'))
+    if p == 'nvidia':
+        if tt in ('planning_long', 'reasoning_complex') or st in ('deep', 'reasoning'):
+            return os.getenv('NVIDIA_REASONING_MODEL', os.getenv('NVIDIA_DEFAULT_MODEL', 'meta/llama-3.1-8b-instruct'))
+        return os.getenv('NVIDIA_FAST_MODEL', os.getenv('NVIDIA_DEFAULT_MODEL', 'meta/llama-3.1-8b-instruct'))
+    if p == 'github_models':
+        if tt in ('routine', 'general') or st == 'cheap':
+            return os.getenv('GITHUB_MODELS_FAST_MODEL', os.getenv('GITHUB_MODELS_DEFAULT_MODEL', 'gpt-4o-mini'))
+        return os.getenv('GITHUB_MODELS_REASONING_MODEL', os.getenv('GITHUB_MODELS_DEFAULT_MODEL', 'gpt-4o-mini'))
+    if p == 'ollama_cloud':
+        return os.getenv('OLLAMA_CLOUD_DEFAULT_MODEL', 'minimax-m2.7')
+    if p == 'openai':
+        return os.getenv('OPENAI_DEFAULT_MODEL', 'gpt-4o-mini')
+    if p == 'anthropic':
+        return os.getenv('ANTHROPIC_DEFAULT_MODEL', 'claude-3-5-sonnet-20241022')
+    return llm_adapter.provider_default_model(p)
 
 class LLMRouter:
     def __init__(self):
@@ -114,7 +325,7 @@ class LLMRouter:
         if ok is True:
             p['ok'] = int(p.get('ok') or 0) + 1
         elif ok is False:
-            p['errors'] = int(p.get('errors') or 0) + 1
+            p['errors'] = int(p.get('errors') or 0) + int(1 if err else 0)
         p['tokens_in'] = int(p.get('tokens_in') or 0) + int(tin or 0)
         p['tokens_out'] = int(p.get('tokens_out') or 0) + int(tout or 0)
         p['tokens_total'] = int(p.get('tokens_total') or 0) + int(tin or 0) + int(tout or 0)
@@ -123,16 +334,12 @@ class LLMRouter:
             self.usage['last_error'] = {'ts': int(time.time()), 'provider': provider, 'error': em[:220]}
             low = em.lower()
             # global backoff for known external failure states
-            if provider in ('huggingface', 'openrouter', 'groq', 'deepseek', 'openai', 'anthropic', 'gemini'):
-                if any(t in low for t in ['402', '429', 'rate limit', 'insufficient credits', 'depleted your monthly included credits', 'model_not_supported', 'no endpoints found', 'payment required']):
-                    if provider == 'gemini':
-                        cool_sec = int(os.getenv('ULTRON_GEMINI_FAILURE_COOLDOWN_SEC', '15') or 15)
-                        self.fail_cooldown_until[str(provider)] = int(time.time()) + max(3, cool_sec)
-                    else:
-                        cool_sec = int(os.getenv('ULTRON_PROVIDER_FAILURE_COOLDOWN_SEC', '900') or 900)
-                        self.fail_cooldown_until[str(provider)] = int(time.time()) + max(60, cool_sec)
+            if provider in ('huggingface', 'openrouter', 'groq', 'deepseek', 'openai', 'anthropic', 'gemini', 'ultron_infer', 'ollama_local', 'ollama', 'nvidia', 'github_models'):
+                if any(t in low for t in ['402', '403', '404', '429', 'rate limit', 'insufficient credits', 'depleted your monthly included credits', 'model_not_supported', 'no endpoints found', 'payment required', 'inference_busy_retry', '504', 'timeout', 'timed out', 'forbidden', 'not found']):
+                    cool_sec = _provider_failure_cooldown_sec(provider, em)
+                    self.fail_cooldown_until[str(provider)] = int(time.time()) + cool_sec
                 try:
-                    if not (provider == 'gemini' and any(t in low for t in ['429', 'rate limit'])):
+                    if provider not in ('ultron_infer', 'ollama_local', 'ollama'):
                         llm_adapter.maybe_quarantine_provider(provider, em)
                 except Exception:
                     pass
@@ -142,7 +349,7 @@ class LLMRouter:
         return ts > int(time.time())
 
     def usage_status(self) -> dict:
-        out = {'started_at': self.usage.get('started_at'), 'providers': {}, 'last_error': self.usage.get('last_error')}
+        out = {'started_at': self.usage.get('started_at'), 'providers': {}, 'last_error': self.usage.get('last_error'), 'response_cache': _response_cache_status() if LLM_CACHE_ENABLED else {'enabled': False, 'configured_backend': 'memory'}}
         now = int(time.time())
         elapsed = max(1, now - int(self.usage.get('started_at') or now))
         for k, v in (self.usage.get('providers') or {}).items():
@@ -165,7 +372,7 @@ class LLMRouter:
         p = str(provider or 'auto').lower().strip()
         if p == 'auto':
             # prefer explicit providers, fallback to ollama
-            for cand in ('gemini', 'ultron_infer', 'ollama_local', 'huggingface', 'openrouter', 'openai', 'anthropic', 'groq', 'deepseek', 'ollama', 'openclaw_bridge'):
+            for cand in ('gemini', 'ultron_infer', 'ollama_local', 'huggingface', 'openrouter', 'openai', 'anthropic', 'groq', 'deepseek', 'ollama', 'openclaw_bridge', 'nvidia', 'github_models'):
                 r = self.healthcheck(cand)
                 if r.get('ok'):
                     return r
@@ -177,14 +384,6 @@ class LLMRouter:
 
         t0 = time.time()
         try:
-            if p in ('ollama', 'ollama_local'):
-                base = (c or {}).get('base_url') or os.getenv('OLLAMA_BASE_URL', 'http://127.0.0.1:11434')
-                with httpx.Client(timeout=10.0) as hc:
-                    rr = hc.get(base.rstrip('/') + '/api/tags')
-                    rr.raise_for_status()
-                dt = int((time.time() - t0) * 1000)
-                return {'ok': True, 'provider': p, 'latency_ms': dt, 'check': 'tags'}
-
             if p == 'openclaw_bridge':
                 txt = self._call_openclaw_bridge(c, 'Reply with OK only.', 'Healthcheck probe.', json_mode=False, max_tokens=64)
                 dt = int((time.time() - t0) * 1000)
@@ -208,13 +407,14 @@ class LLMRouter:
                 'groq': 'cheap',
                 'anthropic': 'anthropic_default',
                 'deepseek': 'deepseek_default',
+                'nvidia': 'nvidia',
+                'github_models': 'github_models'
             }
             txt = self.complete(
                 'Reply with OK only.',
                 strategy=strategy_map.get(p, 'local'),
                 system='Healthcheck probe.',
-                json_mode=False,
-            )
+                json_mode=False)
             dt = int((time.time() - t0) * 1000)
             return {'ok': bool((txt or '').strip()), 'provider': p, 'latency_ms': dt, 'sample': (txt or '')[:40]}
         except Exception as e:
@@ -271,8 +471,31 @@ class LLMRouter:
                         default_headers={
                             'HTTP-Referer': os.getenv('OPENROUTER_HTTP_REFERER', 'https://ultronpro.nutef.com'),
                             'X-Title': os.getenv('OPENROUTER_APP_TITLE', 'UltronPro'),
-                        },
-                    )
+                        })
+            elif provider == "nvidia":
+                from openai import OpenAI
+                if key:
+                    client = OpenAI(
+                        api_key=key,
+                        base_url=os.getenv('NVIDIA_BASE_URL', 'https://integrate.api.nvidia.com/v1'),
+                        timeout=router_timeout,
+                        max_retries=0)
+            elif provider == "github_models":
+                from openai import OpenAI
+                if key:
+                    client = OpenAI(
+                        api_key=key,
+                        base_url=os.getenv('GITHUB_MODELS_BASE_URL', 'https://models.inference.ai.azure.com'),
+                        timeout=router_timeout,
+                        max_retries=0)
+            elif provider == "ollama_cloud":
+                from openai import OpenAI
+                if key:
+                    client = OpenAI(
+                        api_key=key,
+                        base_url=os.getenv('OLLAMA_CLOUD_BASE_URL', 'https://ollama.com/api/openai'),
+                        timeout=router_timeout,
+                        max_retries=0)
             elif provider == "huggingface":
                 from openai import OpenAI
                 if key:
@@ -280,8 +503,7 @@ class LLMRouter:
                         api_key=key,
                         base_url=os.getenv('HUGGINGFACE_BASE_URL', 'https://router.huggingface.co/v1'),
                         timeout=router_timeout,
-                        max_retries=0,
-                    )
+                        max_retries=0)
             elif provider == "ollama":
                 # local HTTP endpoint; no API key required
                 client = {"base_url": os.getenv('OLLAMA_BASE_URL', 'http://127.0.0.1:11434')}
@@ -315,24 +537,42 @@ class LLMRouter:
             except Exception:
                 pass
 
+        cache_key = ''
+        if _cacheable_request(strategy, prompt, json_mode, max_tokens):
+            try:
+                cache_key = _cache_key(prompt, strategy, system, json_mode, max_tokens, cloud_fallback, input_class, inject_persona)
+                cached = _RESPONSE_CACHE.get(cache_key)
+                if cached is not None:
+                    self.last_call_meta = {
+                        'provider': 'cache',
+                        'model': 'response_cache',
+                        'task_type': llm_adapter.classify_task_type(input_class=input_class, strategy=strategy),
+                        'budget_mode': os.getenv('ULTRON_LLM_BUDGET_MODE', 'economy').strip().lower(),
+                    }
+                    return cached
+            except Exception:
+                cache_key = ''
+
         config = MODELS.get(strategy, MODELS["default"])
         provider = config["provider"]
         model = config["model"]
 
         # Unified adapter-based routing (Phase 6)
-        budget_mode = os.getenv('ULTRON_LLM_BUDGET_MODE', 'economy').strip().lower()
+        budget_mode = os.getenv('ULTRON_LLM_BUDGET_MODE', 'balanced').strip().lower()
         task_type = llm_adapter.classify_task_type(input_class=input_class, strategy=strategy)
         cloud_available = os.getenv('ULTRON_DISABLE_CLOUD_PROVIDERS', '0') != '1'
-
         def _has_provider(pv: str) -> bool:
+            if not _provider_has_key(pv):
+                return False
             return self._get_client(pv) is not None
 
         routed = llm_adapter.route_provider(task_type=task_type, budget_mode=budget_mode, cloud_available=cloud_available, has_provider=_has_provider)
         provider = str(routed.get('provider') or provider)
-        model = str(routed.get('model') or model)
+        model = str(routed.get('model') or _model_for_provider_task(provider, task_type, strategy))
 
         # local runtime providers rely on server-side active adapter marker
 
+        client = None
         # 1. Prefer local ultron_infer for primary reasoning strategies (unless adapter selected explicit cloud)
         if strategy in ('default', 'reasoning', 'creative', 'deep') and provider in ('ultron_infer', 'ollama_local'):
             cloud_disabled = os.getenv('ULTRON_DISABLE_CLOUD_PROVIDERS', '0') == '1'
@@ -361,6 +601,8 @@ class LLMRouter:
                 # stable runtime path; optionally prefer remote infer over ollama-compatible endpoint
                 first_provider = 'ultron_infer' if PREFER_ULTRON_INFER else 'ollama_local'
                 second_provider = 'ollama_local' if first_provider == 'ultron_infer' else 'ultron_infer'
+                if self._provider_cooldown_active(first_provider) and not self._provider_cooldown_active(second_provider):
+                    first_provider, second_provider = second_provider, first_provider
                 first = self._get_client(first_provider)
                 if first:
                     provider = first_provider
@@ -374,23 +616,36 @@ class LLMRouter:
                         client = second
                     else:
                         client = self._get_client(provider)
-        elif strategy in ('cheap',):
+        elif strategy in ('cheap'):
             cloud_disabled = os.getenv('ULTRON_DISABLE_CLOUD_PROVIDERS', '0') == '1'
             if not cloud_disabled:
-                # Prefer HF free router when configured, then OpenRouter free
-                hf_client = self._get_client('huggingface')
-                if hf_client:
-                    provider = 'huggingface'
-                    model = MODELS['hf_free']['model']
-                    client = hf_client
+                # Prioridade para o que está funcionando hoje (NVIDIA e GitHub)
+                gh_client = self._get_client('github_models')
+                if gh_client:
+                    provider = 'github_models'
+                    model = os.getenv('GITHUB_MODELS_DEFAULT_MODEL', 'gpt-4o-mini')
+                    client = gh_client
                 else:
-                    or_client = self._get_client('openrouter')
-                    if or_client:
-                        provider = 'openrouter'
-                        model = MODELS['openrouter_free']['model']
-                        client = or_client
+                    nv_client = self._get_client('nvidia')
+                    if nv_client:
+                        provider = 'nvidia'
+                        model = os.getenv('NVIDIA_DEFAULT_MODEL', 'meta/llama-3.1-8b-instruct')
+                        client = nv_client
                     else:
-                        client = None
+                        # Fallback para os outros
+                        hf_client = self._get_client('huggingface')
+                        if hf_client:
+                            provider = 'huggingface'
+                            model = MODELS['hf_free']['model']
+                            client = hf_client
+                        else:
+                            or_client = self._get_client('openrouter')
+                            if or_client:
+                                provider = 'openrouter'
+                                model = MODELS['openrouter_free']['model']
+                                client = or_client
+                            else:
+                                client = None
             else:
                 client = None
             if not client:
@@ -412,27 +667,16 @@ class LLMRouter:
             client = self._get_client(provider)
         
         # 2. Fallback chain across providers
-        if not client and cloud_fallback:
+        if not client and cloud_fallback and cloud_available:
             for cand in llm_adapter.provider_priority(task_type=task_type, budget_mode=budget_mode):
-                if cand in ('ollama_local', 'ultron_infer', provider):
+                if self._provider_cooldown_active(cand):
+                    continue
+                if cand == provider:
                     continue
                 c = self._get_client(cand)
                 if c:
                     provider = cand
-                    if cand == 'groq':
-                        model = MODELS['cheap']['model']
-                    elif cand == 'deepseek':
-                        model = MODELS['deep']['model']
-                    elif cand == 'openrouter':
-                        model = MODELS['openrouter_free']['model']
-                    elif cand == 'gemini':
-                        model = MODELS['gemini_default']['model']
-                    elif cand == 'huggingface':
-                        model = MODELS['hf_free']['model']
-                    elif cand == 'openai':
-                        model = 'gpt-4o-mini'
-                    else:
-                        model = 'claude-3-5-sonnet-20241022'
+                    model = _model_for_provider_task(cand, task_type, strategy)
                     client = c
                     logger.warning(f"Provider fallback: using {provider}/{model}")
                     break
@@ -448,46 +692,131 @@ class LLMRouter:
             self._touch('none', ok=False, err='no_llm_clients_cloud_chain')
             return ""
 
-        self.last_call_meta = {'provider': provider, 'model': model, 'task_type': task_type, 'budget_mode': budget_mode}
+        self.last_call_meta = {'provider': provider, 'model': model, 'task_type': task_type, 'budget_mode': budget_mode, 'role': 'serve'}
         try:
             if provider == "anthropic":
-                return self._call_anthropic(client, model, prompt, system, json_mode)
-            if provider == 'gemini':
-                return self._call_gemini(client, model, prompt, system, json_mode, max_tokens=max_tokens)
-            if provider == 'openclaw_bridge':
-                return self._call_openclaw_bridge(client, prompt, system, json_mode, max_tokens=max_tokens)
-            if provider in ('ollama', 'ollama_local'):
-                return self._call_ollama(client, model, prompt, system, json_mode, max_tokens=max_tokens, provider_label=provider)
-            if provider == 'ultron_infer':
-                return self._call_ultron_infer(client, model, prompt, system, json_mode, max_tokens=max_tokens)
-            return self._call_openai_compat(client, model, prompt, system, json_mode, provider=provider, max_tokens=max_tokens)
+                out = self._call_anthropic(client, model, prompt, system, json_mode)
+            elif provider == 'gemini':
+                out = self._call_gemini(client, model, prompt, system, json_mode, max_tokens=max_tokens)
+            elif provider == 'openclaw_bridge':
+                out = self._call_openclaw_bridge(client, prompt, system, json_mode, max_tokens=max_tokens)
+            elif provider in ('ollama_local', 'ollama'):
+                out = self._call_ollama(client, model, prompt, system, json_mode, max_tokens=max_tokens, provider_label=provider)
+            elif provider == 'ultron_infer':
+                out = self._call_ultron_infer(client, model, prompt, system, json_mode, max_tokens=max_tokens)
+            else:
+                out = self._call_openai_compat(client, model, prompt, system, json_mode, provider=provider, max_tokens=max_tokens)
+            provider_policy.record_event(
+                role='serve',
+                provider=provider,
+                model=model,
+                task_type=task_type,
+                outcome='ok',
+                artifact_count=1 if str(out or '').strip() else 0,
+                trace_payload={
+                    'problem': str(prompt or '')[:500],
+                    'response_excerpt': str(out or '')[:500],
+                    'strategy': f'llm::{provider}',
+                    'steps': [
+                        {'step': 1, 'kind': 'provider_select', 'detail': f'provider={provider} model={model} task_type={task_type} budget_mode={budget_mode}'},
+                        {'step': 2, 'kind': 'provider_response', 'detail': str(out or '')[:240]}],
+                    'artifacts': ['llm_response'],
+                    'artifact_refs': [f'provider://{provider}/{model}'],
+                    'expected_effect': {
+                        'kind': 'provider_assist',
+                        'goal': 'gerar resposta útil e passível de internalização posterior',
+                    },
+                    'observed_effect': {
+                        'kind': 'provider_response',
+                        'success': True,
+                        'nonempty': bool(str(out or '').strip()),
+                    },
+                    'cloud_dependency_intent': 'worker_assist_not_permanent_dependency',
+                    'work_context': {
+                        'budget_mode': budget_mode,
+                        'role': 'serve',
+                        'cache_key_present': bool(cache_key),
+                    },
+                })
+            if cache_key and _is_cacheable_response(out):
+                try:
+                    _RESPONSE_CACHE.set(cache_key, str(out))
+                except Exception:
+                    pass
+            return out
         except Exception as e:
+            provider_policy.record_event(
+                role='serve',
+                provider=provider,
+                model=model,
+                task_type=task_type,
+                outcome='error',
+                notes=str(e),
+                trace_payload={
+                    'problem': str(prompt or '')[:500],
+                    'strategy': f'llm::{provider}',
+                    'steps': [
+                        {'step': 1, 'kind': 'provider_select', 'detail': f'provider={provider} model={model} task_type={task_type} budget_mode={budget_mode}'},
+                        {'step': 2, 'kind': 'provider_error', 'detail': str(e)[:240]}],
+                    'artifacts': [],
+                    'expected_effect': {
+                        'kind': 'provider_assist',
+                        'goal': 'gerar resposta útil e passível de internalização posterior',
+                    },
+                    'observed_effect': {
+                        'kind': 'provider_error',
+                        'success': False,
+                        'error': str(e)[:240],
+                    },
+                    'cloud_dependency_intent': 'worker_assist_not_permanent_dependency',
+                    'work_context': {
+                        'budget_mode': budget_mode,
+                        'role': 'serve',
+                    },
+                })
             self._touch(provider, ok=False, err=str(e))
             logger.error(f"LLM Call Error ({provider}/{model}): {e}")
 
             # retry on alternative providers first, then use configured local fallback.
-            if cloud_fallback:
+            if cloud_fallback and cloud_available:
                 for cand in llm_adapter.provider_priority(task_type=task_type, budget_mode=budget_mode):
-                    if cand in ('ollama_local', 'ultron_infer') or cand == provider:
+                    if cand == provider:
+                        continue
+                    if self._provider_cooldown_active(cand):
                         continue
                     try:
                         c = self._get_client(cand)
                         if not c:
                             continue
-                        if cand == 'huggingface':
-                            return self._call_openai_compat(c, MODELS['hf_free']['model'], prompt, system, json_mode, provider='huggingface', max_tokens=max_tokens)
+                        cand_model = _model_for_provider_task(cand, task_type, strategy)
                         if cand == 'gemini':
-                            return self._call_gemini(c, MODELS['gemini_default']['model'], prompt, system, json_mode, max_tokens=max_tokens)
-                        if cand == 'anthropic':
-                            return self._call_anthropic(c, 'claude-3-5-sonnet-20241022', prompt, system, json_mode)
-                        if cand == 'deepseek':
-                            return self._call_openai_compat(c, MODELS['deep']['model'], prompt, system, json_mode, provider='deepseek', max_tokens=max_tokens)
-                        if cand == 'openrouter':
-                            return self._call_openai_compat(c, MODELS['openrouter_free']['model'], prompt, system, json_mode, provider='openrouter', max_tokens=max_tokens)
-                        if cand == 'groq':
-                            return self._call_openai_compat(c, MODELS['cheap']['model'], prompt, system, json_mode, provider='groq', max_tokens=max_tokens)
-                        return self._call_openai_compat(c, 'gpt-4o-mini', prompt, system, json_mode, provider='openai', max_tokens=max_tokens)
-                    except Exception:
+                            out = self._call_gemini(c, cand_model, prompt, system, json_mode, max_tokens=max_tokens)
+                        elif cand == 'anthropic':
+                            out = self._call_anthropic(c, cand_model, prompt, system, json_mode)
+                        else:
+                            out = self._call_openai_compat(c, cand_model, prompt, system, json_mode, provider=cand, max_tokens=max_tokens)
+                        
+                        provider_policy.record_event(
+                            role='serve', provider=cand, model=cand_model, task_type=task_type, outcome='fallback_ok', notes=f'fallback_from={provider}',
+                            artifact_count=1 if str(out or '').strip() else 0,
+                            trace_payload={
+                                'problem': str(prompt or '')[:500],
+                                'response_excerpt': str(out or '')[:500],
+                                'strategy': f'llm_fallback::{cand}',
+                                'steps': [
+                                    {'step': 1, 'kind': 'provider_error', 'detail': f'fallback_from={provider}'},
+                                    {'step': 2, 'kind': 'provider_response', 'detail': str(out or '')[:240]}],
+                                'artifacts': ['llm_response', 'fallback_success'],
+                                'artifact_refs': [f'provider://{cand}/{cand_model}'],
+                                'expected_effect': {'kind': 'fallback_provider_assist', 'goal': 'manter continuidade sem travar o ciclo'},
+                                'observed_effect': {'kind': 'fallback_provider_response', 'success': True, 'fallback_from': provider},
+                                'cloud_dependency_intent': 'fallback_bridge_to_keep_local_loop_alive',
+                                'work_context': {'budget_mode': budget_mode, 'role': 'serve', 'fallback_from': provider},
+                            })
+                        return out
+                    except Exception as e3:
+                        self._touch(cand, ok=False, err=str(e3))
+                        logger.warning("LLM fallback error (%s/%s): %s", cand, cand_model, str(e3)[:220])
                         continue
 
                 local_retry_order = []
@@ -517,6 +846,113 @@ class LLMRouter:
                     self._touch('ollama', ok=False, err=str(e2))
 
             return ""
+
+    def _chat_messages(self, prompt: str, system: str | None) -> list[dict]:
+        messages = []
+        if system:
+            messages.append({"role": "system", "content": str(system)})
+        messages.append({"role": "user", "content": str(prompt or "")})
+        return messages
+
+    def _call_ollama(self, client, model, prompt, system, json_mode, max_tokens: int | None = None, provider_label: str = 'ollama_local'):
+        base = str((client or {}).get('base_url') or os.getenv('OLLAMA_BASE_URL', 'http://127.0.0.1:11434')).rstrip('/')
+        timeout_sec = float((client or {}).get('timeout') or _env_float('ULTRON_OLLAMA_TIMEOUT_SEC', 45.0))
+        messages = self._chat_messages(prompt, system)
+        if json_mode:
+            messages[-1]["content"] = str(messages[-1]["content"]) + "\n\nReturn ONLY valid JSON."
+        body = {
+            "model": model,
+            "messages": messages,
+            "stream": False,
+            "options": {
+                "temperature": 0.2,
+                "num_predict": int(max(32, min(4096, int(max_tokens or 256)))),
+            },
+        }
+        if json_mode:
+            body["format"] = "json"
+        with httpx.Client(timeout=max(10.0, timeout_sec)) as hc:
+            rr = hc.post(base + '/api/chat', json=body)
+            rr.raise_for_status()
+            data = rr.json() if rr.text else {}
+        msg = data.get('message') if isinstance(data, dict) else {}
+        text = str((msg or {}).get('content') or data.get('response') or '').strip()
+        self._touch(provider_label, ok=bool(text))
+        return text
+
+    def _call_ultron_infer(self, client, model, prompt, system, json_mode, max_tokens: int | None = None):
+        base = str((client or {}).get('base_url') or os.getenv('ULTRON_LOCAL_INFER_URL', 'http://127.0.0.1:8025')).rstrip('/')
+        token = str((client or {}).get('token') or os.getenv('ULTRON_LOCAL_INFER_TOKEN', '')).strip()
+        timeout_sec = float((client or {}).get('timeout') or _env_float('ULTRON_INFER_TIMEOUT_SEC', 45.0))
+        headers = {'x-api-key': token} if token else {}
+        last_err: Exception | None = None
+        if os.getenv('ULTRON_INFER_BINARY_CLIENT_ENABLED', '1') == '1':
+            try:
+                from ultronpro import binary_protocol
+
+                host, port = binary_protocol.binary_endpoint_from_base(
+                    base,
+                    default_port=int(os.getenv('ULTRON_LOCAL_INFER_BINARY_PORT', '8026') or 8026),
+                )
+                connect_timeout = _env_float('ULTRON_INFER_BINARY_CONNECT_TIMEOUT_SEC', 0.35)
+                decoded = binary_protocol.infer_via_binary_tcp(
+                    host=host,
+                    port=port,
+                    token=token,
+                    model=model,
+                    prompt=str(prompt or ''),
+                    system=system,
+                    max_tokens=int(max_tokens or 256),
+                    temperature=0.2,
+                    json_mode=bool(json_mode),
+                    timeout_sec=timeout_sec,
+                    connect_timeout_sec=connect_timeout,
+                )
+                text = str(decoded.get('text') or '').strip()
+                if text:
+                    self._touch('ultron_infer', ok=True)
+                    return text
+            except Exception as e:
+                last_err = e
+                logger.debug("ultron_infer binary transport unavailable; falling back to HTTP: %s", e)
+        messages = self._chat_messages(prompt, system)
+        if json_mode:
+            messages[-1]["content"] = str(messages[-1]["content"]) + "\n\nReturn ONLY valid JSON."
+        body = {
+            "model": model,
+            "messages": messages,
+            "temperature": 0.2,
+            "max_tokens": int(max(32, min(4096, int(max_tokens or 256)))),
+            "stream": False,
+        }
+        if json_mode:
+            body["response_format"] = {"type": "json_object"}
+        with httpx.Client(timeout=max(10.0, timeout_sec)) as hc:
+            for path in ('/v1/chat/completions', '/chat/completions'):
+                try:
+                    rr = hc.post(base + path, json=body, headers=headers)
+                    rr.raise_for_status()
+                    data = rr.json() if rr.text else {}
+                    choices = data.get('choices') if isinstance(data, dict) else []
+                    if choices:
+                        msg = (choices[0] or {}).get('message') or {}
+                        text = str(msg.get('content') or (choices[0] or {}).get('text') or '').strip()
+                        if text:
+                            self._touch('ultron_infer', ok=True)
+                            return text
+                except Exception as e:
+                    last_err = e
+            try:
+                rr = hc.post(base + '/generate', json={'prompt': str(prompt or ''), 'model': model, 'max_tokens': int(max_tokens or 256)}, headers=headers)
+                rr.raise_for_status()
+                data = rr.json() if rr.text else {}
+                text = str(data.get('text') or data.get('response') or data.get('content') or '').strip()
+                if text:
+                    self._touch('ultron_infer', ok=True)
+                    return text
+            except Exception as e:
+                last_err = e
+        raise RuntimeError(str(last_err or 'ultron_infer_empty_response'))
 
     def _call_gemini(self, client, model, prompt, system, json_mode, max_tokens: int | None = None):
         api_key = str((client or {}).get('api_key') or '').strip()
@@ -558,13 +994,17 @@ class LLMRouter:
         if system: messages.append({"role": "system", "content": system})
         messages.append({"role": "user", "content": prompt})
 
-        # Hard cap for cloud costs (prevents providers defaulting to huge max_tokens like 65536)
+        # Hard cap for cloud costs (prevents providers defaulting to huge max_tokens like 65536).
+        # Exception: if the caller explicitly requests more tokens (e.g. chat synthesis passes 4096),
+        # respect it up to 4096 so that chat responses are not truncated to 220 chars.
         cap_env = int(os.getenv('ULTRON_CLOUD_MAX_TOKENS', '220') or 220)
+        explicit_large = isinstance(max_tokens, int) and max_tokens > cap_env
         req_max = int(max_tokens) if isinstance(max_tokens, int) and max_tokens > 0 else cap_env
-        req_max = int(max(32, min(cap_env, req_max)))
+        hard_cap = int(max(cap_env, min(4096, int(max_tokens or cap_env)))) if explicit_large else cap_env
+        req_max = int(max(32, min(hard_cap, req_max)))
 
         kwargs = {"model": model, "messages": messages, "temperature": 0.3, "max_tokens": req_max}
-        if json_mode and "groq" not in str(client.base_url):
+        if json_mode and "groq" not in str(getattr(client, 'base_url', '')):
             kwargs["response_format"] = {"type": "json_object"}
 
         # model rotation on quota/support failures
@@ -649,7 +1089,7 @@ class LLMRouter:
             except Exception as e:
                 self._touch('openclaw_bridge', ok=False, err=str(e))
 
-        # Fallback path: local CLI (works only if openclaw binary exists in this runtime)
+        # Fallback path: local CLI
         sess = f"{(client or {}).get('session_prefix','ulbridge')}-{uuid.uuid4().hex[:10]}"
         agent_id = str((client or {}).get('agent') or 'bridge')
         cmd = [
@@ -677,61 +1117,6 @@ class LLMRouter:
         self._touch('openclaw_bridge', ok=True, tin=tin, tout=tout)
         return text
 
-    def _call_ollama(self, client, model, prompt, system, json_mode, max_tokens: int | None = None, provider_label: str = 'ollama'):
-        base = (client or {}).get('base_url') or os.getenv('OLLAMA_BASE_URL', 'http://127.0.0.1:11434')
-        body_prompt = prompt
-        if system:
-            body_prompt = f"[SYSTEM]\n{system}\n\n[USER]\n{prompt}"
-        if json_mode:
-            body_prompt += "\n\nReturn ONLY valid JSON."
-        options = {'temperature': 0.2}
-        if max_tokens is not None:
-            options['num_predict'] = int(max(16, min(512, max_tokens)))
-        payload = {
-            'model': model,
-            'prompt': body_prompt,
-            'stream': False,
-            'options': options
-        }
-        timeout_sec = _env_float('ULTRON_OLLAMA_TIMEOUT_SEC', 60.0)
-        with httpx.Client(timeout=max(5.0, timeout_sec)) as hc:
-            r = hc.post(base.rstrip('/') + '/api/generate', json=payload)
-            r.raise_for_status()
-            data = r.json()
-            tin = int(data.get('prompt_eval_count') or 0)
-            tout = int(data.get('eval_count') or 0)
-            self._touch(provider_label or 'ollama', ok=True, tin=tin, tout=tout)
-            return str(data.get('response') or '')
-
-    def _call_ultron_infer(self, client, model, prompt, system, json_mode, max_tokens: int | None = None):
-        base = (client or {}).get('base_url') or os.getenv('ULTRON_LOCAL_INFER_URL', 'http://127.0.0.1:8025')
-        token = (client or {}).get('token') or os.getenv('ULTRON_LOCAL_INFER_TOKEN', '').strip()
-        body_prompt = prompt + ('\n\nReturn ONLY valid JSON.' if json_mode else '')
-        req_max = int(max(32, min(256, max_tokens or 160)))
-        mode = 'deep' if req_max >= 180 else 'balanced'
-        payload = {
-            'prompt': body_prompt,
-            'system': system,
-            'max_new_tokens': req_max,
-            'temperature': 0.2,
-            'mode': mode,
-        }
-        headers = {'x-api-key': token} if token else {}
-        last_err = None
-        base_timeout = _env_float('ULTRON_LOCAL_INFER_TIMEOUT_SEC', 18.0)
-        retry_timeout = _env_float('ULTRON_LOCAL_INFER_RETRY_TIMEOUT_SEC', max(base_timeout + 10.0, 28.0))
-        for to in (base_timeout, retry_timeout):
-            try:
-                with httpx.Client(timeout=to) as hc:
-                    r = hc.post(base.rstrip('/') + '/generate', json=payload, headers=headers)
-                    r.raise_for_status()
-                    data = r.json()
-                    txt = str(data.get('text') or '')
-                    self._touch('ultron_infer', ok=True, tin=max(0, len(body_prompt)//4), tout=max(0, len(txt)//4))
-                    return txt
-            except Exception as e:
-                last_err = e
-        raise last_err if last_err else RuntimeError('ultron_infer_failed')
 
 router = LLMRouter()
 def complete(prompt: str, strategy: str = "default", system: str = None, json_mode: bool = False, inject_persona: bool = True, max_tokens: int | None = None, cloud_fallback: bool = True, input_class: str | None = None) -> str:
@@ -744,20 +1129,101 @@ def last_call_meta() -> dict:
 def usage_status() -> dict:
     return router.usage_status()
 
+
+def response_cache_status() -> dict:
+    return _response_cache_status()
+
 def healthcheck(provider: str = 'auto') -> dict:
     return router.healthcheck(provider)
 
 
 def router_status(task_type: str = 'general', budget_mode: str | None = None) -> dict:
-    mode = str(budget_mode or os.getenv('ULTRON_LLM_BUDGET_MODE', 'economy')).strip().lower()
-    def _has(p: str) -> bool:
-        return router._get_client(p) is not None
-    routed = llm_adapter.route_provider(task_type=task_type, budget_mode=mode, cloud_available=(os.getenv('ULTRON_DISABLE_CLOUD_PROVIDERS', '0') != '1'), has_provider=_has)
+    mode = str(budget_mode or os.getenv('ULTRON_LLM_BUDGET_MODE', 'balanced')).strip().lower()
+    cloud_available = (os.getenv('ULTRON_DISABLE_CLOUD_PROVIDERS', '0') != '1')
+    availability: dict[str, bool] = {}
+    provider_details: dict[str, dict[str, Any]] = {}
+
+    def _probe(p: str) -> bool:
+        pv = str(p or '').strip().lower()
+        disabled = _is_provider_disabled(pv)
+        quarantined = False
+        cooldown_active = False
+        has_key = False
+        client_ready = False
+        reason = 'unavailable'
+
+        if disabled:
+            reason = 'disabled'
+        else:
+            try:
+                quarantined = bool(llm_adapter.is_provider_quarantined(pv))
+            except Exception:
+                quarantined = False
+            cooldown_active = bool(router._provider_cooldown_active(pv))
+            has_key = bool(_provider_has_key(pv))
+            if quarantined:
+                reason = 'quarantined'
+            elif cooldown_active:
+                reason = 'cooldown'
+            elif not has_key:
+                reason = 'missing_key'
+            else:
+                client_ready = router._get_client(pv) is not None
+                reason = 'ready' if client_ready else 'client_unavailable'
+
+        available = bool((not disabled) and (not quarantined) and (not cooldown_active) and has_key and client_ready)
+        availability[pv] = available
+        provider_details[pv] = {
+            'available': available,
+            'reason': reason,
+            'has_key': has_key,
+            'disabled': disabled,
+            'quarantined': quarantined,
+            'cooldown_active': cooldown_active,
+            'default_model': llm_adapter.provider_default_model(pv),
+        }
+        return available
+
+    routed = llm_adapter.route_provider(
+        task_type=task_type,
+        budget_mode=mode,
+        cloud_available=cloud_available,
+        has_provider=_probe)
+    priority = llm_adapter.provider_priority(task_type=task_type, budget_mode=mode)
+    for p in priority:
+        provider_details.setdefault(str(p or '').strip().lower(), {})
+        if str(p or '').strip().lower() not in availability:
+            _probe(p)
+
+    selected_provider = str((routed or {}).get('provider') or '').strip().lower()
+    selected_runtime_model = str((routed or {}).get('model') or llm_adapter.provider_default_model(selected_provider))
+    if selected_provider:
+        provider_details.setdefault(selected_provider, {})
+        provider_details[selected_provider]['selected'] = True
+        provider_details[selected_provider]['runtime_model'] = selected_runtime_model
+
     return {
         'budget_mode': mode,
         'task_type': task_type,
-        'selected': routed,
-        'priority': llm_adapter.provider_priority(task_type=task_type, budget_mode=mode),
+        'cloud_available': cloud_available,
+        'selected': {
+            **dict(routed or {}),
+            'task_type': task_type,
+            'budget_mode': mode,
+        },
+        'priority': priority,
+        'availability': availability,
+        'providers': provider_details,
+        'policy': {
+            'priority': priority,
+            'history_min_n': int(os.getenv('ULTRON_PROVIDER_HISTORY_MIN_N', '6') or 6),
+            'prefer_ultron_infer': os.getenv('ULTRON_PREFER_ULTRON_INFER', '1') == '1',
+            'primary_local_provider': str(PRIMARY_LOCAL_PROVIDER or 'ultron_infer'),
+            'primary_local_model': str(PRIMARY_LOCAL_MODEL or ''),
+            'canary_provider': str(CANARY_PROVIDER or ''),
+            'canary_model': str(CANARY_MODEL or ''),
+            'allow_ollama_fallback': bool(ALLOW_OLLAMA_FALLBACK),
+        },
         'history': llm_adapter.get_perf_snapshot().get('procedural', {}),
         'quarantine': llm_adapter.quarantine_status(),
         'last_call_meta': last_call_meta(),

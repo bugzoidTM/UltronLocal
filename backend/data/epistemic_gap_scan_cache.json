@@ -1,0 +1,196 @@
+{
+  "ts": 1777643018.076897,
+  "meta": {
+    "cached": false,
+    "scan_ms": 98.45,
+    "gap_count": 5,
+    "cache_ttl_sec": 15.0
+  },
+  "gaps": [
+    {
+      "id": "causal_graph_interventional_coverage",
+      "label": "cobertura interventional do grafo causal",
+      "domain": "causal_graph",
+      "metric": "edges=13 strong=0 weak=1",
+      "priority": 0.833,
+      "evidence": {
+        "causal_graph": {
+          "ok": true,
+          "nodes": 20,
+          "edges": 13,
+          "updated_at": 1776905723,
+          "path": "F:\\sistemas\\UltronPro\\backend\\data\\causal_graph.json",
+          "interventional_strong_edges": 0,
+          "interventional_weak_edges": 1,
+          "observational_edges": 12
+        }
+      },
+      "next_experiment": "converter decisoes e benchmarks recentes em arestas causais com validacao interventional"
+    },
+    {
+      "id": "episodic_abstraction_density",
+      "label": "densidade de abstracoes episodicas reutilizaveis",
+      "domain": "biographic_digest",
+      "metric": "abstracted=0 active_after=37 min_group_episodes=3",
+      "priority": 0.78,
+      "evidence": {
+        "sleep_cycle": {
+          "ok": true,
+          "ts": 1776946339,
+          "episodes_total": 38,
+          "active_after": 37,
+          "pruned": 0,
+          "abstracted": 0,
+          "abstractions_tested": 372,
+          "sql_consolidation": {
+            "decayed": 6242,
+            "pruned": 13,
+            "promoted": 0
+          },
+          "causal_gap_investigation": {
+            "ok": false,
+            "enabled": true,
+            "epistemic_gap_perception": {
+              "ok": true,
+              "enabled": true,
+              "seeded": 0,
+              "reason": "pending_queue_not_empty"
+            },
+            "pending_before": 3,
+            "executed": 3,
+            "injected": 0,
+            "failed": 3,
+            "coverage_delta_edges": 0,
+            "coverage_gained": false,
+            "items": [
+              {
+                "investigation_id": "inv_2008d2650b",
+                "ok": false,
+                "injected": false,
+                "error": "sandbox_unreachable:ConnectError",
+                "experiment_kind": "causal_transfer_prior_validation",
+                "target_route": "unknown:general",
+                "query_terms": [
+                  "llm",
+                  "sua"
+                ],
+                "edge": {}
+              },
+              {
+                "investigation_id": "inv_47bb669b64",
+                "ok": false,
+                "injected": false,
+                "error": "sandbox_unreachable:ConnectError",
+                "experiment_kind": "causal_graph_enrichment",
+                "target_route": "active_investigation",
+                "query_terms": [
+                  "chama",
+                  "como"
+                ],
+                "edge": {}
+              },
+              {
+                "investigation_id": "inv_d1b19aa531",
+                "ok": false,
+                "injected": false,
+                "error": "sandbox_unreachable:ConnectError",
+                "experiment_kind": "causal_graph_enrichment",
+                "target_route": "unknown",
+                "query_terms": [
+                  "chama",
+                  "como"
+                ],
+                "edge": {}
+              }
+            ],
+            "reason": null
+          },
+          "epistemic_gap_perception": {
+            "ok": true,
+            "enabled": true,
+            "seeded": 0,
+            "reason": "pending_queue_not_empty"
+          },
+          "coverage_delta_edges": 0,
+          "coverage_gained": false,
+          "retention_days": 14,
+          "max_active_rows": 3000,
+          "recent_abstraction_hours": 48,
+          "min_group_episodes": 3,
+          "paths": {
+            "episodic_active": "F:\\sistemas\\UltronPro\\backend\\data\\episodic_memory.jsonl",
+            "episodic_archive": "F:\\sistemas\\UltronPro\\backend\\data\\episodic_memory_archive.jsonl",
+            "abstractions": "F:\\sistemas\\UltronPro\\backend\\data\\episodic_abstractions.json"
+          }
+        }
+      },
+      "next_experiment": "semear episodios por dominio e verificar se o sleep_cycle compila skills reutilizaveis"
+    },
+    {
+      "id": "background_loop_pressure",
+      "label": "estabilidade dos loops sob carga",
+      "domain": "runtime_lifecycle",
+      "metric": "paused=True reason=event_loop_lag max_lag=33.125s blocked_loops=95",
+      "priority": 0.734,
+      "evidence": {
+        "background_guard": {
+          "enabled": true,
+          "state": "paused",
+          "lag_sec": 0.0,
+          "max_lag_sec": 33.125,
+          "consecutive_lag": 0,
+          "paused_until": 1777642980.5478528,
+          "last_pause_reason": "event_loop_lag",
+          "last_pause_at": 1777642890.5478528,
+          "last_slow_request": null,
+          "blocked_loops": 95,
+          "last_blocked_loop": "sleep_cycle_loop",
+          "last_log_at": 1777642952.8394186,
+          "last_pause_details": {
+            "lag_sec": 28.922,
+            "consecutive_lag": 1
+          },
+          "paused": true,
+          "paused_for_sec": 0.007436990737915039
+        }
+      },
+      "next_experiment": "medir custo por loop e aplicar budget adaptativo sem desligar loops essenciais"
+    },
+    {
+      "id": "biographic_open_tension",
+      "label": "tensao aberta no digest biografico",
+      "domain": "self_model",
+      "metric": "benchmark abaixo do limiar: interventive_prediction_unseen_variants não passou (acurácia respondível 76.5%, acurácia total 65.0%, limiar 80.0%)",
+      "priority": 0.719,
+      "evidence": {
+        "digest_day": "2026-05-01",
+        "checksum": "a2e4410729ef9c6a",
+        "open_tension": "benchmark abaixo do limiar: interventive_prediction_unseen_variants não passou (acurácia respondível 76.5%, acurácia total 65.0%, limiar 80.0%)"
+      },
+      "next_experiment": "transformar a tensao principal do digest em tarefa mensuravel com criterio de fechamento"
+    },
+    {
+      "id": "structured_reasoning_cloud_contingency",
+      "label": "contingencia de linguagem por rotacao cloud",
+      "domain": "language_interface_resilience",
+      "metric": "no_cloud_probe=0/3 accuracy=0.0 policy=cloud_rotation",
+      "priority": 0.687,
+      "evidence": {
+        "hard_eval_ts": 1776800563,
+        "external_benchmark": {
+          "ok": true,
+          "score": 1.0,
+          "suite_count": 9,
+          "oracle_selftest_ok": true,
+          "oracle_accuracy": 1.0,
+          "no_cloud_probe_accuracy": 0.0,
+          "no_cloud_probe_total": 3,
+          "no_cloud_probe_correct": 0,
+          "no_cloud_probe_run_id": "extb_1646a07843"
+        },
+        "local_provider_policy": "cloud_rotation"
+      },
+      "next_experiment": "validar que o nucleo estruturado decide primeiro e que cloud rotation atua apenas como verbalizador/fallback quando a investigacao ativa precisar de linguagem"
+    }
+  ]
+}

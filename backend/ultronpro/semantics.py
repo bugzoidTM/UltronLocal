@@ -91,7 +91,7 @@ def clarification_prompt(user_text: str) -> str:
     )
 
 
-def evaluate_language_dataset(dataset_path: str | Path = "/app/ultronpro/data_language_eval.json") -> dict[str, Any]:
+def evaluate_language_dataset(dataset_path: str | Path = str(Path(__file__).resolve().parent.parent / 'ultronpro/data_language_eval.json')) -> dict[str, Any]:
     p = Path(dataset_path)
     if not p.exists():
         return {"total": 0, "correct": 0, "accuracy": 0.0, "missing": True}

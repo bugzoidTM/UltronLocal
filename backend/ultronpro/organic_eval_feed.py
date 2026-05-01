@@ -8,7 +8,7 @@ from typing import Any
 from ultronpro import quality_eval, gap_detector, cognitive_patch_loop
 
 
-STATUS_PATH = Path('/app/data/organic_eval_feed_state.json')
+STATUS_PATH = Path(__file__).resolve().parent.parent / 'data' / 'organic_eval_feed_state.json'
 
 
 def _now() -> int:

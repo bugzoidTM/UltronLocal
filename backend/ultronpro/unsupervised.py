@@ -6,7 +6,7 @@ import json
 import re
 import time
 
-STATE_PATH = Path('/app/data/unsupervised_state.json')
+STATE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'unsupervised_state.json'
 
 
 def _tokens(text: str) -> list[str]:

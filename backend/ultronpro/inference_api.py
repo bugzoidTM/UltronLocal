@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import os
 import time
+import logging
+import secrets
 from threading import Lock
 from typing import Optional
 import asyncio
@@ -10,6 +12,9 @@ import torch
 from fastapi import FastAPI, HTTPException, Header
 from pydantic import BaseModel
 from transformers import AutoModelForCausalLM, AutoTokenizer
+from ultronpro import binary_protocol
+
+logger = logging.getLogger("uvicorn")
 
 # CPU stabilization knobs (safe defaults for VPS)
 try:
@@ -31,6 +36,7 @@ _state = {
     'model': None,
     'last_loaded_at': 0,
 }
+_binary_server: asyncio.AbstractServer | None = None
 
 
 class GenerateRequest(BaseModel):
@@ -91,6 +97,13 @@ async def health():
             'reason': 'training_disabled_by_architecture',
         },
         'last_loaded_at': _state.get('last_loaded_at'),
+        'binary_protocol': {
+            'enabled': os.getenv('ULTRON_INFER_BINARY_ENABLED', '1') == '1',
+            'host': os.getenv('ULTRON_INFER_BINARY_HOST', '127.0.0.1'),
+            'port': int(os.getenv('ULTRON_INFER_BINARY_PORT', '8026') or 8026),
+            'magic': binary_protocol.MAGIC.decode('ascii'),
+            'version': binary_protocol.VERSION,
+        },
     }
 
 
@@ -155,6 +168,111 @@ async def runtime_reload(x_api_key: str | None = Header(default=None)):
     except Exception as e:
         raise HTTPException(500, str(e))
     return {'ok': True, 'loaded_base': _state.get('loaded_base'), 'loaded_adapter': ''}
+
+
+async def _binary_write_response(
+    writer: asyncio.StreamWriter,
+    *,
+    nonce: int,
+    key: bytes,
+    text: str = '',
+    error: str = '',
+    status: int = 200,
+):
+    opcode = binary_protocol.OP_INFER_RESPONSE if status < 400 else binary_protocol.OP_ERROR
+    payload = binary_protocol.encode_infer_response(
+        text=text,
+        error=error,
+        model=str(_state.get('loaded_base') or BASE_MODEL),
+        status=status,
+    )
+    writer.write(binary_protocol.encode_frame(opcode, payload, nonce=nonce, key=key, sequence=2))
+    await writer.drain()
+
+
+async def _handle_binary_client(reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
+    nonce = secrets.randbits(64)
+    key = binary_protocol.protocol_key(API_TOKEN)
+    try:
+        hello = await asyncio.wait_for(reader.readexactly(binary_protocol.HELLO_SIZE), timeout=1.0)
+        binary_protocol.parse_hello(hello)
+        writer.write(binary_protocol.make_challenge(nonce))
+        await writer.drain()
+
+        header = await asyncio.wait_for(reader.readexactly(binary_protocol.FRAME_HEADER.size), timeout=2.0)
+        length = binary_protocol.FRAME_HEADER.unpack(header)[6]
+        if length > binary_protocol.MAX_PAYLOAD_BYTES:
+            raise binary_protocol.BinaryProtocolError('payload_too_large')
+        body = await asyncio.wait_for(reader.readexactly(length), timeout=3.0)
+        frame = binary_protocol.decode_frame(header + body, key=key, expected_nonce=nonce)
+        if frame.opcode != binary_protocol.OP_INFER_REQUEST:
+            raise binary_protocol.BinaryProtocolError('unexpected_opcode')
+        payload = binary_protocol.decode_infer_request(frame.payload)
+        if payload.get('json_mode'):
+            payload['prompt'] = str(payload.get('prompt') or '') + "\n\nReturn ONLY valid JSON."
+
+        req = GenerateRequest(
+            prompt=str(payload.get('prompt') or ''),
+            system=str(payload.get('system') or '') or None,
+            max_new_tokens=int(payload.get('max_tokens') or 160),
+            temperature=float(payload.get('temperature') or 0.2),
+            mode=str(payload.get('mode') or 'balanced'),
+        )
+
+        try:
+            await asyncio.wait_for(_infer_lock.acquire(), timeout=0.8)
+        except Exception:
+            await _binary_write_response(writer, nonce=nonce, key=key, error='inference_busy_retry', status=429)
+            return
+
+        try:
+            result = await asyncio.wait_for(asyncio.to_thread(_infer_sync, req), timeout=28.0)
+            await _binary_write_response(
+                writer,
+                nonce=nonce,
+                key=key,
+                text=str((result or {}).get('text') or ''),
+                status=200,
+            )
+        except asyncio.TimeoutError:
+            await _binary_write_response(writer, nonce=nonce, key=key, error='inference_timeout', status=504)
+        except Exception as exc:
+            await _binary_write_response(writer, nonce=nonce, key=key, error=str(exc)[:500], status=500)
+        finally:
+            if _infer_lock.locked():
+                _infer_lock.release()
+    except Exception as exc:
+        logger.debug("binary inference client rejected: %s", exc)
+    finally:
+        try:
+            writer.close()
+            await writer.wait_closed()
+        except Exception:
+            pass
+
+
+@app.on_event('startup')
+async def _startup_binary_protocol():
+    global _binary_server
+    if os.getenv('ULTRON_INFER_BINARY_ENABLED', '1') != '1':
+        return
+    host = os.getenv('ULTRON_INFER_BINARY_HOST', '127.0.0.1')
+    port = int(os.getenv('ULTRON_INFER_BINARY_PORT', '8026') or 8026)
+    try:
+        _binary_server = await asyncio.start_server(_handle_binary_client, host=host, port=port)
+        logger.info("UltronPro binary inference protocol listening on %s:%s", host, port)
+    except Exception as exc:
+        _binary_server = None
+        logger.warning("UltronPro binary inference protocol disabled: %s", exc)
+
+
+@app.on_event('shutdown')
+async def _shutdown_binary_protocol():
+    global _binary_server
+    if _binary_server is not None:
+        _binary_server.close()
+        await _binary_server.wait_closed()
+        _binary_server = None
 
 
 @app.post('/generate')

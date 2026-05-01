@@ -6,8 +6,8 @@ import uuid
 from pathlib import Path
 from typing import Any
 
-RUNS_PATH = Path('/app/data/operational_consciousness/benchmark_runs.jsonl')
-BASELINE_PATH = Path('/app/data/operational_consciousness/baseline.json')
+RUNS_PATH = Path(__file__).resolve().parent.parent / 'data' / 'operational_consciousness/benchmark_runs.jsonl'
+BASELINE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'operational_consciousness/baseline.json'
 
 
 def _now() -> int:

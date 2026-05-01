@@ -4,12 +4,19 @@ import json
 import re
 import time
 import uuid
+import ast
 from pathlib import Path
 from typing import Any
 
 SUITE_PATH = Path(__file__).resolve().parent / 'benchmarks' / 'external_public_eval_v1.json'
-RUNS_PATH = Path('/app/data/external_benchmarks/public_eval_runs.jsonl')
-BASELINE_PATH = Path('/app/data/external_benchmarks/public_eval_baseline.json')
+RUNS_PATH = Path(__file__).resolve().parent.parent / 'data' / 'external_benchmarks/public_eval_runs.jsonl'
+BASELINE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'external_benchmarks/public_eval_baseline.json'
+HINDSIGHT_PATH = Path(__file__).resolve().parent.parent / 'data' / 'external_benchmarks/hindsight_replay.jsonl'
+CROSS_MODAL_PATH = Path(__file__).resolve().parent.parent / 'data' / 'external_benchmarks/cross_modal_validations.jsonl'
+
+FACTUAL_CORRECT_SCORE = 0.975
+FACTUAL_INCORRECT_SCORE = 0.1
+CROSS_MODAL_FAILURE_CAP = 0.35
 
 _BENCHMARK_FAMILIES = {
     'arc_easy_partial': 'science_qa',
@@ -76,13 +83,15 @@ def list_suite() -> dict[str, Any]:
 
 
 def _extract_choice_letter(text: str) -> str:
-    s = str(text or '').strip().upper()
+    s = str(text or '').strip()
     try:
         obj = json.loads(s)
         if isinstance(obj, dict):
-            s = str(obj.get('answer') or obj.get('choice') or '').strip().upper()
+            # Case-insensitive key lookup
+            d = {str(k).lower(): v for k, v in obj.items()}
+            s = str(d.get('answer') or d.get('choice') or '').strip().upper()
     except Exception:
-        pass
+        s = s.upper()
     m = re.search(r'\b([ABCD])\b', s)
     if m:
         return m.group(1)
@@ -90,6 +99,473 @@ def _extract_choice_letter(text: str) -> str:
     if m:
         return m.group(1)
     return ''
+
+
+def _safe_jsonish(value: Any) -> Any:
+    if isinstance(value, (dict, list, int, float, bool)) or value is None:
+        return value
+    text = str(value or '').strip()
+    if not text:
+        return ''
+    try:
+        return json.loads(text)
+    except Exception:
+        pass
+    try:
+        return ast.literal_eval(text)
+    except Exception:
+        return value
+
+
+def _norm_text(value: Any) -> str:
+    return re.sub(r'\s+', ' ', str(value or '').strip()).upper()
+
+
+def _choice_text(item: dict[str, Any], label: str) -> str:
+    lab = str(label or '').strip().upper()
+    for choice in (item.get('choices') or []):
+        if not isinstance(choice, dict):
+            continue
+        if str(choice.get('label') or '').strip().upper() == lab:
+            return str(choice.get('text') or '').strip()
+    return ''
+
+
+def resolve_external_ground_truth(query: str = '', context_meta: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Resolve a factual anchor from explicit meta or the public benchmark suite."""
+    meta = context_meta if isinstance(context_meta, dict) else {}
+    for key in ('ground_truth', 'gold_answer', 'expected_answer'):
+        if key in meta and meta.get(key) not in (None, ''):
+            return {
+                'ok': True,
+                'has_ground_truth': True,
+                'ground_truth': meta.get(key),
+                'source': key,
+                'item': meta.get('benchmark_item') if isinstance(meta.get('benchmark_item'), dict) else {},
+            }
+
+    item = meta.get('external_benchmark_item') or meta.get('benchmark_item')
+    if isinstance(item, dict) and item.get('answer') not in (None, ''):
+        annotated = _annotate_item(item)
+        return {
+            'ok': True,
+            'has_ground_truth': True,
+            'ground_truth': annotated.get('answer'),
+            'source': 'benchmark_item',
+            'item': annotated,
+        }
+
+    bench_id = str(meta.get('external_benchmark_id') or meta.get('benchmark_id') or meta.get('case_id') or '').strip()
+    if bench_id:
+        try:
+            suite = _load_suite()
+            for raw in suite.get('items') or []:
+                if not isinstance(raw, dict):
+                    continue
+                if str(raw.get('id') or '') == bench_id:
+                    annotated = _annotate_item(raw)
+                    return {
+                        'ok': True,
+                        'has_ground_truth': True,
+                        'ground_truth': annotated.get('answer'),
+                        'source': 'external_public_eval_v1',
+                        'item': annotated,
+                    }
+        except Exception as e:
+            return {'ok': False, 'has_ground_truth': False, 'error': f'ground_truth_lookup_failed:{type(e).__name__}'}
+
+    return {'ok': True, 'has_ground_truth': False, 'ground_truth': None, 'source': None, 'item': {}}
+
+
+def evaluate_answer_against_ground_truth(
+    *,
+    query: str,
+    answer: Any,
+    ground_truth: Any = None,
+    context_meta: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Score an answer against an external factual anchor, independent of style."""
+    meta = context_meta if isinstance(context_meta, dict) else {}
+    resolved = resolve_external_ground_truth(query=query, context_meta=meta)
+    item = resolved.get('item') if isinstance(resolved.get('item'), dict) else {}
+    gold = ground_truth if ground_truth not in (None, '') else resolved.get('ground_truth')
+    if gold in (None, ''):
+        return {'ok': True, 'has_ground_truth': False, 'factual_correct': None, 'factual_score': None}
+
+    parsed_answer = _safe_jsonish(answer)
+    kind = 'exact'
+    predicted: Any = parsed_answer
+    correct = False
+
+    if isinstance(gold, list) and (not gold or isinstance(gold[0], list)):
+        kind = 'grid'
+        predicted = parsed_answer
+        correct = bool(predicted == gold)
+    elif isinstance(gold, str) and len(str(gold).strip()) == 1:
+        kind = 'mcq'
+        predicted = _extract_choice_letter(str(answer))
+        correct = bool(predicted and predicted == str(gold).strip().upper())
+    else:
+        predicted = parsed_answer
+        correct = _norm_text(predicted) == _norm_text(gold)
+
+    gold_label = str(gold or '').strip().upper() if kind == 'mcq' else gold
+    expected_text = _choice_text(item, str(gold_label)) if kind == 'mcq' and item else ''
+    score = FACTUAL_CORRECT_SCORE if correct else FACTUAL_INCORRECT_SCORE
+    alerts = [] if correct else ['factual_error_against_ground_truth', 'ground_truth_mismatch']
+    return {
+        'ok': True,
+        'has_ground_truth': True,
+        'kind': kind,
+        'factual_correct': bool(correct),
+        'factual_score': score,
+        'predicted_answer': predicted,
+        'gold_answer': gold_label,
+        'expected_answer': expected_text or gold_label,
+        'ground_truth_source': resolved.get('source') or ('provided' if ground_truth not in (None, '') else None),
+        'benchmark_id': item.get('id'),
+        'benchmark': item.get('benchmark'),
+        'family': item.get('family'),
+        'split': item.get('split'),
+        'comparability_tier': item.get('comparability_tier'),
+        'alerts': alerts,
+    }
+
+
+def _compact_trajectory(context_meta: dict[str, Any], tool_outputs: list[dict[str, Any]] | None) -> dict[str, Any]:
+    meta = context_meta if isinstance(context_meta, dict) else {}
+    trajectory = meta.get('trajectory')
+    if not isinstance(trajectory, (dict, list)):
+        trajectory = meta.get('planner_trace') or meta.get('steps') or meta.get('plan')
+    return {
+        'trajectory': trajectory if isinstance(trajectory, (dict, list)) else None,
+        'tool_outputs': [
+            {
+                'tool': str((row or {}).get('tool') or '')[:80],
+                'status': str((row or {}).get('status') or '')[:40],
+                'output': str((row or {}).get('output') or '')[:500],
+            }
+            for row in (tool_outputs or [])[:12]
+            if isinstance(row, dict)
+        ],
+    }
+
+
+def build_hindsight_example(
+    *,
+    query: str,
+    answer: Any,
+    factual_eval: dict[str, Any],
+    context_meta: dict[str, Any] | None = None,
+    tool_outputs: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    if not bool((factual_eval or {}).get('has_ground_truth')):
+        return {}
+    correct = bool((factual_eval or {}).get('factual_correct'))
+    return {
+        'ts': _now(),
+        'kind': 'hindsight_retro_label',
+        'query': str(query or '')[:1200],
+        'observed_answer': str(answer or '')[:2000],
+        'predicted_answer': (factual_eval or {}).get('predicted_answer'),
+        'gold_answer': (factual_eval or {}).get('gold_answer'),
+        'correct_solution': (factual_eval or {}).get('expected_answer') or (factual_eval or {}).get('gold_answer'),
+        'factual_correct': correct,
+        'surprise_score': 0.0 if correct else 1.0,
+        'negative_label': None if correct else 'avoid_observed_answer',
+        'positive_label': 'replay_with_external_ground_truth',
+        'benchmark_id': (factual_eval or {}).get('benchmark_id'),
+        'benchmark': (factual_eval or {}).get('benchmark'),
+        'family': (factual_eval or {}).get('family'),
+        'trajectory': _compact_trajectory(context_meta or {}, tool_outputs),
+    }
+
+
+def record_hindsight_failure(
+    *,
+    query: str,
+    answer: Any,
+    factual_eval: dict[str, Any],
+    context_meta: dict[str, Any] | None = None,
+    tool_outputs: list[dict[str, Any]] | None = None,
+) -> dict[str, Any] | None:
+    if not bool((factual_eval or {}).get('has_ground_truth')) or bool((factual_eval or {}).get('factual_correct')):
+        return None
+    row = build_hindsight_example(
+        query=query,
+        answer=answer,
+        factual_eval=factual_eval,
+        context_meta=context_meta,
+        tool_outputs=tool_outputs,
+    )
+    if not row:
+        return None
+    _ensure_parent(HINDSIGHT_PATH)
+    with HINDSIGHT_PATH.open('a', encoding='utf-8') as f:
+        f.write(json.dumps(row, ensure_ascii=False) + '\n')
+    return row
+
+
+def _append_cross_modal(row: dict[str, Any]) -> None:
+    _ensure_parent(CROSS_MODAL_PATH)
+    with CROSS_MODAL_PATH.open('a', encoding='utf-8') as f:
+        f.write(json.dumps(row, ensure_ascii=False) + '\n')
+
+
+def _code_validation_modality(spec: dict[str, Any]) -> dict[str, Any] | None:
+    if not isinstance(spec, dict) or not spec:
+        return None
+    result = spec.get('sandbox_result') if isinstance(spec.get('sandbox_result'), dict) else None
+    language = str(spec.get('language') or 'python').strip().lower()
+    code = str(spec.get('code') or spec.get('command') or '')
+    if result is None and code.strip():
+        try:
+            from ultronpro import sandbox_client
+            if language in ('bash', 'shell', 'sh'):
+                result = sandbox_client.execute_bash(code, timeout_sec=int(spec.get('timeout_sec') or 10))
+            else:
+                result = sandbox_client.execute_python(code, timeout_sec=int(spec.get('timeout_sec') or 10))
+        except Exception as e:
+            result = {'ok': False, 'error': f'sandbox_error:{type(e).__name__}', 'returncode': -1, 'stdout': '', 'stderr': str(e)[:600]}
+    if result is None:
+        return {'modality': 'code_sandbox', 'status': 'unavailable', 'surprise': 0.35, 'reason': 'missing_code_or_result'}
+
+    err = str(result.get('error') or '')
+    if err.startswith('sandbox_unreachable:'):
+        return {'modality': 'code_sandbox', 'status': 'unavailable', 'surprise': 0.55, 'reason': err, 'result': result}
+
+    expected_rc = int(spec.get('expected_returncode') if spec.get('expected_returncode') is not None else 0)
+    rc_ok = int(result.get('returncode') or 0) == expected_rc
+    stdout = str(result.get('stdout') or '')
+    contains = spec.get('expected_stdout_contains')
+    stdout_ok = True if contains in (None, '') else str(contains) in stdout
+    passed = rc_ok and stdout_ok and bool(result.get('ok', rc_ok))
+    return {
+        'modality': 'code_sandbox',
+        'status': 'passed' if passed else 'failed',
+        'surprise': 0.0 if passed else 0.9,
+        'reason': 'execution_matched_expectation' if passed else 'sandbox_result_mismatch',
+        'result': {
+            'ok': bool(result.get('ok')),
+            'returncode': int(result.get('returncode') or 0),
+            'stdout': stdout[:1000],
+            'stderr': str(result.get('stderr') or '')[:1000],
+            'error': err[:300],
+        },
+    }
+
+
+def _source_validation_modality(query: str, factual_eval: dict[str, Any], spec: dict[str, Any]) -> dict[str, Any] | None:
+    if not isinstance(spec, dict) or not spec:
+        return None
+    sources = spec.get('sources') or spec.get('independent_sources') or []
+    if not isinstance(sources, list):
+        sources = []
+    allow_network = bool(spec.get('allow_network'))
+    fetched_sources: list[dict[str, Any]] = []
+    if not sources and allow_network:
+        try:
+            from ultronpro import web_browser
+            search = web_browser.search_web(str(query or ''), top_k=int(spec.get('top_k') or 3))
+            for item in (search.get('items') or [])[:3]:
+                if isinstance(item, dict):
+                    fetched_sources.append({'title': item.get('title'), 'url': item.get('url'), 'text': item.get('snippet') or ''})
+        except Exception:
+            fetched_sources = []
+    sources = [x for x in (sources or fetched_sources) if isinstance(x, dict)]
+    if not sources:
+        return {'modality': 'independent_sources', 'status': 'unavailable', 'surprise': 0.35, 'reason': 'missing_sources'}
+
+    expected = str((factual_eval or {}).get('expected_answer') or (factual_eval or {}).get('gold_answer') or '').strip()
+    required_terms = [str(x).strip().lower() for x in (spec.get('required_terms') or []) if str(x).strip()]
+    if not required_terms and expected:
+        required_terms = [expected.lower()]
+    min_sources = max(1, int(spec.get('min_sources') or 2))
+    hits = 0
+    checked = []
+    for source in sources[:8]:
+        text = str(source.get('text') or source.get('snippet') or source.get('title') or '')
+        low = text.lower()
+        supported = bool(required_terms) and all(term in low for term in required_terms)
+        if supported:
+            hits += 1
+        checked.append({
+            'url': str(source.get('url') or '')[:300],
+            'title': str(source.get('title') or '')[:200],
+            'supported': supported,
+        })
+
+    passed = hits >= min_sources
+    return {
+        'modality': 'independent_sources',
+        'status': 'passed' if passed else 'failed',
+        'surprise': 0.0 if passed else 0.85,
+        'reason': 'source_consensus_met' if passed else 'source_consensus_missing',
+        'hits': hits,
+        'min_sources': min_sources,
+        'checked_sources': checked,
+        'required_terms': required_terms[:10],
+    }
+
+
+def validate_cross_modal(
+    *,
+    query: str,
+    answer: Any,
+    context_meta: dict[str, Any] | None = None,
+    tool_outputs: list[dict[str, Any]] | None = None,
+    factual_eval: dict[str, Any] | None = None,
+    record: bool = False,
+) -> dict[str, Any]:
+    meta = context_meta if isinstance(context_meta, dict) else {}
+    factual = factual_eval or evaluate_answer_against_ground_truth(query=query, answer=answer, context_meta=meta)
+    modalities: list[dict[str, Any]] = []
+    if bool(factual.get('has_ground_truth')):
+        modalities.append({
+            'modality': 'external_ground_truth',
+            'status': 'passed' if bool(factual.get('factual_correct')) else 'failed',
+            'surprise': 0.0 if bool(factual.get('factual_correct')) else 1.0,
+            'reason': 'gold_answer_match' if bool(factual.get('factual_correct')) else 'gold_answer_mismatch',
+            'gold_answer': factual.get('gold_answer'),
+            'predicted_answer': factual.get('predicted_answer'),
+        })
+
+    code_spec = meta.get('code_validation') if isinstance(meta.get('code_validation'), dict) else {}
+    code_mod = _code_validation_modality(code_spec)
+    if code_mod:
+        modalities.append(code_mod)
+
+    source_spec = meta.get('source_validation') if isinstance(meta.get('source_validation'), dict) else {}
+    if not source_spec and isinstance(meta.get('independent_sources'), list):
+        source_spec = {'sources': meta.get('independent_sources')}
+    source_mod = _source_validation_modality(query, factual, source_spec)
+    if source_mod:
+        modalities.append(source_mod)
+
+    passed_count = sum(1 for m in modalities if str(m.get('status')) == 'passed')
+    failed_count = sum(1 for m in modalities if str(m.get('status')) == 'failed')
+    unavailable_count = sum(1 for m in modalities if str(m.get('status')) == 'unavailable')
+    surprise = round(max([float(m.get('surprise') or 0.0) for m in modalities] or [0.0]), 4)
+    row = {
+        'ok': failed_count == 0,
+        'validated': bool(modalities),
+        'ts': _now(),
+        'query': str(query or '')[:1200],
+        'passed_count': passed_count,
+        'failed_count': failed_count,
+        'unavailable_count': unavailable_count,
+        'surprise_score': surprise,
+        'needs_revision': failed_count > 0,
+        'modalities': modalities,
+    }
+    if record and modalities:
+        _append_cross_modal(row)
+    return row
+
+
+def verify_response_against_reality(
+    *,
+    query: str,
+    answer: Any,
+    context_meta: dict[str, Any] | None = None,
+    tool_outputs: list[dict[str, Any]] | None = None,
+    record: bool = False,
+) -> dict[str, Any]:
+    meta = context_meta if isinstance(context_meta, dict) else {}
+    factual = evaluate_answer_against_ground_truth(query=query, answer=answer, context_meta=meta)
+    cross = validate_cross_modal(
+        query=query,
+        answer=answer,
+        context_meta=meta,
+        tool_outputs=tool_outputs,
+        factual_eval=factual,
+        record=record,
+    )
+    hindsight = record_hindsight_failure(
+        query=query,
+        answer=answer,
+        factual_eval=factual,
+        context_meta=meta,
+        tool_outputs=tool_outputs,
+    ) if record else None
+    result = {
+        'ok': True,
+        'factual_eval': factual,
+        'cross_modal': cross,
+        'hindsight_replay': hindsight,
+    }
+    if record:
+        try:
+            from ultronpro import epistemic_ledger
+            result['epistemic_ledger'] = epistemic_ledger.record_external_verification(
+                query=query,
+                answer=answer,
+                verification=result,
+            )
+        except Exception as e:
+            result['epistemic_ledger'] = {'ok': False, 'error': f'ledger_record_failed:{type(e).__name__}'}
+    return result
+
+
+def patch_requires_external_anchor(patch: dict[str, Any]) -> bool:
+    text = ' '.join([
+        str(patch.get('problem_pattern') or ''),
+        str(patch.get('hypothesis') or ''),
+        json.dumps(patch.get('benchmark_before') or {}, ensure_ascii=False, default=str),
+        json.dumps(patch.get('proposed_change') or {}, ensure_ascii=False, default=str),
+    ]).lower()
+    terms = (
+        'ground_truth',
+        'gold',
+        'gabarito',
+        'factual',
+        'mcq',
+        'mmlu',
+        'arc_easy',
+        'hellaswag',
+        'academic_mcq',
+        'science_qa',
+        'commonsense_next_step',
+        'external_public_eval',
+    )
+    return any(term in text for term in terms)
+
+
+def evaluate_patch_external_factual_evidence(patch: dict[str, Any]) -> dict[str, Any]:
+    patch = patch if isinstance(patch, dict) else {}
+    shadow_metrics = patch.get('shadow_metrics') if isinstance(patch.get('shadow_metrics'), dict) else {}
+    benchmark_after = patch.get('benchmark_after') if isinstance(patch.get('benchmark_after'), dict) else {}
+    shadow_eval = benchmark_after.get('shadow_eval') if isinstance(benchmark_after.get('shadow_eval'), dict) else {}
+    cases = [c for c in (shadow_eval.get('cases') or []) if isinstance(c, dict)]
+    factual_cases = [
+        c for c in cases
+        if c.get('ground_truth') not in (None, '') or c.get('candidate_factual_correct') is not None
+    ]
+
+    cases_total = int(shadow_metrics.get('factual_cases_total') or len(factual_cases) or 0)
+    candidate_correct = int(shadow_metrics.get('candidate_factual_correct') or 0)
+    baseline_correct = int(shadow_metrics.get('baseline_factual_correct') or 0)
+    if factual_cases and not candidate_correct:
+        candidate_correct = sum(1 for c in factual_cases if bool(c.get('candidate_factual_correct')))
+    if factual_cases and not baseline_correct:
+        baseline_correct = sum(1 for c in factual_cases if bool(c.get('baseline_factual_correct')))
+    candidate_failures = int(shadow_metrics.get('external_anchor_failures') or max(0, cases_total - candidate_correct))
+    candidate_accuracy = round(candidate_correct / max(1, cases_total), 4) if cases_total else 0.0
+    baseline_accuracy = round(baseline_correct / max(1, cases_total), 4) if cases_total else 0.0
+
+    return {
+        'ok': True,
+        'requires_external_anchor': patch_requires_external_anchor(patch),
+        'has_external_anchor': cases_total > 0,
+        'cases_total': cases_total,
+        'candidate_factual_correct': candidate_correct,
+        'baseline_factual_correct': baseline_correct,
+        'candidate_factual_accuracy': candidate_accuracy,
+        'baseline_factual_accuracy': baseline_accuracy,
+        'factual_delta': round(candidate_accuracy - baseline_accuracy, 4) if cases_total else 0.0,
+        'external_anchor_failures': candidate_failures,
+        'case_ids': [str(c.get('case_id') or '') for c in factual_cases[:20]],
+    }
 
 
 def _predict_with_llm(question: str, choices: list[dict[str, Any]], benchmark: str, strategy: str = 'cheap') -> dict[str, Any]:

@@ -1,0 +1,21 @@
+{
+  "items": [
+    {
+      "ts": 1775266804,
+      "group": "auto_resolve_conflicts|review",
+      "episodes": 2,
+      "rule": "Reutilizar estratégia com maior taxa de sucesso em contexto análogo e monitorar latência.",
+      "success_rate": 1.0,
+      "window_hours": 48
+    },
+    {
+      "ts": 1775266823,
+      "group": "task:review",
+      "episodes": 2,
+      "rule": "Reutilizar estratégia com maior taxa de sucesso em contexto análogo e monitorar latência.",
+      "success_rate": 1.0,
+      "window_hours": 48,
+      "bootstrap": true
+    }
+  ]
+}

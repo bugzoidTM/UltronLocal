@@ -6,7 +6,7 @@ import json
 import re
 import time
 
-PATH = Path('/app/data/mission_control.json')
+PATH = Path(__file__).resolve().parent.parent / 'data' / 'mission_control.json'
 
 STATUSES = {'inbox', 'assigned', 'in_progress', 'review', 'done', 'blocked'}
 

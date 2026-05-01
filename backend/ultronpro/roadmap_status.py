@@ -5,8 +5,10 @@ from pathlib import Path
 from typing import Any
 
 ROADMAP_CANDIDATES = [
-    Path('/root/.openclaw/workspace/UltronPro/ROADMAP_AGI_FRONTS.md'),
-    Path('/app/ultronpro/ROADMAP_AGI_FRONTS.md'),
+    Path("f:/sistemas/UltronPro/ROADMAP_AGI_FRONTS.md"),  # Workspace atual (Windows)
+    Path(__file__).resolve().parent.parent.parent / "ROADMAP_AGI_FRONTS.md", # Root relativo ao backend
+    Path("/root/.openclaw/workspace/UltronPro/ROADMAP_AGI_FRONTS.md"), # Cloud/Docker fallback
+    Path("./ROADMAP_AGI_FRONTS.md"),
 ]
 STATUS_PAT = re.compile(r'_Status[^:]*:\s*(.+?)_\s*$')
 PERCENT_PAT = re.compile(r'(\d+)%')
@@ -135,6 +137,7 @@ def _aggregate_evidence(data: dict[str, Any]) -> tuple[dict[str, dict[str, int]]
     for _, kind, title in events:
         if kind == 'phase':
             current_phase = title
+            current_front = None
         elif kind == 'front':
             current_front = title
         elif kind == 'milestone':
@@ -217,5 +220,5 @@ def scorecard() -> dict[str, Any]:
             }
             for x in (macro.get('fronts') or [])
         ],
-        'scoring_note': 'Score atual é derivado dos percentuais explícitos do roadmap e das contagens de evidência do próprio arquivo. Vinculação mais forte a benchmarks depende de ampliar a evidência pública e interna por front.',
+        'scoring_note': 'Score atual é derivado dos percentuais explícitos do roadmap. Contagens de itens são locais às fases/marcos e não substituem benchmark ou validação compatível por front.',
     }
