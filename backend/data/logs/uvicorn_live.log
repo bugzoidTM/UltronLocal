@@ -5725,3 +5725,296 @@ asyncio.exceptions.CancelledError
 2026-05-01 18:59:24,520 ERROR [uvicorn] LLM Call Error (groq/llama-3.3-70b-versatile): Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01j2fr3g0afrg83zk90sz12hqk` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99869, Requested 468. Please try again in 4m51.168s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
 2026-05-01 18:59:26,423 ERROR [uvicorn] LLM Call Error (openrouter/google/gemma-3-12b-it:free): Error code: 429 - {'error': {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1777680000000'}, 'provider_name': None}}, 'user_id': 'user_2ueUNny652rbn7mWgMS36MQqu4O'}
 2026-05-01 18:59:26,487 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 18:59:40,064 WARNING [uvicorn] Background guard: pausing loop judge_loop for 90.0s (reason=event_loop_lag)
+2026-05-01 19:00:10,086 WARNING [uvicorn] Background guard: pausing loop self_talk_loop for 60.0s (reason=event_loop_lag)
+2026-05-01 19:00:40,122 WARNING [uvicorn] Background guard: pausing loop self_talk_loop for 29.9s (reason=event_loop_lag)
+2026-05-01 19:01:12,395 INFO [uvicorn] extract_triples (Attempt 1/3): calling LLM for 250 chars...
+2026-05-01 19:01:12,549 INFO [uvicorn] --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+2026-05-01 19:01:12,550 INFO [uvicorn] Voice prewarm skipped because local model backends are disabled
+2026-05-01 19:01:13,584 INFO [uvicorn] Judge: trigger detectado, usando LLM. reason=promoted_patch
+2026-05-01 19:01:13,592 WARNING [uvicorn] Background guard: pausing loop roadmap_v5_loop for 90.0s (reason=event_loop_lag)
+2026-05-01 19:01:17,052 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:01:17,054 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:01:17,072 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:01:17,352 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:01:17,506 INFO [uvicorn] extract_triples: LLM returned 0 chars.
+2026-05-01 19:01:17,700 WARNING [uvicorn] extract_triples: LLM empty/unavailable; using local fallback without retry.
+2026-05-01 19:01:17,984 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:01:18,084 INFO [uvicorn] extract_triples: returning 0 triples (empty/failed after retries)
+2026-05-01 19:01:18,239 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:01:20,865 INFO [uvicorn] [SELF-TALK] Tick #1: posture=anomaly, action=alert_and_simulate
+2026-05-01 19:01:21,110 INFO [uvicorn] Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=3545, extracted=0, added=0)
+2026-05-01 19:01:28,693 INFO [uvicorn] extract_triples (Attempt 1/3): calling LLM for 253 chars...
+2026-05-01 19:01:32,804 INFO [uvicorn] extract_triples: LLM returned 79 chars.
+2026-05-01 19:01:32,821 WARNING [uvicorn] extract_triples: unexpected data type after unwrap: <class 'dict'>
+2026-05-01 19:01:32,825 WARNING [uvicorn] extract_triples: attempt 1 failed to yield valid triples. Retrying...
+2026-05-01 19:01:32,852 INFO [uvicorn] extract_triples (Attempt 2/3): calling LLM for 253 chars...
+2026-05-01 19:01:34,762 INFO [uvicorn] extract_triples: LLM returned 79 chars.
+2026-05-01 19:01:34,779 WARNING [uvicorn] extract_triples: unexpected data type after unwrap: <class 'dict'>
+2026-05-01 19:01:34,780 WARNING [uvicorn] extract_triples: attempt 2 failed to yield valid triples. Retrying...
+2026-05-01 19:01:34,782 INFO [uvicorn] extract_triples (Attempt 3/3): calling LLM for 253 chars...
+2026-05-01 19:01:37,947 INFO [uvicorn] [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+2026-05-01 19:01:38,137 INFO [uvicorn] [META] Ciclo finalizado. Status: NOMINAL
+2026-05-01 19:01:38,160 INFO [uvicorn] extract_triples: LLM returned 79 chars.
+2026-05-01 19:01:38,167 WARNING [uvicorn] extract_triples: unexpected data type after unwrap: <class 'dict'>
+2026-05-01 19:01:38,169 WARNING [uvicorn] extract_triples: attempt 3 failed to yield valid triples.
+2026-05-01 19:01:38,171 INFO [uvicorn] extract_triples: returning 0 triples (empty/failed after retries)
+2026-05-01 19:01:38,608 INFO [uvicorn] Autofeeder: Synced from LightRAG doc doc-266a (exp_id=3546, added=0)
+2026-05-01 19:01:46,965 WARNING [uvicorn] Background guard: pausing loop roadmap_v5_loop for 70.0s (reason=event_loop_lag)
+2026-05-01 19:02:16,975 WARNING [uvicorn] Background guard: pausing loop roadmap_v5_loop for 39.9s (reason=event_loop_lag)
+2026-05-01 19:02:47,072 WARNING [uvicorn] Background guard: pausing loop agi_path_loop for 9.9s (reason=event_loop_lag)
+2026-05-01 19:03:19,453 ERROR [uvicorn] LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+2026-05-01 19:03:20,514 WARNING [uvicorn] roadmap_v5_loop: status exceeded 5.0s; loop remains enabled and will retry later
+2026-05-01 19:03:20,538 WARNING [uvicorn] Background guard: pausing loop inner_monologue_loop for 90.0s (reason=event_loop_lag)
+2026-05-01 19:03:50,889 WARNING [uvicorn] Background guard: pausing loop integration_proxy_loop for 59.6s (reason=event_loop_lag)
+2026-05-01 19:04:20,905 WARNING [uvicorn] Background guard: pausing loop integration_proxy_loop for 29.6s (reason=event_loop_lag)
+2026-05-01 19:04:51,783 INFO [uvicorn] Judge: trigger detectado, usando LLM. reason=promoted_patch
+2026-05-01 19:04:51,937 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:04:59,880 INFO [uvicorn] [SELF-TALK] Tick #2: posture=anomaly, action=alert_and_simulate
+2026-05-01 19:05:00,607 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:05:13,089 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:05:13,172 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:05:13,238 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:05:13,270 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:05:15,750 ERROR [uvicorn] Judge loop error: database is locked
+2026-05-01 19:05:15,768 WARNING [uvicorn] Background guard: pausing loop inner_monologue_loop for 90.0s (reason=event_loop_lag)
+2026-05-01 19:05:16,354 INFO [uvicorn] [AutobioRouter] self_event ingested: kind=sleep_cycle_completed module=sleep_cycle
+2026-05-01 19:05:16,487 INFO [uvicorn] 😴 Sleep cycle: pruned=0 abstracted=0 sql={'decayed': 5933, 'pruned': 100, 'promoted': 0}
+2026-05-01 19:06:11,858 WARNING [uvicorn] Background guard: pausing loop reflexion_loop for 33.9s (reason=event_loop_lag)
+2026-05-01 19:06:41,886 WARNING [uvicorn] Background guard: pausing loop reflexion_loop for 3.9s (reason=event_loop_lag)
+2026-05-01 19:06:45,789 INFO [uvicorn] --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+2026-05-01 19:06:45,971 INFO [uvicorn] extract_triples (Attempt 1/3): calling LLM for 250 chars...
+2026-05-01 19:06:46,772 INFO [uvicorn] Voice prewarm skipped because local model backends are disabled
+2026-05-01 19:06:52,573 INFO [uvicorn] [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+2026-05-01 19:06:52,649 INFO [uvicorn] [META] Ciclo finalizado. Status: NOMINAL
+2026-05-01 19:06:58,349 ERROR [uvicorn] LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+2026-05-01 19:06:58,353 INFO [uvicorn] extract_triples: LLM returned 0 chars.
+2026-05-01 19:06:58,354 WARNING [uvicorn] extract_triples: LLM empty/unavailable; using local fallback without retry.
+2026-05-01 19:06:58,357 INFO [uvicorn] extract_triples: returning 0 triples (empty/failed after retries)
+2026-05-01 19:06:58,755 INFO [uvicorn] Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=3547, extracted=0, added=0)
+2026-05-01 19:07:00,928 INFO [uvicorn] extract_triples (Attempt 1/3): calling LLM for 253 chars...
+2026-05-01 19:07:00,980 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:07:00,981 INFO [uvicorn] extract_triples: LLM returned 0 chars.
+2026-05-01 19:07:00,985 WARNING [uvicorn] extract_triples: LLM empty/unavailable; using local fallback without retry.
+2026-05-01 19:07:00,988 INFO [uvicorn] extract_triples: returning 0 triples (empty/failed after retries)
+2026-05-01 19:07:01,300 INFO [uvicorn] Autofeeder: Synced from LightRAG doc doc-833d (exp_id=3548, added=0)
+2026-05-01 19:08:15,823 INFO [uvicorn] Judge: trigger detectado, usando LLM. reason=promoted_patch
+2026-05-01 19:08:15,889 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:08:15,931 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:08:15,980 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:08:16,136 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:08:16,394 INFO [uvicorn] [SELF-TALK] Tick #3: posture=anomaly, action=alert_and_simulate
+2026-05-01 19:10:36,234 ERROR [uvicorn] LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+2026-05-01 19:10:36,272 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:10:36,318 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:10:36,346 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:10:38,264 WARNING [uvicorn] Background guard: pausing loop narrative_summary_loop for 90.0s (reason=event_loop_lag)
+2026-05-01 19:11:08,302 WARNING [uvicorn] Background guard: pausing loop narrative_summary_loop for 60.0s (reason=event_loop_lag)
+2026-05-01 19:11:38,329 WARNING [uvicorn] Background guard: pausing loop narrative_summary_loop for 29.9s (reason=event_loop_lag)
+2026-05-01 19:12:09,387 INFO [uvicorn] Judge: trigger detectado, usando LLM. reason=promoted_patch
+2026-05-01 19:12:09,533 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:12:09,652 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:12:09,758 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:12:10,417 INFO [uvicorn] Voice prewarm skipped because local model backends are disabled
+2026-05-01 19:12:10,448 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:12:10,913 INFO [uvicorn] [SELF-TALK] Tick #4: posture=anomaly, action=alert_and_simulate
+2026-05-01 19:12:12,955 INFO [uvicorn] --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+2026-05-01 19:12:13,196 INFO [uvicorn] extract_triples (Attempt 1/3): calling LLM for 250 chars...
+2026-05-01 19:12:13,802 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:12:13,804 INFO [uvicorn] extract_triples: LLM returned 0 chars.
+2026-05-01 19:12:13,823 WARNING [uvicorn] extract_triples: LLM empty/unavailable; using local fallback without retry.
+2026-05-01 19:12:13,828 INFO [uvicorn] extract_triples: returning 0 triples (empty/failed after retries)
+2026-05-01 19:12:14,251 INFO [uvicorn] Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=3549, extracted=0, added=0)
+2026-05-01 19:12:16,645 INFO [uvicorn] extract_triples (Attempt 1/3): calling LLM for 253 chars...
+2026-05-01 19:12:17,259 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:12:17,743 INFO [uvicorn] extract_triples: LLM returned 0 chars.
+2026-05-01 19:12:18,083 WARNING [uvicorn] extract_triples: LLM empty/unavailable; using local fallback without retry.
+2026-05-01 19:12:18,256 INFO [uvicorn] extract_triples: returning 0 triples (empty/failed after retries)
+2026-05-01 19:12:19,696 INFO [uvicorn] Autofeeder: Synced from LightRAG doc doc-8b5c (exp_id=3550, added=0)
+2026-05-01 19:12:33,336 INFO [uvicorn] [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+2026-05-01 19:12:33,447 INFO [uvicorn] [META] Ciclo finalizado. Status: NOMINAL
+2026-05-01 19:13:05,902 WARNING [uvicorn] Background guard: pausing loop inner_monologue_loop for 37.3s (reason=event_loop_lag)
+2026-05-01 19:13:37,647 WARNING [uvicorn] Background guard: pausing loop affect_markers_loop for 5.6s (reason=event_loop_lag)
+2026-05-01 19:13:55,859 ERROR [uvicorn] LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+2026-05-01 19:14:16,525 WARNING [uvicorn] Background guard: pausing loop agi_path_loop for 70.0s (reason=event_loop_lag)
+2026-05-01 19:14:46,526 WARNING [uvicorn] Background guard: pausing loop agi_path_loop for 40.0s (reason=event_loop_lag)
+2026-05-01 19:15:16,564 WARNING [uvicorn] Background guard: pausing loop agi_path_loop for 9.9s (reason=event_loop_lag)
+2026-05-01 19:15:27,534 INFO [uvicorn] Judge: trigger detectado, usando LLM. reason=promoted_patch
+2026-05-01 19:15:27,657 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:15:27,742 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:15:27,785 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:15:27,838 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:15:28,203 INFO [uvicorn] [SELF-TALK] Tick #5: posture=anomaly, action=alert_and_simulate
+2026-05-01 19:15:44,834 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:15:44,863 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:15:44,881 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:15:44,898 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:15:45,003 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:15:45,291 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:15:45,319 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:15:45,335 ERROR [uvicorn] No LLM clients available in cloud chain (and local fallback disabled).
+2026-05-01 19:15:50,334 INFO [uvicorn.error] Shutting down
+2026-05-01 19:15:50,460 INFO [uvicorn.error] Waiting for application shutdown.
+2026-05-01 19:15:50,470 INFO [uvicorn] Shutdown complete
+2026-05-01 19:15:50,471 INFO [uvicorn.error] Application shutdown complete.
+2026-05-01 19:15:50,473 INFO [uvicorn.error] Finished server process [13804]
+2026-05-01 19:16:02,858 INFO [uvicorn] uvicorn file log enabled path=F:\sistemas\UltronPro\backend\data\logs\uvicorn_live.log max_bytes=26214400 keep_bytes=8388608
+2026-05-01 19:16:04,170 INFO [uvicorn.error] Started server process [11012]
+2026-05-01 19:16:04,172 INFO [uvicorn.error] Waiting for application startup.
+2026-05-01 19:16:04,174 INFO [uvicorn] Starting UltronPRO...
+2026-05-01 19:16:04,175 INFO [uvicorn] Loaded settings. LightRAG URL: https://lightrag.nutef.com
+2026-05-01 19:16:04,178 INFO [uvicorn] [META] Unidade de Reflexão Metacognitiva Unificada iniciada.
+2026-05-01 19:16:04,203 INFO [uvicorn] Longitudinal harness loop started
+2026-05-01 19:16:04,205 INFO [uvicorn] [SELF-TALK] OODA loop started (interval=180s)
+2026-05-01 19:16:04,252 INFO [uvicorn] Ultron loops startup complete
+2026-05-01 19:16:04,266 INFO [uvicorn] Operational Memory initialized: session=a3d1eed8809d
+2026-05-01 19:16:04,268 INFO [uvicorn] Background guard started (lag_pause=2.00s, pause=90s, slow_request=4.00s)
+2026-05-01 19:16:04,269 INFO [uvicorn] Autofeeder started
+2026-05-01 19:16:04,271 INFO [uvicorn] Autonomy loop started
+2026-05-01 19:16:04,272 INFO [uvicorn] Judge loop started
+2026-05-01 19:16:04,272 INFO [uvicorn] Recursive self-improvement loop started
+2026-05-01 19:16:04,281 INFO [uvicorn] Voice prewarm loop started
+2026-05-01 19:16:04,282 INFO [uvicorn] Roadmap V5 orchestrator loop started
+2026-05-01 19:16:04,284 INFO [uvicorn] AGI path loop started
+2026-05-01 19:16:04,285 INFO [uvicorn] Self-improvement loop started
+2026-05-01 19:16:04,287 INFO [uvicorn] Reflexion loop started
+2026-05-01 19:16:04,288 INFO [uvicorn] Self-governance loop started
+2026-05-01 19:16:04,288 INFO [uvicorn] Meta-observer loop started
+2026-05-01 19:16:04,292 INFO [uvicorn] Affect markers loop started
+2026-05-01 19:16:04,300 INFO [uvicorn] Narrative summary loop started
+2026-05-01 19:16:04,302 INFO [uvicorn] Integration proxy loop started
+2026-05-01 19:16:04,303 INFO [uvicorn] 😴 Sleep cycle loop started (interval=21600s)
+2026-05-01 19:16:04,305 INFO [uvicorn] 🩹 Healer verify loop started
+2026-05-01 19:16:04,306 INFO [uvicorn] ⚗️ Active Discovery loop started
+2026-05-01 19:16:04,308 INFO [uvicorn] No-cloud campaign loop started
+2026-05-01 19:16:04,315 INFO [uvicorn.error] Application startup complete.
+2026-05-01 19:16:04,405 INFO [uvicorn] Shutdown complete
+2026-05-01 19:16:04,415 ERROR [uvicorn.error] Traceback (most recent call last):
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 686, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 741, in lifespan
+    await receive()
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\site-packages\uvicorn\lifespan\on.py", line 137, in receive
+    return await self.receive_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\asyncio\queues.py", line 158, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+2026-05-01 19:16:09,912 INFO [uvicorn] uvicorn file log enabled path=F:\sistemas\UltronPro\backend\data\logs\uvicorn_live.log max_bytes=26214400 keep_bytes=8388608
+2026-05-01 19:16:11,030 INFO [uvicorn.error] Started server process [2088]
+2026-05-01 19:16:11,031 INFO [uvicorn.error] Waiting for application startup.
+2026-05-01 19:16:11,032 INFO [uvicorn] Starting UltronPRO...
+2026-05-01 19:16:11,033 INFO [uvicorn] Loaded settings. LightRAG URL: https://lightrag.nutef.com
+2026-05-01 19:16:11,034 INFO [uvicorn] [META] Unidade de Reflexão Metacognitiva Unificada iniciada.
+2026-05-01 19:16:11,040 INFO [uvicorn] Longitudinal harness loop started
+2026-05-01 19:16:11,046 INFO [uvicorn] [SELF-TALK] OODA loop started (interval=180s)
+2026-05-01 19:16:11,067 INFO [uvicorn] Ultron loops startup complete
+2026-05-01 19:16:11,085 INFO [uvicorn] Operational Memory initialized: session=c490b0607f46
+2026-05-01 19:16:11,087 INFO [uvicorn] Background guard started (lag_pause=2.00s, pause=90s, slow_request=4.00s)
+2026-05-01 19:16:11,089 INFO [uvicorn] Autofeeder started
+2026-05-01 19:16:11,089 INFO [uvicorn] Autonomy loop started
+2026-05-01 19:16:11,090 INFO [uvicorn] Judge loop started
+2026-05-01 19:16:11,091 INFO [uvicorn] Recursive self-improvement loop started
+2026-05-01 19:16:11,095 INFO [uvicorn] Voice prewarm loop started
+2026-05-01 19:16:11,098 INFO [uvicorn] Roadmap V5 orchestrator loop started
+2026-05-01 19:16:11,103 INFO [uvicorn] AGI path loop started
+2026-05-01 19:16:11,104 INFO [uvicorn] Self-improvement loop started
+2026-05-01 19:16:11,105 INFO [uvicorn] Reflexion loop started
+2026-05-01 19:16:11,107 INFO [uvicorn] Self-governance loop started
+2026-05-01 19:16:11,112 INFO [uvicorn] Meta-observer loop started
+2026-05-01 19:16:11,119 INFO [uvicorn] Affect markers loop started
+2026-05-01 19:16:11,120 INFO [uvicorn] Narrative summary loop started
+2026-05-01 19:16:11,122 INFO [uvicorn] Integration proxy loop started
+2026-05-01 19:16:11,123 INFO [uvicorn] 😴 Sleep cycle loop started (interval=21600s)
+2026-05-01 19:16:11,124 INFO [uvicorn] 🩹 Healer verify loop started
+2026-05-01 19:16:11,126 INFO [uvicorn] ⚗️ Active Discovery loop started
+2026-05-01 19:16:11,127 INFO [uvicorn] No-cloud campaign loop started
+2026-05-01 19:16:11,128 INFO [uvicorn.error] Application startup complete.
+2026-05-01 19:16:11,255 INFO [uvicorn] Shutdown complete
+2026-05-01 19:16:11,261 ERROR [uvicorn.error] Traceback (most recent call last):
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 686, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\routing.py", line 741, in lifespan
+    await receive()
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\site-packages\uvicorn\lifespan\on.py", line 137, in receive
+    return await self.receive_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\eleni\AppData\Local\Programs\Python\Python312\Lib\asyncio\queues.py", line 158, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+2026-05-01 19:16:15,994 INFO [uvicorn] uvicorn file log enabled path=F:\sistemas\UltronPro\backend\data\logs\uvicorn_live.log max_bytes=26214400 keep_bytes=8388608
+2026-05-01 19:16:17,260 INFO [uvicorn.error] Started server process [1096]
+2026-05-01 19:16:17,262 INFO [uvicorn.error] Waiting for application startup.
+2026-05-01 19:16:17,263 INFO [uvicorn] Starting UltronPRO...
+2026-05-01 19:16:17,265 INFO [uvicorn] Loaded settings. LightRAG URL: https://lightrag.nutef.com
+2026-05-01 19:16:17,266 INFO [uvicorn] [META] Unidade de Reflexão Metacognitiva Unificada iniciada.
+2026-05-01 19:16:17,272 INFO [uvicorn] Longitudinal harness loop started
+2026-05-01 19:16:17,273 INFO [uvicorn] [SELF-TALK] OODA loop started (interval=180s)
+2026-05-01 19:16:17,296 INFO [uvicorn] Ultron loops startup complete
+2026-05-01 19:16:17,333 INFO [uvicorn] Operational Memory initialized: session=7db16f52fc3f
+2026-05-01 19:16:17,334 INFO [uvicorn] Background guard started (lag_pause=2.00s, pause=90s, slow_request=4.00s)
+2026-05-01 19:16:17,343 INFO [uvicorn] Autofeeder started
+2026-05-01 19:16:17,344 INFO [uvicorn] Autonomy loop started
+2026-05-01 19:16:17,346 INFO [uvicorn] Judge loop started
+2026-05-01 19:16:17,348 INFO [uvicorn] Recursive self-improvement loop started
+2026-05-01 19:16:17,348 INFO [uvicorn] Voice prewarm loop started
+2026-05-01 19:16:17,349 INFO [uvicorn] Roadmap V5 orchestrator loop started
+2026-05-01 19:16:17,355 INFO [uvicorn] AGI path loop started
+2026-05-01 19:16:17,358 INFO [uvicorn] Self-improvement loop started
+2026-05-01 19:16:17,360 INFO [uvicorn] Reflexion loop started
+2026-05-01 19:16:17,360 INFO [uvicorn] Self-governance loop started
+2026-05-01 19:16:17,362 INFO [uvicorn] Meta-observer loop started
+2026-05-01 19:16:17,362 INFO [uvicorn] Affect markers loop started
+2026-05-01 19:16:17,365 INFO [uvicorn] Narrative summary loop started
+2026-05-01 19:16:17,366 INFO [uvicorn] Integration proxy loop started
+2026-05-01 19:16:17,366 INFO [uvicorn] 😴 Sleep cycle loop started (interval=21600s)
+2026-05-01 19:16:17,368 INFO [uvicorn] 🩹 Healer verify loop started
+2026-05-01 19:16:17,374 INFO [uvicorn] ⚗️ Active Discovery loop started
+2026-05-01 19:16:17,379 INFO [uvicorn] No-cloud campaign loop started
+2026-05-01 19:16:17,380 INFO [uvicorn.error] Application startup complete.
+2026-05-01 19:16:18,323 INFO [uvicorn] Background bootstrap disabled by env
+2026-05-01 19:16:18,329 INFO [uvicorn] Background source backfill disabled by env
+2026-05-01 19:16:18,463 INFO [uvicorn] Background recovery: ok
+2026-05-01 19:16:18,466 INFO [uvicorn] Phenomenal consciousness activated: already_active
+2026-05-01 19:16:18,508 INFO [uvicorn] WebExplorer: Iniciando (ULTRON_WEB_EXPLORER=1, interval=900s, max_links=1)
+2026-05-01 19:16:18,511 INFO [uvicorn] WebExplorer: Motor de exploração iniciado em background.

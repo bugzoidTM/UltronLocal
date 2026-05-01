@@ -1,14 +1,14 @@
 {
   "ok": true,
-  "ts": 1777667772,
+  "ts": 1777673091,
   "episodes_total": 37,
   "active_after": 36,
   "pruned": 0,
   "abstracted": 0,
-  "abstractions_tested": 78,
+  "abstractions_tested": 91,
   "sql_consolidation": {
-    "decayed": 5932,
-    "pruned": 8,
+    "decayed": 5933,
+    "pruned": 100,
     "promoted": 0
   },
   "causal_gap_investigation": {
@@ -27,6 +27,21 @@
     "coverage_delta_edges": 0,
     "coverage_gained": false,
     "items": [
+      {
+        "investigation_id": "inv_891c9c678d",
+        "ok": false,
+        "injected": false,
+        "error": "sandbox_unreachable:ConnectError",
+        "experiment_kind": "causal_transfer_prior_validation",
+        "target_route": "unknown:general",
+        "query_terms": [
+          "barriga",
+          "com",
+          "dor",
+          "tou"
+        ],
+        "edge": {}
+      },
       {
         "investigation_id": "inv_15b1941413",
         "ok": false,
@@ -48,22 +63,6 @@
         "experiment_kind": "causal_graph_enrichment",
         "target_route": "unknown",
         "query_terms": [],
-        "edge": {}
-      },
-      {
-        "investigation_id": "inv_dcca5c18a8",
-        "ok": false,
-        "injected": false,
-        "error": "sandbox_unreachable:ConnectError",
-        "experiment_kind": "causal_transfer_prior_validation",
-        "target_route": "unknown:general",
-        "query_terms": [
-          "baixo",
-          "grau",
-          "incerteza",
-          "que",
-          "significa"
-        ],
         "edge": {}
       }
     ],

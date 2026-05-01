@@ -1,23 +1,20 @@
 {
   "enabled": true,
-  "state": "paused",
-  "lag_sec": 74.079,
-  "max_lag_sec": 74.079,
-  "consecutive_lag": 1,
-  "paused_until": 1777672870.0647209,
-  "last_pause_reason": "event_loop_lag",
-  "last_pause_at": 1777672780.0647209,
+  "state": "healthy",
+  "lag_sec": 0.0,
+  "max_lag_sec": 0.906,
+  "consecutive_lag": 0,
+  "paused_until": 0.0,
+  "last_pause_reason": null,
+  "last_pause_at": 0.0,
   "last_slow_request": null,
-  "blocked_loops": 9,
-  "last_blocked_loop": "no_cloud_campaign_loop",
-  "last_log_at": 1777672780.0647209,
+  "blocked_loops": 0,
+  "last_blocked_loop": null,
+  "last_log_at": 0.0,
   "foreground_active": 0,
   "last_foreground_path": null,
   "last_foreground_at": 0.0,
   "last_foreground_elapsed_sec": 0.0,
-  "last_pause_details": {
-    "lag_sec": 74.079,
-    "consecutive_lag": 1
-  },
-  "paused": true,
-  "paused_for_sec": 89.99799
+  "paused": false,
+  "paused_for_sec": 0.0
+}

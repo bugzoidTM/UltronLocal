@@ -1,26 +1,22 @@
 {
-  "ts": 1777669263,
+  "ts": 1777673112,
   "ok": false,
   "executed": true,
   "injected": false,
-  "investigation_id": "inv_891c9c678d",
-  "query": "tou com dor de barriga",
+  "investigation_id": "inv_d87cf6bddb",
+  "query": "?",
   "reason": "no_structured_coverage",
   "missing_slots": [
     "aresta_causal_relevante",
+    "evidencia_interna_suficiente",
     "fato_estruturado_recuperavel"
   ],
   "experiment": {
-    "kind": "causal_transfer_prior_validation",
-    "target_route": "unknown:general",
-    "query_terms": [
-      "barriga",
-      "com",
-      "dor",
-      "tou"
-    ],
-    "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
-    "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+    "kind": "causal_graph_enrichment",
+    "target_route": "unknown",
+    "query_terms": [],
+    "action": "registrar uma decisao ou observacao verificavel como aresta causal antes de responder com confianca",
+    "acceptance": "a proxima resposta deve citar evidencia interna recuperada ou declarar UNKNOWN com a lacuna exata"
   },
   "sandbox": {
     "ok": false,
@@ -29,5 +25,5 @@
     "stderr": "[Errno 11001] getaddrinfo failed"
   },
   "error": "sandbox_unreachable:ConnectError",
-  "duration_ms": 2863.63
+  "duration_ms": 3669.87
 }

@@ -1,5 +1,5 @@
 {
-  "ts": 1777672780,
+  "ts": 1777673777,
   "active_goal": "Modelar taxonomia de erros cognitivos em decisões",
   "active_mission": {
     "id": "mis_1776628887_3",
@@ -556,41 +556,44 @@
     "budget_per_min": 2
   },
   "autonomy_state": {
-    "ticks": 1,
-    "last_tick": 689945,
+    "ticks": 0,
+    "last_tick": null,
     "last_error": null,
     "consecutive_errors": 0
   },
   "background_guard": {
     "enabled": true,
-    "state": "paused",
-    "lag_sec": 0.015,
-    "max_lag_sec": 1.625,
+    "state": "healthy",
+    "lag_sec": 0.0,
+    "max_lag_sec": 0.0,
     "consecutive_lag": 0,
-    "paused_until": 1777672705.5266166,
-    "last_pause_reason": "event_loop_lag",
-    "last_pause_at": 1777672615.5266166,
+    "paused_until": 0.0,
+    "last_pause_reason": null,
+    "last_pause_at": 0.0,
     "last_slow_request": null,
-    "blocked_loops": 5,
-    "last_blocked_loop": "autonomy_loop",
-    "last_log_at": 1777672699.033261,
+    "blocked_loops": 0,
+    "last_blocked_loop": null,
+    "last_log_at": 0.0,
     "foreground_active": 0,
     "last_foreground_path": null,
     "last_foreground_at": 0.0,
     "last_foreground_elapsed_sec": 0.0,
-    "last_pause_details": {
-      "lag_sec": 0.922,
-      "consecutive_lag": 2
-    },
     "paused": false,
     "paused_for_sec": 0.0
   },
   "background_binary_bus": {
     "enabled": true,
-    "started_at": 1777672612.7097273,
-    "processed": 65,
+    "started_at": 0.0,
+    "processed": 0,
     "dropped": 0,
     "sink_errors": 0,
-    "last_event": {
-      "kind": "workspace",
-      "loop": "au
+    "last_event": null,
+    "last_error": null,
+    "queue_size": 0,
+    "worker_alive": false,
+    "binlog_path": "F:\\sistemas\\UltronPro\\backend\\data\\background_bus.binlog"
+  },
+  "extra": {
+    "reason": "startup_complete"
+  }
+}

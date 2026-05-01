@@ -8,9 +8,9 @@ from typing import Any
 
 from ultronpro import quality_eval
 
-SUITE_PATH = Path(__file__).resolve().parent / 'benchmarks' / 'domain_suite_v1.json'
-BASELINE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'benchmark_baselines/domain_suite_v1_baseline.json'
-RUNS_PATH = Path(__file__).resolve().parent.parent / 'data' / 'benchmark_runs/domain_suite_v1_runs.jsonl'
+SUITE_PATH = Path(__file__).resolve().parent / 'benchmarks' / 'domain_suite_v2.json'
+BASELINE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'benchmark_baselines/domain_suite_v2_baseline.json'
+RUNS_PATH = Path(__file__).resolve().parent.parent / 'data' / 'benchmark_runs/domain_suite_v2_runs.jsonl'
 
 
 def _now() -> int:
@@ -86,7 +86,7 @@ def run_suite(path: Path | None = None) -> dict[str, Any]:
         total_cases += cases
     result = {
         'ok': True,
-        'suite': suite.get('suite') or 'domain_suite_v1',
+        'suite': suite.get('suite') or 'domain_suite_v2_agi_extended',
         'version': suite.get('version') or 1,
         'ts': _now(),
         'total_cases': total_cases,
@@ -105,7 +105,7 @@ def run_suite(path: Path | None = None) -> dict[str, Any]:
 def freeze_baseline(path: Path | None = None) -> dict[str, Any]:
     suite = _load_suite(path)
     baseline: dict[str, Any] = {
-        'suite': suite.get('suite') or 'domain_suite_v1',
+        'suite': suite.get('suite') or 'domain_suite_v2_agi_extended',
         'version': suite.get('version') or 1,
         'ts': _now(),
         'domains': {},
