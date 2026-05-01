@@ -1,6 +1,6 @@
 {
   "created_at": 1776626713,
-  "updated_at": 1777673738,
+  "updated_at": 1777674260,
   "drives": {
     "competence": {
       "weight": 0.22,
@@ -10,7 +10,7 @@
     "coherence": {
       "weight": 0.22,
       "desired": 0.75,
-      "observed": 0.770778
+      "observed": 0.770761
     },
     "autonomy": {
       "weight": 0.2,
@@ -25,7 +25,7 @@
     "integrity": {
       "weight": 0.18,
       "desired": 0.9,
-      "observed": 0.73294
+      "observed": 0.732926
     }
   },
   "utility": 0.5112,
@@ -4572,6 +4572,28 @@
         "novelty": 0.2711,
         "integrity": 0.7317
       }
+    },
+    {
+      "ts": 1777673867,
+      "utility": 0.5112,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.771,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7333
+      }
+    },
+    {
+      "ts": 1777674260,
+      "utility": 0.5112,
+      "signals": {
+        "competence": 0.2523,
+        "coherence": 0.7704,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7325
+      }
     }
   ],
   "emergent_goals": [
@@ -5092,7 +5114,7 @@
     "origin": "intrinsic_utility",
     "priority": 0.72
   },
-  "tick_count": 413,
+  "tick_count": 415,
   "weight_hashes": [
     "3e5df9269b905c02",
     "3e5df9269b905c02",
