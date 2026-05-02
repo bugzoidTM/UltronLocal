@@ -8,6 +8,7 @@ except ImportError:
 import logging
 import json
 import asyncio
+import contextvars
 import time
 import hashlib
 import secrets
@@ -40,6 +41,7 @@ from ultronpro.core.intent import (
 )
 from ultronpro.core.learned_intent import record_route_episode
 from ultronpro.core.middleware import register_middlewares
+from ultronpro.performance_compression import EntropyAwareCompressionMiddleware
 
 # Logging
 logging.basicConfig(level=logging.INFO)
@@ -68,6 +70,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+if str(os.getenv('ULTRON_HTTP_COMPRESSION', '1')).strip().lower() not in ('0', 'false', 'no', 'off'):
+    app.add_middleware(EntropyAwareCompressionMiddleware)
 
 
 register_middlewares(app)
@@ -8136,8 +8141,29 @@ async def episodic_hints(kind: str, text: str, task_type: str = 'heartbeat'):
 
 @app.get('/api/episodic/structured/recent')
 async def episodic_structured_recent(limit: int = 20):
-    arr = episodic_memory.recent_structured(limit=max(1, min(200, int(limit))))
-    return {'ok': True, 'count': len(arr), 'episodes': arr[-max(1, min(100, int(limit))):]}
+    lim = max(1, min(200, int(limit)))
+    arr = episodic_memory.recent_structured(limit=lim)
+    db_arr = []
+    try:
+        db_arr = store.list_episodic_episodes(limit=lim)
+    except Exception:
+        db_arr = []
+    return {'ok': True, 'count': len(arr) + len(db_arr), 'episodes': db_arr + arr[-max(1, min(100, int(limit))):]}
+
+
+@app.get('/api/episodic/sessions/{session_id}')
+async def episodic_session_get(session_id: str, max_chars: int = 1800):
+    sid = _normalize_chat_session_id(session_id)
+    state = episodic_memory.get_chat_session_state(sid)
+    prompt_context = episodic_memory.chat_session_prompt_context(sid, max_chars=max(300, min(8000, int(max_chars))))
+    episodes = store.list_episodic_episodes(session_id=sid, episode_type='chat_turn', limit=20)
+    return {'ok': True, 'session': state, 'prompt_context': prompt_context, 'episodes': episodes}
+
+
+@app.get('/api/episodic/search')
+async def episodic_search(q: str, limit: int = 20):
+    rows = store.search_episodic_episodes(str(q or ''), limit=max(1, min(100, int(limit))))
+    return {'ok': True, 'count': len(rows), 'episodes': rows}
 
 
 @app.get('/api/episodic/structured/search')
@@ -10957,6 +10983,63 @@ def _classify_query_type(query: str) -> str:
     return 'general'
 
 
+_CHAT_SESSION_ID: contextvars.ContextVar[str] = contextvars.ContextVar("ultron_chat_session_id", default="default")
+
+
+def _normalize_chat_session_id(session_id: str | None) -> str:
+    raw = str(session_id or "default").strip() or "default"
+    return re.sub(r"[^a-zA-Z0-9_.:-]+", "_", raw)[:120] or "default"
+
+
+def _chat_session_context(session_id: str | None, max_chars: int = 1800) -> str:
+    try:
+        return episodic_memory.chat_session_prompt_context(
+            _normalize_chat_session_id(session_id),
+            max_chars=max_chars,
+        )
+    except Exception:
+        return ""
+
+
+def _chat_contextual_query(query: str, session_id: str | None, max_chars: int = 1800) -> str:
+    try:
+        return episodic_memory.contextualize_chat_query(
+            str(query or ""),
+            _normalize_chat_session_id(session_id),
+            max_chars=max_chars,
+        )
+    except Exception:
+        return str(query or "")
+
+
+def _record_chat_turn_episode(
+    query: str,
+    answer: str,
+    *,
+    strategy: str = "unknown",
+    ok: bool = True,
+    latency_ms: int = 0,
+    source: str = "chat",
+    session_id: str | None = None,
+    meta: dict[str, Any] | None = None,
+) -> None:
+    try:
+        if not str(query or "").strip() or not str(answer or "").strip():
+            return
+        episodic_memory.record_chat_turn(
+            session_id=_normalize_chat_session_id(session_id or _CHAT_SESSION_ID.get("default")),
+            user_text=str(query or ""),
+            assistant_text=str(answer or ""),
+            strategy=str(strategy or "unknown"),
+            ok=bool(ok),
+            latency_ms=int(latency_ms or 0),
+            source=source,
+            meta=meta or {},
+        )
+    except Exception as exc:
+        logger.debug(f"chat episodic memory skipped: {exc}")
+
+
 def _record_conversation_route(query: str, strategy: str, *, ok: bool = True, latency_ms: int = 0, source: str = 'chat', meta: dict[str, Any] | None = None) -> None:
     try:
         record_route_episode(
@@ -10972,7 +11055,7 @@ def _record_conversation_route(query: str, strategy: str, *, ok: bool = True, la
         pass
 
 
-def _learned_chat_response(query: str, payload: dict[str, Any], *, source: str = 'chat', meta: dict[str, Any] | None = None) -> dict[str, Any]:
+def _learned_chat_response(query: str, payload: dict[str, Any], *, source: str = 'chat', meta: dict[str, Any] | None = None, session_id: str | None = None) -> dict[str, Any]:
     try:
         _record_conversation_route(
             query,
@@ -10982,6 +11065,21 @@ def _learned_chat_response(query: str, payload: dict[str, Any], *, source: str =
             source=source,
             meta=meta,
         )
+    except Exception:
+        pass
+    try:
+        answer = str(payload.get('answer') or payload.get('reply') or '').strip()
+        if answer:
+            _record_chat_turn_episode(
+                query,
+                answer,
+                strategy=str(payload.get('strategy') or ''),
+                ok=bool(payload.get('ok', True)),
+                latency_ms=int(payload.get('latency_ms') or 0),
+                source=source,
+                session_id=session_id,
+                meta=meta,
+            )
     except Exception:
         pass
     return payload
@@ -11902,6 +12000,9 @@ async def chat_fast(req: ChatRequest):
     q = str(req.message or '').strip()
     if not q:
         return {'ok': False, 'answer': 'Mensagem vazia.'}
+    session_id = _normalize_chat_session_id(getattr(req, 'session_id', None))
+    _CHAT_SESSION_ID.set(session_id)
+    q_memory = _chat_contextual_query(q, session_id)
     
     t0 = time.time()
     ql = q.lower()
@@ -12223,7 +12324,7 @@ async def chat_fast(req: ChatRequest):
     # Busca conhecimento de mÃºltiplas fontes: grafo, RAG, memÃ³ria episÃ³dica
     try:
         raw_result = await asyncio.wait_for(
-            asyncio.to_thread(_reasoning_engine, q, ql),
+            asyncio.to_thread(_reasoning_engine, q_memory, ql),
             timeout=_chat_deep_reasoning_timeout()
         )
         if raw_result and not _retrieved_context_covers_query(q, raw_result):
@@ -12293,7 +12394,7 @@ async def chat_fast(req: ChatRequest):
         from ultronpro import sir_amplifier
 
         chat_llm_timeout = _chat_llm_timeout()
-        fallback_sir = sir_amplifier.build_sir_from_raw_context(q, '', source='chat_fallback')
+        fallback_sir = sir_amplifier.build_sir_from_raw_context(q, _chat_session_context(session_id), source='chat_fallback')
         fallback_result = await asyncio.wait_for(
             asyncio.to_thread(
                 _synthesize_chat_answer_from_sir,
@@ -12334,8 +12435,14 @@ async def chat_stream(req: ChatRequest):
     """
     Versão Streaming do Chat. Emite eventos progressivos e permite timeouts mais longos sem freeze no frontend.
     """
+    q_outer = str(req.message or '').strip()
+    session_id = _normalize_chat_session_id(getattr(req, 'session_id', None))
+    _CHAT_SESSION_ID.set(session_id)
+    q_memory_outer = _chat_contextual_query(q_outer, session_id)
+
     async def sse_generator():
-        q = str(req.message or '').strip()
+        q = q_outer
+        q_memory = q_memory_outer
         if not q:
             yield f"data: {json.dumps({'type': 'done', 'answer': 'Mensagem vazia.'})}\n\n"
             return
@@ -12648,7 +12755,7 @@ async def chat_stream(req: ChatRequest):
         yield f"data: {json.dumps({'type': 'progress', 'text': '🧠 RAG e Memória Episódica (Thinking deep...)'})}\n\n"
         
         try:
-            raw_result = await asyncio.wait_for(asyncio.to_thread(_reasoning_engine, q, q.lower()), timeout=_chat_deep_reasoning_timeout())
+            raw_result = await asyncio.wait_for(asyncio.to_thread(_reasoning_engine, q_memory, q.lower()), timeout=_chat_deep_reasoning_timeout())
             if raw_result and not _retrieved_context_covers_query(q, raw_result):
                 logger.info("Stream chat: retrieved context skipped due to low query coverage")
                 raw_result = ''
@@ -12724,7 +12831,7 @@ async def chat_stream(req: ChatRequest):
             from ultronpro import sir_amplifier
 
             chat_llm_timeout = _chat_llm_timeout()
-            fallback_sir = sir_amplifier.build_sir_from_raw_context(q, '', source='chat_stream_fallback')
+            fallback_sir = sir_amplifier.build_sir_from_raw_context(q, _chat_session_context(session_id), source='chat_stream_fallback')
             fallback_result = await asyncio.wait_for(
                 asyncio.to_thread(
                     _synthesize_chat_answer_from_sir,
@@ -12748,7 +12855,30 @@ async def chat_stream(req: ChatRequest):
         _record_conversation_route(q, 'local_llm_unavailable', ok=False, source='chat_stream')
         yield f"data: {json.dumps({'type': 'done', 'answer': '[AVISO: a LLM local nao retornou resposta; nenhuma resposta sintetica foi fabricada.]', 'strategy': 'local_llm_unavailable'})}\n\n"
 
-    return StreamingResponse(sse_generator(), media_type="text/event-stream")
+    async def memory_recording_generator():
+        recorded = False
+        async for chunk in sse_generator():
+            if not recorded and isinstance(chunk, str) and chunk.startswith("data: "):
+                try:
+                    payload = json.loads(chunk.split("data: ", 1)[1].strip())
+                    if payload.get("type") == "done":
+                        answer = str(payload.get("answer") or "").strip()
+                        if q_outer and answer and answer != "Mensagem vazia.":
+                            _record_chat_turn_episode(
+                                q_outer,
+                                answer,
+                                strategy=str(payload.get("strategy") or "chat_stream"),
+                                ok=not str(payload.get("strategy") or "").endswith("_error"),
+                                source="chat_stream",
+                                session_id=session_id,
+                                meta={k: v for k, v in payload.items() if k not in ("answer", "type")},
+                            )
+                            recorded = True
+                except Exception:
+                    pass
+            yield chunk
+
+    return StreamingResponse(memory_recording_generator(), media_type="text/event-stream")
 
 
 @app.get('/api/autonomous/status')
@@ -13952,6 +14082,8 @@ async def voice_chat(req: VoiceChatRequest):
     txt = str(req.text or '').strip()
     if not txt:
         raise HTTPException(400, 'empty text')
+    session_id = _normalize_chat_session_id(getattr(req, 'session_id', None))
+    _CHAT_SESSION_ID.set(session_id)
 
     system = (
         'VocÃª Ã© UltronPRO, um assistente de voz de software (nÃ£o Ã© personagem da Marvel). '
@@ -14009,6 +14141,7 @@ async def voice_chat(req: VoiceChatRequest):
         ans = 'Fui desenvolvido no projeto UltronPro (Nutef) pelo seu time local, nÃ£o pelo personagem da Marvel.'
         store.db.add_event('voice_chat', "ðŸŽ™ï¸ voice chat latency=0ms ok=True strategy=identity_guard")
         _trace_emit_voice(ans, 'identity_guard', outcome='success')
+        _record_chat_turn_episode(txt, ans, strategy='identity_guard', source='voice_chat', session_id=session_id)
         return {'ok': True, 'reply': ans, 'strategy': 'identity_guard'}
 
     t0 = int(time.time() * 1000)
@@ -14056,7 +14189,91 @@ async def voice_chat(req: VoiceChatRequest):
     if not (ans or '').strip():
         ans = 'NÃ£o consegui responder agora. Tenta reformular em uma frase curta?'
     _trace_emit_voice(ans.strip(), used, outcome=('success' if ok else 'fallback'))
+    _record_chat_turn_episode(txt, ans.strip(), strategy=used, ok=ok, latency_ms=latency, source='voice_chat', session_id=session_id)
     return {'ok': True, 'reply': ans.strip(), 'strategy': used}
+
+
+@app.post('/api/voice/audio')
+async def voice_audio(
+    file: UploadFile = File(...),
+    authorized: bool = Form(False),
+    consent_actor: str = Form('user'),
+    consent_scope: Optional[str] = Form(None),
+    compressed: bool = Form(False),
+    original_bytes: int = Form(0),
+    compression_codec: Optional[str] = Form(None),
+    compression_bitrate_bps: Optional[int] = Form(None),
+    client_mime: Optional[str] = Form(None),
+    session_id: Optional[str] = Form(None),
+):
+    from ultronpro import audio_perception
+
+    raw = await file.read()
+    if not raw:
+        raise HTTPException(400, 'empty audio')
+
+    max_bytes = int(os.getenv('ULTRON_AUDIO_UPLOAD_MAX_BYTES', str(25 * 1024 * 1024)))
+    if len(raw) > max_bytes:
+        raise HTTPException(413, 'audio too large')
+
+    mime = str(client_mime or file.content_type or '').strip()
+    suffix = Path(file.filename or '').suffix.lower()
+    if not suffix:
+        if 'ogg' in mime:
+            suffix = '.ogg'
+        elif 'mp4' in mime:
+            suffix = '.m4a'
+        elif 'mpeg' in mime or 'mp3' in mime:
+            suffix = '.mp3'
+        elif 'webm' in mime or 'opus' in mime:
+            suffix = '.webm'
+        else:
+            suffix = '.wav'
+    temp_audio = audio_perception.copy_upload_to_temp(raw, suffix=suffix)
+    original_size = int(original_bytes or len(raw) or 0)
+    compression_ratio = max(0.0, 1.0 - (len(raw) / max(float(original_size or len(raw) or 1), 1.0)))
+    client_metadata = {
+        'upload_filename': file.filename,
+        'content_type': file.content_type,
+        'mime': mime,
+        'compressed': bool(compressed),
+        'original_bytes': original_size,
+        'uploaded_bytes': len(raw),
+        'compression_codec': compression_codec or mime,
+        'compression_bitrate_bps': compression_bitrate_bps,
+        'compression_ratio': round(compression_ratio, 4),
+    }
+
+    async def _chat_from_transcript(text: str) -> dict[str, Any]:
+        return await voice_chat(VoiceChatRequest(text=text, session_id=session_id))
+
+    result = await audio_perception.handle_voice_command(
+        temp_audio,
+        authorized=bool(authorized),
+        chat_callback=_chat_from_transcript,
+        source='voice_upload',
+        consent_scope=consent_scope,
+        consent_basis='voice audio upload with explicit authorization' if authorized else 'voice audio upload without transcription authorization',
+        consent_actor=consent_actor or 'user',
+        discard_raw=True,
+        client_metadata=client_metadata,
+    )
+    payload = result.to_dict()
+    return {
+        'ok': True,
+        'reply': result.chat_response.get('reply', ''),
+        'chat': result.chat_response,
+        'transcript': result.transcript,
+        'summary': result.summary,
+        'speech': payload.get('speech'),
+        'sound_events': payload.get('sound_events'),
+        'raw_audio_discarded': result.raw_audio_discarded,
+        'sensory_event_id': result.sensory_event_id,
+        'consent_scope': result.consent_scope,
+        'session_id': _normalize_chat_session_id(session_id),
+        'compression': client_metadata,
+        'errors': result.errors,
+    }
 
 
 @app.get('/api/self-play/status')

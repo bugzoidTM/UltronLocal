@@ -421,6 +421,77 @@
     .muted { color: var(--text-muted); font-size: 12px; }
     .mono { font-family: ui-monospace, 'SFMono-Regular', 'Cascadia Mono', 'Segoe UI Mono', monospace; }
 
+    /* Chat audio composer */
+    .chat-composer {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: end;
+    }
+
+    .chat-input-wrap { min-width: 0; }
+
+    .chat-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding-bottom: 2px;
+    }
+
+    .chat-icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-hover);
+      color: var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 17px;
+      transition: all 0.2s;
+      flex: 0 0 auto;
+    }
+
+    .chat-icon-btn:hover { border-color: var(--accent-blue); background: var(--bg-card); }
+    .chat-icon-btn.recording { background: var(--accent-red); border-color: var(--accent-red); color: white; }
+    .chat-icon-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    .chat-audio-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 20px;
+      margin-top: 8px;
+    }
+
+    .chat-audio-meter {
+      width: 92px;
+      height: 8px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+      display: none;
+    }
+
+    .chat-audio-meter.active { display: block; }
+
+    .chat-audio-meter-fill {
+      display: block;
+      width: 0%;
+      height: 100%;
+      background: var(--gradient-2);
+      transition: width 0.08s linear;
+    }
+
+    .chat-audio-status {
+      color: var(--text-muted);
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
     /* Code */
     code {
       background: var(--bg-secondary);
@@ -435,6 +506,8 @@
     @media (max-width: 768px) {
       .grid-2 { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .chat-composer { grid-template-columns: 1fr; }
+      .chat-actions { justify-content: flex-end; }
       .header { padding: 12px 16px; }
       .main { padding: 16px; }
     }
@@ -671,9 +744,18 @@
           </div>
         </div>
         <div class="card-body">
-          <textarea id="ultronMainChatInput" placeholder="Pergunte sobre aprendizado, abstrações consolidadas ou ciclo de sono..." style="min-height:110px;"></textarea>
-          <div class="btn-group" style="margin-top:10px;">
-            <button class="btn btn-sm" onclick="sendUltronMainChat()">Enviar</button>
+          <div class="chat-composer">
+            <div class="chat-input-wrap">
+              <textarea id="ultronMainChatInput" placeholder="Pergunte sobre aprendizado, abstrações consolidadas ou ciclo de sono..." style="min-height:110px;"></textarea>
+              <div class="chat-audio-row">
+                <div id="chatAudioMeter" class="chat-audio-meter" aria-hidden="true"><span id="chatAudioMeterFill" class="chat-audio-meter-fill"></span></div>
+                <div id="chatAudioStatus" class="chat-audio-status" aria-live="polite"></div>
+              </div>
+            </div>
+            <div class="chat-actions">
+              <button class="btn btn-sm" onclick="sendUltronMainChat()" title="Enviar texto">Enviar</button>
+              <button id="chatMicBtn" class="chat-icon-btn" onclick="toggleChatAudioRecording()" title="Falar com UltronPro" aria-label="Falar com UltronPro">&#127908;</button>
+            </div>
           </div>
           <pre id="ultronMainChatOut" style="white-space:pre-wrap;max-height:52vh;overflow:auto;margin-top:12px;background:#0b1020;border:1px solid #2b3a66;border-radius:8px;padding:10px;">(sem mensagens)</pre>
         </div>
@@ -1174,6 +1256,19 @@
     }
 
     // === Chat / Metacognition ===
+    const ULTRON_CHAT_SESSION_ID = (() => {
+      try {
+        const key = 'ultronpro.chat.session_id';
+        let sid = localStorage.getItem(key);
+        if (!sid) {
+          sid = `ui_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
+          localStorage.setItem(key, sid);
+        }
+        return sid;
+      } catch (_) {
+        return `ui_${Date.now().toString(36)}`;
+      }
+    })();
     const METACOG_INTERVIEW_PROMPT = 'Ultron, faça um resumo das abstrações mais importantes que você consolidou no ciclo de sono da última semana.';
 
     async function sendUltronMainChat(customText = null) {
@@ -1191,7 +1286,7 @@
         const response = await fetch('/api/chat/stream', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: msg })
+          body: JSON.stringify({ message: msg, session_id: ULTRON_CHAT_SESSION_ID })
         });
         
         if (!response.ok) throw new Error('API Error: ' + response.statusText);
@@ -1245,6 +1340,217 @@
       const input = document.getElementById('ultronMainChatInput');
       if (input) input.value = METACOG_INTERVIEW_PROMPT;
       await sendUltronMainChat(METACOG_INTERVIEW_PROMPT);
+    }
+
+    // === Chat Audio Input ===
+    const CHAT_AUDIO_BITRATE = 32000;
+    let chatAudioRecorder = null;
+    let chatAudioChunks = [];
+    let chatAudioStream = null;
+    let chatAudioStartedAt = 0;
+    let chatAudioMeterCtx = null;
+    let chatAudioMeterRaf = null;
+
+    function formatBytes(bytes) {
+      const n = Number(bytes || 0);
+      if (n < 1024) return `${n} B`;
+      if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
+      return `${(n / (1024 * 1024)).toFixed(2)} MB`;
+    }
+
+    function chooseAudioMimeType() {
+      if (!window.MediaRecorder?.isTypeSupported) return '';
+      const options = [
+        'audio/webm;codecs=opus',
+        'audio/ogg;codecs=opus',
+        'audio/webm',
+        'audio/mp4'
+      ];
+      return options.find(type => MediaRecorder.isTypeSupported(type)) || '';
+    }
+
+    function audioExtFromMime(mime) {
+      const m = String(mime || '').toLowerCase();
+      if (m.includes('ogg')) return 'ogg';
+      if (m.includes('mp4')) return 'm4a';
+      if (m.includes('mpeg')) return 'mp3';
+      if (m.includes('wav')) return 'wav';
+      return 'webm';
+    }
+
+    function escapeChatHtml(value) {
+      return String(value ?? '').replace(/[&<>"']/g, ch => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[ch]));
+    }
+
+    function setChatAudioStatus(text) {
+      const el = document.getElementById('chatAudioStatus');
+      if (el) el.textContent = text || '';
+    }
+
+    function setChatMicState(recording, busy = false) {
+      const mic = document.getElementById('chatMicBtn');
+      if (!mic) return;
+      mic.classList.toggle('recording', Boolean(recording));
+      mic.disabled = Boolean(busy);
+      mic.title = recording ? 'Parar gravação' : 'Falar com UltronPro';
+      mic.setAttribute('aria-label', mic.title);
+    }
+
+    async function toggleChatAudioRecording() {
+      if (chatAudioRecorder && chatAudioRecorder.state === 'recording') {
+        stopChatAudioRecording();
+      } else {
+        await startChatAudioRecording();
+      }
+    }
+
+    async function startChatAudioRecording() {
+      try {
+        if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
+          throw new Error('captura de audio indisponivel neste navegador');
+        }
+        chatAudioChunks = [];
+        const mimeType = chooseAudioMimeType();
+        chatAudioStream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            channelCount: 1,
+            echoCancellation: true,
+            noiseSuppression: true,
+            autoGainControl: true
+          }
+        });
+        const opts = { audioBitsPerSecond: CHAT_AUDIO_BITRATE };
+        if (mimeType) opts.mimeType = mimeType;
+        try {
+          chatAudioRecorder = new MediaRecorder(chatAudioStream, opts);
+        } catch (_) {
+          chatAudioRecorder = new MediaRecorder(chatAudioStream, { audioBitsPerSecond: CHAT_AUDIO_BITRATE });
+        }
+        chatAudioRecorder.ondataavailable = event => {
+          if (event.data && event.data.size > 0) chatAudioChunks.push(event.data);
+        };
+        chatAudioRecorder.onstop = async () => {
+          stopChatAudioMeter();
+          stopChatAudioStream();
+          const type = chatAudioRecorder.mimeType || mimeType || 'audio/webm';
+          const blob = new Blob(chatAudioChunks, { type });
+          const durationSec = Math.max(0.1, (Date.now() - chatAudioStartedAt) / 1000);
+          const rawEstimate = Math.round(durationSec * 16000 * 2);
+          setChatMicState(false, true);
+          setChatAudioStatus(`Enviando ${formatBytes(blob.size)} de audio comprimido...`);
+          await sendChatAudioBlob(blob, {
+            filename: `voice-${Date.now()}.${audioExtFromMime(type)}`,
+            originalBytes: rawEstimate,
+            codec: type || 'opus',
+            bitrate: CHAT_AUDIO_BITRATE
+          });
+          setChatMicState(false, false);
+        };
+        chatAudioStartedAt = Date.now();
+        chatAudioRecorder.start(1000);
+        startChatAudioMeter(chatAudioStream);
+        setChatMicState(true, false);
+        setChatAudioStatus('Gravando...');
+      } catch (e) {
+        setChatMicState(false, false);
+        stopChatAudioMeter();
+        stopChatAudioStream();
+        setChatAudioStatus('');
+        showToast('Audio: ' + String(e?.message || e), 'error');
+      }
+    }
+
+    function stopChatAudioRecording() {
+      if (!chatAudioRecorder || chatAudioRecorder.state === 'inactive') return;
+      setChatMicState(false, true);
+      setChatAudioStatus('Processando audio...');
+      chatAudioRecorder.stop();
+    }
+
+    function stopChatAudioStream() {
+      if (chatAudioStream) {
+        chatAudioStream.getTracks().forEach(track => track.stop());
+        chatAudioStream = null;
+      }
+    }
+
+    function startChatAudioMeter(stream) {
+      stopChatAudioMeter();
+      const meter = document.getElementById('chatAudioMeter');
+      const fill = document.getElementById('chatAudioMeterFill');
+      if (!fill || !window.AudioContext) return;
+      if (meter) meter.classList.add('active');
+      chatAudioMeterCtx = new AudioContext();
+      const analyser = chatAudioMeterCtx.createAnalyser();
+      analyser.fftSize = 512;
+      const source = chatAudioMeterCtx.createMediaStreamSource(stream);
+      source.connect(analyser);
+      const data = new Uint8Array(analyser.frequencyBinCount);
+      const tick = () => {
+        analyser.getByteTimeDomainData(data);
+        let sum = 0;
+        for (const value of data) {
+          const centered = (value - 128) / 128;
+          sum += centered * centered;
+        }
+        const rms = Math.sqrt(sum / data.length);
+        fill.style.width = `${Math.min(100, Math.round(rms * 260))}%`;
+        chatAudioMeterRaf = requestAnimationFrame(tick);
+      };
+      tick();
+    }
+
+    function stopChatAudioMeter() {
+      if (chatAudioMeterRaf) cancelAnimationFrame(chatAudioMeterRaf);
+      chatAudioMeterRaf = null;
+      const meter = document.getElementById('chatAudioMeter');
+      const fill = document.getElementById('chatAudioMeterFill');
+      if (fill) fill.style.width = '0%';
+      if (meter) meter.classList.remove('active');
+      if (chatAudioMeterCtx) {
+        try { chatAudioMeterCtx.close(); } catch (_) {}
+        chatAudioMeterCtx = null;
+      }
+    }
+
+    async function sendChatAudioBlob(blob, meta) {
+      const form = new FormData();
+      const bitrate = Number(meta.bitrate || CHAT_AUDIO_BITRATE);
+      const originalBytes = Math.max(Number(meta.originalBytes || blob.size), 1);
+      form.append('file', blob, meta.filename || `audio.${audioExtFromMime(blob.type)}`);
+      form.append('authorized', 'true');
+      form.append('consent_actor', 'user');
+      form.append('compressed', 'true');
+      form.append('original_bytes', String(originalBytes));
+      form.append('compression_codec', String(meta.codec || blob.type || 'audio'));
+      form.append('compression_bitrate_bps', String(bitrate));
+      form.append('client_mime', String(blob.type || meta.codec || 'audio'));
+      form.append('session_id', ULTRON_CHAT_SESSION_ID);
+      const started = Date.now();
+      const result = await api('/api/voice/audio', {
+        method: 'POST',
+        body: form,
+        timeoutMs: 180000
+      });
+      const elapsed = Date.now() - started;
+      const ratio = Math.max(0, 1 - (blob.size / originalBytes));
+      const uploadNote = `${formatBytes(blob.size)} enviados, ${Math.round(ratio * 100)}% menor, ${elapsed}ms`;
+      setChatAudioStatus(uploadNote);
+      const out = document.getElementById('ultronMainChatOut');
+      const transcript = result.transcript || '(sem transcricao)';
+      const reply = result.reply || result.chat?.reply || '(sem resposta)';
+      if (out) {
+        out.innerHTML = `<div style="font-weight:600;color:var(--text-primary);">👤 Você:</div><div style="margin-bottom:15px;white-space:pre-wrap;">${escapeChatHtml(transcript)}</div><div style="font-weight:600;color:var(--text-primary);">🤖 Ultron:</div><div style="white-space:pre-wrap;">${escapeChatHtml(reply)}</div>`;
+      }
+      if (result.errors && result.errors.length) {
+        showToast('Audio processado com avisos', 'error');
+      }
     }
 
     // === Status & Questions ===

@@ -1,6 +1,8 @@
 import json
 import time
 import os
+import hashlib
+import uuid
 from pathlib import Path
 from typing import Any
 
@@ -540,6 +542,362 @@ def working_memory_get(session_key: str = 'default') -> dict[str, Any]:
         return data.get(str(session_key or 'default')) or {}
     except Exception:
         return {}
+
+
+# ---------------------------------------------------------------------------
+# Chat session episodic memory backed by store.py
+# ---------------------------------------------------------------------------
+
+def _cfg_int(name: str, default: int, low: int, high: int) -> int:
+    try:
+        value = int(os.getenv(name, str(default)) or default)
+    except Exception:
+        value = default
+    return max(low, min(high, value))
+
+
+def _safe_session_id(session_id: str | None) -> str:
+    raw = str(session_id or "default").strip() or "default"
+    import re
+    cleaned = re.sub(r"[^a-zA-Z0-9_.:-]+", "_", raw)[:120]
+    return cleaned or "default"
+
+
+def _json_loads(value: str | None, fallback: Any) -> Any:
+    try:
+        return json.loads(value or "")
+    except Exception:
+        return fallback
+
+
+def _store_module(store_module: Any = None) -> Any:
+    if store_module is not None:
+        return store_module
+    from ultronpro import store
+
+    return store
+
+
+def _store_db(store_module: Any = None) -> Any:
+    st = _store_module(store_module)
+    return getattr(st, "db", st)
+
+
+def _store_add_experience(st: Any, *, text: str, source_id: str, modality: str = "chat") -> int | None:
+    try:
+        if hasattr(st, "add_experience") and not hasattr(st, "_conn"):
+            return st.add_experience(text=text, source_id=source_id, modality=modality)
+        db = getattr(st, "db", st)
+        return db.add_experience(user_id=None, text=text, source_id=source_id, modality=modality)
+    except Exception:
+        return None
+
+
+def _store_publish_workspace(st: Any, *, payload_json: str, salience: float) -> int | None:
+    try:
+        if hasattr(st, "publish_workspace") and not hasattr(st, "_conn"):
+            return st.publish_workspace("episodic_memory", "memory.episode.chat", payload_json, salience=salience, ttl_sec=1800)
+        db = getattr(st, "db", st)
+        return db.publish_workspace("episodic_memory", "memory.episode.chat", payload_json, salience=salience, ttl_sec=1800)
+    except Exception:
+        return None
+
+
+def _trim(text: str, limit: int) -> str:
+    s = str(text or "").strip()
+    return s if len(s) <= limit else s[: max(0, limit - 1)].rstrip() + "..."
+
+
+def _turn_chars(turns: list[dict[str, Any]]) -> int:
+    return sum(len(str(t.get("user") or "")) + len(str(t.get("assistant") or "")) + 80 for t in turns)
+
+
+def _infer_chat_intent(text: str) -> str:
+    t = str(text or "").lower()
+    if "?" in t or any(x in t for x in ("como", "qual", "por que", "quando", "onde", "quem")):
+        return "question"
+    if any(x in t for x in ("crie", "faça", "faca", "implemente", "ajuste", "corrija", "rode", "execute")):
+        return "task_request"
+    if any(x in t for x in ("lembra", "continu", "isso", "aquilo", "anterior")):
+        return "contextual_followup"
+    return "chat"
+
+
+def _episode_title(user_text: str) -> str:
+    title = _trim(" ".join(str(user_text or "").split()), 90)
+    return title or "Turno de chat"
+
+
+def _summarize_turns_for_compaction(turns: list[dict[str, Any]], previous: str = "", target_chars: int = 2400) -> str:
+    lines: list[str] = []
+    if previous.strip():
+        lines.append(_trim(previous.strip(), max(300, target_chars // 2)))
+    for turn in turns:
+        user = _trim(str(turn.get("user") or ""), 160)
+        assistant = _trim(str(turn.get("assistant") or ""), 180)
+        strategy = str(turn.get("strategy") or "unknown")
+        outcome = str(turn.get("outcome") or "observed")
+        if user or assistant:
+            lines.append(f"- usuario: {user} | ultron: {assistant} | strategy={strategy} outcome={outcome}")
+    summary = "\n".join(lines)
+    if len(summary) <= target_chars:
+        return summary
+    return summary[-target_chars:].lstrip()
+
+
+def compact_chat_context(
+    turns: list[dict[str, Any]],
+    *,
+    previous_compact: str = "",
+    previous_compacted_turns: int = 0,
+    limit_chars: int | None = None,
+    keep_recent: int | None = None,
+    target_chars: int | None = None,
+) -> dict[str, Any]:
+    limit = int(limit_chars or _cfg_int("ULTRON_CHAT_SESSION_CONTEXT_LIMIT_CHARS", 8000, 1200, 60000))
+    keep = int(keep_recent or _cfg_int("ULTRON_CHAT_SESSION_KEEP_RECENT_TURNS", 8, 2, 40))
+    target = int(target_chars or _cfg_int("ULTRON_CHAT_SESSION_COMPACT_TARGET_CHARS", 2400, 600, 12000))
+    normalized = [dict(t) for t in turns if isinstance(t, dict)]
+    over_budget = _turn_chars(normalized) > limit or len(normalized) > keep
+    if not over_budget:
+        return {
+            "compacted": False,
+            "compact_context": str(previous_compact or ""),
+            "recent_turns": normalized,
+            "compacted_turns": int(previous_compacted_turns or 0),
+            "limit_chars": limit,
+            "context_chars": _turn_chars(normalized) + len(str(previous_compact or "")),
+        }
+
+    older = normalized[:-keep] if len(normalized) > keep else normalized[:-2]
+    recent = normalized[-keep:] if len(normalized) > keep else normalized[-2:]
+    compact = _summarize_turns_for_compaction(older, previous=str(previous_compact or ""), target_chars=target)
+    return {
+        "compacted": True,
+        "compact_context": compact,
+        "recent_turns": recent,
+        "compacted_turns": int(previous_compacted_turns or 0) + len(older),
+        "limit_chars": limit,
+        "context_chars": _turn_chars(recent) + len(compact),
+    }
+
+
+def get_chat_session_state(session_id: str = "default", *, store_module: Any = None) -> dict[str, Any]:
+    sid = _safe_session_id(session_id)
+    db = _store_db(store_module)
+    try:
+        row = db.get_chat_session(sid)
+    except Exception:
+        row = None
+    if not row:
+        return {
+            "session_id": sid,
+            "raw_turns": [],
+            "compact_context": "",
+            "compacted_turns": 0,
+            "context_limit_chars": _cfg_int("ULTRON_CHAT_SESSION_CONTEXT_LIMIT_CHARS", 8000, 1200, 60000),
+            "turn_count": 0,
+        }
+    raw_turns = _json_loads(row.get("raw_context_json"), [])
+    if not isinstance(raw_turns, list):
+        raw_turns = []
+    return {
+        "session_id": sid,
+        "raw_turns": raw_turns,
+        "compact_context": str(row.get("compact_context") or ""),
+        "compacted_turns": int(row.get("compacted_turns") or 0),
+        "context_limit_chars": int(row.get("context_limit_chars") or _cfg_int("ULTRON_CHAT_SESSION_CONTEXT_LIMIT_CHARS", 8000, 1200, 60000)),
+        "turn_count": int(row.get("turn_count") or (len(raw_turns))),
+        "last_episode_id": row.get("last_episode_id"),
+        "updated_at": row.get("updated_at"),
+    }
+
+
+def chat_session_prompt_context(session_id: str = "default", *, max_chars: int | None = None, store_module: Any = None) -> str:
+    state = get_chat_session_state(session_id, store_module=store_module)
+    compact = str(state.get("compact_context") or "").strip()
+    turns = state.get("raw_turns") if isinstance(state.get("raw_turns"), list) else []
+    limit = int(max_chars or _cfg_int("ULTRON_CHAT_SESSION_PROMPT_MAX_CHARS", 1800, 300, 8000))
+    lines: list[str] = []
+    if compact:
+        lines.append("Resumo compactado da sessao:")
+        compact_budget = max(160, int(limit * 0.55)) if turns else limit
+        lines.append(_trim(compact, compact_budget))
+    if turns:
+        lines.append("Turnos recentes:")
+        for turn in turns[-_cfg_int("ULTRON_CHAT_SESSION_PROMPT_TURNS", 4, 1, 12):]:
+            lines.append(f"Usuario: {_trim(str(turn.get('user') or ''), 220)}")
+            lines.append(f"Ultron: {_trim(str(turn.get('assistant') or ''), 260)}")
+    text = "\n".join(lines).strip()
+    return _trim(text, limit)
+
+
+def contextualize_chat_query(query: str, session_id: str = "default", *, max_chars: int | None = None, store_module: Any = None) -> str:
+    ctx = chat_session_prompt_context(session_id, max_chars=max_chars, store_module=store_module)
+    if not ctx:
+        return str(query or "")
+    return (
+        "Contexto da sessao atual (use somente quando ajudar a resolver referencias, continuidade ou preferencias):\n"
+        f"{ctx}\n\nMensagem atual do usuario:\n{str(query or '')}"
+    )
+
+
+def record_chat_turn(
+    *,
+    session_id: str = "default",
+    user_text: str,
+    assistant_text: str,
+    strategy: str = "unknown",
+    ok: bool = True,
+    latency_ms: int = 0,
+    source: str = "chat",
+    meta: dict[str, Any] | None = None,
+    store_module: Any = None,
+    context_limit_chars: int | None = None,
+    keep_recent: int | None = None,
+) -> dict[str, Any]:
+    sid = _safe_session_id(session_id)
+    st = _store_module(store_module)
+    db = _store_db(st)
+    now = int(time.time())
+    user = str(user_text or "").strip()
+    assistant = str(assistant_text or "").strip()
+    if not user and not assistant:
+        return {"ok": False, "reason": "empty_turn", "session_id": sid}
+
+    state = get_chat_session_state(sid, store_module=st)
+    turns = list(state.get("raw_turns") or [])
+    outcome = "success" if bool(ok) else "fallback"
+    turn = {
+        "ts": now,
+        "user": user[:6000],
+        "assistant": assistant[:6000],
+        "strategy": str(strategy or "unknown")[:80],
+        "source": str(source or "chat")[:80],
+        "outcome": outcome,
+        "latency_ms": int(latency_ms or 0),
+    }
+    turns.append(turn)
+    compacted = compact_chat_context(
+        turns,
+        previous_compact=str(state.get("compact_context") or ""),
+        previous_compacted_turns=int(state.get("compacted_turns") or 0),
+        limit_chars=context_limit_chars,
+        keep_recent=keep_recent,
+    )
+    recent_turns = compacted["recent_turns"]
+    compact_context = compacted["compact_context"]
+    salience = min(1.0, 0.45 + min(0.25, len(user) / 1200.0) + (0.15 if _infer_chat_intent(user) != "chat" else 0.0))
+    episode_id = "ep_chat_" + hashlib.sha256(f"{sid}:{now}:{uuid.uuid4().hex}:{user[:80]}".encode("utf-8", errors="ignore")).hexdigest()[:18]
+    summary = _trim(f"Usuario: {user} | Ultron: {assistant}", 900)
+    structured = {
+        "episode_id": episode_id,
+        "schema": "ultronpro.episodic.chat_turn.v1",
+        "session_id": sid,
+        "timestamp": now,
+        "episode_type": "chat_turn",
+        "participants": ["user", "UltronPro"],
+        "situation": "chat_frontend" if source.startswith("chat") else source,
+        "user_intent": _infer_chat_intent(user),
+        "user_text": user[:4000],
+        "assistant_text": assistant[:4000],
+        "strategy": str(strategy or "unknown"),
+        "outcome": outcome,
+        "latency_ms": int(latency_ms or 0),
+        "context": {
+            "compacted": bool(compacted.get("compacted")),
+            "compacted_turns": int(compacted.get("compacted_turns") or 0),
+            "recent_turns": len(recent_turns),
+            "context_chars": int(compacted.get("context_chars") or 0),
+            "limit_chars": int(compacted.get("limit_chars") or 0),
+        },
+        "consequence": "session_context_updated",
+        "meta": dict(meta or {}),
+    }
+
+    refs: list[dict[str, Any]] = []
+    source_id = f"chat_session:{sid}"
+    exp_text = f"Usuario: {user}\nUltron: {assistant}"
+    experience_id = _store_add_experience(st, text=exp_text[:8000], source_id=source_id, modality="chat")
+    if experience_id is not None:
+        refs.append({"table": "experiences", "id": experience_id, "relation": "conversation_turn", "weight": 1.0})
+
+    event_id = None
+    try:
+        event_id = db.add_event(
+            "episodic_chat_turn",
+            f"episode={episode_id} session={sid} strategy={strategy} intent={structured['user_intent']}",
+            meta_json=json.dumps(structured, ensure_ascii=False, default=str),
+        )
+        refs.append({"table": "events", "id": event_id, "relation": "audit_event", "weight": 0.9})
+    except Exception:
+        pass
+
+    memory_id = None
+    try:
+        memory_id = db.add_autobiographical_memory(
+            text=f"[chat episode] {_trim(summary, 500)}",
+            memory_type="episodic",
+            importance=salience,
+            decay_rate=0.008,
+            content_json=json.dumps({"episode_id": episode_id, "session_id": sid, "strategy": strategy}, ensure_ascii=False),
+        )
+        refs.append({"table": "autobiographical_memories", "id": memory_id, "relation": "episodic_memory", "weight": 0.85})
+    except Exception:
+        pass
+
+    workspace_id = _store_publish_workspace(
+        st,
+        payload_json=json.dumps({
+            "episode_id": episode_id,
+            "session_id": sid,
+            "summary": _trim(summary, 500),
+            "strategy": strategy,
+            "outcome": outcome,
+            "compacted": bool(compacted.get("compacted")),
+        }, ensure_ascii=False, default=str),
+        salience=salience,
+    )
+    if workspace_id is not None:
+        refs.append({"table": "global_workspace", "id": workspace_id, "relation": "workspace_publication", "weight": 0.75})
+
+    episode_id = db.add_episodic_episode(
+        episode_id=episode_id,
+        episode_type="chat_turn",
+        session_id=sid,
+        source=str(source or "chat"),
+        title=_episode_title(user),
+        summary=summary,
+        user_text=user,
+        assistant_text=assistant,
+        outcome=outcome,
+        salience=salience,
+        structured_json=json.dumps(structured, ensure_ascii=False, default=str),
+        compacted_context=compact_context,
+        meta_json=json.dumps(dict(meta or {}), ensure_ascii=False, default=str),
+        refs=refs,
+    )
+    db.upsert_chat_session(
+        session_id=sid,
+        raw_context_json=json.dumps(recent_turns, ensure_ascii=False, default=str),
+        compact_context=compact_context,
+        compacted_turns=int(compacted.get("compacted_turns") or 0),
+        context_limit_chars=int(compacted.get("limit_chars") or _cfg_int("ULTRON_CHAT_SESSION_CONTEXT_LIMIT_CHARS", 8000, 1200, 60000)),
+        last_episode_id=episode_id,
+        meta_json=json.dumps({"updated_by": source, "last_strategy": strategy}, ensure_ascii=False),
+    )
+    return {
+        "ok": True,
+        "episode_id": episode_id,
+        "session_id": sid,
+        "experience_id": experience_id,
+        "event_id": event_id,
+        "memory_id": memory_id,
+        "workspace_id": workspace_id,
+        "compacted": bool(compacted.get("compacted")),
+        "compacted_turns": int(compacted.get("compacted_turns") or 0),
+        "recent_turns": len(recent_turns),
+    }
 
 
 def get_task_memory_policy(task_type: str = 'planning') -> dict[str, Any]:

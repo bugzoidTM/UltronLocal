@@ -1,13 +1,46 @@
 from __future__ import annotations
 
+import hashlib
+import json
 import sqlite3
 import time
+import uuid
 from pathlib import Path
 from typing import Any
 
 
 def _ts() -> float:
     return time.time()
+
+
+def _pack_storage_text(value: str | None) -> str | None:
+    if value is None:
+        return None
+    try:
+        from ultronpro.performance_compression import pack_text
+
+        return pack_text(value)
+    except Exception:
+        return value
+
+
+def _unpack_storage_text(value: str | None) -> str | None:
+    if value is None:
+        return None
+    try:
+        from ultronpro.performance_compression import unpack_text
+
+        return unpack_text(value)
+    except Exception:
+        return value
+
+
+def _decode_storage_fields(row: dict[str, Any], fields: tuple[str, ...]) -> dict[str, Any]:
+    out = dict(row)
+    for field in fields:
+        if field in out:
+            out[field] = _unpack_storage_text(out.get(field))
+    return out
 
 
 class Store:
@@ -359,6 +392,59 @@ class Store:
                 )
                 """
             )
+            c.execute(
+                """
+                CREATE TABLE IF NOT EXISTS episodic_episodes(
+                  id TEXT PRIMARY KEY,
+                  created_at REAL NOT NULL,
+                  updated_at REAL NOT NULL,
+                  episode_type TEXT NOT NULL,
+                  session_id TEXT,
+                  source TEXT,
+                  title TEXT,
+                  summary TEXT,
+                  user_text TEXT,
+                  assistant_text TEXT,
+                  outcome TEXT,
+                  salience REAL NOT NULL DEFAULT 0.5,
+                  structured_json TEXT,
+                  refs_json TEXT,
+                  compacted_context TEXT,
+                  meta_json TEXT
+                )
+                """
+            )
+            c.execute(
+                """
+                CREATE TABLE IF NOT EXISTS episodic_episode_refs(
+                  id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  episode_id TEXT NOT NULL,
+                  ref_table TEXT NOT NULL,
+                  ref_id TEXT NOT NULL,
+                  relation TEXT,
+                  weight REAL NOT NULL DEFAULT 1.0
+                )
+                """
+            )
+            c.execute(
+                """
+                CREATE TABLE IF NOT EXISTS chat_sessions(
+                  session_id TEXT PRIMARY KEY,
+                  created_at REAL NOT NULL,
+                  updated_at REAL NOT NULL,
+                  turn_count INTEGER NOT NULL DEFAULT 0,
+                  raw_context_json TEXT,
+                  compact_context TEXT,
+                  compacted_turns INTEGER NOT NULL DEFAULT 0,
+                  context_limit_chars INTEGER NOT NULL DEFAULT 8000,
+                  last_episode_id TEXT,
+                  meta_json TEXT
+                )
+                """
+            )
+            c.execute("CREATE INDEX IF NOT EXISTS idx_episodic_episodes_session_created ON episodic_episodes(session_id, created_at)")
+            c.execute("CREATE INDEX IF NOT EXISTS idx_episodic_episodes_type_created ON episodic_episodes(episode_type, created_at)")
+            c.execute("CREATE INDEX IF NOT EXISTS idx_episodic_episode_refs_episode ON episodic_episode_refs(episode_id)")
             try:
                 c.execute("ALTER TABLE autobiographical_memories ADD COLUMN embedding_json TEXT")
             except Exception:
@@ -2435,6 +2521,202 @@ class Store:
             rows = c.execute("SELECT memory_type, COUNT(*) as count, AVG(importance) as avg_imp FROM autobiographical_memories GROUP BY memory_type").fetchall()
             return {r['memory_type']: {'count': r['count'], 'avg_importance': r['avg_imp']} for r in rows}
 
+    # --- structured episodic memory
+    def add_episodic_episode(
+        self,
+        *,
+        episode_id: str | None = None,
+        episode_type: str = "chat_turn",
+        session_id: str | None = None,
+        source: str = "system",
+        title: str = "",
+        summary: str = "",
+        user_text: str = "",
+        assistant_text: str = "",
+        outcome: str = "observed",
+        salience: float = 0.5,
+        structured_json: str | None = None,
+        refs_json: str | None = None,
+        compacted_context: str | None = None,
+        meta_json: str | None = None,
+        refs: list[dict[str, Any]] | None = None,
+    ) -> str:
+        now = _ts()
+        if not episode_id:
+            seed = f"{now}:{session_id}:{episode_type}:{user_text[:120]}:{uuid.uuid4().hex}"
+            episode_id = "ep_" + hashlib.sha256(seed.encode("utf-8", errors="ignore")).hexdigest()[:18]
+        refs_payload = refs_json
+        if refs_payload is None and refs is not None:
+            refs_payload = json.dumps(refs, ensure_ascii=False, default=str)
+
+        with self._conn() as c:
+            c.execute(
+                """
+                INSERT INTO episodic_episodes(
+                  id, created_at, updated_at, episode_type, session_id, source, title, summary,
+                  user_text, assistant_text, outcome, salience, structured_json, refs_json,
+                  compacted_context, meta_json
+                )
+                VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+                ON CONFLICT(id) DO UPDATE SET
+                  updated_at=excluded.updated_at,
+                  episode_type=excluded.episode_type,
+                  session_id=excluded.session_id,
+                  source=excluded.source,
+                  title=excluded.title,
+                  summary=excluded.summary,
+                  user_text=excluded.user_text,
+                  assistant_text=excluded.assistant_text,
+                  outcome=excluded.outcome,
+                  salience=excluded.salience,
+                  structured_json=excluded.structured_json,
+                  refs_json=excluded.refs_json,
+                  compacted_context=excluded.compacted_context,
+                  meta_json=excluded.meta_json
+                """,
+                (
+                    str(episode_id),
+                    now,
+                    now,
+                    str(episode_type or "chat_turn")[:60],
+                    str(session_id or "")[:120] or None,
+                    str(source or "system")[:80],
+                    str(title or "")[:240],
+                    str(summary or "")[:2000],
+                    str(user_text or "")[:12000],
+                    str(assistant_text or "")[:12000],
+                    str(outcome or "observed")[:40],
+                    max(0.0, min(1.0, float(salience or 0.5))),
+                    _pack_storage_text(structured_json),
+                    _pack_storage_text(refs_payload),
+                    _pack_storage_text(compacted_context),
+                    _pack_storage_text(meta_json),
+                ),
+            )
+            if refs is not None:
+                c.execute("DELETE FROM episodic_episode_refs WHERE episode_id=?", (str(episode_id),))
+                for ref in refs:
+                    if not isinstance(ref, dict):
+                        continue
+                    ref_table = str(ref.get("table") or ref.get("ref_table") or "").strip()
+                    ref_id = str(ref.get("id") or ref.get("ref_id") or "").strip()
+                    if not ref_table or not ref_id:
+                        continue
+                    c.execute(
+                        """
+                        INSERT INTO episodic_episode_refs(episode_id, ref_table, ref_id, relation, weight)
+                        VALUES(?,?,?,?,?)
+                        """,
+                        (
+                            str(episode_id),
+                            ref_table[:80],
+                            ref_id[:120],
+                            str(ref.get("relation") or "")[:80],
+                            max(0.0, min(1.0, float(ref.get("weight", 1.0) or 1.0))),
+                        ),
+                    )
+        return str(episode_id)
+
+    def list_episodic_episodes(
+        self,
+        *,
+        session_id: str | None = None,
+        episode_type: str | None = None,
+        limit: int = 50,
+    ) -> list[dict[str, Any]]:
+        q = "SELECT * FROM episodic_episodes WHERE 1=1"
+        params: list[Any] = []
+        if session_id:
+            q += " AND session_id=?"
+            params.append(str(session_id))
+        if episode_type:
+            q += " AND episode_type=?"
+            params.append(str(episode_type))
+        q += " ORDER BY created_at DESC LIMIT ?"
+        params.append(max(1, min(500, int(limit or 50))))
+        with self._conn() as c:
+            rows = c.execute(q, tuple(params)).fetchall()
+        return [
+            _decode_storage_fields(dict(r), ("structured_json", "refs_json", "compacted_context", "meta_json"))
+            for r in rows
+        ]
+
+    def search_episodic_episodes(self, query: str, limit: int = 20) -> list[dict[str, Any]]:
+        terms = [t for t in str(query or "").lower().split() if len(t) >= 3][:8]
+        if not terms:
+            return self.list_episodic_episodes(limit=limit)
+        clauses = []
+        params: list[Any] = []
+        for term in terms:
+            clauses.append("(lower(summary) LIKE ? OR lower(user_text) LIKE ? OR lower(assistant_text) LIKE ? OR lower(title) LIKE ?)")
+            like = f"%{term}%"
+            params.extend([like, like, like, like])
+        sql = "SELECT * FROM episodic_episodes WHERE " + " OR ".join(clauses) + " ORDER BY created_at DESC LIMIT ?"
+        params.append(max(1, min(100, int(limit or 20))))
+        with self._conn() as c:
+            rows = c.execute(sql, tuple(params)).fetchall()
+        return [
+            _decode_storage_fields(dict(r), ("structured_json", "refs_json", "compacted_context", "meta_json"))
+            for r in rows
+        ]
+
+    def get_chat_session(self, session_id: str) -> dict[str, Any] | None:
+        with self._conn() as c:
+            row = c.execute("SELECT * FROM chat_sessions WHERE session_id=?", (str(session_id),)).fetchone()
+        if not row:
+            return None
+        return _decode_storage_fields(dict(row), ("raw_context_json", "compact_context", "meta_json"))
+
+    def upsert_chat_session(
+        self,
+        *,
+        session_id: str,
+        raw_context_json: str,
+        compact_context: str = "",
+        compacted_turns: int = 0,
+        context_limit_chars: int = 8000,
+        last_episode_id: str | None = None,
+        meta_json: str | None = None,
+    ) -> None:
+        now = _ts()
+        raw_turns = []
+        try:
+            raw_turns = json.loads(raw_context_json or "[]")
+        except Exception:
+            raw_turns = []
+        turn_count = len(raw_turns) + max(0, int(compacted_turns or 0))
+        with self._conn() as c:
+            c.execute(
+                """
+                INSERT INTO chat_sessions(
+                  session_id, created_at, updated_at, turn_count, raw_context_json,
+                  compact_context, compacted_turns, context_limit_chars, last_episode_id, meta_json
+                )
+                VALUES(?,?,?,?,?,?,?,?,?,?)
+                ON CONFLICT(session_id) DO UPDATE SET
+                  updated_at=excluded.updated_at,
+                  turn_count=excluded.turn_count,
+                  raw_context_json=excluded.raw_context_json,
+                  compact_context=excluded.compact_context,
+                  compacted_turns=excluded.compacted_turns,
+                  context_limit_chars=excluded.context_limit_chars,
+                  last_episode_id=excluded.last_episode_id,
+                  meta_json=excluded.meta_json
+                """,
+                (
+                    str(session_id)[:120],
+                    now,
+                    now,
+                    int(turn_count),
+                    _pack_storage_text(raw_context_json),
+                    _pack_storage_text(str(compact_context or "")[:12000]),
+                    max(0, int(compacted_turns or 0)),
+                    max(1000, int(context_limit_chars or 8000)),
+                    last_episode_id,
+                    _pack_storage_text(meta_json),
+                ),
+            )
+
     def update_autobiographical_memory_embedding(self, memory_id: int, embedding_json: str):
         with self._conn() as c:
             c.execute(
@@ -2661,3 +2943,18 @@ def consolidate_memories():
 
 def get_memory_stats():
     return db.get_memory_stats()
+
+def add_episodic_episode(**kwargs):
+    return db.add_episodic_episode(**kwargs)
+
+def list_episodic_episodes(session_id: str | None = None, episode_type: str | None = None, limit: int = 50):
+    return db.list_episodic_episodes(session_id=session_id, episode_type=episode_type, limit=limit)
+
+def search_episodic_episodes(query: str, limit: int = 20):
+    return db.search_episodic_episodes(query, limit=limit)
+
+def get_chat_session(session_id: str):
+    return db.get_chat_session(session_id)
+
+def upsert_chat_session(**kwargs):
+    return db.upsert_chat_session(**kwargs)

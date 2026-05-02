@@ -448,6 +448,7 @@ class LearningAgendaConfigRequest(BaseModel):
 
 class ChatRequest(BaseModel):
     message: str
+    session_id: Optional[str] = None
 
 
 class MetacogAskRequest(BaseModel):
@@ -457,6 +458,7 @@ class MetacogAskRequest(BaseModel):
 
 class VoiceChatRequest(BaseModel):
     text: str
+    session_id: Optional[str] = None
 
 
 # ---------------------------------------------------------------------------
