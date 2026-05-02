@@ -425,7 +425,7 @@ def propose_goal_plan(goal: dict, store: Any = None) -> ExecutionPlan:
     import asyncio
     title = str(goal.get('title') or '')
     desc = str(goal.get('description') or '')
-    objective = f"{{title}}: {{desc}}"
+    objective = f"{title}: {desc}".strip(": ")
     
     # Phase 5.4: Homeostasis check antes de planos volumosos
     try:
@@ -441,8 +441,11 @@ def propose_goal_plan(goal: dict, store: Any = None) -> ExecutionPlan:
         pass
 
     # Executa de forma síncrona
-    loop = asyncio.get_event_loop()
-    if loop.is_running():
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        loop = None
+    if loop and loop.is_running():
         # Estamos num contexto já assíncrono, embora autonomous_loop espere algo síncrono.
         # Fallback rápido se não puder rodar async_to_sync
         plan = ExecutionPlan(

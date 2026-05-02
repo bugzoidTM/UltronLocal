@@ -4431,7 +4431,7 @@ async def _execute_next_action() -> dict | None:
         )
         try:
             lat_ms = int((time.time() - t0) * 1000)
-            prof = str(cp.get('model_hint') or 'default')
+            prof = str((cp or {}).get('model_hint') or 'default')
             ok_flag = action_status == 'done'
             self_model.record_action_outcome(
                 strategy=str(kind),
@@ -4481,6 +4481,23 @@ async def _execute_next_action() -> dict | None:
         except Exception:
             pass
         # ── Mental Simulation: post-mortem learning (Fase 13.4) ──
+        try:
+            autonomous_loop.close_loop_with_intrinsic(
+                action_kind=str(kind),
+                context=str(text),
+                success=bool(action_status == 'done'),
+                quality_score=1.0 if action_status == 'done' else 0.45,
+                latency_ms=int((time.time() - t0) * 1000),
+                risk_reason=(risk_reason or ''),
+                metadata={
+                    'action_id': aid,
+                    'task_type': task_type,
+                    'budget_profile': str((cp or {}).get('model_hint') or 'balanced'),
+                    'status': action_status,
+                },
+            )
+        except Exception:
+            pass
         if _mental_sim_scenario_id:
             try:
                 mental_simulation.learn(_mental_sim_scenario_id, {
@@ -4570,6 +4587,23 @@ async def _execute_next_action() -> dict | None:
         except Exception:
             pass
         # ── Code Self-Healer: auto-heal from action errors (Fase 14) ──
+        try:
+            autonomous_loop.close_loop_with_intrinsic(
+                action_kind=str(kind),
+                context=str(text),
+                success=False,
+                quality_score=0.0,
+                latency_ms=int((time.time() - t0) * 1000),
+                risk_reason=str(e),
+                metadata={
+                    'action_id': aid,
+                    'task_type': task_type,
+                    'budget_profile': str((cp or {}).get('model_hint') or 'balanced'),
+                    'status': 'error',
+                },
+            )
+        except Exception:
+            pass
         try:
             import traceback as _tb_action
             tb_str_action = _tb_action.format_exc()
