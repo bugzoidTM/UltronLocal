@@ -26,6 +26,7 @@ from fastapi.responses import StreamingResponse
 import uvicorn
 import httpx
 
+from ultronpro.secret_redaction import install_logging_redaction
 from ultronpro import llm, llm_adapter, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, roadmap_v5, agi_path, episodic_memory, learning_agenda, sleep_cycle, replay_traces, rag_synth_generator, semantic_cache, prm_lite, symbolic_reasoner, reflexion_agent, cognitive_state, causal_graph, sandbox_client, web_browser, context_policy, quality_eval, context_metrics, context_inspector, rag_router, rag_eval, rag_eval_cases, rag_eval_store, internal_critic, memory_governor, causal_preflight, cognitive_patches, gap_detector, shadow_eval, promotion_gate, rollback_manager, benchmark_suite, ultronbody, explicit_abstractions, structural_mapper, transfer_benchmark, external_benchmarks, cognitive_patch_loop, organic_eval_feed, roadmap_status, self_governance, operational_consciousness_benchmark, local_reasoning, self_improvement_engine, inner_monologue, working_memory, vision, world_model, causal_discovery, self_modification, continuous_learning, recursive_self_improvement, autonomous_loop, metacognitive_loop, web_explorer, mental_simulation, code_self_healer, self_talk_loop, autonomous_cognition, low_power, runtime_guard, longitudinal_harness
 
 
@@ -45,6 +46,7 @@ from ultronpro.performance_compression import EntropyAwareCompressionMiddleware
 
 # Logging
 logging.basicConfig(level=logging.INFO)
+install_logging_redaction()
 logger = logging.getLogger("uvicorn")
 try:
     from ultronpro.uvicorn_file_logger import configure_uvicorn_file_logging
@@ -6193,6 +6195,13 @@ async def startup_event():
     logger.info("Starting UltronPRO...")
     store.init_db()
     graph.init()
+    try:
+        from ultronpro import skill_memory
+
+        skill_memory.ensure_schema()
+        skill_memory.ensure_autoreflex_base_skill()
+    except Exception as exc:
+        logger.warning("Skill memory startup skipped: %s", exc)
     # Ensure settings are loaded/initialized
     s = settings.load_settings()
     logger.info(f"Loaded settings. LightRAG URL: {s.get('lightrag_url')}")
@@ -11053,27 +11062,85 @@ def _record_chat_turn_episode(
         logger.debug(f"chat episodic memory skipped: {exc}")
 
 
+def _chat_strategy_ok(strategy: str, ok: bool = True, answer: str = "") -> bool:
+    if ok is False:
+        return False
+    low = str(strategy or "").strip().lower()
+    answer_low = str(answer or "").strip().lower()
+    bad_markers = (
+        "unavailable",
+        "timeout",
+        "failed",
+        "error",
+        "no_sources",
+        "empty",
+        "fallback",
+    )
+    if any(marker in low for marker in bad_markers) and low not in {
+        "autobiographical_fallback",
+        "identity_guard_deterministic",
+    }:
+        return False
+    if "nao retornou resposta" in answer_low or "não retornou resposta" in answer_low:
+        return False
+    return True
+
+
+def _chat_learning_ok(payload: dict[str, Any]) -> bool:
+    if "learning_ok" in payload:
+        return bool(payload.get("learning_ok"))
+    return _chat_strategy_ok(
+        str(payload.get("strategy") or ""),
+        bool(payload.get("ok", True)),
+        str(payload.get("answer") or payload.get("reply") or ""),
+    )
+
+
 def _record_conversation_route(query: str, strategy: str, *, ok: bool = True, latency_ms: int = 0, source: str = 'chat', meta: dict[str, Any] | None = None) -> None:
+    route_ok = _chat_strategy_ok(strategy, ok)
     try:
         record_route_episode(
             query,
             strategy=strategy,
-            ok=ok,
+            ok=route_ok,
             latency_ms=int(latency_ms or 0),
             source=source,
-            outcome='success' if ok else 'fallback',
+            outcome='success' if route_ok else 'fallback',
             meta=meta or {},
+        )
+    except Exception:
+        pass
+    try:
+        slow_threshold = int(os.getenv("ULTRON_CHAT_SLOW_EPISODE_MS", "12000") or 12000)
+        if route_ok and int(latency_ms or 0) < slow_threshold:
+            return
+        episodic_memory.append_episode(
+            action_id=int(time.time() * 1000) % (2**31),
+            kind="chat.route_feedback",
+            text=str(query or "")[:420],
+            task_type="chat_interaction" if str(source or "").startswith("chat") else str(source or "interaction"),
+            strategy=str(strategy or "unknown"),
+            ok=route_ok,
+            latency_ms=int(latency_ms or 0),
+            error="" if route_ok else str((meta or {}).get("error") or strategy or "chat_route_fallback"),
+            meta={
+                "source": source,
+                "route_meta": meta or {},
+                "learned_from": "conversation_route",
+            },
+            authorship_origin="externally_triggered" if str(source or "").startswith(("chat", "voice")) else "internal",
         )
     except Exception:
         pass
 
 
 def _learned_chat_response(query: str, payload: dict[str, Any], *, source: str = 'chat', meta: dict[str, Any] | None = None, session_id: str | None = None) -> dict[str, Any]:
+    learning_ok = _chat_learning_ok(payload)
     try:
         _record_conversation_route(
             query,
             str(payload.get('strategy') or ''),
-            ok=bool(payload.get('ok', True)),
+            ok=learning_ok,
             latency_ms=int(payload.get('latency_ms') or 0),
             source=source,
             meta=meta,
@@ -11087,12 +11154,26 @@ def _learned_chat_response(query: str, payload: dict[str, Any], *, source: str =
                 query,
                 answer,
                 strategy=str(payload.get('strategy') or ''),
-                ok=bool(payload.get('ok', True)),
+                ok=learning_ok,
                 latency_ms=int(payload.get('latency_ms') or 0),
                 source=source,
                 session_id=session_id,
                 meta=meta,
             )
+            try:
+                from ultronpro import skill_memory
+
+                skill_memory.learn_from_chat_turn(
+                    query,
+                    answer,
+                    strategy=str(payload.get('strategy') or ''),
+                    ok=learning_ok,
+                    latency_ms=int(payload.get('latency_ms') or 0),
+                    source=source,
+                    meta=meta,
+                )
+            except Exception as exc:
+                logger.debug(f"skill memory learn skipped: {exc}")
     except Exception:
         pass
     return payload
@@ -11360,6 +11441,8 @@ def _cognitive_greeting_response(query: str) -> str:
         pass
 
     ctx = '\n'.join(ctx_parts)
+    if str(os.getenv('ULTRON_CHAT_SMALLTALK_LLM', '0')).strip().lower() not in ('1', 'true', 'yes', 'on'):
+        return f"Boa {period}. To bem sim; sigo acompanhando o contexto e pronto para continuar."
     _greet_prompt = (
         f"Contexto operacional atual:\n{ctx}\n\n"
         f"O usuario enviou uma saudacao: '{query}'\n"
@@ -11397,6 +11480,9 @@ def _cognitive_thanks_response(query: str) -> str:
     except Exception:
         pass
     ctx = '\n'.join(ctx_parts) if ctx_parts else 'sem contexto afetivo disponível'
+    if str(os.getenv('ULTRON_CHAT_SMALLTALK_LLM', '0')).strip().lower() not in ('1', 'true', 'yes', 'on'):
+        return "Disponha. Seguimos juntos por aqui."
+
     _thanks_prompt = (
         f"Contexto operacional:\n{ctx}\n\n"
         f"O usuario disse: '{query}'\n"
@@ -11501,14 +11587,32 @@ def _cognitive_identity_response(query: str) -> str:
 def _quick_smalltalk_intent(query: str) -> str | None:
     text = unicodedata.normalize('NFKD', str(query or '').lower())
     text = ''.join(ch for ch in text if not unicodedata.combining(ch))
+    text = re.sub(r'[^a-z0-9\s]+', ' ', text)
     text = re.sub(r'\s+', ' ', text).strip()
     if not text:
         return None
+    try:
+        from ultronpro import skill_memory
+
+        learned = skill_memory.deterministic_chat_intent(text)
+        if learned and learned.get('intent') in ('greeting', 'thanks'):
+            return str(learned.get('intent'))
+    except Exception:
+        pass
     greeting_triggers = (
         'bom dia', 'boa tarde', 'boa noite', 'ola', 'oi', 'hi', 'hey',
-        'como vai', 'como esta', 'como ta', 'tudo bem', 'tudo certo', 'e ai',
+        'como vai', 'como esta', 'como ta', 'como voce esta', 'como voce ta',
+        'como vc esta', 'como vc ta', 'como ce esta', 'como ce ta', 'como tu esta',
+        'como tu ta', 'tudo bem', 'tudo bom', 'tudo bao', 'tudo certo', 'e ai', 'eae',
     )
     if len(text) < 40 and any(text == item or text.startswith(item + ' ') for item in greeting_triggers):
+        return 'greeting'
+    colloquial_status = (
+        r'\b(tu|vc|voce|ce)\s+(ta|esta)\s+(bem|bom|boa|bao|suave|de boa)\b',
+        r'\b(ta|esta)\s+(bem|bom|boa|bao|suave|de boa)\b',
+        r'\b(beleza|blz|suave|de boa|tranquilo|tranquila)\b',
+    )
+    if len(text) < 50 and any(re.search(pattern, text) for pattern in colloquial_status):
         return 'greeting'
     first_token = re.sub(r'[^a-z0-9_]+', '', text.split(' ', 1)[0])
     fuzzy_greetings = ('ola', 'oi', 'hello', 'hi', 'hey')
@@ -11832,7 +11936,42 @@ def _synthesize_chat_answer_from_sir(
         fallback_text=fallback_text,
         max_attempts=2,
         max_tokens=max_tokens,
+        allow_model=str(os.getenv('ULTRON_CHAT_SIR_LLM_SYNTHESIS', '0')).strip().lower() in ('1', 'true', 'yes', 'on'),
     )
+
+
+def _chat_last_resort_model_answer(
+    query: str,
+    session_id: str | None = None,
+    *,
+    max_tokens: int = 180,
+    input_class: str = 'chat_final_fallback',
+) -> str:
+    session_context = _chat_session_context(session_id, max_chars=650)
+    prompt = (
+        "Voce e o fallback final de linguagem do chat UltronPro. "
+        "Use apenas quando o motor simbolico, memoria, skills e raciocinio proprio nao responderam. "
+        "Responda em PT-BR, direto, calibrando incerteza e sem inventar fatos.\n\n"
+        f"Contexto compacto da sessao:\n{session_context or '(sem contexto de sessao relevante)'}\n\n"
+        f"Mensagem do usuario:\n{query}"
+    )
+    try:
+        return str(
+            llm.complete(
+                prompt,
+                strategy='local',
+                system='Fallback final do chat. Nao exponha raciocinio interno. Nao use fatos externos ausentes.',
+                json_mode=False,
+                inject_persona=False,
+                max_tokens=int(max(32, min(512, max_tokens))),
+                cloud_fallback=False,
+                input_class=input_class,
+            )
+            or ''
+        ).strip()
+    except Exception as exc:
+        logger.warning("Chat final local model fallback failed: %s", exc)
+        return ''
 
 
 async def _classify_with_llm(query: str) -> str:
@@ -12404,38 +12543,28 @@ async def chat_fast(req: ChatRequest):
     # --- NÃ­vel 5: Fallback ---
     dt = int((time.time() - t0) * 1000)
     try:
-        from ultronpro import sir_amplifier
-
-        chat_llm_timeout = _chat_llm_timeout()
-        fallback_sir = sir_amplifier.build_sir_from_raw_context(q, _chat_session_context(session_id), source='chat_fallback')
-        fallback_result = await asyncio.wait_for(
-            asyncio.to_thread(
-                _synthesize_chat_answer_from_sir,
-                q,
-                fallback_sir,
-                fallback_text=None,
-                max_tokens=500,
-            ),
+        chat_llm_timeout = _chat_llm_timeout(default=110.0)
+        fallback_answer = await asyncio.wait_for(
+            asyncio.to_thread(_chat_last_resort_model_answer, q, session_id, max_tokens=180),
             timeout=chat_llm_timeout,
         )
-        fallback_answer = str((fallback_result or {}).get('answer') or '').strip()
         fallback_answer = await asyncio.to_thread(_ensure_chat_answer_constraints, q, fallback_answer)
         if fallback_answer:
             return _learned_chat_response(q, {
                 'ok': True,
                 'answer': fallback_answer,
-                'strategy': str((fallback_result or {}).get('strategy') or 'sir_fallback'),
+                'strategy': 'chat_final_ultron_infer',
                 'latency_ms': dt,
                 'qualia': qs.generate_report(),
-                'sir_verification': (fallback_result or {}).get('verification'),
             })
     except asyncio.TimeoutError:
-        logger.warning("Chat: local fallback timed out")
+        logger.warning("Chat: final local model fallback timed out")
     except Exception as e:
-        logger.warning(f"Chat: local fallback failed: {e}")
+        logger.warning(f"Chat: final local model fallback failed: {e}")
 
     return _learned_chat_response(q, {
         'ok': True,
+        'learning_ok': False,
         'answer': '[AVISO: a LLM local nao retornou resposta; nenhuma resposta sintetica foi fabricada.]',
         'strategy': 'local_llm_unavailable',
         'latency_ms': dt,
@@ -12762,7 +12891,7 @@ async def chat_stream(req: ChatRequest):
                 yield f"data: {json.dumps({'type': 'done', 'answer': ans.strip('\"'), 'strategy': 'intent'})}\n\n"
             except Exception as e:
                 _record_conversation_route(q, 'local_llm_unavailable', ok=False, source='chat_stream', meta={'intent': intent})
-                yield f"data: {json.dumps({'type': 'done', 'answer': '[AVISO: a LLM local nao retornou resposta para este turno.]', 'strategy': 'local_llm_unavailable'})}\n\n"
+                yield f"data: {json.dumps({'type': 'done', 'ok': False, 'answer': '[AVISO: a LLM local nao retornou resposta para este turno.]', 'strategy': 'local_llm_unavailable'})}\n\n"
             return
             
         yield f"data: {json.dumps({'type': 'progress', 'text': '🧠 RAG e Memória Episódica (Thinking deep...)'})}\n\n"
@@ -12839,34 +12968,24 @@ async def chat_stream(req: ChatRequest):
         except Exception as e:
             yield f"data: {json.dumps({'type': 'progress', 'text': '⚠️ Falha no raciocínio profundo.'})}\n\n"
 
-        yield f"data: {json.dumps({'type': 'progress', 'text': 'Consultando LLM local de fallback...'})}\n\n"
+        yield f"data: {json.dumps({'type': 'progress', 'text': 'Consultando modelo local de ultima instancia...'})}\n\n"
         try:
-            from ultronpro import sir_amplifier
-
-            chat_llm_timeout = _chat_llm_timeout()
-            fallback_sir = sir_amplifier.build_sir_from_raw_context(q, _chat_session_context(session_id), source='chat_stream_fallback')
-            fallback_result = await asyncio.wait_for(
-                asyncio.to_thread(
-                    _synthesize_chat_answer_from_sir,
-                    q,
-                    fallback_sir,
-                    fallback_text=None,
-                    max_tokens=500,
-                ),
+            chat_llm_timeout = _chat_llm_timeout(default=110.0)
+            fallback_answer = await asyncio.wait_for(
+                asyncio.to_thread(_chat_last_resort_model_answer, q, session_id, max_tokens=180),
                 timeout=chat_llm_timeout,
             )
-            fallback_answer = str((fallback_result or {}).get('answer') or '').strip()
             fallback_answer = await asyncio.to_thread(_ensure_chat_answer_constraints, q, fallback_answer)
             if fallback_answer:
-                strategy = str((fallback_result or {}).get('strategy') or 'sir_fallback')
+                strategy = 'chat_stream_final_ultron_infer'
                 _record_conversation_route(q, strategy, source='chat_stream')
-                yield f"data: {json.dumps({'type': 'done', 'answer': fallback_answer, 'strategy': strategy, 'sir_verification': (fallback_result or {}).get('verification')})}\n\n"
+                yield f"data: {json.dumps({'type': 'done', 'answer': fallback_answer, 'strategy': strategy})}\n\n"
                 return
         except Exception as e:
             logger.warning(f"Stream chat local fallback failed: {e}")
 
         _record_conversation_route(q, 'local_llm_unavailable', ok=False, source='chat_stream')
-        yield f"data: {json.dumps({'type': 'done', 'answer': '[AVISO: a LLM local nao retornou resposta; nenhuma resposta sintetica foi fabricada.]', 'strategy': 'local_llm_unavailable'})}\n\n"
+        yield f"data: {json.dumps({'type': 'done', 'ok': False, 'answer': '[AVISO: a LLM local nao retornou resposta; nenhuma resposta sintetica foi fabricada.]', 'strategy': 'local_llm_unavailable'})}\n\n"
 
     async def memory_recording_generator():
         recorded = False
@@ -12877,15 +12996,35 @@ async def chat_stream(req: ChatRequest):
                     if payload.get("type") == "done":
                         answer = str(payload.get("answer") or "").strip()
                         if q_outer and answer and answer != "Mensagem vazia.":
+                            strategy = str(payload.get("strategy") or "chat_stream")
+                            answer_ok = _chat_strategy_ok(
+                                strategy,
+                                bool(payload.get("ok", True)),
+                                answer,
+                            )
                             _record_chat_turn_episode(
                                 q_outer,
                                 answer,
-                                strategy=str(payload.get("strategy") or "chat_stream"),
-                                ok=not str(payload.get("strategy") or "").endswith("_error"),
+                                strategy=strategy,
+                                ok=answer_ok,
                                 source="chat_stream",
                                 session_id=session_id,
                                 meta={k: v for k, v in payload.items() if k not in ("answer", "type")},
                             )
+                            try:
+                                from ultronpro import skill_memory
+
+                                skill_memory.learn_from_chat_turn(
+                                    q_outer,
+                                    answer,
+                                    strategy=strategy,
+                                    ok=answer_ok,
+                                    latency_ms=int(payload.get("latency_ms") or 0),
+                                    source="chat_stream",
+                                    meta={k: v for k, v in payload.items() if k not in ("answer", "type")},
+                                )
+                            except Exception as exc:
+                                logger.debug(f"stream skill memory learn skipped: {exc}")
                             recorded = True
                 except Exception:
                     pass
@@ -12918,6 +13057,140 @@ async def autonomous_cognition_tick(stage: str = 'full'):
 
 
 # ==================== SKILL SYSTEM ENDPOINTS ====================
+
+
+@app.get('/api/skill-memory/status')
+async def skill_memory_status():
+    try:
+        from ultronpro import skill_memory
+
+        return skill_memory.status()
+    except Exception as e:
+        return {'ok': False, 'error': str(e)}
+
+
+@app.get('/api/skill-memory/search')
+async def skill_memory_search(q: str = "", limit: int = 5, include_candidates: bool = True):
+    try:
+        from ultronpro import skill_memory
+
+        results = skill_memory.search(q, limit=max(1, min(25, int(limit))), include_candidates=bool(include_candidates))
+        return {'ok': True, 'results': results}
+    except Exception as e:
+        return {'ok': False, 'error': str(e), 'results': []}
+
+
+@app.post('/api/skill-memory/search')
+async def skill_memory_search_post(request: Request):
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+    q = str((body or {}).get('query') or (body or {}).get('q') or '')
+    limit = int((body or {}).get('limit') or 5)
+    include_candidates = bool((body or {}).get('include_candidates', True))
+    return await skill_memory_search(q=q, limit=limit, include_candidates=include_candidates)
+
+
+@app.post('/api/skill-memory/index')
+async def skill_memory_index(request: Request):
+    try:
+        from ultronpro import skill_memory
+
+        try:
+            body = await request.json()
+        except Exception:
+            body = {}
+        skill_path = str((body or {}).get('skill_path') or '').strip()
+        if skill_path:
+            return {'ok': True, 'indexed': [skill_memory.index_skill_file(skill_path)]}
+        indexed = skill_memory.index_all()
+        return {'ok': True, 'indexed': indexed, 'count': len(indexed)}
+    except FileNotFoundError as e:
+        return {'ok': False, 'error': str(e)}
+    except Exception as e:
+        return {'ok': False, 'error': str(e)}
+
+
+@app.get('/api/skill-memory/{name}')
+async def skill_memory_get(name: str):
+    try:
+        from ultronpro import skill_memory
+
+        skill = skill_memory.get_skill(name)
+        return {'ok': bool(skill), 'skill': skill}
+    except Exception as e:
+        return {'ok': False, 'error': str(e)}
+
+
+@app.post('/agent/skills/search')
+async def autoreflex_compat_skill_search(request: Request):
+    try:
+        from ultronpro import skill_memory
+
+        try:
+            body = await request.json()
+        except Exception:
+            body = {}
+        q = str((body or {}).get('query') or '')
+        limit = max(1, min(25, int((body or {}).get('limit') or 5)))
+        rows = skill_memory.search(q, limit=limit, include_candidates=True)
+        return {
+            'results': [
+                {
+                    'score': item.get('score'),
+                    'skill_path': item.get('skill_path') or item.get('name'),
+                    'skill_name': item.get('title') or item.get('name'),
+                    'summary': item.get('summary'),
+                    'status': item.get('status'),
+                    'action_kind': item.get('action_kind'),
+                }
+                for item in rows
+            ]
+        }
+    except Exception as e:
+        return {'results': [], 'error': str(e)}
+
+
+@app.post('/agent/skills/get')
+async def autoreflex_compat_skill_get(request: Request):
+    try:
+        from ultronpro import skill_memory
+
+        try:
+            body = await request.json()
+        except Exception:
+            body = {}
+        skill_path = str((body or {}).get('skill_path') or '').strip()
+        if not skill_path:
+            return {'error': 'skill_path required'}
+        content = skill_memory.get_skill_content(skill_path)
+        return {'skill_path': skill_path, 'content': content}
+    except FileNotFoundError:
+        return {'error': 'skill not found'}
+    except Exception as e:
+        return {'error': str(e)}
+
+
+@app.post('/agent/skills/index')
+async def autoreflex_compat_skill_index(request: Request):
+    try:
+        from ultronpro import skill_memory
+
+        try:
+            body = await request.json()
+        except Exception:
+            body = {}
+        skill_path = str((body or {}).get('skill_path') or '').strip()
+        if skill_path:
+            item = skill_memory.index_skill_file(skill_path)
+            return {'indexed_files': [item.get('skill_path') or skill_path], 'indexed_chunks': 1}
+        indexed = skill_memory.index_all()
+        return {'indexed_files': [item.get('skill_path') for item in indexed], 'indexed_chunks': len(indexed)}
+    except FileNotFoundError as e:
+        return {'indexed_files': [], 'indexed_chunks': 0, 'error': str(e)}
+    except Exception as e:
+        return {'indexed_files': [], 'indexed_chunks': 0, 'error': str(e)}
 
 
 
@@ -13643,16 +13916,20 @@ async def llm_health(provider: str = 'auto'):
 @app.get('/api/llm/router/status')
 async def llm_router_status(task_type: str = 'general', budget_mode: Optional[str] = None):
     status = llm.router_status(task_type=task_type, budget_mode=budget_mode)
-    # Include LRU cache stats
+    legacy_cache = getattr(llm.router, 'lru_cache', None)
+    response_cache = llm.response_cache_status() if hasattr(llm, 'response_cache_status') else {}
+    # Keep the old field name for frontend compatibility, while reporting the
+    # active response cache when the legacy LRU cache is not present.
     status['lru_cache'] = {
-        'size': len(llm.router.lru_cache),
-        'max_size': 1000,
-        'ttl_seconds': 3600,
+        'size': len(legacy_cache) if isinstance(legacy_cache, dict) else int(response_cache.get('entries') or 0),
+        'max_size': 1000 if isinstance(legacy_cache, dict) else int(response_cache.get('max_entries') or 0),
+        'ttl_seconds': 3600 if isinstance(legacy_cache, dict) else int(float(response_cache.get('ttl_sec') or 0)),
+        'backend': 'legacy_lru' if isinstance(legacy_cache, dict) else response_cache.get('backend', 'memory'),
     }
     # Include circuit breaker stats
     status['circuit_breaker_config'] = {
-        'failures_threshold': llm.router._circuit_breaker_failures_threshold,
-        'cooldown_sec': llm.router._circuit_breaker_cooldown_sec,
+        'failures_threshold': getattr(llm.router, '_circuit_breaker_failures_threshold', None),
+        'cooldown_sec': getattr(llm.router, '_circuit_breaker_cooldown_sec', None),
     }
     return status
 
@@ -13660,13 +13937,23 @@ async def llm_router_status(task_type: str = 'general', budget_mode: Optional[st
 @app.get('/api/llm/circuit-breaker')
 async def circuit_breaker_status():
     """Retorna status do circuit breaker para todos os providers."""
+    provider_status = {}
+    if hasattr(llm.router, 'get_circuit_breaker_status'):
+        provider_status = llm.router.get_circuit_breaker_status()
+    else:
+        now = int(time.time())
+        provider_status = {
+            provider: {'state': 'cooldown', 'cooldown_until': int(ts or 0)}
+            for provider, ts in getattr(llm.router, 'fail_cooldown_until', {}).items()
+            if int(ts or 0) > now
+        }
     return {
         'ok': True,
         'config': {
-            'failures_threshold': llm.router._circuit_breaker_failures_threshold,
-            'cooldown_sec': llm.router._circuit_breaker_cooldown_sec,
+            'failures_threshold': getattr(llm.router, '_circuit_breaker_failures_threshold', None),
+            'cooldown_sec': getattr(llm.router, '_circuit_breaker_cooldown_sec', None),
         },
-        'providers': llm.router.get_circuit_breaker_status(),
+        'providers': provider_status,
     }
 
 
@@ -13683,7 +13970,9 @@ async def llm_lanes_status():
 @app.get('/api/llm/lru/cache')
 async def llm_lru_cache():
     """Retorna estatÃ­sticas do LRU cache de LLMs."""
-    cache = llm.router.lru_cache
+    cache = getattr(llm.router, 'lru_cache', None)
+    if not isinstance(cache, dict):
+        return llm.response_cache_status() if hasattr(llm, 'response_cache_status') else {'enabled': False}
     now = time.time()
     valid = sum(1 for v in cache.values() if now - v.get('_ts', 0) < 3600)
     return {
@@ -14182,6 +14471,8 @@ async def voice_chat(req: VoiceChatRequest):
                 json_mode=False,
                 inject_persona=False,
                 max_tokens=64,
+                cloud_fallback=False,
+                input_class='voice_chat',
             )
         except Exception:
             cand = ''
@@ -14195,6 +14486,20 @@ async def voice_chat(req: VoiceChatRequest):
 
     latency = int(time.time() * 1000) - t0
     ok = bool((ans or '').strip()) and not _is_poor(ans)
+    if not ok:
+        try:
+            fallback = _chat_last_resort_model_answer(
+                txt,
+                session_id=session_id,
+                max_tokens=96,
+                input_class='voice_chat_final_fallback',
+            )
+        except Exception:
+            fallback = ''
+        if fallback and not _is_poor(fallback):
+            ans = fallback.strip()
+            used = 'voice_chat_final_ultron_infer'
+            ok = True
 
     try:
         plasticity_runtime.record_feedback(

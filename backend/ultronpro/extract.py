@@ -50,6 +50,62 @@ def _parse_json_robustly(text: str) -> dict | list | None:
                 
     return None
 
+
+def _unwrap_sequence_payload(data):
+    """Return the most likely list-like payload without assuming one provider schema."""
+    seen = 0
+    while isinstance(data, dict) and seen < 4:
+        if _looks_like_triple_dict(data):
+            return [data]
+        next_data = None
+        for key in ("triples", "facts", "relations", "items", "data", "result", "results", "output"):
+            if key in data:
+                next_data = data.get(key)
+                break
+        if next_data is None:
+            return []
+        if isinstance(next_data, str):
+            parsed = _parse_json_robustly(next_data)
+            data = parsed if parsed is not None else next_data
+        else:
+            data = next_data
+        seen += 1
+    if isinstance(data, list):
+        return data
+    if isinstance(data, str):
+        parsed = _parse_json_robustly(data)
+        if parsed is not None and parsed is not data:
+            return _unwrap_sequence_payload(parsed)
+    return []
+
+
+def _looks_like_triple_dict(item: dict) -> bool:
+    keys = {str(k).lower() for k in item.keys()}
+    has_s = bool(keys & {"s", "subject", "sujeito", "source"})
+    has_p = bool(keys & {"p", "predicate", "predicado", "relation", "relacao"})
+    has_o = bool(keys & {"o", "object", "objeto", "target"})
+    return has_s and has_p and has_o
+
+
+def _coerce_triple_item(item) -> tuple[str, str, str, float] | None:
+    if isinstance(item, dict):
+        s = item.get('s') or item.get('subject') or item.get('Subject') or item.get('sujeito') or item.get('source')
+        p = item.get('p') or item.get('predicate') or item.get('Predicate') or item.get('predicado') or item.get('relation') or item.get('relacao')
+        o = item.get('o') or item.get('object') or item.get('Object') or item.get('objeto') or item.get('target')
+        conf = item.get('confidence') or item.get('score') or 0.85
+    elif isinstance(item, (list, tuple)) and len(item) >= 3:
+        s, p, o = item[0], item[1], item[2]
+        conf = item[3] if len(item) > 3 else 0.82
+    else:
+        return None
+    if not (s and p and o):
+        return None
+    try:
+        confidence = float(conf)
+    except Exception:
+        confidence = 0.85
+    return (str(s), str(p), str(o), max(0.0, min(1.0, confidence)))
+
 def extract_norms(text: str, max_retries: int = 3) -> list[tuple[str, str, str, float]]:
     """Extract norms using LLM."""
     if not text: return []
@@ -138,28 +194,19 @@ Text: {text[:3000]}"""
             logger.debug(f"extract_triples: parsed JSON type={type(data)}")
             
             if data is not None:
-                if isinstance(data, dict):
-                    if 'result' in data: data = data['result']
-                    elif 'triples' in data: data = data['triples']
-                    elif 'facts' in data: data = data['facts']
-                    elif 'data' in data: data = data['data']
-                    elif 'items' in data: data = data['items']
-                
-                if isinstance(data, list):
-                    logger.info(f"extract_triples: processing {len(data)} items from LLM on attempt {attempt+1}")
-                    for i in data:
-                        if isinstance(i, dict):
-                            s = i.get('s') or i.get('subject') or i.get('Subject') or i.get('sujeito')
-                            p = i.get('p') or i.get('predicate') or i.get('Predicate') or i.get('predicado')
-                            o = i.get('o') or i.get('object') or i.get('Object') or i.get('objeto')
-                            if s and p and o:
-                                out.append((str(s), str(p), str(o), 0.85))
-                    
+                items = _unwrap_sequence_payload(data)
+                if items:
+                    logger.info(f"extract_triples: processing {len(items)} items from LLM on attempt {attempt+1}")
+                    for i in items:
+                        triple = _coerce_triple_item(i)
+                        if triple:
+                            out.append(triple)
                     if out:
                         logger.info(f"extract_triples: returning {len(out)} triples")
                         return out
                 else:
-                    logger.warning(f"extract_triples: unexpected data type after unwrap: {type(data)}")
+                    logger.warning(f"extract_triples: no triple items after unwrap (parsed={type(data)})")
+                    break
             
             if attempt + 1 < max_retries:
                 logger.warning(f"extract_triples: attempt {attempt+1} failed to yield valid triples. Retrying...")

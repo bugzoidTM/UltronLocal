@@ -7,6 +7,8 @@ from pathlib import Path
 from threading import RLock
 from typing import Any
 
+from ultronpro.secret_redaction import add_redaction_filter
+
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 DEFAULT_LOG_PATH = DATA_DIR / "logs" / "uvicorn_live.log"
@@ -118,10 +120,12 @@ def configure_uvicorn_file_logging(
             _HANDLER.setFormatter(
                 logging.Formatter("%(asctime)s %(levelname)s [%(name)s] %(message)s")
             )
+        add_redaction_filter(_HANDLER)
 
         for name in ("uvicorn", "uvicorn.error", "uvicorn.access"):
             log = logging.getLogger(name)
             log.setLevel(logging.INFO)
+            add_redaction_filter(log)
             if _HANDLER not in log.handlers:
                 log.addHandler(_HANDLER)
 
