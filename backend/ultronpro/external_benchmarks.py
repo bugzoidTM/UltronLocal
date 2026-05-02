@@ -569,6 +569,29 @@ def evaluate_patch_external_factual_evidence(patch: dict[str, Any]) -> dict[str,
 
 
 def _predict_with_llm(question: str, choices: list[dict[str, Any]], benchmark: str, strategy: str = 'cheap') -> dict[str, Any]:
+    if str(strategy or '').strip().lower() in {'local', 'no_cloud', 'deterministic'}:
+        try:
+            from ultronpro import local_mcq_reasoner
+
+            local = local_mcq_reasoner.solve_mcq(question, choices)
+            if bool(local.get('ok')):
+                return {
+                    'raw': local.get('raw') or json.dumps({'answer': local.get('answer')}, ensure_ascii=False),
+                    'answer': str(local.get('answer') or ''),
+                    'source': 'local_mcq_reasoner',
+                    'confidence': local.get('confidence'),
+                    'scores': local.get('scores'),
+                }
+            return {
+                'raw': local.get('raw') or json.dumps({'answer': ''}, ensure_ascii=False),
+                'answer': '',
+                'source': 'local_mcq_reasoner',
+                'confidence': local.get('confidence'),
+                'scores': local.get('scores'),
+            }
+        except Exception as e:
+            return {'raw': f'local_mcq_reasoner_error:{type(e).__name__}', 'answer': '', 'source': 'local_mcq_reasoner'}
+
     from ultronpro import llm
 
     choice_lines = []
@@ -624,6 +647,20 @@ def _select_items(
 def _score_item(item: dict[str, Any], predictor: str = 'llm', strategy: str = 'cheap') -> dict[str, Any]:
     if predictor == 'oracle':
         pred = _predict_oracle(item)
+    elif str(predictor or '').strip().lower() in {'local', 'local_mcq', 'local_reasoner'}:
+        from ultronpro import local_mcq_reasoner
+
+        local = local_mcq_reasoner.solve_mcq(
+            str(item.get('question') or ''),
+            item.get('choices') if isinstance(item.get('choices'), list) else [],
+        )
+        pred = {
+            'raw': local.get('raw') or json.dumps({'answer': local.get('answer')}, ensure_ascii=False),
+            'answer': str(local.get('answer') or ''),
+            'source': 'local_mcq_reasoner',
+            'confidence': local.get('confidence'),
+            'scores': local.get('scores'),
+        }
     else:
         pred = _predict_with_llm(
             str(item.get('question') or ''),
@@ -642,6 +679,8 @@ def _score_item(item: dict[str, Any], predictor: str = 'llm', strategy: str = 'c
         'correct': bool(gold and got == gold),
         'gold_answer': gold,
         'predicted_answer': got,
+        'prediction_source': str(pred.get('source') or predictor),
+        'prediction_confidence': pred.get('confidence'),
         'raw_response': str(pred.get('raw') or '')[:600],
     }
 

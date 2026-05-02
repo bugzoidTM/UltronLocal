@@ -63,11 +63,19 @@ Evidência executada nesta rodada:
 - `pressure_benchmark.run_selftest()`: baseline `0.3333`, memory blackout `0.0`, retention `0.0`; a full suite anterior `pb_suite_ffd58d9e` com `0.85` não foi reproduzida nesta rodada e uma nova execução completa excedeu timeout.
 - Pytest focal: `15 passed` em `backend/test_external_factual_routing.py`, `backend/test_external_verification_loop.py`, `backend/test_epistemic_ledger.py`; `test_causal_gate.py` legado falha na coleta por importar `process_query` inexistente.
 
+Atualização incremental — 2026-05-02:
+
+- `local_mcq_reasoner.py` integrado ao `external_benchmarks.run_suite(..., strategy="local")`, removendo dependência de LLM no probe MCQ no-cloud.
+- Benchmark externo local/no-cloud completo: `extb_490be0a1ac`, `9/9`, accuracy `1.0`, fonte `local_mcq_reasoner`.
+- Hard eval completo: `10.0/10`; probe externo no-cloud do hard eval `extb_435713b2ee`, `3/3`, accuracy `1.0`.
+- Holdout não visto em teste unitário: resolvedor MCQ local vence baseline de primeira escolha por `+0.8333`.
+- Pytest focal ampliado: `20 passed` em testes de MCQ local, auto-melhoria forte, auto-modificação endurecida, roteamento factual externo, verificação externa e ledger epistêmico.
+
 | Front | Estado máximo validado | Status aplicado | Evidência bloqueante |
 | --- | --- | ---: | --- |
 | Front 1 — Plasticidade estrutural real | Testado localmente | 80% | hard eval local forte, mas sem validação externa/longitudinal consolidada |
 | Front 2 — Modelo de mundo causal | Testado localmente | 72% | pressure selftest atual reteve `0.0` sob memory blackout |
-| Front 3 — Generalização entre domínios | Testado localmente | 62% | benchmark externo da runtime ficou `0/9`; longitudinal generalization `0.0` |
+| Front 3 — Generalização entre domínios | Testado localmente | 66% | benchmark externo local/no-cloud subiu para `9/9`, mas ainda é `proxy_subset` e longitudinal generalization segue `0.0` |
 | Front 4 — Automanutenção e individuação | Integrado | 68% | longitudinal em `watch`; blackout de memória não sustentou capacidade |
 | Front 5 — Consciência operacional integrada | Integrado | 66% | proxies integrados, mas ledger ainda bloqueia evidência externa/longitudinal |
 
@@ -75,14 +83,14 @@ Evidência executada nesta rodada:
 
 ## Auditoria epistêmica — 2026-05-01 (Atualização)
 
-Status geral do roadmap: 72%
+Status geral do roadmap: 73%
 
 Evidência executada nesta auditoria de stress e verdade:
 
 - [FEITO] **Shift Epistemológico de Telemetria:** O `benchmark_suite.py` agora coleta latência real e tokens verdadeiros por fallback live, abandonando métricas randomizadas ("telemetria de vaidade").
 - [EM ANDAMENTO 55%] **Maturidade sob Pressão:** `pressure_benchmark.py` injeta falhas (provider dropout, blackout de memória, starvation de contexto, adversarial framing). A full suite anterior `pb_suite_ffd58d9e` atingiu `85.0%`, mas a rodada curta atual na runtime Python 3.12 ficou em baseline `0.3333`, memory blackout `0.0`, retention `0.0`; portanto não sustenta maturidade atual.
 - [FEITO] **Remoção de Autojuiz:** `longitudinal_harness.py` não valida mais a identidade verificando strings hardcoded (`answer == gold`); o LLM agora deve provar o conhecimento de resiliência e deriva causal via MCQ aberto ancorado em literatura externa (Pearl 2009, Amodei 2016, etc).
-- [EM ANDAMENTO 45%] Benchmark factual externo: harness público existe, mas a runtime do app marcou `0/9` em `extb_9cadc133b2`; a repetição Python 3.14 marcou `4/9`, porém não conta como maturidade por divergência de ambiente.
+- [EM ANDAMENTO 58%] Benchmark factual externo: harness público existe e o caminho local/no-cloud marcou `9/9` em `extb_490be0a1ac`; ainda não conta como maturidade externa plena porque segue `proxy_subset` e sem histórico longitudinal compatível.
 - [EM ANDAMENTO 45%] Probe longitudinal de simulação mental/currículo permanece em `watch`: rodada atual `success_rate=0.3333`, generalização `0.0`, sem promoção no ledger.
 - [EM ANDAMENTO 60%] Harness longitudinal integrado atualizado para validação externa, mas ainda bloqueado por evidência externa e longitudinal insuficiente (`promotion_ready=false`).
 
@@ -114,11 +122,11 @@ Conclusão da auditoria de stress: O paradigma mudou de vez. A métrica saiu de 
 - [FEITO] `core.intent` recebeu caminho estrutural rápido para intenção autobiográfica quando há sinal de autorreferência forte, evitando embeddings caros em perguntas já cobertas.
 - [FEITO] `mental_simulation.py` corrigido para carregar cenários persistidos com hipóteses como dataclasses, restaurando a simulação mental em perguntas de projeção/risco.
 - [FEITO] `local_reasoning_engine.py` agora extrai expressões aritméticas embutidas em linguagem natural, evitando queda indevida para RAG/LLM em perguntas como "quanto é 2+2?".
-- [FEITO] Hard eval reprodutível criado em `backend/ultronpro/benchmarks/hard_cognitive_core_eval.py`; última rodada: **9.0/10**, com Digest biográfico ok, abstração promovida a `compiled_skill`, isomorfismo validado com `p=0.0417` e ganho de transferência `+73.3pp`, chat não-LLM 8/8 e benchmark externo auditado.
+- [FEITO] Hard eval reprodutível criado em `backend/ultronpro/benchmarks/hard_cognitive_core_eval.py`; última rodada: **10.0/10**, com Digest biográfico ok, abstração promovida a `compiled_skill`, isomorfismo validado com `p=0.0417` e ganho de transferência `+73.3pp`, chat não-LLM 8/8 e benchmark externo no-cloud `3/3`.
 - [FEITO] `episodic_compiler.py` agora consegue propor hipótese causal determinística em `BENCHMARK_MODE=1`, sem depender de LLM para nascer; o ciclo hipótese→teste→`compiled_skill` passou com 5/5 confirmações.
 - [FEITO] `autoisomorphic_mapper.py` agora extrai pares de hashes estruturais compostos, usa p-value exato para pequenas permutações e testa utilidade de transferência contra baseline treinado só no split de treino.
 - [FEITO] `llm.py` e `llm_adapter.py` corrigidos para respeitar `ULTRON_DISABLE_CLOUD_PROVIDERS=1`; fallback de nuvem não é mais usado em modo LLM-off.
-- [EM ANDAMENTO 88%] Fase 7 saiu de planejamento para operação mensurável: chat de domínio próprio passou 8/8 sem LLM externo e há hard eval persistido, mas o benchmark externo MCQ sem nuvem ainda falha quando `ultron_infer` está offline.
+- [EM ANDAMENTO 92%] Fase 7 saiu de planejamento para operação mensurável: chat de domínio próprio passou 8/8 sem LLM externo, o hard eval marcou `10.0/10` e o benchmark externo MCQ no-cloud agora passa pelo resolvedor local; ainda falta ampliar para suíte externa oficial/maior.
 - [EM ANDAMENTO 68%] Fase 13 permanece implementada, mas a validação longitudinal foi reclassificada: a auditoria de 2026-05-01 validou probe isolado de 6 ciclos, ainda insuficiente para sustentar `FEITO 100%` em convergência de competências.
 
 ## Front 1 — Plasticidade estrutural real
@@ -149,7 +157,7 @@ Meta 10/10:
 **Leitura atual:** há módulos causais, contrafactuais e anti-Mirage implementados, e a hard eval trouxe evidência útil de transferência. A auditoria de 2026-05-01 rebaixa o front porque o harness longitudinal segue em `watch` e o `pressure_benchmark.run_selftest()` atual reteve `0.0` sob memory blackout.
 
 ## Front 3 — Generalização entre domínios
-_Status do front: 62%_
+_Status do front: 66%_
 
 Meta 10/10:
 
@@ -158,7 +166,7 @@ Meta 10/10:
 - medir ganho vs baseline
 - consolidar abstrações multi-domínio
 
-**Leitura atual:** compilador, abstrações e mapper existem e têm testes locais. A auditoria rebaixa o front porque o benchmark externo da runtime marcou `0/9`, a evidência pública segue em `proxy_subset`, o harness longitudinal marcou generalização `0.0` e os testes zero-shot do próprio harness não passaram.
+**Leitura atual:** compilador, abstrações e mapper existem e têm testes locais. O caminho externo local/no-cloud agora resolve o subset MCQ proxy com `9/9`, mas a evidência pública segue em `proxy_subset`, o harness longitudinal marcou generalização `0.0` e os testes zero-shot do próprio harness ainda não passaram.
 
 ## Front 4 — Automanutenção e individuação
 _Status do front: 68%_
@@ -862,10 +870,11 @@ _Status: [EM ANDAMENTO 55%]_
 ---
 
 ## 10.4 Auto-melhoria forte por classe
-_Status: [EM ANDAMENTO 65%]_
+_Status: [EM ANDAMENTO 70%]_
 - [FEITO] `self_improvement_engine.py` agora distingue `procedure_improvement`, `representation_improvement` e `competency_improvement`.
 - [FEITO] Toda melhoria forte grava evidência em `improvement_validations`.
 - [FEITO] Gate de promoção exige tarefas não vistas/holdout e candidato vencendo baseline.
+- [FEITO] Primeira melhoria de competência mensurável: `local_mcq_reasoner.py` vence baseline em holdout não visto e alimenta benchmark externo no-cloud.
 - [PENDENTE] Ligar esse gate a benchmarks externos recorrentes por família de tarefa.
 
 ---
