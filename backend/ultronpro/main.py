@@ -14093,6 +14093,55 @@ async def voice_chat(req: VoiceChatRequest):
     return {'ok': True, 'reply': ans.strip(), 'strategy': used}
 
 
+@app.post('/api/voice/audio')
+async def voice_audio(
+    file: UploadFile = File(...),
+    authorized: bool = Form(False),
+    consent_actor: str = Form('user'),
+    consent_scope: Optional[str] = Form(None),
+):
+    from ultronpro import audio_perception
+
+    raw = await file.read()
+    if not raw:
+        raise HTTPException(400, 'empty audio')
+
+    max_bytes = int(os.getenv('ULTRON_AUDIO_UPLOAD_MAX_BYTES', str(25 * 1024 * 1024)))
+    if len(raw) > max_bytes:
+        raise HTTPException(413, 'audio too large')
+
+    suffix = Path(file.filename or 'audio.wav').suffix or '.wav'
+    temp_audio = audio_perception.copy_upload_to_temp(raw, suffix=suffix)
+
+    async def _chat_from_transcript(text: str) -> dict[str, Any]:
+        return await voice_chat(VoiceChatRequest(text=text))
+
+    result = await audio_perception.handle_voice_command(
+        temp_audio,
+        authorized=bool(authorized),
+        chat_callback=_chat_from_transcript,
+        source='voice_upload',
+        consent_scope=consent_scope,
+        consent_basis='voice audio upload with explicit authorization' if authorized else 'voice audio upload without transcription authorization',
+        consent_actor=consent_actor or 'user',
+        discard_raw=True,
+    )
+    payload = result.to_dict()
+    return {
+        'ok': True,
+        'reply': result.chat_response.get('reply', ''),
+        'chat': result.chat_response,
+        'transcript': result.transcript,
+        'summary': result.summary,
+        'speech': payload.get('speech'),
+        'sound_events': payload.get('sound_events'),
+        'raw_audio_discarded': result.raw_audio_discarded,
+        'sensory_event_id': result.sensory_event_id,
+        'consent_scope': result.consent_scope,
+        'errors': result.errors,
+    }
+
+
 @app.get('/api/self-play/status')
 async def self_play_status(limit: int = 10):
     return self_play.status(limit=limit)
