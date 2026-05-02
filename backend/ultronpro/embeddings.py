@@ -19,6 +19,30 @@ _model = None
 _model_name = os.getenv('ULTRON_EMBED_MODEL', 'all-MiniLM-L6-v2')
 
 
+def _backend() -> str:
+    return str(os.getenv("ULTRON_EMBEDDINGS_BACKEND", "local") or "local").strip().lower()
+
+
+def _local_embedding_enabled() -> bool:
+    return _backend() in {"auto", "local", "rust", "lightweight"}
+
+
+def _transformer_enabled() -> bool:
+    return _backend() in {"auto", "transformer", "sentence-transformers", "sentence_transformers"}
+
+
+def _embed_local(text: str) -> list[float]:
+    from ultronpro import local_inference
+
+    return local_inference.embed_text(text)
+
+
+def _embed_local_batch(texts: list[str]) -> list[list[float]]:
+    from ultronpro import local_inference
+
+    return local_inference.embed_texts(texts)
+
+
 def _get_model():
     global _model
     if _model is None:
@@ -29,18 +53,34 @@ def _get_model():
 
 def embed_text(text: str) -> list[float]:
     """Return embedding vector for a single text."""
-    model = _get_model()
-    vec = model.encode(text, convert_to_numpy=True)
-    return vec.tolist()
+    if _backend() in {"local", "rust", "lightweight"}:
+        return _embed_local(text)
+    if _transformer_enabled():
+        try:
+            model = _get_model()
+            vec = model.encode(text, convert_to_numpy=True)
+            return vec.tolist()
+        except Exception:
+            if not _local_embedding_enabled():
+                raise
+    return _embed_local(text)
 
 
 def embed_texts(texts: list[str]) -> list[list[float]]:
     """Batch embed multiple texts."""
     if not texts:
         return []
-    model = _get_model()
-    vecs = model.encode(texts, convert_to_numpy=True, show_progress_bar=False)
-    return [v.tolist() for v in vecs]
+    if _backend() in {"local", "rust", "lightweight"}:
+        return _embed_local_batch(texts)
+    if _transformer_enabled():
+        try:
+            model = _get_model()
+            vecs = model.encode(texts, convert_to_numpy=True, show_progress_bar=False)
+            return [v.tolist() for v in vecs]
+        except Exception:
+            if not _local_embedding_enabled():
+                raise
+    return _embed_local_batch(texts)
 
 
 def cosine_similarity(a: list[float], b: list[float]) -> float:

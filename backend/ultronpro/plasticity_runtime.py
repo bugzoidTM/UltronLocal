@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 import json
+import os
 import time
 import random
 import re
@@ -62,6 +63,16 @@ def _text_of_result(r: dict[str, Any]) -> str:
 
 
 def rerank_with_hard_negatives(query: str, results: list[dict[str, Any]], top_k: int = 10) -> list[dict[str, Any]]:
+    if os.getenv("ULTRON_LOCAL_RERANK_ENABLED", "1").strip().lower() in {"1", "true", "yes", "on"}:
+        try:
+            from ultronpro import local_inference
+
+            ranked = local_inference.rerank(query, results, top_k=top_k)
+            if ranked:
+                return ranked
+        except Exception:
+            pass
+
     q = (query or '').lower().strip()
     toks = [t for t in re.split(r'\W+', q) if len(t) >= 3]
     neg_markers = {'nao', 'não', 'sem', 'evitar', 'exceto', 'except', 'without', 'avoid'}

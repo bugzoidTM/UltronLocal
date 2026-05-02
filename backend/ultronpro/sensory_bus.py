@@ -229,6 +229,25 @@ def normalize_event(
     sens = str(sensitivity or ("high" if redactions else "normal")).strip().lower()
     if scope == "restricted":
         allow_workspace = False
+    metadata_payload = dict(metadata or {})
+    try:
+        import os
+
+        if (
+            scope != "restricted"
+            and bool(allow_persist)
+            and str(os.getenv("ULTRON_LOCAL_EVENT_PARSE_ENABLED", "1")).strip().lower() in {"1", "true", "yes", "on"}
+        ):
+            from ultronpro import local_inference
+
+            parsed = local_inference.parse_event(str(source or stype), redacted_text)
+            if parsed.get("ok"):
+                metadata_payload["local_event_parse"] = parsed
+                severity = str(parsed.get("severity") or "")
+                if salience is None and severity in {"error", "critical"}:
+                    salience = 0.78 if severity == "error" else 0.9
+    except Exception:
+        pass
 
     basis = str(consent_basis or f"default_policy:{scope}").strip()
     return SensoryEvent(
@@ -239,7 +258,7 @@ def normalize_event(
         modality=str(modality or DEFAULT_MODALITY_BY_SOURCE[stype])[:40],
         content_text=redacted_text[:8000],
         payload=_jsonable(redacted_payload),
-        metadata=dict(metadata or {}),
+        metadata=metadata_payload,
         consent_scope=scope,
         consent_basis=basis[:240],
         consent_actor=str(consent_actor or "system")[:80],
