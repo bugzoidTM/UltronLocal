@@ -45,7 +45,7 @@ Só vale como concluído quando houver:
 
 ## Auditoria epistêmica — 2026-05-01 (Atualização)
 
-Status geral do roadmap: 79%
+Status geral do roadmap: 81%
 
 Evidência executada nesta auditoria de stress e verdade:
 
@@ -91,6 +91,16 @@ Conclusão da auditoria de stress: O paradigma mudou. A métrica saiu de "quanti
 - [EM ANDAMENTO 88%] Fase 7 saiu de planejamento para operação mensurável: chat de domínio próprio passou 8/8 sem LLM externo e há hard eval persistido, mas o benchmark externo MCQ sem nuvem ainda falha quando `ultron_infer` está offline.
 - [EM ANDAMENTO 68%] Fase 13 permanece implementada, mas a validação longitudinal foi reclassificada: a auditoria de 2026-05-01 validou probe isolado de 6 ciclos, ainda insuficiente para sustentar `FEITO 100%` em convergência de competências.
 
+### Atualização operacional — 2026-05-02
+
+- [FEITO] `autonomous_cognition.py` adiciona um ciclo interno independente do chat: percebe eventos/workspace/metas/ações/conflitos, prevê riscos, sugere ações internas reversíveis, executa uma ação segura e aprende com a consequência.
+- [FEITO] O ciclo publica `autonomous.perception`, `autonomous.risk_forecast`, `autonomous.action_suggestions` e `autonomous.consequence` no Global Workspace, registra auditoria em eventos e grava episódios estruturados `autonomous_cognition` no SQLite.
+- [FEITO] Consequências internas agora têm `context_input`, `granular_action`, `objective_result`, contrafactual estimado, surpresa calculada e invariante `perceive_predict_act_learn`, alimentando também `local_world_models` no domínio `cognitive_architecture`.
+- [FEITO] Integração no startup via background loop configurável e endpoints `/api/autonomous/cognition/status` e `/api/autonomous/cognition/tick`.
+- [FEITO] Validação em 3 etapas: percepção autônoma, previsão/sugestão e ação+aprendizado passaram em teste local reprodutível; regressão focada atual: `13 passed`.
+- [EM ANDAMENTO 90%] Fase 7 avança porque o motor de raciocínio próprio deixou de ser apenas resposta ao usuário e passou a operar internamente em ciclo OODA/P.E.A.L. sem depender de LLM.
+- [EM ANDAMENTO 63%] Propagação de erro preditivo ganhou aplicação em arquitetura cognitiva interna, ainda aguardando ciclos longitudinais vivos para medir surpresa decrescente.
+
 ## Front 1 — Plasticidade estrutural real
 _Status do front: 82%_
 
@@ -106,7 +116,7 @@ Meta 10/10:
 **Leitura atual:** front está funcional e testado em loop local, com shadow eval, canário, gate e ledger epistêmico integrados. A auditoria de 2026-05-01 rebaixa o front porque o benchmark interno ainda mostra regressão em `debugging` e a validação longitudinal/externa é curta demais para sustentar `100%`.
 
 ## Front 2 — Modelo de mundo causal
-_Status do front: 78%_
+_Status do front: 80%_
 
 Meta 10/10:
 
@@ -131,7 +141,7 @@ Meta 10/10:
 **Leitura atual:** compilador, abstrações e mapper existem e têm testes locais. A auditoria rebaixa o front porque a evidência pública segue em `proxy_subset`, o harness longitudinal marcou sucesso agregado baixo e os testes zero-shot do próprio harness não passaram.
 
 ## Front 4 — Automanutenção e individuação
-_Status do front: 76%_
+_Status do front: 78%_
 
 Meta 10/10:
 
@@ -147,7 +157,7 @@ Meta 10/10:
 **Leitura atual:** self-governance, self-model, homeostasis, healer e predição de degradação estão integrados. A auditoria de 2026-05-01 rebaixa o front porque o self-healer passou em E2E local, mas ainda não demonstrou correções recorrentes verificadas em produção, e o modelo preditivo ainda foi validado em histórico sintético curto.
 
 ## Front 5 — Consciência operacional integrada
-_Status do front: 70%_
+_Status do front: 73%_
 
 Meta 10/10:
 
@@ -236,7 +246,7 @@ _Status: [FEITO 100%]_
 ---
 
 # Fase 2 — Modelo de mundo causal
-_Status da fase: 78%_
+_Status da fase: 80%_
 
 ## 2.1 Corpo mínimo / ambiente de interação
 _Status: [EM ANDAMENTO 80%]_
@@ -248,12 +258,13 @@ _Status: [EM ANDAMENTO 80%]_
 - [FEITO] ampliar diversidade de ambiente/consequência além do corpo mínimo atual
 
 ## 2.2 Schema causal de episódio
-_Status: [EM ANDAMENTO 78%]_
+_Status: [EM ANDAMENTO 80%]_
 
 - [FEITO] Campos estruturais principais de episódio causal
 - [FEITO] Persistência durável
 - [FEITO] Replay causal
 - [FEITO] padronizar completamente `expected_effect` vs `observed_effect` em todos os fluxos
+- [FEITO] ciclos internos `autonomous_cognition` agora persistem `expected_effect`, `observed_effect`, surpresa e estado T/T+1 no SQLite.
 
 ## 2.3 Atualização causal por evidência
 _Status: [EM ANDAMENTO 75%]_
@@ -264,7 +275,7 @@ _Status: [EM ANDAMENTO 75%]_
 - [FEITO] Escopo contextual
 
 ## 2.4 Predição causal pré-ação
-_Status: [EM ANDAMENTO 75%]_
+_Status: [EM ANDAMENTO 78%]_
 
 - [FEITO] Previsão de efeito por passo/plano em forma inicial
 - [FEITO] Score de risco/benefício (via `causal_graph.score_plan_risk`)
@@ -272,7 +283,7 @@ _Status: [EM ANDAMENTO 75%]_
 - [FEITO] Integração no planner (Uso decisivo: `plan_prompt` força geração de de múltiplas opções usando `candidate_plans` e `causal_graph_hints`, e o orquestrador seleciona via Score Causal)
 
 ## 2.5 Contrafactual e análise de surpresa
-_Status: [EM ANDAMENTO 72%]_
+_Status: [EM ANDAMENTO 75%]_
 
 - [FEITO] Cálculo de surpresa em embrião operacional
 - [FEITO] Pergunta contrafactual por episódio
@@ -352,7 +363,7 @@ _Status: [EM ANDAMENTO 72%]_
 ---
 
 # Fase 4 — Automanutenção, individuação e continuidade
-_Status da fase: 76%_
+_Status da fase: 78%_
 
 _Atualização 2026-03-19: deploy da Fase 4 estabilizado no serviço principal via stack spec. Rotas `/api/self-governance/*`, storage dedicado, camada de linhagem/descendência, bridge de runtime preparado e autoavaliação/promoção mínima estão ativas em produção._
 
@@ -539,14 +550,14 @@ _Status: [EM ANDAMENTO 70%]_
 ---
 
 # Fase 5 — Consciência operacional integrada
-_Status da fase: [EM ANDAMENTO 70%]_
+_Status da fase: [EM ANDAMENTO 73%]_
 
 _Atualização 2026-03-19: já existia base operacional de workspace global no código (`global_workspace` no store, publicações de `self_model`, `tom`, `judge`, `metacognition` e loop Roadmap V5). Agora também há `meta_observer` explícito com endpoint próprio e publicação periódica no workspace; status, broadcast, consumo e autoria do workspace estão validados em produção. Nesta rodada, entrou também uma camada explícita de marcadores afetivos artificiais com snapshot composto, endpoint próprio e publicação periódica em `affect.state`/`policy.risk`, conectando narrativa, incerteza, competição e promessas pendentes ao workspace global. Além disso, foi adicionada uma autobiografia operacional contínua com resumo narrativo explícito, `first_person_report`, postura de continuidade, riscos de continuidade e publicação periódica em `self.narrative`. Agora também existe um proxy explícito de integração interna, combinando workspace, meta-observer, afetos e narrativa em um score operacional observável e publicável em `integration.proxy`. Por fim, foi criado um benchmark operacional inicial persistido, com baseline congelável, runs comparáveis e score integrado para foco, autoria, ignorados, surpresa interna, autobiografia e modelagem do outro. Também foi constatado que o frontend estava conceitualmente defasado em relação ao Front 5; a UI foi limpa de blocos legados de sprint/fase antiga, ganhou aba própria de Front 5 com lazy-load e deixou de pré-carregar na home os endpoints mais pesados de autobiografia/integração/benchmark._
 
 Observação conceitual: esta fase é inspirada por ideias de acesso global, integração, metacognição e autorrelato, mas não deve ser tratada como prova de consciência fenomenal. Global workspace e metacognição são boas inspirações arquiteturais; métricas tipo phi entram apenas como proxies exploratórios.
 
 ## 5.1 Espaço de trabalho global
-_Status: [EM ANDAMENTO 72%]_
+_Status: [EM ANDAMENTO 75%]_
 
 ### Objetivo
 Criar um núcleo compartilhado de foco atual, acessível por todos os módulos relevantes.
@@ -676,7 +687,7 @@ _Status: [EM ANDAMENTO 60%]_
 ---
 
 # Fase 7 — Motor de raciocínio próprio
-_Status da fase: [EM ANDAMENTO 88%]_
+_Status da fase: [EM ANDAMENTO 90%]_
 
 O objetivo desta fase é desacoplar o raciocínio de alto nível (planejamento, decisão, governança) das APIs externas de LLM. O LLM deve ser movido para a periferia como um "módulo de interface de linguagem", enquanto o núcleo cognitivo (Planner simbólico + Motor Causal) assume o controle do loop de pensamento.
 
@@ -708,10 +719,10 @@ Implementação do código determinístico de acordo com a Regra de Ouro ("O que
 - [FEITO] Limpar dependências e fallback `ollama_local` em todo o motor cognitivo
 
 ## 7.4 Benchmarks de autonomia "LLM-off"
-_Status: [EM ANDAMENTO 70%]_
+_Status: [EM ANDAMENTO 74%]_
 - [FEITO] Smoke test local e HTTP validado para chat/stream sem LLM em três casos: identidade autobiográfica, risco operacional por simulação mental e matemática embutida em linguagem natural.
 - [FEITO] Hard eval reprodutível validou chat de domínio próprio 8/8 sem LLM externo e grava evidência em `backend/data/hard_cognitive_eval_runs.jsonl`.
-- [EM ANDAMENTO 35%] Medir sobrevivência funcional do sistema com zero chamadas de API externa em autonomia prolongada.
+- [EM ANDAMENTO 42%] Medir sobrevivência funcional do sistema com zero chamadas de API externa em autonomia prolongada.
 - [EM ANDAMENTO 30%] Validar coerência do planner simbólico contra baseline em suíte reprodutível.
 
 ## 7.5 Composição de resposta por evidência interna
@@ -720,6 +731,14 @@ _Status: [EM ANDAMENTO 80%]_
 - [FEITO] Verbalizador mínimo usa traços e episódios locais apenas para estilo/forma, sem inventar fatos.
 - [FEITO] Classificador aprendido por episódios (`core.learned_intent`) entra apenas como viés leve quando a cobertura estruturada está fraca ou ambígua.
 - [EM ANDAMENTO 82%] Avaliação automática de resposta não-LLM ampliada pelo hard eval; falta expandir para perguntas abertas e benchmark externo sem servidor local.
+
+## 7.6 Cognição autônoma interna fora do chat
+_Status: [EM ANDAMENTO 72%]_
+- [FEITO] `autonomous_cognition.tick(stage="perceive")` cria percepção interna normalizada a partir de eventos, workspace, goals, actions, conflitos e memória episódica recente.
+- [FEITO] `stage="deliberate"` prevê riscos operacionais e transforma risco em ações internas seguras, deduplicadas por `cooldown_key` na fila de ações.
+- [FEITO] `stage="act"` executa uma ação interna reversível, mede consequência, calcula surpresa e grava episódio estruturado no store.
+- [FEITO] Loop roda em background por `ULTRON_AUTONOMOUS_COGNITION_ENABLED` e não depende de prompt humano, chat frontend ou LLM externo.
+- [EM ANDAMENTO 45%] Ainda falta prova longitudinal com 30+ ciclos vivos medindo redução de surpresa e aumento de utilidade de ações.
 
 ---
 
@@ -1266,7 +1285,7 @@ _Status: [EM ANDAMENTO 78%]_
 
 ---
 # Fase A — Domínio causal fechado e verificável
-_Status: [EM ANDAMENTO 55%]_
+_Status: [EM ANDAMENTO 60%]_
 O causal graph vira árbitro primário apenas onde é verificável: ultronbody, sandbox financeiro, patches reversíveis, operações de arquivo com rollback, ciclos autônomos determinísticos. Fora desses domínios, o LLM continua no controle. Dentro deles, o LLM rebaixado para gerador de hipóteses que o causal graph aceita, rejeita ou revisa.
 O critério de saída desta fase é concreto: o sistema consegue operar nesses domínios com taxa de surpresa decrescente e consistente ao longo de 30+ ciclos sem intervenção humana. Só então o domínio causal se expande.
 O que amadurece aqui: causal_graph deixa de ser triplas com score heurístico e passa a registrar intervenções reais com magnitude, direção e contexto. Cada episódio no domínio fechado alimenta o grafo com evidência, não com inferência de palavras.
@@ -1353,7 +1372,7 @@ O ápice dessa reformulação arquitetônica (Fases A-E) garante que o **LLM per
 ---
 
 # Substrato Episódico Causal — Componentes Estruturados por Episódio
-_Status: [EM ANDAMENTO 60%]_
+_Status: [EM ANDAMENTO 63%]_
 
 Cada episódio armazenado pelo sistema agora contém 6 componentes causais explícitos além do log narrativo. Estes componentes são a matéria-prima para compilação de invariantes, treinamento de world models e aprendizado contrafactual.
 
@@ -1378,7 +1397,7 @@ Cada episódio armazenado pelo sistema agora contém 6 componentes causais expl�
 ---
 
 # Closed-Loop Prediction-Error Propagation
-_Status: [EM ANDAMENTO 58%]_
+_Status: [EM ANDAMENTO 63%]_
 
 Loop fechado automático que gera um sinal de treinamento a cada ciclo autônomo. Cada execução de ferramenta em domínio coberto agora segue o protocolo:
 
@@ -1395,6 +1414,7 @@ Loop fechado automático que gera um sinal de treinamento a cada ciclo autônomo
 - [FEITO] **Propagação para arestas causais relevantes**: reforça confiança/strength se acertou, enfraquece se errou. Promove `knowledge_type` de `observational` → `interventional_weak` → `interventional_strong` conforme acúmulo de confirmações.
 - [FEITO] **Degradação automática**: se confiança cai abaixo de 0.4, `interventional_strong` é rebaixado para `interventional_weak`.
 - [FEITO] **Publicação no Global Workspace** via canal `causal.prediction_error` com saliência proporcional à surpresa.
+- [FEITO] **Arquitetura cognitiva como domínio fechado inicial:** `autonomous_cognition.py` registra previsão de risco, ação interna, efeito observado e surpresa em cada ciclo `act/full`, treinando `local_world_models` na família `cognitive_architecture`.
 
 ## Convergência esperada
 Com alta velocidade de ciclos no sandbox, o grafo causal converge para representações interventivas sólidas. Cada ciclo autônomo gera um sinal de treinamento — não uma análise post-hoc manual.

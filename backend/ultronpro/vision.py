@@ -24,7 +24,10 @@ from pathlib import Path
 from typing import Any, Optional
 from dataclasses import dataclass
 
-import requests
+try:
+    import requests
+except Exception:
+    requests = None
 
 from ultronpro import settings
 
@@ -136,6 +139,8 @@ Responda em JSON com as chaves: description, objects, text, scene_type, confiden
         return result
 
     def _analyze_openai(self, b64_image: str, prompt: str) -> VisionResult:
+        if requests is None:
+            raise RuntimeError("requests unavailable; vision provider cannot call OpenAI")
         api_key = _setting("openai_api_key") or settings.get_api_key("openai")
         if not api_key:
             raise ValueError("OpenAI API key não configurada")
@@ -186,6 +191,8 @@ Responda em JSON com as chaves: description, objects, text, scene_type, confiden
         )
 
     def _analyze_anthropic(self, b64_image: str, prompt: str) -> VisionResult:
+        if requests is None:
+            raise RuntimeError("requests unavailable; vision provider cannot call Anthropic")
         api_key = _setting("anthropic_api_key") or settings.get_api_key("anthropic")
         if not api_key:
             raise ValueError("Anthropic API key não configurada")
@@ -237,6 +244,8 @@ Responda em JSON com as chaves: description, objects, text, scene_type, confiden
         )
 
     def _analyze_ollama(self, b64_image: str, prompt: str) -> VisionResult:
+        if requests is None:
+            raise RuntimeError("requests unavailable; vision provider cannot call Ollama")
         ollama_url = _setting("OLLAMA_URL") or "http://localhost:11434"
         
         payload = {

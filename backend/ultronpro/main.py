@@ -26,7 +26,7 @@ from fastapi.responses import StreamingResponse
 import uvicorn
 import httpx
 
-from ultronpro import llm, llm_adapter, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, roadmap_v5, agi_path, episodic_memory, learning_agenda, sleep_cycle, replay_traces, rag_synth_generator, semantic_cache, prm_lite, symbolic_reasoner, reflexion_agent, cognitive_state, causal_graph, sandbox_client, web_browser, context_policy, quality_eval, context_metrics, context_inspector, rag_router, rag_eval, rag_eval_cases, rag_eval_store, internal_critic, memory_governor, causal_preflight, cognitive_patches, gap_detector, shadow_eval, promotion_gate, rollback_manager, benchmark_suite, ultronbody, explicit_abstractions, structural_mapper, transfer_benchmark, external_benchmarks, cognitive_patch_loop, organic_eval_feed, roadmap_status, self_governance, operational_consciousness_benchmark, local_reasoning, self_improvement_engine, inner_monologue, working_memory, vision, world_model, causal_discovery, self_modification, continuous_learning, recursive_self_improvement, autonomous_loop, metacognitive_loop, web_explorer, mental_simulation, code_self_healer, self_talk_loop, low_power, runtime_guard, longitudinal_harness
+from ultronpro import llm, llm_adapter, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, roadmap_v5, agi_path, episodic_memory, learning_agenda, sleep_cycle, replay_traces, rag_synth_generator, semantic_cache, prm_lite, symbolic_reasoner, reflexion_agent, cognitive_state, causal_graph, sandbox_client, web_browser, context_policy, quality_eval, context_metrics, context_inspector, rag_router, rag_eval, rag_eval_cases, rag_eval_store, internal_critic, memory_governor, causal_preflight, cognitive_patches, gap_detector, shadow_eval, promotion_gate, rollback_manager, benchmark_suite, ultronbody, explicit_abstractions, structural_mapper, transfer_benchmark, external_benchmarks, cognitive_patch_loop, organic_eval_feed, roadmap_status, self_governance, operational_consciousness_benchmark, local_reasoning, self_improvement_engine, inner_monologue, working_memory, vision, world_model, causal_discovery, self_modification, continuous_learning, recursive_self_improvement, autonomous_loop, metacognitive_loop, web_explorer, mental_simulation, code_self_healer, self_talk_loop, autonomous_cognition, low_power, runtime_guard, longitudinal_harness
 
 
 # New systems - qualia
@@ -6362,6 +6362,15 @@ async def startup_event():
     else:
         logger.info("Self-talk loop disabled by env")
 
+    if BACKGROUND_LOOPS_ENABLED:
+        ac_start = autonomous_cognition.start_background_loop()
+        if ac_start.get("started"):
+            logger.info("Autonomous cognition loop started")
+        elif ac_start.get("reason") == "disabled":
+            logger.info("Autonomous cognition loop disabled by env")
+    else:
+        logger.info("Autonomous cognition loop disabled by background master switch")
+
     _runtime_health_write({'reason': 'startup_complete'})
     logger.info("Ultron loops startup complete")
 
@@ -6504,6 +6513,10 @@ async def shutdown_event():
                 pass
     try:
         longitudinal_harness.stop_background_loop()
+    except Exception:
+        pass
+    try:
+        autonomous_cognition.stop_background_loop()
     except Exception:
         pass
     logger.info("Shutdown complete")
@@ -12892,6 +12905,16 @@ async def autonomous_status():
         return aloop.get_status()
     except Exception as e:
         return {'error': str(e), 'enabled': False}
+
+
+@app.get('/api/autonomous/cognition/status')
+async def autonomous_cognition_status():
+    return autonomous_cognition.status()
+
+
+@app.post('/api/autonomous/cognition/tick')
+async def autonomous_cognition_tick(stage: str = 'full'):
+    return await asyncio.to_thread(autonomous_cognition.tick, stage=stage)
 
 
 # ==================== SKILL SYSTEM ENDPOINTS ====================

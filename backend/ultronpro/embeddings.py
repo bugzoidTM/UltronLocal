@@ -7,8 +7,13 @@ from __future__ import annotations
 
 import json
 import os
-import numpy as np
+import math
 from typing import Any
+
+try:
+    import numpy as np
+except Exception:
+    np = None
 
 _model = None
 _model_name = os.getenv('ULTRON_EMBED_MODEL', 'all-MiniLM-L6-v2')
@@ -40,6 +45,17 @@ def embed_texts(texts: list[str]) -> list[list[float]]:
 
 def cosine_similarity(a: list[float], b: list[float]) -> float:
     """Compute cosine similarity between two vectors."""
+    if not a or not b:
+        return 0.0
+    if np is None:
+        n = min(len(a), len(b))
+        if n <= 0:
+            return 0.0
+        dot = sum(float(a[i]) * float(b[i]) for i in range(n))
+        norm_a = math.sqrt(sum(float(x) * float(x) for x in a[:n]))
+        norm_b = math.sqrt(sum(float(x) * float(x) for x in b[:n]))
+        denom = norm_a * norm_b
+        return 0.0 if denom == 0 else float(dot / denom)
     a_np = np.array(a)
     b_np = np.array(b)
     denom = (np.linalg.norm(a_np) * np.linalg.norm(b_np))
