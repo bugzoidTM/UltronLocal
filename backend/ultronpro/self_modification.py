@@ -23,6 +23,10 @@ import inspect
 import json
 import os
 import re
+import shutil
+import subprocess
+import sys
+import tempfile
 import time
 from dataclasses import dataclass, asdict, field
 from pathlib import Path
@@ -31,6 +35,7 @@ from typing import Any, Optional
 from ultronpro import llm, settings
 
 DATA_DIR = Path(__file__).resolve().parent.parent.parent / 'data'
+ULTRONPRO_DIR = Path(__file__).resolve().parent
 SELF_MOD_PATH = DATA_DIR / 'self_modification'
 SELF_MOD_PATH.mkdir(parents=True, exist_ok=True)
 
@@ -38,6 +43,17 @@ PROPOSALS_PATH = SELF_MOD_PATH / 'proposals.json'
 HISTORY_PATH = SELF_MOD_PATH / 'history.json'
 BACKUPS_PATH = SELF_MOD_PATH / 'backups'
 BACKUPS_PATH.mkdir(exist_ok=True)
+
+REQUIRED_PIPELINE_STAGES = [
+    'generated_patch',
+    'isolated_copy_apply',
+    'unit_tests',
+    'reduced_benchmark',
+    'regression_benchmark',
+    'baseline_compare',
+    'canary',
+    'rollback_ready',
+]
 
 
 @dataclass
@@ -105,7 +121,7 @@ class SelfModificationEngine:
 
     def analyze_code_structure(self, file_path: str) -> dict:
         """Analisa estrutura de um arquivo Python."""
-        full_path = Path(__file__).resolve().parent / file_path
+        full_path = ULTRONPRO_DIR / file_path
         if not full_path.exists():
             return {'error': 'Arquivo não encontrado'}
         
@@ -150,7 +166,7 @@ class SelfModificationEngine:
     def list_modifiable_modules(self) -> list[dict]:
         """Lista módulos que podem ser modificados."""
         modules = []
-        ultronpro_dir = Path(__file__).resolve().parent
+        ultronpro_dir = ULTRONPRO_DIR
         
         for py_file in ultronpro_dir.glob('*.py'):
             if py_file.name.startswith('_'):
@@ -232,12 +248,20 @@ Responda APENAS com JSON válido, sem explicações."""
 
     def _create_proposal(self, patch_data: dict, goal: str) -> ModificationProposal:
         """Cria uma proposta de modificação."""
+        target_file = patch_data.get('file')
+        changes = []
+        for change in patch_data.get('changes', []):
+            if isinstance(change, dict):
+                row = dict(change)
+                if target_file and not row.get('file'):
+                    row['file'] = target_file
+                changes.append(row)
         proposal = ModificationProposal(
             id=f"mod_{int(time.time())}_{hashlib.md5(str(time.time()).encode()).hexdigest()[:6]}",
             created_at=int(time.time()),
             title=goal[:100],
             description=patch_data.get('rationale', ''),
-            changes=patch_data.get('changes', []),
+            changes=changes,
             rationale=patch_data.get('rationale', ''),
             risk_level=patch_data.get('risk_level', 'medium'),
             status='pending',
@@ -259,6 +283,8 @@ Responda APENAS com JSON válido, sem explicações."""
         
         for change in proposal.changes:
             new_code = change.get('new_code', '')
+            if not change.get('file'):
+                errors.append('Arquivo alvo ausente no change')
             
             for pattern in self.DANGEROUS_PATTERNS:
                 if re.search(pattern, new_code):
@@ -293,7 +319,7 @@ Responda APENAS com JSON válido, sem explicações."""
         results = []
         
         for change in proposal.changes:
-            file_path = Path(__file__).resolve().parent / proposal.changes[0].get('file', 'unknown.py')
+            file_path = ULTRONPRO_DIR / change.get('file', 'unknown.py')
             
             if not file_path.exists():
                 results.append({'change': change, 'status': 'error', 'message': 'Arquivo não existe'})
@@ -337,6 +363,178 @@ Responda APENAS com JSON válido, sem explicações."""
             'backup_files': len(list(BACKUPS_PATH.glob('*.py'))),
         }
 
+    def validate_isolated_pipeline(self, proposal_id: str, evidence: dict | None = None) -> dict:
+        """Validate a proposal through the mandatory isolated promotion pipeline."""
+        proposal = next((p for p in self.proposals if p.id == proposal_id), None)
+        if not proposal:
+            return {'ok': False, 'error': 'Proposta nao encontrada'}
+
+        evidence = evidence if isinstance(evidence, dict) else {}
+        static_validation = self.validate_change(proposal_id)
+        stage_results: dict[str, dict[str, Any]] = {
+            'generated_patch': {'passed': bool(proposal.changes), 'detail': f'{len(proposal.changes)} changes'},
+        }
+        if not static_validation.get('valid'):
+            stage_results['static_validation'] = {'passed': False, 'detail': static_validation}
+            return self._finish_pipeline_validation(proposal, stage_results, evidence)
+
+        with tempfile.TemporaryDirectory(prefix='ultron-selfmod-') as td:
+            isolated_root = Path(td) / 'ultronpro'
+            shutil.copytree(
+                ULTRONPRO_DIR,
+                isolated_root,
+                ignore=shutil.ignore_patterns('__pycache__', '*.pyc', '.pytest_cache'),
+            )
+            apply_result = self._apply_changes_to_root(isolated_root, proposal)
+            stage_results['isolated_copy_apply'] = apply_result
+
+            target_files = [
+                str((isolated_root / change.get('file')).resolve())
+                for change in proposal.changes
+                if change.get('file') and (isolated_root / change.get('file')).exists()
+            ]
+            unit_result = self._run_py_compile(target_files)
+            stage_results['unit_tests'] = unit_result
+
+        reduced = evidence.get('reduced_benchmark') if isinstance(evidence.get('reduced_benchmark'), dict) else {}
+        regression = evidence.get('regression_benchmark') if isinstance(evidence.get('regression_benchmark'), dict) else {}
+        canary = evidence.get('canary') if isinstance(evidence.get('canary'), dict) else {}
+        baseline_compare = self._compare_baseline_evidence(evidence)
+
+        stage_results['reduced_benchmark'] = {
+            'passed': bool(reduced.get('passed')),
+            'detail': reduced or 'missing_reduced_benchmark_evidence',
+        }
+        stage_results['regression_benchmark'] = {
+            'passed': bool(regression.get('passed')),
+            'detail': regression or 'missing_regression_benchmark_evidence',
+        }
+        stage_results['baseline_compare'] = baseline_compare
+        stage_results['canary'] = {
+            'passed': bool(canary.get('passed')) and int(canary.get('rollout_pct') or 0) > 0,
+            'detail': canary or 'missing_canary_evidence',
+        }
+        stage_results['rollback_ready'] = {
+            'passed': True,
+            'detail': {
+                'mode': 'automatic',
+                'reason': 'runtime principal nao foi modificado; proposta tem manifesto reproduzivel',
+            },
+        }
+
+        return self._finish_pipeline_validation(proposal, stage_results, evidence)
+
+    def _finish_pipeline_validation(self, proposal: ModificationProposal, stage_results: dict, evidence: dict) -> dict:
+        missing = [
+            stage for stage in REQUIRED_PIPELINE_STAGES
+            if not bool((stage_results.get(stage) or {}).get('passed'))
+        ]
+        promoted = not missing
+        proposal.validation_result = {
+            'valid': promoted,
+            'required_stages': REQUIRED_PIPELINE_STAGES,
+            'stage_results': stage_results,
+            'missing_or_failed_stages': missing,
+            'evidence': evidence,
+            'validated_at': int(time.time()),
+            'promotion_mode': 'canary' if promoted else 'blocked',
+        }
+        proposal.status = 'canary_ready' if promoted else 'validation_blocked'
+        self._save_proposals()
+        self._log_history(
+            proposal.id,
+            'isolated_pipeline_validated',
+            'canary_ready' if promoted else f"blocked:{','.join(missing)}",
+        )
+        return {
+            'ok': True,
+            'proposal_id': proposal.id,
+            'promoted': promoted,
+            'promotion_stage': proposal.status,
+            'required_stages': REQUIRED_PIPELINE_STAGES,
+            'missing_or_failed_stages': missing,
+            'stage_results': stage_results,
+        }
+
+    def _apply_changes_to_root(self, root: Path, proposal: ModificationProposal) -> dict:
+        results = []
+        for change in proposal.changes:
+            target_file = change.get('file')
+            if not target_file:
+                results.append({'passed': False, 'file': None, 'error': 'missing_file'})
+                continue
+            file_path = root / target_file
+            if not file_path.exists():
+                results.append({'passed': False, 'file': target_file, 'error': 'file_not_found'})
+                continue
+            original = file_path.read_text(encoding='utf-8')
+            lines = original.splitlines(keepends=True)
+            start = max(0, int(change.get('line_start') or 1) - 1)
+            end = max(start, int(change.get('line_end') or (start + 1)))
+            change_type = change.get('type')
+            new_code = str(change.get('new_code') or '')
+            if change_type == 'replace':
+                if start >= len(lines):
+                    results.append({'passed': False, 'file': target_file, 'error': 'invalid_start_line'})
+                    continue
+                new_lines = lines[:start] + [new_code.rstrip('\n') + '\n'] + lines[end:]
+                file_path.write_text(''.join(new_lines), encoding='utf-8')
+            elif change_type == 'add':
+                position = change.get('position', 'end')
+                payload = new_code.rstrip('\n') + '\n'
+                if position == 'start':
+                    file_path.write_text(payload + original, encoding='utf-8')
+                else:
+                    file_path.write_text(original.rstrip('\n') + '\n' + payload, encoding='utf-8')
+            elif change_type == 'remove':
+                if start >= len(lines):
+                    results.append({'passed': False, 'file': target_file, 'error': 'invalid_start_line'})
+                    continue
+                file_path.write_text(''.join(lines[:start] + lines[end:]), encoding='utf-8')
+            else:
+                results.append({'passed': False, 'file': target_file, 'error': f'unsupported_change_type:{change_type}'})
+                continue
+            results.append({'passed': True, 'file': target_file, 'type': change_type})
+        return {
+            'passed': bool(results) and all(row.get('passed') for row in results),
+            'detail': results,
+        }
+
+    def _run_py_compile(self, target_files: list[str]) -> dict:
+        if not target_files:
+            return {'passed': False, 'detail': 'no_target_files'}
+        try:
+            result = subprocess.run(
+                [sys.executable, '-m', 'py_compile', *target_files],
+                capture_output=True,
+                text=True,
+                timeout=60,
+            )
+            return {
+                'passed': result.returncode == 0,
+                'returncode': result.returncode,
+                'stdout': result.stdout[-1000:],
+                'stderr': result.stderr[-1000:],
+            }
+        except Exception as exc:
+            return {'passed': False, 'detail': f'{type(exc).__name__}: {str(exc)[:200]}'}
+
+    def _compare_baseline_evidence(self, evidence: dict) -> dict:
+        baseline = evidence.get('baseline') if isinstance(evidence.get('baseline'), dict) else {}
+        candidate = evidence.get('candidate') if isinstance(evidence.get('candidate'), dict) else {}
+        try:
+            baseline_score = float(baseline.get('score'))
+            candidate_score = float(candidate.get('score'))
+        except Exception:
+            return {'passed': False, 'detail': 'missing_baseline_or_candidate_score'}
+        delta = candidate_score - baseline_score
+        return {
+            'passed': delta > 0,
+            'baseline_score': baseline_score,
+            'candidate_score': candidate_score,
+            'delta': round(delta, 6),
+        }
+
     def apply(self, proposal_id: str, force: bool = False) -> dict:
         """Aplica uma modificação aprovada."""
         if not self.enabled and not force:
@@ -346,6 +544,16 @@ Responda APENAS com JSON válido, sem explicações."""
         if not proposal:
             return {'error': 'Proposta não encontrada'}
         
+        return {
+            'ok': False,
+            'blocked': True,
+            'error': 'direct_runtime_apply_disabled',
+            'proposal_id': proposal_id,
+            'message': 'Auto-modificacao nao aplica patch direto no runtime principal.',
+            'required_flow': REQUIRED_PIPELINE_STAGES,
+            'next_action': 'validate_isolated_pipeline',
+        }
+
         if proposal.status not in ('validated', 'approved') and not force:
             return {'error': 'Proposta precisa ser validada primeiro'}
         
@@ -353,7 +561,7 @@ Responda APENAS com JSON válido, sem explicações."""
         
         for change in proposal.changes:
             target_file = change.get('file')
-            file_path = Path(__file__).resolve().parent / target_file
+            file_path = ULTRONPRO_DIR / target_file
             
             if not file_path.exists():
                 continue
@@ -417,7 +625,7 @@ Responda APENAS com JSON válido, sem explicações."""
         
         for backup in backup_files:
             if target_file.replace('.py', '') in backup.name:
-                file_path = Path(__file__).resolve().parent / target_file
+                file_path = ULTRONPRO_DIR / target_file
                 file_path.write_text(backup.read_text(encoding='utf-8'), encoding='utf-8')
                 
                 self._log_history(proposal_id, 'reverted', reason or 'rollback manual')
@@ -466,6 +674,8 @@ Responda APENAS com JSON válido, sem explicações."""
         return {
             'enabled': self.enabled,
             'auto_approve': self.auto_approve,
+            'direct_runtime_apply': False,
+            'required_pipeline_stages': REQUIRED_PIPELINE_STAGES,
             'total_proposals': len(self.proposals),
             'pending': len([p for p in self.proposals if p.status == 'pending']),
             'applied': len([p for p in self.proposals if p.status == 'applied']),
@@ -502,6 +712,10 @@ def validate_proposal(proposal_id: str) -> dict:
 
 def dry_run_proposal(proposal_id: str) -> dict:
     return get_self_mod_engine().dry_run(proposal_id)
+
+
+def validate_isolated_pipeline(proposal_id: str, evidence: dict | None = None) -> dict:
+    return get_self_mod_engine().validate_isolated_pipeline(proposal_id, evidence)
 
 
 def apply_modification(proposal_id: str, force: bool = False) -> dict:

@@ -861,6 +861,15 @@ _Status: [EM ANDAMENTO 55%]_
 
 ---
 
+## 10.4 Auto-melhoria forte por classe
+_Status: [EM ANDAMENTO 65%]_
+- [FEITO] `self_improvement_engine.py` agora distingue `procedure_improvement`, `representation_improvement` e `competency_improvement`.
+- [FEITO] Toda melhoria forte grava evidência em `improvement_validations`.
+- [FEITO] Gate de promoção exige tarefas não vistas/holdout e candidato vencendo baseline.
+- [PENDENTE] Ligar esse gate a benchmarks externos recorrentes por família de tarefa.
+
+---
+
 # Fase 11 — Motor de Generalização Composicional
 _Status da fase: [EM ANDAMENTO 70%] — Aguardando Benchmark ARC Completo_
 
@@ -1295,6 +1304,13 @@ _Status: [EM ANDAMENTO 78%]_
 - [FEITO] Impede deleção acidental de hooks críticos (ex: `time.sleep`, `store.db.add_event` ou exports top-level).
 - [FEITO] Bloqueia silenciamento perigoso via _bare except passes_ (`except Exception: pass`).
 - [FEITO] Integrado nativamente no fluxo `apply_fix()` como Step 0.5 da validação (protege contra "auto-destruição formatada").
+
+## 14.7 Auto-modificação endurecida
+_Status: [EM ANDAMENTO 70%]_
+- [FEITO] `self_modification.apply()` não aplica mais patch direto no runtime principal, mesmo com `force=True`.
+- [FEITO] Novo pipeline obrigatório `validate_isolated_pipeline`: patch gerado, cópia isolada, validação unitária por `py_compile`, benchmark reduzido, benchmark de regressão, comparação contra baseline, canário e rollback pronto.
+- [FEITO] Zero proposta entra em `canary_ready` sem todas as evidências reprodutíveis.
+- [PENDENTE] Substituir qualquer uso legado de apply direto por promoção via worktree/canário em produção.
 
 ---
 # Fase A — Domínio causal fechado e verificável

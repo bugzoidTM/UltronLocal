@@ -22,6 +22,18 @@ from dataclasses import dataclass, field
 DATA_DIR = Path(__file__).resolve().parent.parent.parent / 'data'
 TRIALS_DB = DATA_DIR / 'self_improvement_trials.db'
 
+STRONG_IMPROVEMENT_TYPES = {
+    'procedure_improvement': 'melhoria_de_procedimento',
+    'representation_improvement': 'melhoria_de_representacao',
+    'competency_improvement': 'melhoria_de_competencia',
+    'melhoria_procedimento': 'melhoria_de_procedimento',
+    'melhoria_representacao': 'melhoria_de_representacao',
+    'melhoria_competencia': 'melhoria_de_competencia',
+}
+MIN_UNSEEN_TASKS = 2
+MIN_HOLDOUT_DELTA = 0.03
+MAX_REGRESSED_UNSEEN_TASKS = 0
+
 
 @dataclass
 class Limitation:
@@ -111,6 +123,21 @@ class SelfImprovementEngine:
             findings TEXT,
             next_strategy TEXT,
             llm_consulted INTEGER
+        )''')
+
+        c.execute('''CREATE TABLE IF NOT EXISTS improvement_validations (
+            id TEXT PRIMARY KEY,
+            experiment_id TEXT,
+            improvement_class TEXT,
+            family TEXT,
+            baseline_score REAL,
+            candidate_score REAL,
+            delta REAL,
+            unseen_task_count INTEGER,
+            regressed_unseen_tasks INTEGER,
+            promoted INTEGER,
+            evidence_json TEXT,
+            created_at INTEGER
         )''')
         
         conn.commit()
@@ -268,6 +295,9 @@ class SelfImprovementEngine:
         - circuit_breaker: Ajustar thresholds
         - temperature: Ajustar temperatura do modelo
         - system_prompt: Modificar prompt do sistema
+        - procedure_improvement: aprende novo algoritmo de decisao
+        - representation_improvement: cria novo schema, abstracao ou indice
+        - competency_improvement: melhora desempenho em familia nova
         """
         conn = sqlite3.connect(str(TRIALS_DB))
         c = conn.cursor()
@@ -284,6 +314,10 @@ class SelfImprovementEngine:
             metric_name=row[3], current_value=row[4],
             target_value=row[5], priority=row[6], created_at=row[7]
         )
+
+        if change_type in STRONG_IMPROVEMENT_TYPES:
+            conn.close()
+            return self._run_strong_improvement_experiment(lim, change_type, params)
         
         # Capturar estado atual ANTES de aplicar mudança (para rollback)
         original_state = self._capture_original_state(change_type, params)
@@ -294,7 +328,7 @@ class SelfImprovementEngine:
             id=exp_id,
             limitation_id=limitation_id,
             change_description=f"{change_type}: {json.dumps(params)}",
-            change_params={**params, '_original_state': original_state},
+            change_params={**params, '_original_state': original_state, 'change_type': change_type},
             expected_improvement=lim.target_value - lim.current_value,
             status='running',
             created_at=int(time.time()),
@@ -320,6 +354,145 @@ class SelfImprovementEngine:
             'description': experiment.change_description,
             'original_state': original_state
         }
+
+    def _run_strong_improvement_experiment(self, lim: Limitation, change_type: str, params: dict) -> dict:
+        """Runs a strong improvement gate against unseen tasks."""
+        improvement_class = STRONG_IMPROVEMENT_TYPES[change_type]
+        evidence = self._evaluate_unseen_task_gate(params)
+        promoted = bool(evidence.get('promoted'))
+        exp_id = f"exp_{lim.id}_{time.time_ns()}"
+        status = 'success' if promoted else 'failed'
+        now = int(time.time())
+
+        conn = sqlite3.connect(str(TRIALS_DB))
+        c = conn.cursor()
+        c.execute('''INSERT INTO experiments
+            (id, limitation_id, change_description, change_params, expected_improvement, status, created_at,
+             completed_at, result_metric_before, result_metric_after, net_improvement)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+            (
+                exp_id,
+                lim.id,
+                f"{improvement_class}: {json.dumps(params, ensure_ascii=False)}",
+                json.dumps({**params, 'change_type': change_type, 'improvement_class': improvement_class}, ensure_ascii=False),
+                float(params.get('expected_improvement') or MIN_HOLDOUT_DELTA),
+                status,
+                now,
+                now,
+                evidence.get('baseline_score'),
+                evidence.get('candidate_score'),
+                evidence.get('delta'),
+            ))
+        c.execute('''INSERT OR REPLACE INTO improvement_validations
+            (id, experiment_id, improvement_class, family, baseline_score, candidate_score, delta,
+             unseen_task_count, regressed_unseen_tasks, promoted, evidence_json, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+            (
+                f"val_{exp_id}",
+                exp_id,
+                improvement_class,
+                str(params.get('task_family') or params.get('family') or 'unknown'),
+                evidence.get('baseline_score'),
+                evidence.get('candidate_score'),
+                evidence.get('delta'),
+                int(evidence.get('unseen_task_count') or 0),
+                int(evidence.get('regressed_unseen_tasks') or 0),
+                1 if promoted else 0,
+                json.dumps(evidence, ensure_ascii=False),
+                now,
+            ))
+        conn.commit()
+        conn.close()
+
+        return {
+            'ok': True,
+            'experiment_id': exp_id,
+            'change_type': change_type,
+            'improvement_class': improvement_class,
+            'promotion_decision': 'promote' if promoted else 'reject',
+            'promoted': promoted,
+            'evidence': evidence,
+        }
+
+    def _evaluate_unseen_task_gate(self, params: dict) -> dict:
+        tasks = params.get('unseen_tasks')
+        if tasks is None:
+            tasks = [
+                task for task in (params.get('tasks') or [])
+                if str(task.get('split') or '').lower() in {'unseen', 'holdout', 'test', 'novel'}
+                or task.get('seen') is False
+            ]
+        tasks = [task for task in (tasks or []) if isinstance(task, dict)]
+        min_tasks = int(params.get('min_unseen_tasks') or MIN_UNSEEN_TASKS)
+        min_delta = float(params.get('min_delta') or MIN_HOLDOUT_DELTA)
+        max_regressions = int(params.get('max_regressed_unseen_tasks') or MAX_REGRESSED_UNSEEN_TASKS)
+        higher_is_better = bool(params.get('higher_is_better', True))
+
+        rows = []
+        for task in tasks:
+            baseline = self._extract_task_score(task, 'baseline')
+            candidate = self._extract_task_score(task, 'candidate')
+            if baseline is None or candidate is None:
+                continue
+            raw_delta = candidate - baseline
+            delta = raw_delta if higher_is_better else -raw_delta
+            rows.append({
+                'task_id': str(task.get('id') or task.get('task_id') or f"task_{len(rows) + 1}"),
+                'family': task.get('family') or task.get('task_family'),
+                'baseline_score': baseline,
+                'candidate_score': candidate,
+                'delta': round(delta, 6),
+                'won': delta > 0,
+                'regressed': delta < 0,
+            })
+
+        count = len(rows)
+        baseline_score = sum(r['baseline_score'] for r in rows) / count if count else 0.0
+        candidate_score = sum(r['candidate_score'] for r in rows) / count if count else 0.0
+        raw_delta = candidate_score - baseline_score
+        delta = raw_delta if higher_is_better else -raw_delta
+        regressed = sum(1 for r in rows if r['regressed'])
+        blockers = []
+        if count < min_tasks:
+            blockers.append('not_enough_unseen_tasks')
+        if delta < min_delta:
+            blockers.append('candidate_does_not_beat_baseline')
+        if regressed > max_regressions:
+            blockers.append('unseen_task_regression')
+        if not rows:
+            blockers.append('missing_unseen_scores')
+
+        return {
+            'ok': True,
+            'promoted': not blockers,
+            'baseline_score': round(baseline_score, 6),
+            'candidate_score': round(candidate_score, 6),
+            'delta': round(delta, 6),
+            'unseen_task_count': count,
+            'regressed_unseen_tasks': regressed,
+            'min_unseen_tasks': min_tasks,
+            'min_delta': min_delta,
+            'blockers': blockers,
+            'tasks': rows,
+            'criterion': 'candidate must beat baseline on unseen tasks',
+        }
+
+    def _extract_task_score(self, task: dict, key: str) -> float | None:
+        for score_key in (f'{key}_score', f'{key}_accuracy', f'{key}_reward'):
+            if score_key in task:
+                try:
+                    return float(task[score_key])
+                except Exception:
+                    return None
+        value = task.get(key)
+        if isinstance(value, dict):
+            for score_key in ('score', 'accuracy', 'reward'):
+                if score_key in value:
+                    try:
+                        return float(value[score_key])
+                    except Exception:
+                        return None
+        return None
     
     def _capture_original_state(self, change_type: str, params: dict) -> dict:
         """Captura o estado atual antes de aplicar mudança (para rollback)."""
@@ -439,13 +612,12 @@ class SelfImprovementEngine:
             return {'ok': False, 'error': 'Experimento não encontrado'}
         
         # Medir métrica atual
-        metric_name = row[3]  # limitation_id -> metric_name mapping
-        current_value = self._get_current_metric(metric_name)
+        limitation_id = row[1]
+        current_value = self._get_current_metric(limitation_id)
         
-        before = row[10]  # result_metric_before
-        expected = row[7]  # expected_improvement
+        before = row[8]
         
-        net_improvement = before - current_value if before else 0
+        net_improvement = before - current_value if before is not None else 0
         
         # Decisão: reter ou reverter?
         success = net_improvement >= 0  # Melhorou ou manteve
