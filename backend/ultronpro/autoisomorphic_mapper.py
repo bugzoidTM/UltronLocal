@@ -33,9 +33,11 @@ import random
 import re
 from itertools import permutations
 from collections import defaultdict
+from pathlib import Path
 from typing import Any
 
-from ultronpro import local_world_models, store
+from ultronpro import local_world_models
+from ultronpro.core.ports import RuntimePorts, default_ports
 from ultronpro.structural_abstractor import _flatten_dict
 from ultronpro.structural_mapper import load_cross_skills, save_cross_skills
 
@@ -51,6 +53,11 @@ BOOTSTRAP_N = 200
 # Score perfeito com poucos features = trivial (penalizar)
 TRIVIAL_SCORE_THRESHOLD = 0.99
 TRIVIAL_MIN_FEATURES = 3
+
+DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+ISOMORPHISM_EVENT_SCHEMA = "ultron.cognitive.isomorphism_validated.v1"
+ISOMORPHISM_VALIDATION_LOG_PATH = DATA_DIR / "cognitive_isomorphism_validations.jsonl"
+FIRST_ISOMORPHISM_MILESTONE_PATH = DATA_DIR / "first_cognitive_isomorphism_validated.json"
 
 _TOKEN_STOP = {
     'qual', 'quais', 'quem', 'como', 'onde', 'quando', 'porque', 'sobre',
@@ -80,6 +87,140 @@ def _safe_float(value: Any, default: float = 0.0) -> float:
         return float(value)
     except Exception:
         return default
+
+
+def _safe_int(value: Any, default: int = 0) -> int:
+    try:
+        return int(float(value))
+    except Exception:
+        return default
+
+
+def _write_json(path: Path, payload: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, default=str), encoding="utf-8")
+
+
+def _append_jsonl(path: Path, payload: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as fh:
+        fh.write(json.dumps(payload, ensure_ascii=False, default=str) + "\n")
+
+
+def _read_jsonl(path: Path, limit: int = 1000) -> list[dict[str, Any]]:
+    try:
+        if not path.exists():
+            return []
+        lines = [line for line in path.read_text(encoding="utf-8", errors="ignore").splitlines() if line.strip()]
+    except Exception:
+        return []
+    out: list[dict[str, Any]] = []
+    for line in lines[-max(1, int(limit or 1)) :]:
+        try:
+            obj = json.loads(line)
+        except Exception:
+            continue
+        if isinstance(obj, dict):
+            out.append(obj)
+    return out
+
+
+def _mapping_from_candidate(candidate: dict[str, Any]) -> dict[str, str]:
+    mapping = candidate.get("mapping")
+    if not isinstance(mapping, dict):
+        mapping = candidate.get("bijective_map")
+    if not isinstance(mapping, dict):
+        mapping = {}
+    out: dict[str, str] = {}
+    for key, value in mapping.items():
+        skey = str(key or "").strip()
+        svalue = str(value or "").strip()
+        if skey and svalue:
+            out[skey] = svalue
+    return out
+
+
+def _bijective_mapping_ok(mapping: dict[str, str]) -> bool:
+    if not mapping:
+        return False
+    return len(set(mapping.keys())) == len(mapping) and len(set(mapping.values())) == len(mapping)
+
+
+def _validation_filter_report(candidate: dict[str, Any]) -> dict[str, Any]:
+    mapping = _mapping_from_candidate(candidate)
+    raw_score = _safe_float(candidate.get("raw_score"), 0.0)
+    p_value = _safe_float(candidate.get("p_value"), 1.0)
+    transfer_improvement = _safe_float(candidate.get("transfer_improvement"), 0.0)
+    features_compared = _safe_int(candidate.get("features_compared"), len(mapping))
+    filters = [
+        {
+            "name": "raw_alignment",
+            "value": round(raw_score, 6),
+            "threshold": f">= {RAW_SCORE_MIN}",
+            "passed": raw_score >= RAW_SCORE_MIN,
+        },
+        {
+            "name": "non_triviality",
+            "value": {"raw_score": round(raw_score, 6), "features_compared": features_compared},
+            "threshold": f"not(raw_score >= {TRIVIAL_SCORE_THRESHOLD} and features < {TRIVIAL_MIN_FEATURES})",
+            "passed": not (raw_score >= TRIVIAL_SCORE_THRESHOLD and features_compared < TRIVIAL_MIN_FEATURES),
+        },
+        {
+            "name": "statistical_rarity",
+            "value": round(p_value, 6),
+            "threshold": f"<= {P_VALUE_MAX}",
+            "passed": p_value <= P_VALUE_MAX,
+        },
+        {
+            "name": "transfer_utility",
+            "value": round(transfer_improvement, 6),
+            "threshold": f">= {TRANSFER_IMPROVEMENT_MIN}",
+            "passed": transfer_improvement >= TRANSFER_IMPROVEMENT_MIN,
+        },
+    ]
+    structural_checks = {
+        "source_domain_present": bool(str(candidate.get("domain_source") or candidate.get("source_domain") or "").strip()),
+        "target_domain_present": bool(str(candidate.get("domain_target") or candidate.get("target_domain") or "").strip()),
+        "distinct_domains": str(candidate.get("domain_source") or candidate.get("source_domain") or "").strip()
+        != str(candidate.get("domain_target") or candidate.get("target_domain") or "").strip(),
+        "bijective_mapping": _bijective_mapping_ok(mapping),
+        "mapping_size": len(mapping),
+    }
+    passed = all(bool(item.get("passed")) for item in filters) and all(
+        bool(structural_checks.get(key))
+        for key in ("source_domain_present", "target_domain_present", "distinct_domains", "bijective_mapping")
+    )
+    return {
+        "passed": passed,
+        "filters": filters,
+        "structural_checks": structural_checks,
+        "raw_score": raw_score,
+        "p_value": p_value,
+        "transfer_improvement": transfer_improvement,
+        "features_compared": features_compared,
+        "mapping": mapping,
+    }
+
+
+def _validation_id(source_domain: str, target_domain: str, mapping: dict[str, str]) -> str:
+    material = json.dumps(
+        {
+            "source": source_domain,
+            "target": target_domain,
+            "mapping": mapping,
+        },
+        ensure_ascii=False,
+        sort_keys=True,
+        default=str,
+    )
+    return "iso_" + hashlib.sha256(material.encode("utf-8", errors="ignore")).hexdigest()[:14]
+
+
+def _validation_already_logged(validation_id: str) -> bool:
+    for row in _read_jsonl(ISOMORPHISM_VALIDATION_LOG_PATH, limit=2000):
+        if str(row.get("id") or "") == validation_id:
+            return True
+    return False
 
 
 def _slug(value: Any) -> str:
@@ -161,8 +302,9 @@ class AutoIsomorphicMapper:
     (b) produzir melhoria de acurácia real quando a política é transferida.
     """
 
-    def __init__(self):
+    def __init__(self, *, ports: RuntimePorts | None = None):
         self.manager = local_world_models.get_manager()
+        self.ports = ports or default_ports()
 
     def _domain_policy_summary(self, domain: str, *, limit: int = 4) -> dict[str, Any]:
         model = self.manager.models.get(domain)
@@ -534,15 +676,19 @@ class AutoIsomorphicMapper:
         candidates.sort(key=lambda row: (row[0], row[1]), reverse=True)
         return candidates[0][2]
 
-    def _transfer_utility_test(self, model_source, model_target, mapping: dict) -> float:
+    def _transfer_utility_audit(self, model_source, model_target, mapping: dict) -> dict[str, Any]:
         """
         Testa se transferir os pesos preditivos do modelo_source para o modelo_target
-        melhora a acurácia de predição acima do baseline (sem transferência).
+        melhora a acuracia preditiva acima do baseline sem transferencia.
 
-        Retorna: improvement (pode ser negativo se a transferência prejudica)
+        Retorna a auditoria minima do ganho para o evento validado.
         """
-        if not model_target.transitions or len(model_target.transitions) < 6:
-            return 0.0
+        if not model_source or not model_target:
+            return {"ok": False, "reason": "missing_model", "improvement": 0.0}
+        if not mapping:
+            return {"ok": False, "reason": "missing_mapping", "improvement": 0.0}
+        if not getattr(model_target, "transitions", None) or len(model_target.transitions) < 6:
+            return {"ok": False, "reason": "target_holdout_too_small", "improvement": 0.0}
 
         # Split: últimos 30% como holdout de validação
         transitions = list(model_target.transitions)
@@ -551,7 +697,7 @@ class AutoIsomorphicMapper:
         holdout = transitions[split:]
 
         if not train or not holdout:
-            return 0.0
+            return {"ok": False, "reason": "empty_train_or_holdout", "improvement": 0.0}
 
         # Baseline: acurácia do modelo_target sem transferência
         from ultronpro.local_world_models import LocalWorldModel
@@ -580,25 +726,26 @@ class AutoIsomorphicMapper:
 
         baseline_acc = baseline_correct / len(holdout)
         transfer_acc = transfer_correct / len(holdout)
-        return transfer_acc - baseline_acc
+        improvement = transfer_acc - baseline_acc
+        return {
+            "ok": True,
+            "reason": "holdout_transfer_test",
+            "train_size": len(train),
+            "holdout_size": len(holdout),
+            "baseline_correct": baseline_correct,
+            "transfer_correct": transfer_correct,
+            "baseline_accuracy": round(baseline_acc, 6),
+            "transfer_accuracy": round(transfer_acc, 6),
+            "improvement": round(improvement, 6),
+            "passed": improvement >= TRANSFER_IMPROVEMENT_MIN,
+        }
 
-        # Com transferência: usar os pesos do source para predição, remapeando features
-        # Simulação: se o source tem acurácia melhor e o mapping é consistente,
-        # estima-se a melhoria como proporcional à diferença de acurácia nos domínios
-        if not model_source.transitions:
-            return 0.0
-
-        source_correct = sum(
-            1 for t in list(model_source.transitions)[-30:]
-            if model_source.predict_next_state(t.get('state_t', {}), t.get('action', ''))
-               .get('predicted_outcome') == t.get('actual_outcome', '')
-        )
-        source_acc = source_correct / max(1, min(30, len(model_source.transitions)))
-
-        # Improvement estimado = diferença ponderada pelo score do mapeamento
-        # (heurística conservadora: max 50% do ganho do source propaga para o target)
-        improvement = (source_acc - baseline_acc) * 0.5
-        return improvement
+    def _transfer_utility_test(self, model_source, model_target, mapping: dict) -> float:
+        """
+        Compatibilidade para callers antigos: retorna apenas o ganho medido.
+        """
+        audit = self._transfer_utility_audit(model_source, model_target, mapping)
+        return _safe_float(audit.get("improvement"), 0.0)
 
     # ── Scanner Principal ────────────────────────────────────────────────────
 
@@ -655,7 +802,12 @@ class AutoIsomorphicMapper:
                 # ── Filtro 4: Transfer Utility Test ──
                 model_a = self.manager.models.get(dom_a)
                 model_b = self.manager.models.get(dom_b)
-                improvement = self._transfer_utility_test(model_a, model_b, mapping) if model_a and model_b else 0.0
+                transfer_test = self._transfer_utility_audit(model_a, model_b, mapping) if model_a and model_b else {
+                    "ok": False,
+                    "reason": "missing_model",
+                    "improvement": 0.0,
+                }
+                improvement = _safe_float(transfer_test.get("improvement"), 0.0)
 
                 if improvement < TRANSFER_IMPROVEMENT_MIN:
                     reason = (
@@ -676,6 +828,7 @@ class AutoIsomorphicMapper:
                     'raw_score': raw_score,
                     'p_value': p_val,
                     'transfer_improvement': improvement,
+                    'transfer_test': transfer_test,
                     'mapping': mapping,
                     'validation_status': 'validated',
                     'features_compared': n_features,
@@ -684,16 +837,133 @@ class AutoIsomorphicMapper:
 
         # Log de transparência epistêmica
         if rejected:
-            store.db.add_event(
-                'isomorphism_rejected',
-                f"🔬 {len(rejected)} candidatos rejeitados por rigor epistêmico: " +
-                "; ".join(f"({r['pair'][0]}↔{r['pair'][1]}): {r['rejection']}" for r in rejected[:3])
+            summary = "; ".join(
+                f"({r['pair'][0]}<->{r['pair'][1]}): {r['rejection']}"
+                for r in rejected[:3]
+            )
+            self.ports.events.add_event(
+                "isomorphism_rejected",
+                f"{len(rejected)} candidatos rejeitados por rigor epistemico: {summary}",
             )
 
         if discovered:
             self._compile_validated_skills(discovered)
 
         return discovered
+
+    def record_validated_isomorphism(
+        self,
+        candidate: dict[str, Any],
+        *,
+        skill: dict[str, Any] | None = None,
+        validation_evidence: dict[str, Any] | None = None,
+        source: str = "autoisomorphic_mapper_v2",
+    ) -> dict[str, Any]:
+        """
+        Registra o evento cognitivo somente quando a descoberta passou pelos
+        quatro filtros do mapper v2 e tem ganho de transferencia medido.
+        """
+        if not isinstance(candidate, dict):
+            return {"ok": False, "recorded": False, "reason": "candidate_not_dict"}
+
+        s_dom = str(candidate.get("domain_source") or candidate.get("source_domain") or "").strip()
+        t_dom = str(candidate.get("domain_target") or candidate.get("target_domain") or "").strip()
+        audit = _validation_filter_report(candidate)
+        mapping = audit["mapping"]
+        validation_id = _validation_id(s_dom, t_dom, mapping)
+        ts = int(time.time())
+
+        event = {
+            "ok": True,
+            "schema": ISOMORPHISM_EVENT_SCHEMA,
+            "id": validation_id,
+            "type": "cognitive.isomorphism_validated",
+            "ts": ts,
+            "source": source,
+            "domain_source": s_dom,
+            "domain_target": t_dom,
+            "mapping": mapping,
+            "filters": audit["filters"],
+            "structural_checks": audit["structural_checks"],
+            "features_compared": audit["features_compared"],
+            "raw_score": round(audit["raw_score"], 6),
+            "p_value": round(audit["p_value"], 6),
+            "transfer_improvement": round(audit["transfer_improvement"], 6),
+            "transfer_test": candidate.get("transfer_test") if isinstance(candidate.get("transfer_test"), dict) else {},
+            "validation_status": "empirically_tested" if audit["passed"] else "rejected",
+            "legitimate": bool(audit["passed"]),
+            "skill": {
+                "id": (skill or {}).get("id"),
+                "name": (skill or {}).get("name"),
+                "valid_domains": (skill or {}).get("valid_domains") if isinstance((skill or {}).get("valid_domains"), list) else [s_dom, t_dom],
+            },
+            "validation_evidence": validation_evidence if isinstance(validation_evidence, dict) else {},
+        }
+
+        if not audit["passed"]:
+            failed = [item["name"] for item in audit["filters"] if not item.get("passed")]
+            structural_failed = [
+                key for key, value in audit["structural_checks"].items()
+                if key != "mapping_size" and not value
+            ]
+            event["rejection"] = {
+                "failed_filters": failed,
+                "failed_structural_checks": structural_failed,
+            }
+            return {
+                "ok": True,
+                "recorded": False,
+                "reason": "validation_filters_failed",
+                "validation_id": validation_id,
+                "event": event,
+            }
+
+        already_logged = _validation_already_logged(validation_id)
+        milestone_recorded = False
+        if not already_logged:
+            _append_jsonl(ISOMORPHISM_VALIDATION_LOG_PATH, event)
+
+        if not FIRST_ISOMORPHISM_MILESTONE_PATH.exists():
+            milestone = {
+                **event,
+                "milestone_type": "first_cognitive_isomorphism_validated",
+                "claim": (
+                    "O mapper v2 encontrou um isomorfismo causal entre dominios, "
+                    "passou os quatro filtros epistemicos e demonstrou ganho real de transferencia."
+                ),
+            }
+            _write_json(FIRST_ISOMORPHISM_MILESTONE_PATH, milestone)
+            milestone_recorded = True
+
+        if not already_logged:
+            payload = json.dumps(event, ensure_ascii=False, default=str)
+            text = (
+                f"cognitive.isomorphism_validated {s_dom}<->{t_dom} "
+                f"p={audit['p_value']:.3f} gain={audit['transfer_improvement']:+.1%} id={validation_id}"
+            )
+            try:
+                self.ports.workspace.publish(
+                    module="autoisomorphic_mapper",
+                    channel="cognitive.isomorphism_validated",
+                    payload=event,
+                    salience=0.95 if milestone_recorded else 0.90,
+                    ttl_sec=86400 if milestone_recorded else 7200,
+                )
+            except Exception:
+                pass
+            try:
+                self.ports.events.add_event("cognitive.isomorphism_validated", text, meta=event)
+            except Exception:
+                pass
+
+        return {
+            "ok": True,
+            "recorded": not already_logged,
+            "reason": "recorded" if not already_logged else "already_logged",
+            "validation_id": validation_id,
+            "milestone_recorded": milestone_recorded,
+            "event": event,
+        }
 
     # ── Compilação de Skills Validadas ────────────────────────────────────────
 
@@ -705,11 +975,21 @@ class AutoIsomorphicMapper:
             s_dom = iso['domain_source']
             t_dom = iso['domain_target']
 
-            # Evita duplicatas
-            if any(
-                s_dom in sk.get('valid_domains', []) and t_dom in sk.get('valid_domains', [])
-                for sk in skills_db['skills']
-            ):
+            # Evita duplicatas de skill, mas ainda permite registrar o marco
+            # caso uma skill antiga ja represente a primeira descoberta legitima.
+            existing_skill = next(
+                (
+                    sk for sk in skills_db['skills']
+                    if s_dom in sk.get('valid_domains', []) and t_dom in sk.get('valid_domains', [])
+                ),
+                None,
+            )
+            if existing_skill:
+                self.record_validated_isomorphism(
+                    iso,
+                    skill=existing_skill,
+                    validation_evidence={"skill_status": "already_compiled"},
+                )
                 continue
 
             skill = {
@@ -729,22 +1009,16 @@ class AutoIsomorphicMapper:
                 'origin': 'autoisomorphic_mapper_v2',
                 'validation_status': 'empirically_tested',
             }
+            event_record = self.record_validated_isomorphism(
+                iso,
+                skill=skill,
+                validation_evidence={"skill_status": "newly_compiled"},
+            )
+            skill['validation_event_id'] = event_record.get('validation_id')
+            skill['isomorphism_event_schema'] = ISOMORPHISM_EVENT_SCHEMA
+            skill['filter_results'] = event_record.get('event', {}).get('filters', [])
             skills_db['skills'].append(skill)
             new_skills += 1
-
-            store.publish_workspace(
-                module='autoisomorphic_mapper',
-                channel='cognitive.isomorphism_validated',
-                payload_json=json.dumps(skill, ensure_ascii=False),
-                salience=0.90,
-                ttl_sec=7200,
-            )
-
-            store.db.add_event(
-                'isomorphism_validated',
-                f"🧬 Isomorfismo VALIDADO: '{s_dom}' ↔ '{t_dom}' "
-                f"(p={iso['p_value']:.3f}, gain={iso['transfer_improvement']:+.1%})"
-            )
 
         if new_skills > 0:
             save_cross_skills(skills_db)

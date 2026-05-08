@@ -1088,6 +1088,7 @@
         <div class="card-body">
           <div class="muted" style="margin-bottom: 12px;">Mostra chamadas, tokens, limites configurados e saldo restante quando aplicável.</div>
           <div id="llmUsageSummary" class="muted" style="margin-bottom: 12px">(carregando...)</div>
+          <div id="llmQwenProfileBox" class="list-item" style="margin-bottom: 12px; display:none"></div>
           <div id="llmHealthMsg" class="muted" style="margin-bottom:10px"></div>
           <div id="llmUsageList"></div>
 
@@ -3038,9 +3039,41 @@
         const keys = Object.keys(providers);
         const summaryEl = document.getElementById('llmUsageSummary');
         const listEl = document.getElementById('llmUsageList');
+        const qwenEl = document.getElementById('llmQwenProfileBox');
         if (!summaryEl || !listEl) return;
 
         summaryEl.innerHTML = `Monitorando <strong>${keys.length}</strong> providers • início=${new Date((j.started_at||0)*1000).toLocaleString()}`;
+        if (qwenEl) {
+          const qwen = j.qwen_runtime || {};
+          const active = qwen.active_profile || {};
+          const rec = qwen.recommended_profile || {};
+          const state = qwen.state || {};
+          const hw = qwen.hardware || {};
+          if (active.name) {
+            const mismatch = qwen.profile_mismatch && rec.name
+              ? `<span class="tag tag-orange">recomendado: ${escHtml(rec.label || rec.name)}</span>`
+              : '<span class="tag tag-green">perfil adequado</span>';
+            const mlock = state.mlock === true ? 'mlock ligado' : (state.mlock === false ? 'mlock desligado' : 'mlock auto');
+            qwenEl.style.display = '';
+            qwenEl.innerHTML = `
+              <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;">
+                <strong>Qwen local: ${escHtml(active.label || active.name)}</strong>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                  <span class="tag tag-purple">llama-server</span>
+                  ${mismatch}
+                </div>
+              </div>
+              <div class="muted" style="margin-top:6px">
+                endpoint=${escHtml(qwen.endpoint || '-')} • ctx=${Number(active.ctx || 0)} • KV=${escHtml(active.cache_k || '-')}/${escHtml(active.cache_v || '-')} • -ngl=${escHtml(String(active.gpu_layers ?? '-'))} • ${escHtml(mlock)}
+              </div>
+              <div class="muted" style="margin-top:4px">
+                RAM livre=${Number(hw.available_ram_gb || 0).toFixed(2)} GB • pressao=${escHtml(hw.pressure || 'n/a')} • modelo=${qwen.paths && qwen.paths.model_exists ? 'ok' : 'nao encontrado'}
+              </div>
+            `;
+          } else {
+            qwenEl.style.display = 'none';
+          }
+        }
 
         if (!keys.length) {
           listEl.innerHTML = '<div class="muted">Sem dados de uso ainda.</div>';
@@ -3049,6 +3082,7 @@
 
         listEl.innerHTML = keys.map(k => {
           const p = providers[k] || {};
+          const isLocalProvider = ['ollama', 'ollama_local', 'ultron_infer'].includes(k);
           const used = Number(p.tokens_total || 0);
           const lim = p.limit_applicable ? Number(p.limit_tokens || 0) : null;
           const rem = (p.remaining_tokens === null || p.remaining_tokens === undefined) ? null : Number(p.remaining_tokens);
@@ -3059,7 +3093,7 @@
             <div class="list-item">
               <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;">
                 <strong>${escHtml(k)}</strong>
-                <span class="tag ${k==='ollama'?'tag-purple':'tag-blue'}">${k==='ollama'?'local':'api'}</span>
+                <span class="tag ${isLocalProvider?'tag-purple':'tag-blue'}">${isLocalProvider?'local':'api'}</span>
               </div>
               <div class="muted" style="margin-top:6px">calls=${Number(p.calls||0)} • ok=${Number(p.ok||0)} • errors=${Number(p.errors||0)}</div>
               <div class="muted" style="margin-top:4px">tokens in/out/total = ${Number(p.tokens_in||0)} / ${Number(p.tokens_out||0)} / ${used}</div>

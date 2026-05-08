@@ -225,7 +225,7 @@ class SkillLoader:
                 content=md_content.strip(),
                 version=frontmatter.get('version', '1.0.0'),
                 author=frontmatter.get('author', 'system'),
-                tags=frontmatter.get('tags', []),
+                tags=[str(x) for x in (frontmatter.get('tags', []) or [])],
                 enabled=frontmatter.get('enabled', True),
                 _raw_frontmatter=frontmatter,
             )
@@ -263,9 +263,10 @@ class SkillLoader:
                 
                 # Index por tags
                 for tag in skill.tags:
-                    if tag not in self._skill_index:
-                        self._skill_index[tag] = []
-                    self._skill_index[tag].append(skill.name)
+                    tag_key = str(tag)
+                    if tag_key not in self._skill_index:
+                        self._skill_index[tag_key] = []
+                    self._skill_index[tag_key].append(skill.name)
         
         self._loaded = True
         logger.info(f"Loaded {len(self._skills)} skills")
@@ -319,7 +320,7 @@ class SkillLoader:
                 
                 # Verificar tags (busca parcial)
                 for tag in s.tags:
-                    tag_lower = tag.lower()
+                    tag_lower = str(tag).lower()
                     if tag_lower in query_lower or query_lower in tag_lower:
                         score += 4
                     # Buscar por palavra chave parcial
@@ -371,7 +372,7 @@ class SkillLoader:
             
             # Verificar correspondência nas tags
             for tag in s.tags:
-                tag_clean = tag.lower().replace('_', '')
+                tag_clean = str(tag).lower().replace('_', '')
                 if tag_clean in task_lower:
                     score += 10
                 for word in task_words:

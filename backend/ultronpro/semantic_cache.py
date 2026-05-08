@@ -74,6 +74,17 @@ def _prune(d: dict[str, Any]) -> dict[str, Any]:
     return d
 
 
+def _attach_inference_trace(query: str, hit: dict[str, Any]) -> dict[str, Any]:
+    try:
+        from ultronpro import unified_inference
+
+        out = dict(hit)
+        out["inference_trace"] = unified_inference.trace_from_cache_hit(query, out)
+        return out
+    except Exception:
+        return hit
+
+
 def lookup(query: str) -> dict[str, Any] | None:
     qn = _norm_q(query)
     if not qn:
@@ -86,12 +97,12 @@ def lookup(query: str) -> dict[str, Any] | None:
     key = _md5(qn)
     ex = (d.get('exact') or {}).get(key)
     if isinstance(ex, dict):
-        return {
+        return _attach_inference_trace(query, {
             'cache_hit': 'exact',
             'score': 1.0,
             'answer': str(ex.get('answer') or ''),
             'strategy': str(ex.get('strategy') or 'cache'),
-        }
+        })
 
     # semantic
     try:
@@ -114,12 +125,12 @@ def lookup(query: str) -> dict[str, Any] | None:
             best = e
 
     if best is not None and best_score >= SEMANTIC_THRESHOLD:
-        return {
+        return _attach_inference_trace(query, {
             'cache_hit': 'semantic',
             'score': round(best_score, 4),
             'answer': str(best.get('answer') or ''),
             'strategy': str(best.get('strategy') or 'cache'),
-        }
+        })
     return None
 
 

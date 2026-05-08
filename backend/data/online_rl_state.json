@@ -1,0 +1,42 @@
+{
+  "schema": "ultron.online_rl_cycle.v1",
+  "last_action_ts": {
+    "trusted_acquisition": 1778265337
+  },
+  "cycle_count": 2,
+  "last_reward": 0.038,
+  "last_action": {
+    "kind": "trusted_acquisition",
+    "drive": "competence",
+    "cost": 0.45,
+    "base_priority": 0.64,
+    "cooldown_sec": 900,
+    "description": "learn from trusted sources and apply as memory or patch proposal",
+    "context": "normal",
+    "score": 0.7731,
+    "rl_priority_adjustment": 0,
+    "need_bonus": 0.08,
+    "state_pressure": 0.6703,
+    "cooldown_remaining_sec": 0,
+    "non_llm": true
+  },
+  "last_reward_report": {
+    "reward": 0.038,
+    "ok": false,
+    "components": {
+      "action_score": 0.0,
+      "homeostasis_delta": 0.0,
+      "gap_delta": 0.0,
+      "latency_score": 0.7254,
+      "result_ok": false
+    },
+    "evidence": {
+      "application_ok": false,
+      "application_mode": "none",
+      "useful_count": 0,
+      "trusted_count": 0
+    }
+  },
+  "last_run_at": 1778265337,
+  "updated_at": 1778265337
+}

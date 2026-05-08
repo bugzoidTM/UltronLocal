@@ -4,6 +4,7 @@ import asyncio
 import itertools
 import json
 import os
+import sys
 import time
 from pathlib import Path
 from typing import Any
@@ -13,6 +14,8 @@ os.environ.setdefault("BENCHMARK_MODE", "1")
 os.environ.setdefault("ULTRON_DISABLE_CLOUD_PROVIDERS", "1")
 
 BACKEND_DIR = Path(__file__).resolve().parents[2]
+if str(BACKEND_DIR) not in sys.path:
+    sys.path.insert(0, str(BACKEND_DIR))
 REPORT_PATH = BACKEND_DIR / "data" / "hard_cognitive_eval_runs.jsonl"
 
 
@@ -194,15 +197,15 @@ def evaluate_external_benchmark() -> dict[str, Any]:
     oracle = external_benchmarks.run_selftest()
     no_cloud_probe = external_benchmarks.run_suite(
         limit_per_benchmark=1,
-        predictor="llm",
-        strategy="local",
-        tag="hard_cognitive_eval_no_cloud_probe",
+        predictor="symbolic",
+        strategy="non_llm",
+        tag="hard_cognitive_eval_non_llm_symbolic_probe",
     )
     audit_ok = bool(audit.get("ok")) and bool(oracle.get("ok"))
     no_cloud_accuracy = float(no_cloud_probe.get("overall_accuracy") or 0.0)
     score = (1.0 if audit_ok else 0.0) + min(1.0, no_cloud_accuracy)
     return {
-        "ok": audit_ok,
+        "ok": audit_ok and no_cloud_accuracy >= 0.66,
         "score": round(score, 3),
         "suite_count": audit.get("count"),
         "oracle_selftest_ok": oracle.get("ok"),

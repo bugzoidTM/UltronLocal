@@ -45,14 +45,14 @@ Só vale como concluído quando houver:
 
 ## Auditoria epistêmica — 2026-05-01 (Atualização)
 
-Status geral do roadmap: 81%
+Status geral do roadmap: 85% (atualizado em 2026-05-07; era 84% em 2026-05-06)
 
 Evidência executada nesta auditoria de stress e verdade:
 
 - [FEITO] **Shift Epistemológico de Telemetria:** O `benchmark_suite.py` agora coleta latência real e tokens verdadeiros por fallback live, abandonando métricas randomizadas ("telemetria de vaidade").
 - [FEITO] **Maturidade sob Pressão:** Novo `pressure_benchmark.py` injeta falhas (provider dropout, blackout de memória, starvation de contexto, adversarial framing). O sistema atingiu `85.0%` de retenção de capacidade (Threshold 72%), classificado formalmente como `MATURE`.
 - [FEITO] **Remoção de Autojuiz:** `longitudinal_harness.py` não valida mais a identidade verificando strings hardcoded (`answer == gold`); o LLM agora deve provar o conhecimento de resiliência e deriva causal via MCQ aberto ancorado em literatura externa (Pearl 2009, Amodei 2016, etc).
-- [EM ANDAMENTO 62%] Benchmark factual externo: harness público existe e passou `9/9`, mas é `proxy_subset` não oficial.
+- [EM ANDAMENTO 72%] Benchmark factual externo: execução oficial do UltronPro em 2026-05-06 (`extb_cc842ab3d4`) passou `9/9` com predictor `symbolic`/`non_llm` em `arc_easy_partial`, `hellaswag_partial` e `mmlu_partial`; continua `proxy_subset`/`non_official_subset`, portanto ainda não substitui benchmark completo/licenciado.
 - [EM ANDAMENTO 55%] Probe longitudinal de simulação mental passou em 6 ciclos isolados, mas ainda não substitui o critério de 30-50+ ciclos vivos.
 - [EM ANDAMENTO 85%] Harness longitudinal integrado atualizado para validação externa, aguardando ciclos longos em background sem nuvem quebrada para consolidar a generalização contínua.
 
@@ -88,7 +88,7 @@ Conclusão da auditoria de stress: O paradigma mudou. A métrica saiu de "quanti
 - [FEITO] `episodic_compiler.py` agora consegue propor hipótese causal determinística em `BENCHMARK_MODE=1`, sem depender de LLM para nascer; o ciclo hipótese→teste→`compiled_skill` passou com 5/5 confirmações.
 - [FEITO] `autoisomorphic_mapper.py` agora extrai pares de hashes estruturais compostos, usa p-value exato para pequenas permutações e testa utilidade de transferência contra baseline treinado só no split de treino.
 - [FEITO] `llm.py` e `llm_adapter.py` corrigidos para respeitar `ULTRON_DISABLE_CLOUD_PROVIDERS=1`; fallback de nuvem não é mais usado em modo LLM-off.
-- [EM ANDAMENTO 88%] Fase 7 saiu de planejamento para operação mensurável: chat de domínio próprio passou 8/8 sem LLM externo e há hard eval persistido, mas o benchmark externo MCQ sem nuvem ainda falha quando `ultron_infer` está offline.
+- [EM ANDAMENTO 93%] Fase 7 saiu de planejamento para operação mensurável: chat de domínio próprio passou 8/8 sem LLM externo, hard eval recente marcou `10.0/10` e a execução externa proxy `extb_cc842ab3d4` passou `9/9` com predictor simbólico não-LLM.
 - [EM ANDAMENTO 68%] Fase 13 permanece implementada, mas a validação longitudinal foi reclassificada: a auditoria de 2026-05-01 validou probe isolado de 6 ciclos, ainda insuficiente para sustentar `FEITO 100%` em convergência de competências.
 
 ### Atualização operacional — 2026-05-02
@@ -98,11 +98,28 @@ Conclusão da auditoria de stress: O paradigma mudou. A métrica saiu de "quanti
 - [FEITO] Consequências internas agora têm `context_input`, `granular_action`, `objective_result`, contrafactual estimado, surpresa calculada e invariante `perceive_predict_act_learn`, alimentando também `local_world_models` no domínio `cognitive_architecture`.
 - [FEITO] Integração no startup via background loop configurável e endpoints `/api/autonomous/cognition/status` e `/api/autonomous/cognition/tick`.
 - [FEITO] Validação em 3 etapas: percepção autônoma, previsão/sugestão e ação+aprendizado passaram em teste local reprodutível; regressão focada atual: `13 passed`.
-- [EM ANDAMENTO 90%] Fase 7 avança porque o motor de raciocínio próprio deixou de ser apenas resposta ao usuário e passou a operar internamente em ciclo OODA/P.E.A.L. sem depender de LLM.
+- [EM ANDAMENTO 93%] Fase 7 avança porque o motor de raciocínio próprio deixou de ser apenas resposta ao usuário e passou a operar internamente em ciclo OODA/P.E.A.L. sem depender de LLM, com validação externa proxy simbólica `9/9`.
 - [EM ANDAMENTO 63%] Propagação de erro preditivo ganhou aplicação em arquitetura cognitiva interna, ainda aguardando ciclos longitudinais vivos para medir surpresa decrescente.
 
+### Atualização operacional — 2026-05-06
+
+- [FEITO] Execução oficial externa proxy registrada: `external_public_eval_v1`, run `extb_cc842ab3d4`, predictor `symbolic`, estratégia `non_llm`, `9/9`, `overall_accuracy=1.0`, com auditoria estrutural do suite limpa (`duplicate_ids=[]`, `malformed_items=[]`, `answer_out_of_range=[]`).
+- [FEITO] A rodada cobriu três famílias externas comparáveis: `science_qa`/ARC-Easy-inspired (`3/3`), `commonsense_next_step`/HellaSwag-inspired (`3/3`) e `academic_mcq`/MMLU-inspired (`3/3`), todas persistidas em `backend/data/external_benchmarks/public_eval_runs.jsonl`.
+- [EM ANDAMENTO 72%] Evidência externa factual subiu porque o núcleo simbólico não-LLM resolveu todo o subset atual sem servidor local `ultron_infer`; permanece travado abaixo de maturidade alta porque o suite declara `comparability_tier=proxy_subset` e `officiality=non_official_subset`.
+- [FEITO] `trusted_acquisition_loop.py` fechou o ciclo lacuna → fonte confiável → extração → aplicação em memória/patch proposto; a execução real para `causal_graph_interventional_coverage` aplicou conhecimento via fonte confiável (`causal-learn.readthedocs.io`) e registrou experiência/insight.
+- [FEITO] `online_rl_loop.py` fechou o ciclo consequência → recompensa → atualização de política: execução real escolheu `trusted_acquisition`, recebeu reward `0.7492`, atualizou o braço `trusted_acquisition|normal` e ajustou o drive `competence`.
+- [EM ANDAMENTO 78%] Fase 8 deixa de ser apenas callbacks dispersos de reward e passa a ter orquestrador online autônomo com seleção de intervenção, execução, recompensa, persistência e endpoints; ainda exige 30+ ciclos vivos comparáveis antes de ser marcada como alta maturidade.
+
+### Atualizacao operacional - 2026-05-07
+
+- [FEITO] A rota autobiografica do chat ganhou `autobiographical_self_synthesis`: em vez de despejar `nome=...; papel=...; criador=...`, o nucleo nao-LLM compoe resposta de primeira pessoa a partir de `self_model`, `biographic_digest`, memoria autobiografica, episodios de introspeccao e estado narrativo.
+- [FEITO] Perguntas hibridas do tipo "eu perguntei o nome do seu criador" deixaram de ser perdidas como referencia ao usuario: quando ha sinal de autoria/criacao, o roteador preserva a pergunta como lacuna autobiografica do proprio sistema.
+- [FEITO] O chat agora bloqueia dumps de identidade em formato `key=value` como raciocinio estatico indevido e resgata a resposta pelo nucleo cognitivo evidencial antes do fallback SIR/LLM.
+- [FEITO] A sintese autobiografica emite lacuna explicita quando a memoria nao tem granularidade suficiente (ex.: autoria coletiva sem nome individual) e propoe a intervencao minima sandboxada para preencher essa lacuna, sem inventar resposta.
+- [EM ANDAMENTO 78%] Front 5 avancou porque a consciencia operacional integrada passou a afetar diretamente a qualidade da resposta visivel ao usuario; ainda nao e `FEITO` porque falta benchmark longitudinal de conversas autobiograficas reais e degradacao/reparo sob carga.
+
 ## Front 1 — Plasticidade estrutural real
-_Status do front: 82%_
+_Status do front: 84%_
 
 Meta 10/10:
 
@@ -113,10 +130,10 @@ Meta 10/10:
 - persistir ganho
 - fazer rollback se piorar
 
-**Leitura atual:** front está funcional e testado em loop local, com shadow eval, canário, gate e ledger epistêmico integrados. A auditoria de 2026-05-01 rebaixa o front porque o benchmark interno ainda mostra regressão em `debugging` e a validação longitudinal/externa é curta demais para sustentar `100%`.
+**Leitura atual:** front está funcional e testado em loop local, com shadow eval, canário, gate e ledger epistêmico integrados. A execução de 2026-05-06 adiciona aquisição confiável capaz de gerar proposta de patch cognitivo a partir de evidência externa, mas o front segue abaixo de maturidade alta porque ainda precisa demonstrar ganhos recorrentes de patches promovidos sob benchmark longitudinal.
 
 ## Front 2 — Modelo de mundo causal
-_Status do front: 80%_
+_Status do front: 82%_
 
 Meta 10/10:
 
@@ -126,10 +143,10 @@ Meta 10/10:
 - revisar relações causais
 - usar causalidade para escolher planos melhores
 
-**Leitura atual:** há módulos causais, contrafactuais e anti-Mirage implementados, e a hard eval anterior trouxe evidência útil de transferência. A auditoria de 2026-05-01 mantém o front abaixo de maturidade alta porque o harness longitudinal ainda está em `watch`, a generalização zero-shot falhou e o critério de surpresa decrescente em ciclos vivos não foi atingido.
+**Leitura atual:** há módulos causais, contrafactuais e anti-Mirage implementados, e a hard eval anterior trouxe evidência útil de transferência. O loop RL online agora escolhe intervenções por pressão causal/epistêmica e aprende por consequência observada, mas o front segue abaixo de maturidade alta porque o critério de surpresa decrescente em ciclos vivos ainda não foi atingido.
 
 ## Front 3 — Generalização entre domínios
-_Status do front: 72%_
+_Status do front: 76%_
 
 Meta 10/10:
 
@@ -138,10 +155,10 @@ Meta 10/10:
 - medir ganho vs baseline
 - consolidar abstrações multi-domínio
 
-**Leitura atual:** compilador, abstrações e mapper existem e têm testes locais. A auditoria rebaixa o front porque a evidência pública segue em `proxy_subset`, o harness longitudinal marcou sucesso agregado baixo e os testes zero-shot do próprio harness não passaram.
+**Leitura atual:** compilador, abstrações e mapper existem e têm testes locais. A execução `extb_cc842ab3d4` validou o subset externo atual em três famílias, mas o front segue limitado porque a evidência pública ainda é `proxy_subset` e falta um ciclo licenciado/mais amplo com tarefas realmente fora da distribuição.
 
 ## Front 4 — Automanutenção e individuação
-_Status do front: 78%_
+_Status do front: 80%_
 
 Meta 10/10:
 
@@ -154,10 +171,10 @@ Meta 10/10:
 - manter identidade operacional
 - priorizar capacidade futura de agir
 
-**Leitura atual:** self-governance, self-model, homeostasis, healer e predição de degradação estão integrados. A auditoria de 2026-05-01 rebaixa o front porque o self-healer passou em E2E local, mas ainda não demonstrou correções recorrentes verificadas em produção, e o modelo preditivo ainda foi validado em histórico sintético curto.
+**Leitura atual:** self-governance, self-model, homeostasis, healer e predição de degradação estão integrados. O loop RL online passou a priorizar capacidade futura de agir por recompensa real e ajuste de drive, mas o front segue abaixo de maturidade alta porque ainda faltam correções recorrentes verificadas em produção e séries longas de degradação/reparo.
 
 ## Front 5 — Consciência operacional integrada
-_Status do front: 73%_
+_Status do front: 78%_
 
 Meta 10/10:
 
@@ -170,12 +187,12 @@ Meta 10/10:
 - manter um eu narrativo contínuo
 - medir integração interna por proxies úteis, sem confundir isso com prova de consciência forte
 
-**Leitura atual:** o Global Workspace operacional existe e integra sinais relevantes, mas a auditoria rebaixa o front porque integração arquitetural não é prova de consciência operacional robusta. O ledger do núcleo cognitivo está bloqueado por evidência externa/longitudinal insuficiente e o harness longitudinal marcou `watch`.
+**Leitura atual:** o Global Workspace operacional existe e integra sinais relevantes, mas a auditoria rebaixa o front porque integração arquitetural não é prova de consciência operacional robusta. A atualização de 2026-05-07 conectou self-model, digest biográfico, memória autobiográfica e lacunas explícitas à resposta visível do chat, removendo dumps de campos crus e propondo intervenção mínima quando falta granularidade autobiográfica. O front segue abaixo de maturidade alta porque ainda precisa de benchmark longitudinal de conversas reais, degradação/reparo sob carga e prova de ganho integrado na decisão, não apenas no autorrelato.
 
 ---
 
 # Fase 1 — Plasticidade estrutural real
-_Status da fase: 82%_
+_Status da fase: 84%_
 
 ## 1.1 Registro durável de patches cognitivos
 _Status: [EM ANDAMENTO 90%]_
@@ -246,7 +263,7 @@ _Status: [FEITO 100%]_
 ---
 
 # Fase 2 — Modelo de mundo causal
-_Status da fase: 80%_
+_Status da fase: 82%_
 
 ## 2.1 Corpo mínimo / ambiente de interação
 _Status: [EM ANDAMENTO 80%]_
@@ -300,7 +317,7 @@ _Status: [EM ANDAMENTO 60%]_
 ---
 
 # Fase 3 — Generalização entre domínios
-_Status da fase: 72%_
+_Status da fase: 76%_
 
 ## 3.1 Biblioteca de abstrações explícitas
 _Status: [EM ANDAMENTO 70%]_
@@ -349,21 +366,21 @@ _Status: [EM ANDAMENTO 88%]_
 - [EM ANDAMENTO 88%] Score de generalidade
 
 ## 3.6 Benchmarks externos comparáveis
-_Status: [EM ANDAMENTO 72%]_
+_Status: [EM ANDAMENTO 78%]_
 
 - [FEITO] Harness externo inicial implementado
 - [FEITO] Baseline congelável
 - [FEITO] Histórico persistido de runs
-- [EM ANDAMENTO 78%] subset comparável inspirado em ARC/HellaSwag/MMLU agora com famílias, splits, lineage, tier de comparabilidade e seleção reproduzível
+- [EM ANDAMENTO 84%] subset comparável inspirado em ARC/HellaSwag/MMLU agora com famílias, splits, lineage, tier de comparabilidade, seleção reproduzível e execução oficial `extb_cc842ab3d4`
 - [EM ANDAMENTO 70%] comparação pareada contra baseline congelado por benchmark/família/split
-- [EM ANDAMENTO 72%] auditoria estrutural do suite + selftest oracle
-- [EM ANDAMENTO 55%] execução comparável recorrente agora aparece em runs persistidos, mas o probe MCQ sem nuvem ficou 0/3 quando `ultron_infer` local estava offline
+- [EM ANDAMENTO 82%] auditoria estrutural do suite + selftest oracle + run não-LLM simbólico `9/9`
+- [EM ANDAMENTO 72%] execução comparável recorrente agora aparece em runs persistidos e o predictor simbólico não-LLM passou no subset completo atual; continua bloqueado por `proxy_subset` e falta de benchmark completo/licenciado
 - [PENDENTE] rodar ciclo comparável mais fiel/licenciado e ampliar validade pública
 
 ---
 
 # Fase 4 — Automanutenção, individuação e continuidade
-_Status da fase: 78%_
+_Status da fase: 80%_
 
 _Atualização 2026-03-19: deploy da Fase 4 estabilizado no serviço principal via stack spec. Rotas `/api/self-governance/*`, storage dedicado, camada de linhagem/descendência, bridge de runtime preparado e autoavaliação/promoção mínima estão ativas em produção._
 
@@ -550,7 +567,7 @@ _Status: [EM ANDAMENTO 70%]_
 ---
 
 # Fase 5 — Consciência operacional integrada
-_Status da fase: [EM ANDAMENTO 73%]_
+_Status da fase: [EM ANDAMENTO 78%]_
 
 _Atualização 2026-03-19: já existia base operacional de workspace global no código (`global_workspace` no store, publicações de `self_model`, `tom`, `judge`, `metacognition` e loop Roadmap V5). Agora também há `meta_observer` explícito com endpoint próprio e publicação periódica no workspace; status, broadcast, consumo e autoria do workspace estão validados em produção. Nesta rodada, entrou também uma camada explícita de marcadores afetivos artificiais com snapshot composto, endpoint próprio e publicação periódica em `affect.state`/`policy.risk`, conectando narrativa, incerteza, competição e promessas pendentes ao workspace global. Além disso, foi adicionada uma autobiografia operacional contínua com resumo narrativo explícito, `first_person_report`, postura de continuidade, riscos de continuidade e publicação periódica em `self.narrative`. Agora também existe um proxy explícito de integração interna, combinando workspace, meta-observer, afetos e narrativa em um score operacional observável e publicável em `integration.proxy`. Por fim, foi criado um benchmark operacional inicial persistido, com baseline congelável, runs comparáveis e score integrado para foco, autoria, ignorados, surpresa interna, autobiografia e modelagem do outro. Também foi constatado que o frontend estava conceitualmente defasado em relação ao Front 5; a UI foi limpa de blocos legados de sprint/fase antiga, ganhou aba própria de Front 5 com lazy-load e deixou de pré-carregar na home os endpoints mais pesados de autobiografia/integração/benchmark._
 
@@ -687,7 +704,7 @@ _Status: [EM ANDAMENTO 60%]_
 ---
 
 # Fase 7 — Motor de raciocínio próprio
-_Status da fase: [EM ANDAMENTO 90%]_
+_Status da fase: [EM ANDAMENTO 93%]_
 
 O objetivo desta fase é desacoplar o raciocínio de alto nível (planejamento, decisão, governança) das APIs externas de LLM. O LLM deve ser movido para a periferia como um "módulo de interface de linguagem", enquanto o núcleo cognitivo (Planner simbólico + Motor Causal) assume o controle do loop de pensamento.
 
@@ -719,68 +736,76 @@ Implementação do código determinístico de acordo com a Regra de Ouro ("O que
 - [FEITO] Limpar dependências e fallback `ollama_local` em todo o motor cognitivo
 
 ## 7.4 Benchmarks de autonomia "LLM-off"
-_Status: [EM ANDAMENTO 74%]_
+_Status: [EM ANDAMENTO 84%]_
 - [FEITO] Smoke test local e HTTP validado para chat/stream sem LLM em três casos: identidade autobiográfica, risco operacional por simulação mental e matemática embutida em linguagem natural.
 - [FEITO] Hard eval reprodutível validou chat de domínio próprio 8/8 sem LLM externo e grava evidência em `backend/data/hard_cognitive_eval_runs.jsonl`.
+- [FEITO] Execução oficial externa proxy `extb_cc842ab3d4` validou predictor `symbolic`/`non_llm` em `9/9` itens, cobrindo ciência, commonsense e MCQ acadêmico.
 - [EM ANDAMENTO 42%] Medir sobrevivência funcional do sistema com zero chamadas de API externa em autonomia prolongada.
 - [EM ANDAMENTO 30%] Validar coerência do planner simbólico contra baseline em suíte reprodutível.
 
 ## 7.5 Composição de resposta por evidência interna
-_Status: [EM ANDAMENTO 80%]_
+_Status: [EM ANDAMENTO 84%]_
 - [FEITO] Templates semânticos por formato de evidência: causal, fatos internos, abstrações, identidade, trajetória, episódios, procedimento, simulação e incerteza.
 - [FEITO] Verbalizador mínimo usa traços e episódios locais apenas para estilo/forma, sem inventar fatos.
 - [FEITO] Classificador aprendido por episódios (`core.learned_intent`) entra apenas como viés leve quando a cobertura estruturada está fraca ou ambígua.
-- [EM ANDAMENTO 82%] Avaliação automática de resposta não-LLM ampliada pelo hard eval; falta expandir para perguntas abertas e benchmark externo sem servidor local.
+- [EM ANDAMENTO 88%] Avaliação automática de resposta não-LLM ampliada pelo hard eval e pelo run externo proxy `9/9`; falta expandir para perguntas abertas e benchmark externo completo/licenciado.
 
 ## 7.6 Cognição autônoma interna fora do chat
-_Status: [EM ANDAMENTO 72%]_
+_Status: [EM ANDAMENTO 76%]_
 - [FEITO] `autonomous_cognition.tick(stage="perceive")` cria percepção interna normalizada a partir de eventos, workspace, goals, actions, conflitos e memória episódica recente.
 - [FEITO] `stage="deliberate"` prevê riscos operacionais e transforma risco em ações internas seguras, deduplicadas por `cooldown_key` na fila de ações.
 - [FEITO] `stage="act"` executa uma ação interna reversível, mede consequência, calcula surpresa e grava episódio estruturado no store.
 - [FEITO] Loop roda em background por `ULTRON_AUTONOMOUS_COGNITION_ENABLED` e não depende de prompt humano, chat frontend ou LLM externo.
+- [FEITO] `online_rl_loop.py` adiciona seleção autônoma de intervenções internas por recompensa observada, fora do chat e sem LLM.
 - [EM ANDAMENTO 45%] Ainda falta prova longitudinal com 30+ ciclos vivos medindo redução de surpresa e aumento de utilidade de ações.
 
 ---
 
 # Fase 8 — Aprendizagem por Reforço Online (Autonomous RL)
-_Status da fase: [EM ANDAMENTO 65%] — Aguardando Benchmark Longitudinal_
+_Status da fase: [EM ANDAMENTO 78%] — Aguardando Benchmark Longitudinal_
 
 O sistema agora fecha o loop entre consequências observadas e ajuste de política sem intervenção humana.
 
 ## 8.1 Motor de Política Online (Thompson Sampling + EMA Decay)
-_Status: [EM ANDAMENTO 70%]_
+_Status: [EM ANDAMENTO 82%]_
 - [IMPLEMENTADO] Implementar `rl_policy.py` com posterior Beta por (action_kind, context)
 - [IMPLEMENTADO] Thompson Sampling para gerar prioridades com exploração natural
 - [IMPLEMENTADO] EMA decay periódico para esquecer experiências obsoletas
 - [IMPLEMENTADO] Safety guardrails: floor de prioridade mínima + proteção de ações críticas
 - [IMPLEMENTADO] Persistência do estado da política em `data/rl_policy_state.json`
+- [FEITO] `online_rl_loop.py` usa a política para selecionar intervenções internas reais e registrar consequência/reward por ciclo.
 
 ## 8.2 Integração no Planner
-_Status: [EM ANDAMENTO 65%]_
+_Status: [EM ANDAMENTO 72%]_
 - [IMPLEMENTADO] Substituir boost/penalize estático por `rl_policy.sample_priority` no planner
 - [IMPLEMENTADO] Cold-start fallback: usar priors Bayesianos do `self_model` quando não há dados suficientes (< 3 observações)
 - [IMPLEMENTADO] Contextualização por modo homeostático (`normal`, `repair`, `conservative`)
+- [FEITO] Orquestrador online escolhe entre `trusted_acquisition`, `cognitive_patch_loop`, `sleep_digest`, `homeostasis_tune` e `epistemic_gap_scan` conforme pressão epistêmica/homeostática e policy.
 
 ## 8.3 Fechamento do Loop de Reward
-_Status: [EM ANDAMENTO 68%]_
+_Status: [EM ANDAMENTO 84%]_
 - [IMPLEMENTADO] Callback de reward no caminho de sucesso (`action_done`)
 - [IMPLEMENTADO] Callback de reward no caminho de falha (`action_error`, reward=0.1)
 - [IMPLEMENTADO] Integração com `economic.reward` como sinal de recompensa
+- [FEITO] Execução real em 2026-05-06 escolheu `trusted_acquisition`, aplicou conhecimento, recebeu reward `0.7492`, atualizou `trusted_acquisition|normal` e ajustou drive `competence`.
 
 ## 8.4 Observabilidade
-_Status: [EM ANDAMENTO 60%]_
+_Status: [EM ANDAMENTO 78%]_
 - [IMPLEMENTADO] Endpoint `GET /api/rl/policy` para inspecionar a política em tempo real
+- [FEITO] Endpoints `GET /api/rl/online/status`, `POST /api/rl/online/run` e `POST /api/rl/online/selftest`.
+- [FEITO] Runs persistidos em `backend/data/online_rl_runs.jsonl` e estado em `backend/data/online_rl_state.json`.
 
 ## 8.5 Validação Longitudinal
-_Status: [EM ANDAMENTO 45%]_
+_Status: [EM ANDAMENTO 52%]_
 - [EM ANDAMENTO 55%] Verificar convergência da política após 14+ ciclos de ação (mean_reward variando entre 0.3 e 0.75)
 - [PENDENTE] Comparar taxa de sucesso antes/depois do RL online em larga escala
 - [EM ANDAMENTO 60%] Validar que o decaimento EMA previne lock-in em políticas obsoletas
+- [EM ANDAMENTO 52%] Há uma execução real bem-sucedida e testes unitários cobrindo recompensa positiva, penalização de falha e cooldown; ainda falta série viva de 30+ ciclos.
 
 ---
 
 # Fase 9 — Função de Utilidade Intrínseca (Emergent Self-Goals)
-_Status da fase: [EM ANDAMENTO 62%] — Aguardando Validação de Convergência de Drives_
+_Status da fase: [EM ANDAMENTO 65%] — Aguardando Validação de Convergência de Drives_
 
 O sistema agora gera seus próprios objetivos a partir da experiência acumulada, sem templates humanos.
 
@@ -799,10 +824,11 @@ _Status: [EM ANDAMENTO 60%]_
 - [IMPLEMENTADO] Delegação de `intrinsic.synthesize_intrinsic_goal` para `intrinsic_utility.derive_goals()`
 
 ## 9.3 Auto-Ajuste de Pesos dos Drives
-_Status: [EM ANDAMENTO 60%]_
+_Status: [EM ANDAMENTO 66%]_
 - [IMPLEMENTADO] `adjust_drive_weights(drive, reward)` atualiza pesos por EMA com normalização
 - [IMPLEMENTADO] Drives que geram goals bem-sucedidos sobem; drives cujos goals falharam descem
 - [IMPLEMENTADO] Safety floor: nenhum drive pode ser suprimido abaixo de MIN_WEIGHT
+- [FEITO] Execução real do RL online ajustou `competence` após reward `0.7492`, demonstrando acoplamento consequência → drive.
 
 ## 9.4 Resistência a Manipulação
 _Status: [EM ANDAMENTO 60%]_
@@ -815,9 +841,10 @@ _Status: [EM ANDAMENTO 60%]_
 - [IMPLEMENTADO] Endpoint `GET /api/utility/status` com utilidade, drives, goals emergentes, histórico
 
 ## 9.6 Validação Longitudinal
-_Status: [EM ANDAMENTO 50%]_
+_Status: [EM ANDAMENTO 52%]_
 - [EM ANDAMENTO 50%] Observar convergência dos drive weights após ciclos iniciais
 - [EM ANDAMENTO 55%] Verificar que goals emergentes refletem lacunas reais (ex: gap de autonomia detectado em 2026-03-24)
+- [EM ANDAMENTO 52%] Primeiro ajuste por consequência real registrado; ainda falta série longitudinal para distinguir convergência de ruído.
 
 ---
 
@@ -849,7 +876,7 @@ _Status: [EM ANDAMENTO 55%]_
 ---
 
 # Fase 11 — Motor de Generalização Composicional
-_Status da fase: [EM ANDAMENTO 70%] — Aguardando Benchmark ARC Completo_
+_Status da fase: [EM ANDAMENTO 72%] — Aguardando Benchmark ARC Completo_
 
 O sistema agora monta soluções para problemas novos a partir de princípios (composição), em vez de apenas interpolar padrões estatísticos.
 
@@ -876,8 +903,9 @@ _Status: [EM ANDAMENTO 65%]_
 - [IMPLEMENTADO] Endpoint `GET /api/composition/status` com métricas de composição vs interpolação
 
 ## 11.5 Benchmarking (ARC-style)
-_Status: [EM ANDAMENTO 55%]_
+_Status: [EM ANDAMENTO 60%]_
 - [EM ANDAMENTO 55%] Validar em problemas genuinamente fora da distribuição de treino (indução de regra blind_001 validada)
+- [EM ANDAMENTO 60%] Run externo proxy `extb_cc842ab3d4` passou `arc_easy_partial` `3/3`, mas ainda não é ARC completo nem mede indução visual/abstrata ampla.
 - [PENDENTE] Comparar precisão de composição simbólica vs LLM "zero-shot" puro
 
 ---

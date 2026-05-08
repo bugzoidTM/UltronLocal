@@ -1,0 +1,65 @@
+{
+  "ok": true,
+  "id": "sleep_digest_2026-05-08_3a3fdda1ee89acf2",
+  "schema": "ultron.sleep_episodic_digest.v1",
+  "ts": 1778265403,
+  "day": "2026-05-08",
+  "checksum": "3a3fdda1ee89acf2",
+  "source_count": 28,
+  "pruned": 0,
+  "abstracted": 0,
+  "abstractions_tested": 78,
+  "sql_promoted_to_episodic": 0,
+  "episodic_enrichment_records": 5,
+  "active_investigation_executed": 3,
+  "active_investigation_injected": 2,
+  "stagnation_status": "recovered_by_episodic_enrichment",
+  "themes": [
+    {
+      "domain": "self_introspection",
+      "action_kind": "episodic_compiler",
+      "episode_count": 6,
+      "ok_count": 6,
+      "failure_count": 0,
+      "mean_surprise": 0.15,
+      "keywords": [
+        "episodic_compiler"
+      ],
+      "examples": [
+        "episodic_compiler success",
+        "episodic_compiler success",
+        "episodic_compiler success"
+      ]
+    },
+    {
+      "domain": "self_introspection",
+      "action_kind": "sleep_cycle",
+      "episode_count": 2,
+      "ok_count": 2,
+      "failure_count": 0,
+      "mean_surprise": 0.15,
+      "keywords": [
+        "sleep_cycle"
+      ],
+      "examples": [
+        "sleep_cycle success",
+        "sleep_cycle success"
+      ]
+    },
+    {
+      "domain": "planning",
+      "action_kind": "causal_graph_enrichment",
+      "episode_count": 1,
+      "ok_count": 1,
+      "failure_count": 0,
+      "mean_surprise": 0.15,
+      "keywords": [
+        "causal_graph_enrichment"
+      ],
+      "examples": [
+        "causal_graph_enrichment success"
+      ]
+    }
+  ],
+  "structured_episode_id": "ep_1778265544_565167"
+}

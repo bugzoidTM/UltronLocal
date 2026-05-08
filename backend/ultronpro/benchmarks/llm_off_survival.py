@@ -10,7 +10,7 @@ if BACKEND_DIR not in sys.path:
 
 # Force LLM Off mode for this run
 os.environ['ULTRON_DISABLE_CLOUD_PROVIDERS'] = '1'
-os.environ['ULTRON_PRIMARY_LOCAL_PROVIDER'] = 'llama_cpp'
+os.environ['ULTRON_PRIMARY_LOCAL_PROVIDER'] = 'ultron_infer'
 
 from ultronpro import llm
 
@@ -33,8 +33,8 @@ def run_survival_test():
         
         start = time.time()
         try:
-            # We use the 'ollama_gemma' strategy which we mapped to llama_cpp
-            resp = llm.router.complete(query, strategy="ollama_gemma", max_tokens=256)
+            # Local survival path uses the persistent Qwen llama-server through ultron_infer.
+            resp = llm.router.complete(query, strategy="local", max_tokens=256)
             latency = time.time() - start
             
             success = len(resp.strip()) > 10

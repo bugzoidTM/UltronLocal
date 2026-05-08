@@ -1382,6 +1382,20 @@ class Store:
 
             return int(cur.lastrowid)
 
+    def list_procedure_runs(self, procedure_id: int, limit: int = 50) -> list[dict[str, Any]]:
+        with self._conn() as c:
+            rows = c.execute(
+                """
+                SELECT id, procedure_id, created_at, input_text, output_text, score, success, notes
+                FROM procedure_runs
+                WHERE procedure_id=?
+                ORDER BY id DESC
+                LIMIT ?
+                """,
+                (int(procedure_id), int(limit)),
+            ).fetchall()
+        return [dict(r) for r in rows][::-1]
+
     # --- analogies (cross-domain transfer)
     def add_analogy(
         self,
@@ -2880,6 +2894,9 @@ def get_procedure(procedure_id: int):
 
 def add_procedure_run(procedure_id: int, input_text: str | None, output_text: str | None, score: float, success: bool, notes: str | None = None):
     return db.add_procedure_run(procedure_id, input_text, output_text, score=score, success=success, notes=notes)
+
+def list_procedure_runs(procedure_id: int, limit: int = 50):
+    return db.list_procedure_runs(procedure_id, limit=limit)
 
 def add_analogy(source_domain: str | None, target_domain: str | None, source_concept: str | None, target_concept: str | None, mapping_json: str | None, inference_rule: str | None, confidence: float = 0.5, status: str = 'hypothesis', evidence_refs_json: str | None = None, notes: str | None = None):
     return db.add_analogy(source_domain, target_domain, source_concept, target_concept, mapping_json, inference_rule, confidence=confidence, status=status, evidence_refs_json=evidence_refs_json, notes=notes)

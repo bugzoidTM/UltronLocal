@@ -5,7 +5,11 @@ from typing import Any
 from ultronpro import causal, governance, tom
 
 
-RISKY_TERMS = ['apagar', 'deletar', 'remover', 'reiniciar', 'migrar', 'deploy', 'executar', 'alterar', 'substituir']
+RISKY_TERMS = [
+    'apagar', 'deletar', 'remover', 'reiniciar', 'migrar', 'deploy',
+    'executar', 'alterar', 'substituir', 'patch', 'auto-modificacao',
+    'auto-modification', 'self_modification',
+]
 REVERSIBLE_TERMS = ['simular', 'analisar', 'planejar', 'rascunho', 'sugerir', 'explicar']
 
 VERIFIABLE_DOMAINS = [
@@ -62,11 +66,13 @@ def run_preflight(
     sim = causal.simulate_intervention({'nodes': {}, 'edges': []}, interventions, steps=1)
 
     lexical_risk = 0.12
-    text_l = str(action_text or '').lower()
+    text_l = f"{str(action_kind or '')} {str(action_text or '')}".lower()
     if any(t in text_l for t in RISKY_TERMS):
         lexical_risk = 0.62
     elif tool_outputs:
         lexical_risk = 0.44
+    if any(t in text_l for t in ('auto-modificacao', 'auto-modification', 'self_modification', 'autonomous_executor')):
+        lexical_risk = max(lexical_risk, 0.68)
 
     governance_risk = 0.18
     if gov.get('class') == 'auto_with_proof':

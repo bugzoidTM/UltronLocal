@@ -27,7 +27,7 @@ import uvicorn
 import httpx
 
 from ultronpro.secret_redaction import install_logging_redaction
-from ultronpro import llm, llm_adapter, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, roadmap_v5, agi_path, episodic_memory, learning_agenda, sleep_cycle, replay_traces, rag_synth_generator, semantic_cache, prm_lite, symbolic_reasoner, reflexion_agent, cognitive_state, causal_graph, sandbox_client, web_browser, context_policy, quality_eval, context_metrics, context_inspector, rag_router, rag_eval, rag_eval_cases, rag_eval_store, internal_critic, memory_governor, causal_preflight, cognitive_patches, gap_detector, shadow_eval, promotion_gate, rollback_manager, benchmark_suite, ultronbody, explicit_abstractions, structural_mapper, transfer_benchmark, external_benchmarks, cognitive_patch_loop, organic_eval_feed, roadmap_status, self_governance, operational_consciousness_benchmark, local_reasoning, self_improvement_engine, inner_monologue, working_memory, vision, world_model, causal_discovery, self_modification, continuous_learning, recursive_self_improvement, autonomous_loop, metacognitive_loop, web_explorer, mental_simulation, code_self_healer, self_talk_loop, autonomous_cognition, low_power, runtime_guard, longitudinal_harness
+from ultronpro import llm, llm_adapter, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, roadmap_v5, agi_path, episodic_memory, learning_agenda, sleep_cycle, replay_traces, rag_synth_generator, semantic_cache, prm_lite, symbolic_reasoner, reflexion_agent, cognitive_state, causal_graph, sandbox_client, web_browser, context_policy, quality_eval, context_metrics, context_inspector, rag_router, rag_eval, rag_eval_cases, rag_eval_store, internal_critic, memory_governor, causal_preflight, cognitive_patches, gap_detector, shadow_eval, promotion_gate, rollback_manager, benchmark_suite, ultronbody, explicit_abstractions, structural_mapper, transfer_benchmark, external_benchmarks, cognitive_patch_loop, organic_eval_feed, roadmap_status, self_governance, operational_consciousness_benchmark, local_reasoning, self_improvement_engine, inner_monologue, working_memory, vision, world_model, causal_discovery, self_modification, continuous_learning, recursive_self_improvement, autonomous_loop, metacognitive_loop, web_explorer, mental_simulation, code_self_healer, self_talk_loop, autonomous_cognition, low_power, runtime_guard, trusted_acquisition_loop, online_rl_loop, longitudinal_harness
 
 
 # New systems - qualia
@@ -452,57 +452,15 @@ def _enqueue_from_persistent_goal():
 
 
 def _workspace_publish_sync(module: str, channel: str, payload: dict, salience: float = 0.5, ttl_sec: int = 900) -> int:
-    try:
-        import json
-        payload_str = json.dumps(payload or {}, ensure_ascii=False)
-        wid = store.publish_workspace(
-            module=module,
-            channel=channel,
-            payload_json=payload_str,
-            salience=float(salience),
-            ttl_sec=int(ttl_sec),
-        )
-        # Push into the real active blackboard (Global Workspace)
-        try:
-            from ultronpro import working_memory
-            summary = f"[{module}:{channel}] " + payload_str[:350]
-            working_memory.add_to_working_memory(
-                content=summary,
-                source=module,
-                item_type=channel,
-                salience=float(salience),
-                metadata={'workspace_id': wid}
-            )
-        except Exception:
-            pass
-            
-        return wid
-    except Exception:
-        return 0
+    from ultronpro.core import workspace_bus
+
+    return workspace_bus.publish_sync(module, channel, payload or {}, salience=salience, ttl_sec=ttl_sec)
 
 
 def _workspace_publish(module: str, channel: str, payload: dict, salience: float = 0.5, ttl_sec: int = 900) -> int:
-    try:
-        loop_name = runtime_guard.current_loop_name()
-    except Exception:
-        loop_name = None
-    if loop_name:
-        try:
-            from ultronpro import background_binary_bus
+    from ultronpro.core import workspace_bus
 
-            background_binary_bus.register_workspace_sink(_workspace_publish_sync)
-            if background_binary_bus.publish_workspace_task(
-                loop_name=loop_name,
-                module=module,
-                channel=channel,
-                payload=payload or {},
-                salience=float(salience),
-                ttl_sec=int(ttl_sec),
-            ):
-                return 0
-        except Exception:
-            pass
-    return _workspace_publish_sync(module, channel, payload or {}, salience=salience, ttl_sec=ttl_sec)
+    return workspace_bus.publish(module, channel, payload or {}, salience=salience, ttl_sec=ttl_sec)
 
 
 def _workspace_recent(channels: list[str] | None = None, limit: int = 20) -> list[dict]:
@@ -1299,12 +1257,21 @@ def _intrinsic_tick(force: bool = False) -> dict:
     _workspace_publish('intrinsic', 'purpose.state', {'purpose': st.get('purpose'), 'drives': st.get('drives'), 'chosen_goal': chosen, 'goal_id': gid}, salience=0.78, ttl_sec=3600)
     store.db.add_event('intrinsic_tick', f"ðŸ§­ IME tick: drive={chosen.get('drive')} goal={chosen.get('title')}")
 
+    self_spec = None
+    try:
+        from ultronpro import auto_specification
+
+        self_spec = auto_specification.rewrite_high_level_objectives(apply=True, force=force)
+    except Exception as exc:
+        self_spec = {'ok': False, 'error': str(exc)[:180]}
+
     return {
         'signals': signals,
         'drives': st.get('drives'),
         'purpose': st.get('purpose'),
         'chosen_goal': chosen,
         'goal_id': gid,
+        'self_specification': self_spec,
     }
 
 
@@ -3072,6 +3039,17 @@ def _select_procedure(context_text: str, domain: str | None = None) -> dict | No
         if any(k in ctx for k in ['buscar','consulta','query','search','api']) and ptype == 'query':
             overlap += 0.25
 
+        try:
+            from ultronpro import procedural_induction
+
+            app = procedural_induction.score_applicability(int(p.get('id') or 0), context_text)
+            if app.get('available'):
+                overlap += float(app.get('score') or 0.0) * 0.25
+                if not app.get('applicable') and app.get('status') in ('induced', 'verified'):
+                    overlap -= 0.12
+        except Exception:
+            pass
+
         return base + min(0.8, overlap)
 
     ranked = sorted(procs, key=score, reverse=True)
@@ -3113,6 +3091,15 @@ Output:\n{out[:2000]}"""
 
     score = max(0.0, min(1.0, score))
     return score, bool(score >= 0.62)
+
+
+def _induce_procedure_contract_after_run(procedure_id: int) -> dict:
+    try:
+        from ultronpro import procedural_induction
+
+        return procedural_induction.induce_and_persist(int(procedure_id), publish=True)
+    except Exception as exc:
+        return {"ok": False, "error": f"procedural_induction_failed:{exc}"}
 
 
 def _invent_procedure_from_context(context_text: str, domain: str | None = None, name_hint: str | None = None) -> dict | None:
@@ -3211,7 +3198,8 @@ def _execute_procedure_simulation(procedure_id: int, input_text: str | None = No
         priority=3,
     )
 
-    return {"ok": True, "run_id": run_id, "score": score, "success": success, "output": out, "procedure": p.get('name'), "proc_type": ptype}
+    contract = _induce_procedure_contract_after_run(procedure_id)
+    return {"ok": True, "run_id": run_id, "score": score, "success": success, "output": out, "procedure": p.get('name'), "proc_type": ptype, "procedural_contract": contract}
 
 
 def _execute_procedure_active(procedure_id: int, input_text: str | None = None, notify: bool = False) -> dict:
@@ -3304,6 +3292,7 @@ def _execute_procedure_active(procedure_id: int, input_text: str | None = None, 
         ttl_sec=1200,
     )
 
+    contract = _induce_procedure_contract_after_run(procedure_id)
     return {
         "ok": True,
         "run_id": run_id,
@@ -3314,6 +3303,7 @@ def _execute_procedure_active(procedure_id: int, input_text: str | None = None, 
         "artifact": str(artifact_path) if artifact_path else None,
         "output": out,
         "active": True,
+        "procedural_contract": contract,
     }
 
 
@@ -6206,6 +6196,29 @@ async def startup_event():
     s = settings.load_settings()
     logger.info(f"Loaded settings. LightRAG URL: {s.get('lightrag_url')}")
 
+    try:
+        from ultronpro import qwen_runtime
+
+        qwen_start = await asyncio.to_thread(
+            qwen_runtime.ensure_server_started,
+            reason="ultronpro_startup",
+            wait_health_sec=0,
+        )
+        if qwen_start.get("started"):
+            profile = (qwen_start.get("profile") or {}).get("name")
+            logger.info("Qwen llama-server startup requested profile=%s pid=%s", profile, qwen_start.get("pid"))
+        elif qwen_start.get("reason") == "already_running":
+            logger.info("Qwen llama-server already running")
+        elif qwen_start.get("reason") == "autostart_disabled":
+            logger.info("Qwen llama-server autostart disabled")
+        else:
+            logger.warning("Qwen llama-server startup status: %s", qwen_start)
+        monitor_start = qwen_runtime.start_runtime_monitor()
+        if monitor_start.get("started"):
+            logger.info("Qwen runtime monitor started")
+    except Exception as e:
+        logger.warning(f"Qwen llama-server startup error: {e}")
+
     if _background_guard_task is None or _background_guard_task.done():
         _background_guard_task = asyncio.create_task(runtime_guard.monitor_loop())
 
@@ -6380,6 +6393,18 @@ async def startup_event():
     else:
         logger.info("Autonomous cognition loop disabled by background master switch")
 
+    if BACKGROUND_LOOPS_ENABLED:
+        try:
+            rl_start = online_rl_loop.start_background_loop()
+            if rl_start.get("started"):
+                logger.info("Online RL loop started")
+            elif rl_start.get("reason") == "disabled":
+                logger.info("Online RL loop disabled by env")
+        except Exception as e:
+            logger.warning(f"Online RL loop startup error: {e}")
+    else:
+        logger.info("Online RL loop disabled by background master switch")
+
     _runtime_health_write({'reason': 'startup_complete'})
     logger.info("Ultron loops startup complete")
 
@@ -6526,6 +6551,18 @@ async def shutdown_event():
         pass
     try:
         autonomous_cognition.stop_background_loop()
+    except Exception:
+        pass
+    try:
+        online_rl_loop.stop_background_loop()
+    except Exception:
+        pass
+    try:
+        from ultronpro import qwen_runtime
+
+        qwen_runtime.stop_runtime_monitor()
+        if os.getenv("ULTRON_QWEN_STOP_ON_SHUTDOWN", "0") == "1":
+            await asyncio.to_thread(qwen_runtime.stop_server)
     except Exception:
         pass
     logger.info("Shutdown complete")
@@ -7535,10 +7572,36 @@ async def rl_policy_status(limit: int = 30):
     return rl_policy.policy_summary(limit=limit)
 
 
+@app.get('/api/rl/online/status')
+async def online_rl_status(limit: int = 20):
+    return online_rl_loop.status(limit=limit)
+
+
+@app.post('/api/rl/online/run')
+async def online_rl_run(force_kind: str | None = None, dry_run: bool = False, include_cooldown: bool = False):
+    return await asyncio.to_thread(
+        online_rl_loop.run_once,
+        force_kind=force_kind,
+        dry_run=dry_run,
+        include_cooldown=include_cooldown,
+    )
+
+
+@app.post('/api/rl/online/selftest')
+async def online_rl_selftest():
+    return online_rl_loop.run_selftest()
+
+
 @app.get('/api/utility/status')
 async def utility_status(limit: int = 20):
     from ultronpro import intrinsic_utility
     return intrinsic_utility.status(limit=limit)
+
+
+@app.get('/api/utility/kernel')
+async def utility_kernel_status(limit: int = 20):
+    from ultronpro import intrinsic_kernel
+    return intrinsic_kernel.status(limit=limit)
 
 
 @app.get('/api/gate/calibration')
@@ -8678,6 +8741,197 @@ def _safe_json_parse(text: str) -> dict[str, Any]:
     return {}
 
 
+def _metacog_query_terms(text: str) -> list[str]:
+    stop = {
+        'qual', 'quais', 'quem', 'como', 'onde', 'quando', 'porque', 'por', 'que',
+        'para', 'sobre', 'isso', 'essa', 'esse', 'este', 'esta', 'com', 'uma', 'um',
+    }
+    normalized = unicodedata.normalize('NFKD', str(text or '').lower())
+    normalized = ''.join(ch for ch in normalized if not unicodedata.combining(ch))
+    terms = sorted(set(re.findall(r"[a-z0-9_]{3,}", normalized)) - stop)
+    return terms[:12]
+
+
+def _metacog_causal_count(causal_hints: Any) -> int:
+    if isinstance(causal_hints, dict):
+        items = causal_hints.get('items') if isinstance(causal_hints.get('items'), list) else []
+        try:
+            return max(int(causal_hints.get('count') or 0), len(items))
+        except Exception:
+            return len(items)
+    if isinstance(causal_hints, list):
+        return len(causal_hints)
+    return 0
+
+
+def _metacog_gap_experiment(missing_slots: list[str], query_terms: list[str]) -> dict[str, Any]:
+    if 'aresta_causal_relevante' in missing_slots:
+        kind = 'causal_graph_enrichment'
+        target = 'causal_graph'
+        action = 'executar intervencao minima sandboxada para registrar uma aresta causal observavel'
+    elif 'episodio_relevante' in missing_slots:
+        kind = 'episodic_evidence_collection'
+        target = 'episodic_memory'
+        action = 'executar intervencao minima sandboxada para criar episodio recuperavel sobre a lacuna'
+    else:
+        kind = 'coverage_refinement'
+        target = 'metacognition'
+        action = 'registrar por que a cobertura interna nao sustenta uma resposta'
+    return {
+        'kind': kind,
+        'target_route': target,
+        'query_terms': query_terms[:12],
+        'action': action,
+        'acceptance': 'a resposta deve manter UNKNOWN ate recuperar evidencia interna ou registrar a lacuna exata',
+    }
+
+
+def _build_metacog_gap_signal(
+    query: str,
+    *,
+    task_type: str,
+    causal_hints: Any,
+    episodic_similar: list[Any] | None,
+    query_sig: dict[str, Any] | None,
+    rag_docs: list[Any] | None = None,
+) -> dict[str, Any]:
+    causal_count = _metacog_causal_count(causal_hints)
+    episodic_count = len(episodic_similar or [])
+    rag_count = len(rag_docs or [])
+    uncertainty = str((query_sig or {}).get('uncertainty') or 'low')
+    missing: list[str] = []
+    module_gaps: list[dict[str, Any]] = []
+    if causal_count <= 0:
+        missing.append('aresta_causal_relevante')
+        module_gaps.append({
+            'module': 'metacog_orchestrator.causal_graph',
+            'dimension': 'causal_graph',
+            'gap_kind': 'missing_causal_edge',
+            'missing_slot': 'aresta_causal_relevante',
+            'description': 'nenhuma aresta causal foi recuperada para orientar plano ou conclusao',
+        })
+    if episodic_count <= 0:
+        missing.append('episodio_relevante')
+        module_gaps.append({
+            'module': 'metacog_orchestrator.episodic_memory',
+            'dimension': 'episodic_memory',
+            'gap_kind': 'missing_episode',
+            'missing_slot': 'episodio_relevante',
+            'description': 'nenhum episodio similar foi recuperado para ancorar analogia ou decisao',
+        })
+    if rag_count <= 0 and uncertainty == 'high':
+        missing.append('evidencia_contextual_recuperavel')
+        module_gaps.append({
+            'module': 'metacog_orchestrator.context_policy',
+            'dimension': 'retrieval_context',
+            'gap_kind': 'missing_context',
+            'missing_slot': 'evidencia_contextual_recuperavel',
+            'description': 'o roteamento de contexto nao trouxe documento que cubra a pergunta inedita',
+        })
+    if not missing:
+        return {}
+    query_terms = _metacog_query_terms(query)
+    open_dimensions = []
+    for gap in module_gaps:
+        dim = str(gap.get('dimension') or '')
+        if dim and dim not in open_dimensions:
+            open_dimensions.append(dim)
+    return {
+        'schema': 'ultron.cognitive_gap_signal.v1',
+        'source': 'metacog_orchestrator',
+        'reason': 'metacognitive_no_coverage' if causal_count <= 0 and episodic_count <= 0 else 'metacognitive_partial_coverage',
+        'task_type': str(task_type or 'planning'),
+        'query_terms': query_terms,
+        'missing_slots': missing,
+        'open_dimensions': open_dimensions,
+        'module_gaps': module_gaps,
+        'coverage': {
+            'causal_hint_count': causal_count,
+            'episodic_similar_count': episodic_count,
+            'rag_doc_count': rag_count,
+            'structural_uncertainty': uncertainty,
+        },
+        'next_step': {
+            'type': 'minimal_intervention',
+            'requires_sandbox': True,
+            'experiment': _metacog_gap_experiment(missing, query_terms),
+        },
+    }
+
+
+def _metacog_gap_requires_uncertainty(gap_signal: dict[str, Any]) -> bool:
+    if not isinstance(gap_signal, dict) or not gap_signal:
+        return False
+    coverage = gap_signal.get('coverage') if isinstance(gap_signal.get('coverage'), dict) else {}
+    missing = set(gap_signal.get('missing_slots') if isinstance(gap_signal.get('missing_slots'), list) else [])
+    return (
+        'aresta_causal_relevante' in missing
+        and 'episodio_relevante' in missing
+        and int(coverage.get('causal_hint_count') or 0) <= 0
+        and int(coverage.get('episodic_similar_count') or 0) <= 0
+        and int(coverage.get('rag_doc_count') or 0) <= 0
+    )
+
+
+def _compact_gap_intervention(intervention: dict[str, Any]) -> dict[str, Any]:
+    if not isinstance(intervention, dict) or not intervention:
+        return {}
+    execution = intervention.get('execution') if isinstance(intervention.get('execution'), dict) else {}
+    return {
+        'ok': intervention.get('ok'),
+        'executed': intervention.get('executed'),
+        'injected': intervention.get('injected'),
+        'episodic_recorded': intervention.get('episodic_recorded'),
+        'investigation_id': intervention.get('investigation_id'),
+        'missing_slots': intervention.get('missing_slots'),
+        'next_experiment': intervention.get('next_experiment'),
+        'sandbox_ok': ((execution.get('sandbox') or {}).get('ok') if isinstance(execution.get('sandbox'), dict) else None),
+    }
+
+
+def _run_metacog_gap_intervention(query: str, task_type: str, gap_signal: dict[str, Any]) -> dict[str, Any]:
+    if not isinstance(gap_signal, dict) or not gap_signal:
+        return {}
+    missing = set(gap_signal.get('missing_slots') if isinstance(gap_signal.get('missing_slots'), list) else [])
+    if not ({'aresta_causal_relevante', 'episodio_relevante'} & missing):
+        return {}
+    try:
+        from ultronpro import active_investigation
+
+        return active_investigation.run_minimal_intervention_for_gap_signal(
+            query,
+            gap_signal=gap_signal,
+            task_type=task_type,
+            source='metacog_orchestrator',
+        )
+    except Exception as exc:
+        return {'ok': False, 'executed': False, 'error': str(exc)[:180]}
+
+
+def _render_metacog_gap_answer(gap_signal: dict[str, Any], intervention: dict[str, Any] | None = None) -> str:
+    missing = gap_signal.get('missing_slots') if isinstance(gap_signal.get('missing_slots'), list) else []
+    dims = gap_signal.get('open_dimensions') if isinstance(gap_signal.get('open_dimensions'), list) else []
+    next_step = gap_signal.get('next_step') if isinstance(gap_signal.get('next_step'), dict) else {}
+    experiment = next_step.get('experiment') if isinstance(next_step.get('experiment'), dict) else {}
+    parts = [
+        'UNKNOWN: nao tenho cobertura interna suficiente para responder isso com confianca.',
+        f"Lacunas especificas: {', '.join(missing) if missing else 'evidencia interna insuficiente'}.",
+        f"Dimensoes descobertas: {', '.join(dims) if dims else 'desconhecidas'}.",
+    ]
+    if experiment:
+        parts.append(f"Proposta de aprendizado: {experiment.get('action')}.")
+    if isinstance(intervention, dict) and intervention:
+        if intervention.get('executed'):
+            parts.append(
+                'Intervencao minima executada no sandbox: '
+                f"kind={((intervention.get('next_experiment') or {}).get('kind') if isinstance(intervention.get('next_experiment'), dict) else 'unknown')}, "
+                f"injected={bool(intervention.get('injected'))}, episodic_recorded={bool(intervention.get('episodic_recorded'))}."
+            )
+        elif intervention.get('reason'):
+            parts.append(f"Intervencao minima nao executada: {intervention.get('reason')}.")
+    return ' '.join(parts).strip()
+
+
 def _parse_runtime_constraints(items: list[str] | None) -> dict[str, Any]:
     out = {'forbid_tools': set(), 'require_tools': set(), 'max_steps': 3, 'raw': list(items or [])}
     for it in (items or []):
@@ -8885,6 +9139,33 @@ async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generat
         except Exception:
             analogy_ctx = {'triggered': False, 'low_confidence': True}
 
+    metacog_gap_signal = _build_metacog_gap_signal(
+        query,
+        task_type=task_type,
+        causal_hints=causal_hints,
+        episodic_similar=episodic_similar,
+        query_sig=query_sig if isinstance(query_sig, dict) else {},
+        rag_docs=rag_seed_docs,
+    )
+    active_gap_intervention = _run_metacog_gap_intervention(query, task_type, metacog_gap_signal)
+    try:
+        from ultronpro import unified_inference
+
+        inference_frame = unified_inference.trace_from_orchestrator_inputs(
+            query=query,
+            task_type=task_type,
+            rag_docs=rag_seed_docs,
+            causal_hints=causal_hints if isinstance(causal_hints, dict) else {},
+            episodic_similar=episodic_similar,
+            procedural_hints=procedural,
+            context_bundle=ctx_bundle if isinstance(ctx_bundle, dict) else {},
+            metacog_gap_signal=metacog_gap_signal,
+        )
+        inference_context = inference_frame.compact()
+    except Exception:
+        inference_frame = None
+        inference_context = {}
+
     plan_base_confidence = max(0.15, min(0.95, 0.35 + (0.5 * float(adaptive_profile.get('domain_confidence') or 0.5))))
     plan_prompt = json.dumps({
         'task': 'Decompose user request into at least 3 causally distinct candidate_plans (using causal_graph_hints to avoid known risks) then synthesize final answer.',
@@ -8923,6 +9204,9 @@ async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generat
         'procedural_hints': recall_compact.get('procedural_hints') if isinstance(recall_compact, dict) else procedural,
         'causal_graph_hints': causal_hints,
         'analogy_context': analogy_ctx,
+        'metacognitive_gap_signal': metacog_gap_signal,
+        'active_gap_intervention': _compact_gap_intervention(active_gap_intervention),
+        'unified_inference_context': inference_context,
         'tools': [
             {'name': 'search_rag', 'args': {'query': 'string'}},
             {'name': 'symbolic_solve', 'args': {'problem': 'string'}},
@@ -9390,12 +9674,17 @@ async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generat
             'fallback': ctx_bundle.get('fallback'),
             'budget': ctx_bundle.get('budget'),
         },
+        'metacognitive_gap_signal': metacog_gap_signal,
+        'active_gap_intervention': _compact_gap_intervention(active_gap_intervention),
         'style': str(plan.get('final_answer_style') or 'objetivo e Ãºtil'),
         'guardrail': 'Se faltar contexto essencial, diga a lacuna explicitamente e nÃ£o invente fatos.'
     }, ensure_ascii=False)
     fallback_meta = (ctx_bundle.get('fallback') if isinstance(ctx_bundle, dict) else {}) or {}
     hard_fallback_gate = bool(fallback_meta.get('needed')) and str(os.getenv('ULTRON_CONTEXT_HARD_FALLBACK_GATE', '1')).strip().lower() in ('1', 'true', 'yes', 'on')
-    if hard_fallback_gate:
+    hard_metacog_gap_gate = _metacog_gap_requires_uncertainty(metacog_gap_signal)
+    if hard_metacog_gap_gate:
+        final_answer = _render_metacog_gap_answer(metacog_gap_signal, active_gap_intervention)
+    elif hard_fallback_gate:
         missing = ', '.join((fallback_meta.get('missing_required_sources') or []))
         final_answer = (
             f"Lacuna explÃ­cita: faltou contexto essencial ({missing}). "
@@ -9436,7 +9725,7 @@ async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generat
         bool(preflight.get('needs_confirmation')) and str(preflight.get('recommended_action') or '') in ('request_confirmation', 'block_or_escalate', 'revise_with_caution')
     )
     revision_trace: list[dict[str, Any]] = []
-    if revision_needed and not hard_fallback_gate:
+    if revision_needed and not hard_fallback_gate and not hard_metacog_gap_gate:
         revise_prompt = _build_guided_revision_prompt(
             query=query,
             current_answer=final_answer,
@@ -9510,11 +9799,43 @@ async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generat
     synth_tokens_est = context_metrics.estimate_tokens(synth_prompt)
     selected_ctx_tokens_est = context_metrics.estimate_tokens(ctx_bundle.get('selected_contexts'))
     excluded_ctx_count = len(ctx_bundle.get('excluded_contexts') or []) if isinstance(ctx_bundle, dict) else 0
+    try:
+        if inference_frame is not None:
+            inference_frame.add_premise(
+                source='llm_planner',
+                modality='planner_hypothesis',
+                statement=str(plan.get('hypothesis') or plan.get('conclusion') or '')[:700],
+                confidence=float(adjusted_plan_confidence or 0.0),
+                payload={'generation_strategy': generation_strategy, 'candidate_plan_count': len(normalized_candidates)},
+            )
+            for step in tool_outputs[:8]:
+                if not isinstance(step, dict):
+                    continue
+                status = str(step.get('status') or '')
+                inference_frame.add_premise(
+                    source=str(step.get('tool') or 'tool'),
+                    modality='tool_observation',
+                    statement=str(step.get('output') or status or '')[:700],
+                    confidence=0.72 if status == 'ok' else (0.42 if status else 0.35),
+                    payload={'step': step.get('step'), 'status': status, 'args': step.get('args')},
+                )
+            inference_frame.decide(
+                statement=final_answer,
+                threshold=0.60 if hard_metacog_gap_gate else 0.48,
+                selected_source='metacog_orchestrator',
+                strategy='orchestrator_qwen_tools',
+            )
+            inference_trace = inference_frame.to_dict()
+        else:
+            inference_trace = {}
+    except Exception:
+        inference_trace = {}
 
     return {
         'ok': True,
         'answer': final_answer,
         'strategy': 'orchestrator_qwen_tools',
+        'inference_trace': inference_trace,
         'orchestration': {
             'planner_raw': str(planner_raw or '')[:1000],
             'steps_executed': tool_outputs,
@@ -9538,6 +9859,7 @@ async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generat
                     'selected_context_tokens_est': selected_ctx_tokens_est,
                     'excluded_context_count': excluded_ctx_count,
                     'hard_fallback_gate': hard_fallback_gate,
+                    'hard_metacog_gap_gate': hard_metacog_gap_gate,
                 },
                 'episodic_similar_count': len(episodic_similar),
                 'episodic_similar': episodic_similar,
@@ -9550,6 +9872,8 @@ async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generat
                 'memory_budget': recall_compact.get('budget') if isinstance(recall_compact, dict) else {},
                 'causal_graph_hints': causal_hints,
                 'analogy_context': analogy_ctx,
+                'metacognitive_gap_signal': metacog_gap_signal,
+                'active_gap_intervention': _compact_gap_intervention(active_gap_intervention),
                 'runtime_constraints': {
                     'forbid_tools': sorted(list(runtime_constraints.get('forbid_tools') or [])),
                     'require_tools': sorted(list(runtime_constraints.get('require_tools') or [])),
@@ -9584,6 +9908,7 @@ async def _metacog_orchestrator_run(query: str, metrics: dict[str, Any], generat
             'selected_context_tokens_est': selected_ctx_tokens_est,
             'excluded_context_count': excluded_ctx_count,
             'hard_fallback_gate': hard_fallback_gate,
+            'hard_metacog_gap_gate': hard_metacog_gap_gate,
         },
         'metrics': metrics,
         'cache_hit': None,
@@ -11189,6 +11514,16 @@ def _cognitive_response_answer(query: str) -> dict[str, Any]:
         return {'ok': False, 'resolved': False, 'error': str(exc)[:200]}
 
 
+def _cognitive_response_first_refusal(query: str) -> dict[str, Any]:
+    try:
+        from ultronpro import cognitive_response
+
+        return cognitive_response.first_refusal(query, min_confidence=0.90)
+    except Exception as exc:
+        logger.warning(f"Cognitive first refusal failed: {exc}")
+        return {'ok': False, 'resolved': False, 'error': str(exc)[:200]}
+
+
 def _external_factual_decision(query: str) -> dict[str, Any]:
     try:
         decision = classify_external_factual_intent(query)
@@ -11200,6 +11535,50 @@ def _external_factual_decision(query: str) -> dict[str, Any]:
             'confidence': 0.0,
             'method': f'external_factual_classifier_error:{type(exc).__name__}',
         }
+
+
+_STATIC_CHAT_SKILLS = {'web_search', 'code_review', 'debug_error', 'learn_concept'}
+
+
+def _is_chat_skill_executable(skill_name: str | None) -> bool:
+    name = str(skill_name or '').strip()
+    if not name:
+        return False
+    if name in _STATIC_CHAT_SKILLS:
+        return True
+    try:
+        from ultronpro import skill_evolution
+
+        return skill_evolution.is_generated_skill(name)
+    except Exception:
+        return False
+
+
+def _suggest_skill_name_for_chat(query: str) -> str | None:
+    static_name = None
+    try:
+        from ultronpro import skill_loader
+
+        suggested_skill = skill_loader.suggest_skill(query)
+        if suggested_skill:
+            suggested_name = str(suggested_skill.name or '')
+            if not suggested_name.startswith('auto_'):
+                static_name = suggested_name
+    except Exception as e:
+        logger.warning(f"Skill suggestion failed: {e}")
+
+    try:
+        from ultronpro import skill_evolution
+
+        generated = skill_evolution.suggest_generated_skill(query)
+        if generated and generated.get('skill_name'):
+            # Web factual tasks keep the explicit web_search route; otherwise a
+            # replay-promoted generated skill can short-circuit LLM fallback.
+            if static_name != 'web_search' or float(generated.get('score') or 0.0) >= 0.70:
+                return str(generated.get('skill_name'))
+    except Exception:
+        pass
+    return static_name
 
 
 async def _execute_skill_for_chat(query: str, skill_name: str):
@@ -11375,6 +11754,13 @@ def _contains_hardcoded_reasoning(text: str) -> bool:
     for lit in _INFRA_ONLY_LITERALS:
         if lit.lower() in tl:
             return True
+    raw_identity_dump = "identidade registrada" in tl and len(
+        re.findall(r"\b(nome|papel|missao|missão|origem|autoria|criador|ts|tipo|texto)\s*=", tl)
+    ) >= 2
+    if raw_identity_dump:
+        return True
+    if len(re.findall(r"\b(nome|papel|missao|missão|origem|criador|checksum|texto)\s*=", tl)) >= 4:
+        return True
     return False
 
 
@@ -12210,6 +12596,30 @@ async def chat_fast(req: ChatRequest):
         })
     
     # --- NÃ­vel 1: SimbÃ³lico puro (math, lÃ³gica) ---
+    generated_skill_fast = _suggest_skill_name_for_chat(q)
+    if str(generated_skill_fast or '').startswith('auto_') and _is_chat_skill_executable(generated_skill_fast):
+        try:
+            result = await _execute_skill_for_chat(q, str(generated_skill_fast))
+            answer = str(getattr(result, 'output', '') or '').strip()
+            if result and result.success and answer:
+                dt = int((time.time() - t0) * 1000)
+                qs.update_valence(0.16)
+                qs.update_coherence(0.82)
+                qs.update_all_qualia()
+                qs.generate_narrative()
+                return _learned_chat_response(q, {
+                    'ok': True,
+                    'answer': answer,
+                    'strategy': f'skill_{result.skill_name}',
+                    'latency_ms': dt,
+                    'skill_used': result.skill_name,
+                    'generated_skill': True,
+                    'checks_passed': result.checks_passed,
+                    'qualia': qs.generate_report(),
+                }, meta={'module': 'skills', 'skill': result.skill_name, 'generated_skill': True})
+        except Exception as e:
+            logger.warning(f"Generated skill fast-path failed: {e}")
+
     try:
         if is_autobiographical_intent(q):
             cognitive_timeout = float(os.getenv('ULTRON_COGNITIVE_RESPONSE_TIMEOUT_SEC', '12') or 12)
@@ -12256,6 +12666,47 @@ async def chat_fast(req: ChatRequest):
             })
     except (asyncio.TimeoutError, Exception) as e:
         logger.warning(f"Level 1 (Symbolic) failed: {e}")
+
+    # High-confidence non-LLM cognitive answers get first refusal before broad
+    # factual shapes are routed to web_search.
+    try:
+        cognitive_timeout = float(os.getenv('ULTRON_COGNITIVE_RESPONSE_TIMEOUT_SEC', '12') or 12)
+        cognitive = await asyncio.wait_for(
+            asyncio.to_thread(_cognitive_response_first_refusal, q),
+            timeout=cognitive_timeout,
+        )
+        strategy = str(cognitive.get('strategy') or '')
+        module = str(cognitive.get('module') or '')
+        confidence = float(cognitive.get('confidence') or 0.0)
+        if (
+            cognitive.get('resolved')
+            and cognitive.get('answer')
+            and confidence >= 0.90
+            and module not in {'web_search', 'active_investigation'}
+            and strategy.startswith('non_llm_')
+        ):
+            answer = await asyncio.to_thread(_ensure_chat_answer_constraints, q, str(cognitive.get('answer') or ''))
+            if answer:
+                dt = int((time.time() - t0) * 1000)
+                qs.update_valence(0.12)
+                qs.update_coherence(0.82)
+                qs.update_all_qualia()
+                qs.generate_narrative()
+                return _learned_chat_response(q, {
+                    'ok': True,
+                    'answer': answer,
+                    'strategy': strategy,
+                    'latency_ms': dt,
+                    'cognitive_core': True,
+                    'module': module,
+                    'confidence': confidence,
+                    'evidence_summary': cognitive.get('evidence_summary'),
+                    'qualia': qs.generate_report(),
+                }, meta={'module': module, 'cognitive_core': True, 'first_refusal': True})
+    except asyncio.TimeoutError:
+        logger.warning("Cognitive first-refusal timed out")
+    except Exception as e:
+        logger.warning(f"Cognitive first-refusal failed in chat: {e}")
 
     external_web = await _external_factual_web_search_payload(q, t0, qs)
     if external_web:
@@ -12395,17 +12846,10 @@ async def chat_fast(req: ChatRequest):
     intent = _classify_query_type(q)
 
     # --- Skill Layer: Sugestão de skill ---
-    skill_suggestion = None
-    try:
-        from ultronpro import skill_loader
-        suggested_skill = skill_loader.suggest_skill(q)
-        if suggested_skill:
-            skill_suggestion = suggested_skill.name
-    except Exception as e:
-        logger.warning(f"Skill suggestion failed: {e}")
+    skill_suggestion = _suggest_skill_name_for_chat(q)
 
     # Se detectou skill de task, tenta executar
-    if skill_suggestion in ('web_search', 'code_review', 'debug_error', 'learn_concept'):
+    if _is_chat_skill_executable(skill_suggestion):
         try:
             from ultronpro import skill_executor
             executor = skill_executor.get_skill_executor()
@@ -12626,6 +13070,25 @@ async def chat_stream(req: ChatRequest):
         except Exception as e:
             logger.warning(f"Stream autobiographical cognitive response failed: {e}")
 
+        generated_skill_fast = _suggest_skill_name_for_chat(q)
+        if str(generated_skill_fast or '').startswith('auto_') and _is_chat_skill_executable(generated_skill_fast):
+            yield f"data: {json.dumps({'type': 'progress', 'text': f'Skill gerada detectada: {generated_skill_fast}...'})}\n\n"
+            try:
+                result = await _execute_skill_for_chat(q, str(generated_skill_fast))
+                answer = str(getattr(result, 'output', '') or '').strip()
+                if result and result.success and answer:
+                    strategy = f'skill_{result.skill_name}'
+                    _record_conversation_route(
+                        q,
+                        strategy,
+                        source='chat_stream',
+                        meta={'module': 'skills', 'skill': result.skill_name, 'generated_skill': True},
+                    )
+                    yield f"data: {json.dumps({'type': 'done', 'answer': answer, 'strategy': strategy, 'skill_used': result.skill_name, 'generated_skill': True})}\n\n"
+                    return
+            except Exception as e:
+                yield f"data: {json.dumps({'type': 'progress', 'text': f'Skill gerada falhou: {str(e)[:120]}. Usando pipeline principal...'})}\n\n"
+
         yield f"data: {json.dumps({'type': 'progress', 'text': '🧠 Simbólico...'})}\n\n"
         
         # O mesmo pipeline do chat_fast, mas executado com yields
@@ -12718,6 +13181,30 @@ async def chat_stream(req: ChatRequest):
                 _abio_conf = _abio_result.get('confidence', {})
                 yield f"data: {json.dumps({'type': 'progress', 'text': '\U0001f9e0 Memoria autobiografica [' + _abio_cat + ']...'})}\n\n"
                 try:
+                    cognitive_timeout = float(os.getenv('ULTRON_COGNITIVE_RESPONSE_TIMEOUT_SEC', '12') or 12)
+                    _abio_cognitive = await asyncio.wait_for(
+                        asyncio.to_thread(_cognitive_response_answer, q),
+                        timeout=cognitive_timeout,
+                    )
+                    if _abio_cognitive.get('resolved') and _abio_cognitive.get('answer'):
+                        _abio_det_ans = await asyncio.to_thread(
+                            _ensure_chat_answer_constraints,
+                            q,
+                            str(_abio_cognitive.get('answer') or ''),
+                        )
+                        if _abio_det_ans:
+                            strategy = _abio_cognitive.get('strategy') or ('autobiographical_' + _abio_cat)
+                            _record_conversation_route(
+                                q,
+                                strategy,
+                                source='chat_stream',
+                                meta={'module': _abio_cognitive.get('module'), 'category': _abio_cat, 'cognitive_core': True, 'legacy_route_rescue': True},
+                            )
+                            yield f"data: {json.dumps({'type': 'done', 'answer': _abio_det_ans.strip(), 'strategy': strategy, 'autobiographical': True, 'cognitive_core': True, 'confidence': _abio_cognitive.get('confidence')})}\n\n"
+                            return
+                except Exception as e:
+                    logger.warning(f"Autobiographical cognitive rescue failed: {e}")
+                try:
                     from ultronpro import sir_amplifier
 
                     chat_llm_timeout = _chat_llm_timeout()
@@ -12763,16 +13250,11 @@ async def chat_stream(req: ChatRequest):
 
         yield f"data: {json.dumps({'type': 'progress', 'text': '🧠 Consultando Skills...'})}\n\n"
         
-        skill_suggestion = None
-        try:
-            from ultronpro import skill_loader
-            suggested_skill = skill_loader.suggest_skill(q)
-            if suggested_skill:
-                skill_suggestion = suggested_skill.name
-                yield f"data: {json.dumps({'type': 'progress', 'text': f'⚡ Skill detectada: {skill_suggestion}...'})}\n\n"
-        except Exception: pass
+        skill_suggestion = _suggest_skill_name_for_chat(q)
+        if skill_suggestion:
+            yield f"data: {json.dumps({'type': 'progress', 'text': f'⚡ Skill detectada: {skill_suggestion}...'})}\n\n"
         
-        if skill_suggestion in ('web_search', 'code_review', 'debug_error', 'learn_concept'):
+        if _is_chat_skill_executable(skill_suggestion):
             try:
                 from ultronpro import skill_executor
                 executor = skill_executor.get_skill_executor()
@@ -13309,6 +13791,41 @@ async def skills_reload():
         }
     except Exception as e:
         return {'ok': False, 'error': str(e)}
+
+
+@app.get('/api/skills/evolution/status')
+async def skills_evolution_status(limit: int = 20):
+    from ultronpro import skill_evolution
+
+    return skill_evolution.status(limit=limit)
+
+
+@app.post('/api/skills/evolution/generate')
+async def skills_evolution_generate(limit: int = 400, target: int | None = None):
+    from ultronpro import skill_evolution
+
+    return await asyncio.to_thread(skill_evolution.generate_candidates, limit=limit, target=target)
+
+
+@app.post('/api/skills/evolution/replay-promote')
+async def skills_evolution_replay_promote(max_promotions: int = 20):
+    from ultronpro import skill_evolution
+
+    return await asyncio.to_thread(skill_evolution.promote_by_replay, max_promotions=max_promotions)
+
+
+@app.post('/api/skills/evolution/validate-transfer')
+async def skills_evolution_validate_transfer(max_validations: int = 8):
+    from ultronpro import skill_evolution
+
+    return await asyncio.to_thread(skill_evolution.validate_transfer, max_validations=max_validations)
+
+
+@app.post('/api/skills/evolution/benchmark-record')
+async def skills_evolution_benchmark_record(req: dict):
+    from ultronpro import skill_evolution
+
+    return await asyncio.to_thread(skill_evolution.record_benchmark_run, req or {})
 
 
 @app.post('/api/autonomous/goal')
@@ -13911,6 +14428,11 @@ async def llm_usage():
 @app.get('/api/llm/health')
 async def llm_health(provider: str = 'auto'):
     return llm.healthcheck(provider)
+
+
+@app.get('/api/llm/qwen/status')
+async def llm_qwen_status(check_server: bool = False):
+    return llm.qwen_runtime_status(check_server=check_server)
 
 
 @app.get('/api/llm/router/status')
@@ -14836,6 +15358,33 @@ async def plasticity_cognitive_patch_loop_selftest():
     return cognitive_patch_loop.run_selftest()
 
 
+@app.get('/api/trusted-acquisition/status')
+async def trusted_acquisition_status(limit: int = 20):
+    return trusted_acquisition_loop.status(limit=limit)
+
+
+@app.post('/api/trusted-acquisition/run')
+async def trusted_acquisition_run(
+    target_gap_id: str | None = None,
+    top_k: int = 5,
+    max_sources: int = 3,
+    apply: bool = True,
+    application_mode: str = 'auto',
+):
+    return trusted_acquisition_loop.run_once(
+        target_gap_id=target_gap_id,
+        top_k=top_k,
+        max_sources=max_sources,
+        apply=apply,
+        application_mode=application_mode,
+    )
+
+
+@app.post('/api/trusted-acquisition/selftest')
+async def trusted_acquisition_selftest():
+    return trusted_acquisition_loop.run_selftest()
+
+
 @app.post('/api/plasticity/cognitive-patches/{patch_id}/shadow-eval')
 async def run_cognitive_patch_shadow_eval(patch_id: str, req: ShadowEvalRunRequest):
     result = shadow_eval.compare_patch_candidate(patch_id, [c.model_dump() for c in req.cases])
@@ -15569,6 +16118,20 @@ async def memory_curation_run(batch: int = 30):
 
 # --- Goals ---
 
+@app.get("/api/self/specification")
+async def self_specification_status():
+    from ultronpro import auto_specification
+
+    return auto_specification.status()
+
+
+@app.post("/api/self/specification/rewrite")
+async def self_specification_rewrite(apply: bool = True, force: bool = False):
+    from ultronpro import auto_specification
+
+    return auto_specification.rewrite_high_level_objectives(apply=apply, force=force)
+
+
 @app.get("/api/goals/persistent")
 async def persistent_goals_list():
     data = _persistent_goals_load()
@@ -15687,7 +16250,20 @@ async def procedures_run_log(req: ProcedureRunRequest):
         success=bool(req.success),
         notes=req.notes,
     )
-    return {"status": "ok", "run_id": rid}
+    contract = _induce_procedure_contract_after_run(req.procedure_id)
+    return {"status": "ok", "run_id": rid, "procedural_contract": contract}
+
+
+@app.get("/api/procedures/{procedure_id}/contract")
+async def procedures_contract(procedure_id: int, refresh: bool = True):
+    from ultronpro import procedural_induction
+
+    if refresh:
+        return procedural_induction.induce_and_persist(procedure_id, publish=False)
+    contract = procedural_induction.load_contract(procedure_id)
+    if not contract:
+        raise HTTPException(404, "Procedural contract not found")
+    return contract
 
 
 @app.post("/api/procedures/select")

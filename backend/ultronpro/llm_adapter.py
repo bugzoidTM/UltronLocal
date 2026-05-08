@@ -6,7 +6,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-from ultronpro import provider_policy
+from ultronpro import provider_policy, qwen_runtime
 
 PERF_PATH = Path('/app/data/llm_provider_perf.json')
 QUARANTINE_PATH = Path('/app/data/llm_provider_quarantine.json')
@@ -272,8 +272,8 @@ def provider_priority(*, task_type: str, budget_mode: str) -> list[str]:
 def provider_default_model(provider: str) -> str:
     pv = str(provider or '').strip().lower()
     model_map = {
-        'ollama_local': os.getenv('ULTRON_OLLAMA_LOCAL_MODEL', os.getenv('ULTRON_PRIMARY_LOCAL_MODEL', os.getenv('OLLAMA_CANARY_MODEL', 'qwen2.5:3b-instruct-q4_K_M'))),
-        'ultron_infer': os.getenv('ULTRON_INFER_MODEL_NAME', os.getenv('ULTRON_PRIMARY_LOCAL_MODEL', os.getenv('OLLAMA_CANARY_MODEL', 'qwen2.5:3b-instruct-q4_K_M'))),
+        'ollama_local': os.getenv('ULTRON_OLLAMA_LOCAL_MODEL', os.getenv('ULTRON_PRIMARY_LOCAL_MODEL', os.getenv('OLLAMA_CANARY_MODEL', qwen_runtime.MODEL_ALIAS))),
+        'ultron_infer': os.getenv('ULTRON_INFER_MODEL_NAME', os.getenv('ULTRON_PRIMARY_LOCAL_MODEL', os.getenv('OLLAMA_CANARY_MODEL', qwen_runtime.MODEL_ALIAS))),
         'openai': os.getenv('OPENAI_DEFAULT_MODEL', 'gpt-4o-mini'),
         'anthropic': os.getenv('ANTHROPIC_DEFAULT_MODEL', 'claude-3-5-sonnet-20241022'),
         'groq': os.getenv('GROQ_DEFAULT_MODEL', 'llama-3.3-70b-versatile'),

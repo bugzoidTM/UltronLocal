@@ -70,6 +70,12 @@ _CATEGORY_PROFILES: dict[str, str] = {
         "its purpose, goals, objective, mission, values, direction, or reason for being. "
         "Pergunta sobre missao, objetivo, proposito, metas ou razao de ser do proprio sistema."
     ),
+    "personality": (
+        "Autobiographical personality and character: the user asks what stable traits, "
+        "behavioral tendencies, emergent personality, character, temperament, values in action, "
+        "or self-consistent patterns the assistant has developed from its own memory. "
+        "Pergunta sobre personalidade emergente, carater, temperamento ou tracos consistentes do proprio sistema."
+    ),
 }
 
 
@@ -213,14 +219,22 @@ _INTERNAL_ENTITY_TOKENS = frozenset(
         "skill",
         "pipeline",
         "workspace",
-    "runtime",
-    "modelo",
-    "model",
-    "llm",
-    "provider",
-    "provedor",
-    "roteador",
-    "router",
+        "runtime",
+        "modelo",
+        "model",
+        "llm",
+        "provider",
+        "provedor",
+        "roteador",
+        "router",
+        "sleep",
+        "sleep_cycle",
+        "cycle",
+        "pruned",
+        "abstracted",
+        "digest",
+        "mapper",
+        "autoisomorphic_mapper",
     }
 )
 
@@ -240,6 +254,14 @@ _INTERNAL_CAUSAL_OR_SYSTEM_STEMS: tuple[str, ...] = (
     "simul",
     "aconteceria",
     "decis",
+    "sleep",
+    "pruned",
+    "abstract",
+    "digest",
+    "mapper",
+    "isomorf",
+    "biographic",
+    "episod",
 )
 
 _OPINION_STEMS: tuple[str, ...] = (
@@ -402,6 +424,27 @@ _CATEGORY_STEMS: dict[str, tuple[str, ...]] = {
         "direction",
         "valor",
         "value",
+    ),
+    "personality": (
+        "personal",
+        "persona",
+        "personality",
+        "carater",
+        "caract",
+        "temper",
+        "traco",
+        "tracos",
+        "trait",
+        "traits",
+        "tendenc",
+        "padrao",
+        "pattern",
+        "comport",
+        "emerg",
+        "consist",
+        "estavel",
+        "valores",
+        "virtude",
     ),
 }
 

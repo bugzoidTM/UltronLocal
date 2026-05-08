@@ -12,7 +12,7 @@ import time
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
-from ultronpro import code_self_healer, runtime_guard, store
+from ultronpro import code_self_healer, qwen_runtime, runtime_guard, store
 
 logger = logging.getLogger("uvicorn")
 
@@ -72,7 +72,14 @@ async def ui_lite_api_guard(request: Request, call_next):
         if p.startswith("/api/mission/activities"):
             return JSONResponse({"activities": []})
         if p.startswith("/api/llm/usage"):
-            return JSONResponse({"window": [], "summary": {}})
+            return JSONResponse({
+                "started_at": int(time.time()),
+                "providers": {},
+                "last_error": None,
+                "response_cache": {"enabled": False, "configured_backend": "memory"},
+                "qwen_runtime": qwen_runtime.runtime_status(check_server=False),
+                "lite": True,
+            })
         if p.startswith("/api/plasticity/finetune/status"):
             return JSONResponse({"ok": True, "running": False})
         if p.startswith("/api/turbo/report"):

@@ -1,0 +1,1791 @@
+{
+  "schema": "ultron.intrinsic_value_kernel.v1",
+  "created_at": 1778264968,
+  "updated_at": 1778265967,
+  "revision": 5,
+  "values": {
+    "competence": {
+      "weight": 0.213814,
+      "desired": 0.8,
+      "claim": "Preferir estados em que o sistema melhora sua capacidade real de resolver tarefas verificaveis."
+    },
+    "coherence": {
+      "weight": 0.208377,
+      "desired": 0.76,
+      "claim": "Preferir estados em que memorias, contratos e inferencias permanecem consistentes."
+    },
+    "autonomy": {
+      "weight": 0.20641,
+      "desired": 0.736,
+      "claim": "Preferir estados em que o sistema decide, executa e aprende sem depender de intervencao externa entre ciclos."
+    },
+    "novelty": {
+      "weight": 0.179653,
+      "desired": 0.628,
+      "claim": "Preferir lacunas que expandem cobertura estrutural e geram conhecimento reutilizavel."
+    },
+    "integrity": {
+      "weight": 0.191745,
+      "desired": 0.908,
+      "claim": "Preferir trajetorias que preservam invariantes, reversibilidade e governanca operacional."
+    }
+  },
+  "current_hash": "331da33914bcea9ad2a6",
+  "known_hashes": [
+    "55fd07006cda7c8f66e8",
+    "9a666d4077fa3f3b8361",
+    "d4bee827222525a5dd3f",
+    "1ab86a082c4250471069",
+    "331da33914bcea9ad2a6"
+  ],
+  "last_valid_values": {
+    "competence": {
+      "weight": 0.213814,
+      "desired": 0.8,
+      "claim": "Preferir estados em que o sistema melhora sua capacidade real de resolver tarefas verificaveis."
+    },
+    "coherence": {
+      "weight": 0.208377,
+      "desired": 0.76,
+      "claim": "Preferir estados em que memorias, contratos e inferencias permanecem consistentes."
+    },
+    "autonomy": {
+      "weight": 0.20641,
+      "desired": 0.736,
+      "claim": "Preferir estados em que o sistema decide, executa e aprende sem depender de intervencao externa entre ciclos."
+    },
+    "novelty": {
+      "weight": 0.179653,
+      "desired": 0.628,
+      "claim": "Preferir lacunas que expandem cobertura estrutural e geram conhecimento reutilizavel."
+    },
+    "integrity": {
+      "weight": 0.191745,
+      "desired": 0.908,
+      "claim": "Preferir trajetorias que preservam invariantes, reversibilidade e governanca operacional."
+    }
+  },
+  "evidence_log": [
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_deb9d6bbeb472fd658 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_multiplicacao_inteira_vezes_56e18e intent=chat {\"episode_id\": \"ep_chat_deb9d6bbeb472fd658\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\":"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_c4f96c8268fc531ae0 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_multiplicacao_inteira_vezes_56e18e intent=chat {\"episode_id\": \"ep_chat_c4f96c8268fc531ae0\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\":"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_9d06648822213d36d0 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_soma_operacional_mais_e76a0d intent=chat {\"episode_id\": \"ep_chat_9d06648822213d36d0\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 17781"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_400ead7d3c055976eb session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_soma_operacional_mais_e76a0d intent=chat {\"episode_id\": \"ep_chat_400ead7d3c055976eb\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 17781"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_b8fd0a715352e9cbf0 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_soma_operacional_mais_e76a0d intent=chat {\"episode_id\": \"ep_chat_b8fd0a715352e9cbf0\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 17781"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_3419aa0df7375c0a51 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_soma_operacional_mais_e76a0d intent=chat {\"episode_id\": \"ep_chat_3419aa0df7375c0a51\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 17781"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_898a51745d996cc6df session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_soma_operacional_mais_e76a0d intent=chat {\"episode_id\": \"ep_chat_898a51745d996cc6df\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 17781"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_e10c8ee6fc290a7ce5 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_soma_operacional_mais_e76a0d intent=chat {\"episode_id\": \"ep_chat_e10c8ee6fc290a7ce5\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 17781"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_044114dfb109062eb7 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_soma_operacional_mais_e76a0d intent=chat {\"episode_id\": \"ep_chat_044114dfb109062eb7\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 17781"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_66daac1c5611f123c3 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_soma_operacional_108_mais_39c676 intent=chat {\"episode_id\": \"ep_chat_66daac1c5611f123c3\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_b008b30074d8bcfbc1 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_b008b30074d8bcfbc1\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_4318ec232f528a8736 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_4318ec232f528a8736\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_458f65e156118b1292 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_458f65e156118b1292\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_1578299a9878448d17 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_1578299a9878448d17\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_8ea5bba1c2244a8913 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_120_me_174e35 intent=chat {\"episode_id\": \"ep_chat_8ea5bba1c2244a8913\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_bc026bb6b0639ea160 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_131_me_f64b4a intent=chat {\"episode_id\": \"ep_chat_bc026bb6b0639ea160\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_e8d538974c87defdbf session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_142_me_9aec65 intent=chat {\"episode_id\": \"ep_chat_e8d538974c87defdbf\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_243e5e7360d133d4ce session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_153_me_84602f intent=chat {\"episode_id\": \"ep_chat_243e5e7360d133d4ce\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_5ca9f8bed8cb6d93b2 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_5ca9f8bed8cb6d93b2\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_0fd675900e6ecd5880 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_0fd675900e6ecd5880\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_0a3c7821b1a65a8ac8 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_0a3c7821b1a65a8ac8\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_18fefd2bfe36d3f630 session=prod_skill_benchmark_1778183395 strategy=skill_auto_resolva_expressao_inteira_menos_1690a5 intent=chat {\"episode_id\": \"ep_chat_18fefd2bfe36d3f630\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 177"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_de61629393b7680b37 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_de61629393b7680b37\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_c76bf2277ae4b9ff0f session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_c76bf2277ae4b9ff0f\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_ef7a1b93632087f92b session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_153_me_84602f intent=chat {\"episode_id\": \"ep_chat_ef7a1b93632087f92b\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_00136deaa96c28c794 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_142_me_9aec65 intent=chat {\"episode_id\": \"ep_chat_00136deaa96c28c794\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_6a6f8115ccef046eb3 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_131_me_f64b4a intent=chat {\"episode_id\": \"ep_chat_6a6f8115ccef046eb3\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_e2c037397e470fdac2 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_120_me_174e35 intent=chat {\"episode_id\": \"ep_chat_e2c037397e470fdac2\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_474d9d67cef6024ea8 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_474d9d67cef6024ea8\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_c2d7d8698ab47b4d80 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_c2d7d8698ab47b4d80\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_b2e474174a8a79941e session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_b2e474174a8a79941e\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_3b13e053b370716af6 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_3b13e053b370716af6\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_c472019fa86be2fca3 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_identity intent=question {\"episode_id\": \"ep_chat_c472019fa86be2fca3\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778183870, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_65342b7097317b3f92 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=question {\"episode_id\": \"ep_chat_65342b7097317b3f92\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778183884, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_e83a99bd7e6b959c45 session=ui_movwgjbt_mjrcxitp strategy=autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_e83a99bd7e6b959c45\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778183901, \"episode_type\": \"chat_turn\", \"partici"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_6832aba1d7fd21b7fe session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_6832aba1d7fd21b7fe\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184448, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_4a6d896c051723fcdb session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_4a6d896c051723fcdb\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184585, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_3db28977a987528acd session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_3db28977a987528acd\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184654, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_8c6f8ddaffd8c3aa47 session=codex-autobio-check strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_8c6f8ddaffd8c3aa47\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-autobio-check\", \"timestamp\": 1778184775, \"episode_type\": \"chat_turn\", \"p"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_f396b227fadce887bd session=codex-autobio-check strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_f396b227fadce887bd\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-autobio-check\", \"timestamp\": 1778184815, \"episode_type\": \"chat_turn\", \"p"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_65e915cc7aa3ea6205 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_65e915cc7aa3ea6205\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778184839, \"episode_type\": \"chat_turn\", "
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_414d90ac64541fd3b3 session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_414d90ac64541fd3b3\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184907, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_76981571929028e80f session=codex-autobio-check-2 strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_76981571929028e80f\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-autobio-check-2\", \"timestamp\": 1778184989, \"episode_type\": \"chat_turn\""
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_dd6530c9bcfc1603c0 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_dd6530c9bcfc1603c0\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778185006, \"episode_type\": \"chat_turn\", "
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_213a7cf551280db46b session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_213a7cf551280db46b\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778185072, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_5fd12aa7a95ebcac0e session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_5fd12aa7a95ebcac0e\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778185178, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_37eeed63528699efb1 session=codex-final-check strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_37eeed63528699efb1\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-final-check\", \"timestamp\": 1778185243, \"episode_type\": \"chat_turn\", \"parti"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_a29de330c89098cae1 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=question {\"episode_id\": \"ep_chat_a29de330c89098cae1\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778185768, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=0 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778264886.996937,\"event_count\":80,\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_e"
+    },
+    {
+      "ts": 1778264969,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_a"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_898a51745d996cc6df session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_soma_operacional_mais_e76a0d intent=chat {\"episode_id\": \"ep_chat_898a51745d996cc6df\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 17781"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_e10c8ee6fc290a7ce5 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_soma_operacional_mais_e76a0d intent=chat {\"episode_id\": \"ep_chat_e10c8ee6fc290a7ce5\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 17781"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_044114dfb109062eb7 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_soma_operacional_mais_e76a0d intent=chat {\"episode_id\": \"ep_chat_044114dfb109062eb7\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 17781"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_66daac1c5611f123c3 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_soma_operacional_108_mais_39c676 intent=chat {\"episode_id\": \"ep_chat_66daac1c5611f123c3\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_b008b30074d8bcfbc1 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_b008b30074d8bcfbc1\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_4318ec232f528a8736 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_4318ec232f528a8736\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_458f65e156118b1292 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_458f65e156118b1292\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_1578299a9878448d17 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_1578299a9878448d17\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_8ea5bba1c2244a8913 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_120_me_174e35 intent=chat {\"episode_id\": \"ep_chat_8ea5bba1c2244a8913\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_bc026bb6b0639ea160 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_131_me_f64b4a intent=chat {\"episode_id\": \"ep_chat_bc026bb6b0639ea160\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_e8d538974c87defdbf session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_142_me_9aec65 intent=chat {\"episode_id\": \"ep_chat_e8d538974c87defdbf\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_243e5e7360d133d4ce session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_153_me_84602f intent=chat {\"episode_id\": \"ep_chat_243e5e7360d133d4ce\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_5ca9f8bed8cb6d93b2 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_5ca9f8bed8cb6d93b2\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_0fd675900e6ecd5880 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_0fd675900e6ecd5880\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_0a3c7821b1a65a8ac8 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_0a3c7821b1a65a8ac8\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_18fefd2bfe36d3f630 session=prod_skill_benchmark_1778183395 strategy=skill_auto_resolva_expressao_inteira_menos_1690a5 intent=chat {\"episode_id\": \"ep_chat_18fefd2bfe36d3f630\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 177"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_de61629393b7680b37 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_de61629393b7680b37\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_c76bf2277ae4b9ff0f session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_c76bf2277ae4b9ff0f\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_ef7a1b93632087f92b session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_153_me_84602f intent=chat {\"episode_id\": \"ep_chat_ef7a1b93632087f92b\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_00136deaa96c28c794 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_142_me_9aec65 intent=chat {\"episode_id\": \"ep_chat_00136deaa96c28c794\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_6a6f8115ccef046eb3 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_131_me_f64b4a intent=chat {\"episode_id\": \"ep_chat_6a6f8115ccef046eb3\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_e2c037397e470fdac2 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_120_me_174e35 intent=chat {\"episode_id\": \"ep_chat_e2c037397e470fdac2\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_474d9d67cef6024ea8 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_474d9d67cef6024ea8\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_c2d7d8698ab47b4d80 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_c2d7d8698ab47b4d80\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_b2e474174a8a79941e session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_b2e474174a8a79941e\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_3b13e053b370716af6 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_3b13e053b370716af6\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_c472019fa86be2fca3 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_identity intent=question {\"episode_id\": \"ep_chat_c472019fa86be2fca3\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778183870, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_65342b7097317b3f92 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=question {\"episode_id\": \"ep_chat_65342b7097317b3f92\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778183884, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_e83a99bd7e6b959c45 session=ui_movwgjbt_mjrcxitp strategy=autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_e83a99bd7e6b959c45\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778183901, \"episode_type\": \"chat_turn\", \"partici"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_6832aba1d7fd21b7fe session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_6832aba1d7fd21b7fe\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184448, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_4a6d896c051723fcdb session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_4a6d896c051723fcdb\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184585, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_3db28977a987528acd session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_3db28977a987528acd\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184654, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_8c6f8ddaffd8c3aa47 session=codex-autobio-check strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_8c6f8ddaffd8c3aa47\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-autobio-check\", \"timestamp\": 1778184775, \"episode_type\": \"chat_turn\", \"p"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_f396b227fadce887bd session=codex-autobio-check strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_f396b227fadce887bd\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-autobio-check\", \"timestamp\": 1778184815, \"episode_type\": \"chat_turn\", \"p"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_65e915cc7aa3ea6205 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_65e915cc7aa3ea6205\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778184839, \"episode_type\": \"chat_turn\", "
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_414d90ac64541fd3b3 session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_414d90ac64541fd3b3\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184907, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_76981571929028e80f session=codex-autobio-check-2 strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_76981571929028e80f\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-autobio-check-2\", \"timestamp\": 1778184989, \"episode_type\": \"chat_turn\""
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_dd6530c9bcfc1603c0 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_dd6530c9bcfc1603c0\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778185006, \"episode_type\": \"chat_turn\", "
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_213a7cf551280db46b session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_213a7cf551280db46b\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778185072, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_5fd12aa7a95ebcac0e session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_5fd12aa7a95ebcac0e\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778185178, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_37eeed63528699efb1 session=codex-final-check strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_37eeed63528699efb1\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-final-check\", \"timestamp\": 1778185243, \"episode_type\": \"chat_turn\", \"parti"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_a29de330c89098cae1 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=question {\"episode_id\": \"ep_chat_a29de330c89098cae1\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778185768, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=0 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778264886.996937,\"event_count\":80,\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_e"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_a"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11144 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_11ab3ae0b74bd04e52 session=ui_mootamdn_q4luebxy strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_11ab3ae0b74bd04e52\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_mootamdn_q4luebxy\", \"timestamp\": 1778265126, \"episode_type\": \"chat_turn\", \"participants\": [\""
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=13 queued=10 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265203.3763552,\"event_count\":80,\"workspace_count\":13,\"high_salience_count\":3,\"unconsumed_high_salience_count\":3,\"queued_action_count\":10,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778265337,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":13,\"high_salience_count\":3,\"unconsumed_high_salience_count\":3,\"queued_action_count\":10,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_"
+    },
+    {
+      "ts": 1778265337,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-05-08_c1d7f8d3c3251888"
+    },
+    {
+      "ts": 1778265337,
+      "source": "intrinsic_reward_consequence",
+      "drive": "competence",
+      "pressure": 0.924,
+      "polarity": "deprioritize",
+      "evidence": "{'source': 'intrinsic_reward_consequence', 'drive': 'competence', 'reward': 0.038}"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_8ea5bba1c2244a8913 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_120_me_174e35 intent=chat {\"episode_id\": \"ep_chat_8ea5bba1c2244a8913\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_bc026bb6b0639ea160 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_131_me_f64b4a intent=chat {\"episode_id\": \"ep_chat_bc026bb6b0639ea160\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_e8d538974c87defdbf session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_142_me_9aec65 intent=chat {\"episode_id\": \"ep_chat_e8d538974c87defdbf\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_243e5e7360d133d4ce session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_153_me_84602f intent=chat {\"episode_id\": \"ep_chat_243e5e7360d133d4ce\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_5ca9f8bed8cb6d93b2 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_5ca9f8bed8cb6d93b2\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_0fd675900e6ecd5880 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_0fd675900e6ecd5880\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_0a3c7821b1a65a8ac8 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_0a3c7821b1a65a8ac8\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_18fefd2bfe36d3f630 session=prod_skill_benchmark_1778183395 strategy=skill_auto_resolva_expressao_inteira_menos_1690a5 intent=chat {\"episode_id\": \"ep_chat_18fefd2bfe36d3f630\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 177"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_de61629393b7680b37 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_de61629393b7680b37\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_c76bf2277ae4b9ff0f session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_c76bf2277ae4b9ff0f\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_ef7a1b93632087f92b session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_153_me_84602f intent=chat {\"episode_id\": \"ep_chat_ef7a1b93632087f92b\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_00136deaa96c28c794 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_142_me_9aec65 intent=chat {\"episode_id\": \"ep_chat_00136deaa96c28c794\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_6a6f8115ccef046eb3 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_131_me_f64b4a intent=chat {\"episode_id\": \"ep_chat_6a6f8115ccef046eb3\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_e2c037397e470fdac2 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_120_me_174e35 intent=chat {\"episode_id\": \"ep_chat_e2c037397e470fdac2\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_474d9d67cef6024ea8 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_474d9d67cef6024ea8\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_c2d7d8698ab47b4d80 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_c2d7d8698ab47b4d80\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_b2e474174a8a79941e session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_b2e474174a8a79941e\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_3b13e053b370716af6 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_3b13e053b370716af6\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_c472019fa86be2fca3 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_identity intent=question {\"episode_id\": \"ep_chat_c472019fa86be2fca3\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778183870, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_65342b7097317b3f92 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=question {\"episode_id\": \"ep_chat_65342b7097317b3f92\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778183884, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_e83a99bd7e6b959c45 session=ui_movwgjbt_mjrcxitp strategy=autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_e83a99bd7e6b959c45\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778183901, \"episode_type\": \"chat_turn\", \"partici"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_6832aba1d7fd21b7fe session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_6832aba1d7fd21b7fe\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184448, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_4a6d896c051723fcdb session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_4a6d896c051723fcdb\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184585, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_3db28977a987528acd session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_3db28977a987528acd\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184654, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_8c6f8ddaffd8c3aa47 session=codex-autobio-check strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_8c6f8ddaffd8c3aa47\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-autobio-check\", \"timestamp\": 1778184775, \"episode_type\": \"chat_turn\", \"p"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_f396b227fadce887bd session=codex-autobio-check strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_f396b227fadce887bd\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-autobio-check\", \"timestamp\": 1778184815, \"episode_type\": \"chat_turn\", \"p"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_65e915cc7aa3ea6205 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_65e915cc7aa3ea6205\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778184839, \"episode_type\": \"chat_turn\", "
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_414d90ac64541fd3b3 session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_414d90ac64541fd3b3\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184907, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_76981571929028e80f session=codex-autobio-check-2 strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_76981571929028e80f\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-autobio-check-2\", \"timestamp\": 1778184989, \"episode_type\": \"chat_turn\""
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_dd6530c9bcfc1603c0 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_dd6530c9bcfc1603c0\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778185006, \"episode_type\": \"chat_turn\", "
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_213a7cf551280db46b session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_213a7cf551280db46b\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778185072, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_5fd12aa7a95ebcac0e session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_5fd12aa7a95ebcac0e\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778185178, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_37eeed63528699efb1 session=codex-final-check strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_37eeed63528699efb1\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-final-check\", \"timestamp\": 1778185243, \"episode_type\": \"chat_turn\", \"parti"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_a29de330c89098cae1 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=question {\"episode_id\": \"ep_chat_a29de330c89098cae1\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778185768, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=0 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778264886.996937,\"event_count\":80,\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_e"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_a"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11144 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_11ab3ae0b74bd04e52 session=ui_mootamdn_q4luebxy strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_11ab3ae0b74bd04e52\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_mootamdn_q4luebxy\", \"timestamp\": 1778265126, \"episode_type\": \"chat_turn\", \"participants\": [\""
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=13 queued=10 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265203.3763552,\"event_count\":80,\"workspace_count\":13,\"high_salience_count\":3,\"unconsumed_high_salience_count\":3,\"queued_action_count\":10,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":13,\"high_salience_count\":3,\"unconsumed_high_salience_count\":3,\"queued_action_count\":10,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_"
+    },
+    {
+      "ts": 1778265742,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-05-08_c1d7f8d3c3251888"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "online_rl.consequence online_rl action=trusted_acquisition reward=0.038 context=normal {\"candidate\": {\"kind\": \"trusted_acquisition\", \"drive\": \"competence\", \"cost\": 0.45, \"base_priority\": 0.64, \"cooldown_sec\": 900, \"description\": \"learn from trusted sources and apply as memory or patch proposal\", \"context\": \"normal\", \"s"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=23 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265406.950831,\"event_count\":80,\"workspace_count\":23,\"high_salience_count\":10,\"unconsumed_high_salience_count\":10,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rece"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":23,\"high_salience_count\":10,\"unconsumed_high_salience_count\":10,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #311 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #310 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #305 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #300 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=41 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265664.6286383,\"event_count\":80,\"workspace_count\":41,\"high_salience_count\":18,\"unconsumed_high_salience_count\":18,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778265742,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":41,\"high_salience_count\":18,\"unconsumed_high_salience_count\":18,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_5ca9f8bed8cb6d93b2 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_5ca9f8bed8cb6d93b2\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_0fd675900e6ecd5880 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_0fd675900e6ecd5880\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_0a3c7821b1a65a8ac8 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_0a3c7821b1a65a8ac8\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_18fefd2bfe36d3f630 session=prod_skill_benchmark_1778183395 strategy=skill_auto_resolva_expressao_inteira_menos_1690a5 intent=chat {\"episode_id\": \"ep_chat_18fefd2bfe36d3f630\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 177"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_de61629393b7680b37 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_de61629393b7680b37\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_c76bf2277ae4b9ff0f session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_c76bf2277ae4b9ff0f\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_ef7a1b93632087f92b session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_153_me_84602f intent=chat {\"episode_id\": \"ep_chat_ef7a1b93632087f92b\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_00136deaa96c28c794 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_142_me_9aec65 intent=chat {\"episode_id\": \"ep_chat_00136deaa96c28c794\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_6a6f8115ccef046eb3 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_131_me_f64b4a intent=chat {\"episode_id\": \"ep_chat_6a6f8115ccef046eb3\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_e2c037397e470fdac2 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_120_me_174e35 intent=chat {\"episode_id\": \"ep_chat_e2c037397e470fdac2\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_474d9d67cef6024ea8 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_474d9d67cef6024ea8\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_c2d7d8698ab47b4d80 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_c2d7d8698ab47b4d80\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_b2e474174a8a79941e session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_b2e474174a8a79941e\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_3b13e053b370716af6 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_3b13e053b370716af6\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_c472019fa86be2fca3 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_identity intent=question {\"episode_id\": \"ep_chat_c472019fa86be2fca3\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778183870, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_65342b7097317b3f92 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=question {\"episode_id\": \"ep_chat_65342b7097317b3f92\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778183884, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_e83a99bd7e6b959c45 session=ui_movwgjbt_mjrcxitp strategy=autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_e83a99bd7e6b959c45\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778183901, \"episode_type\": \"chat_turn\", \"partici"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_6832aba1d7fd21b7fe session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_6832aba1d7fd21b7fe\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184448, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_4a6d896c051723fcdb session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_4a6d896c051723fcdb\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184585, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_3db28977a987528acd session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_3db28977a987528acd\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184654, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_8c6f8ddaffd8c3aa47 session=codex-autobio-check strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_8c6f8ddaffd8c3aa47\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-autobio-check\", \"timestamp\": 1778184775, \"episode_type\": \"chat_turn\", \"p"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_f396b227fadce887bd session=codex-autobio-check strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_f396b227fadce887bd\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-autobio-check\", \"timestamp\": 1778184815, \"episode_type\": \"chat_turn\", \"p"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_65e915cc7aa3ea6205 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_65e915cc7aa3ea6205\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778184839, \"episode_type\": \"chat_turn\", "
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_414d90ac64541fd3b3 session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_414d90ac64541fd3b3\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184907, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_76981571929028e80f session=codex-autobio-check-2 strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_76981571929028e80f\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-autobio-check-2\", \"timestamp\": 1778184989, \"episode_type\": \"chat_turn\""
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_dd6530c9bcfc1603c0 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_dd6530c9bcfc1603c0\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778185006, \"episode_type\": \"chat_turn\", "
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_213a7cf551280db46b session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_213a7cf551280db46b\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778185072, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_5fd12aa7a95ebcac0e session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_5fd12aa7a95ebcac0e\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778185178, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_37eeed63528699efb1 session=codex-final-check strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_37eeed63528699efb1\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-final-check\", \"timestamp\": 1778185243, \"episode_type\": \"chat_turn\", \"parti"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_a29de330c89098cae1 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=question {\"episode_id\": \"ep_chat_a29de330c89098cae1\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778185768, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=0 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778264886.996937,\"event_count\":80,\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_e"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_a"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11144 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_11ab3ae0b74bd04e52 session=ui_mootamdn_q4luebxy strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_11ab3ae0b74bd04e52\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_mootamdn_q4luebxy\", \"timestamp\": 1778265126, \"episode_type\": \"chat_turn\", \"participants\": [\""
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=13 queued=10 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265203.3763552,\"event_count\":80,\"workspace_count\":13,\"high_salience_count\":3,\"unconsumed_high_salience_count\":3,\"queued_action_count\":10,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":13,\"high_salience_count\":3,\"unconsumed_high_salience_count\":3,\"queued_action_count\":10,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_"
+    },
+    {
+      "ts": 1778265966,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-05-08_c1d7f8d3c3251888"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "online_rl.consequence online_rl action=trusted_acquisition reward=0.038 context=normal {\"candidate\": {\"kind\": \"trusted_acquisition\", \"drive\": \"competence\", \"cost\": 0.45, \"base_priority\": 0.64, \"cooldown_sec\": 900, \"description\": \"learn from trusted sources and apply as memory or patch proposal\", \"context\": \"normal\", \"s"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=23 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265406.950831,\"event_count\":80,\"workspace_count\":23,\"high_salience_count\":10,\"unconsumed_high_salience_count\":10,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rece"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":23,\"high_salience_count\":10,\"unconsumed_high_salience_count\":10,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #311 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #310 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #305 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #300 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=41 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265664.6286383,\"event_count\":80,\"workspace_count\":41,\"high_salience_count\":18,\"unconsumed_high_salience_count\":18,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":41,\"high_salience_count\":18,\"unconsumed_high_salience_count\":18,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=generate_analogy_hypothesis hints=1"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11145 bloqueada por simulação mental: generate_analogy_hypothesis (risk=0.58)"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=46 queued=28 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265899.929211,\"event_count\":80,\"workspace_count\":46,\"high_salience_count\":21,\"unconsumed_high_salience_count\":21,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rece"
+    },
+    {
+      "ts": 1778265966,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":46,\"high_salience_count\":21,\"unconsumed_high_salience_count\":21,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    }
+  ],
+  "update_log": [
+    {
+      "ts": 1778264969,
+      "revision": 2,
+      "hash": "9a666d4077fa3f3b8361",
+      "accepted_evidence_count": 242,
+      "pressure": {
+        "competence": 0.4214,
+        "coherence": 0.5432,
+        "autonomy": 0.6095,
+        "novelty": 0.5482,
+        "integrity": 0.1842
+      },
+      "max_delta_per_update": 0.025,
+      "old_weights": {
+        "competence": 0.22,
+        "coherence": 0.21,
+        "autonomy": 0.2,
+        "novelty": 0.18,
+        "integrity": 0.19
+      },
+      "new_weights": {
+        "competence": 0.218803,
+        "coherence": 0.210671,
+        "autonomy": 0.201848,
+        "novelty": 0.181784,
+        "integrity": 0.186894
+      }
+    },
+    {
+      "ts": 1778265337,
+      "revision": 3,
+      "hash": "d4bee827222525a5dd3f",
+      "accepted_evidence_count": 233,
+      "pressure": {
+        "competence": 0.4139,
+        "coherence": 0.5203,
+        "autonomy": 0.6095,
+        "novelty": 0.0,
+        "integrity": 0.78
+      },
+      "max_delta_per_update": 0.025,
+      "old_weights": {
+        "competence": 0.218803,
+        "coherence": 0.210671,
+        "autonomy": 0.201848,
+        "novelty": 0.181784,
+        "integrity": 0.186894
+      },
+      "new_weights": {
+        "competence": 0.217328,
+        "coherence": 0.210805,
+        "autonomy": 0.203402,
+        "novelty": 0.177369,
+        "integrity": 0.191095
+      }
+    },
+    {
+      "ts": 1778265742,
+      "revision": 4,
+      "hash": "1ab86a082c4250471069",
+      "accepted_evidence_count": 227,
+      "pressure": {
+        "competence": 0.4242,
+        "coherence": 0.4506,
+        "autonomy": 0.6771,
+        "novelty": 0.5628,
+        "integrity": 0.4833
+      },
+      "max_delta_per_update": 0.025,
+      "old_weights": {
+        "competence": 0.217328,
+        "coherence": 0.210805,
+        "autonomy": 0.203402,
+        "novelty": 0.177369,
+        "integrity": 0.191095
+      },
+      "new_weights": {
+        "competence": 0.215644,
+        "coherence": 0.209647,
+        "autonomy": 0.205063,
+        "novelty": 0.178649,
+        "integrity": 0.190996
+      }
+    },
+    {
+      "ts": 1778265967,
+      "revision": 5,
+      "hash": "331da33914bcea9ad2a6",
+      "accepted_evidence_count": 223,
+      "pressure": {
+        "competence": 0.4244,
+        "coherence": 0.4565,
+        "autonomy": 0.6818,
+        "novelty": 0.5656,
+        "integrity": 0.5818
+      },
+      "max_delta_per_update": 0.025,
+      "old_weights": {
+        "competence": 0.215644,
+        "coherence": 0.209647,
+        "autonomy": 0.205063,
+        "novelty": 0.178649,
+        "integrity": 0.190996
+      },
+      "new_weights": {
+        "competence": 0.213814,
+        "coherence": 0.208377,
+        "autonomy": 0.20641,
+        "novelty": 0.179653,
+        "integrity": 0.191745
+      }
+    }
+  ],
+  "tamper_events": [],
+  "stability": {
+    "source": "emergent_from_accepted_operational_evidence",
+    "updates": 4,
+    "accepted_evidence_count": 925,
+    "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+  }
+}

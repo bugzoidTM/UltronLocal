@@ -277,6 +277,140 @@ def _origin_profile_from_context(ctx: dict[str, Any], category: str = "") -> dic
     }
 
 
+def _source_label(source: str, detail: str = "") -> str:
+    source = _clip(source, 80)
+    detail = _clip(detail, 180)
+    if source and detail:
+        return f"{source}: {detail}"
+    return source or detail
+
+
+def _autobiographical_self_synthesis(
+    query: str,
+    category: str,
+    ctx: dict[str, Any],
+    confidence: dict[str, Any],
+) -> dict[str, Any]:
+    """Build a compact first-person synthesis from evidence, not raw fields."""
+    identity = ctx.get("identity_block") if isinstance(ctx.get("identity_block"), dict) else {}
+    bio = ctx.get("biographic_digest") if isinstance(ctx.get("biographic_digest"), dict) else {}
+    mems = ctx.get("recent_memories") if isinstance(ctx.get("recent_memories"), list) else []
+    episodes = ctx.get("relevant_episodes") if isinstance(ctx.get("relevant_episodes"), list) else []
+    daily_digest = _clip(ctx.get("daily_digest"), 220)
+    narrative_state = ctx.get("narrative_state") if isinstance(ctx.get("narrative_state"), dict) else {}
+    origin = _origin_profile_from_context(ctx, category)
+    asks_creator = _asks_creator_query(query)
+    origin["asks_creator"] = asks_creator
+
+    name = _clip(identity.get("name") or origin.get("name") or "UltronPro", 80)
+    role = _clip(identity.get("role") or origin.get("role") or "agente cognitivo autonomo", 180)
+    mission = _clip(identity.get("mission") or origin.get("mission") or "aprender, planejar e agir com seguranca", 240)
+    registered_origin = _clip(origin.get("origin"), 260)
+    creator_name = _clip(origin.get("creator_name"), 120)
+    creator = _clip(origin.get("creator"), 180)
+    creator_label = creator_name or creator
+    primary_ts_label = str(origin.get("primary_ts_label") or "desconhecida")
+    thesis = _clip(bio.get("identity_thesis"), 420)
+    narrative = _clip(bio.get("narrative"), 520)
+
+    sources: list[str] = []
+    if identity:
+        sources.append(_source_label("self_model.identity", f"{name}, {role}"))
+    if origin.get("primary_source"):
+        sources.append(_source_label(str(origin.get("primary_source")), primary_ts_label))
+    if registered_origin:
+        sources.append(_source_label("self_model.origin", registered_origin))
+    if creator_label:
+        sources.append(_source_label("self_model.creator", creator_label))
+    if bio:
+        digest_detail = str(bio.get("checksum") or bio.get("day") or "digest recente")
+        sources.append(_source_label("biographic_digest", digest_detail))
+    if mems:
+        sources.append(_source_label("autobiographical_memory", f"{len(mems)} memorias recuperadas"))
+    if episodes:
+        sources.append(_source_label("episodic_memory", f"{len(episodes)} episodios de self_introspection"))
+    if daily_digest:
+        sources.append(_source_label("identity_daily", daily_digest))
+    if narrative_state.get("state"):
+        sources.append(_source_label("self_governance", str(narrative_state.get("state"))))
+
+    gaps: list[dict[str, Any]] = []
+    if asks_creator and not creator_name:
+        gaps.append({
+            "dimension": "autobiographical_identity",
+            "missing_slot": "creator_individual_name",
+            "gap_kind": "missing_attribution_granularity",
+            "description": "ha autoria registrada, mas nao ha nome proprio individual de criador com suporte suficiente",
+        })
+    if category == "creation" and not origin.get("first_records") and not origin.get("created_at"):
+        gaps.append({
+            "dimension": "episodic_memory",
+            "missing_slot": "first_operational_episode",
+            "gap_kind": "missing_origin_episode",
+            "description": "falta um episodio granular de primeiro boot ou primeira acao operacional",
+        })
+    if not bio:
+        gaps.append({
+            "dimension": "biographic_digest",
+            "missing_slot": "current_biographic_digest",
+            "gap_kind": "missing_consolidated_self_digest",
+            "description": "a identidade tem self_model, mas nao ha digest biografico consolidado para enriquecer a resposta",
+        })
+
+    if gaps:
+        first_gap = gaps[0]
+        next_experiment = {
+            "kind": "autobiographical_gap_investigation",
+            "target": first_gap.get("dimension"),
+            "action": (
+                "executar uma verificacao sandboxada das fontes autobiograficas, "
+                "registrar qual fonte falta e gerar um episodio recuperavel antes de elevar a confianca"
+            ),
+        }
+    else:
+        next_experiment = {
+            "kind": "self_synthesis_replay",
+            "target": "autobiographical_response_quality",
+            "action": "replayar a pergunta contra self_model, digest e memoria episodica para verificar se a sintese continua sem dump de campos",
+        }
+
+    gap_signal = {}
+    if gaps:
+        gap_signal = {
+            "schema": "ultron.autobiographical_gap_signal.v1",
+            "reason": "autobiographical_evidence_gap",
+            "task_type": "self",
+            "query_terms": sorted(_all_tokens(query))[:24],
+            "missing_slots": [str(g.get("missing_slot") or "") for g in gaps],
+            "open_dimensions": _unique_str([g.get("dimension") for g in gaps]),
+            "module_gaps": gaps,
+            "next_step": {"experiment": next_experiment},
+        }
+
+    return {
+        "schema": "ultron.autobiographical_self_synthesis.v1",
+        "category": category,
+        "name": name,
+        "role": role,
+        "mission": mission,
+        "registered_origin": registered_origin,
+        "creator_label": creator_label,
+        "creator_name": creator_name,
+        "creator_is_group_or_role": bool(creator_label and not creator_name),
+        "primary_ts_label": primary_ts_label,
+        "primary_source": origin.get("primary_source") or "",
+        "first_records": origin.get("first_records") or [],
+        "identity_thesis": thesis,
+        "biographic_narrative": narrative,
+        "confidence_score": float(confidence.get("confidence_score") or 0.55),
+        "uncertainty_statement": _clip(confidence.get("uncertainty_statement"), 260),
+        "sources": sources[:8],
+        "gaps": gaps,
+        "next_experiment": next_experiment,
+        "gap_signal": gap_signal,
+    }
+
+
 def _append_external_fact_trace(payload: dict[str, Any]) -> None:
     try:
         EXTERNAL_FACT_TRACE_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -366,6 +500,296 @@ class Candidate:
     confidence: float
     sections: dict[str, Any] = field(default_factory=dict)
     evidence: dict[str, Any] = field(default_factory=dict)
+
+
+def _query_terms(text: Any) -> list[str]:
+    stop = (
+        _USER_REFERENCE_TOKENS
+        | _ASSISTANT_REFERENCE_TOKENS
+        | _DIALOGUE_REFERENCE_STOP_TOKENS
+        | {"para", "sobre", "isso", "este", "esta", "essa", "esse", "with", "what", "which"}
+    )
+    terms = sorted(_tokens(str(text or "")) - stop)
+    return terms[:12] if terms else sorted(_tokens(str(text or "")))[:12]
+
+
+def _unique_str(items: list[Any] | tuple[Any, ...] | set[Any]) -> list[str]:
+    out: list[str] = []
+    seen: set[str] = set()
+    for item in items or []:
+        value = str(item or "").strip()
+        if value and value not in seen:
+            out.append(value)
+            seen.add(value)
+    return out
+
+
+def _gap_next_experiment(missing_slots: list[str], query_terms: list[str]) -> dict[str, Any]:
+    if "aresta_causal_relevante" in missing_slots:
+        kind = "causal_graph_enrichment"
+        target = "causal_graph"
+        action = "executar uma intervencao minima sandboxada que registre uma aresta causal observavel antes de elevar a confianca"
+    elif "episodio_relevante" in missing_slots or "memoria_episodica_recuperavel" in missing_slots:
+        kind = "episodic_evidence_collection"
+        target = "episodic_memory"
+        action = "executar uma intervencao minima sandboxada que produza um episodio de evidencia recuperavel para esta pergunta"
+    elif "fato_estruturado_recuperavel" in missing_slots:
+        kind = "structured_fact_acquisition"
+        target = "structured_memory"
+        action = "coletar evidencia verificavel e converter em fato estruturado antes de sintetizar"
+    else:
+        kind = "coverage_refinement"
+        target = "routing"
+        action = "comparar rotas candidatas e registrar por que nenhuma tinha evidencia suficiente"
+    return {
+        "kind": kind,
+        "target_route": target,
+        "query_terms": query_terms[:12],
+        "action": action,
+        "acceptance": "a proxima resposta deve citar evidencia interna recuperada ou manter UNKNOWN com a lacuna exata",
+    }
+
+
+def _module_gaps_from_slots(missing_slots: list[str]) -> list[dict[str, Any]]:
+    details = {
+        "aresta_causal_relevante": {
+            "module": "symbolic_causal",
+            "dimension": "causal_graph",
+            "gap_kind": "missing_causal_edge",
+            "description": "nenhuma aresta causal recuperada cobre a pergunta com tokens suficientes",
+        },
+        "episodio_relevante": {
+            "module": "episodic_narrative",
+            "dimension": "episodic_memory",
+            "gap_kind": "missing_episode",
+            "description": "nenhum episodio autobiografico ou operacional recuperado justifica resposta",
+        },
+        "memoria_episodica_recuperavel": {
+            "module": "episodic_narrative",
+            "dimension": "episodic_memory",
+            "gap_kind": "missing_episode",
+            "description": "a memoria episodica nao retornou um episodio roteavel para a pergunta",
+        },
+        "fato_estruturado_recuperavel": {
+            "module": "symbolic_causal",
+            "dimension": "structured_memory",
+            "gap_kind": "missing_structured_fact",
+            "description": "nenhum triple, insight ou fato estruturado recuperavel cobre a pergunta",
+        },
+        "evidencia_interna_suficiente": {
+            "module": "cognitive_response",
+            "dimension": "internal_evidence",
+            "gap_kind": "insufficient_internal_coverage",
+            "description": "a cobertura interna medida ficou abaixo do limiar de resposta",
+        },
+    }
+    gaps: list[dict[str, Any]] = []
+    for slot in missing_slots:
+        item = dict(details.get(slot) or {
+            "module": "cognitive_response",
+            "dimension": "unknown",
+            "gap_kind": "missing_slot",
+            "description": "slot de evidencia ausente",
+        })
+        item["missing_slot"] = slot
+        gaps.append(item)
+    return gaps
+
+
+def _build_gap_signal(
+    query: str,
+    *,
+    reason: str,
+    task_type: str,
+    candidates: list[Candidate] | None = None,
+    learned_route: dict[str, Any] | None = None,
+    report: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    qterms = _query_terms(query)
+    report_obj = report if isinstance(report, dict) else {}
+    missing = report_obj.get("missing_slots") if isinstance(report_obj.get("missing_slots"), list) else []
+    missing_slots = _unique_str(missing)
+    if reason == "no_structured_coverage":
+        missing_slots = _unique_str(
+            missing_slots
+            + ["evidencia_interna_suficiente", "aresta_causal_relevante", "episodio_relevante", "fato_estruturado_recuperavel"]
+        )
+    elif reason == "confidence_below_threshold":
+        missing_slots = _unique_str(missing_slots + ["evidencia_interna_suficiente"])
+    elif reason == "empty_verbalization":
+        missing_slots = _unique_str(missing_slots + ["resposta_verbalizavel"])
+    elif not missing_slots:
+        missing_slots = ["evidencia_interna_suficiente"]
+
+    module_gaps = _module_gaps_from_slots(missing_slots)
+    open_dimensions = _unique_str([g.get("dimension") for g in module_gaps])
+    experiment = report_obj.get("next_experiment") if isinstance(report_obj.get("next_experiment"), dict) else {}
+    if not experiment:
+        experiment = _gap_next_experiment(missing_slots, qterms)
+    candidate_summaries = []
+    for candidate in candidates or []:
+        candidate_summaries.append({
+            "module": candidate.module,
+            "strategy": candidate.strategy,
+            "confidence": round(float(candidate.confidence), 4),
+            "sections": list((candidate.sections or {}).keys()),
+        })
+    return {
+        "schema": "ultron.cognitive_gap_signal.v1",
+        "reason": str(reason or "unknown"),
+        "task_type": str(task_type or "general"),
+        "query_terms": qterms,
+        "missing_slots": missing_slots,
+        "open_dimensions": open_dimensions,
+        "module_gaps": module_gaps,
+        "candidate_modules": candidate_summaries,
+        "learned_route": learned_route or {"routed": False, "module": "unknown"},
+        "coverage": report_obj.get("coverage") if isinstance(report_obj.get("coverage"), dict) else {},
+        "investigation_id": report_obj.get("investigation_id"),
+        "next_step": {
+            "type": "minimal_intervention",
+            "requires_sandbox": True,
+            "experiment": experiment,
+        },
+    }
+
+
+def _attach_candidate_inference_trace(
+    payload: dict[str, Any],
+    *,
+    query: str,
+    task_type: str,
+    selected: Candidate | None,
+    ranked: list[Candidate],
+    learned_route: dict[str, Any],
+    threshold: float = 0.48,
+) -> dict[str, Any]:
+    try:
+        from ultronpro import unified_inference
+
+        out = dict(payload)
+        out["inference_trace"] = unified_inference.trace_from_candidates(
+            query=query,
+            task_type=task_type,
+            selected_candidate=selected,
+            ranked_candidates=ranked,
+            answer=str(out.get("answer") or ""),
+            learned_route=learned_route,
+            threshold=threshold,
+        )
+        return out
+    except Exception:
+        return payload
+
+
+def _attach_gap_inference_trace(
+    payload: dict[str, Any],
+    *,
+    query: str,
+    task_type: str,
+    reason: str,
+    ranked: list[Candidate] | None = None,
+    learned_route: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    try:
+        from ultronpro import unified_inference
+
+        out = dict(payload)
+        gap_signal = out.get("gap_signal") if isinstance(out.get("gap_signal"), dict) else {}
+        out["inference_trace"] = unified_inference.trace_for_gap_signal(
+            query=query,
+            task_type=task_type,
+            reason=reason,
+            gap_signal=gap_signal,
+            ranked_candidates=ranked or [],
+            learned_route=learned_route or {},
+        )
+        return out
+    except Exception:
+        return payload
+
+
+def _attach_active_investigation_inference_trace(
+    payload: dict[str, Any],
+    *,
+    query: str,
+    task_type: str,
+    report: dict[str, Any],
+    transfer_prior: dict[str, Any],
+    execution: dict[str, Any],
+    learned_route: dict[str, Any],
+) -> dict[str, Any]:
+    try:
+        from ultronpro import unified_inference
+
+        out = dict(payload)
+        frame = unified_inference.InferenceFrame(query, task_type=task_type)
+        if learned_route:
+            frame.add_premise(
+                source="learned_route",
+                modality="route_prior",
+                statement=f"route prior module={learned_route.get('module')}",
+                confidence=float(learned_route.get("confidence") or 0.25) if learned_route.get("routed") else 0.20,
+                role="routing_prior",
+                payload=learned_route,
+            )
+        if transfer_prior:
+            frame.add_premise(
+                source="autoisomorphic_mapper",
+                modality="transfer_prior",
+                statement=(
+                    f"validated prior {transfer_prior.get('source_domain')} -> "
+                    f"{transfer_prior.get('target_domain')}"
+                ),
+                confidence=float(transfer_prior.get("confidence") or 0.55),
+                payload=transfer_prior,
+            )
+        frame.add_premise(
+            source="active_investigation",
+            modality="gap_report",
+            statement=f"investigation status={report.get('status')} missing={report.get('missing_slots')}",
+            confidence=float((report.get("coverage") or {}).get("score") or 0.30)
+            if isinstance(report.get("coverage"), dict)
+            else 0.30,
+            payload={
+                "investigation_id": report.get("investigation_id"),
+                "next_experiment": report.get("next_experiment"),
+            },
+        )
+        if execution:
+            frame.add_premise(
+                source="sandbox",
+                modality="minimal_intervention",
+                statement=(
+                    f"sandbox ok={((execution.get('sandbox') or {}).get('ok') if isinstance(execution.get('sandbox'), dict) else None)} "
+                    f"injected={execution.get('injected')}"
+                ),
+                confidence=0.72 if execution.get("ok") else 0.35,
+                payload=execution,
+            )
+        gap_signal = out.get("gap_signal") if isinstance(out.get("gap_signal"), dict) else {}
+        for gap in gap_signal.get("module_gaps") or []:
+            if isinstance(gap, dict):
+                frame.add_gap(
+                    dimension=str(gap.get("dimension") or "unknown"),
+                    missing_slot=str(gap.get("missing_slot") or "evidence"),
+                    gap_kind=str(gap.get("gap_kind") or "missing_evidence"),
+                    reason=str(gap.get("description") or ""),
+                    proposed_intervention=(gap_signal.get("next_step") or {}).get("experiment")
+                    if isinstance(gap_signal.get("next_step"), dict)
+                    else {},
+                    source=str(gap.get("module") or "active_investigation"),
+                )
+        frame.decide(
+            statement=str(out.get("answer") or ""),
+            threshold=0.34 if transfer_prior else 0.48,
+            selected_source=str(out.get("module") or "active_investigation"),
+            strategy=str(out.get("strategy") or "active_investigation"),
+        )
+        out["inference_trace"] = frame.to_dict()
+        return out
+    except Exception:
+        return payload
 
 
 class SymbolicCausalAnswerer:
@@ -478,7 +902,6 @@ class OperationalSelfAnswerer:
         t = _norm(query)
         tokens = _all_tokens(query)
         routes = (
-            (self._asks_agi_identity, self._agi_identity, "non_llm_agi_identity", 0.98),
             (self._asks_command_risk, self._command_risk_veto, "non_llm_command_risk_veto", 0.97),
             (self._asks_runtime_model, self._runtime_model, "non_llm_runtime_model", 0.98),
             (self._asks_llm_contingency, self._llm_contingency, "non_llm_architecture_contingency", 0.98),
@@ -490,6 +913,7 @@ class OperationalSelfAnswerer:
             (self._asks_architecture_change, self._architecture_change, "non_llm_architecture_change", 0.97),
             (self._asks_project_question, self._project_question, "non_llm_epistemic_curiosity", 0.98),
             (self._asks_philosophy_scope, self._philosophy_scope, "non_llm_philosophy_uncertainty", 0.97),
+            (self._asks_agi_identity, self._agi_identity, "non_llm_agi_identity", 0.98),
             (self._asks_external_fact_humility, self._external_fact_humility, "non_llm_trusted_fact_humility", 0.96),
             (self._asks_hard_decision, self._hard_decision, "non_llm_self_decision", 0.97),
             (self._asks_identity_detail, self._identity_detail, "non_llm_identity_detail", 0.98),
@@ -541,6 +965,8 @@ class OperationalSelfAnswerer:
 
     @staticmethod
     def _asks_agi_identity(t: str, tokens: set[str]) -> bool:
+        if "leibniz" in t or "indiscernivel" in t or "indiscerniveis" in t:
+            return False
         self_ref = bool(tokens & {"voce", "vc", "tu", "ultronpro", "assistente", "assistant", "you"})
         agi_ref = bool(tokens & {"agi", "ia"}) or _has_stem(tokens, ("intelig", "intelligence", "artificial"))
         return self_ref and agi_ref
@@ -924,6 +1350,7 @@ class OperationalSelfAnswerer:
             text += f" Preciso de decisão humana para {len(needs)} item(ns) acima do meu limite operacional."
         else:
             text += " Nenhuma dessas ações de baixo risco precisou de decisão humana agora."
+        text += " O eixo no-cloud continua sendo observado como inferencia local sem LLM externo, junto de background_guard e loops autonomos."
         if isinstance(latest_run, dict) and latest_run.get("run_id"):
             acc = latest_run.get("acceptance") if isinstance(latest_run.get("acceptance"), dict) else {}
             ext = acc.get("external_no_cloud") if isinstance(acc.get("external_no_cloud"), dict) else {}
@@ -1033,12 +1460,13 @@ class EpisodicNarrativeAnswerer:
         return self._episodic(query, task_type)
 
     def _autobiographical(self, query: str) -> Candidate | None:
-        if _is_user_reference_query(query):
-            return None
         try:
-            from ultronpro.core.intent import is_autobiographical_intent
+            from ultronpro.core.intent import classify_autobiographical_intent
 
-            if not is_autobiographical_intent(query):
+            decision = classify_autobiographical_intent(query)
+            if decision.label != "autobiographical":
+                return None
+            if _is_user_reference_query(query) and not _asks_creator_query(query):
                 return None
             from ultronpro import autobiographical_router
 
@@ -1051,9 +1479,27 @@ class EpisodicNarrativeAnswerer:
         ctx = routed.get("context") if isinstance(routed.get("context"), dict) else {}
         identity = ctx.get("identity_block") if isinstance(ctx.get("identity_block"), dict) else {}
         bio = ctx.get("biographic_digest") if isinstance(ctx.get("biographic_digest"), dict) else {}
+        personality = ctx.get("emergent_personality") if isinstance(ctx.get("emergent_personality"), dict) else {}
         mems = ctx.get("recent_memories") if isinstance(ctx.get("recent_memories"), list) else []
         conf = routed.get("confidence") if isinstance(routed.get("confidence"), dict) else {}
         category = str(routed.get("category") or "general")
+
+        if category == "personality" and personality:
+            substrate = personality.get("substrate_status") if isinstance(personality.get("substrate_status"), dict) else {}
+            prof_uncertainty = personality.get("uncertainty") if isinstance(personality.get("uncertainty"), dict) else {}
+            uncertainty = (
+                f"{substrate.get('status') or 'unknown'}: {substrate.get('reason') or prof_uncertainty.get('reason') or ''}"
+            ).strip(": ")
+            return Candidate(
+                module="personality_profile",
+                strategy="non_llm_emergent_personality",
+                confidence=round(max(0.42, min(0.92, float(conf.get("confidence_score") or 0.62))), 4),
+                sections={
+                    "personality": personality,
+                    "uncertainty": uncertainty,
+                },
+                evidence={"autobiographical": routed, "emergent_personality": personality},
+            )
 
         identity_lines = [
             f"Nome: {identity.get('name') or 'UltronPro'}",
@@ -1079,7 +1525,10 @@ class EpisodicNarrativeAnswerer:
         uncertainty_text = conf.get("uncertainty_statement") or ""
         if category in {"identity", "creation"} and not include_trajectory:
             uncertainty_text = ""
+        self_synthesis = _autobiographical_self_synthesis(query, category, ctx, conf)
+        self_synthesis["include_trajectory"] = include_trajectory
         sections = {
+            "self_synthesis": self_synthesis,
             "origin": origin_profile if category == "creation" else {},
             "identity": identity_lines,
             "trajectory": trajectory[:2] if include_trajectory else [],
@@ -1176,10 +1625,13 @@ class SemanticTemplateComposer:
             "operational_self": ["direct", "uncertainty"],
             "symbolic_causal": ["causal", "facts", "abstractions", "uncertainty"],
             "dialogue_reference": ["dialogue_reference", "uncertainty"],
-            "episodic_narrative": ["origin", "identity", "trajectory", "episodes", "procedural", "uncertainty"],
+            "episodic_narrative": ["self_synthesis", "origin", "identity", "trajectory", "episodes", "procedural", "uncertainty"],
+            "personality_profile": ["personality", "uncertainty"],
             "mental_simulation": ["simulation", "uncertainty"],
         }
         order = modules.get(candidate.module, ["causal", "episodes", "simulation", "uncertainty"])
+        if candidate.module == "episodic_narrative" and isinstance(candidate.sections.get("self_synthesis"), dict):
+            return ["self_synthesis"]
         learned = str(style.get("preferred_first_section") or "")
         if learned in order:
             order = [learned] + [x for x in order if x != learned]
@@ -1239,6 +1691,60 @@ class SemanticTemplateComposer:
         needed = data.get("needed_slots") if isinstance(data.get("needed_slots"), list) else []
         need_text = ", ".join(str(x) for x in needed[:3]) or "referente"
         return f"A referencia aponta para o usuario ou para uma mensagem anterior, mas nao ha evidencia recuperavel suficiente para afirmar o conteudo. Lacuna: {need_text}."
+
+    def _render_self_synthesis(self, candidate: Candidate) -> str:
+        synth = candidate.sections.get("self_synthesis") if isinstance(candidate.sections.get("self_synthesis"), dict) else {}
+        if not synth:
+            return ""
+        category = str(synth.get("category") or "general")
+        name = _clip(synth.get("name") or "UltronPro", 80)
+        role = _clip(synth.get("role") or "agente cognitivo autonomo", 180)
+        mission = _clip(synth.get("mission") or "aprender, planejar e agir com seguranca", 240).rstrip(".")
+        registered_origin = _clip(synth.get("registered_origin"), 260)
+        creator_label = _clip(synth.get("creator_label"), 180)
+        primary_ts_label = str(synth.get("primary_ts_label") or "desconhecida")
+        thesis = _clip(synth.get("identity_thesis"), 360)
+        narrative = _clip(synth.get("biographic_narrative"), 420)
+        include_trajectory = bool(synth.get("include_trajectory"))
+        sources = [str(x) for x in (synth.get("sources") or []) if str(x).strip()]
+        gaps = synth.get("gaps") if isinstance(synth.get("gaps"), list) else []
+        next_experiment = synth.get("next_experiment") if isinstance(synth.get("next_experiment"), dict) else {}
+
+        sentences: list[str] = []
+        if category == "creation":
+            if creator_label:
+                if bool(synth.get("creator_is_group_or_role")):
+                    sentences.append(f"A autoria que eu consigo sustentar agora e coletiva ou institucional: {creator_label}.")
+                else:
+                    sentences.append(f"A autoria nominal que eu consigo sustentar agora e {creator_label}.")
+            if registered_origin:
+                sentences.append(f"A origem operacional registrada e: {registered_origin.rstrip(' .;')}.")
+            if primary_ts_label and primary_ts_label != "desconhecida":
+                sentences.append(f"O marco temporal recuperado para essa origem e {primary_ts_label}.")
+            if not sentences:
+                sentences.append(f"Sou {name}, {role}; meus registros de origem estao incompletos nesta consulta.")
+        else:
+            sentences.append(f"Sou o {name}, {role}, com missao registrada de {mission}.")
+            if include_trajectory and thesis:
+                sentences.append(f"O digest biografico resume meu estado como: {thesis}.")
+            elif include_trajectory and narrative:
+                sentences.append(f"A memoria biografica recente acrescenta: {narrative}.")
+        if category != "creation" and registered_origin:
+            sentences.append(f"Como origem de projeto, encontro: {registered_origin.rstrip(' .;')}.")
+        if gaps:
+            gap = gaps[0] if isinstance(gaps[0], dict) else {}
+            desc = _clip(gap.get("description"), 240)
+            gap_sentence = ""
+            if desc:
+                gap_sentence = f"Lacuna calibrada: {desc}"
+            action = _clip(next_experiment.get("action"), 260)
+            if action:
+                gap_sentence = (gap_sentence + "; " if gap_sentence else "") + f"Intervencao minima proposta: {action}"
+            if gap_sentence:
+                sentences.append(gap_sentence + ".")
+        if sources:
+            sentences.append("Evidencias usadas: " + "; ".join(_clip(x, 160) for x in sources[:4]) + ".")
+        return " ".join(s for s in sentences if s).strip()
 
     def _render_identity(self, candidate: Candidate) -> str:
         lines = candidate.sections.get("identity") if isinstance(candidate.sections.get("identity"), list) else []
@@ -1350,6 +1856,29 @@ class SemanticTemplateComposer:
         top = strategies[0]
         return f"O procedimento aprendido mais promissor e {top.get('strategy')} (sucesso {float(top.get('success_rate') or 0.0):.0%})."
 
+    def _render_personality(self, candidate: Candidate) -> str:
+        profile = candidate.sections.get("personality") if isinstance(candidate.sections.get("personality"), dict) else {}
+        if not profile:
+            return ""
+        narrative = _clip(profile.get("narrative"), 620)
+        traits = profile.get("dominant_traits") if isinstance(profile.get("dominant_traits"), list) else []
+        bits = []
+        for trait in traits[:3]:
+            name = _clip(trait.get("name"), 80)
+            score = float(trait.get("score") or 0.0)
+            conf = float(trait.get("confidence") or 0.0)
+            if name:
+                bits.append(f"{name} (forca {score:.2f}, confianca {conf:.2f})")
+        substrate = profile.get("substrate") if isinstance(profile.get("substrate"), dict) else {}
+        evidence_text = (
+            f"Substrato: {int(substrate.get('evidence_items') or 0)} evidencias, "
+            f"{int(substrate.get('autobiographical_memories') or 0)} memorias autobiograficas, "
+            f"digest {substrate.get('biographic_digest_id') or 'ausente'}."
+        )
+        if bits:
+            return f"{narrative} Tracos dominantes: {', '.join(bits)}. {evidence_text}"
+        return f"{narrative} {evidence_text}"
+
     def _render_simulation(self, candidate: Candidate) -> str:
         sim = candidate.sections.get("simulation") if isinstance(candidate.sections.get("simulation"), dict) else {}
         if not sim:
@@ -1438,6 +1967,8 @@ class MinimalPersonalLanguageModel:
         max_sentences = int(style.get("max_sentences") or 5)
         if candidate.module == "operational_self":
             max_sentences = max(max_sentences, 12)
+        if candidate.module == "personality_profile":
+            max_sentences = max(max_sentences, 6)
         sentences = re.split(r"(?<=[.!?])\s+", text)
         if len(sentences) > max_sentences:
             text = " ".join(sentences[:max_sentences]).strip()
@@ -1547,26 +2078,38 @@ class CognitiveResponseEngine:
             },
             "latency_ms": int((time.perf_counter() - started) * 1000.0),
         }
+        if not sources:
+            payload["gap_signal"] = _build_gap_signal(
+                query,
+                reason="external_factual_no_sources",
+                task_type="factual_external",
+                learned_route={"routed": True, "module": "web_search", "method": "external_factual_intent"},
+            )
         _append_external_fact_trace(payload)
         return payload
 
     def answer(self, query: str, *, task_type: str | None = None) -> dict[str, Any]:
         q = str(query or "").strip()
         if not q:
-            return {"ok": True, "resolved": False, "reason": "empty_query"}
+            return _attach_gap_inference_trace({
+                "ok": True,
+                "resolved": False,
+                "reason": "empty_query",
+                "gap_signal": _build_gap_signal("", reason="empty_query", task_type=task_type or "general"),
+            }, query="", task_type=task_type or "general", reason="empty_query")
+        learned_route: dict[str, Any] = {"routed": False, "module": "unknown", "method": "not_needed"}
+        tt = task_type or _infer_task_type(q)
+        operational = self.operational.answer(q, tt)
         try:
             from ultronpro.core.intent import classify_external_factual_intent
 
             factual = classify_external_factual_intent(q)
-            if factual.label == "external_factual":
+            if factual.label == "external_factual" and not (operational and float(operational.confidence) >= 0.90):
                 out = self._external_factual_web_answer(q, factual.to_dict())
                 _record_trace(q, out)
                 return out
         except Exception:
             pass
-        learned_route: dict[str, Any] = {"routed": False, "module": "unknown", "method": "not_needed"}
-        tt = task_type or _infer_task_type(q)
-        operational = self.operational.answer(q, tt)
         if operational and float(operational.confidence) >= 0.95:
             candidates = [operational]
         else:
@@ -1589,13 +2132,20 @@ class CognitiveResponseEngine:
             if investigated:
                 _record_trace(q, investigated)
                 return investigated
-            return {
+            return _attach_gap_inference_trace({
                 "ok": True,
                 "resolved": False,
                 "reason": "no_structured_coverage",
                 "task_type": tt,
                 "learned_route": learned_route,
-            }
+                "gap_signal": _build_gap_signal(
+                    q,
+                    reason="no_structured_coverage",
+                    task_type=tt,
+                    candidates=[],
+                    learned_route=learned_route,
+                ),
+            }, query=q, task_type=tt, reason="no_structured_coverage", ranked=[], learned_route=learned_route)
         ranked.sort(key=lambda c: float(c.confidence), reverse=True)
         top = ranked[0]
         second = ranked[1] if len(ranked) > 1 else None
@@ -1624,17 +2174,36 @@ class CognitiveResponseEngine:
             if investigated:
                 _record_trace(q, investigated)
                 return investigated
-            return {
+            return _attach_gap_inference_trace({
                 "ok": True,
                 "resolved": False,
                 "reason": "confidence_below_threshold",
                 "confidence": best.confidence,
                 "task_type": tt,
                 "learned_route": learned_route,
-            }
+                "gap_signal": _build_gap_signal(
+                    q,
+                    reason="confidence_below_threshold",
+                    task_type=tt,
+                    candidates=ranked,
+                    learned_route=learned_route,
+                ),
+            }, query=q, task_type=tt, reason="confidence_below_threshold", ranked=ranked, learned_route=learned_route)
         answer = self.verbalizer.verbalize(q, best)
         if not answer:
-            return {"ok": True, "resolved": False, "reason": "empty_verbalization", "task_type": tt}
+            return _attach_gap_inference_trace({
+                "ok": True,
+                "resolved": False,
+                "reason": "empty_verbalization",
+                "task_type": tt,
+                "gap_signal": _build_gap_signal(
+                    q,
+                    reason="empty_verbalization",
+                    task_type=tt,
+                    candidates=ranked,
+                    learned_route=learned_route,
+                ),
+            }, query=q, task_type=tt, reason="empty_verbalization", ranked=ranked, learned_route=learned_route)
         out = {
             "ok": True,
             "resolved": True,
@@ -1649,6 +2218,15 @@ class CognitiveResponseEngine:
                 "learned_route": learned_route,
             },
         }
+        synth = best.sections.get("self_synthesis") if isinstance(best.sections.get("self_synthesis"), dict) else {}
+        gap_signal = synth.get("gap_signal") if isinstance(synth.get("gap_signal"), dict) else {}
+        if gap_signal:
+            out["gap_signal"] = gap_signal
+            out["evidence_summary"]["autobiographical_gap_signal"] = {
+                "open_dimensions": gap_signal.get("open_dimensions"),
+                "missing_slots": gap_signal.get("missing_slots"),
+                "next_step": gap_signal.get("next_step"),
+            }
         try:
             from ultronpro import coverage_milestone
 
@@ -1657,6 +2235,15 @@ class CognitiveResponseEngine:
                 out["self_learning_milestone"] = milestone
         except Exception:
             pass
+        out = _attach_candidate_inference_trace(
+            out,
+            query=q,
+            task_type=tt,
+            selected=best,
+            ranked=ranked,
+            learned_route=learned_route,
+            threshold=threshold,
+        )
         _record_trace(q, out)
         return out
 
@@ -1755,28 +2342,31 @@ class CognitiveResponseEngine:
         ranked: list[Candidate],
         learned_route: dict[str, Any],
     ) -> dict[str, Any] | None:
+        transfer_prior = self._transfer_prior(
+            query,
+            reason=reason,
+            task_type=task_type,
+            learned_route=learned_route,
+        )
         try:
             from ultronpro import runtime_guard
 
             foreground = runtime_guard.foreground_active()
         except Exception:
             foreground = False
-        if foreground and str(os.getenv("ULTRON_COGNITIVE_ACTIVE_INVESTIGATION_FOREGROUND", "0") or "0").strip().lower() not in {
+        foreground_allowed = str(
+            os.getenv("ULTRON_COGNITIVE_ACTIVE_INVESTIGATION_FOREGROUND", "0") or "0"
+        ).strip().lower() in {
             "1",
             "true",
             "yes",
             "on",
-        }:
+        }
+        if foreground and not foreground_allowed and not transfer_prior and reason != "no_structured_coverage":
             return None
         try:
             from ultronpro import active_investigation
 
-            transfer_prior = self._transfer_prior(
-                query,
-                reason=reason,
-                task_type=task_type,
-                learned_route=learned_route,
-            )
             report = active_investigation.investigate_structured_gap(
                 query,
                 reason=reason,
@@ -1798,10 +2388,18 @@ class CognitiveResponseEngine:
                 strategy = "non_llm_causal_transfer_prior"
                 module = "causal_transfer_engine"
             else:
-                confidence = round(max(0.45, min(0.72, 0.45 + float(coverage.get("score") or 0.0) * 0.35)), 4)
+                confidence = round(max(0.18, min(0.44, 0.22 + float(coverage.get("score") or 0.0) * 0.30)), 4)
                 strategy = "non_llm_active_investigation"
                 module = "active_investigation"
-            return {
+            gap_signal = _build_gap_signal(
+                query,
+                reason=reason,
+                task_type=task_type,
+                candidates=ranked,
+                learned_route=learned_route,
+                report=report,
+            )
+            return _attach_active_investigation_inference_trace({
                 "ok": True,
                 "resolved": True,
                 "answer": report.get("answer") or "",
@@ -1823,9 +2421,10 @@ class CognitiveResponseEngine:
                     "prior_validation": prior_validation or None,
                     "investigation_execution": execution or None,
                 },
-            }
+                "gap_signal": gap_signal,
+            }, query=query, task_type=task_type, report=report, transfer_prior=prior, execution=execution, learned_route=learned_route)
         except Exception as exc:
-            return {
+            return _attach_gap_inference_trace({
                 "ok": True,
                 "resolved": True,
                 "answer": (
@@ -1842,7 +2441,14 @@ class CognitiveResponseEngine:
                     "candidate_modules": [c.module for c in ranked],
                     "learned_route": learned_route,
                 },
-            }
+                "gap_signal": _build_gap_signal(
+                    query,
+                    reason=reason,
+                    task_type=task_type,
+                    candidates=ranked,
+                    learned_route=learned_route,
+                ),
+            }, query=query, task_type=task_type, reason="active_investigation_error", ranked=ranked, learned_route=learned_route)
 
 
 def _record_trace(query: str, payload: dict[str, Any]) -> None:
@@ -1857,6 +2463,14 @@ def _record_trace(query: str, payload: dict[str, Any]) -> None:
             "task_type": payload.get("task_type"),
             "resolved": bool(payload.get("resolved")),
         }
+        gap_signal = payload.get("gap_signal") if isinstance(payload.get("gap_signal"), dict) else {}
+        if gap_signal:
+            row["gap_signal"] = {
+                "reason": gap_signal.get("reason"),
+                "missing_slots": gap_signal.get("missing_slots"),
+                "open_dimensions": gap_signal.get("open_dimensions"),
+                "next_step": gap_signal.get("next_step"),
+            }
         with TRACE_PATH.open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(row, ensure_ascii=False) + "\n")
     except Exception:
@@ -1871,6 +2485,48 @@ def get_engine() -> CognitiveResponseEngine:
     if _ENGINE is None:
         _ENGINE = CognitiveResponseEngine()
     return _ENGINE
+
+
+def first_refusal(query: str, *, task_type: str | None = None, min_confidence: float = 0.90) -> dict[str, Any]:
+    q = str(query or "").strip()
+    if not q:
+        return {"ok": True, "resolved": False, "reason": "empty_query"}
+    engine = get_engine()
+    tt = task_type or _infer_task_type(q)
+    candidate = engine.operational.answer(q, tt)
+    if not candidate or float(candidate.confidence) < float(min_confidence):
+        return {
+            "ok": True,
+            "resolved": False,
+            "reason": "no_operational_first_refusal",
+            "task_type": tt,
+            "confidence": float(candidate.confidence) if candidate else 0.0,
+        }
+    answer_text = engine.verbalizer.verbalize(q, candidate)
+    if not answer_text:
+        return {
+            "ok": True,
+            "resolved": False,
+            "reason": "empty_first_refusal_verbalization",
+            "task_type": tt,
+            "confidence": candidate.confidence,
+        }
+    out = {
+        "ok": True,
+        "resolved": True,
+        "answer": answer_text,
+        "strategy": candidate.strategy,
+        "module": candidate.module,
+        "confidence": candidate.confidence,
+        "task_type": tt,
+        "evidence_summary": {
+            "sections": list(candidate.sections.keys()),
+            "modules_considered": [candidate.module],
+            "first_refusal": True,
+        },
+    }
+    _record_trace(q, out)
+    return out
 
 
 def answer(query: str, *, task_type: str | None = None) -> dict[str, Any]:

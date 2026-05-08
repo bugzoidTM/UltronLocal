@@ -20,7 +20,7 @@ import uuid
 from typing import Any
 from pathlib import Path
 
-from ultronpro import llm, store
+from ultronpro.core.ports import RuntimePorts, default_ports
 
 ABSTRACTIONS_PATH = Path(__file__).resolve().parent.parent / 'data' / 'causal_abstractions_v2.json'
 
@@ -87,7 +87,14 @@ def _deterministic_abstraction_payload(domain: str, action_kind: str, episode_da
     }
 
 
-def compile_causal_invariant(domain: str, action_kind: str, episode_data: dict[str, Any], surprise_score: float) -> dict[str, Any] | None:
+def compile_causal_invariant(
+    domain: str,
+    action_kind: str,
+    episode_data: dict[str, Any],
+    surprise_score: float,
+    *,
+    ports: RuntimePorts | None = None,
+) -> dict[str, Any] | None:
     """Extrai um padrão invariante causal de um episódio bem-sucedido e com baixa surpresa.
     A abstração nasce como HIPÓTESE, não como fato confirmado."""
 
@@ -108,11 +115,12 @@ Dados do Episódio:
 {json.dumps(episode_data, ensure_ascii=False)[:3000]}
 """
 
-    if os.environ.get('BENCHMARK_MODE') == '1':
+    ports = ports or default_ports()
+    if os.environ.get('BENCHMARK_MODE') == '1' or not ports.llm:
         res = None
     else:
         try:
-            res = llm.complete(prompt, json_mode=True, strategy='cheap')
+            res = ports.llm.complete(prompt, json_mode=True, strategy='cheap')
         except Exception:
             res = None
     data = None
@@ -164,15 +172,15 @@ Dados do Episódio:
                 lib['abstractions'].append(abs_record)
                 _save_abstractions(lib)
 
-                store.publish_workspace(
+                ports.workspace.publish(
                     module='episodic_compiler',
                     channel='causal.hypothesis_proposed',
-                    payload_json=json.dumps({
+                    payload={
                         'id': abs_record['id'],
                         'name': abs_record['name'],
                         'status': 'hypothesis',
                         'testable_prediction': abs_record['testable_prediction'],
-                    }, ensure_ascii=False),
+                    },
                     salience=0.75,
                     ttl_sec=3600
                 )
@@ -184,7 +192,7 @@ Dados do Episódio:
 
 
 def test_abstraction(abs_id: str, episode_data: dict[str, Any], episode_ok: bool,
-                     episode_surprise: float) -> dict[str, Any] | None:
+                     episode_surprise: float, *, ports: RuntimePorts | None = None) -> dict[str, Any] | None:
     """Testa uma abstração-hipótese contra um novo episódio.
     Verifica se a previsão implícita da abstração se confirmou.
     Retorna o resultado do teste e atualiza o lifecycle."""
@@ -198,6 +206,7 @@ def test_abstraction(abs_id: str, episode_data: dict[str, Any], episode_ok: bool
         return None
     if target.get('status') == 'discarded':
         return {'ok': False, 'reason': 'abstraction_discarded'}
+    ports = ports or default_ports()
 
     # Determinar se o episódio confirma ou refuta a hipótese
     # Confirmação: episódio bem-sucedido + baixa surpresa no domínio da abstração
@@ -236,15 +245,15 @@ def test_abstraction(abs_id: str, episode_data: dict[str, Any], episode_ok: bool
                 # PROMOÇÃO: hipótese → skill compilada
                 target['status'] = 'compiled_skill'
                 target['version'] = round(target.get('version', 1.0) + 0.5, 1)
-                store.publish_workspace(
+                ports.workspace.publish(
                     module='episodic_compiler',
                     channel='causal.skill_promoted',
-                    payload_json=json.dumps({
+                    payload={
                         'id': abs_id,
                         'name': target['name'],
                         'confirmation_rate': target['confirmation_rate'],
                         'tests': total,
-                    }, ensure_ascii=False),
+                    },
                     salience=0.9,
                     ttl_sec=7200
                 )
@@ -269,21 +278,21 @@ def test_abstraction(abs_id: str, episode_data: dict[str, Any], episode_ok: bool
             elif target['confirmation_rate'] < DISCARD_THRESHOLD:
                 # DESCARTE: falha sistemática
                 target['status'] = 'discarded'
-                store.publish_workspace(
+                ports.workspace.publish(
                     module='episodic_compiler',
                     channel='causal.hypothesis_discarded',
-                    payload_json=json.dumps({
+                    payload={
                         'id': abs_id,
                         'name': target['name'],
                         'confirmation_rate': target['confirmation_rate'],
                         'tests': total,
-                    }, ensure_ascii=False),
+                    },
                     salience=0.7,
                     ttl_sec=3600
                 )
             elif target['confirmation_rate'] < CONFIRMATION_THRESHOLD:
                 # REVISÃO: taxa intermediária, pedir ao LLM para refinar
-                _maybe_revise(target, lib)
+                _maybe_revise(target, lib, ports=ports)
 
     _save_abstractions(lib)
 
@@ -298,7 +307,7 @@ def test_abstraction(abs_id: str, episode_data: dict[str, Any], episode_ok: bool
     }
 
 
-def _maybe_revise(target: dict[str, Any], lib: dict[str, Any]):
+def _maybe_revise(target: dict[str, Any], lib: dict[str, Any], *, ports: RuntimePorts | None = None):
     """Pede ao LLM para revisar uma abstração que não está confirmando bem."""
     now = int(time.time())
     if now - target.get('last_revised_at', 0) < REVISION_COOLDOWN_SEC:
@@ -322,7 +331,13 @@ Retorne JSON com:
 - "revised_prediction": A previsão corrigida
 - "revision_reason": Por que a versão anterior falhava"""
 
-    res = llm.complete(prompt, json_mode=True, strategy='cheap')
+    ports = ports or default_ports()
+    if not ports.llm:
+        return
+    try:
+        res = ports.llm.complete(prompt, json_mode=True, strategy='cheap')
+    except Exception:
+        return
     if res:
         try:
             cleaned = res.strip()
@@ -343,15 +358,15 @@ Retorne JSON com:
                 target['confirmation_rate'] = 0.0
                 target['test_history'] = []
 
-                store.publish_workspace(
+                ports.workspace.publish(
                     module='episodic_compiler',
                     channel='causal.hypothesis_revised',
-                    payload_json=json.dumps({
+                    payload={
                         'id': target['id'],
                         'name': target['name'],
                         'revision_reason': data.get('revision_reason', ''),
                         'revision_count': target['revision_count'],
-                    }, ensure_ascii=False),
+                    },
                     salience=0.8,
                     ttl_sec=3600
                 )

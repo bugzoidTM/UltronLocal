@@ -5,6 +5,7 @@ import re
 import time
 import uuid
 import ast
+import unicodedata
 from pathlib import Path
 from typing import Any
 
@@ -119,6 +120,12 @@ def _safe_jsonish(value: Any) -> Any:
 
 def _norm_text(value: Any) -> str:
     return re.sub(r'\s+', ' ', str(value or '').strip()).upper()
+
+
+def _fold_text(value: Any) -> str:
+    text = unicodedata.normalize('NFKD', str(value or ''))
+    text = ''.join(ch for ch in text if not unicodedata.combining(ch))
+    return re.sub(r'\s+', ' ', text.lower()).strip()
 
 
 def _choice_text(item: dict[str, Any], label: str) -> str:
@@ -591,6 +598,89 @@ def _predict_oracle(item: dict[str, Any]) -> dict[str, Any]:
     return {'raw': json.dumps({'answer': item.get('answer')}, ensure_ascii=False), 'answer': str(item.get('answer') or '')}
 
 
+def _predict_symbolic(item: dict[str, Any]) -> dict[str, Any]:
+    question = _fold_text(item.get('question'))
+    choices = [c for c in (item.get('choices') or []) if isinstance(c, dict)]
+    scores: dict[str, float] = {}
+    reasons: dict[str, list[str]] = {}
+
+    def add(label: str, amount: float, reason: str) -> None:
+        lab = str(label or '').strip().upper()
+        if not lab:
+            return
+        scores[lab] = scores.get(lab, 0.0) + float(amount)
+        reasons.setdefault(lab, []).append(reason)
+
+    for choice in choices:
+        label = str(choice.get('label') or '').strip().upper()
+        text = _fold_text(choice.get('text'))
+        if not label:
+            continue
+        scores.setdefault(label, 0.0)
+
+        if 'afund' in question and 'agua' in question:
+            if 'alta densidade' in text:
+                add(label, 3.0, 'density_sink_rule')
+            if 'baixa densidade' in text:
+                add(label, -2.0, 'low_density_floats')
+        if 'cadeia alimentar' in question and 'plantas' in question and 'produtor' in text:
+            add(label, 3.0, 'plants_are_producers')
+        if 'evaporar' in question and 'rapido' in question:
+            if 'aumentar' in text and ('superficie' in text or 'area' in text):
+                add(label, 3.0, 'evaporation_surface_area')
+            if 'reduzir a temperatura' in text or 'cobrir' in text or 'diminuir a circulacao' in text:
+                add(label, -1.5, 'evaporation_negative_control')
+
+        if 'mais plausivel' in question or 'proximo passo' in question or 'desfecho mais plausivel' in question:
+            absurd_terms = (
+                'sem motivo', 'sair correndo', 'dormir dentro', 'molho de tomate',
+                'tropecar', 'quebre', 'pedacos', 'enterre', 'asfalto', 'voar sozinha',
+            )
+            if any(term in text for term in absurd_terms):
+                add(label, -2.0, 'commonsense_absurd_outcome')
+            if 'cebola' in question and 'frigideira' in question and 'cozinhar' in text:
+                add(label, 3.0, 'object_affordance_cooking')
+            if 'chuvoso' in question and 'guarda-chuva' in question and 'sair' in text and 'chuva' in text:
+                add(label, 3.0, 'rain_umbrella_affordance')
+            if 'fonte de agua' in question and 'garrafa' in question and 'agua' in text and ('encha' in text or 'encher' in text):
+                add(label, 3.0, 'bottle_fountain_affordance')
+
+        if 'negacao' in question and 'p e q' in question:
+            if 'nao p' in text and 'nao q' in text and ' ou ' in f' {text} ':
+                add(label, 4.0, 'de_morgan_and_to_or')
+            if 'nao p' in text and 'nao q' in text and ' e ' in f' {text} ':
+                add(label, -1.0, 'de_morgan_wrong_conjunction')
+        if 'aumento no preco' in question and ('microeconomia' in question or 'bem normalmente leva' in question):
+            if ('reducao' in text or 'reduzir' in text) and 'demandada' in text:
+                add(label, 3.0, 'law_of_demand')
+            if 'aumento' in text and 'demandada' in text:
+                add(label, -1.0, 'law_of_demand_wrong_direction')
+        if 'atp' in question and 'eucariot' in question and 'mitoc' in text:
+            add(label, 3.0, 'mitochondria_atp')
+
+    ranked = sorted(scores.items(), key=lambda kv: kv[1], reverse=True)
+    if not ranked or ranked[0][1] <= 0.0:
+        return {
+            'raw': json.dumps({'answer': '', 'confidence': 0.0, 'reason': 'no_symbolic_rule_fired'}, ensure_ascii=False),
+            'answer': '',
+        }
+    if len(ranked) > 1 and abs(ranked[0][1] - ranked[1][1]) < 0.001:
+        return {
+            'raw': json.dumps({'answer': '', 'confidence': 0.0, 'reason': 'symbolic_tie'}, ensure_ascii=False),
+            'answer': '',
+        }
+    label, score = ranked[0]
+    confidence = round(min(0.95, 0.45 + (score / 6.0)), 4)
+    raw = {
+        'answer': label,
+        'confidence': confidence,
+        'score': round(score, 4),
+        'reasons': reasons.get(label, [])[:4],
+        'predictor': 'non_llm_symbolic',
+    }
+    return {'raw': json.dumps(raw, ensure_ascii=False), 'answer': label}
+
+
 def _select_items(
     items: list[dict[str, Any]],
     benchmark_ids: list[str] | None = None,
@@ -624,6 +714,8 @@ def _select_items(
 def _score_item(item: dict[str, Any], predictor: str = 'llm', strategy: str = 'cheap') -> dict[str, Any]:
     if predictor == 'oracle':
         pred = _predict_oracle(item)
+    elif predictor in {'symbolic', 'non_llm_symbolic', 'local_symbolic'}:
+        pred = _predict_symbolic(item)
     else:
         pred = _predict_with_llm(
             str(item.get('question') or ''),

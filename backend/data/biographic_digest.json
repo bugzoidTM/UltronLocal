@@ -4,10 +4,36 @@
     "um agente medido por benchmarks reais (0 aprovados, 1 ainda abaixo do limiar nesta janela de evidência)",
     "um sistema com ciclo de plasticidade explícito (4 patches promovidos, 1 revertidos, 2 propostos)",
     "um sistema governado por gate causal calibrado (100 calibrações registradas)",
-    "um sistema que transforma lacunas causais em experimentos noturnos (6 executados, 0 injetados no grafo)",
-    "um organismo operacional com episódios significativos em blocked_mental_sim, cognitive_patch_loop"
+    "um sistema que transforma lacunas causais em experimentos noturnos (8 executados, 5 injetados no grafo)",
+    "um organismo operacional com episódios significativos em autonomous_cognition, blocked_mental_sim, cognitive_patch_loop, episodic_chat_turn"
   ],
   "benchmarks": [
+    {
+      "accuracy_answerable": null,
+      "accuracy_total": null,
+      "correct": null,
+      "file": "causal_benchmark_1778103196.json",
+      "incorrect": null,
+      "name": "causal_benchmark_1778103196",
+      "passed": null,
+      "summary": "",
+      "threshold": null,
+      "total": null,
+      "ts": 1778103196
+    },
+    {
+      "accuracy_answerable": null,
+      "accuracy_total": null,
+      "correct": null,
+      "file": "causal_benchmark_1778102853.json",
+      "incorrect": null,
+      "name": "causal_benchmark_1778102853",
+      "passed": null,
+      "summary": "",
+      "threshold": null,
+      "total": null,
+      "ts": 1778102853
+    },
     {
       "accuracy_answerable": null,
       "accuracy_total": null,
@@ -77,21 +103,94 @@
   "causal_gap_investigations": [
     {
       "edge": {
-        "cause": "",
-        "condition": "",
-        "effect": ""
+        "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+        "condition": "active_investigation_prior_validation:inv_487d659974",
+        "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general"
       },
-      "error": "sandbox_unreachable:ConnectError",
-      "experiment_kind": "causal_graph_enrichment",
-      "injected": false,
-      "investigation_id": "inv_d1b19aa531",
-      "ok": false,
+      "error": "",
+      "experiment_kind": "causal_transfer_prior_validation",
+      "injected": true,
+      "investigation_id": "inv_487d659974",
+      "ok": true,
       "query_terms": [
-        "chama",
-        "como"
+        "nome",
+        "sistema"
       ],
-      "target_route": "unknown",
-      "ts": 1776946356
+      "target_route": "unknown:general",
+      "ts": 1778103026
+    },
+    {
+      "edge": {
+        "cause": "active_investigation_gap:orionx vextrum limiar",
+        "condition": "autonomous_executor_next_cycle:inv_gap_0c69c36efa",
+        "effect": "sandbox_experiment_observed:causal_graph_enrichment:causal_graph"
+      },
+      "error": "",
+      "experiment_kind": "causal_graph_enrichment",
+      "injected": true,
+      "investigation_id": "inv_gap_0c69c36efa",
+      "ok": true,
+      "query_terms": [
+        "orionx",
+        "vextrum",
+        "limiar"
+      ],
+      "target_route": "causal_graph",
+      "ts": 1778102996
+    },
+    {
+      "edge": {
+        "cause": "active_investigation_gap:lembra mim voce",
+        "condition": "autonomous_executor_next_cycle:inv_797400281b",
+        "effect": "sandbox_experiment_observed:causal_graph_enrichment:active_investigation"
+      },
+      "error": "",
+      "experiment_kind": "causal_graph_enrichment",
+      "injected": true,
+      "investigation_id": "inv_797400281b",
+      "ok": true,
+      "query_terms": [
+        "lembra",
+        "mim",
+        "voce"
+      ],
+      "target_route": "active_investigation",
+      "ts": 1778102973
+    },
+    {
+      "edge": {
+        "cause": "active_investigation_gap:quanto",
+        "condition": "autonomous_executor_next_cycle:inv_24f9469ea0",
+        "effect": "sandbox_experiment_observed:causal_graph_enrichment:local_reasoning"
+      },
+      "error": "",
+      "experiment_kind": "causal_graph_enrichment",
+      "injected": true,
+      "investigation_id": "inv_24f9469ea0",
+      "ok": true,
+      "query_terms": [
+        "quanto"
+      ],
+      "target_route": "local_reasoning",
+      "ts": 1778102969
+    },
+    {
+      "edge": {
+        "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+        "condition": "active_investigation_prior_validation:inv_77c249986b",
+        "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general"
+      },
+      "error": "",
+      "experiment_kind": "causal_transfer_prior_validation",
+      "injected": true,
+      "investigation_id": "inv_77c249986b",
+      "ok": true,
+      "query_terms": [
+        "nome",
+        "sistema"
+      ],
+      "target_route": "unknown:general",
+      "ts": 1778102966
     },
     {
       "edge": {
@@ -102,14 +201,11 @@
       "error": "sandbox_unreachable:ConnectError",
       "experiment_kind": "causal_graph_enrichment",
       "injected": false,
-      "investigation_id": "inv_47bb669b64",
+      "investigation_id": "inv_d87cf6bddb",
       "ok": false,
-      "query_terms": [
-        "chama",
-        "como"
-      ],
-      "target_route": "active_investigation",
-      "ts": 1776946353
+      "query_terms": [],
+      "target_route": "unknown",
+      "ts": 1777674272
     },
     {
       "edge": {
@@ -120,68 +216,34 @@
       "error": "sandbox_unreachable:ConnectError",
       "experiment_kind": "causal_transfer_prior_validation",
       "injected": false,
-      "investigation_id": "inv_2008d2650b",
+      "investigation_id": "inv_15b1941413",
       "ok": false,
       "query_terms": [
-        "llm",
-        "sua"
+        "agi",
+        "voce"
+      ],
+      "target_route": "unknown:self",
+      "ts": 1777674269
+    },
+    {
+      "edge": {
+        "cause": "",
+        "condition": "",
+        "effect": ""
+      },
+      "error": "sandbox_unreachable:ConnectError",
+      "experiment_kind": "causal_transfer_prior_validation",
+      "injected": false,
+      "investigation_id": "inv_891c9c678d",
+      "ok": false,
+      "query_terms": [
+        "barriga",
+        "com",
+        "dor",
+        "tou"
       ],
       "target_route": "unknown:general",
-      "ts": 1776946351
-    },
-    {
-      "edge": {
-        "cause": "",
-        "condition": "",
-        "effect": ""
-      },
-      "error": "sandbox_unreachable:ConnectError",
-      "experiment_kind": "causal_graph_enrichment",
-      "injected": false,
-      "investigation_id": "inv_7aacdb43a1",
-      "ok": false,
-      "query_terms": [
-        "direitos",
-        "fundamentais"
-      ],
-      "target_route": "unknown",
-      "ts": 1776897700
-    },
-    {
-      "edge": {
-        "cause": "",
-        "condition": "",
-        "effect": ""
-      },
-      "error": "sandbox_unreachable:ConnectError",
-      "experiment_kind": "causal_graph_enrichment",
-      "injected": false,
-      "investigation_id": "inv_c6fdd4bc5d",
-      "ok": false,
-      "query_terms": [
-        "brasil",
-        "presidente"
-      ],
-      "target_route": "episodic_narrative",
-      "ts": 1776897697
-    },
-    {
-      "edge": {
-        "cause": "",
-        "condition": "",
-        "effect": ""
-      },
-      "error": "sandbox_unreachable:ConnectError",
-      "experiment_kind": "causal_graph_enrichment",
-      "injected": false,
-      "investigation_id": "inv_61ded79bbe",
-      "ok": false,
-      "query_terms": [
-        "brasil",
-        "presidente"
-      ],
-      "target_route": "episodic_narrative",
-      "ts": 1776897694
+      "ts": 1777674266
     }
   ],
   "causal_gates": [
@@ -198,7 +260,7 @@
         },
         "sample_size": 9,
         "successes": 6,
-        "ts": 1777642598
+        "ts": 1778264969
       },
       "thresholds": {
         "max_domain_regression_delta": -0.02,
@@ -209,84 +271,126 @@
       }
     }
   ],
-  "checksum": "a2e4410729ef9c6a",
+  "checksum": "c1d7f8d3c3251888",
   "corrections": [
     {
-      "evidence": "🧠⛔ ação #9184 bloqueada por simulação mental: ask_evidence (risk=0.18)",
-      "kind": "blocked_mental_sim",
-      "summary": "🧠⛔ ação #9184 bloqueada por simulação mental: ask_evidence (risk=0.18)",
-      "ts": 1777642624
-    },
-    {
-      "evidence": "🧠⛔ ação #9179 bloqueada por simulação mental: ask_evidence (risk=0.18)",
-      "kind": "blocked_mental_sim",
-      "summary": "🧠⛔ ação #9179 bloqueada por simulação mental: ask_evidence (risk=0.18)",
-      "ts": 1776961848
+      "evidence": "promote",
+      "kind": "patch:promoted",
+      "summary": "identity: relevance baixa recorrente",
+      "ts": 1778265299
     },
     {
       "evidence": "gap_detector",
       "kind": "patch:proposed",
       "summary": "general: groundedness baixa recorrente",
-      "ts": 1776961736
+      "ts": 1778265296
     },
     {
       "evidence": "gap_detector",
       "kind": "patch:proposed",
       "summary": "general: relevance baixa recorrente",
-      "ts": 1776961736
+      "ts": 1778265296
     },
     {
       "evidence": "promote",
       "kind": "patch:promoted",
       "summary": "identity: groundedness baixa recorrente",
-      "ts": 1776961736
+      "ts": 1778265296
     },
     {
-      "evidence": "promote",
+      "evidence": "perception workspace=13 queued=10 errors=0 goals=10",
+      "kind": "autonomous_cognition",
+      "summary": "perception workspace=13 queued=10 errors=0 goals=10",
+      "ts": 1778265203
+    },
+    {
+      "evidence": "🧠⛔ ação #11144 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)",
+      "kind": "blocked_mental_sim",
+      "summary": "🧠⛔ ação #11144 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)",
+      "ts": 1778265111
+    },
+    {
+      "evidence": "perception workspace=0 queued=20 errors=0 goals=10",
+      "kind": "autonomous_cognition",
+      "summary": "perception workspace=0 queued=20 errors=0 goals=10",
+      "ts": 1778264887
+    },
+    {
+      "evidence": "Containment action due to critical damage score",
+      "kind": "patch:rolled_back",
+      "summary": "test patch",
+      "ts": 1776201719
+    },
+    {
+      "evidence": "manual",
       "kind": "patch:promoted",
-      "summary": "identity: relevance baixa recorrente",
-      "ts": 1776961736
+      "summary": "overconfidence",
+      "ts": 1774401556
     },
     {
-      "evidence": "🧠⛔ ação #9171 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)",
-      "kind": "blocked_mental_sim",
-      "summary": "🧠⛔ ação #9171 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)",
-      "ts": 1776961539
-    },
-    {
-      "evidence": "🧠⛔ ação #9166 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)",
-      "kind": "blocked_mental_sim",
-      "summary": "🧠⛔ ação #9166 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)",
-      "ts": 1776961228
-    },
-    {
-      "evidence": "🧠⛔ ação #9156 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)",
-      "kind": "blocked_mental_sim",
-      "summary": "🧠⛔ ação #9156 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)",
-      "ts": 1776960920
-    },
-    {
-      "evidence": "🧠⛔ ação #9147 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)",
-      "kind": "blocked_mental_sim",
-      "summary": "🧠⛔ ação #9147 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)",
-      "ts": 1776960600
+      "evidence": "promotion_gate=hold; blockers=delta_below_threshold",
+      "kind": "patch:evaluated",
+      "summary": "academic_mcq: falha em raciocínio lógico formal (De Morgan / leis biológicas)",
+      "ts": 1774227059
     }
   ],
-  "day": "2026-05-01",
+  "day": "2026-05-08",
   "decisions": [
     {
       "evidence": "",
       "kind": "promotion_gate",
       "source": "cognitive_patches",
-      "summary": "gate decidiu promote para cp_d072237dbf96",
-      "ts": 1776961736
+      "summary": "gate decidiu promote para cp_75a80ef715bc",
+      "ts": 1778265299
     },
     {
       "evidence": "",
       "kind": "promotion_gate",
       "source": "cognitive_patches",
-      "summary": "gate decidiu promote para cp_75a80ef715bc",
-      "ts": 1776961736
+      "summary": "gate decidiu promote para cp_d072237dbf96",
+      "ts": 1778265296
+    },
+    {
+      "evidence": "episode=ep_chat_c472019fa86be2fca3 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_identity intent=question",
+      "kind": "episodic_chat_turn",
+      "source": "events",
+      "summary": "episode=ep_chat_c472019fa86be2fca3 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_identity intent=question",
+      "ts": 1778183870
+    },
+    {
+      "evidence": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+      "kind": "active_investigation_executor",
+      "source": "active_investigation_executions",
+      "summary": "investigacao ativa consolidou inv_487d659974",
+      "ts": 1778103026
+    },
+    {
+      "evidence": "active_investigation_gap:orionx vextrum limiar",
+      "kind": "active_investigation_executor",
+      "source": "active_investigation_executions",
+      "summary": "investigacao ativa consolidou inv_gap_0c69c36efa",
+      "ts": 1778102996
+    },
+    {
+      "evidence": "active_investigation_gap:lembra mim voce",
+      "kind": "active_investigation_executor",
+      "source": "active_investigation_executions",
+      "summary": "investigacao ativa consolidou inv_797400281b",
+      "ts": 1778102973
+    },
+    {
+      "evidence": "active_investigation_gap:quanto",
+      "kind": "active_investigation_executor",
+      "source": "active_investigation_executions",
+      "summary": "investigacao ativa consolidou inv_24f9469ea0",
+      "ts": 1778102969
+    },
+    {
+      "evidence": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+      "kind": "active_investigation_executor",
+      "source": "active_investigation_executions",
+      "summary": "investigacao ativa consolidou inv_77c249986b",
+      "ts": 1778102966
     },
     {
       "evidence": "delta_below_threshold",
@@ -298,19 +402,19 @@
   ],
   "evidence_counts": {
     "actions": 24,
-    "benchmarks": 5,
-    "causal_gap_experiments": 6,
-    "causal_gap_injections": 0,
+    "benchmarks": 7,
+    "causal_gap_experiments": 8,
+    "causal_gap_injections": 5,
     "causal_gate_calibrations": 100,
     "corrections": 10,
-    "decisions": 3,
-    "events": 13,
+    "decisions": 9,
+    "events": 11,
     "memories": 10,
     "patches": 8,
     "significant_episodes": 18
   },
-  "generated_at": 1777642686,
-  "id": "bio_2026-05-01_a2e4410729ef9c6a",
+  "generated_at": 1778265304,
+  "id": "bio_2026-05-08_c1d7f8d3c3251888",
   "identity": {
     "created_at": 1774100861,
     "mission": "Aprender, planejar e agir com segurança usando guardrails simbólicos.",
@@ -319,257 +423,256 @@
     "role": "Agente cognitivo autônomo orientado a objetivos"
   },
   "identity_thesis": "Sou o UltronPro hoje: um agente cognitivo cuja identidade é processo acumulado por benchmarks, correções, decisões e gates causais.",
-  "narrative": "Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um agente medido por benchmarks reais (0 aprovados, 1 ainda abaixo do limiar nesta janela de evidência); um sistema com ciclo de plasticidade explícito (4 patches promovidos, 1 revertidos, 2 propostos). Meu marco de medição mais significativo diz que interventive_prediction_unseen_variants não passou (acurácia respondível 76.5%, acurácia total 65.0%, limiar 80.0%). Minha trajetória inclui correções como 🧠⛔ ação #9184 bloqueada por simulação mental: ask_evidence (risk=0.18). Entre as decisões registradas, pesa gate decidiu promote para cp_d072237dbf96. Meu gate causal está presente como critério de maturidade, com 100 calibrações registradas. Minha tensão aberta agora é benchmark abaixo do limiar: interventive_prediction_unseen_variants não passou (acurácia respondível 76.5%, acurácia total 65.0%, limiar 80.0%).",
+  "narrative": "Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um agente medido por benchmarks reais (0 aprovados, 1 ainda abaixo do limiar nesta janela de evidência); um sistema com ciclo de plasticidade explícito (4 patches promovidos, 1 revertidos, 2 propostos). Meu marco de medição mais significativo diz que interventive_prediction_unseen_variants não passou (acurácia respondível 76.5%, acurácia total 65.0%, limiar 80.0%). Minha trajetória inclui correções como identity: relevance baixa recorrente. Entre as decisões registradas, pesa gate decidiu promote para cp_75a80ef715bc. Meu gate causal está presente como critério de maturidade, com 100 calibrações registradas. Durante o sono investigativo, consolidei 5 lacuna(s) causais no grafo. Minha tensão aberta agora é benchmark abaixo do limiar: interventive_prediction_unseen_variants não passou (acurácia respondível 76.5%, acurácia total 65.0%, limiar 80.0%).",
   "open_tensions": [
     "benchmark abaixo do limiar: interventive_prediction_unseen_variants não passou (acurácia respondível 76.5%, acurácia total 65.0%, limiar 80.0%)",
     "correção ainda não estabilizada: general: groundedness baixa recorrente",
     "correção ainda não estabilizada: general: relevance baixa recorrente",
-    "ação com fricção operacional: (motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
+    "correção ainda não estabilizada: test patch",
+    "correção ainda não estabilizada: academic_mcq: falha em raciocínio lógico formal (De Morgan / leis biológicas)",
     "ação com fricção operacional: (ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
-    "ação com fricção operacional: (aÃ§Ã£o) Tentar auto-resolver conflito persistente #74 (Cenário é).",
-    "ação com fricção operacional: (ação) Tentar analogia estrutural para resolver conflito: Resposta é"
+    "ação com fricção operacional: (motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
+    "ação com fricção operacional: Publish a conflict review request for the highest-pressure open contradictions."
   ],
   "significant_episodes": [
     {
+      "evidence": "mental_sim_abort: risk=0.58",
+      "kind": "auto_resolve_conflicts",
+      "priority": 10,
+      "source": "actions",
+      "status": "blocked",
+      "title": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
+      "ts": 1778265107,
+      "weight": 0.71
+    },
+    {
       "evidence": "mental_sim_abort: risk=0.18",
       "kind": "ask_evidence",
-      "priority": 10,
+      "priority": 7,
       "source": "actions",
       "status": "blocked",
       "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "ts": 1777642623,
+      "ts": 1778030233,
       "weight": 0.71
     },
     {
       "evidence": "mental_sim_abort: risk=0.18",
       "kind": "ask_evidence",
-      "priority": 10,
+      "priority": 7,
       "source": "actions",
       "status": "blocked",
       "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "ts": 1776961847,
+      "ts": 1778029883,
       "weight": 0.71
     },
     {
       "evidence": "mental_sim_abort: risk=0.58",
       "kind": "auto_resolve_conflicts",
-      "priority": 10,
+      "priority": 7,
       "source": "actions",
       "status": "blocked",
       "title": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
-      "ts": 1776961539,
+      "ts": 1777943005,
       "weight": 0.71
     },
     {
-      "evidence": "mental_sim_abort: risk=0.58",
-      "kind": "auto_resolve_conflicts",
-      "priority": 10,
+      "evidence": "mental_sim_abort: risk=0.18",
+      "kind": "ask_evidence",
+      "priority": 7,
       "source": "actions",
       "status": "blocked",
-      "title": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
-      "ts": 1776961227,
+      "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
+      "ts": 1777942521,
       "weight": 0.71
     },
     {
-      "evidence": "mental_sim_abort: risk=0.58",
-      "kind": "auto_resolve_conflicts",
-      "priority": 8,
+      "evidence": "mental_sim_abort: risk=0.18",
+      "kind": "ask_evidence",
+      "priority": 7,
       "source": "actions",
       "status": "blocked",
-      "title": "(aÃ§Ã£o) Tentar auto-resolver conflito persistente #74 (Cenário é).",
-      "ts": 1776960904,
+      "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
+      "ts": 1777942150,
       "weight": 0.71
     },
     {
-      "evidence": "mental_sim_abort: risk=0.58",
-      "kind": "auto_resolve_conflicts",
-      "priority": 10,
+      "evidence": "mental_sim_abort: risk=0.18",
+      "kind": "ask_evidence",
+      "priority": 7,
       "source": "actions",
       "status": "blocked",
-      "title": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
-      "ts": 1776960598,
+      "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
+      "ts": 1777941797,
       "weight": 0.71
     },
     {
-      "evidence": "mental_sim_abort: risk=0.58",
-      "kind": "auto_resolve_conflicts",
-      "priority": 10,
+      "evidence": "mental_sim_abort: risk=0.18",
+      "kind": "ask_evidence",
+      "priority": 7,
       "source": "actions",
       "status": "blocked",
-      "title": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
-      "ts": 1776960277,
+      "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
+      "ts": 1777941470,
       "weight": 0.71
     },
     {
       "evidence": "mental_sim_abort: risk=0.58",
-      "kind": "auto_resolve_conflicts",
-      "priority": 10,
-      "source": "actions",
-      "status": "blocked",
-      "title": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
-      "ts": 1776959662,
-      "weight": 0.71
-    },
-    {
-      "evidence": "mental_sim_abort: risk=0.58",
-      "kind": "generate_analogy_hypothesis",
+      "kind": "autonomous_internal",
       "priority": 9,
       "source": "actions",
       "status": "blocked",
-      "title": "(ação) Tentar analogia estrutural para resolver conflito: Resposta é",
-      "ts": 1776959346,
+      "title": "Publish a conflict review request for the highest-pressure open contradictions.",
+      "ts": 1777940990,
       "weight": 0.71
+    },
+    {
+      "evidence": "processed=2 picked=2 stats={'ok': True, 'path': 'F:\\\\sistemas\\\\UltronPro\\\\backend\\\\data\\\\cognitive_patches.jsonl', 'state_path': 'F:\\\\sistemas\\\\UltronPro\\\\backend\\\\data\\\\cognitive_patches_state.json', 'total_rows': 356, 'counts_by_status': {'promoted': 174, 'proposed': 173, 'eva…",
+      "kind": "cognitive_patch_loop",
+      "source": "events",
+      "title": "processed=2 picked=2 stats={'ok': True, 'path': 'F:\\\\sistemas\\\\UltronPro\\\\backend\\\\data\\\\cognitive_patches.jsonl', 'state_path': 'F:\\\\sistemas\\\\UltronPro\\\\backend\\\\data\\\\cognitive…",
+      "ts": 1778265299,
+      "weight": 0.7
     },
     {
       "evidence": "mental_sim_abort: risk=0.58",
-      "kind": "auto_resolve_conflicts",
-      "priority": 10,
+      "kind": "neuroplastic_cycle",
+      "priority": 5,
       "source": "actions",
       "status": "blocked",
-      "title": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
-      "ts": 1776959346,
-      "weight": 0.71
+      "title": "(aÃ§Ã£o) Rodar ciclo de avaliaÃ§Ã£o shadow de mutaÃ§Ãµes arquiteturais pendentes.",
+      "ts": 1778029507,
+      "weight": 0.68
     },
     {
-      "evidence": "mental_sim_abort: risk=0.18",
-      "kind": "ask_evidence",
-      "priority": 10,
-      "source": "actions",
-      "status": "blocked",
-      "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "ts": 1776959038,
-      "weight": 0.71
-    },
-    {
-      "evidence": "mental_sim_abort: risk=0.18",
-      "kind": "ask_evidence",
-      "priority": 10,
-      "source": "actions",
-      "status": "blocked",
-      "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "ts": 1776958730,
-      "weight": 0.71
-    },
-    {
-      "evidence": "mental_sim_abort: risk=0.18",
-      "kind": "ask_evidence",
-      "priority": 10,
-      "source": "actions",
-      "status": "blocked",
-      "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "ts": 1776958423,
-      "weight": 0.71
-    },
-    {
-      "evidence": "mental_sim_abort: risk=0.58",
-      "kind": "auto_resolve_conflicts",
-      "priority": 10,
-      "source": "actions",
-      "status": "blocked",
-      "title": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
-      "ts": 1776957499,
-      "weight": 0.71
-    },
-    {
-      "evidence": "mental_sim_abort: risk=0.58",
-      "kind": "auto_resolve_conflicts",
-      "priority": 8,
-      "source": "actions",
-      "status": "blocked",
-      "title": "(aÃ§Ã£o) Tentar auto-resolver conflito persistente #74 (Cenário é).",
-      "ts": 1776957493,
-      "weight": 0.71
-    },
-    {
-      "evidence": "mental_sim_abort: risk=0.58",
-      "kind": "generate_analogy_hypothesis",
+      "evidence": "Publish a conflict review request for the highest-pressure open contradictions.",
+      "kind": "autonomous_internal",
       "priority": 9,
       "source": "actions",
-      "status": "blocked",
-      "title": "(ação) Tentar analogia estrutural para resolver conflito: Resposta é",
-      "ts": 1776957192,
-      "weight": 0.71
+      "status": "done",
+      "title": "Publish a conflict review request for the highest-pressure open contradictions.",
+      "ts": 1778265203,
+      "weight": 0.44
     },
     {
-      "evidence": "mental_sim_abort: risk=0.58",
-      "kind": "auto_resolve_conflicts",
-      "priority": 10,
+      "evidence": "Publish a conflict review request for the highest-pressure open contradictions.",
+      "kind": "autonomous_internal",
+      "priority": 9,
       "source": "actions",
-      "status": "blocked",
-      "title": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
-      "ts": 1776957192,
-      "weight": 0.71
+      "status": "done",
+      "title": "Publish a conflict review request for the highest-pressure open contradictions.",
+      "ts": 1778264887,
+      "weight": 0.44
     },
     {
-      "evidence": "mental_sim_abort: risk=0.18",
-      "kind": "ask_evidence",
-      "priority": 10,
+      "evidence": "Publish a conflict review request for the highest-pressure open contradictions.",
+      "kind": "autonomous_internal",
+      "priority": 9,
       "source": "actions",
-      "status": "blocked",
-      "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "ts": 1776956885,
-      "weight": 0.71
+      "status": "done",
+      "title": "Publish a conflict review request for the highest-pressure open contradictions.",
+      "ts": 1778162852,
+      "weight": 0.44
+    },
+    {
+      "evidence": "Publish a conflict review request for the highest-pressure open contradictions.",
+      "kind": "autonomous_internal",
+      "priority": 9,
+      "source": "actions",
+      "status": "done",
+      "title": "Publish a conflict review request for the highest-pressure open contradictions.",
+      "ts": 1778162760,
+      "weight": 0.44
+    },
+    {
+      "evidence": "Publish a conflict review request for the highest-pressure open contradictions.",
+      "kind": "autonomous_internal",
+      "priority": 9,
+      "source": "actions",
+      "status": "done",
+      "title": "Publish a conflict review request for the highest-pressure open contradictions.",
+      "ts": 1778162656,
+      "weight": 0.44
+    },
+    {
+      "evidence": "Publish a conflict review request for the highest-pressure open contradictions.",
+      "kind": "autonomous_internal",
+      "priority": 9,
+      "source": "actions",
+      "status": "done",
+      "title": "Publish a conflict review request for the highest-pressure open contradictions.",
+      "ts": 1778030324,
+      "weight": 0.44
+    },
+    {
+      "evidence": "Publish a conflict review request for the highest-pressure open contradictions.",
+      "kind": "autonomous_internal",
+      "priority": 9,
+      "source": "actions",
+      "status": "done",
+      "title": "Publish a conflict review request for the highest-pressure open contradictions.",
+      "ts": 1778030203,
+      "weight": 0.44
     }
   ],
   "supporting_memories": [
     {
-      "importance": 0.88,
-      "text": "Conceito Web: KL divergence",
-      "ts": 1776905826,
-      "type": "research"
-    },
-    {
-      "importance": 0.88,
-      "text": "Conceito Web: partition function",
-      "ts": 1776905826,
-      "type": "research"
-    },
-    {
-      "importance": 0.88,
-      "text": "Conceito Web: optimal model",
-      "ts": 1776905826,
-      "type": "research"
-    },
-    {
       "importance": 0.95,
-      "text": "Digest Biográfico (2026-04-19): Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um agente med…",
-      "ts": 1776648110,
+      "text": "Digest Biográfico (2026-05-06): Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um sistema qu…",
+      "ts": 1778100404,
       "type": "semantic"
     },
     {
       "importance": 0.95,
-      "text": "Digest Biográfico (2026-04-19): Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um agente med…",
-      "ts": 1776648144,
+      "text": "Digest Biográfico (2026-05-06): Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um sistema qu…",
+      "ts": 1778100491,
       "type": "semantic"
     },
     {
       "importance": 0.95,
-      "text": "Digest Biográfico (2026-04-19): Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um agente med…",
-      "ts": 1776650546,
+      "text": "Digest Biográfico (2026-05-06): Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um sistema qu…",
+      "ts": 1778101709,
       "type": "semantic"
     },
     {
       "importance": 0.95,
-      "text": "Digest Biográfico (2026-04-20): Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um agente med…",
-      "ts": 1776736840,
+      "text": "Digest Biográfico (2026-05-06): Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um agente med…",
+      "ts": 1778102242,
       "type": "semantic"
     },
     {
       "importance": 0.95,
-      "text": "Digest Biográfico (2026-04-21): Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um agente med…",
-      "ts": 1776800402,
+      "text": "Digest Biográfico (2026-05-06): Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um agente med…",
+      "ts": 1778102795,
       "type": "semantic"
     },
     {
       "importance": 0.95,
-      "text": "Digest Biográfico (2026-04-22): Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um sistema qu…",
-      "ts": 1776887867,
+      "text": "Digest Biográfico (2026-05-06): Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um agente med…",
+      "ts": 1778103012,
       "type": "semantic"
     },
     {
       "importance": 0.95,
-      "text": "Digest Biográfico (2026-04-22): Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um agente med…",
-      "ts": 1776909811,
+      "text": "Digest Biográfico (2026-05-06): Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um agente med…",
+      "ts": 1778103127,
+      "type": "semantic"
+    },
+    {
+      "importance": 0.95,
+      "text": "Digest Biográfico (2026-05-06): Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um agente med…",
+      "ts": 1778103790,
+      "type": "semantic"
+    },
+    {
+      "importance": 0.95,
+      "text": "Digest Biográfico (2026-05-06): Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um agente med…",
+      "ts": 1778107960,
+      "type": "semantic"
+    },
+    {
+      "importance": 0.99,
+      "text": "O meu criador e desenvolvedor é o Bugzoid. Ele me construiu. Bugzoid é meu nome de usuário no X.",
+      "ts": 1777845796,
       "type": "semantic"
     }
   ],

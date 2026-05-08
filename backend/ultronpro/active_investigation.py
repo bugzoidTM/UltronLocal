@@ -17,6 +17,8 @@ import uuid
 from pathlib import Path
 from typing import Any
 
+from ultronpro.core.ports import RuntimePorts, default_ports
+
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 INVESTIGATION_LOG_PATH = DATA_DIR / "active_investigations.jsonl"
@@ -73,6 +75,17 @@ def _query_tokens(text: Any) -> set[str]:
 
 def _clip(text: Any, n: int = 280) -> str:
     return re.sub(r"\s+", " ", str(text or "")).strip()[: max(1, int(n))]
+
+
+def _unique_str(items: list[Any] | tuple[Any, ...] | set[Any]) -> list[str]:
+    out: list[str] = []
+    seen: set[str] = set()
+    for item in items or []:
+        value = str(item or "").strip()
+        if value and value not in seen:
+            out.append(value)
+            seen.add(value)
+    return out
 
 
 def _append_jsonl(path: Path, payload: dict[str, Any]) -> None:
@@ -443,6 +456,32 @@ else:
         "confidence": 0.66 if accepted else 0.42,
     }}
 
+needs_episodic = kind == "episodic_evidence_collection" or bool({{
+    "episodio_relevante",
+    "memoria_episodica_recuperavel",
+}} & set(missing))
+episodic_episode = None
+if needs_episodic:
+    episodic_episode = {{
+        "action_id": int(digest[:8], 16),
+        "kind": "active_gap_intervention",
+        "text": "Intervencao minima para lacuna episodica: " + str(report.get("query") or "")[:280],
+        "task_type": str(report.get("task_type") or "general"),
+        "strategy": kind,
+        "ok": accepted,
+        "latency_ms": 1,
+        "meta": {{
+            "investigation_id": str(report.get("investigation_id") or ""),
+            "missing_slots": missing,
+            "query_terms": query_terms[:12],
+            "target_route": target_route,
+            "sandbox_digest": digest,
+            "outcome": "success" if accepted else "failure",
+            "error_class": "none" if accepted else "experiment_not_accepted",
+        }},
+        "authorship_origin": "active_investigation_sandbox",
+    }}
+
 print(json.dumps({{
     "ok": True,
     "accepted": accepted,
@@ -453,6 +492,13 @@ print(json.dumps({{
     "target_route": target_route,
     "edge": edge,
     "prior_validation": prior_validation,
+    "episodic_episode": episodic_episode,
+    "minimal_intervention": {{
+        "kind": kind,
+        "target_route": target_route,
+        "filled_slots": missing,
+        "sandbox_digest": digest,
+    }},
     "acceptance_checked": bool(next_exp.get("acceptance")),
 }}, ensure_ascii=False))
 """.strip()
@@ -472,8 +518,9 @@ def _parse_sandbox_stdout(stdout: str) -> dict[str, Any]:
     return {"ok": False, "error": "no_json_result"}
 
 
-def _execute_report_experiment(report: dict[str, Any]) -> dict[str, Any]:
+def _execute_report_experiment(report: dict[str, Any], *, ports: RuntimePorts | None = None) -> dict[str, Any]:
     """Execute a concrete investigation report without re-reading the pending queue."""
+    ports = ports or default_ports()
     inv_id = str(report.get("investigation_id") or "").strip()
     payload = _sandbox_report_payload(report)
     code = _experiment_sandbox_code(payload)
@@ -528,7 +575,7 @@ def _execute_report_experiment(report: dict[str, Any]) -> dict[str, Any]:
     if prior_validation:
         row["prior_validation"] = prior_validation
     try:
-        from ultronpro import causal_graph, store
+        from ultronpro import causal_graph
 
         injected = causal_graph.upsert_edge(
             cause=str(edge.get("cause") or f"active_investigation_gap:{inv_id}"),
@@ -562,15 +609,54 @@ def _execute_report_experiment(report: dict[str, Any]) -> dict[str, Any]:
             except Exception as exc:
                 row["transfer_prior_causal_update"] = {"ok": False, "error": str(exc)[:180]}
         try:
-            store.publish_workspace(
+            ports.workspace.publish(
                 module="active_investigation_executor",
                 channel="causal.experiment",
-                payload_json=json.dumps(row, ensure_ascii=False, default=str),
+                payload=row,
                 salience=0.72,
                 ttl_sec=1800,
             )
         except Exception:
             pass
+        episodic_episode = (
+            experiment_result.get("episodic_episode")
+            if isinstance(experiment_result.get("episodic_episode"), dict)
+            else None
+        )
+        if episodic_episode:
+            try:
+                from ultronpro import episodic_memory
+
+                episodic_memory.append_episode(
+                    action_id=int(episodic_episode.get("action_id") or int(time.time())),
+                    kind=str(episodic_episode.get("kind") or "active_gap_intervention"),
+                    text=str(episodic_episode.get("text") or "")[:420],
+                    task_type=str(episodic_episode.get("task_type") or payload.get("task_type") or "general"),
+                    strategy=str(episodic_episode.get("strategy") or payload.get("next_experiment", {}).get("kind") or "active_gap_intervention"),
+                    ok=bool(episodic_episode.get("ok")),
+                    latency_ms=max(1, int(episodic_episode.get("latency_ms") or 1)),
+                    meta=episodic_episode.get("meta") if isinstance(episodic_episode.get("meta"), dict) else {},
+                    authorship_origin=str(episodic_episode.get("authorship_origin") or "active_investigation_sandbox"),
+                )
+                row["episodic_memory"] = {
+                    "ok": True,
+                    "kind": str(episodic_episode.get("kind") or "active_gap_intervention"),
+                    "task_type": str(episodic_episode.get("task_type") or payload.get("task_type") or "general"),
+                }
+                row["episodic_recorded"] = True
+                row["ok"] = bool(row.get("ok") or row["episodic_memory"]["ok"])
+                try:
+                    ports.workspace.publish(
+                        module="active_investigation_executor",
+                        channel="episodic.experiment",
+                        payload={"execution": row, "episode": episodic_episode},
+                        salience=0.68,
+                        ttl_sec=1800,
+                    )
+                except Exception:
+                    pass
+            except Exception as exc:
+                row["episodic_memory"] = {"ok": False, "error": str(exc)[:180]}
     except Exception as exc:
         row["error"] = f"causal_injection_error:{type(exc).__name__}:{str(exc)[:160]}"
 
@@ -580,15 +666,15 @@ def _execute_report_experiment(report: dict[str, Any]) -> dict[str, Any]:
     return row
 
 
-def execute_pending_experiment() -> dict[str, Any]:
+def execute_pending_experiment(*, ports: RuntimePorts | None = None) -> dict[str, Any]:
     """Execute one pending investigation experiment in sandbox and inject the result into the causal graph."""
     pending = pending_experiments(limit=1)
     if not pending:
         return {"ok": True, "executed": False, "reason": "no_pending_active_investigation"}
-    return _execute_report_experiment(pending[0])
+    return _execute_report_experiment(pending[0], ports=ports)
 
 
-def execute_pending_experiments(*, limit: int = 3) -> dict[str, Any]:
+def execute_pending_experiments(*, limit: int = 3, ports: RuntimePorts | None = None) -> dict[str, Any]:
     """Execute a bounded batch of pending investigations for offline/nightly cycles."""
     limit = max(1, int(limit or 1))
     pending = pending_experiments(limit=limit)
@@ -603,7 +689,7 @@ def execute_pending_experiments(*, limit: int = 3) -> dict[str, Any]:
             "reason": "no_pending_active_investigation",
         }
 
-    results = [_execute_report_experiment(report) for report in pending[:limit]]
+    results = [_execute_report_experiment(report, ports=ports) for report in pending[:limit]]
     injected = sum(1 for item in results if item.get("ok") and item.get("injected"))
     failed = sum(1 for item in results if item.get("executed") and not item.get("ok"))
     return {
@@ -613,6 +699,134 @@ def execute_pending_experiments(*, limit: int = 3) -> dict[str, Any]:
         "failed": failed,
         "pending_before": len(pending),
         "results": results,
+    }
+
+
+def _missing_slots_from_gap_signal(gap_signal: dict[str, Any]) -> list[str]:
+    missing = gap_signal.get("missing_slots") if isinstance(gap_signal.get("missing_slots"), list) else []
+    slots = _unique_str(missing)
+    module_gaps = gap_signal.get("module_gaps") if isinstance(gap_signal.get("module_gaps"), list) else []
+    for gap in module_gaps:
+        if isinstance(gap, dict):
+            slots = _unique_str(slots + [gap.get("missing_slot")])
+    return slots
+
+
+def _learned_route_from_gap_signal(gap_signal: dict[str, Any], task_type: str) -> dict[str, Any]:
+    learned_route = gap_signal.get("learned_route") if isinstance(gap_signal.get("learned_route"), dict) else {}
+    if learned_route:
+        return dict(learned_route)
+    module = "memory" if "episodio_relevante" in _missing_slots_from_gap_signal(gap_signal) else (task_type or "unknown")
+    return {"routed": False, "module": module, "method": "gap_signal"}
+
+
+def run_minimal_intervention_for_gap_signal(
+    query: str,
+    *,
+    gap_signal: dict[str, Any],
+    task_type: str = "general",
+    source: str = "metacognition",
+    ports: RuntimePorts | None = None,
+) -> dict[str, Any]:
+    """Turn a specific causal/episodic gap into one sandboxed minimal intervention."""
+    if not _enabled():
+        return {"ok": True, "executed": False, "reason": "active_investigation_disabled"}
+    if str(os.getenv("ULTRON_ACTIVE_GAP_INTERVENTIONS_ENABLED", "1")).strip().lower() in {
+        "0",
+        "false",
+        "no",
+        "off",
+    }:
+        return {"ok": True, "executed": False, "reason": "active_gap_interventions_disabled"}
+    if not isinstance(gap_signal, dict):
+        return {"ok": False, "executed": False, "reason": "invalid_gap_signal"}
+
+    missing = _missing_slots_from_gap_signal(gap_signal)
+    actionable = [
+        slot
+        for slot in missing
+        if slot
+        in {
+            "aresta_causal_relevante",
+            "episodio_relevante",
+            "memoria_episodica_recuperavel",
+        }
+    ]
+    if not actionable:
+        return {
+            "ok": True,
+            "executed": False,
+            "reason": "no_causal_or_episodic_gap",
+            "missing_slots": missing,
+        }
+
+    started = time.perf_counter()
+    q = str(query or gap_signal.get("query") or "").strip()
+    learned_route = _learned_route_from_gap_signal(gap_signal, task_type)
+    next_step = gap_signal.get("next_step") if isinstance(gap_signal.get("next_step"), dict) else {}
+    next_exp = next_step.get("experiment") if isinstance(next_step.get("experiment"), dict) else {}
+    if not next_exp:
+        next_exp = _next_experiment(q, missing, learned_route)
+    else:
+        next_exp = dict(next_exp)
+        if not next_exp.get("query_terms"):
+            next_exp["query_terms"] = sorted(_query_tokens(q))[:12]
+        if not next_exp.get("action"):
+            next_exp["action"] = _next_experiment(q, missing, learned_route).get("action")
+        if not next_exp.get("acceptance"):
+            next_exp["acceptance"] = "o experimento deve registrar evidencia ou manter UNKNOWN com lacuna explicita"
+
+    investigation_id = f"inv_gap_{uuid.uuid4().hex[:10]}"
+    coverage = gap_signal.get("coverage") if isinstance(gap_signal.get("coverage"), dict) else {}
+    report = {
+        "ok": True,
+        "resolved": True,
+        "investigation_id": investigation_id,
+        "ts": int(time.time()),
+        "status": "executing_minimal_intervention",
+        "reason": str(gap_signal.get("reason") or "metacognitive_gap"),
+        "task_type": str(task_type or "general"),
+        "query": q[:600],
+        "source": str(source or "metacognition"),
+        "learned_route": learned_route,
+        "coverage": coverage,
+        "missing_slots": missing,
+        "next_experiment": next_exp,
+        "gap_signal": gap_signal,
+        "candidate_modules": gap_signal.get("candidate_modules") if isinstance(gap_signal.get("candidate_modules"), list) else [],
+        "probes": {
+            "gap_signal": {
+                "ok": True,
+                "open_dimensions": gap_signal.get("open_dimensions") if isinstance(gap_signal.get("open_dimensions"), list) else [],
+                "module_gaps": gap_signal.get("module_gaps") if isinstance(gap_signal.get("module_gaps"), list) else [],
+            }
+        },
+        "duration_ms": round((time.perf_counter() - started) * 1000.0, 2),
+    }
+    report["answer"] = _render_answer(report)
+    report["causal_graph_registration"] = _register_in_causal_graph(report)
+    execution = _execute_report_experiment(report, ports=ports)
+    report["execution"] = execution
+    report["status"] = "minimal_intervention_executed" if execution.get("ok") else "minimal_intervention_failed"
+    report["duration_ms"] = round((time.perf_counter() - started) * 1000.0, 2)
+    report["answer"] = _render_answer(report)
+    _append_jsonl(INVESTIGATION_LOG_PATH, report)
+    _write_json(INVESTIGATION_STATE_PATH, report)
+    return {
+        "ok": bool(execution.get("ok")),
+        "executed": True,
+        "injected": bool(execution.get("injected")),
+        "episodic_recorded": bool(execution.get("episodic_recorded")),
+        "investigation_id": investigation_id,
+        "missing_slots": missing,
+        "next_experiment": next_exp,
+        "execution": execution,
+        "report": {
+            "status": report.get("status"),
+            "answer": report.get("answer"),
+            "coverage": coverage,
+        },
+        "duration_ms": report["duration_ms"],
     }
 
 
@@ -708,13 +922,12 @@ def _probe_episodic_memory(query: str, task_type: str) -> dict[str, Any]:
         return {"ok": False, "error": str(exc)[:180]}
 
 
-def _probe_store(query: str) -> dict[str, Any]:
+def _probe_store(query: str, *, ports: RuntimePorts | None = None) -> dict[str, Any]:
+    ports = ports or default_ports()
     try:
-        from ultronpro import store
-
-        raw_triples = store.search_triples(query, limit=8) if hasattr(store, "search_triples") else []
-        raw_insights = store.search_insights(query, limit=5) if hasattr(store, "search_insights") else []
-        experiences = store.list_experiences(limit=8) if hasattr(store, "list_experiences") else []
+        raw_triples = ports.memory_reader.search_triples(query, limit=8)
+        raw_insights = ports.memory_reader.search_insights(query, limit=5)
+        experiences = ports.memory_reader.list_experiences(limit=8)
         qtok = _query_tokens(query)
         triples = []
         for item in raw_triples:
@@ -745,11 +958,10 @@ def _probe_store(query: str) -> dict[str, Any]:
         return {"ok": False, "error": str(exc)[:180]}
 
 
-def _probe_workspace() -> dict[str, Any]:
+def _probe_workspace(*, ports: RuntimePorts | None = None) -> dict[str, Any]:
+    ports = ports or default_ports()
     try:
-        from ultronpro import store
-
-        rows = store.read_workspace(limit=10, include_expired=False) if hasattr(store, "read_workspace") else []
+        rows = ports.workspace_reader.read_workspace(limit=10, include_expired=False)
         compact = []
         for row in rows[:10]:
             compact.append({
@@ -925,6 +1137,7 @@ def investigate_structured_gap(
     task_type: str = "general",
     candidates: list[dict[str, Any]] | None = None,
     transfer_prior: dict[str, Any] | None = None,
+    ports: RuntimePorts | None = None,
 ) -> dict[str, Any]:
     if not _enabled():
         return {"ok": True, "resolved": False, "reason": "active_investigation_disabled"}
@@ -932,12 +1145,20 @@ def investigate_structured_gap(
     started = time.perf_counter()
     q = str(query or "").strip()
     learned_route = _learned_route(q)
+    try:
+        store_probe = _probe_store(q, ports=ports)
+    except TypeError:
+        store_probe = _probe_store(q)
+    try:
+        workspace_probe = _probe_workspace(ports=ports)
+    except TypeError:
+        workspace_probe = _probe_workspace()
     probes = {
         "learned_route": {"ok": True, "prediction": learned_route},
         "causal_graph": _probe_causal_graph(q),
         "episodic_memory": _probe_episodic_memory(q, task_type),
-        "store": _probe_store(q),
-        "workspace": _probe_workspace(),
+        "store": store_probe,
+        "workspace": workspace_probe,
         "runtime_state": _probe_runtime_state(),
     }
     if isinstance(transfer_prior, dict) and transfer_prior:
@@ -975,7 +1196,7 @@ def investigate_structured_gap(
     _append_jsonl(INVESTIGATION_LOG_PATH, report)
     _write_json(INVESTIGATION_STATE_PATH, report)
     if isinstance(transfer_prior, dict) and transfer_prior:
-        execution = _execute_report_experiment(report)
+        execution = _execute_report_experiment(report, ports=ports)
         report["execution"] = execution
         prior_validation = execution.get("prior_validation") if isinstance(execution.get("prior_validation"), dict) else None
         if prior_validation:

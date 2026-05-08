@@ -154,6 +154,7 @@ def build_autobiographical_context(query: str, category: str = 'general') -> dic
         'relevant_episodes': [],
         'daily_digest': '',
         'biographic_digest': {},
+        'emergent_personality': {},
         'trajectory_digest': '',
         'narrative_state': {},
         'coverage': 0.0,
@@ -296,7 +297,19 @@ def build_autobiographical_context(query: str, category: str = 'general') -> dic
     except Exception as e:
         logger.debug(f"[AutobioRouter] biographic_digest failed: {e}")
 
-    # 6. Estado narrativo do self_governance
+    # 6. Perfil de personalidade emergente: apenas para perguntas sobre tracos/carater.
+    try:
+        if category == 'personality':
+            from ultronpro import emergent_personality
+
+            profile = emergent_personality.ensure_recent_profile(max_age_hours=24.0, window_days=30)
+            if isinstance(profile, dict) and profile:
+                ctx['emergent_personality'] = profile
+                data_points += 1.3
+    except Exception as e:
+        logger.debug(f"[AutobioRouter] emergent_personality failed: {e}")
+
+    # 7. Estado narrativo do self_governance
     try:
         from ultronpro import self_governance
         narrative = self_governance.autobiographical_summary(limit=20)
@@ -312,8 +325,8 @@ def build_autobiographical_context(query: str, category: str = 'general') -> dic
     except Exception as e:
         logger.debug(f"[AutobioRouter] self_governance failed: {e}")
 
-    # Calcula coverage: quantas das 6 fontes retornaram dados
-    ctx['coverage'] = round(data_points / 6.0, 3)
+    # Calcula coverage: quantas fontes retornaram dados.
+    ctx['coverage'] = round(data_points / (7.0 if category == 'personality' else 6.0), 3)
     return ctx
 
 
@@ -330,6 +343,8 @@ def assess_autobiographical_confidence(ctx: dict[str, Any]) -> dict[str, Any]:
     has_episodes = len(ctx.get('relevant_episodes') or []) > 0
     has_identity = bool(ctx.get('identity_block', {}).get('name'))
     has_biographic_digest = bool(ctx.get('biographic_digest'))
+    personality = ctx.get('emergent_personality') if isinstance(ctx.get('emergent_personality'), dict) else {}
+    has_personality = bool(personality)
     origin_records = ctx.get('origin_records') or []
 
     # Score ponderado: ter registros de origem aumenta muito a confiança em 'creation'
@@ -338,8 +353,17 @@ def assess_autobiographical_confidence(ctx: dict[str, Any]) -> dict[str, Any]:
         (0.28 if origin_records else (0.16 if has_memories else 0.0)) +
         (0.18 if has_episodes else 0.0) +
         (0.26 if has_biographic_digest else 0.0) +
-        (0.10 if ctx.get('daily_digest') else 0.0)
+        (0.10 if ctx.get('daily_digest') else 0.0) +
+        (0.26 if has_personality else 0.0)
     ))
+
+    if has_personality:
+        status = (personality.get('substrate_status') or {}).get('status')
+        profile_traits = personality.get('dominant_traits') if isinstance(personality.get('dominant_traits'), list) else []
+        confidence_score = min(
+            1.0,
+            confidence_score + (0.10 if status == 'sufficient' else 0.04) + min(0.12, 0.03 * len(profile_traits)),
+        )
 
     confident = confidence_score >= 0.40
     

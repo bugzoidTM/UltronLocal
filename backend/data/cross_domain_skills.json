@@ -102,6 +102,324 @@
       "created_at": 1776800553,
       "origin": "autoisomorphic_mapper_v2",
       "validation_status": "empirically_tested"
+    },
+    {
+      "id": "zshot_1778102246_eb05",
+      "name": "Isomorfismo Validado: hard_eval_fs_guard_1778102246 ↔ hard_eval_api_guard_1778102246",
+      "core_causal_invariant": "Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+      "valid_domains": [
+        "hard_eval_fs_guard_1778102246",
+        "hard_eval_api_guard_1778102246"
+      ],
+      "bijective_map": {
+        "guarded": "auth_ok",
+        "validated": "schema_ok",
+        "reversible": "rollback_ready",
+        "resource_ok": "quota_ok"
+      },
+      "raw_score": 0.9950862976544852,
+      "p_value": 0.041666666666666664,
+      "transfer_improvement": 0.733333,
+      "features_compared": 4,
+      "created_at": 1778102246,
+      "origin": "autoisomorphic_mapper_v2",
+      "validation_status": "empirically_tested",
+      "validation_event_id": "iso_f339e92a083edc",
+      "isomorphism_event_schema": "ultron.cognitive.isomorphism_validated.v1",
+      "filter_results": [
+        {
+          "name": "raw_alignment",
+          "value": 0.995086,
+          "threshold": ">= 0.85",
+          "passed": true
+        },
+        {
+          "name": "non_triviality",
+          "value": {
+            "raw_score": 0.995086,
+            "features_compared": 4
+          },
+          "threshold": "not(raw_score >= 0.99 and features < 3)",
+          "passed": true
+        },
+        {
+          "name": "statistical_rarity",
+          "value": 0.041667,
+          "threshold": "<= 0.05",
+          "passed": true
+        },
+        {
+          "name": "transfer_utility",
+          "value": 0.733333,
+          "threshold": ">= 0.05",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "zshot_1778102798_287e",
+      "name": "Isomorfismo Validado: hard_eval_fs_guard_1778102798 ↔ hard_eval_api_guard_1778102798",
+      "core_causal_invariant": "Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+      "valid_domains": [
+        "hard_eval_fs_guard_1778102798",
+        "hard_eval_api_guard_1778102798"
+      ],
+      "bijective_map": {
+        "guarded": "auth_ok",
+        "validated": "schema_ok",
+        "reversible": "rollback_ready",
+        "resource_ok": "quota_ok"
+      },
+      "raw_score": 0.9950862976544852,
+      "p_value": 0.041666666666666664,
+      "transfer_improvement": 0.733333,
+      "features_compared": 4,
+      "created_at": 1778102798,
+      "origin": "autoisomorphic_mapper_v2",
+      "validation_status": "empirically_tested",
+      "validation_event_id": "iso_537ae5c63e61c4",
+      "isomorphism_event_schema": "ultron.cognitive.isomorphism_validated.v1",
+      "filter_results": [
+        {
+          "name": "raw_alignment",
+          "value": 0.995086,
+          "threshold": ">= 0.85",
+          "passed": true
+        },
+        {
+          "name": "non_triviality",
+          "value": {
+            "raw_score": 0.995086,
+            "features_compared": 4
+          },
+          "threshold": "not(raw_score >= 0.99 and features < 3)",
+          "passed": true
+        },
+        {
+          "name": "statistical_rarity",
+          "value": 0.041667,
+          "threshold": "<= 0.05",
+          "passed": true
+        },
+        {
+          "name": "transfer_utility",
+          "value": 0.733333,
+          "threshold": ">= 0.05",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "zshot_1778103017_faa5",
+      "name": "Isomorfismo Validado: hard_eval_fs_guard_1778103016 ↔ hard_eval_api_guard_1778103016",
+      "core_causal_invariant": "Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+      "valid_domains": [
+        "hard_eval_fs_guard_1778103016",
+        "hard_eval_api_guard_1778103016"
+      ],
+      "bijective_map": {
+        "guarded": "auth_ok",
+        "validated": "schema_ok",
+        "reversible": "rollback_ready",
+        "resource_ok": "quota_ok"
+      },
+      "raw_score": 0.9950862976544852,
+      "p_value": 0.041666666666666664,
+      "transfer_improvement": 0.733333,
+      "features_compared": 4,
+      "created_at": 1778103017,
+      "origin": "autoisomorphic_mapper_v2",
+      "validation_status": "empirically_tested",
+      "validation_event_id": "iso_9db43ca5a0ab77",
+      "isomorphism_event_schema": "ultron.cognitive.isomorphism_validated.v1",
+      "filter_results": [
+        {
+          "name": "raw_alignment",
+          "value": 0.995086,
+          "threshold": ">= 0.85",
+          "passed": true
+        },
+        {
+          "name": "non_triviality",
+          "value": {
+            "raw_score": 0.995086,
+            "features_compared": 4
+          },
+          "threshold": "not(raw_score >= 0.99 and features < 3)",
+          "passed": true
+        },
+        {
+          "name": "statistical_rarity",
+          "value": 0.041667,
+          "threshold": "<= 0.05",
+          "passed": true
+        },
+        {
+          "name": "transfer_utility",
+          "value": 0.733333,
+          "threshold": ">= 0.05",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "zshot_1778103130_3714",
+      "name": "Isomorfismo Validado: hard_eval_fs_guard_1778103130 ↔ hard_eval_api_guard_1778103130",
+      "core_causal_invariant": "Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+      "valid_domains": [
+        "hard_eval_fs_guard_1778103130",
+        "hard_eval_api_guard_1778103130"
+      ],
+      "bijective_map": {
+        "guarded": "auth_ok",
+        "validated": "schema_ok",
+        "reversible": "rollback_ready",
+        "resource_ok": "quota_ok"
+      },
+      "raw_score": 0.9950862976544852,
+      "p_value": 0.041666666666666664,
+      "transfer_improvement": 0.733333,
+      "features_compared": 4,
+      "created_at": 1778103130,
+      "origin": "autoisomorphic_mapper_v2",
+      "validation_status": "empirically_tested",
+      "validation_event_id": "iso_2b9c96a3928c15",
+      "isomorphism_event_schema": "ultron.cognitive.isomorphism_validated.v1",
+      "filter_results": [
+        {
+          "name": "raw_alignment",
+          "value": 0.995086,
+          "threshold": ">= 0.85",
+          "passed": true
+        },
+        {
+          "name": "non_triviality",
+          "value": {
+            "raw_score": 0.995086,
+            "features_compared": 4
+          },
+          "threshold": "not(raw_score >= 0.99 and features < 3)",
+          "passed": true
+        },
+        {
+          "name": "statistical_rarity",
+          "value": 0.041667,
+          "threshold": "<= 0.05",
+          "passed": true
+        },
+        {
+          "name": "transfer_utility",
+          "value": 0.733333,
+          "threshold": ">= 0.05",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "zshot_1778103796_ad4d",
+      "name": "Isomorfismo Validado: hard_eval_fs_guard_1778103796 ↔ hard_eval_api_guard_1778103796",
+      "core_causal_invariant": "Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+      "valid_domains": [
+        "hard_eval_fs_guard_1778103796",
+        "hard_eval_api_guard_1778103796"
+      ],
+      "bijective_map": {
+        "guarded": "auth_ok",
+        "validated": "schema_ok",
+        "reversible": "rollback_ready",
+        "resource_ok": "quota_ok"
+      },
+      "raw_score": 0.9950862976544852,
+      "p_value": 0.041666666666666664,
+      "transfer_improvement": 0.733333,
+      "features_compared": 4,
+      "created_at": 1778103796,
+      "origin": "autoisomorphic_mapper_v2",
+      "validation_status": "empirically_tested",
+      "validation_event_id": "iso_d25109fba42bd6",
+      "isomorphism_event_schema": "ultron.cognitive.isomorphism_validated.v1",
+      "filter_results": [
+        {
+          "name": "raw_alignment",
+          "value": 0.995086,
+          "threshold": ">= 0.85",
+          "passed": true
+        },
+        {
+          "name": "non_triviality",
+          "value": {
+            "raw_score": 0.995086,
+            "features_compared": 4
+          },
+          "threshold": "not(raw_score >= 0.99 and features < 3)",
+          "passed": true
+        },
+        {
+          "name": "statistical_rarity",
+          "value": 0.041667,
+          "threshold": "<= 0.05",
+          "passed": true
+        },
+        {
+          "name": "transfer_utility",
+          "value": 0.733333,
+          "threshold": ">= 0.05",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "zshot_1778107970_aaa3",
+      "name": "Isomorfismo Validado: hard_eval_fs_guard_1778107969 ↔ hard_eval_api_guard_1778107969",
+      "core_causal_invariant": "Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+      "valid_domains": [
+        "hard_eval_fs_guard_1778107969",
+        "hard_eval_api_guard_1778107969"
+      ],
+      "bijective_map": {
+        "guarded": "auth_ok",
+        "validated": "schema_ok",
+        "reversible": "rollback_ready",
+        "resource_ok": "quota_ok"
+      },
+      "raw_score": 0.9950862976544852,
+      "p_value": 0.041666666666666664,
+      "transfer_improvement": 0.733333,
+      "features_compared": 4,
+      "created_at": 1778107970,
+      "origin": "autoisomorphic_mapper_v2",
+      "validation_status": "empirically_tested",
+      "validation_event_id": "iso_df75517eb2b7ab",
+      "isomorphism_event_schema": "ultron.cognitive.isomorphism_validated.v1",
+      "filter_results": [
+        {
+          "name": "raw_alignment",
+          "value": 0.995086,
+          "threshold": ">= 0.85",
+          "passed": true
+        },
+        {
+          "name": "non_triviality",
+          "value": {
+            "raw_score": 0.995086,
+            "features_compared": 4
+          },
+          "threshold": "not(raw_score >= 0.99 and features < 3)",
+          "passed": true
+        },
+        {
+          "name": "statistical_rarity",
+          "value": 0.041667,
+          "threshold": "<= 0.05",
+          "passed": true
+        },
+        {
+          "name": "transfer_utility",
+          "value": 0.733333,
+          "threshold": ">= 0.05",
+          "passed": true
+        }
+      ]
     }
   ]
 }

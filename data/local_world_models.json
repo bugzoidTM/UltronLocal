@@ -29,6 +29,7 @@
         }
       },
       "hypotheses": [],
+      "structural_features": [],
       "transitions": [
         {
           "ts": 1776559943,
@@ -541,6 +542,7 @@
         }
       },
       "hypotheses": [],
+      "structural_features": [],
       "transitions": [
         {
           "ts": 1776560115,
@@ -2298,6 +2300,7 @@
         }
       },
       "hypotheses": [],
+      "structural_features": [],
       "transitions": [
         {
           "ts": 1776560332,
@@ -3730,6 +3733,7 @@
         }
       },
       "hypotheses": [],
+      "structural_features": [],
       "transitions": [
         {
           "ts": 1776560697,
@@ -4582,6 +4586,186 @@
           "metrics": {}
         }
       ]
+    },
+    "cognitive_architecture": {
+      "empirical_matrix": {
+        "autocog:queue_conflict_review": {
+          "outcomes": {
+            "success": 21.0
+          },
+          "expected_value": 1.0,
+          "risk": 0.6,
+          "observations": 21.0
+        }
+      },
+      "hypotheses": [
+        {
+          "id": "hyp_1778162860_a2ff",
+          "action": "autocog:queue_conflict_review",
+          "hypothesis": "O modelo local ignora a variável oculta 'conflicto_intensidade' que representa a intensidade do conflito entre as metas atuais e as metas pendentes.",
+          "hidden_variable": "conflicto_intensidade",
+          "created_at": 1778162860,
+          "status": "under_test"
+        }
+      ],
+      "structural_features": [],
+      "transitions": [
+        {
+          "ts": 1778162656,
+          "action": "autocog:queue_conflict_review",
+          "state_hash": "-6882743",
+          "state_t": {
+            "workspace_count": 49,
+            "high_salience_count": 44,
+            "unconsumed_high_salience_count": 44,
+            "queued_action_count": 20,
+            "failed_action_count": 8,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "unknown",
+          "surprise": 1.0,
+          "metrics": {
+            "surprise_delta": 1.0,
+            "predicted_risk": 1.0
+          }
+        },
+        {
+          "ts": 1778162760,
+          "action": "autocog:queue_conflict_review",
+          "state_hash": "-4548677",
+          "state_t": {
+            "workspace_count": 67,
+            "high_salience_count": 47,
+            "unconsumed_high_salience_count": 47,
+            "queued_action_count": 20,
+            "failed_action_count": 8,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 1.0,
+          "metrics": {
+            "surprise_delta": 1.0,
+            "predicted_risk": 1.0
+          }
+        },
+        {
+          "ts": 1778162853,
+          "action": "autocog:queue_conflict_review",
+          "state_hash": "25027356",
+          "state_t": {
+            "workspace_count": 72,
+            "high_salience_count": 51,
+            "unconsumed_high_salience_count": 51,
+            "queued_action_count": 20,
+            "failed_action_count": 8,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 1.0,
+          "metrics": {
+            "surprise_delta": 1.0,
+            "predicted_risk": 1.0
+          }
+        },
+        {
+          "ts": 1778264888,
+          "action": "autocog:queue_conflict_review",
+          "state_hash": "70466972",
+          "state_t": {
+            "workspace_count": 0,
+            "high_salience_count": 0,
+            "unconsumed_high_salience_count": 0,
+            "queued_action_count": 20,
+            "failed_action_count": 7,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 1.0,
+          "metrics": {
+            "surprise_delta": 1.0,
+            "predicted_risk": 1.0
+          }
+        },
+        {
+          "ts": 1778265205,
+          "action": "autocog:queue_conflict_review",
+          "state_hash": "-5849718",
+          "state_t": {
+            "workspace_count": 13,
+            "high_salience_count": 3,
+            "unconsumed_high_salience_count": 3,
+            "queued_action_count": 10,
+            "failed_action_count": 7,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 1.0,
+          "metrics": {
+            "surprise_delta": 1.0,
+            "predicted_risk": 1.0
+          }
+        },
+        {
+          "ts": 1778265408,
+          "action": "autocog:queue_conflict_review",
+          "state_hash": "66380568",
+          "state_t": {
+            "workspace_count": 23,
+            "high_salience_count": 10,
+            "unconsumed_high_salience_count": 10,
+            "queued_action_count": 12,
+            "failed_action_count": 6,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 1.0,
+          "metrics": {
+            "surprise_delta": 1.0,
+            "predicted_risk": 1.0
+          }
+        },
+        {
+          "ts": 1778265665,
+          "action": "autocog:queue_conflict_review",
+          "state_hash": "-3867992",
+          "state_t": {
+            "workspace_count": 41,
+            "high_salience_count": 18,
+            "unconsumed_high_salience_count": 18,
+            "queued_action_count": 12,
+            "failed_action_count": 6,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 1.0,
+          "metrics": {
+            "surprise_delta": 1.0,
+            "predicted_risk": 1.0
+          }
+        }
+      ]
     }
-  }
+  },
+  "transfer_graph": {}
 }

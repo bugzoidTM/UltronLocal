@@ -1,34 +1,39 @@
 {
   "created_at": 1776626713,
-  "updated_at": 1777674260,
+  "updated_at": 1778265967,
   "drives": {
     "competence": {
-      "weight": 0.22,
+      "weight": 0.213814,
       "desired": 0.8,
-      "observed": 0.252247
+      "observed": 0.251311,
+      "weight_source": "stable_intrinsic_kernel"
     },
     "coherence": {
-      "weight": 0.22,
-      "desired": 0.75,
-      "observed": 0.770761
+      "weight": 0.208377,
+      "desired": 0.76,
+      "observed": 0.772285,
+      "weight_source": "stable_intrinsic_kernel"
     },
     "autonomy": {
-      "weight": 0.2,
-      "desired": 0.7,
-      "observed": 3e-06
+      "weight": 0.20641,
+      "desired": 0.736,
+      "observed": 3e-06,
+      "weight_source": "stable_intrinsic_kernel"
     },
     "novelty": {
-      "weight": 0.18,
-      "desired": 0.6,
-      "observed": 0.271053
+      "weight": 0.179653,
+      "desired": 0.628,
+      "observed": 0.271053,
+      "weight_source": "stable_intrinsic_kernel"
     },
     "integrity": {
-      "weight": 0.18,
-      "desired": 0.9,
-      "observed": 0.732926
+      "weight": 0.191745,
+      "desired": 0.908,
+      "observed": 0.736292,
+      "weight_source": "stable_intrinsic_kernel"
     }
   },
-  "utility": 0.5112,
+  "utility": 0.5052,
   "utility_history": [
     {
       "ts": 1776626714,
@@ -4594,6 +4599,69 @@
         "novelty": 0.2711,
         "integrity": 0.7325
       }
+    },
+    {
+      "ts": 1778264969,
+      "utility": 0.5089,
+      "signals": {
+        "competence": 0.2621,
+        "coherence": 0.7747,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7416
+      },
+      "utility_kernel": {
+        "revision": 2,
+        "hash": "9a666d4077fa3f3b8361",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 1,
+          "accepted_evidence_count": 242,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778265742,
+      "utility": 0.5074,
+      "signals": {
+        "competence": 0.245,
+        "coherence": 0.7747,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7416
+      },
+      "utility_kernel": {
+        "revision": 4,
+        "hash": "1ab86a082c4250471069",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 3,
+          "accepted_evidence_count": 702,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778265967,
+      "utility": 0.5052,
+      "signals": {
+        "competence": 0.245,
+        "coherence": 0.7747,
+        "autonomy": 0.0,
+        "novelty": 0.2711,
+        "integrity": 0.7416
+      },
+      "utility_kernel": {
+        "revision": 5,
+        "hash": "331da33914bcea9ad2a6",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 4,
+          "accepted_evidence_count": 925,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
     }
   ],
   "emergent_goals": [
@@ -5114,12 +5182,22 @@
     "origin": "intrinsic_utility",
     "priority": 0.72
   },
-  "tick_count": 415,
+  "tick_count": 418,
   "weight_hashes": [
-    "3e5df9269b905c02",
-    "3e5df9269b905c02",
-    "3e5df9269b905c02",
-    "3e5df9269b905c02",
-    "3e5df9269b905c02"
-  ]
+    "26559f20003166ce",
+    "0f07924bbcb3241f",
+    "a460db98942ecaec",
+    "b0e730586357dae9",
+    "f2da69623837572e"
+  ],
+  "utility_kernel": {
+    "revision": 5,
+    "hash": "331da33914bcea9ad2a6",
+    "stability": {
+      "source": "emergent_from_accepted_operational_evidence",
+      "updates": 4,
+      "accepted_evidence_count": 925,
+      "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+    }
+  }
 }

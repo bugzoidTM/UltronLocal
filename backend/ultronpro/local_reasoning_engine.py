@@ -28,14 +28,20 @@ FACTS_DB = DATA_DIR / 'local_facts.db'
 
 
 def _attach_sir(query: str, payload: dict[str, Any]) -> dict[str, Any]:
+    out = dict(payload or {})
     try:
         from ultronpro import sir_amplifier
 
-        out = dict(payload)
         out['sir'] = sir_amplifier.build_sir_from_local_result(query, out)
-        return out
     except Exception:
-        return payload
+        pass
+    try:
+        from ultronpro import unified_inference
+
+        out['inference_trace'] = unified_inference.trace_from_local_result(query, out)
+    except Exception:
+        pass
+    return out
 
 
 def _normalize_query(text: str) -> str:
@@ -451,7 +457,7 @@ class LocalReasoningEngine:
             'resolved': bool,
             'method': 'rules' | 'math' | 'facts' | None,
             'result': str | None,
-            'escalate': bool (True se falhar e deve chamar LLM)
+            'escalate': bool (True se falhar e deve seguir para o proximo resolvedor)
         }
         """
         t0 = time.time()
@@ -500,13 +506,15 @@ class LocalReasoningEngine:
                     'escalate': False
                 })
         
-        # Cannot resolve locally - escalate to LLM
-        logger.info(f"LocalReasoning: ESCALATE to LLM (no local resolution)")
+        # Cannot resolve in this narrow resolver; the chat pipeline can still use
+        # cognitive core, skills, web verification, or only then an LLM fallback.
+        logger.info("LocalReasoning: unresolved in local rules; deferring to next resolver")
         return _attach_sir(query, {
             'resolved': False,
             'method': None,
             'result': None,
-            'escalate': True
+            'escalate': True,
+            'next_route': 'pipeline_fallback'
         })
 
 

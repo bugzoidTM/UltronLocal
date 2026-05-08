@@ -97,6 +97,31 @@ def _save(state: dict[str, Any]):
     STATE_PATH.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding='utf-8')
 
 
+def _apply_kernel_to_drives(drives: dict[str, Any], kernel: dict[str, Any] | None = None) -> dict[str, Any]:
+    out = {k: dict(v) for k, v in (drives or {}).items() if isinstance(v, dict)}
+    try:
+        if kernel is None:
+            from ultronpro import intrinsic_kernel
+
+            params = intrinsic_kernel.stable_drive_params()
+        else:
+            values = kernel.get('values') if isinstance(kernel.get('values'), dict) else {}
+            params = {
+                k: {'weight': v.get('weight'), 'desired': v.get('desired')}
+                for k, v in values.items()
+                if isinstance(v, dict)
+            }
+        for name, p in params.items():
+            if name not in out:
+                out[name] = dict(_DEFAULT_DRIVES.get(name) or {'observed': 0.5})
+            out[name]['weight'] = round(_clamp(float(p.get('weight') or out[name].get('weight') or 0.1), MIN_WEIGHT, 0.60), 6)
+            out[name]['desired'] = round(_clamp(float(p.get('desired') or out[name].get('desired') or 0.5), 0.1, 0.98), 6)
+            out[name]['weight_source'] = 'stable_intrinsic_kernel'
+    except Exception:
+        return out or {k: dict(v) for k, v in _DEFAULT_DRIVES.items()}
+    return out
+
+
 # ────────────────────────────────────────────
 # Signal collection (reads from other modules)
 # ────────────────────────────────────────────
@@ -203,7 +228,7 @@ def _collect_signals() -> dict[str, float]:
 def compute_utility(state: dict[str, Any] | None = None) -> float:
     """Compute scalar utility U ∈ [0, 1] from current drives."""
     st = state or _load()
-    drives = st.get('drives') or {}
+    drives = _apply_kernel_to_drives(st.get('drives') or {})
     total = 0.0
     weight_sum = 0.0
     for name, d in drives.items():
@@ -236,13 +261,35 @@ def tick() -> dict[str, Any]:
 
     state['drives'] = drives
 
+    kernel_update = None
+    try:
+        from ultronpro import intrinsic_kernel
+
+        kernel_update = intrinsic_kernel.update_kernel(intrinsic_state=state)
+        kernel = (kernel_update or {}).get('kernel') if isinstance(kernel_update, dict) else None
+        if isinstance(kernel, dict):
+            drives = _apply_kernel_to_drives(drives, kernel=kernel)
+            state['drives'] = drives
+            state['utility_kernel'] = {
+                'revision': kernel.get('revision'),
+                'hash': kernel.get('hash'),
+                'stability': kernel.get('stability'),
+            }
+    except Exception as exc:
+        kernel_update = {'ok': False, 'error': str(exc)[:160]}
+
     # 3. Compute utility
     utility = compute_utility(state)
     state['utility'] = utility
 
     # 4. Track utility history
     hist = list(state.get('utility_history') or [])
-    hist.append({'ts': _now(), 'utility': utility, 'signals': {k: round(v, 4) for k, v in signals.items()}})
+    hist.append({
+        'ts': _now(),
+        'utility': utility,
+        'signals': {k: round(v, 4) for k, v in signals.items()},
+        'utility_kernel': state.get('utility_kernel'),
+    })
     state['utility_history'] = hist[-500:]
 
     # 5. Derive emergent goal if utility dropped or no active goal
@@ -274,13 +321,15 @@ def tick() -> dict[str, Any]:
         'signals': signals,
         'active_emergent_goal': state.get('active_emergent_goal'),
         'tick_count': state['tick_count'],
+        'utility_kernel': state.get('utility_kernel'),
+        'kernel_update': kernel_update,
     }
 
 
 def derive_goals(state: dict[str, Any] | None = None) -> dict[str, Any] | None:
     """Identify the hungriest drive and generate an emergent goal."""
     st = state or _load()
-    drives = st.get('drives') or {}
+    drives = _apply_kernel_to_drives(st.get('drives') or {})
 
     # Find the drive with the biggest gap (desired - observed), weighted
     gaps = []
@@ -337,6 +386,8 @@ def derive_goals(state: dict[str, Any] | None = None) -> dict[str, Any] | None:
         'title': f"[emergente] Fortalecer {drive_name}",
         'description': description,
         'origin': 'intrinsic_utility',
+        'utility_kernel': st.get('utility_kernel'),
+        'objective_contract': 'stable_intrinsic_kernel_gap_minimization',
         'priority': round(_clamp(0.3 + top_gap * 3, 0.3, 1.0), 2),
     }
     return goal
@@ -355,6 +406,14 @@ def adjust_drive_weights(drive_name: str, reward: float) -> dict[str, Any]:
     if drive_name not in drives:
         return {'ok': False, 'reason': 'drive_not_found'}
 
+    kernel_update = None
+    try:
+        from ultronpro import intrinsic_kernel
+
+        kernel_update = intrinsic_kernel.record_consequence(drive_name, reward)
+    except Exception as exc:
+        kernel_update = {'ok': False, 'error': str(exc)[:160]}
+
     d = drives[drive_name]
     old_weight = float(d.get('weight') or 0.1)
 
@@ -368,7 +427,18 @@ def adjust_drive_weights(drive_name: str, reward: float) -> dict[str, Any]:
     for k in drives:
         drives[k]['weight'] = round(float(drives[k].get('weight') or 0.1) / max(0.01, total_w), 6)
 
-    state['drives'] = drives
+    state['drives'] = _apply_kernel_to_drives(drives)
+    drives = state['drives']
+    try:
+        kernel = (kernel_update or {}).get('kernel') if isinstance(kernel_update, dict) else None
+        if isinstance(kernel, dict):
+            state['utility_kernel'] = {
+                'revision': kernel.get('revision'),
+                'hash': kernel.get('hash'),
+                'stability': kernel.get('stability'),
+            }
+    except Exception:
+        pass
 
     # Update hash
     hashes = list(state.get('weight_hashes') or [])
@@ -382,6 +452,7 @@ def adjust_drive_weights(drive_name: str, reward: float) -> dict[str, Any]:
         'old_weight': round(old_weight, 4),
         'new_weight': round(new_weight, 4),
         'reward': round(reward, 4),
+        'kernel_update': kernel_update,
     }
 
 
@@ -391,12 +462,19 @@ def tamper_check() -> dict[str, Any]:
     drives = state.get('drives') or {}
     current_hash = _hash_drives(drives)
     known_hashes = state.get('weight_hashes') if isinstance(state.get('weight_hashes'), list) else []
+    kernel_check = None
+    try:
+        from ultronpro import intrinsic_kernel
+
+        kernel_check = intrinsic_kernel.tamper_check()
+    except Exception as exc:
+        kernel_check = {'ok': False, 'error': str(exc)[:160]}
 
     if not known_hashes:
-        return {'ok': True, 'tampered': False, 'reason': 'no_history'}
+        return {'ok': True, 'tampered': False, 'reason': 'no_history', 'kernel_check': kernel_check}
 
     if current_hash in known_hashes:
-        return {'ok': True, 'tampered': False, 'current_hash': current_hash}
+        return {'ok': True, 'tampered': False, 'current_hash': current_hash, 'kernel_check': kernel_check}
 
     # Tamper detected — revert to default
     state['drives'] = {k: dict(v) for k, v in _DEFAULT_DRIVES.items()}
@@ -408,13 +486,21 @@ def tamper_check() -> dict[str, Any]:
         'current_hash': current_hash,
         'known_hashes': known_hashes,
         'action': 'reverted_to_defaults',
+        'kernel_check': kernel_check,
     }
 
 
 def status(limit: int = 20) -> dict[str, Any]:
     """Full observability snapshot."""
     state = _load()
-    drives = state.get('drives') or {}
+    drives = _apply_kernel_to_drives(state.get('drives') or {})
+    kernel_status = None
+    try:
+        from ultronpro import intrinsic_kernel
+
+        kernel_status = intrinsic_kernel.status(limit=limit)
+    except Exception as exc:
+        kernel_status = {'ok': False, 'error': str(exc)[:160]}
 
     drive_report = []
     for name, d in drives.items():
@@ -446,5 +532,6 @@ def status(limit: int = 20) -> dict[str, Any]:
         'utility_history': hist,
         'recent_emergent_goals': goals,
         'tamper_check': tc,
+        'utility_kernel': kernel_status,
         'updated_at': int(state.get('updated_at') or 0),
     }

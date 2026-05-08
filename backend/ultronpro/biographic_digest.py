@@ -783,6 +783,13 @@ def _persist_digest(digest: dict[str, Any]) -> None:
     except Exception:
         pass
 
+    try:
+        from ultronpro import emergent_personality
+
+        emergent_personality.analyze_emergent_personality(window_days=30, persist=True)
+    except Exception:
+        pass
+
 
 def latest_digest(max_age_hours: float | None = None) -> dict[str, Any]:
     obj = _load_json(DIGEST_PATH, {})

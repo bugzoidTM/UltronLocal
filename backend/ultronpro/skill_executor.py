@@ -301,6 +301,14 @@ class SkillExecutor:
 
     async def _execute_builtin_skill(self, skill_name: str, task: str) -> Optional[Dict[str, Any]]:
         """Executa skills com implementação local direta quando disponível."""
+        try:
+            from ultronpro import skill_evolution
+
+            if skill_evolution.is_generated_skill(skill_name):
+                return skill_evolution.execute_generated_skill(skill_name, task, production=True)
+        except Exception:
+            pass
+
         if skill_name != 'web_search':
             return None
 
@@ -495,19 +503,21 @@ class SkillExecutor:
                 output = builtin_result.get('output')
                 tools_used = builtin_result.get('tools_used') or ctx.tools_allowed
                 raw_result = builtin_result.get('raw')
+                builtin_success = bool(builtin_result.get('success', True))
             else:
                 from ultronpro import llm
                 prompt = f"Executing specialized skill: [{skill_name}]. Task: {task}\n\nExecute the skill logic and return the final output in PT-BR."
                 output = await asyncio.to_thread(llm.complete, prompt)
                 tools_used = ctx.tools_allowed
                 raw_result = None
+                builtin_success = True
             
             ctx.results = {
                 'output': output,
                 'tools_used': tools_used,
                 'raw': raw_result,
             }
-            ctx.status = ExecutionStatus.SUCCESS
+            ctx.status = ExecutionStatus.SUCCESS if builtin_success else ExecutionStatus.FAILED
         except Exception as e:
             ctx.status = ExecutionStatus.FAILED
             ctx.errors.append(str(e))

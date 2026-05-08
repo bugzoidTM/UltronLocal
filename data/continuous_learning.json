@@ -5594,13 +5594,30 @@
       "latency_ms": 507,
       "error_type": null,
       "profile": "balanced"
+    },
+    {
+      "ts": 1778107925,
+      "task_type": "online_rl:trusted_acquisition",
+      "success": true,
+      "latency_ms": 16234,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1778265337,
+      "task_type": "online_rl:trusted_acquisition",
+      "success": false,
+      "latency_ms": 32946,
+      "error_type": null,
+      "profile": "normal"
     }
   ],
   "policy_weights": {
     "code_heal:_test_healable.py": 0.6,
     "research": 1.4201178518906643,
     "review": 0.9238685574788892,
-    "heartbeat": 0.7909809926574759
+    "heartbeat": 0.7909809926574759,
+    "online_rl:trusted_acquisition": 0.368
   },
-  "updated_at": 1776794222
+  "updated_at": 1778265337
 }

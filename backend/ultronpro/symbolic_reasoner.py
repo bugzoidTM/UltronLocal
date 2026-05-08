@@ -164,6 +164,33 @@ def _solve_deterministic(question: str) -> str | None:
     return None
 
 
+def _attach_inference_trace(question: str, payload: dict[str, Any]) -> dict[str, Any]:
+    try:
+        from ultronpro import unified_inference
+
+        out = dict(payload)
+        frame = unified_inference.InferenceFrame(question, task_type="symbolic")
+        strategy = str(out.get("strategy_used") or "symbolic")
+        confidence = 0.90 if strategy == "deterministic" else 0.58
+        frame.add_premise(
+            source="symbolic_reasoner",
+            modality=strategy,
+            statement=f"symbolic_reasoner produced answer via {strategy}",
+            confidence=confidence,
+            payload={"module": out.get("module"), "routed": out.get("routed")},
+        )
+        frame.decide(
+            statement=str(out.get("answer") or ""),
+            threshold=0.48,
+            selected_source="symbolic_reasoner",
+            strategy=strategy,
+        )
+        out["inference_trace"] = frame.to_dict()
+        return out
+    except Exception:
+        return payload
+
+
 def solve(question: str, context: str = '') -> dict[str, Any]:
     q = str(question or '').strip()
     c = str(context or '').strip()
@@ -172,13 +199,13 @@ def solve(question: str, context: str = '') -> dict[str, Any]:
 
     det = _solve_deterministic(q)
     if det and _valid_answer(det):
-        return {
+        return _attach_inference_trace(q, {
             'ok': True,
             'answer': det,
             'module': 'symbolic_reasoner',
             'routed': True,
             'strategy_used': 'deterministic',
-        }
+        })
 
     prompt = (
         "Tarefa: resolver com raciocínio estruturado (lógica/matemática/planejamento/programação) sem inventar fatos.\n"
@@ -207,13 +234,13 @@ def solve(question: str, context: str = '') -> dict[str, Any]:
             )
             ans = str(ans or '').strip()
             if _valid_answer(ans):
-                return {
+                return _attach_inference_trace(q, {
                     'ok': True,
                     'answer': ans,
                     'module': 'symbolic_reasoner',
                     'routed': True,
                     'strategy_used': st,
-                }
+                })
             last_err = 'invalid_or_placeholder_answer'
         except Exception as e:
             last_err = str(e)[:220]

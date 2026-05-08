@@ -10,7 +10,7 @@ from typing import Dict, Optional, Any
 import httpx
 import time
 from ultronpro.settings import get_api_key
-from ultronpro import persona, llm_adapter, provider_policy
+from ultronpro import persona, llm_adapter, provider_policy, qwen_runtime
 
 # --- API Models ---
 from pydantic import BaseModel
@@ -63,9 +63,9 @@ def _provider_failure_cooldown_sec(provider: str, error_text: str) -> int:
 
 # LLM Routing Strategy
 PRIMARY_LOCAL_PROVIDER = os.getenv('ULTRON_PRIMARY_LOCAL_PROVIDER', 'ultron_infer').strip().lower() or 'ultron_infer'
-PRIMARY_LOCAL_MODEL = os.getenv('ULTRON_PRIMARY_LOCAL_MODEL', os.getenv('ULTRON_INFER_MODEL_NAME', os.getenv('ULTRON_OLLAMA_LOCAL_MODEL', os.getenv('OLLAMA_CANARY_MODEL', 'qwen2.5:3b-instruct-q4_K_M'))))
+PRIMARY_LOCAL_MODEL = os.getenv('ULTRON_PRIMARY_LOCAL_MODEL', os.getenv('ULTRON_INFER_MODEL_NAME', os.getenv('ULTRON_OLLAMA_LOCAL_MODEL', os.getenv('OLLAMA_CANARY_MODEL', qwen_runtime.MODEL_ALIAS))))
 CANARY_PROVIDER = os.getenv('ULTRON_CANARY_PROVIDER', PRIMARY_LOCAL_PROVIDER).strip().lower() or PRIMARY_LOCAL_PROVIDER
-CANARY_MODEL = os.getenv('ULTRON_CANARY_MODEL_NAME', os.getenv('ULTRON_PRIMARY_LOCAL_MODEL', os.getenv('ULTRON_INFER_MODEL_NAME', os.getenv('ULTRON_OLLAMA_LOCAL_MODEL', os.getenv('OLLAMA_CANARY_MODEL', 'qwen2.5:3b-instruct-q4_K_M')))))
+CANARY_MODEL = os.getenv('ULTRON_CANARY_MODEL_NAME', os.getenv('ULTRON_PRIMARY_LOCAL_MODEL', os.getenv('ULTRON_INFER_MODEL_NAME', os.getenv('ULTRON_OLLAMA_LOCAL_MODEL', os.getenv('OLLAMA_CANARY_MODEL', qwen_runtime.MODEL_ALIAS)))))
 PREFER_ULTRON_INFER = os.getenv('ULTRON_PREFER_ULTRON_INFER', '1') == '1'
 
 MODELS = {
@@ -312,6 +312,7 @@ class LLMRouter:
                 'deepseek': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': int(os.getenv('DEEPSEEK_DAILY_LIMIT_TOKENS', '0') or 0)},
                 'openrouter': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': int(os.getenv('OPENROUTER_DAILY_LIMIT_TOKENS', '0') or 0)},
                 'huggingface': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': int(os.getenv('HUGGINGFACE_DAILY_LIMIT_TOKENS', '0') or 0)},
+                'ultron_infer': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': 0},
                 'openclaw_bridge': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': 0},
                 'ollama': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': 0},
                 'ollama_local': {'calls': 0, 'ok': 0, 'errors': 0, 'tokens_in': 0, 'tokens_out': 0, 'tokens_total': 0, 'limit_tokens': 0},
@@ -349,7 +350,13 @@ class LLMRouter:
         return ts > int(time.time())
 
     def usage_status(self) -> dict:
-        out = {'started_at': self.usage.get('started_at'), 'providers': {}, 'last_error': self.usage.get('last_error'), 'response_cache': _response_cache_status() if LLM_CACHE_ENABLED else {'enabled': False, 'configured_backend': 'memory'}}
+        out = {
+            'started_at': self.usage.get('started_at'),
+            'providers': {},
+            'last_error': self.usage.get('last_error'),
+            'response_cache': _response_cache_status() if LLM_CACHE_ENABLED else {'enabled': False, 'configured_backend': 'memory'},
+            'qwen_runtime': qwen_runtime.runtime_status(check_server=False),
+        }
         now = int(time.time())
         elapsed = max(1, now - int(self.usage.get('started_at') or now))
         for k, v in (self.usage.get('providers') or {}).items():
@@ -390,13 +397,19 @@ class LLMRouter:
                 return {'ok': bool((txt or '').strip()), 'provider': p, 'latency_ms': dt, 'sample': (txt or '')[:40]}
 
             if p == 'ultron_infer':
-                base = (c or {}).get('base_url') or os.getenv('ULTRON_LOCAL_INFER_URL', 'http://127.0.0.1:8025')
+                base = (c or {}).get('base_url') or qwen_runtime.endpoint_url()
                 headers = {'x-api-key': os.getenv('ULTRON_LOCAL_INFER_TOKEN','').strip()} if os.getenv('ULTRON_LOCAL_INFER_TOKEN','').strip() else {}
                 with httpx.Client(timeout=10.0) as hc:
                     rr = hc.get(base.rstrip('/') + '/health', headers=headers)
                     rr.raise_for_status()
                 dt = int((time.time() - t0) * 1000)
-                return {'ok': True, 'provider': p, 'latency_ms': dt, 'check': 'health'}
+                return {
+                    'ok': True,
+                    'provider': p,
+                    'latency_ms': dt,
+                    'check': 'health',
+                    'qwen_runtime': qwen_runtime.runtime_status(check_server=False),
+                }
 
             # tiny generation probe (low token)
             strategy_map = {
@@ -511,8 +524,10 @@ class LLMRouter:
                 client = {"base_url": os.getenv('OLLAMA_BASE_URL_LOCAL', os.getenv('OLLAMA_BASE_URL', 'http://127.0.0.1:11434'))}
             elif provider == "ultron_infer":
                 client = {
-                    "base_url": os.getenv('ULTRON_LOCAL_INFER_URL', 'http://127.0.0.1:8025'),
+                    "base_url": os.getenv('ULTRON_LOCAL_INFER_URL', qwen_runtime.endpoint_url()),
                     "token": os.getenv('ULTRON_LOCAL_INFER_TOKEN', '').strip(),
+                    "engine": os.getenv('ULTRON_LOCAL_INFER_ENGINE', 'llama_server'),
+                    "timeout": _env_float('ULTRON_INFER_TIMEOUT_SEC', 45.0),
                 }
             elif provider == "openclaw_bridge":
                 client = {
@@ -693,6 +708,11 @@ class LLMRouter:
             return ""
 
         self.last_call_meta = {'provider': provider, 'model': model, 'task_type': task_type, 'budget_mode': budget_mode, 'role': 'serve'}
+        if provider == 'ultron_infer':
+            try:
+                self.last_call_meta['qwen_profile'] = qwen_runtime.active_profile().public()
+            except Exception:
+                pass
         try:
             if provider == "anthropic":
                 out = self._call_anthropic(client, model, prompt, system, json_mode)
@@ -793,6 +813,12 @@ class LLMRouter:
                             out = self._call_gemini(c, cand_model, prompt, system, json_mode, max_tokens=max_tokens)
                         elif cand == 'anthropic':
                             out = self._call_anthropic(c, cand_model, prompt, system, json_mode)
+                        elif cand == 'openclaw_bridge':
+                            out = self._call_openclaw_bridge(c, prompt, system, json_mode, max_tokens=max_tokens)
+                        elif cand in ('ollama_local', 'ollama'):
+                            out = self._call_ollama(c, cand_model, prompt, system, json_mode, max_tokens=max_tokens, provider_label=cand)
+                        elif cand == 'ultron_infer':
+                            out = self._call_ultron_infer(c, cand_model, prompt, system, json_mode, max_tokens=max_tokens)
                         else:
                             out = self._call_openai_compat(c, cand_model, prompt, system, json_mode, provider=cand, max_tokens=max_tokens)
                         
@@ -881,12 +907,17 @@ class LLMRouter:
         return text
 
     def _call_ultron_infer(self, client, model, prompt, system, json_mode, max_tokens: int | None = None):
-        base = str((client or {}).get('base_url') or os.getenv('ULTRON_LOCAL_INFER_URL', 'http://127.0.0.1:8025')).rstrip('/')
+        base = str((client or {}).get('base_url') or os.getenv('ULTRON_LOCAL_INFER_URL', qwen_runtime.endpoint_url())).rstrip('/')
         token = str((client or {}).get('token') or os.getenv('ULTRON_LOCAL_INFER_TOKEN', '')).strip()
         timeout_sec = float((client or {}).get('timeout') or _env_float('ULTRON_INFER_TIMEOUT_SEC', 45.0))
         headers = {'x-api-key': token} if token else {}
         last_err: Exception | None = None
-        if os.getenv('ULTRON_INFER_BINARY_CLIENT_ENABLED', '1') == '1':
+        engine = str((client or {}).get('engine') or os.getenv('ULTRON_LOCAL_INFER_ENGINE', 'llama_server')).strip().lower()
+        binary_default = '0' if engine in {'llama_server', 'llama-server', 'llamacpp'} else '1'
+        defaults = qwen_runtime.generation_defaults(max_tokens=max_tokens)
+        req_max = int(defaults.get('max_tokens') or 256)
+        req_temp = float(defaults.get('temperature') or 0.3)
+        if os.getenv('ULTRON_INFER_BINARY_CLIENT_ENABLED', binary_default) == '1':
             try:
                 from ultronpro import binary_protocol
 
@@ -902,8 +933,8 @@ class LLMRouter:
                     model=model,
                     prompt=str(prompt or ''),
                     system=system,
-                    max_tokens=int(max_tokens or 256),
-                    temperature=0.2,
+                    max_tokens=req_max,
+                    temperature=req_temp,
                     json_mode=bool(json_mode),
                     timeout_sec=timeout_sec,
                     connect_timeout_sec=connect_timeout,
@@ -919,39 +950,58 @@ class LLMRouter:
         if json_mode:
             messages[-1]["content"] = str(messages[-1]["content"]) + "\n\nReturn ONLY valid JSON."
         body = {
-            "model": model,
+            "model": str(model or qwen_runtime.MODEL_ALIAS),
             "messages": messages,
-            "temperature": 0.2,
-            "max_tokens": int(max(32, min(4096, int(max_tokens or 256)))),
+            "temperature": req_temp,
+            "max_tokens": req_max,
             "stream": False,
         }
         if json_mode:
             body["response_format"] = {"type": "json_object"}
+        def _extract_chat_text(payload: Any) -> str:
+            choices = payload.get('choices') if isinstance(payload, dict) else []
+            if not choices:
+                return ""
+            first = choices[0] or {}
+            msg = first.get('message') or {}
+            content = msg.get('content') or first.get('text') or ''
+            if isinstance(content, list):
+                parts: list[str] = []
+                for item in content:
+                    if isinstance(item, dict):
+                        parts.append(str(item.get('text') or item.get('content') or ''))
+                    else:
+                        parts.append(str(item or ''))
+                content = ''.join(parts)
+            return str(content or '').strip()
+
         with httpx.Client(timeout=max(10.0, timeout_sec)) as hc:
             for path in ('/v1/chat/completions', '/chat/completions'):
                 try:
                     rr = hc.post(base + path, json=body, headers=headers)
                     rr.raise_for_status()
                     data = rr.json() if rr.text else {}
-                    choices = data.get('choices') if isinstance(data, dict) else []
-                    if choices:
-                        msg = (choices[0] or {}).get('message') or {}
-                        text = str(msg.get('content') or (choices[0] or {}).get('text') or '').strip()
-                        if text:
-                            self._touch('ultron_infer', ok=True)
-                            return text
+                    text = _extract_chat_text(data)
+                    if text:
+                        self._touch('ultron_infer', ok=True)
+                        return text
                 except Exception as e:
                     last_err = e
-            try:
-                rr = hc.post(base + '/generate', json={'prompt': str(prompt or ''), 'model': model, 'max_tokens': int(max_tokens or 256)}, headers=headers)
-                rr.raise_for_status()
-                data = rr.json() if rr.text else {}
-                text = str(data.get('text') or data.get('response') or data.get('content') or '').strip()
-                if text:
-                    self._touch('ultron_infer', ok=True)
-                    return text
-            except Exception as e:
-                last_err = e
+            legacy_generate = os.getenv('ULTRON_INFER_LEGACY_GENERATE_FALLBACK', '0') == '1'
+            if engine not in {'llama_server', 'llama-server', 'llamacpp'} or legacy_generate:
+                try:
+                    rr = hc.post(
+                        base + '/generate',
+                        json={'prompt': str(prompt or ''), 'model': model, 'max_tokens': req_max, 'temperature': req_temp},
+                        headers=headers)
+                    rr.raise_for_status()
+                    data = rr.json() if rr.text else {}
+                    text = str(data.get('text') or data.get('response') or data.get('content') or '').strip()
+                    if text:
+                        self._touch('ultron_infer', ok=True)
+                        return text
+                except Exception as e:
+                    last_err = e
         raise RuntimeError(str(last_err or 'ultron_infer_empty_response'))
 
     def _call_gemini(self, client, model, prompt, system, json_mode, max_tokens: int | None = None):
@@ -1137,6 +1187,10 @@ def healthcheck(provider: str = 'auto') -> dict:
     return router.healthcheck(provider)
 
 
+def qwen_runtime_status(check_server: bool = False) -> dict:
+    return qwen_runtime.runtime_status(check_server=check_server)
+
+
 def router_status(task_type: str = 'general', budget_mode: str | None = None) -> dict:
     mode = str(budget_mode or os.getenv('ULTRON_LLM_BUDGET_MODE', 'balanced')).strip().lower()
     cloud_available = (os.getenv('ULTRON_DISABLE_CLOUD_PROVIDERS', '0') != '1')
@@ -1227,4 +1281,5 @@ def router_status(task_type: str = 'general', budget_mode: str | None = None) ->
         'history': llm_adapter.get_perf_snapshot().get('procedural', {}),
         'quarantine': llm_adapter.quarantine_status(),
         'last_call_meta': last_call_meta(),
+        'qwen_runtime': qwen_runtime.runtime_status(check_server=False),
     }

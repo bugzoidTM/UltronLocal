@@ -4,14 +4,51 @@ __pycache__/
 *.pyd
 .env
 .DS_Store
+
+# Local databases and runtime sidecars
 *.sqlite
 *.db
-*.db-wal
 *.db-shm
+*.db-wal
 chaves.md
-backend/data/models/gemma-3-1b.gguf
-backend/opencode.zip
+
+# Large local models and downloaded assets
+*.gguf
+*.ggml
+*.onnx
+*.ort
+backend/data/models/
+backend/data/piper/
+backend/data/ultron_ui_config.json
+
+# Local native binaries and downloaded runtimes
+*.exe
+*.dll
+*.so
+*.dylib
+*.msi
+*.com
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.tgz
 backend/bin/llama_cpp/
+backend/bin/piper/
+backend/opencode.zip
+
+# Runtime/temp artifacts
+backend/tmp/
+backend/data/qwen_llama_runtime.json
+backend/data/logs/qwen_llama_server*.log
+
+# Test-generated learned skills
+backend/data/learned_skills/test-skill-*
+
+# Build outputs
 backend/rust/**/target/
-backend/data/models/*.gguf
-backend/data/learned_skills/
+
+# Dynamic task sandbox
+tasks/.sandbox/
+tasks/.pending/

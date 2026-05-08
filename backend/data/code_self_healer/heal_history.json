@@ -155,6 +155,40 @@
         "56:         if not VISION_CACHE_PATH.exists():"
       ],
       "frequency": 1
+    },
+    "ce4e19c67f4f": {
+      "id": "ce4e19c67f4f",
+      "timestamp": 1778265810,
+      "module": "middleware.py",
+      "function": "self_healer_middleware",
+      "lineno": 105,
+      "exception_type": "RuntimeError",
+      "message": "No response returned.",
+      "traceback_lines": [
+        "",
+        "During handling of the above exception, another exception occurred:",
+        "",
+        "Traceback (most recent call last):",
+        "  File \"F:\\sistemas\\UltronPro\\backend\\ultronpro\\core\\middleware.py\", line 105, in self_healer_middleware",
+        "    response = await call_next(request)",
+        "               ^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"C:\\Users\\eleni\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\starlette\\middleware\\base.py\", line 166, in call_next",
+        "    raise RuntimeError(\"No response returned.\")",
+        "RuntimeError: No response returned."
+      ],
+      "source_context": [
+        "101: ",
+        "102: async def self_healer_middleware(request: Request, call_next):",
+        "103:     \"\"\"Capture 500 exceptions and feed the Code Self-Healer.\"\"\"",
+        "104:     try:",
+        "105:         response = await call_next(request)",
+        "106:         return response",
+        "107:     except Exception as exc:",
+        "108:         import traceback as _tb_mod",
+        "109:         tb_str = _tb_mod.format_exc()",
+        "110:         try:"
+      ],
+      "frequency": 1
     }
   },
   "history": [
@@ -172,7 +206,11 @@
       "applied": false,
       "rolled_back": true,
       "verified": true,
-      "verification_result": "fix_effective"
+      "verification_result": "fix_effective",
+      "sandbox_validated": false,
+      "sandbox_result": {},
+      "tests_passed": false,
+      "test_result": {}
     }
   ],
   "fix_counts": {
@@ -180,5 +218,5 @@
       1776200020.0929902
     ]
   },
-  "updated_at": 1776776433
+  "updated_at": 1778265810
 }

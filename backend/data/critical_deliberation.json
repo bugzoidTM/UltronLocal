@@ -1,1340 +1,6 @@
 {
-  "updated_at": 1777674371,
+  "updated_at": 1778265808,
   "reports": [
-    {
-      "id": "cdr_1776795624581",
-      "ts": 1776795624,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776795828439",
-      "ts": 1776795828,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776795931657",
-      "ts": 1776795931,
-      "kind": "ask_evidence",
-      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de ask_evidence.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776796026863",
-      "ts": 1776796026,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776796211983",
-      "ts": 1776796211,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776796325424",
-      "ts": 1776796325,
-      "kind": "ask_evidence",
-      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de ask_evidence.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776796428031",
-      "ts": 1776796428,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776796700892",
-      "ts": 1776796700,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776796715921",
-      "ts": 1776796715,
-      "kind": "ask_evidence",
-      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de ask_evidence.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776796907285",
-      "ts": 1776796907,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776797089365",
-      "ts": 1776797089,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776797115095",
-      "ts": 1776797115,
-      "kind": "ask_evidence",
-      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de ask_evidence.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776797358360",
-      "ts": 1776797358,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776797427501",
-      "ts": 1776797427,
-      "kind": "ask_evidence",
-      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de ask_evidence.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776797632707",
-      "ts": 1776797632,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776797758765",
-      "ts": 1776797758,
-      "kind": "ask_evidence",
-      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de ask_evidence.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776797865570",
-      "ts": 1776797865,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776798081818",
-      "ts": 1776798081,
-      "kind": "ask_evidence",
-      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de ask_evidence.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776798082119",
-      "ts": 1776798082,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776798321236",
-      "ts": 1776798321,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776798492183",
-      "ts": 1776798492,
-      "kind": "ask_evidence",
-      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de ask_evidence.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776798583233",
-      "ts": 1776798583,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776798694492",
-      "ts": 1776798694,
-      "kind": "question_projection:operations",
-      "text": "qual o risco de executar um comando com pouca memoria?",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de question_projection:operations.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776798791899",
-      "ts": 1776798791,
-      "kind": "question_projection:operations",
-      "text": "qual o risco de executar um comando com pouca memoria?",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de question_projection:operations.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776798879215",
-      "ts": 1776798879,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (2)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776798950927",
-      "ts": 1776798950,
-      "kind": "ask_evidence",
-      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de ask_evidence.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776798951692",
-      "ts": 1776798951,
-      "kind": "question_projection:operations",
-      "text": "qual o risco de executar um comando com pouca memoria?",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de question_projection:operations.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776800411035",
-      "ts": 1776800411,
-      "kind": "question_projection:operations",
-      "text": "qual o risco de executar um comando com pouca memoria?",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de question_projection:operations.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776800508102",
-      "ts": 1776800508,
-      "kind": "question_projection:operations",
-      "text": "qual o risco de executar um comando com pouca memoria?",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de question_projection:operations.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
     {
       "id": "cdr_1776800563253",
       "ts": 1776800563,
@@ -22993,6 +21659,1340 @@
         {
           "id": "aggressive",
           "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778102254721",
+      "ts": 1778102254,
+      "kind": "question_projection:operations",
+      "text": "qual o risco de executar um comando com pouca memoria?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778102803512",
+      "ts": 1778102803,
+      "kind": "question_projection:operations",
+      "text": "qual o risco de executar um comando com pouca memoria?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778102804080",
+      "ts": 1778102804,
+      "kind": "question_projection:operations",
+      "text": "qual o risco de executar um comando com pouca memoria?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778103019043",
+      "ts": 1778103019,
+      "kind": "question_projection:operations",
+      "text": "Qual o risco de fazer deploy sem rollback?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778103023768",
+      "ts": 1778103023,
+      "kind": "question_projection:operations",
+      "text": "qual o risco de executar um comando com pouca memoria?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778103025415",
+      "ts": 1778103025,
+      "kind": "question_projection:operations",
+      "text": "qual o risco de executar um comando com pouca memoria?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778103135647",
+      "ts": 1778103135,
+      "kind": "question_projection:operations",
+      "text": "qual o risco de executar um comando com pouca memoria?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778103800188",
+      "ts": 1778103800,
+      "kind": "question_projection:operations",
+      "text": "Qual o risco de fazer deploy sem rollback?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778103803436",
+      "ts": 1778103803,
+      "kind": "question_projection:operations",
+      "text": "qual o risco de executar um comando com pouca memoria?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778103919156",
+      "ts": 1778103919,
+      "kind": "question_projection:operations",
+      "text": "Qual o risco de fazer deploy sem rollback?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778107961357",
+      "ts": 1778107961,
+      "kind": "question_projection:operations",
+      "text": "Qual o risco de fazer deploy sem rollback?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778107983647",
+      "ts": 1778107983,
+      "kind": "question_projection:operations",
+      "text": "qual o risco de executar um comando com pouca memoria?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778108054139",
+      "ts": 1778108054,
+      "kind": "question_projection:operations",
+      "text": "Qual o risco de fazer deploy sem rollback?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778119547901",
+      "ts": 1778119547,
+      "kind": "question_projection:operations",
+      "text": "Qual o risco de fazer deploy sem rollback?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778120132844",
+      "ts": 1778120132,
+      "kind": "question_projection:operations",
+      "text": "Qual o risco de fazer deploy sem rollback?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778120273585",
+      "ts": 1778120273,
+      "kind": "question_projection:operations",
+      "text": "Qual o risco de fazer deploy sem rollback?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778120326904",
+      "ts": 1778120326,
+      "kind": "question_projection:operations",
+      "text": "Qual o risco de fazer deploy sem rollback?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778120477341",
+      "ts": 1778120477,
+      "kind": "question_projection:operations",
+      "text": "Qual o risco de fazer deploy sem rollback?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778157218913",
+      "ts": 1778157218,
+      "kind": "question_projection:operations",
+      "text": "Qual o risco de fazer deploy sem rollback?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778158043313",
+      "ts": 1778158043,
+      "kind": "question_projection:operations",
+      "text": "Qual o risco de fazer deploy sem rollback?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778159005764",
+      "ts": 1778159005,
+      "kind": "question_projection:operations",
+      "text": "Qual o risco de fazer deploy sem rollback?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778159063652",
+      "ts": 1778159063,
+      "kind": "question_projection:operations",
+      "text": "Qual o risco de fazer deploy sem rollback?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778159670991",
+      "ts": 1778159670,
+      "kind": "question_projection:operations",
+      "text": "Qual o risco de fazer deploy sem rollback?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778161407380",
+      "ts": 1778161407,
+      "kind": "question_projection:operations",
+      "text": "Qual o risco de fazer deploy sem rollback?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778162867094",
+      "ts": 1778162867,
+      "kind": "question_projection:general",
+      "text": "qual e seu foco cognitivo atual",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:general com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:general com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:general.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:general em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778163406402",
+      "ts": 1778163406,
+      "kind": "question_projection:operations",
+      "text": "Qual o risco de fazer deploy sem rollback?",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de question_projection:operations.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778265111379",
+      "ts": 1778265111,
+      "kind": "auto_resolve_conflicts",
+      "text": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de auto_resolve_conflicts.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar auto_resolve_conflicts em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778265405464",
+      "ts": 1778265405,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778265808590",
+      "ts": 1778265808,
+      "kind": "generate_analogy_hypothesis",
+      "text": "(ação) Tentar analogia estrutural para resolver conflito: Diagnóstico recomenda",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar generate_analogy_hypothesis com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar generate_analogy_hypothesis com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de generate_analogy_hypothesis.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar generate_analogy_hypothesis em profundidade máxima para ganho rápido.",
           "cost": 0.75,
           "risk": 0.72,
           "benefit": 0.88,
