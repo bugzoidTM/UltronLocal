@@ -12009,6 +12009,17 @@ def _quick_smalltalk_intent(query: str) -> str | None:
     text = re.sub(r'\s+', ' ', text).strip()
     if not text:
         return None
+    # Anti-falso-positivo global: perguntas não são smalltalk (intercepta skill_memory)
+    _interrogative_markers = (
+        'como se diz', 'como fala', 'como escreve', 'como fica', 'o que significa',
+        'qual e', 'qual a', 'traduz', 'traduza', 'traducao', 'em frances', 'em ingles',
+        'em espanhol', 'em alemao', 'em italiano', 'em japones', 'em chines',
+        'como diz', 'crie', 'gere', 'cria', 'invente', 'sugira',
+    )
+    has_interrogative = any(m in text for m in _interrogative_markers)
+    if has_interrogative:
+        return None
+
     try:
         from ultronpro import skill_memory
 

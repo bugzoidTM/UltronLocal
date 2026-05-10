@@ -150,7 +150,14 @@ class LocalMathResolver:
         q = re.sub(r'\bmais\b', '+', q)
         q = re.sub(r'\bmenos\b', '-', q)
         q = re.sub(r'\bvezes\b', '*', q)
-        q = re.sub(r'\bdividido\s+por\b', '/', q)
+        # Cobre tanto 'dividido por' quanto 'dividida por'
+        q = re.sub(r'\bdividid[ao]\s+por\b', '/', q)
+        # Converte "raiz quadrada de N" → "sqrt(N)"
+        q = re.sub(r'raiz\s+quadrada\s+de\s+(\d+(?:\.\d+)?)', r'sqrt(\1)', q)
+        # Se houver sqrt(N) seguido de operador e número, monta expressão completa
+        sqrt_chain = re.search(r'sqrt\(\d+(?:\.\d+)?\)\s*[\+\-\*/]\s*\d+(?:\.\d+)?', q)
+        if sqrt_chain:
+            return sqrt_chain.group(0)
         candidates = re.findall(
             r'[-+]?\d+(?:\.\d+)?(?:\s*(?:\*\*|[\+\-\*/%])\s*[-+]?\d+(?:\.\d+)?)+',
             q,
@@ -158,49 +165,63 @@ class LocalMathResolver:
         if candidates:
             return candidates[-1].strip()
         return q.strip().strip('?')
-    
+
+
     @classmethod
     def can_resolve(cls, query: str) -> bool:
         """Verifica se a query é uma expressão matemática simples."""
         q = query.strip().lower()
-        
+
         # Check for mathematical keywords
-        math_keywords = ['calcule', 'quanto é', 'resultado', '=', 'mais', 'menos', 'vezes', 'dividido', 'potencia', 'sqrt', 'pow']
+        math_keywords = ['calcule', 'quanto é', 'resultado', '=', 'mais', 'menos', 'vezes', 'dividido', 'potencia', 'sqrt', 'pow', 'raiz quadrada']
         has_math_keyword = any(k in q for k in math_keywords)
-        
+
         # Extract the expression part
         expr = cls._extract_expression(query)
         for kw in ['calcule ', 'quanto é ', 'resultado ', '= ', '?']:
             if kw in expr:
                 expr = expr.split(kw, 1)[1].strip()
-        
-        # Check if matches math patterns
+
+        # Check if matches math patterns or sqrt pattern
+        if re.match(r'^sqrt\(\d+(?:\.\d+)?\)\s*[\+\-\*/]\s*\d+(?:\.\d+)?$', expr.replace(' ', '')):
+            return True
         for pattern in cls.MATH_PATTERNS:
             if re.match(pattern, expr.replace(' ', '').replace('^', '**')):
                 return True
-        
+
         return False
+
     
     @classmethod
     def resolve(cls, query: str) -> Optional[str]:
         """Resolve a expressão matemática."""
         try:
             q = query.strip().lower()
-            
+
             # Extract expression
             expr = cls._extract_expression(query)
             for kw in ['calcule ', 'quanto é ', 'resultado ', '= ', '?']:
                 if kw in expr:
                     expr = expr.split(kw, 1)[1].strip()
-            
+
             # Normalize expression
             expr = expr.replace('^', '**')
             expr = expr.replace('×', '*')
             expr = expr.replace('÷', '/')
             expr = expr.replace('π', str(3.14159))
-            expr = expr.replace('sqrt', 'math.sqrt')
             expr = expr.replace('pow', 'pow')
-            
+
+            # Resolve sqrt-based expressions via safe eval
+            if 'sqrt(' in expr:
+                import math as _math
+                allowed_names = {"sqrt": _math.sqrt, "math": _math, "pow": pow}
+                result = eval(expr, {"__builtins__": {}}, allowed_names)
+                if isinstance(result, float):
+                    result = int(result) if result == int(result) else round(result, 6)
+                return str(result)
+
+            expr = expr.replace('sqrt', 'math.sqrt')
+
             # Handle simple cases without eval
             if re.match(r'^\d+\s*[\+\-\*/]\s*\d+$', expr.replace(' ', '')):
                 parts = re.split(r'([\+\-\*/])', expr.replace(' ', ''))
@@ -210,18 +231,19 @@ class LocalMathResolver:
                 elif op == '*': result = a * b
                 elif op == '/': result = a / b if b != 0 else 'erro'
                 return str(int(result) if result == int(result) else round(result, 6))
-            
+
             # Safe eval with math functions
             allowed_names = {"math": __import__('math'), "pow": pow}
             result = eval(expr, {"__builtins__": {}}, allowed_names)
-            
+
             if isinstance(result, float):
                 result = int(result) if result == int(result) else round(result, 6)
             return str(result)
-            
+
         except Exception as e:
             logger.debug(f"Math resolution failed: {e}")
             return None
+
 
 
 class LocalFactsResolver:
@@ -266,12 +288,18 @@ class LocalFactsResolver:
             conn.close()
             logger.info("Local facts database initialized")
     
+    # Verbos imperativos de criação que indicam pedido de geração, não consulta factual
+    _CREATION_VERBS = frozenset({'crie', 'cria', 'gere', 'gera', 'invente', 'inventa', 'sugira', 'sugere', 'crea', 'create', 'generate', 'invent'})
+
     @classmethod
     def can_resolve(cls, query: str) -> bool:
         """Verifica se é uma consulta de fato simples."""
         q = _normalize_query(query)
         tokens = _query_tokens(query)
         if _is_self_directed(tokens) or _requires_dialogue_context(query) or _requires_cognitive_projection(query) or _requires_external_factual_lookup(query):
+            return False
+        # Anti-falso-positivo: verbos imperativos de criação indicam geração, não consulta
+        if tokens & cls._CREATION_VERBS:
             return False
         
         # Patterns de consulta factual
@@ -298,6 +326,9 @@ class LocalFactsResolver:
             q = _normalize_query(query)
             tokens = _query_tokens(query)
             if _is_self_directed(tokens) or _requires_dialogue_context(query) or _requires_cognitive_projection(query) or _requires_external_factual_lookup(query):
+                return None
+            # Anti-falso-positivo: verbos imperativos de criação impedem consulta factual para 'nome'
+            if tokens & cls._CREATION_VERBS:
                 return None
             conn = sqlite3.connect(str(FACTS_DB))
             c = conn.cursor()

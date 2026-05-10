@@ -1,0 +1,60 @@
+{
+  "ok": true,
+  "campaign": "local_inference_no_cloud_recovery",
+  "status": "needs_local_inference",
+  "created_at": 1776804884,
+  "source_gap": {
+    "id": "local_inference_no_cloud",
+    "label": "independencia local de LLM externo",
+    "domain": "llm_off_survival",
+    "metric": "no_cloud_probe=0/3 accuracy=0.0",
+    "priority": 0.972,
+    "evidence": {
+      "hard_eval_ts": 1776800563,
+      "external_benchmark": {
+        "ok": true,
+        "score": 1.0,
+        "suite_count": 9,
+        "oracle_selftest_ok": true,
+        "oracle_accuracy": 1.0,
+        "no_cloud_probe_accuracy": 0.0,
+        "no_cloud_probe_total": 3,
+        "no_cloud_probe_correct": 0,
+        "no_cloud_probe_run_id": "extb_1646a07843"
+      }
+    },
+    "next_experiment": "rodar benchmark no-cloud com infer local ativo e comparar contra oracle"
+  },
+  "acceptance_criteria": {
+    "minimal": "external benchmark no_cloud_probe >= 2/3 without cloud providers",
+    "target": "no_cloud_probe accuracy >= 0.80 over expanded proxy suite",
+    "hard_suite_guard": "UltronPro Intelligence Test Suite remains >= 7.5 and >= 11/13"
+  },
+  "experiments": [
+    {
+      "id": "health_ultron_infer",
+      "provider": "ultron_infer",
+      "probe": "GET /health and 1 JSON MCQ generation",
+      "risk": "low"
+    },
+    {
+      "id": "health_ollama_local",
+      "provider": "ollama_local",
+      "probe": "tags/list plus 1 JSON MCQ generation when enabled",
+      "risk": "low"
+    },
+    {
+      "id": "external_proxy_no_cloud",
+      "provider": "best_available_local",
+      "probe": "external_public_eval_v1 limit_per_benchmark=1 predictor=llm strategy=local",
+      "risk": "low"
+    },
+    {
+      "id": "llm_off_survival",
+      "provider": "best_available_local",
+      "probe": "llm_off_survival_v1 S01-S03",
+      "risk": "low"
+    }
+  ],
+  "next_action": "executar probes locais e promover o provider que atingir o criterio minimal"
+}

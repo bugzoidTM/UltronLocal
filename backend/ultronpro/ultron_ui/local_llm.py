@@ -266,11 +266,89 @@ class UltronLLMClient:
         raise RuntimeError(self.last_error)
 
     def voice_reply(self, command: str) -> str:
+        """
+        Motor de resposta da UI. Hierarquia:
+        1. Cérebro Causal do backend (orquestração completa, memória de sessão)
+        2. Se o backend retornar debug interno (investigação causal), o Qwen
+           atua como sintetizador linguístico das premissas coletadas.
+        3. Fallback puro ao Qwen se o backend estiver offline.
+        """
+        # Marcadores de resposta interna do motor de investigação ativa
+        _INTERNAL_MARKERS = (
+            "Encontrei cobertura direta insuficiente",
+            "transferi um prior causal",
+            "Lacunas restantes:",
+            "UNKNOWN: meu nucleo estruturado",
+            "Investigacao ativa iniciada:",
+            "[AVISO: a LLM local",
+        )
+
+        brain_answer: str | None = None
+        brain_data: dict = {}
+        backend_online = False
+
+        # Tenta o Cérebro Causal (Motor Unificado) com sessão persistente
+        try:
+            with httpx.Client(timeout=50.0) as client:
+                res = client.post(
+                    "http://127.0.0.1:8000/api/chat",
+                    json={"message": command, "session_id": "ui_voice_session"},
+                )
+                if res.status_code == 200:
+                    backend_online = True
+                    brain_data = res.json()
+                    ans = brain_data.get("answer") or ""
+                    if ans:
+                        brain_answer = ans
+        except Exception:
+            pass
+
+        # Se o backend retornou algo, verifica se é linguagem natural ou debug interno
+        if brain_answer is not None:
+            is_internal = any(m in brain_answer for m in _INTERNAL_MARKERS)
+
+            if not is_internal:
+                # Resposta já é linguagem natural da orquestração — usa diretamente
+                trace = brain_data.get("trace") or {}
+                self.last_route = f"causal_brain (via {trace.get('module', 'unknown')})"
+                return brain_answer
+
+            # O backend coletou premissas causais mas não sintetizou em linguagem natural.
+            # Usa o Qwen como núcleo linguístico para verbalizar o que foi encontrado.
+            # Extrai as lacunas e o contexto reportado pelo motor causal.
+            context_hint = brain_answer[:600]
+            system_synth = (
+                "Você é UltronPro, um assistente AGI. O seu motor de raciocínio investigou "
+                "a pergunta do usuário e coletou as seguintes premissas e lacunas internas:\n\n"
+                f"{context_hint}\n\n"
+                "Com base nesse contexto interno, responda ao usuário de forma natural, honesta e concisa "
+                "em português brasileiro. Se não houver evidência suficiente, diga isso claramente mas de "
+                "forma amigável, sem expor o jargão técnico interno."
+            )
+            try:
+                synth = self.complete(
+                    command,
+                    system=system_synth,
+                    max_tokens=180,
+                    temperature=0.3,
+                )
+                if synth:
+                    self.last_route = "causal_brain→qwen_synthesis"
+                    return synth
+            except Exception:
+                pass
+
+            # Se a síntese falhar, retorna o brain_answer como estava (melhor que nada)
+            self.last_route = "causal_brain (raw)"
+            return brain_answer
+
+        # Backend offline — Qwen puro como fallback
         system = (
             "Você é UltronPro, um assistente de voz. Responda em português brasileiro. "
             "Seja curto, prático e natural para voz."
         )
         prompt = f"Comando de voz do usuário: {command}\nResponda em no máximo duas frases."
+        self.last_route = "local_llm_fallback"
         return self.complete(prompt, system=system, max_tokens=64, temperature=0.25)
 
     def runtime_description(self) -> str:

@@ -1,0 +1,34 @@
+{
+  "ok": true,
+  "id": "sleep_digest_2026-05-09_ee512af9e0bb5857",
+  "schema": "ultron.sleep_episodic_digest.v1",
+  "ts": 1778364201,
+  "day": "2026-05-09",
+  "checksum": "ee512af9e0bb5857",
+  "source_count": 21,
+  "pruned": 0,
+  "abstracted": 0,
+  "abstractions_tested": 0,
+  "sql_promoted_to_episodic": 0,
+  "episodic_enrichment_records": 5,
+  "active_investigation_executed": 3,
+  "active_investigation_injected": 3,
+  "stagnation_status": "recovered_by_episodic_enrichment",
+  "themes": [
+    {
+      "domain": "self_introspection",
+      "action_kind": "sleep_cycle",
+      "episode_count": 1,
+      "ok_count": 1,
+      "failure_count": 0,
+      "mean_surprise": 0.15,
+      "keywords": [
+        "sleep_cycle"
+      ],
+      "examples": [
+        "sleep_cycle success"
+      ]
+    }
+  ],
+  "structured_episode_id": "ep_1778364210_249630"
+}

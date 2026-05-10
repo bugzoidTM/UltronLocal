@@ -8,86 +8,6 @@
   },
   "calibration_history": [
     {
-      "ts": 1776533007,
-      "old_thresholds": {
-        "min_delta": 0.0425,
-        "max_regressed_cases": 0,
-        "max_domain_regression_delta": -0.02,
-        "require_canary": true,
-        "min_canary_rollout_pct": 5
-      },
-      "new_thresholds": {
-        "min_delta": 0.0425,
-        "max_regressed_cases": 0,
-        "max_domain_regression_delta": -0.02,
-        "require_canary": true,
-        "min_canary_rollout_pct": 5
-      },
-      "sample_size": 7,
-      "successes": 4,
-      "failures": 1
-    },
-    {
-      "ts": 1776534869,
-      "old_thresholds": {
-        "min_delta": 0.0425,
-        "max_regressed_cases": 0,
-        "max_domain_regression_delta": -0.02,
-        "require_canary": true,
-        "min_canary_rollout_pct": 5
-      },
-      "new_thresholds": {
-        "min_delta": 0.0425,
-        "max_regressed_cases": 0,
-        "max_domain_regression_delta": -0.02,
-        "require_canary": true,
-        "min_canary_rollout_pct": 5
-      },
-      "sample_size": 7,
-      "successes": 4,
-      "failures": 1
-    },
-    {
-      "ts": 1776536787,
-      "old_thresholds": {
-        "min_delta": 0.0425,
-        "max_regressed_cases": 0,
-        "max_domain_regression_delta": -0.02,
-        "require_canary": true,
-        "min_canary_rollout_pct": 5
-      },
-      "new_thresholds": {
-        "min_delta": 0.0425,
-        "max_regressed_cases": 0,
-        "max_domain_regression_delta": -0.02,
-        "require_canary": true,
-        "min_canary_rollout_pct": 5
-      },
-      "sample_size": 7,
-      "successes": 4,
-      "failures": 1
-    },
-    {
-      "ts": 1776538658,
-      "old_thresholds": {
-        "min_delta": 0.0425,
-        "max_regressed_cases": 0,
-        "max_domain_regression_delta": -0.02,
-        "require_canary": true,
-        "min_canary_rollout_pct": 5
-      },
-      "new_thresholds": {
-        "min_delta": 0.0425,
-        "max_regressed_cases": 0,
-        "max_domain_regression_delta": -0.02,
-        "require_canary": true,
-        "min_canary_rollout_pct": 5
-      },
-      "sample_size": 7,
-      "successes": 4,
-      "failures": 1
-    },
-    {
       "ts": 1776540527,
       "old_thresholds": {
         "min_delta": 0.0425,
@@ -2006,6 +1926,86 @@
       "sample_size": 9,
       "successes": 6,
       "failures": 1
+    },
+    {
+      "ts": 1778439443,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1778441353,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1778451469,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
+    },
+    {
+      "ts": 1778453429,
+      "old_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "new_thresholds": {
+        "min_delta": 0.0475,
+        "max_regressed_cases": 0,
+        "max_domain_regression_delta": -0.02,
+        "require_canary": true,
+        "min_canary_rollout_pct": 5
+      },
+      "sample_size": 9,
+      "successes": 6,
+      "failures": 1
     }
   ],
   "patch_outcomes": [
@@ -2073,6 +2073,6 @@
       "result": "rollback"
     }
   ],
-  "calibration_count": 263,
-  "updated_at": 1778264969
+  "calibration_count": 267,
+  "updated_at": 1778453429
 }

@@ -81,7 +81,13 @@ def _default_arm() -> dict[str, Any]:
         'alpha': 1.0,       # prior successes + 1 (uniform prior)
         'beta': 1.0,        # prior failures + 1
         'ema_reward': 0.5,   # exponential moving average of reward
-        'n': 0,              # total updates
+        'n': 0,              # total updates (n_total)
+        'n_real': 0,
+        'n_synthetic': 0,
+        'mean_reward_real': 0.0,
+        'mean_reward_synthetic': 0.0,
+        'sum_reward_real': 0.0,
+        'sum_reward_synthetic': 0.0,
         'last_reward': 0.0,
         'updated_at': 0,
     }
@@ -91,17 +97,32 @@ def _default_arm() -> dict[str, Any]:
 # Core API
 # ────────────────────────────────────────────
 
-def update(kind: str, context: str, reward: float) -> dict[str, Any]:
+def update(kind: str, context: str, reward: float, is_synthetic: bool = False) -> dict[str, Any]:
     """Record a reward observation and update the posterior."""
     reward = max(0.0, min(1.0, float(reward)))
     state = _load()
     key = _arm_key(kind, context)
     arm = state['arms'].setdefault(key, _default_arm())
 
+    if reward == 0.55:
+        is_synthetic = True
+
     # Update Beta posterior
     arm['alpha'] = float(arm.get('alpha') or 1.0) + reward
     arm['beta'] = float(arm.get('beta') or 1.0) + (1.0 - reward)
+    
+    # Increment total updates (used for warmup logic)
     arm['n'] = int(arm.get('n') or 0) + 1
+    
+    # Separate real and synthetic tracking
+    if is_synthetic:
+        arm['n_synthetic'] = int(arm.get('n_synthetic') or 0) + 1
+        arm['sum_reward_synthetic'] = float(arm.get('sum_reward_synthetic') or 0.0) + reward
+        arm['mean_reward_synthetic'] = round(arm['sum_reward_synthetic'] / arm['n_synthetic'], 4)
+    else:
+        arm['n_real'] = int(arm.get('n_real') or 0) + 1
+        arm['sum_reward_real'] = float(arm.get('sum_reward_real') or 0.0) + reward
+        arm['mean_reward_real'] = round(arm['sum_reward_real'] / arm['n_real'], 4)
 
     # Update EMA reward (gives recency bias)
     ema_alpha = 2.0 / (min(arm['n'], 20) + 1)
@@ -121,9 +142,9 @@ def update(kind: str, context: str, reward: float) -> dict[str, Any]:
     return {'ok': True, 'key': key, 'arm': arm, 'global_updates': state['global_updates']}
 
 
-def observe(kind: str, context: str = 'general', reward: float = 0.5) -> dict[str, Any]:
+def observe(kind: str, context: str = 'general', reward: float = 0.5, is_synthetic: bool = False) -> dict[str, Any]:
     """Compatibility alias used by mental simulation and older loops."""
-    return update(kind, context, reward)
+    return update(kind, context, reward, is_synthetic=is_synthetic)
 
 
 def reward_from_quality_eval(qeval: dict[str, Any] | None) -> float:
@@ -261,13 +282,17 @@ def policy_summary(limit: int = 30) -> dict[str, Any]:
             'beta': round(beta_v, 3),
             'mean': mean,
             'ema_reward': round(float(arm.get('ema_reward') or 0.0), 4),
-            'n': n,
+            'n_total': n,
+            'n_real': int(arm.get('n_real') or 0),
+            'n_synthetic': int(arm.get('n_synthetic') or 0),
+            'mean_reward_real': float(arm.get('mean_reward_real') or 0.0),
+            'mean_reward_synthetic': float(arm.get('mean_reward_synthetic') or 0.0),
             'last_reward': float(arm.get('last_reward') or 0.0),
             'updated_at': int(arm.get('updated_at') or 0),
         })
 
     # Sort by mean descending
-    items.sort(key=lambda x: (-x['mean'], -x['n']))
+    items.sort(key=lambda x: (-x['mean'], -x['n_total']))
     items = items[:max(1, int(limit))]
 
     return {

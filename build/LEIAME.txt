@@ -1,0 +1,35 @@
+╔══════════════════════════════════════════════════════╗
+║                   ULTRON PRO                        ║
+║          Assistente de IA Local e em Nuvem          ║
+╚══════════════════════════════════════════════════════╝
+
+COMO USAR
+─────────
+1. Copie esta pasta para onde preferir (ex: C:\UltronPRO\)
+2. Clique duas vezes em UltronPRO.exe
+3. Na PRIMEIRA execução:
+   • O programa baixará e instalará as dependências Python
+     automaticamente (requer internet, ~200 MB)
+   • Isso pode levar de 3 a 10 minutos
+   • Nas execuções seguintes, inicia em segundos
+
+REQUISITOS
+──────────
+• Windows 10 ou 11 (64-bit)
+• Conexão com internet na primeira execução
+• ~4 GB de espaço em disco
+• Microfone (opcional, para voz)
+
+ESTRUTURA
+─────────
+UltronPRO.exe         → Programa principal
+backend\data\         → Modelos de IA e banco de dados
+backend\bin\          → Sintetizador de voz (Piper TTS)
+tasks\                → Tarefas automáticas
+
+PROBLEMAS COMUNS
+────────────────
+• "Windows protegeu seu computador": clique "Mais informações"
+  e depois "Executar assim mesmo". O programa não é malicioso.
+• Porta 8000 em uso: feche outros programas que usem essa porta.
+• Erro de dependência: verifique sua conexão com a internet.

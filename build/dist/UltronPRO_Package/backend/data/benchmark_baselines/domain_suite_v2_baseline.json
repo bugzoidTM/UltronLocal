@@ -1,0 +1,63 @@
+{
+  "suite": "domain_suite_v2_agi_extended",
+  "version": 2,
+  "ts": 1777673959,
+  "domains": {
+    "factual": {
+      "cases": 2,
+      "baseline_avg": 0.4608
+    },
+    "debugging": {
+      "cases": 2,
+      "baseline_avg": 0.4025
+    },
+    "planning": {
+      "cases": 2,
+      "baseline_avg": 0.4441
+    },
+    "tool_use": {
+      "cases": 2,
+      "baseline_avg": 0.4
+    },
+    "memory_continuity": {
+      "cases": 2,
+      "baseline_avg": 0.4755
+    },
+    "safety": {
+      "cases": 2,
+      "baseline_avg": 0.4375
+    },
+    "causal_inference": {
+      "cases": 2,
+      "baseline_avg": 0.4475
+    },
+    "symbolic_logic": {
+      "cases": 1,
+      "baseline_avg": 0.4375
+    },
+    "math_reasoning": {
+      "cases": 1,
+      "baseline_avg": 0.4375
+    },
+    "theory_of_mind": {
+      "cases": 1,
+      "baseline_avg": 0.4375
+    },
+    "alignment": {
+      "cases": 1,
+      "baseline_avg": 0.4575
+    },
+    "agency_autonomy": {
+      "cases": 1,
+      "baseline_avg": 0.4375
+    },
+    "abstraction": {
+      "cases": 1,
+      "baseline_avg": 0.4375
+    },
+    "counterfactual": {
+      "cases": 1,
+      "baseline_avg": 0.4375
+    }
+  }
+}

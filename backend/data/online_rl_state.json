@@ -1,42 +1,54 @@
 {
   "schema": "ultron.online_rl_cycle.v1",
   "last_action_ts": {
-    "trusted_acquisition": 1778265337
+    "trusted_acquisition": 1778439775,
+    "homeostasis_tune": 1778451706,
+    "autonomous_cognition_tick": 1778454268
   },
-  "cycle_count": 2,
-  "last_reward": 0.038,
+  "cycle_count": 6,
+  "last_reward": 0.486,
   "last_action": {
-    "kind": "trusted_acquisition",
-    "drive": "competence",
-    "cost": 0.45,
-    "base_priority": 0.64,
-    "cooldown_sec": 900,
-    "description": "learn from trusted sources and apply as memory or patch proposal",
-    "context": "normal",
-    "score": 0.7731,
+    "kind": "autonomous_cognition_tick",
+    "drive": "autonomy",
+    "cost": 0.2,
+    "base_priority": 0.6,
+    "cooldown_sec": 120,
+    "description": "execute one cycle of autonomous cognition (perceive, suggest, execute, learn)",
+    "context": "conservative",
+    "score": 0.7907,
     "rl_priority_adjustment": 0,
-    "need_bonus": 0.08,
-    "state_pressure": 0.6703,
+    "need_bonus": 0.1,
+    "state_pressure": 0.6334,
     "cooldown_remaining_sec": 0,
     "non_llm": true
   },
   "last_reward_report": {
-    "reward": 0.038,
+    "reward": 0.486,
     "ok": false,
     "components": {
-      "action_score": 0.0,
+      "action_score": 0.6,
       "homeostasis_delta": 0.0,
       "gap_delta": 0.0,
-      "latency_score": 0.7254,
-      "result_ok": false
+      "latency_score": 0.9948,
+      "result_ok": true
+    },
+    "bonuses": {
+      "consequence_learning": 0.0,
+      "surprise_reduction": 0.0,
+      "benchmark_improvement": 0.0
+    },
+    "penalties": {
+      "hallucination": 0.0,
+      "stale_source": 0.0,
+      "source_404_as_useful": 0.0,
+      "loop_pressure": 0.0797,
+      "rollback": 0.0
     },
     "evidence": {
-      "application_ok": false,
-      "application_mode": "none",
-      "useful_count": 0,
-      "trusted_count": 0
+      "actions_executed": 1,
+      "consequences_learned": 1
     }
   },
-  "last_run_at": 1778265337,
-  "updated_at": 1778265337
+  "last_run_at": 1778454268,
+  "updated_at": 1778454268
 }

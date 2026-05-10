@@ -1,39 +1,39 @@
 {
   "created_at": 1776626713,
-  "updated_at": 1778265967,
+  "updated_at": 1778454373,
   "drives": {
     "competence": {
-      "weight": 0.213814,
-      "desired": 0.8,
-      "observed": 0.251311,
+      "weight": 0.208375,
+      "desired": 0.864,
+      "observed": 0.262432,
       "weight_source": "stable_intrinsic_kernel"
     },
     "coherence": {
-      "weight": 0.208377,
+      "weight": 0.18572,
       "desired": 0.76,
-      "observed": 0.772285,
+      "observed": 0.780302,
       "weight_source": "stable_intrinsic_kernel"
     },
     "autonomy": {
-      "weight": 0.20641,
-      "desired": 0.736,
-      "observed": 3e-06,
+      "weight": 0.224953,
+      "desired": 0.82,
+      "observed": 0.169525,
       "weight_source": "stable_intrinsic_kernel"
     },
     "novelty": {
-      "weight": 0.179653,
-      "desired": 0.628,
+      "weight": 0.175271,
+      "desired": 0.7,
       "observed": 0.271053,
       "weight_source": "stable_intrinsic_kernel"
     },
     "integrity": {
-      "weight": 0.191745,
-      "desired": 0.908,
-      "observed": 0.736292,
+      "weight": 0.205681,
+      "desired": 0.96,
+      "observed": 0.742408,
       "weight_source": "stable_intrinsic_kernel"
     }
   },
-  "utility": 0.5052,
+  "utility": 0.5175,
   "utility_history": [
     {
       "ts": 1776626714,
@@ -4662,6 +4662,363 @@
           "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
         }
       }
+    },
+    {
+      "ts": 1778439443,
+      "utility": 0.5041,
+      "signals": {
+        "competence": 0.245,
+        "coherence": 0.776,
+        "autonomy": 0.042,
+        "novelty": 0.2711,
+        "integrity": 0.7441
+      },
+      "utility_kernel": {
+        "revision": 6,
+        "hash": "be9582667427d5df4683",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 5,
+          "accepted_evidence_count": 1067,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778439753,
+      "utility": 0.5043,
+      "signals": {
+        "competence": 0.245,
+        "coherence": 0.8007,
+        "autonomy": 0.098,
+        "novelty": 0.2711,
+        "integrity": 0.7441
+      },
+      "utility_kernel": {
+        "revision": 7,
+        "hash": "a4f16015afaf2b83ce57",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 6,
+          "accepted_evidence_count": 1194,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778440061,
+      "utility": 0.5063,
+      "signals": {
+        "competence": 0.2528,
+        "coherence": 0.7555,
+        "autonomy": 0.154,
+        "novelty": 0.2711,
+        "integrity": 0.7467
+      },
+      "utility_kernel": {
+        "revision": 9,
+        "hash": "90fca8f18d5da26638e1",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 8,
+          "accepted_evidence_count": 1488,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778440368,
+      "utility": 0.5093,
+      "signals": {
+        "competence": 0.2528,
+        "coherence": 0.8035,
+        "autonomy": 0.196,
+        "novelty": 0.2711,
+        "integrity": 0.7484
+      },
+      "utility_kernel": {
+        "revision": 10,
+        "hash": "7cb3c40ebeea023d8825",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 9,
+          "accepted_evidence_count": 1701,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778440715,
+      "utility": 0.5153,
+      "signals": {
+        "competence": 0.2649,
+        "coherence": 0.7788,
+        "autonomy": 0.252,
+        "novelty": 0.2711,
+        "integrity": 0.7484
+      },
+      "utility_kernel": {
+        "revision": 11,
+        "hash": "639d77cdc3c3eab32ee1",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 10,
+          "accepted_evidence_count": 1897,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778441028,
+      "utility": 0.5219,
+      "signals": {
+        "competence": 0.2649,
+        "coherence": 0.7782,
+        "autonomy": 0.294,
+        "novelty": 0.2711,
+        "integrity": 0.7475
+      },
+      "utility_kernel": {
+        "revision": 12,
+        "hash": "e48ffd57f9abca851335",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 11,
+          "accepted_evidence_count": 2077,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778441353,
+      "utility": 0.5295,
+      "signals": {
+        "competence": 0.2649,
+        "coherence": 0.7777,
+        "autonomy": 0.35,
+        "novelty": 0.2711,
+        "integrity": 0.7467
+      },
+      "utility_kernel": {
+        "revision": 13,
+        "hash": "b3e802183ec9ef18b264",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 12,
+          "accepted_evidence_count": 2239,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778441664,
+      "utility": 0.5358,
+      "signals": {
+        "competence": 0.2649,
+        "coherence": 0.8018,
+        "autonomy": 0.406,
+        "novelty": 0.2711,
+        "integrity": 0.7459
+      },
+      "utility_kernel": {
+        "revision": 15,
+        "hash": "1f9f78b83bc62bc3d260",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 14,
+          "accepted_evidence_count": 2525,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778451469,
+      "utility": 0.5294,
+      "signals": {
+        "competence": 0.2649,
+        "coherence": 0.7765,
+        "autonomy": 0.084,
+        "novelty": 0.2711,
+        "integrity": 0.745
+      },
+      "utility_kernel": {
+        "revision": 16,
+        "hash": "3fa91f42f99d595f923a",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 15,
+          "accepted_evidence_count": 2668,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778451863,
+      "utility": 0.525,
+      "signals": {
+        "competence": 0.2642,
+        "coherence": 0.776,
+        "autonomy": 0.154,
+        "novelty": 0.2711,
+        "integrity": 0.7441
+      },
+      "utility_kernel": {
+        "revision": 18,
+        "hash": "627737ad44fdc09bdf08",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 17,
+          "accepted_evidence_count": 2917,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778452172,
+      "utility": 0.5248,
+      "signals": {
+        "competence": 0.2642,
+        "coherence": 0.7754,
+        "autonomy": 0.196,
+        "novelty": 0.2711,
+        "integrity": 0.7433
+      },
+      "utility_kernel": {
+        "revision": 19,
+        "hash": "f9c976fbcfac9a193cf2",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 18,
+          "accepted_evidence_count": 3025,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778452488,
+      "utility": 0.5258,
+      "signals": {
+        "competence": 0.2642,
+        "coherence": 0.7995,
+        "autonomy": 0.252,
+        "novelty": 0.2711,
+        "integrity": 0.7425
+      },
+      "utility_kernel": {
+        "revision": 20,
+        "hash": "e04925849ac3de83d5b9",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 19,
+          "accepted_evidence_count": 3125,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778452982,
+      "utility": 0.5308,
+      "signals": {
+        "competence": 0.2642,
+        "coherence": 0.76,
+        "autonomy": 0.322,
+        "novelty": 0.2711,
+        "integrity": 0.7425
+      },
+      "utility_kernel": {
+        "revision": 21,
+        "hash": "f3bc64369eb21a1c2a61",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 20,
+          "accepted_evidence_count": 3234,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778453429,
+      "utility": 0.5263,
+      "signals": {
+        "competence": 0.2642,
+        "coherence": 0.7742,
+        "autonomy": 0.112,
+        "novelty": 0.2711,
+        "integrity": 0.7416
+      },
+      "utility_kernel": {
+        "revision": 22,
+        "hash": "22cf3f3e796927e7275a",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 21,
+          "accepted_evidence_count": 3352,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778453671,
+      "utility": 0.5217,
+      "signals": {
+        "competence": 0.2642,
+        "coherence": 0.7742,
+        "autonomy": 0.098,
+        "novelty": 0.2711,
+        "integrity": 0.7416
+      },
+      "utility_kernel": {
+        "revision": 23,
+        "hash": "edd2e3d0e268bc8cd4d4",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 22,
+          "accepted_evidence_count": 3474,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778454026,
+      "utility": 0.5178,
+      "signals": {
+        "competence": 0.2642,
+        "coherence": 0.7736,
+        "autonomy": 0.098,
+        "novelty": 0.2711,
+        "integrity": 0.7409
+      },
+      "utility_kernel": {
+        "revision": 24,
+        "hash": "461497739f39d1f17164",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 23,
+          "accepted_evidence_count": 3591,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778454373,
+      "utility": 0.5175,
+      "signals": {
+        "competence": 0.2627,
+        "coherence": 0.7983,
+        "autonomy": 0.182,
+        "novelty": 0.2711,
+        "integrity": 0.7409
+      },
+      "utility_kernel": {
+        "revision": 26,
+        "hash": "47fb7462219066b101af",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 25,
+          "accepted_evidence_count": 3823,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
     }
   ],
   "emergent_goals": [
@@ -5168,35 +5525,92 @@
       "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
       "origin": "intrinsic_utility",
       "priority": 0.72
+    },
+    {
+      "ts": 1778439753,
+      "drive": "autonomy",
+      "gap": 0.1505,
+      "observed": 0.0201,
+      "desired": 0.744,
+      "weight": 0.2079,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 2% para 74%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "utility_kernel": {
+        "revision": 7,
+        "hash": "a4f16015afaf2b83ce57",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 6,
+          "accepted_evidence_count": 1194,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      },
+      "objective_contract": "stable_intrinsic_kernel_gap_minimization",
+      "priority": 0.75
+    },
+    {
+      "ts": 1778452488,
+      "drive": "autonomy",
+      "gap": 0.1323,
+      "observed": 0.1884,
+      "desired": 0.796,
+      "weight": 0.2178,
+      "title": "[emergente] Fortalecer autonomy",
+      "description": "Aumentar taxa de resolução local de 19% para 80%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "origin": "intrinsic_utility",
+      "utility_kernel": {
+        "revision": 20,
+        "hash": "e04925849ac3de83d5b9",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 19,
+          "accepted_evidence_count": 3125,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      },
+      "objective_contract": "stable_intrinsic_kernel_gap_minimization",
+      "priority": 0.7
     }
   ],
   "active_emergent_goal": {
-    "ts": 1777672709,
+    "ts": 1778452488,
     "drive": "autonomy",
-    "gap": 0.14,
-    "observed": 0.0,
-    "desired": 0.7,
-    "weight": 0.2,
+    "gap": 0.1323,
+    "observed": 0.1884,
+    "desired": 0.796,
+    "weight": 0.2178,
     "title": "[emergente] Fortalecer autonomy",
-    "description": "Aumentar taxa de resolução local de 0% para 70%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+    "description": "Aumentar taxa de resolução local de 19% para 80%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
     "origin": "intrinsic_utility",
-    "priority": 0.72
+    "utility_kernel": {
+      "revision": 20,
+      "hash": "e04925849ac3de83d5b9",
+      "stability": {
+        "source": "emergent_from_accepted_operational_evidence",
+        "updates": 19,
+        "accepted_evidence_count": 3125,
+        "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+      }
+    },
+    "objective_contract": "stable_intrinsic_kernel_gap_minimization",
+    "priority": 0.7
   },
-  "tick_count": 418,
+  "tick_count": 435,
   "weight_hashes": [
-    "26559f20003166ce",
-    "0f07924bbcb3241f",
-    "a460db98942ecaec",
-    "b0e730586357dae9",
-    "f2da69623837572e"
+    "a532bf72810a676d",
+    "d4e31c227d0fe9d2",
+    "3c87eda0a90c47c3",
+    "c1262efa8e3b208b",
+    "de2342d81675ea17"
   ],
   "utility_kernel": {
-    "revision": 5,
-    "hash": "331da33914bcea9ad2a6",
+    "revision": 26,
+    "hash": "47fb7462219066b101af",
     "stability": {
       "source": "emergent_from_accepted_operational_evidence",
-      "updates": 4,
-      "accepted_evidence_count": 925,
+      "updates": 25,
+      "accepted_evidence_count": 3823,
       "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
     }
   }

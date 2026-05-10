@@ -1,0 +1,2235 @@
+{
+  "enabled": true,
+  "exploration_budget_ratio": 0.2,
+  "min_gap_to_trigger": 0.25,
+  "domains": [
+    {
+      "name": "distributed-systems",
+      "target_depth": 120,
+      "weight": 1.0
+    },
+    {
+      "name": "security",
+      "target_depth": 100,
+      "weight": 1.0
+    },
+    {
+      "name": "economics",
+      "target_depth": 90,
+      "weight": 0.9
+    },
+    {
+      "name": "law-tech",
+      "target_depth": 80,
+      "weight": 0.8
+    },
+    {
+      "name": "science-method",
+      "target_depth": 90,
+      "weight": 0.9
+    }
+  ],
+  "last_tick_at": 1778365434,
+  "history": [
+    {
+      "ts": 1777658345,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777658372,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777658490,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777658498,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777658528,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777658558,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777658597,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777658618,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777658648,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777658679,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777658786,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777658965,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777659058,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777659145,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777659147,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777659237,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777659360,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777659447,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777659537,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777659543,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777659925,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777659961,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777660080,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777660147,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777660259,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777660319,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777660334,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777660439,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777660499,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777660619,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777660659,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777660680,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777660799,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777660859,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777660970,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777660981,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777661040,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777661159,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777661219,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777661287,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777661339,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777661414,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777661519,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777661579,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777661613,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777661699,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777661759,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777661879,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777661926,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777661939,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777662059,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777662119,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777662239,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777662240,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777665841,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777665905,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777665931,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777665966,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777665994,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777666025,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777666051,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777667379,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777667418,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777667540,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777667566,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777667653,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777667771,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777667983,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777668363,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777668680,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777669178,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777669182,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777669209,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777669240,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777669275,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777669299,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777669329,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777672871,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777673205,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777673529,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777673982,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1777674363,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778183361,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778183416,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778183447,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778183477,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778183507,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778183537,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778183566,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778183596,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778183657,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778183687,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778183717,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778183747,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778183777,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778183816,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778183846,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778183876,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778183906,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778183936,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778183966,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778183996,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184026,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184056,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184086,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184116,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184146,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184176,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184206,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184236,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184266,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184297,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184326,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184356,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184386,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184416,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184446,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184476,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184507,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184536,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184566,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184596,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184626,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184656,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184686,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184716,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184746,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184781,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184807,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184836,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184842,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184869,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184900,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184929,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184959,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778184988,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185008,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185035,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185065,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185095,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185125,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185155,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185185,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185245,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185275,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185305,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185335,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185365,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185395,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185425,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185455,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185485,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185515,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185545,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185575,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185605,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185635,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185665,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185695,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185725,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185749,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778185776,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778263125,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778263152,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778263181,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778263212,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778263241,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778263271,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778263302,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778263331,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778263362,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778263391,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778263407,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778264871,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778264880,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778265112,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778265192,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778265310,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778265340,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778265402,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778265522,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778265524,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778363913,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778363939,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778363969,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778363999,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778364004,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778364029,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778364059,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778364081,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778364101,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778364119,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778364149,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778364179,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778364225,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778364239,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778364413,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778364820,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778365124,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    },
+    {
+      "ts": 1778365434,
+      "event": "tick",
+      "top": {
+        "domain": "security",
+        "coverage": 0.0015,
+        "gap": 0.9985,
+        "priority": 0.9985
+      },
+      "trigger": true
+    }
+  ]
+}

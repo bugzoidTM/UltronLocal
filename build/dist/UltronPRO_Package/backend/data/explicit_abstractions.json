@@ -1,0 +1,91 @@
+{
+  "items": [
+    {
+      "id": "abs_arc_001",
+      "created_at": 1711130000,
+      "updated_at": 1711130000,
+      "version": 1,
+      "principle": "Extrapolação de cor por linha: Se um pixel solitário de cor C existe em uma linha majoritariamente vazia, a cor C deve preencher toda a linha ou segmento contíguo.",
+      "source_domains": [
+        "spatial",
+        "arc",
+        "grid_logic"
+      ],
+      "applicability_conditions": [
+        "grid",
+        "pixel solitário",
+        "linha",
+        "preenchimento",
+        "color",
+        "cor",
+        "row"
+      ],
+      "procedure_template": [
+        "Identificar a cor do pixel isolado",
+        "Determinar a extensão da linha ou segmento",
+        "Substituir 0 pela cor C no intervalo"
+      ],
+      "confidence": 0.85,
+      "generality_score": 0.75,
+      "status": "validated"
+    },
+    {
+      "id": "abs_arc_002",
+      "created_at": 1711130001,
+      "updated_at": 1711130001,
+      "version": 1,
+      "principle": "Simetria de Reflexão: Objetos ou padrões em uma metade da grid devem ser espelhados na metade oposta usando um eixo central (vertical ou horizontal).",
+      "source_domains": [
+        "spatial",
+        "arc",
+        "geometry"
+      ],
+      "applicability_conditions": [
+        "simetria",
+        "espelhamento",
+        "eixo",
+        "grid",
+        "reflection",
+        "espelh",
+        "reflet"
+      ],
+      "procedure_template": [
+        "Definir o eixo de simetria",
+        "Iterar sobre cada pixel na metade fonte",
+        "Mapear a posição (x, y) para a posição espelhada correspondente"
+      ],
+      "confidence": 0.9,
+      "generality_score": 0.8,
+      "status": "validated"
+    },
+    {
+      "id": "abs_arc_003",
+      "created_at": 1711130002,
+      "updated_at": 1711130002,
+      "version": 1,
+      "principle": "Escalonamento de Padrão (Scaling): Um padrão N x M deve ser repetido ou expandido por um fator de escala K, resultando em uma grid de tamanho (N*K) x (M*K).",
+      "source_domains": [
+        "spatial",
+        "arc",
+        "scaling"
+      ],
+      "applicability_conditions": [
+        "escalonamento",
+        "repetição",
+        "fator de escala",
+        "padrão",
+        "scaling",
+        "escala",
+        "size"
+      ],
+      "procedure_template": [
+        "Identificar o padrão base",
+        "Calcular as novas dimensões",
+        "Mapear cada pixel (i, j) do original para blocos K x K na nova grid"
+      ],
+      "confidence": 0.88,
+      "generality_score": 0.7,
+      "status": "validated"
+    }
+  ]
+}

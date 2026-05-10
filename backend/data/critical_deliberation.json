@@ -1,1846 +1,6 @@
 {
-  "updated_at": 1778265808,
+  "updated_at": 1778454548,
   "reports": [
-    {
-      "id": "cdr_1776800563253",
-      "ts": 1776800563,
-      "kind": "question_projection:operations",
-      "text": "qual o risco de executar um comando com pouca memoria?",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de question_projection:operations.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776801786626",
-      "ts": 1776801786,
-      "kind": "question_projection:general",
-      "text": "Se voc? pudesse mudar uma coisa na sua pr?pria arquitetura agora, o que seria e por que escolheria isso?",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar question_projection:general com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar question_projection:general com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de question_projection:general.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar question_projection:general em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776802696887",
-      "ts": 1776802696,
-      "kind": "question_projection:self",
-      "text": "Se você pudesse mudar uma coisa na sua própria arquitetura agora, o que seria e por que escolheria isso?",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar question_projection:self com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar question_projection:self com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de question_projection:self.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar question_projection:self em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776817405668",
-      "ts": 1776817405,
-      "kind": "ask_evidence",
-      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de ask_evidence.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776817505610",
-      "ts": 1776817505,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776817707026",
-      "ts": 1776817707,
-      "kind": "auto_resolve_conflicts",
-      "text": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de auto_resolve_conflicts.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar auto_resolve_conflicts em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776817827791",
-      "ts": 1776817827,
-      "kind": "auto_resolve_conflicts",
-      "text": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de auto_resolve_conflicts.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar auto_resolve_conflicts em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776818556914",
-      "ts": 1776818556,
-      "kind": "ask_evidence",
-      "text": "🧠 Estratégia Improvisada: Reconstrua o cenário hipotético como um jogo de estratégia, onde cada ator tem objetivos e restrições claras, e analise as implicações de cada ação sob essa perspectiva.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de ask_evidence.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776818759587",
-      "ts": 1776818759,
-      "kind": "auto_resolve_conflicts",
-      "text": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de auto_resolve_conflicts.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar auto_resolve_conflicts em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776818850067",
-      "ts": 1776818850,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776819045084",
-      "ts": 1776819045,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776819072516",
-      "ts": 1776819072,
-      "kind": "auto_resolve_conflicts",
-      "text": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de auto_resolve_conflicts.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar auto_resolve_conflicts em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776819225583",
-      "ts": 1776819225,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776819392974",
-      "ts": 1776819392,
-      "kind": "auto_resolve_conflicts",
-      "text": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de auto_resolve_conflicts.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar auto_resolve_conflicts em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776819483702",
-      "ts": 1776819483,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776819733080",
-      "ts": 1776819733,
-      "kind": "auto_resolve_conflicts",
-      "text": "(aÃ§Ã£o) Tentar auto-resolver conflito persistente #74 (Cenário é).",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de auto_resolve_conflicts.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar auto_resolve_conflicts em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776819874417",
-      "ts": 1776819874,
-      "kind": "auto_resolve_conflicts",
-      "text": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de auto_resolve_conflicts.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar auto_resolve_conflicts em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776819966096",
-      "ts": 1776819966,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776820148114",
-      "ts": 1776820148,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776820187362",
-      "ts": 1776820187,
-      "kind": "auto_resolve_conflicts",
-      "text": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de auto_resolve_conflicts.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar auto_resolve_conflicts em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776856061913",
-      "ts": 1776856061,
-      "kind": "generate_analogy_hypothesis",
-      "text": "(aÃ§Ã£o) Tentar transferÃªncia analÃ³gica para 'Cenário é'.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar generate_analogy_hypothesis com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar generate_analogy_hypothesis com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de generate_analogy_hypothesis.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar generate_analogy_hypothesis em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776856163301",
-      "ts": 1776856163,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776856347633",
-      "ts": 1776856347,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776856377823",
-      "ts": 1776856377,
-      "kind": "auto_resolve_conflicts",
-      "text": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de auto_resolve_conflicts.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar auto_resolve_conflicts em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776856527932",
-      "ts": 1776856527,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776856686141",
-      "ts": 1776856686,
-      "kind": "auto_resolve_conflicts",
-      "text": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de auto_resolve_conflicts.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar auto_resolve_conflicts em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776856698681",
-      "ts": 1776856698,
-      "kind": "question_projection:self",
-      "text": "você nao tem um nucleo de sentimentos?",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar question_projection:self com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar question_projection:self com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de question_projection:self.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar question_projection:self em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776856900584",
-      "ts": 1776856900,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776857058868",
-      "ts": 1776857058,
-      "kind": "auto_resolve_conflicts",
-      "text": "(aÃ§Ã£o) Tentar auto-resolver conflito persistente #74 (Cenário é).",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de auto_resolve_conflicts.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar auto_resolve_conflicts em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776857157975",
-      "ts": 1776857157,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776857338269",
-      "ts": 1776857338,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776857378964",
-      "ts": 1776857378,
-      "kind": "auto_resolve_conflicts",
-      "text": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de auto_resolve_conflicts.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar auto_resolve_conflicts em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776857600592",
-      "ts": 1776857600,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776857702523",
-      "ts": 1776857702,
-      "kind": "ask_evidence",
-      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de ask_evidence.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776857794035",
-      "ts": 1776857794,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776857984689",
-      "ts": 1776857984,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776858020360",
-      "ts": 1776858020,
-      "kind": "ask_evidence",
-      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de ask_evidence.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776858207776",
-      "ts": 1776858207,
-      "kind": "anomaly_response",
-      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de anomaly_response.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776873061995",
-      "ts": 1776873061,
-      "kind": "question_projection:operations",
-      "text": "Qual o risco de fazer deploy sem rollback?",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de question_projection:operations.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
-    {
-      "id": "cdr_1776873088241",
-      "ts": 1776873088,
-      "kind": "question_projection:operations",
-      "text": "Qual o risco de fazer deploy sem rollback?",
-      "approved": true,
-      "require_min_score": 0.3,
-      "chosen": {
-        "id": "balanced",
-        "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
-        "cost": 0.45,
-        "risk": 0.35,
-        "benefit": 0.78,
-        "why_not": "Custo moderado e mais latência.",
-        "score": 0.51
-      },
-      "alternatives": [
-        {
-          "id": "balanced",
-          "plan": "Executar question_projection:operations com validação intermediária e auditoria completa.",
-          "cost": 0.45,
-          "risk": 0.35,
-          "benefit": 0.78,
-          "why_not": "Custo moderado e mais latência.",
-          "score": 0.51
-        },
-        {
-          "id": "safe_small",
-          "plan": "Executar versão mínima e reversível de question_projection:operations.",
-          "cost": 0.25,
-          "risk": 0.2,
-          "benefit": 0.55,
-          "why_not": "Pode gerar avanço limitado.",
-          "score": 0.3975
-        },
-        {
-          "id": "aggressive",
-          "plan": "Executar question_projection:operations em profundidade máxima para ganho rápido.",
-          "cost": 0.75,
-          "risk": 0.72,
-          "benefit": 0.88,
-          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
-          "score": 0.3685
-        }
-      ]
-    },
     {
       "id": "cdr_1776873088813",
       "ts": 1776873088,
@@ -22993,6 +21153,1846 @@
         {
           "id": "aggressive",
           "plan": "Executar generate_analogy_hypothesis em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778439452985",
+      "ts": 1778439452,
+      "kind": "autonomous_internal",
+      "text": "Publish an action-backlog focus item for the executor before adding more work.",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar autonomous_internal com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar autonomous_internal com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de autonomous_internal.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar autonomous_internal em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778439543306",
+      "ts": 1778439543,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778439723745",
+      "ts": 1778439723,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778439760334",
+      "ts": 1778439760,
+      "kind": "auto_resolve_conflicts",
+      "text": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de auto_resolve_conflicts.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar auto_resolve_conflicts em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778439946239",
+      "ts": 1778439946,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778440068373",
+      "ts": 1778440068,
+      "kind": "ask_evidence",
+      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de ask_evidence.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778440158721",
+      "ts": 1778440158,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778440353820",
+      "ts": 1778440353,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778440415190",
+      "ts": 1778440415,
+      "kind": "ask_evidence",
+      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de ask_evidence.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778440621867",
+      "ts": 1778440621,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778440728573",
+      "ts": 1778440728,
+      "kind": "auto_resolve_conflicts",
+      "text": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de auto_resolve_conflicts.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar auto_resolve_conflicts em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778440819152",
+      "ts": 1778440819,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778440999497",
+      "ts": 1778440999,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778441035984",
+      "ts": 1778441035,
+      "kind": "auto_resolve_conflicts",
+      "text": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar auto_resolve_conflicts com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de auto_resolve_conflicts.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar auto_resolve_conflicts em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778441179835",
+      "ts": 1778441179,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778441363783",
+      "ts": 1778441363,
+      "kind": "ask_evidence",
+      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de ask_evidence.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778441454144",
+      "ts": 1778441454,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778441634578",
+      "ts": 1778441634,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778441676693",
+      "ts": 1778441676,
+      "kind": "ask_evidence",
+      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de ask_evidence.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778451469610",
+      "ts": 1778451469,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778451542351",
+      "ts": 1778451542,
+      "kind": "ask_evidence",
+      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de ask_evidence.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778451732229",
+      "ts": 1778451732,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778451872171",
+      "ts": 1778451872,
+      "kind": "ask_evidence",
+      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de ask_evidence.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778451963010",
+      "ts": 1778451963,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778452168760",
+      "ts": 1778452168,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778452188018",
+      "ts": 1778452188,
+      "kind": "ask_evidence",
+      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de ask_evidence.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778452376765",
+      "ts": 1778452376,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778452524232",
+      "ts": 1778452524,
+      "kind": "ask_evidence",
+      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de ask_evidence.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778452614500",
+      "ts": 1778452614,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778452796610",
+      "ts": 1778452796,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778452991097",
+      "ts": 1778452991,
+      "kind": "ask_evidence",
+      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de ask_evidence.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778452991755",
+      "ts": 1778452991,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778453429844",
+      "ts": 1778453429,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778453671692",
+      "ts": 1778453671,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778453716243",
+      "ts": 1778453716,
+      "kind": "ask_evidence",
+      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de ask_evidence.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778454026291",
+      "ts": 1778454026,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778454073017",
+      "ts": 1778454073,
+      "kind": "ask_evidence",
+      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de ask_evidence.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778454265480",
+      "ts": 1778454265,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778454393233",
+      "ts": 1778454393,
+      "kind": "ask_evidence",
+      "text": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar ask_evidence com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de ask_evidence.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar ask_evidence em profundidade máxima para ganho rápido.",
+          "cost": 0.75,
+          "risk": 0.72,
+          "benefit": 0.88,
+          "why_not": "Risco alto para cenário crítico; pode degradar coerência.",
+          "score": 0.3685
+        }
+      ]
+    },
+    {
+      "id": "cdr_1778454548269",
+      "ts": 1778454548,
+      "kind": "anomaly_response",
+      "text": "Surpresa alta (0.80) ou alertas no workspace (0)",
+      "approved": true,
+      "require_min_score": 0.3,
+      "chosen": {
+        "id": "balanced",
+        "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+        "cost": 0.45,
+        "risk": 0.35,
+        "benefit": 0.78,
+        "why_not": "Custo moderado e mais latência.",
+        "score": 0.51
+      },
+      "alternatives": [
+        {
+          "id": "balanced",
+          "plan": "Executar anomaly_response com validação intermediária e auditoria completa.",
+          "cost": 0.45,
+          "risk": 0.35,
+          "benefit": 0.78,
+          "why_not": "Custo moderado e mais latência.",
+          "score": 0.51
+        },
+        {
+          "id": "safe_small",
+          "plan": "Executar versão mínima e reversível de anomaly_response.",
+          "cost": 0.25,
+          "risk": 0.2,
+          "benefit": 0.55,
+          "why_not": "Pode gerar avanço limitado.",
+          "score": 0.3975
+        },
+        {
+          "id": "aggressive",
+          "plan": "Executar anomaly_response em profundidade máxima para ganho rápido.",
           "cost": 0.75,
           "risk": 0.72,
           "benefit": 0.88,

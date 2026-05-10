@@ -1,0 +1,3307 @@
+{
+  "updated_at": 1776794222,
+  "blocked_integrity": 1,
+  "hallucination_prevented_count": 1,
+  "last_decisions": [
+    {
+      "ts": 1776548645,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 6974,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776548960,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 6990,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776549290,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 6994,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776550532,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7007,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776550794,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7011,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776550994,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7016,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776551155,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7005,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776551398,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7020,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776551532,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7019,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776551772,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7026,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776552008,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7030,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776552319,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7035,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776552612,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7041,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776552758,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7036,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776553193,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7050,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776553525,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7051,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776553851,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7061,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776554160,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7064,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776554470,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7069,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776554785,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7076,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776555094,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7080,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776555404,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7084,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776555714,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7090,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776556023,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7096,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776556343,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7102,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776556654,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7106,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776556964,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7112,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776557275,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7116,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776557584,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7122,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776557894,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7124,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776558204,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7131,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776558514,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7138,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776558865,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7139,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776559101,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7148,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776559298,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7150,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776559382,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7144,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776559544,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7155,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776559882,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7151,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776559989,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7164,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776560164,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7169,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776560301,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7170,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776560439,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7178,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776560655,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7180,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776560908,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7185,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776561234,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7189,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776561553,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7193,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776561860,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7197,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776562169,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7202,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776562489,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7210,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776562809,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7216,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776563121,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7211,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776563441,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7227,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776563761,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7234,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776564075,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7228,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776564313,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7246,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776564621,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7249,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776564931,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7251,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776565466,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7257,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776565774,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7264,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776565968,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7269,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776566082,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7275,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776566296,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7277,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776566644,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7281,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776566747,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7270,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776601424,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7291,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776601773,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7298,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776602240,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7306,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776604619,
+      "kind": "self_model_refresh",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7311,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776604929,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7319,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776605244,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7329,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776605558,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7320,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776605881,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7334,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776606205,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7339,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776606523,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7340,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776606876,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7349,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776607193,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7357,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776607507,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7369,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776607828,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7375,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776608140,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7378,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776608452,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7380,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776608929,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7391,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776620264,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7393,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776620573,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7402,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776620881,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7409,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776621191,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7416,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776621501,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7410,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776621816,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7425,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776622132,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7431,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776622358,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7435,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776622617,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7441,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776622925,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7445,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776623128,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7450,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776626412,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7463,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776626773,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7464,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776626773,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7464,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776627137,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7465,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776627497,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7484,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776627609,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7485,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776627697,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7487,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776627750,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7498,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776627750,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7480,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776627794,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7486,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776628060,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7488,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776628087,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7489,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776628146,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7500,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776628370,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7508,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776628399,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7509,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776628464,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7507,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776628622,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7513,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776628709,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7514,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776628709,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7514,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776628787,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7512,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776628875,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7520,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776628876,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7503,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776628887,
+      "kind": "horizon_review",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7504,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776629184,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7528,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776629197,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7529,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776629215,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7530,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776629499,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7534,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776629511,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7535,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776629536,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7526,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776629814,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7538,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776629824,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7539,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776629863,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7540,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776630142,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7543,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776630467,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7554,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776630778,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7558,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776631087,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7563,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776631402,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7559,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776632403,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7579,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776632525,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7586,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776632843,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7581,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776633153,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7598,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776633435,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7601,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776633706,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7603,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776633894,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7599,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776634259,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7611,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776636886,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7624,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776637197,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7628,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776637508,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7633,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776637743,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7638,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776638032,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7639,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776638273,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7634,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776638353,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7635,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776638619,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7648,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776638677,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7643,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776638967,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7655,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776639013,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7647,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776639332,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7665,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776639650,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7672,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776639966,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7675,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776640273,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7679,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776640579,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7683,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776640887,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7690,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776641119,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7694,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776641174,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7682,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776641199,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7689,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776641212,
+      "kind": "deliberate_task",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7673,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776641224,
+      "kind": "self_model_refresh",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7674,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776641294,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7696,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776641316,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7699,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776641532,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7703,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776641598,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7704,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776641631,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7695,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776641841,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7710,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776642010,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7711,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776642146,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7714,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776642356,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7716,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776642454,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7709,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776642662,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7726,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776642767,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7727,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776643081,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7732,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776643083,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7733,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776643393,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7739,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776643495,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7742,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776643703,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7748,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776643890,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7752,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776644009,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7740,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776644213,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7756,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776644321,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7757,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776644568,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7763,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776644628,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7764,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776644923,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7768,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776644935,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7769,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776645233,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7773,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776645246,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7774,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776645552,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7775,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776645582,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7776,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776645858,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7781,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776645922,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7782,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776646167,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7788,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776646326,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7792,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776646475,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7797,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776646793,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7802,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776646804,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7789,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776647117,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7793,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776647255,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7809,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776647434,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7810,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776647755,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7815,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776647762,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7813,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776648006,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7823,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776648084,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7824,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776648194,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7825,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776648378,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7834,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776648428,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7837,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776648488,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7838,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776648740,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7840,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776648810,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7841,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776649057,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7844,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776649145,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7846,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776649376,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7850,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776649489,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7854,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776649692,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7859,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776649818,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7863,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776650007,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7865,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776650202,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7867,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776650324,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7855,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776650561,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7874,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776650650,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7875,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776650746,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7882,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776650969,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7887,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776651017,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7888,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776651144,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7890,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776651282,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7891,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776651658,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7897,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776652024,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7905,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776652366,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7911,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776652784,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7914,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776653113,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7919,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776695524,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7928,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776695904,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7938,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776696222,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7943,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776696545,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7945,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776697088,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7948,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776697484,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7956,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776697834,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7961,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776698242,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7964,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776698587,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7965,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776698982,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7978,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776699302,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7983,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776699653,
+      "kind": "generate_analogy_hypothesis",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7979,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776700125,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7993,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776701335,
+      "kind": "project_management_cycle",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 7990,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776702121,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8014,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776702736,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8023,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776703291,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8028,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776703958,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8035,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776704611,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8041,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776705276,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8047,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776705803,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8056,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776706406,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8062,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776707137,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8067,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776707854,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8080,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776708366,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8087,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776708926,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8093,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776709616,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8100,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776710410,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8103,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776710883,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8110,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776711610,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8118,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776712179,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8124,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776712718,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8130,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776713303,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8142,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776713835,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8146,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776714366,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8150,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776714927,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8161,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776715491,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8169,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776716141,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8172,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776716707,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8180,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776717293,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8186,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776717901,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8191,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776718559,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8201,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776719851,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8216,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776720430,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8220,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776721224,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8230,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776721939,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8237,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776722760,
+      "kind": "project_management_cycle",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8228,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776723076,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8249,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776723396,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8255,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776723778,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8259,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776724295,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8263,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776725082,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8275,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776733161,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8282,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776733581,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8290,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776734142,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8296,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776734346,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8299,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776734761,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8304,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776735109,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8314,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776735514,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8317,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776735841,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8321,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776736158,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8325,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776736523,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8333,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776736847,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8338,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776737180,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8341,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776787548,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8350,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776787648,
+      "kind": "auto_resolve_conflicts",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8352,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776791515,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8367,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776791827,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8372,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776792245,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8376,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776792560,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8377,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1776794222,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 8385,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    }
+  ]
+}

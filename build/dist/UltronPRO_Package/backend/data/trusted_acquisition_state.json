@@ -1,0 +1,60 @@
+{
+  "schema": "ultron.trusted_acquisition_run.v1",
+  "last_run_id": "ta_ebd4354d6c77",
+  "last_ts": 1778364201,
+  "last_ok": true,
+  "last_need": {
+    "schema": "ultron.acquisition_need.v1",
+    "id": "causal_graph_interventional_coverage",
+    "label": "cobertura interventional do grafo causal",
+    "domain": "causal_graph",
+    "metric": "edges=28 strong=0 weak=9",
+    "priority": 0.833,
+    "rank": 1,
+    "total_candidates": 4,
+    "evidence": {
+      "causal_graph": {
+        "ok": true,
+        "nodes": 37,
+        "edges": 28,
+        "updated_at": 1778363963,
+        "path": "D:\\UnidadeF\\UltronPro\\backend\\data\\causal_graph.json",
+        "interventional_strong_edges": 0,
+        "interventional_weak_edges": 9,
+        "observational_edges": 19
+      }
+    },
+    "next_experiment": "converter decisoes e benchmarks recentes em arestas causais com validacao interventional",
+    "need_terms": [
+      "causal_graph_interventional_coverage",
+      "cobertura",
+      "interventional",
+      "grafo",
+      "causal",
+      "causal_graph",
+      "edges",
+      "strong",
+      "weak",
+      "converter",
+      "decisoes",
+      "benchmarks",
+      "recentes",
+      "arestas",
+      "causais",
+      "validacao"
+    ],
+    "search_query": "causal_graph causal_graph_interventional_coverage cobertura interventional grafo causal causal_graph edges strong documentation reliable source",
+    "application_target": "knowledge",
+    "decision_rule": "highest_epistemic_gap_priority_then_stable_id",
+    "need_id": "need_3dc67bb102cd"
+  },
+  "last_application": {
+    "ok": true,
+    "mode": "knowledge",
+    "source_id": "trusted:causal-learn.readthedocs.io:103e03799f",
+    "experience_id": 4392,
+    "insight_id": 16550,
+    "event_id": 71030
+  },
+  "last_gaps_remaining": []
+}

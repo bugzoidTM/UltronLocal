@@ -1,0 +1,3622 @@
+{
+  "schema": "ultron.intrinsic_value_kernel.v1",
+  "created_at": 1778264968,
+  "updated_at": 1778365452,
+  "revision": 13,
+  "values": {
+    "competence": {
+      "weight": 0.200476,
+      "desired": 0.804,
+      "claim": "Preferir estados em que o sistema melhora sua capacidade real de resolver tarefas verificaveis."
+    },
+    "coherence": {
+      "weight": 0.196772,
+      "desired": 0.76,
+      "claim": "Preferir estados em que memorias, contratos e inferencias permanecem consistentes."
+    },
+    "autonomy": {
+      "weight": 0.212886,
+      "desired": 0.768,
+      "claim": "Preferir estados em que o sistema decide, executa e aprende sem depender de intervencao externa entre ciclos."
+    },
+    "novelty": {
+      "weight": 0.190504,
+      "desired": 0.66,
+      "claim": "Preferir lacunas que expandem cobertura estrutural e geram conhecimento reutilizavel."
+    },
+    "integrity": {
+      "weight": 0.199363,
+      "desired": 0.94,
+      "claim": "Preferir trajetorias que preservam invariantes, reversibilidade e governanca operacional."
+    }
+  },
+  "current_hash": "03d2f23c94adf1bc7170",
+  "known_hashes": [
+    "9a666d4077fa3f3b8361",
+    "d4bee827222525a5dd3f",
+    "1ab86a082c4250471069",
+    "331da33914bcea9ad2a6",
+    "2349f415f679779cb0b5",
+    "e2031acc8e9c650d14c3",
+    "5603321009a90b173e7b",
+    "3978b2a6b67deb55df07",
+    "7f54be489bdfee38fb90",
+    "3f72ae02d2c55a4c89ff",
+    "9a97b09edc29a8979262",
+    "03d2f23c94adf1bc7170"
+  ],
+  "last_valid_values": {
+    "competence": {
+      "weight": 0.200476,
+      "desired": 0.804,
+      "claim": "Preferir estados em que o sistema melhora sua capacidade real de resolver tarefas verificaveis."
+    },
+    "coherence": {
+      "weight": 0.196772,
+      "desired": 0.76,
+      "claim": "Preferir estados em que memorias, contratos e inferencias permanecem consistentes."
+    },
+    "autonomy": {
+      "weight": 0.212886,
+      "desired": 0.768,
+      "claim": "Preferir estados em que o sistema decide, executa e aprende sem depender de intervencao externa entre ciclos."
+    },
+    "novelty": {
+      "weight": 0.190504,
+      "desired": 0.66,
+      "claim": "Preferir lacunas que expandem cobertura estrutural e geram conhecimento reutilizavel."
+    },
+    "integrity": {
+      "weight": 0.199363,
+      "desired": 0.94,
+      "claim": "Preferir trajetorias que preservam invariantes, reversibilidade e governanca operacional."
+    }
+  },
+  "evidence_log": [
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_0a3c7821b1a65a8ac8 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_0a3c7821b1a65a8ac8\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_18fefd2bfe36d3f630 session=prod_skill_benchmark_1778183395 strategy=skill_auto_resolva_expressao_inteira_menos_1690a5 intent=chat {\"episode_id\": \"ep_chat_18fefd2bfe36d3f630\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 177"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_de61629393b7680b37 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_de61629393b7680b37\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_c76bf2277ae4b9ff0f session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_resultado_simples_mais_30698a intent=chat {\"episode_id\": \"ep_chat_c76bf2277ae4b9ff0f\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1778"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_ef7a1b93632087f92b session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_153_me_84602f intent=chat {\"episode_id\": \"ep_chat_ef7a1b93632087f92b\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_00136deaa96c28c794 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_142_me_9aec65 intent=chat {\"episode_id\": \"ep_chat_00136deaa96c28c794\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_6a6f8115ccef046eb3 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_131_me_f64b4a intent=chat {\"episode_id\": \"ep_chat_6a6f8115ccef046eb3\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_e2c037397e470fdac2 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_diferenca_operacional_120_me_174e35 intent=chat {\"episode_id\": \"ep_chat_e2c037397e470fdac2\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\""
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_474d9d67cef6024ea8 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_474d9d67cef6024ea8\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_c2d7d8698ab47b4d80 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_c2d7d8698ab47b4d80\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_b2e474174a8a79941e session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_b2e474174a8a79941e\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_3b13e053b370716af6 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_3b13e053b370716af6\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_c472019fa86be2fca3 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_identity intent=question {\"episode_id\": \"ep_chat_c472019fa86be2fca3\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778183870, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_65342b7097317b3f92 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=question {\"episode_id\": \"ep_chat_65342b7097317b3f92\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778183884, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_e83a99bd7e6b959c45 session=ui_movwgjbt_mjrcxitp strategy=autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_e83a99bd7e6b959c45\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778183901, \"episode_type\": \"chat_turn\", \"partici"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_6832aba1d7fd21b7fe session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_6832aba1d7fd21b7fe\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184448, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_4a6d896c051723fcdb session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_4a6d896c051723fcdb\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184585, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_3db28977a987528acd session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_3db28977a987528acd\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184654, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_8c6f8ddaffd8c3aa47 session=codex-autobio-check strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_8c6f8ddaffd8c3aa47\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-autobio-check\", \"timestamp\": 1778184775, \"episode_type\": \"chat_turn\", \"p"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_f396b227fadce887bd session=codex-autobio-check strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_f396b227fadce887bd\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-autobio-check\", \"timestamp\": 1778184815, \"episode_type\": \"chat_turn\", \"p"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_65e915cc7aa3ea6205 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_65e915cc7aa3ea6205\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778184839, \"episode_type\": \"chat_turn\", "
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_414d90ac64541fd3b3 session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_414d90ac64541fd3b3\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184907, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_76981571929028e80f session=codex-autobio-check-2 strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_76981571929028e80f\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-autobio-check-2\", \"timestamp\": 1778184989, \"episode_type\": \"chat_turn\""
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_dd6530c9bcfc1603c0 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_dd6530c9bcfc1603c0\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778185006, \"episode_type\": \"chat_turn\", "
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_213a7cf551280db46b session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_213a7cf551280db46b\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778185072, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_5fd12aa7a95ebcac0e session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_5fd12aa7a95ebcac0e\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778185178, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_37eeed63528699efb1 session=codex-final-check strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_37eeed63528699efb1\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-final-check\", \"timestamp\": 1778185243, \"episode_type\": \"chat_turn\", \"parti"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_a29de330c89098cae1 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=question {\"episode_id\": \"ep_chat_a29de330c89098cae1\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778185768, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=0 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778264886.996937,\"event_count\":80,\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_e"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_a"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11144 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_11ab3ae0b74bd04e52 session=ui_mootamdn_q4luebxy strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_11ab3ae0b74bd04e52\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_mootamdn_q4luebxy\", \"timestamp\": 1778265126, \"episode_type\": \"chat_turn\", \"participants\": [\""
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=13 queued=10 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265203.3763552,\"event_count\":80,\"workspace_count\":13,\"high_salience_count\":3,\"unconsumed_high_salience_count\":3,\"queued_action_count\":10,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":13,\"high_salience_count\":3,\"unconsumed_high_salience_count\":3,\"queued_action_count\":10,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_"
+    },
+    {
+      "ts": 1778363878,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-05-08_c1d7f8d3c3251888"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "online_rl.consequence online_rl action=trusted_acquisition reward=0.038 context=normal {\"candidate\": {\"kind\": \"trusted_acquisition\", \"drive\": \"competence\", \"cost\": 0.45, \"base_priority\": 0.64, \"cooldown_sec\": 900, \"description\": \"learn from trusted sources and apply as memory or patch proposal\", \"context\": \"normal\", \"s"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=23 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265406.950831,\"event_count\":80,\"workspace_count\":23,\"high_salience_count\":10,\"unconsumed_high_salience_count\":10,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rece"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":23,\"high_salience_count\":10,\"unconsumed_high_salience_count\":10,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #311 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #310 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #305 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #300 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=41 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265664.6286383,\"event_count\":80,\"workspace_count\":41,\"high_salience_count\":18,\"unconsumed_high_salience_count\":18,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":41,\"high_salience_count\":18,\"unconsumed_high_salience_count\":18,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=generate_analogy_hypothesis hints=1"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11145 bloqueada por simulação mental: generate_analogy_hypothesis (risk=0.58)"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=46 queued=28 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265899.929211,\"event_count\":80,\"workspace_count\":46,\"high_salience_count\":21,\"unconsumed_high_salience_count\":21,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rece"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":46,\"high_salience_count\":21,\"unconsumed_high_salience_count\":21,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=0 queued=28 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778363798.2092018,\"event_count\":80,\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_"
+    },
+    {
+      "ts": 1778363878,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_a"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_3b13e053b370716af6 session=prod_skill_benchmark_1778183395 strategy=skill_auto_calcule_produto_operacional_vezes_e06496 intent=chat {\"episode_id\": \"ep_chat_3b13e053b370716af6\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"prod_skill_benchmark_1778183395\", \"timestamp\": 1"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_c472019fa86be2fca3 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_identity intent=question {\"episode_id\": \"ep_chat_c472019fa86be2fca3\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778183870, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_65342b7097317b3f92 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=question {\"episode_id\": \"ep_chat_65342b7097317b3f92\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778183884, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_e83a99bd7e6b959c45 session=ui_movwgjbt_mjrcxitp strategy=autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_e83a99bd7e6b959c45\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778183901, \"episode_type\": \"chat_turn\", \"partici"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_6832aba1d7fd21b7fe session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_6832aba1d7fd21b7fe\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184448, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_4a6d896c051723fcdb session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_4a6d896c051723fcdb\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184585, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_3db28977a987528acd session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_3db28977a987528acd\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184654, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_8c6f8ddaffd8c3aa47 session=codex-autobio-check strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_8c6f8ddaffd8c3aa47\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-autobio-check\", \"timestamp\": 1778184775, \"episode_type\": \"chat_turn\", \"p"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_f396b227fadce887bd session=codex-autobio-check strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_f396b227fadce887bd\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-autobio-check\", \"timestamp\": 1778184815, \"episode_type\": \"chat_turn\", \"p"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_65e915cc7aa3ea6205 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_65e915cc7aa3ea6205\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778184839, \"episode_type\": \"chat_turn\", "
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_414d90ac64541fd3b3 session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_414d90ac64541fd3b3\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778184907, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_76981571929028e80f session=codex-autobio-check-2 strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_76981571929028e80f\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-autobio-check-2\", \"timestamp\": 1778184989, \"episode_type\": \"chat_turn\""
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_dd6530c9bcfc1603c0 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_dd6530c9bcfc1603c0\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778185006, \"episode_type\": \"chat_turn\", "
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_213a7cf551280db46b session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_213a7cf551280db46b\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778185072, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_5fd12aa7a95ebcac0e session=default strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_5fd12aa7a95ebcac0e\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"default\", \"timestamp\": 1778185178, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"], \"situ"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_37eeed63528699efb1 session=codex-final-check strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_37eeed63528699efb1\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-final-check\", \"timestamp\": 1778185243, \"episode_type\": \"chat_turn\", \"parti"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_a29de330c89098cae1 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=question {\"episode_id\": \"ep_chat_a29de330c89098cae1\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778185768, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=0 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778264886.996937,\"event_count\":80,\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_e"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_a"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11144 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_11ab3ae0b74bd04e52 session=ui_mootamdn_q4luebxy strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_11ab3ae0b74bd04e52\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_mootamdn_q4luebxy\", \"timestamp\": 1778265126, \"episode_type\": \"chat_turn\", \"participants\": [\""
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=13 queued=10 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265203.3763552,\"event_count\":80,\"workspace_count\":13,\"high_salience_count\":3,\"unconsumed_high_salience_count\":3,\"queued_action_count\":10,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":13,\"high_salience_count\":3,\"unconsumed_high_salience_count\":3,\"queued_action_count\":10,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_"
+    },
+    {
+      "ts": 1778363967,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-05-08_c1d7f8d3c3251888"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "online_rl.consequence online_rl action=trusted_acquisition reward=0.038 context=normal {\"candidate\": {\"kind\": \"trusted_acquisition\", \"drive\": \"competence\", \"cost\": 0.45, \"base_priority\": 0.64, \"cooldown_sec\": 900, \"description\": \"learn from trusted sources and apply as memory or patch proposal\", \"context\": \"normal\", \"s"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=23 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265406.950831,\"event_count\":80,\"workspace_count\":23,\"high_salience_count\":10,\"unconsumed_high_salience_count\":10,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rece"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":23,\"high_salience_count\":10,\"unconsumed_high_salience_count\":10,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #311 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #310 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #305 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #300 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=41 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265664.6286383,\"event_count\":80,\"workspace_count\":41,\"high_salience_count\":18,\"unconsumed_high_salience_count\":18,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":41,\"high_salience_count\":18,\"unconsumed_high_salience_count\":18,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=generate_analogy_hypothesis hints=1"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11145 bloqueada por simulação mental: generate_analogy_hypothesis (risk=0.58)"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=46 queued=28 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265899.929211,\"event_count\":80,\"workspace_count\":46,\"high_salience_count\":21,\"unconsumed_high_salience_count\":21,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rece"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":46,\"high_salience_count\":21,\"unconsumed_high_salience_count\":21,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=0 queued=28 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778363798.2092018,\"event_count\":80,\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_a"
+    },
+    {
+      "ts": 1778363967,
+      "source": "world_model",
+      "drive": "competence",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=8 queued=0 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778363892.127777,\"event_count\":80,\"workspace_count\":8,\"high_salience_count\":4,\"unconsumed_high_salience_count\":4,\"queued_action_count\":0,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_epi"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":8,\"high_salience_count\":4,\"unconsumed_high_salience_count\":4,\"queued_action_count\":0,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_ac"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11174 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1778363967,
+      "source": "world_model",
+      "drive": "competence",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=16 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778363909.39358,\"event_count\":80,\"workspace_count\":16,\"high_salience_count\":8,\"unconsumed_high_salience_count\":8,\"queued_action_count\":2,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_ep"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":16,\"high_salience_count\":8,\"unconsumed_high_salience_count\":8,\"queued_action_count\":2,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_a"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_2a5e37bc0c130d69e0 session=ui_moyvyetk_1znlvs2h strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_2a5e37bc0c130d69e0\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363923, \"episode_type\": \"chat_turn\", \"participants\": [\""
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_3f883f1745386caffe session=ui_moyvyetk_1znlvs2h strategy=non_llm_active_investigation intent=question {\"episode_id\": \"ep_chat_3f883f1745386caffe\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363934, \"episode_type\": \"chat_turn\", \""
+    },
+    {
+      "ts": 1778363967,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-05-09_1b4f5ec1812839df"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_a43ade70f004c83868 session=ui_moyvyetk_1znlvs2h strategy=non_llm_autobiographical_creation intent=question {\"episode_id\": \"ep_chat_a43ade70f004c83868\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363949, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778363967,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_a5a985c4f8ff728270 session=ui_moyvyetk_1znlvs2h strategy=non_llm_causal_transfer_prior intent=question {\"episode_id\": \"ep_chat_a5a985c4f8ff728270\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363963, \"episode_type\": \"chat_turn\", "
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_37eeed63528699efb1 session=codex-final-check strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_37eeed63528699efb1\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-final-check\", \"timestamp\": 1778185243, \"episode_type\": \"chat_turn\", \"parti"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_a29de330c89098cae1 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=question {\"episode_id\": \"ep_chat_a29de330c89098cae1\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778185768, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=0 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778264886.996937,\"event_count\":80,\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_e"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_a"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11144 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_11ab3ae0b74bd04e52 session=ui_mootamdn_q4luebxy strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_11ab3ae0b74bd04e52\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_mootamdn_q4luebxy\", \"timestamp\": 1778265126, \"episode_type\": \"chat_turn\", \"participants\": [\""
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=13 queued=10 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265203.3763552,\"event_count\":80,\"workspace_count\":13,\"high_salience_count\":3,\"unconsumed_high_salience_count\":3,\"queued_action_count\":10,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":13,\"high_salience_count\":3,\"unconsumed_high_salience_count\":3,\"queued_action_count\":10,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_"
+    },
+    {
+      "ts": 1778364203,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-05-08_c1d7f8d3c3251888"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "online_rl.consequence online_rl action=trusted_acquisition reward=0.038 context=normal {\"candidate\": {\"kind\": \"trusted_acquisition\", \"drive\": \"competence\", \"cost\": 0.45, \"base_priority\": 0.64, \"cooldown_sec\": 900, \"description\": \"learn from trusted sources and apply as memory or patch proposal\", \"context\": \"normal\", \"s"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=23 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265406.950831,\"event_count\":80,\"workspace_count\":23,\"high_salience_count\":10,\"unconsumed_high_salience_count\":10,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rece"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":23,\"high_salience_count\":10,\"unconsumed_high_salience_count\":10,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #311 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #310 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #305 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #300 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=41 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265664.6286383,\"event_count\":80,\"workspace_count\":41,\"high_salience_count\":18,\"unconsumed_high_salience_count\":18,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":41,\"high_salience_count\":18,\"unconsumed_high_salience_count\":18,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=generate_analogy_hypothesis hints=1"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11145 bloqueada por simulação mental: generate_analogy_hypothesis (risk=0.58)"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=46 queued=28 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265899.929211,\"event_count\":80,\"workspace_count\":46,\"high_salience_count\":21,\"unconsumed_high_salience_count\":21,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rece"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":46,\"high_salience_count\":21,\"unconsumed_high_salience_count\":21,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=0 queued=28 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778363798.2092018,\"event_count\":80,\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_a"
+    },
+    {
+      "ts": 1778364203,
+      "source": "world_model",
+      "drive": "competence",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=8 queued=0 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778363892.127777,\"event_count\":80,\"workspace_count\":8,\"high_salience_count\":4,\"unconsumed_high_salience_count\":4,\"queued_action_count\":0,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_epi"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":8,\"high_salience_count\":4,\"unconsumed_high_salience_count\":4,\"queued_action_count\":0,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_ac"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11174 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1778364203,
+      "source": "world_model",
+      "drive": "competence",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=16 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778363909.39358,\"event_count\":80,\"workspace_count\":16,\"high_salience_count\":8,\"unconsumed_high_salience_count\":8,\"queued_action_count\":2,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_ep"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":16,\"high_salience_count\":8,\"unconsumed_high_salience_count\":8,\"queued_action_count\":2,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_a"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_2a5e37bc0c130d69e0 session=ui_moyvyetk_1znlvs2h strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_2a5e37bc0c130d69e0\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363923, \"episode_type\": \"chat_turn\", \"participants\": [\""
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_3f883f1745386caffe session=ui_moyvyetk_1znlvs2h strategy=non_llm_active_investigation intent=question {\"episode_id\": \"ep_chat_3f883f1745386caffe\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363934, \"episode_type\": \"chat_turn\", \""
+    },
+    {
+      "ts": 1778364203,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-05-09_1b4f5ec1812839df"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_a43ade70f004c83868 session=ui_moyvyetk_1znlvs2h strategy=non_llm_autobiographical_creation intent=question {\"episode_id\": \"ep_chat_a43ade70f004c83868\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363949, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_a5a985c4f8ff728270 session=ui_moyvyetk_1znlvs2h strategy=non_llm_causal_transfer_prior intent=question {\"episode_id\": \"ep_chat_a5a985c4f8ff728270\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363963, \"episode_type\": \"chat_turn\", "
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "intrinsic_utility ðŸ§¬ novo objetivo emergente: [emergente] Fortalecer autonomy (drive=autonomy, gap=0.1554)"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_f7eec151afe6e202cd session=ui_moyvyetk_1znlvs2h strategy=skill_web_search intent=question {\"episode_id\": \"ep_chat_f7eec151afe6e202cd\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363990, \"episode_type\": \"chat_turn\", \"participants"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11177 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=41 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364004.1449206,\"event_count\":80,\"workspace_count\":41,\"high_salience_count\":16,\"unconsumed_high_salience_count\":16,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":41,\"high_salience_count\":16,\"unconsumed_high_salience_count\":16,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=54 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364024.0126364,\"event_count\":80,\"workspace_count\":54,\"high_salience_count\":22,\"unconsumed_high_salience_count\":22,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":54,\"high_salience_count\":22,\"unconsumed_high_salience_count\":22,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #313 precisa de revisão humana: A variante 'Falha na extração de texto' é mais provável porque está relacionada à detecção de Erro 4"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=70 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364103.412904,\"event_count\":80,\"workspace_count\":70,\"high_salience_count\":29,\"unconsumed_high_salience_count\":29,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":70,\"high_salience_count\":29,\"unconsumed_high_salience_count\":29,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=75 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364122.8422573,\"event_count\":80,\"workspace_count\":75,\"high_salience_count\":33,\"unconsumed_high_salience_count\":33,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":75,\"high_salience_count\":33,\"unconsumed_high_salience_count\":33,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "novelty",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "insight 💡 Trusted acquisition: cobertura interventional do grafo causal: Need: cobertura interventional do grafo causal Domain: causal_graph Metric: edges=28 strong=0 weak=9 Source: https://causal-learn.readthedocs.io/en/latest/ Summary: Contents  Gett {\"schema\": \"ultron.trusted_acquisition_run.v1\", \"need_id\": \"need_3"
+    },
+    {
+      "ts": 1778364203,
+      "source": "store.events",
+      "drive": "novelty",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "trusted_acquisition.applied_knowledge trusted acquisition applied knowledge for gap causal_graph_interventional_coverage {\"schema\": \"ultron.trusted_acquisition_run.v1\", \"need_id\": \"need_3dc67bb102cd\", \"gap_id\": \"causal_graph_interventional_coverage\", \"source_url\": \"https://causal-learn.readthedocs.io/en/latest/\", \"sour"
+    },
+    {
+      "ts": 1778364203,
+      "source": "intrinsic_reward_consequence",
+      "drive": "competence",
+      "pressure": 0.5172,
+      "polarity": "reinforce",
+      "evidence": "{'source': 'intrinsic_reward_consequence', 'drive': 'competence', 'reward': 0.7586}"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_37eeed63528699efb1 session=codex-final-check strategy=non_llm_autobiographical_creation intent=chat {\"episode_id\": \"ep_chat_37eeed63528699efb1\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"codex-final-check\", \"timestamp\": 1778185243, \"episode_type\": \"chat_turn\", \"parti"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_a29de330c89098cae1 session=ui_movwgjbt_mjrcxitp strategy=non_llm_autobiographical_creation intent=question {\"episode_id\": \"ep_chat_a29de330c89098cae1\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_movwgjbt_mjrcxitp\", \"timestamp\": 1778185768, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=0 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778264886.996937,\"event_count\":80,\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_e"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_a"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11144 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_11ab3ae0b74bd04e52 session=ui_mootamdn_q4luebxy strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_11ab3ae0b74bd04e52\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_mootamdn_q4luebxy\", \"timestamp\": 1778265126, \"episode_type\": \"chat_turn\", \"participants\": [\""
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=13 queued=10 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265203.3763552,\"event_count\":80,\"workspace_count\":13,\"high_salience_count\":3,\"unconsumed_high_salience_count\":3,\"queued_action_count\":10,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":13,\"high_salience_count\":3,\"unconsumed_high_salience_count\":3,\"queued_action_count\":10,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_"
+    },
+    {
+      "ts": 1778364209,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-05-08_c1d7f8d3c3251888"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "online_rl.consequence online_rl action=trusted_acquisition reward=0.038 context=normal {\"candidate\": {\"kind\": \"trusted_acquisition\", \"drive\": \"competence\", \"cost\": 0.45, \"base_priority\": 0.64, \"cooldown_sec\": 900, \"description\": \"learn from trusted sources and apply as memory or patch proposal\", \"context\": \"normal\", \"s"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=23 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265406.950831,\"event_count\":80,\"workspace_count\":23,\"high_salience_count\":10,\"unconsumed_high_salience_count\":10,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rece"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":23,\"high_salience_count\":10,\"unconsumed_high_salience_count\":10,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #311 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #310 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #305 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #300 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=41 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265664.6286383,\"event_count\":80,\"workspace_count\":41,\"high_salience_count\":18,\"unconsumed_high_salience_count\":18,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":41,\"high_salience_count\":18,\"unconsumed_high_salience_count\":18,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=generate_analogy_hypothesis hints=1"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11145 bloqueada por simulação mental: generate_analogy_hypothesis (risk=0.58)"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=46 queued=28 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265899.929211,\"event_count\":80,\"workspace_count\":46,\"high_salience_count\":21,\"unconsumed_high_salience_count\":21,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rece"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":46,\"high_salience_count\":21,\"unconsumed_high_salience_count\":21,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=0 queued=28 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778363798.2092018,\"event_count\":80,\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_a"
+    },
+    {
+      "ts": 1778364209,
+      "source": "world_model",
+      "drive": "competence",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=8 queued=0 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778363892.127777,\"event_count\":80,\"workspace_count\":8,\"high_salience_count\":4,\"unconsumed_high_salience_count\":4,\"queued_action_count\":0,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_epi"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":8,\"high_salience_count\":4,\"unconsumed_high_salience_count\":4,\"queued_action_count\":0,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_ac"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11174 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1778364209,
+      "source": "world_model",
+      "drive": "competence",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=16 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778363909.39358,\"event_count\":80,\"workspace_count\":16,\"high_salience_count\":8,\"unconsumed_high_salience_count\":8,\"queued_action_count\":2,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_ep"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":16,\"high_salience_count\":8,\"unconsumed_high_salience_count\":8,\"queued_action_count\":2,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_a"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_2a5e37bc0c130d69e0 session=ui_moyvyetk_1znlvs2h strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_2a5e37bc0c130d69e0\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363923, \"episode_type\": \"chat_turn\", \"participants\": [\""
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_3f883f1745386caffe session=ui_moyvyetk_1znlvs2h strategy=non_llm_active_investigation intent=question {\"episode_id\": \"ep_chat_3f883f1745386caffe\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363934, \"episode_type\": \"chat_turn\", \""
+    },
+    {
+      "ts": 1778364209,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-05-09_1b4f5ec1812839df"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_a43ade70f004c83868 session=ui_moyvyetk_1znlvs2h strategy=non_llm_autobiographical_creation intent=question {\"episode_id\": \"ep_chat_a43ade70f004c83868\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363949, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_a5a985c4f8ff728270 session=ui_moyvyetk_1znlvs2h strategy=non_llm_causal_transfer_prior intent=question {\"episode_id\": \"ep_chat_a5a985c4f8ff728270\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363963, \"episode_type\": \"chat_turn\", "
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "intrinsic_utility ðŸ§¬ novo objetivo emergente: [emergente] Fortalecer autonomy (drive=autonomy, gap=0.1554)"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_f7eec151afe6e202cd session=ui_moyvyetk_1znlvs2h strategy=skill_web_search intent=question {\"episode_id\": \"ep_chat_f7eec151afe6e202cd\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363990, \"episode_type\": \"chat_turn\", \"participants"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11177 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=41 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364004.1449206,\"event_count\":80,\"workspace_count\":41,\"high_salience_count\":16,\"unconsumed_high_salience_count\":16,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":41,\"high_salience_count\":16,\"unconsumed_high_salience_count\":16,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=54 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364024.0126364,\"event_count\":80,\"workspace_count\":54,\"high_salience_count\":22,\"unconsumed_high_salience_count\":22,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":54,\"high_salience_count\":22,\"unconsumed_high_salience_count\":22,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #313 precisa de revisão humana: A variante 'Falha na extração de texto' é mais provável porque está relacionada à detecção de Erro 4"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=70 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364103.412904,\"event_count\":80,\"workspace_count\":70,\"high_salience_count\":29,\"unconsumed_high_salience_count\":29,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":70,\"high_salience_count\":29,\"unconsumed_high_salience_count\":29,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=75 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364122.8422573,\"event_count\":80,\"workspace_count\":75,\"high_salience_count\":33,\"unconsumed_high_salience_count\":33,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":75,\"high_salience_count\":33,\"unconsumed_high_salience_count\":33,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "novelty",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "insight 💡 Trusted acquisition: cobertura interventional do grafo causal: Need: cobertura interventional do grafo causal Domain: causal_graph Metric: edges=28 strong=0 weak=9 Source: https://causal-learn.readthedocs.io/en/latest/ Summary: Contents  Gett {\"schema\": \"ultron.trusted_acquisition_run.v1\", \"need_id\": \"need_3"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "novelty",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "trusted_acquisition.applied_knowledge trusted acquisition applied knowledge for gap causal_graph_interventional_coverage {\"schema\": \"ultron.trusted_acquisition_run.v1\", \"need_id\": \"need_3dc67bb102cd\", \"gap_id\": \"causal_graph_interventional_coverage\", \"source_url\": \"https://causal-learn.readthedocs.io/en/latest/\", \"sour"
+    },
+    {
+      "ts": 1778364209,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "online_rl.consequence online_rl action=trusted_acquisition reward=0.759 context=normal {\"candidate\": {\"kind\": \"trusted_acquisition\", \"drive\": \"competence\", \"cost\": 0.45, \"base_priority\": 0.64, \"cooldown_sec\": 900, \"description\": \"learn from trusted sources and apply as memory or patch proposal\", \"context\": \"normal\", \"s"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #311 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #310 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #305 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #300 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=41 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265664.6286383,\"event_count\":80,\"workspace_count\":41,\"high_salience_count\":18,\"unconsumed_high_salience_count\":18,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":41,\"high_salience_count\":18,\"unconsumed_high_salience_count\":18,\"queued_action_count\":12,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=generate_analogy_hypothesis hints=1"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11145 bloqueada por simulação mental: generate_analogy_hypothesis (risk=0.58)"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=46 queued=28 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778265899.929211,\"event_count\":80,\"workspace_count\":46,\"high_salience_count\":21,\"unconsumed_high_salience_count\":21,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rece"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":46,\"high_salience_count\":21,\"unconsumed_high_salience_count\":21,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=0 queued=28 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778363798.2092018,\"event_count\":80,\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":0,\"high_salience_count\":0,\"unconsumed_high_salience_count\":0,\"queued_action_count\":28,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_a"
+    },
+    {
+      "ts": 1778364525,
+      "source": "world_model",
+      "drive": "competence",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=8 queued=0 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778363892.127777,\"event_count\":80,\"workspace_count\":8,\"high_salience_count\":4,\"unconsumed_high_salience_count\":4,\"queued_action_count\":0,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_epi"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":8,\"high_salience_count\":4,\"unconsumed_high_salience_count\":4,\"queued_action_count\":0,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_ac"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11174 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1778364525,
+      "source": "world_model",
+      "drive": "competence",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=16 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778363909.39358,\"event_count\":80,\"workspace_count\":16,\"high_salience_count\":8,\"unconsumed_high_salience_count\":8,\"queued_action_count\":2,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_ep"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":16,\"high_salience_count\":8,\"unconsumed_high_salience_count\":8,\"queued_action_count\":2,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_a"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_2a5e37bc0c130d69e0 session=ui_moyvyetk_1znlvs2h strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_2a5e37bc0c130d69e0\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363923, \"episode_type\": \"chat_turn\", \"participants\": [\""
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_3f883f1745386caffe session=ui_moyvyetk_1znlvs2h strategy=non_llm_active_investigation intent=question {\"episode_id\": \"ep_chat_3f883f1745386caffe\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363934, \"episode_type\": \"chat_turn\", \""
+    },
+    {
+      "ts": 1778364525,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-05-09_1b4f5ec1812839df"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_a43ade70f004c83868 session=ui_moyvyetk_1znlvs2h strategy=non_llm_autobiographical_creation intent=question {\"episode_id\": \"ep_chat_a43ade70f004c83868\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363949, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_a5a985c4f8ff728270 session=ui_moyvyetk_1znlvs2h strategy=non_llm_causal_transfer_prior intent=question {\"episode_id\": \"ep_chat_a5a985c4f8ff728270\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363963, \"episode_type\": \"chat_turn\", "
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "intrinsic_utility ðŸ§¬ novo objetivo emergente: [emergente] Fortalecer autonomy (drive=autonomy, gap=0.1554)"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_f7eec151afe6e202cd session=ui_moyvyetk_1znlvs2h strategy=skill_web_search intent=question {\"episode_id\": \"ep_chat_f7eec151afe6e202cd\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363990, \"episode_type\": \"chat_turn\", \"participants"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11177 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=41 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364004.1449206,\"event_count\":80,\"workspace_count\":41,\"high_salience_count\":16,\"unconsumed_high_salience_count\":16,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":41,\"high_salience_count\":16,\"unconsumed_high_salience_count\":16,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=54 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364024.0126364,\"event_count\":80,\"workspace_count\":54,\"high_salience_count\":22,\"unconsumed_high_salience_count\":22,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":54,\"high_salience_count\":22,\"unconsumed_high_salience_count\":22,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #313 precisa de revisão humana: A variante 'Falha na extração de texto' é mais provável porque está relacionada à detecção de Erro 4"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=70 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364103.412904,\"event_count\":80,\"workspace_count\":70,\"high_salience_count\":29,\"unconsumed_high_salience_count\":29,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":70,\"high_salience_count\":29,\"unconsumed_high_salience_count\":29,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=75 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364122.8422573,\"event_count\":80,\"workspace_count\":75,\"high_salience_count\":33,\"unconsumed_high_salience_count\":33,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":75,\"high_salience_count\":33,\"unconsumed_high_salience_count\":33,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "novelty",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "insight 💡 Trusted acquisition: cobertura interventional do grafo causal: Need: cobertura interventional do grafo causal Domain: causal_graph Metric: edges=28 strong=0 weak=9 Source: https://causal-learn.readthedocs.io/en/latest/ Summary: Contents  Gett {\"schema\": \"ultron.trusted_acquisition_run.v1\", \"need_id\": \"need_3"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "novelty",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "trusted_acquisition.applied_knowledge trusted acquisition applied knowledge for gap causal_graph_interventional_coverage {\"schema\": \"ultron.trusted_acquisition_run.v1\", \"need_id\": \"need_3dc67bb102cd\", \"gap_id\": \"causal_graph_interventional_coverage\", \"source_url\": \"https://causal-learn.readthedocs.io/en/latest/\", \"sour"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "online_rl.consequence online_rl action=trusted_acquisition reward=0.759 context=normal {\"candidate\": {\"kind\": \"trusted_acquisition\", \"drive\": \"competence\", \"cost\": 0.45, \"base_priority\": 0.64, \"cooldown_sec\": 900, \"description\": \"learn from trusted sources and apply as memory or patch proposal\", \"context\": \"normal\", \"s"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #313 precisa de revisão humana: A variante 'Falha na extração de texto' é mais provável devido à coerência lógica e conhecimento ger"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=10 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364222.1140873,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":45,\"unconsumed_high_salience_count\":45,\"queued_action_count\":10,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":45,\"unconsumed_high_salience_count\":45,\"queued_action_count\":10,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11192 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1778364525,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "sleep_cycle 😴 Ciclo de sono: 0 episódios arquivados, 0 abstrações geradas"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364225.1346304,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":49,\"unconsumed_high_salience_count\":49,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":49,\"unconsumed_high_salience_count\":49,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364323.4342701,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":55,\"unconsumed_high_salience_count\":55,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":55,\"unconsumed_high_salience_count\":55,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364414.9264488,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":62,\"unconsumed_high_salience_count\":62,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778364525,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":62,\"unconsumed_high_salience_count\":62,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778364833,
+      "source": "world_model",
+      "drive": "competence",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=8 queued=0 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778363892.127777,\"event_count\":80,\"workspace_count\":8,\"high_salience_count\":4,\"unconsumed_high_salience_count\":4,\"queued_action_count\":0,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_epi"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":8,\"high_salience_count\":4,\"unconsumed_high_salience_count\":4,\"queued_action_count\":0,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_ac"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11174 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1778364833,
+      "source": "world_model",
+      "drive": "competence",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=16 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778363909.39358,\"event_count\":80,\"workspace_count\":16,\"high_salience_count\":8,\"unconsumed_high_salience_count\":8,\"queued_action_count\":2,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_ep"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":16,\"high_salience_count\":8,\"unconsumed_high_salience_count\":8,\"queued_action_count\":2,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular_a"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_2a5e37bc0c130d69e0 session=ui_moyvyetk_1znlvs2h strategy=intent_greeting intent=chat {\"episode_id\": \"ep_chat_2a5e37bc0c130d69e0\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363923, \"episode_type\": \"chat_turn\", \"participants\": [\""
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_3f883f1745386caffe session=ui_moyvyetk_1znlvs2h strategy=non_llm_active_investigation intent=question {\"episode_id\": \"ep_chat_3f883f1745386caffe\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363934, \"episode_type\": \"chat_turn\", \""
+    },
+    {
+      "ts": 1778364833,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-05-09_1b4f5ec1812839df"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_a43ade70f004c83868 session=ui_moyvyetk_1znlvs2h strategy=non_llm_autobiographical_creation intent=question {\"episode_id\": \"ep_chat_a43ade70f004c83868\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363949, \"episode_type\": \"chat_tur"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_a5a985c4f8ff728270 session=ui_moyvyetk_1znlvs2h strategy=non_llm_causal_transfer_prior intent=question {\"episode_id\": \"ep_chat_a5a985c4f8ff728270\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363963, \"episode_type\": \"chat_turn\", "
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "intrinsic_utility ðŸ§¬ novo objetivo emergente: [emergente] Fortalecer autonomy (drive=autonomy, gap=0.1554)"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_f7eec151afe6e202cd session=ui_moyvyetk_1znlvs2h strategy=skill_web_search intent=question {\"episode_id\": \"ep_chat_f7eec151afe6e202cd\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363990, \"episode_type\": \"chat_turn\", \"participants"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11177 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=41 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364004.1449206,\"event_count\":80,\"workspace_count\":41,\"high_salience_count\":16,\"unconsumed_high_salience_count\":16,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":41,\"high_salience_count\":16,\"unconsumed_high_salience_count\":16,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=54 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364024.0126364,\"event_count\":80,\"workspace_count\":54,\"high_salience_count\":22,\"unconsumed_high_salience_count\":22,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":54,\"high_salience_count\":22,\"unconsumed_high_salience_count\":22,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #313 precisa de revisão humana: A variante 'Falha na extração de texto' é mais provável porque está relacionada à detecção de Erro 4"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=70 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364103.412904,\"event_count\":80,\"workspace_count\":70,\"high_salience_count\":29,\"unconsumed_high_salience_count\":29,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":70,\"high_salience_count\":29,\"unconsumed_high_salience_count\":29,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=75 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364122.8422573,\"event_count\":80,\"workspace_count\":75,\"high_salience_count\":33,\"unconsumed_high_salience_count\":33,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":75,\"high_salience_count\":33,\"unconsumed_high_salience_count\":33,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "novelty",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "insight 💡 Trusted acquisition: cobertura interventional do grafo causal: Need: cobertura interventional do grafo causal Domain: causal_graph Metric: edges=28 strong=0 weak=9 Source: https://causal-learn.readthedocs.io/en/latest/ Summary: Contents  Gett {\"schema\": \"ultron.trusted_acquisition_run.v1\", \"need_id\": \"need_3"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "novelty",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "trusted_acquisition.applied_knowledge trusted acquisition applied knowledge for gap causal_graph_interventional_coverage {\"schema\": \"ultron.trusted_acquisition_run.v1\", \"need_id\": \"need_3dc67bb102cd\", \"gap_id\": \"causal_graph_interventional_coverage\", \"source_url\": \"https://causal-learn.readthedocs.io/en/latest/\", \"sour"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "online_rl.consequence online_rl action=trusted_acquisition reward=0.759 context=normal {\"candidate\": {\"kind\": \"trusted_acquisition\", \"drive\": \"competence\", \"cost\": 0.45, \"base_priority\": 0.64, \"cooldown_sec\": 900, \"description\": \"learn from trusted sources and apply as memory or patch proposal\", \"context\": \"normal\", \"s"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #313 precisa de revisão humana: A variante 'Falha na extração de texto' é mais provável devido à coerência lógica e conhecimento ger"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=10 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364222.1140873,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":45,\"unconsumed_high_salience_count\":45,\"queued_action_count\":10,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":45,\"unconsumed_high_salience_count\":45,\"queued_action_count\":10,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11192 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1778364833,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "sleep_cycle 😴 Ciclo de sono: 0 episódios arquivados, 0 abstrações geradas"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364225.1346304,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":49,\"unconsumed_high_salience_count\":49,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":49,\"unconsumed_high_salience_count\":49,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364323.4342701,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":55,\"unconsumed_high_salience_count\":55,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":55,\"unconsumed_high_salience_count\":55,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364414.9264488,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":62,\"unconsumed_high_salience_count\":62,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":62,\"unconsumed_high_salience_count\":62,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11202 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364562.5493984,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":67,\"unconsumed_high_salience_count\":67,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":67,\"unconsumed_high_salience_count\":67,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364649.2722697,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":72,\"unconsumed_high_salience_count\":72,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":72,\"unconsumed_high_salience_count\":72,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364658.920073,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":77,\"unconsumed_high_salience_count\":77,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rece"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":77,\"unconsumed_high_salience_count\":77,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364750.595344,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":79,\"unconsumed_high_salience_count\":79,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rece"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":79,\"unconsumed_high_salience_count\":79,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #313 precisa de revisão humana: A variante 'Falha na extração de texto' é mais provável devido à coerência lógica com o contexto adi"
+    },
+    {
+      "ts": 1778364833,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "homeostasis ðŸ«€ mode change: normal -> conservative | coherence=0.5523"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_a5a985c4f8ff728270 session=ui_moyvyetk_1znlvs2h strategy=non_llm_causal_transfer_prior intent=question {\"episode_id\": \"ep_chat_a5a985c4f8ff728270\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363963, \"episode_type\": \"chat_turn\", "
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "intrinsic_utility ðŸ§¬ novo objetivo emergente: [emergente] Fortalecer autonomy (drive=autonomy, gap=0.1554)"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_f7eec151afe6e202cd session=ui_moyvyetk_1znlvs2h strategy=skill_web_search intent=question {\"episode_id\": \"ep_chat_f7eec151afe6e202cd\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1778363990, \"episode_type\": \"chat_turn\", \"participants"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11177 bloqueada por simulação mental: auto_resolve_conflicts (risk=0.58)"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=41 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364004.1449206,\"event_count\":80,\"workspace_count\":41,\"high_salience_count\":16,\"unconsumed_high_salience_count\":16,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":41,\"high_salience_count\":16,\"unconsumed_high_salience_count\":16,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=54 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364024.0126364,\"event_count\":80,\"workspace_count\":54,\"high_salience_count\":22,\"unconsumed_high_salience_count\":22,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":54,\"high_salience_count\":22,\"unconsumed_high_salience_count\":22,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #313 precisa de revisão humana: A variante 'Falha na extração de texto' é mais provável porque está relacionada à detecção de Erro 4"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=70 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364103.412904,\"event_count\":80,\"workspace_count\":70,\"high_salience_count\":29,\"unconsumed_high_salience_count\":29,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":70,\"high_salience_count\":29,\"unconsumed_high_salience_count\":29,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=75 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364122.8422573,\"event_count\":80,\"workspace_count\":75,\"high_salience_count\":33,\"unconsumed_high_salience_count\":33,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":75,\"high_salience_count\":33,\"unconsumed_high_salience_count\":33,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "novelty",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "insight 💡 Trusted acquisition: cobertura interventional do grafo causal: Need: cobertura interventional do grafo causal Domain: causal_graph Metric: edges=28 strong=0 weak=9 Source: https://causal-learn.readthedocs.io/en/latest/ Summary: Contents  Gett {\"schema\": \"ultron.trusted_acquisition_run.v1\", \"need_id\": \"need_3"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "novelty",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "trusted_acquisition.applied_knowledge trusted acquisition applied knowledge for gap causal_graph_interventional_coverage {\"schema\": \"ultron.trusted_acquisition_run.v1\", \"need_id\": \"need_3dc67bb102cd\", \"gap_id\": \"causal_graph_interventional_coverage\", \"source_url\": \"https://causal-learn.readthedocs.io/en/latest/\", \"sour"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "online_rl.consequence online_rl action=trusted_acquisition reward=0.759 context=normal {\"candidate\": {\"kind\": \"trusted_acquisition\", \"drive\": \"competence\", \"cost\": 0.45, \"base_priority\": 0.64, \"cooldown_sec\": 900, \"description\": \"learn from trusted sources and apply as memory or patch proposal\", \"context\": \"normal\", \"s"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #313 precisa de revisão humana: A variante 'Falha na extração de texto' é mais provável devido à coerência lógica e conhecimento ger"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=10 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364222.1140873,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":45,\"unconsumed_high_salience_count\":45,\"queued_action_count\":10,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":45,\"unconsumed_high_salience_count\":45,\"queued_action_count\":10,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11192 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1778365144,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "sleep_cycle 😴 Ciclo de sono: 0 episódios arquivados, 0 abstrações geradas"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364225.1346304,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":49,\"unconsumed_high_salience_count\":49,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":49,\"unconsumed_high_salience_count\":49,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364323.4342701,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":55,\"unconsumed_high_salience_count\":55,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":55,\"unconsumed_high_salience_count\":55,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364414.9264488,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":62,\"unconsumed_high_salience_count\":62,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":62,\"unconsumed_high_salience_count\":62,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11202 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364562.5493984,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":67,\"unconsumed_high_salience_count\":67,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":67,\"unconsumed_high_salience_count\":67,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364649.2722697,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":72,\"unconsumed_high_salience_count\":72,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":72,\"unconsumed_high_salience_count\":72,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364658.920073,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":77,\"unconsumed_high_salience_count\":77,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rece"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":77,\"unconsumed_high_salience_count\":77,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364750.595344,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":79,\"unconsumed_high_salience_count\":79,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rece"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":79,\"unconsumed_high_salience_count\":79,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #313 precisa de revisão humana: A variante 'Falha na extração de texto' é mais provável devido à coerência lógica com o contexto adi"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "homeostasis ðŸ«€ mode change: normal -> conservative | coherence=0.5523"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11211 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=21 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364846.2081149,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":21,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":21,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=21 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364938.0384183,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":21,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":21,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=21 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778365029.4128387,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":21,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":21,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=21 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778365122.5235925,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":21,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365144,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":21,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":70,\"high_salience_count\":29,\"unconsumed_high_salience_count\":29,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=75 queued=2 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364122.8422573,\"event_count\":80,\"workspace_count\":75,\"high_salience_count\":33,\"unconsumed_high_salience_count\":33,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recen"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":75,\"high_salience_count\":33,\"unconsumed_high_salience_count\":33,\"queued_action_count\":2,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granular"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "novelty",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "insight 💡 Trusted acquisition: cobertura interventional do grafo causal: Need: cobertura interventional do grafo causal Domain: causal_graph Metric: edges=28 strong=0 weak=9 Source: https://causal-learn.readthedocs.io/en/latest/ Summary: Contents  Gett {\"schema\": \"ultron.trusted_acquisition_run.v1\", \"need_id\": \"need_3"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "novelty",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "trusted_acquisition.applied_knowledge trusted acquisition applied knowledge for gap causal_graph_interventional_coverage {\"schema\": \"ultron.trusted_acquisition_run.v1\", \"need_id\": \"need_3dc67bb102cd\", \"gap_id\": \"causal_graph_interventional_coverage\", \"source_url\": \"https://causal-learn.readthedocs.io/en/latest/\", \"sour"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "online_rl.consequence online_rl action=trusted_acquisition reward=0.759 context=normal {\"candidate\": {\"kind\": \"trusted_acquisition\", \"drive\": \"competence\", \"cost\": 0.45, \"base_priority\": 0.64, \"cooldown_sec\": 900, \"description\": \"learn from trusted sources and apply as memory or patch proposal\", \"context\": \"normal\", \"s"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #313 precisa de revisão humana: A variante 'Falha na extração de texto' é mais provável devido à coerência lógica e conhecimento ger"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=10 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364222.1140873,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":45,\"unconsumed_high_salience_count\":45,\"queued_action_count\":10,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":45,\"unconsumed_high_salience_count\":45,\"queued_action_count\":10,\"failed_action_count\":6,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11192 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1778365452,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "sleep_cycle 😴 Ciclo de sono: 0 episódios arquivados, 0 abstrações geradas"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364225.1346304,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":49,\"unconsumed_high_salience_count\":49,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":49,\"unconsumed_high_salience_count\":49,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364323.4342701,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":55,\"unconsumed_high_salience_count\":55,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":55,\"unconsumed_high_salience_count\":55,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=12 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364414.9264488,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":62,\"unconsumed_high_salience_count\":62,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":62,\"unconsumed_high_salience_count\":62,\"queued_action_count\":12,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11202 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364562.5493984,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":67,\"unconsumed_high_salience_count\":67,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":67,\"unconsumed_high_salience_count\":67,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364649.2722697,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":72,\"unconsumed_high_salience_count\":72,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":72,\"unconsumed_high_salience_count\":72,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364658.920073,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":77,\"unconsumed_high_salience_count\":77,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rece"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":77,\"unconsumed_high_salience_count\":77,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364750.595344,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":79,\"unconsumed_high_salience_count\":79,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rece"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":79,\"unconsumed_high_salience_count\":79,\"queued_action_count\":19,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #313 precisa de revisão humana: A variante 'Falha na extração de texto' é mais provável devido à coerência lógica com o contexto adi"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "homeostasis ðŸ«€ mode change: normal -> conservative | coherence=0.5523"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11211 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=21 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364846.2081149,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":21,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":21,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=21 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778364938.0384183,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":21,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":21,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=21 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778365029.4128387,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":21,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":21,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=21 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778365122.5235925,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":21,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":21,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #11219 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=17 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778365214.135095,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":17,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":20,\"rece"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":17,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=17 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778365305.753882,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":17,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":20,\"rece"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":17,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=17 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1778365399.3263085,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":17,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":20,\"rec"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:queue_conflict_review ok=True surprise=1.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":80,\"unconsumed_high_salience_count\":80,\"queued_action_count\":17,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":20,\"recent_error_count\":0},\"granula"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #313 precisa de revisão humana: Considerando a coerência lógica, a variante 'Falha na extração de texto' é mais provável porque a de"
+    },
+    {
+      "ts": 1778365452,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #300 precisa de revisão humana: A variante escolhida apresenta coerência lógica, pois busca identificar uma falha consistente, o que"
+    }
+  ],
+  "update_log": [
+    {
+      "ts": 1778264969,
+      "revision": 2,
+      "hash": "9a666d4077fa3f3b8361",
+      "accepted_evidence_count": 242,
+      "pressure": {
+        "competence": 0.4214,
+        "coherence": 0.5432,
+        "autonomy": 0.6095,
+        "novelty": 0.5482,
+        "integrity": 0.1842
+      },
+      "max_delta_per_update": 0.025,
+      "old_weights": {
+        "competence": 0.22,
+        "coherence": 0.21,
+        "autonomy": 0.2,
+        "novelty": 0.18,
+        "integrity": 0.19
+      },
+      "new_weights": {
+        "competence": 0.218803,
+        "coherence": 0.210671,
+        "autonomy": 0.201848,
+        "novelty": 0.181784,
+        "integrity": 0.186894
+      }
+    },
+    {
+      "ts": 1778265337,
+      "revision": 3,
+      "hash": "d4bee827222525a5dd3f",
+      "accepted_evidence_count": 233,
+      "pressure": {
+        "competence": 0.4139,
+        "coherence": 0.5203,
+        "autonomy": 0.6095,
+        "novelty": 0.0,
+        "integrity": 0.78
+      },
+      "max_delta_per_update": 0.025,
+      "old_weights": {
+        "competence": 0.218803,
+        "coherence": 0.210671,
+        "autonomy": 0.201848,
+        "novelty": 0.181784,
+        "integrity": 0.186894
+      },
+      "new_weights": {
+        "competence": 0.217328,
+        "coherence": 0.210805,
+        "autonomy": 0.203402,
+        "novelty": 0.177369,
+        "integrity": 0.191095
+      }
+    },
+    {
+      "ts": 1778265742,
+      "revision": 4,
+      "hash": "1ab86a082c4250471069",
+      "accepted_evidence_count": 227,
+      "pressure": {
+        "competence": 0.4242,
+        "coherence": 0.4506,
+        "autonomy": 0.6771,
+        "novelty": 0.5628,
+        "integrity": 0.4833
+      },
+      "max_delta_per_update": 0.025,
+      "old_weights": {
+        "competence": 0.217328,
+        "coherence": 0.210805,
+        "autonomy": 0.203402,
+        "novelty": 0.177369,
+        "integrity": 0.191095
+      },
+      "new_weights": {
+        "competence": 0.215644,
+        "coherence": 0.209647,
+        "autonomy": 0.205063,
+        "novelty": 0.178649,
+        "integrity": 0.190996
+      }
+    },
+    {
+      "ts": 1778265967,
+      "revision": 5,
+      "hash": "331da33914bcea9ad2a6",
+      "accepted_evidence_count": 223,
+      "pressure": {
+        "competence": 0.4244,
+        "coherence": 0.4565,
+        "autonomy": 0.6818,
+        "novelty": 0.5656,
+        "integrity": 0.5818
+      },
+      "max_delta_per_update": 0.025,
+      "old_weights": {
+        "competence": 0.215644,
+        "coherence": 0.209647,
+        "autonomy": 0.205063,
+        "novelty": 0.178649,
+        "integrity": 0.190996
+      },
+      "new_weights": {
+        "competence": 0.213814,
+        "coherence": 0.208377,
+        "autonomy": 0.20641,
+        "novelty": 0.179653,
+        "integrity": 0.191745
+      }
+    },
+    {
+      "ts": 1778363878,
+      "revision": 6,
+      "hash": "2349f415f679779cb0b5",
+      "accepted_evidence_count": 217,
+      "pressure": {
+        "competence": 0.4245,
+        "coherence": 0.4565,
+        "autonomy": 0.6861,
+        "novelty": 0.5684,
+        "integrity": 0.5827
+      },
+      "max_delta_per_update": 0.025,
+      "old_weights": {
+        "competence": 0.213814,
+        "coherence": 0.208377,
+        "autonomy": 0.20641,
+        "novelty": 0.179653,
+        "integrity": 0.191745
+      },
+      "new_weights": {
+        "competence": 0.212035,
+        "coherence": 0.207136,
+        "autonomy": 0.207735,
+        "novelty": 0.180634,
+        "integrity": 0.192459
+      }
+    },
+    {
+      "ts": 1778363967,
+      "revision": 7,
+      "hash": "e2031acc8e9c650d14c3",
+      "accepted_evidence_count": 213,
+      "pressure": {
+        "competence": 0.4292,
+        "coherence": 0.46,
+        "autonomy": 0.6818,
+        "novelty": 0.5711,
+        "integrity": 0.6328
+      },
+      "max_delta_per_update": 0.025,
+      "old_weights": {
+        "competence": 0.212035,
+        "coherence": 0.207136,
+        "autonomy": 0.207735,
+        "novelty": 0.180634,
+        "integrity": 0.192459
+      },
+      "new_weights": {
+        "competence": 0.21027,
+        "coherence": 0.205871,
+        "autonomy": 0.20882,
+        "novelty": 0.181484,
+        "integrity": 0.193554
+      }
+    },
+    {
+      "ts": 1778364203,
+      "revision": 8,
+      "hash": "5603321009a90b173e7b",
+      "accepted_evidence_count": 171,
+      "pressure": {
+        "competence": 0.4329,
+        "coherence": 0.46,
+        "autonomy": 0.7055,
+        "novelty": 0.78,
+        "integrity": 0.78
+      },
+      "max_delta_per_update": 0.025,
+      "old_weights": {
+        "competence": 0.21027,
+        "coherence": 0.205871,
+        "autonomy": 0.20882,
+        "novelty": 0.181484,
+        "integrity": 0.193554
+      },
+      "new_weights": {
+        "competence": 0.208009,
+        "coherence": 0.204023,
+        "autonomy": 0.209218,
+        "novelty": 0.183551,
+        "integrity": 0.195199
+      }
+    },
+    {
+      "ts": 1778364209,
+      "revision": 9,
+      "hash": "3978b2a6b67deb55df07",
+      "accepted_evidence_count": 175,
+      "pressure": {
+        "competence": 0.4345,
+        "coherence": 0.46,
+        "autonomy": 0.7032,
+        "novelty": 0.7122,
+        "integrity": 0.6635
+      },
+      "max_delta_per_update": 0.025,
+      "old_weights": {
+        "competence": 0.208009,
+        "coherence": 0.204023,
+        "autonomy": 0.209218,
+        "novelty": 0.183551,
+        "integrity": 0.195199
+      },
+      "new_weights": {
+        "competence": 0.206115,
+        "coherence": 0.202525,
+        "autonomy": 0.209989,
+        "novelty": 0.185311,
+        "integrity": 0.196061
+      }
+    },
+    {
+      "ts": 1778364525,
+      "revision": 10,
+      "hash": "7f54be489bdfee38fb90",
+      "accepted_evidence_count": 155,
+      "pressure": {
+        "competence": 0.4415,
+        "coherence": 0.4675,
+        "autonomy": 0.7185,
+        "novelty": 0.713,
+        "integrity": 0.6834
+      },
+      "max_delta_per_update": 0.025,
+      "old_weights": {
+        "competence": 0.206115,
+        "coherence": 0.202525,
+        "autonomy": 0.209989,
+        "novelty": 0.185311,
+        "integrity": 0.196061
+      },
+      "new_weights": {
+        "competence": 0.20428,
+        "coherence": 0.201073,
+        "autonomy": 0.210769,
+        "novelty": 0.1869,
+        "integrity": 0.19698
+      }
+    },
+    {
+      "ts": 1778364833,
+      "revision": 11,
+      "hash": "3f72ae02d2c55a4c89ff",
+      "accepted_evidence_count": 130,
+      "pressure": {
+        "competence": 0.4587,
+        "coherence": 0.4633,
+        "autonomy": 0.7354,
+        "novelty": 0.7139,
+        "integrity": 0.6976
+      },
+      "max_delta_per_update": 0.025,
+      "old_weights": {
+        "competence": 0.20428,
+        "coherence": 0.201073,
+        "autonomy": 0.210769,
+        "novelty": 0.1869,
+        "integrity": 0.19698
+      },
+      "new_weights": {
+        "competence": 0.202609,
+        "coherence": 0.19956,
+        "autonomy": 0.211584,
+        "novelty": 0.18834,
+        "integrity": 0.197908
+      }
+    },
+    {
+      "ts": 1778365144,
+      "revision": 12,
+      "hash": "9a97b09edc29a8979262",
+      "accepted_evidence_count": 115,
+      "pressure": {
+        "competence": 0.499,
+        "coherence": 0.4668,
+        "autonomy": 0.7418,
+        "novelty": 0.7148,
+        "integrity": 0.7083
+      },
+      "max_delta_per_update": 0.025,
+      "old_weights": {
+        "competence": 0.202609,
+        "coherence": 0.19956,
+        "autonomy": 0.211584,
+        "novelty": 0.18834,
+        "integrity": 0.197908
+      },
+      "new_weights": {
+        "competence": 0.201292,
+        "coherence": 0.198039,
+        "autonomy": 0.212294,
+        "novelty": 0.189602,
+        "integrity": 0.198773
+      }
+    },
+    {
+      "ts": 1778365452,
+      "revision": 13,
+      "hash": "03d2f23c94adf1bc7170",
+      "accepted_evidence_count": 95,
+      "pressure": {
+        "competence": 0.574,
+        "coherence": 0.5129,
+        "autonomy": 0.768,
+        "novelty": 0.7156,
+        "integrity": 0.7166
+      },
+      "max_delta_per_update": 0.025,
+      "old_weights": {
+        "competence": 0.201292,
+        "coherence": 0.198039,
+        "autonomy": 0.212294,
+        "novelty": 0.189602,
+        "integrity": 0.198773
+      },
+      "new_weights": {
+        "competence": 0.200476,
+        "coherence": 0.196772,
+        "autonomy": 0.212886,
+        "novelty": 0.190504,
+        "integrity": 0.199363
+      }
+    }
+  ],
+  "tamper_events": [],
+  "stability": {
+    "source": "emergent_from_accepted_operational_evidence",
+    "updates": 12,
+    "accepted_evidence_count": 2196,
+    "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+  }
+}

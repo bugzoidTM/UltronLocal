@@ -17,22 +17,87 @@
       "updated_at": 0
     },
     "auto_resolve_conflicts|normal": {
-      "alpha": 220.35064799999995,
-      "beta": 208.79993300000004,
+      "alpha": 201.108087,
+      "beta": 190.566061,
       "ema_reward": 0.621716,
       "n": 609,
       "last_reward": 0.5213,
       "updated_at": 1776787654
     },
     "trusted_acquisition|normal": {
-      "alpha": 1.7872000000000001,
-      "beta": 2.2127999999999997,
-      "ema_reward": 0.275067,
-      "n": 2,
-      "last_reward": 0.038,
-      "updated_at": 1778265337
+      "alpha": 5.837183,
+      "beta": 5.114893,
+      "ema_reward": 0.546376,
+      "n": 10,
+      "last_reward": 0.55,
+      "updated_at": 1778440479
+    },
+    "cognitive_patch_loop|normal": {
+      "alpha": 5.994474,
+      "beta": 5.07051,
+      "ema_reward": 0.55,
+      "n": 10,
+      "last_reward": 0.55,
+      "updated_at": 1778440479
+    },
+    "sleep_digest|normal": {
+      "alpha": 6.11585,
+      "beta": 5.17495,
+      "ema_reward": 0.55,
+      "n": 10,
+      "last_reward": 0.55,
+      "updated_at": 1778440479
+    },
+    "homeostasis_tune|normal": {
+      "alpha": 7.03145,
+      "beta": 6.2593499999999995,
+      "ema_reward": 0.521589,
+      "n": 12,
+      "last_reward": 0.3624,
+      "updated_at": 1778451706,
+      "n_real": 1,
+      "sum_reward_real": 0.3624,
+      "mean_reward_real": 0.3624
+    },
+    "epistemic_gap_scan|normal": {
+      "alpha": 6.259895,
+      "beta": 5.292805,
+      "ema_reward": 0.55,
+      "n": 10,
+      "last_reward": 0.55,
+      "updated_at": 1778440479
+    },
+    "autonomous_cognition_tick|normal": {
+      "alpha": 6.305,
+      "beta": 5.335,
+      "ema_reward": 0.55,
+      "n": 10,
+      "last_reward": 0.55,
+      "updated_at": 1778440479
+    },
+    "reflexion_tick|normal": {
+      "alpha": 6.3709999999999996,
+      "beta": 5.389,
+      "ema_reward": 0.55,
+      "n": 10,
+      "last_reward": 0.55,
+      "updated_at": 1778440479
+    },
+    "autonomous_cognition_tick|conservative": {
+      "alpha": 1.486,
+      "beta": 1.514,
+      "ema_reward": 0.486,
+      "n": 1,
+      "n_real": 1,
+      "n_synthetic": 0,
+      "mean_reward_real": 0.486,
+      "mean_reward_synthetic": 0.0,
+      "sum_reward_real": 0.486,
+      "sum_reward_synthetic": 0.0,
+      "last_reward": 0.486,
+      "updated_at": 1778454268
     }
   },
-  "global_updates": 611,
-  "updated_at": 1778265337
+  "global_updates": 683,
+  "updated_at": 1778454268
 }

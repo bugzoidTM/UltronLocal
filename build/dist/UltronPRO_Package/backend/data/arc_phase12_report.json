@@ -1,0 +1,718 @@
+{
+  "score": 0.15,
+  "solved": 3,
+  "total": 20,
+  "solved_ids": [
+    "blind_001",
+    "blind_005",
+    "blind_020"
+  ],
+  "failed_ids": [
+    "blind_002",
+    "blind_003",
+    "blind_004",
+    "blind_006",
+    "blind_007",
+    "blind_008",
+    "blind_009",
+    "blind_010",
+    "blind_011",
+    "blind_012",
+    "blind_013",
+    "blind_014",
+    "blind_015",
+    "blind_016",
+    "blind_017",
+    "blind_018",
+    "blind_019"
+  ],
+  "diagnosis_summary": {
+    "solved": 4,
+    "llm_failed_to_propose_valid_hypotheses": 4,
+    "llm_hypothesis_gap: no proposed sequence matched all train pairs": 12
+  },
+  "results": [
+    {
+      "ok": true,
+      "task_id": "blind_001",
+      "output_grid": [
+        [
+          7,
+          6,
+          5
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "winning_hypothesis": [
+        "reflect_h"
+      ],
+      "reasoning": "O objeto azul no canto superior foi movido para o canto inferior, enquanto o objeto vermelho no centro permaneceu estático.",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "reflect_h"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "llm_guided_symbolic",
+      "llm_calls": 2,
+      "elapsed_s": 23.12,
+      "graded_correct": true
+    },
+    {
+      "ok": false,
+      "task_id": "blind_002",
+      "output_grid": null,
+      "winning_hypothesis": null,
+      "reasoning": "",
+      "hypotheses_tried": [],
+      "failures": {},
+      "parse_error": "no_json_found",
+      "method": "llm_guided_symbolic",
+      "llm_calls": 2,
+      "diagnosis": "llm_failed_to_propose_valid_hypotheses",
+      "elapsed_s": 31.13
+    },
+    {
+      "ok": false,
+      "task_id": "blind_003",
+      "output_grid": null,
+      "winning_hypothesis": null,
+      "reasoning": "",
+      "hypotheses_tried": [],
+      "failures": {},
+      "parse_error": "no_json_found",
+      "method": "llm_guided_symbolic",
+      "llm_calls": 2,
+      "diagnosis": "llm_failed_to_propose_valid_hypotheses",
+      "elapsed_s": 25.2
+    },
+    {
+      "ok": false,
+      "task_id": "blind_004",
+      "output_grid": null,
+      "winning_hypothesis": null,
+      "reasoning": "",
+      "hypotheses_tried": [],
+      "failures": {},
+      "parse_error": "no_json_found",
+      "method": "llm_guided_symbolic",
+      "llm_calls": 2,
+      "diagnosis": "llm_failed_to_propose_valid_hypotheses",
+      "elapsed_s": 28.42
+    },
+    {
+      "ok": true,
+      "task_id": "blind_005",
+      "output_grid": [
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ]
+      ],
+      "winning_hypothesis": [
+        "obj_fill"
+      ],
+      "reasoning": "O padrão de 1s no centro foi espalhado para todas as linhas, tornando todas as linhas iguais.",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "obj_fill"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "llm_guided_symbolic",
+      "llm_calls": 2,
+      "elapsed_s": 19.76,
+      "graded_correct": true
+    },
+    {
+      "ok": false,
+      "task_id": "blind_006",
+      "output_grid": null,
+      "winning_hypothesis": null,
+      "reasoning": "",
+      "hypotheses_tried": [],
+      "failures": {},
+      "parse_error": "no_json_found",
+      "method": "llm_guided_symbolic",
+      "llm_calls": 2,
+      "diagnosis": "llm_failed_to_propose_valid_hypotheses",
+      "elapsed_s": 26.44
+    },
+    {
+      "ok": false,
+      "task_id": "blind_007",
+      "output_grid": null,
+      "winning_hypothesis": null,
+      "reasoning": "O objeto vermelho na quarta linha foi duplicado para a quinta linha, mantendo as outras linhas inalteradas.",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "obj_fill"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 5x5 vs expected 5x5)"
+          ]
+        },
+        {
+          "sequence": [
+            "obj_reflect_v"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 5x5 vs expected 5x5)"
+          ]
+        }
+      ],
+      "failures": {
+        "[\"obj_fill\"]": [
+          "pair_0: output_mismatch (got shape 5x5 vs expected 5x5)"
+        ],
+        "[\"obj_reflect_v\"]": [
+          "pair_0: output_mismatch (got shape 5x5 vs expected 5x5)"
+        ]
+      },
+      "parse_error": "",
+      "method": "llm_guided_symbolic",
+      "llm_calls": 2,
+      "elapsed_s": 8.27,
+      "diagnosis": "llm_hypothesis_gap: no proposed sequence matched all train pairs"
+    },
+    {
+      "ok": false,
+      "task_id": "blind_008",
+      "output_grid": null,
+      "winning_hypothesis": null,
+      "reasoning": "O objeto azul no canto superior foi espelhado para baixo e para a direita, criando uma grade maior com a mesma configuração repetida.",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "reflect_h"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 2x2 vs expected 4x4)"
+          ]
+        },
+        {
+          "sequence": [
+            "scale_2"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 4x4 vs expected 4x4)"
+          ]
+        }
+      ],
+      "failures": {
+        "[\"reflect_h\"]": [
+          "pair_0: output_mismatch (got shape 2x2 vs expected 4x4)"
+        ],
+        "[\"scale_2\"]": [
+          "pair_0: output_mismatch (got shape 4x4 vs expected 4x4)"
+        ]
+      },
+      "parse_error": "",
+      "method": "llm_guided_symbolic",
+      "llm_calls": 1,
+      "elapsed_s": 4.18,
+      "diagnosis": "llm_hypothesis_gap: no proposed sequence matched all train pairs"
+    },
+    {
+      "ok": false,
+      "task_id": "blind_009",
+      "output_grid": null,
+      "winning_hypothesis": null,
+      "reasoning": "Não houve mudança entre o input e o output. Ambos os grids são exatamente iguais.",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "keep_max"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 2x4 vs expected 2x4)"
+          ]
+        }
+      ],
+      "failures": {
+        "[\"keep_max\"]": [
+          "pair_0: output_mismatch (got shape 2x4 vs expected 2x4)"
+        ]
+      },
+      "parse_error": "",
+      "method": "llm_guided_symbolic",
+      "llm_calls": 1,
+      "elapsed_s": 4.69,
+      "diagnosis": "llm_hypothesis_gap: no proposed sequence matched all train pairs"
+    },
+    {
+      "ok": false,
+      "task_id": "blind_010",
+      "output_grid": null,
+      "winning_hypothesis": null,
+      "reasoning": "O objeto azul no canto superior foi movido para o canto inferior, enquanto o objeto verde no canto inferior foi movido para o canto superior. Os objetos vermelho e amarelo mantiveram suas posições, mas foram rotacionados 90 graus horário.",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "rotate_90"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 2x2 vs expected 2x2)"
+          ]
+        },
+        {
+          "sequence": [
+            "obj_rotate_90"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 2x2 vs expected 2x2)"
+          ]
+        }
+      ],
+      "failures": {
+        "[\"rotate_90\"]": [
+          "pair_0: output_mismatch (got shape 2x2 vs expected 2x2)"
+        ],
+        "[\"obj_rotate_90\"]": [
+          "pair_0: output_mismatch (got shape 2x2 vs expected 2x2)"
+        ]
+      },
+      "parse_error": "",
+      "method": "llm_guided_symbolic",
+      "llm_calls": 1,
+      "elapsed_s": 4.5,
+      "diagnosis": "llm_hypothesis_gap: no proposed sequence matched all train pairs"
+    },
+    {
+      "ok": false,
+      "task_id": "blind_011",
+      "output_grid": null,
+      "winning_hypothesis": null,
+      "reasoning": "O padrão de cores no input foi espelhado verticalmente para gerar o output, transformando a linha 1 e 2 do input em uma única linha no output.",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "reflect_v"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 4x4 vs expected 2x2)"
+          ]
+        },
+        {
+          "sequence": [
+            "crop",
+            "scale_2"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 4x4 vs expected 2x2)"
+          ]
+        }
+      ],
+      "failures": {
+        "[\"reflect_v\"]": [
+          "pair_0: output_mismatch (got shape 4x4 vs expected 2x2)"
+        ],
+        "[\"crop\", \"scale_2\"]": [
+          "pair_0: output_mismatch (got shape 4x4 vs expected 2x2)"
+        ]
+      },
+      "parse_error": "",
+      "method": "llm_guided_symbolic",
+      "llm_calls": 2,
+      "elapsed_s": 19.81,
+      "diagnosis": "llm_hypothesis_gap: no proposed sequence matched all train pairs"
+    },
+    {
+      "ok": false,
+      "task_id": "blind_012",
+      "output_grid": null,
+      "winning_hypothesis": null,
+      "reasoning": "O objeto azul no canto superior foi espelhado para baixo, preenchendo o grid inteiro com azul.",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "reflect_h"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 1x1 vs expected 3x3)"
+          ]
+        },
+        {
+          "sequence": [
+            "scale_2",
+            "fill"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 2x2 vs expected 3x3)"
+          ]
+        }
+      ],
+      "failures": {
+        "[\"reflect_h\"]": [
+          "pair_0: output_mismatch (got shape 1x1 vs expected 3x3)"
+        ],
+        "[\"scale_2\", \"fill\"]": [
+          "pair_0: output_mismatch (got shape 2x2 vs expected 3x3)"
+        ]
+      },
+      "parse_error": "",
+      "method": "llm_guided_symbolic",
+      "llm_calls": 1,
+      "elapsed_s": 4.52,
+      "diagnosis": "llm_hypothesis_gap: no proposed sequence matched all train pairs"
+    },
+    {
+      "ok": false,
+      "task_id": "blind_013",
+      "output_grid": null,
+      "winning_hypothesis": null,
+      "reasoning": "O objeto azul no canto superior foi movido para o canto inferior.",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "reflect_h"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 2x2 vs expected 2x2)"
+          ]
+        },
+        {
+          "sequence": [
+            "rotate_90"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 2x2 vs expected 2x2)"
+          ]
+        }
+      ],
+      "failures": {
+        "[\"reflect_h\"]": [
+          "pair_0: output_mismatch (got shape 2x2 vs expected 2x2)"
+        ],
+        "[\"rotate_90\"]": [
+          "pair_0: output_mismatch (got shape 2x2 vs expected 2x2)"
+        ]
+      },
+      "parse_error": "",
+      "method": "llm_guided_symbolic",
+      "llm_calls": 1,
+      "elapsed_s": 4.21,
+      "diagnosis": "llm_hypothesis_gap: no proposed sequence matched all train pairs"
+    },
+    {
+      "ok": false,
+      "task_id": "blind_014",
+      "output_grid": null,
+      "winning_hypothesis": null,
+      "reasoning": "O objeto azul no canto superior foi movido para o canto inferior, e o objeto vermelho no centro foi espalhado para baixo, mantendo a sua forma.",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "reflect_h"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 3x3 vs expected 3x3)"
+          ]
+        },
+        {
+          "sequence": [
+            "rotate_90"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 3x3 vs expected 3x3)"
+          ]
+        }
+      ],
+      "failures": {
+        "[\"reflect_h\"]": [
+          "pair_0: output_mismatch (got shape 3x3 vs expected 3x3)"
+        ],
+        "[\"rotate_90\"]": [
+          "pair_0: output_mismatch (got shape 3x3 vs expected 3x3)"
+        ]
+      },
+      "parse_error": "",
+      "method": "llm_guided_symbolic",
+      "llm_calls": 2,
+      "elapsed_s": 14.96,
+      "diagnosis": "llm_hypothesis_gap: no proposed sequence matched all train pairs"
+    },
+    {
+      "ok": false,
+      "task_id": "blind_015",
+      "output_grid": null,
+      "winning_hypothesis": null,
+      "reasoning": "O objeto azul no canto superior foi movido para o canto inferior, mantendo a orientação vertical.",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "reflect_h"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 3x3 vs expected 3x3)"
+          ]
+        },
+        {
+          "sequence": [
+            "rotate_90"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 3x3 vs expected 3x3)"
+          ]
+        }
+      ],
+      "failures": {
+        "[\"reflect_h\"]": [
+          "pair_0: output_mismatch (got shape 3x3 vs expected 3x3)"
+        ],
+        "[\"rotate_90\"]": [
+          "pair_0: output_mismatch (got shape 3x3 vs expected 3x3)"
+        ]
+      },
+      "parse_error": "",
+      "method": "llm_guided_symbolic",
+      "llm_calls": 1,
+      "elapsed_s": 4.32,
+      "diagnosis": "llm_hypothesis_gap: no proposed sequence matched all train pairs"
+    },
+    {
+      "ok": true,
+      "task_id": "blind_016",
+      "output_grid": [
+        [
+          2,
+          0,
+          2
+        ],
+        [
+          0,
+          2,
+          0
+        ],
+        [
+          2,
+          0,
+          2
+        ]
+      ],
+      "winning_hypothesis": [
+        "reflect_h"
+      ],
+      "reasoning": "O padrão de azuis foi invertido verticalmente, fazendo com que o azul no topo se mova para o fundo e vice-versa.",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "reflect_h"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "llm_guided_symbolic",
+      "llm_calls": 1,
+      "elapsed_s": 3.71,
+      "graded_correct": false
+    },
+    {
+      "ok": false,
+      "task_id": "blind_017",
+      "output_grid": null,
+      "winning_hypothesis": null,
+      "reasoning": "O input é um padrão de linha única de azul (1) no centro, enquanto o output é um quadrado preenchido com azul (1) em toda a sua extensão.",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "fill"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 3x3 vs expected 2x2)"
+          ]
+        },
+        {
+          "sequence": [
+            "obj_fill"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 3x3 vs expected 2x2)"
+          ]
+        }
+      ],
+      "failures": {
+        "[\"fill\"]": [
+          "pair_0: output_mismatch (got shape 3x3 vs expected 2x2)"
+        ],
+        "[\"obj_fill\"]": [
+          "pair_0: output_mismatch (got shape 3x3 vs expected 2x2)"
+        ]
+      },
+      "parse_error": "",
+      "method": "llm_guided_symbolic",
+      "llm_calls": 1,
+      "elapsed_s": 4.78,
+      "diagnosis": "llm_hypothesis_gap: no proposed sequence matched all train pairs"
+    },
+    {
+      "ok": false,
+      "task_id": "blind_018",
+      "output_grid": null,
+      "winning_hypothesis": null,
+      "reasoning": "O padrão de azul no centro foi movido para o lado direito e espelhado verticalmente, criando um padrão simétrico.",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "reflect_v"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 3x3 vs expected 3x3)"
+          ]
+        },
+        {
+          "sequence": [
+            "rotate_90"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 3x3 vs expected 3x3)"
+          ]
+        }
+      ],
+      "failures": {
+        "[\"reflect_v\"]": [
+          "pair_0: output_mismatch (got shape 3x3 vs expected 3x3)"
+        ],
+        "[\"rotate_90\"]": [
+          "pair_0: output_mismatch (got shape 3x3 vs expected 3x3)"
+        ]
+      },
+      "parse_error": "",
+      "method": "llm_guided_symbolic",
+      "llm_calls": 1,
+      "elapsed_s": 4.55,
+      "diagnosis": "llm_hypothesis_gap: no proposed sequence matched all train pairs"
+    },
+    {
+      "ok": false,
+      "task_id": "blind_019",
+      "output_grid": null,
+      "winning_hypothesis": null,
+      "reasoning": "A mudança visual é a remoção de uma linha inteira, transformando a matriz 2x3 em uma matriz 1x3, mantendo as cores das colunas intactas.",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "crop"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 2x3 vs expected 1x3)"
+          ]
+        },
+        {
+          "sequence": [
+            "scale_2",
+            "crop"
+          ],
+          "passed": false,
+          "failures": [
+            "pair_0: output_mismatch (got shape 4x6 vs expected 1x3)"
+          ]
+        }
+      ],
+      "failures": {
+        "[\"crop\"]": [
+          "pair_0: output_mismatch (got shape 2x3 vs expected 1x3)"
+        ],
+        "[\"scale_2\", \"crop\"]": [
+          "pair_0: output_mismatch (got shape 4x6 vs expected 1x3)"
+        ]
+      },
+      "parse_error": "",
+      "method": "llm_guided_symbolic",
+      "llm_calls": 1,
+      "elapsed_s": 3.75,
+      "diagnosis": "llm_hypothesis_gap: no proposed sequence matched all train pairs"
+    },
+    {
+      "ok": true,
+      "task_id": "blind_020",
+      "output_grid": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "winning_hypothesis": [
+        "reflect_h"
+      ],
+      "reasoning": "O objeto azul no canto superior foi movido para o canto inferior.",
+      "hypotheses_tried": [
+        {
+          "sequence": [
+            "reflect_h"
+          ],
+          "passed": true,
+          "failures": []
+        }
+      ],
+      "failures": {},
+      "parse_error": "",
+      "method": "llm_guided_symbolic",
+      "llm_calls": 1,
+      "elapsed_s": 4.09,
+      "graded_correct": true
+    }
+  ]
+}

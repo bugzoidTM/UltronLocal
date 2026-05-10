@@ -1,0 +1,22 @@
+"""Test module with intentional bugs for self-healer testing."""
+import httpx
+import json
+
+def function_with_timeout_bug():
+    """This function catches ConnectError but not ConnectTimeout."""
+    try:
+        response = httpx.get("http://127.0.0.1:9999/test", timeout=0.1)
+        return response.text
+    except httpx.ConnectError:
+        return "connection failed"
+
+def function_with_uninitialized_var():
+    """This function uses 'results' before initializing it."""
+    for i in range(5):
+        results.append(i * 2)
+    return results
+
+def function_with_json_bug(text):
+    """This function calls json.loads without protection."""
+    data = json.loads(text)
+    return data.get("value", "none")

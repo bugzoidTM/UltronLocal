@@ -1,0 +1,50 @@
+{
+  "updated_at": 1774059541,
+  "playbooks": {
+    "timeout": {
+      "detect": "long_request_or_no_progress",
+      "fallbacks": [
+        "retry_with_lower_budget",
+        "switch_to_deterministic_fallback",
+        "queue_followup_evidence"
+      ],
+      "escalate": "if_repeated_3x"
+    },
+    "low_deliberation_quality": {
+      "detect": "itc_quality_below_threshold",
+      "fallbacks": [
+        "increase_steps_small",
+        "change_policy_arm_balanced",
+        "split_problem_into_subgoal"
+      ],
+      "escalate": "if_repeated_2x"
+    },
+    "tool_failure": {
+      "detect": "action_error_or_external_tool_fail",
+      "fallbacks": [
+        "alternate_tool_route",
+        "replan_with_lower_cost",
+        "defer_and_checkpoint"
+      ],
+      "escalate": "if_repeated_3x"
+    },
+    "conflict_stalemate": {
+      "detect": "open_conflicts_persistent",
+      "fallbacks": [
+        "ask_targeted_evidence",
+        "run_analogy_transfer",
+        "manual_review_question"
+      ],
+      "escalate": "if_repeated_4x"
+    },
+    "kpi_regression": {
+      "detect": "progress_stagnation_and_blocked_hours_up",
+      "fallbacks": [
+        "prune_scope",
+        "reorder_subgoals",
+        "activate_recovery_mode"
+      ],
+      "escalate": "if_repeated_2x"
+    }
+  }
+}

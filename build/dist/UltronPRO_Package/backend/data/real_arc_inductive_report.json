@@ -1,0 +1,42 @@
+[
+  {
+    "id": "real_001",
+    "name": "Horizontal Mirror",
+    "llm_success": false,
+    "comp_success": true,
+    "plan": [
+      "reflect_h"
+    ],
+    "comp_time": 0.003996372222900391
+  },
+  {
+    "id": "real_002",
+    "name": "Vertical Flip",
+    "llm_success": false,
+    "comp_success": true,
+    "plan": [
+      "reflect_v"
+    ],
+    "comp_time": 0.002002239227294922
+  },
+  {
+    "id": "real_003",
+    "name": "Rotation 90 CW",
+    "llm_success": false,
+    "comp_success": true,
+    "plan": [
+      "rotate_90"
+    ],
+    "comp_time": 0.0009987354278564453
+  },
+  {
+    "id": "real_004",
+    "name": "Scale 2x (Non-zero)",
+    "llm_success": false,
+    "comp_success": true,
+    "plan": [
+      "scale_2"
+    ],
+    "comp_time": 0.015413999557495117
+  }
+]

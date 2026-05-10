@@ -981,6 +981,8 @@ def recent_runs(limit: int = 10) -> dict[str, Any]:
             try:
                 obj = json.loads(line)
                 if isinstance(obj, dict):
+                    if obj.get('predictor') == 'oracle' or obj.get('tag') == 'selftest':
+                        continue
                     rows.append(obj)
             except Exception:
                 continue

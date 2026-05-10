@@ -5610,6 +5610,38 @@
       "latency_ms": 32946,
       "error_type": null,
       "profile": "normal"
+    },
+    {
+      "ts": 1778439775,
+      "task_type": "online_rl:trusted_acquisition",
+      "success": true,
+      "latency_ms": 2293,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1778441575,
+      "task_type": "online_rl:homeostasis_tune",
+      "success": true,
+      "latency_ms": 39,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1778451706,
+      "task_type": "online_rl:homeostasis_tune",
+      "success": false,
+      "latency_ms": 59,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1778454268,
+      "task_type": "online_rl:autonomous_cognition_tick",
+      "success": false,
+      "latency_ms": 620,
+      "error_type": null,
+      "profile": "conservative"
     }
   ],
   "policy_weights": {
@@ -5617,7 +5649,9 @@
     "research": 1.4201178518906643,
     "review": 0.9238685574788892,
     "heartbeat": 0.7909809926574759,
-    "online_rl:trusted_acquisition": 0.368
+    "online_rl:trusted_acquisition": 0.4312,
+    "online_rl:homeostasis_tune": 0.43999999999999995,
+    "online_rl:autonomous_cognition_tick": 0.35
   },
-  "updated_at": 1778265337
+  "updated_at": 1778454268
 }

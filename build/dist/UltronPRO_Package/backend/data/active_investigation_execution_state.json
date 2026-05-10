@@ -1,0 +1,145 @@
+{
+  "ts": 1778364207,
+  "ok": true,
+  "executed": true,
+  "injected": true,
+  "investigation_id": "inv_592d87de02",
+  "query": "qual meu nome?",
+  "reason": "confidence_below_threshold",
+  "missing_slots": [
+    "aresta_causal_relevante"
+  ],
+  "experiment": {
+    "kind": "causal_graph_enrichment",
+    "target_route": "active_investigation",
+    "query_terms": [
+      "meu",
+      "nome",
+      "qual"
+    ],
+    "action": "registrar uma decisao ou observacao verificavel como aresta causal antes de responder com confianca",
+    "acceptance": "a proxima resposta deve citar evidencia interna recuperada ou declarar UNKNOWN com a lacuna exata"
+  },
+  "sandbox": {
+    "ok": true,
+    "error": null,
+    "returncode": 0,
+    "stderr": ""
+  },
+  "experiment_result": {
+    "ok": true,
+    "accepted": true,
+    "digest": "6d9fd6078077004d",
+    "query_terms": [
+      "meu",
+      "nome",
+      "qual"
+    ],
+    "missing_slots": [
+      "aresta_causal_relevante"
+    ],
+    "experiment_kind": "causal_graph_enrichment",
+    "target_route": "active_investigation",
+    "edge": {
+      "cause": "active_investigation_gap:meu nome qual",
+      "effect": "sandbox_experiment_observed:causal_graph_enrichment:active_investigation",
+      "condition": "autonomous_executor_next_cycle:inv_592d87de02",
+      "confidence": 0.66
+    },
+    "prior_validation": null,
+    "episodic_episode": null,
+    "minimal_intervention": {
+      "kind": "causal_graph_enrichment",
+      "target_route": "active_investigation",
+      "filled_slots": [
+        "aresta_causal_relevante"
+      ],
+      "sandbox_digest": "6d9fd6078077004d"
+    },
+    "acceptance_checked": true
+  },
+  "causal_graph": {
+    "ok": true,
+    "edge": {
+      "cause": "active_investigation_gap:meu nome qual",
+      "effect": "sandbox_experiment_observed:causal_graph_enrichment:active_investigation",
+      "condition": "autonomous_executor_next_cycle:inv_592d87de02",
+      "support": 1,
+      "confidence": 0.68,
+      "severity": 1,
+      "knowledge_type": "interventional_weak",
+      "sources": [
+        "active_investigation_executor"
+      ],
+      "last_evidence": {
+        "investigation": {
+          "investigation_id": "inv_592d87de02",
+          "query": "qual meu nome?",
+          "reason": "confidence_below_threshold",
+          "task_type": "user_context",
+          "status": "needs_experiment",
+          "coverage": {
+            "score": 1.0,
+            "shared": [
+              "meu",
+              "nome",
+              "qual"
+            ],
+            "query_tokens": 3,
+            "evidence_tokens": 439
+          },
+          "missing_slots": [
+            "aresta_causal_relevante"
+          ],
+          "next_experiment": {
+            "kind": "causal_graph_enrichment",
+            "target_route": "active_investigation",
+            "query_terms": [
+              "meu",
+              "nome",
+              "qual"
+            ],
+            "action": "registrar uma decisao ou observacao verificavel como aresta causal antes de responder com confianca",
+            "acceptance": "a proxima resposta deve citar evidencia interna recuperada ou declarar UNKNOWN com a lacuna exata"
+          },
+          "transfer_prior": null
+        },
+        "sandbox_result": {
+          "ok": true,
+          "accepted": true,
+          "digest": "6d9fd6078077004d",
+          "query_terms": [
+            "meu",
+            "nome",
+            "qual"
+          ],
+          "missing_slots": [
+            "aresta_causal_relevante"
+          ],
+          "experiment_kind": "causal_graph_enrichment",
+          "target_route": "active_investigation",
+          "edge": {
+            "cause": "active_investigation_gap:meu nome qual",
+            "effect": "sandbox_experiment_observed:causal_graph_enrichment:active_investigation",
+            "condition": "autonomous_executor_next_cycle:inv_592d87de02",
+            "confidence": 0.66
+          },
+          "prior_validation": null,
+          "episodic_episode": null,
+          "minimal_intervention": {
+            "kind": "causal_graph_enrichment",
+            "target_route": "active_investigation",
+            "filled_slots": [
+              "aresta_causal_relevante"
+            ],
+            "sandbox_digest": "6d9fd6078077004d"
+          },
+          "acceptance_checked": true
+        },
+        "duration_ms": 2637.91
+      },
+      "updated_at": 1778364210
+    }
+  },
+  "duration_ms": 2721.33
+}

@@ -1,0 +1,25 @@
+{
+  "updated_at": 1776720582,
+  "providers": {
+    "openrouter": {
+      "until": 1776722371,
+      "reason": "Error code: 429 - {'error': {'message': 'Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '50', 'X-RateLimit",
+      "updated_at": 1776720571
+    },
+    "groq": {
+      "until": 1776722343,
+      "reason": "Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01j2fr3g0afrg83zk90sz12hqk` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99904,",
+      "updated_at": 1776720543
+    },
+    "nvidia": {
+      "until": 1776628266,
+      "reason": "Error code: 429 - {'status': 429, 'title': 'Too Many Requests'}",
+      "updated_at": 1776626466
+    },
+    "gemini": {
+      "until": 1776722382,
+      "reason": "Client error '429 Too Many Requests' for url 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyAsBSMVCiOwDbxTKuY27zLXv06rS-ucJLU'\nFor more information check: https://deve",
+      "updated_at": 1776720582
+    }
+  }
+}

@@ -76,6 +76,11 @@ def _fmt_steps(title: str, steps: list[str], final: str, limits: str = "Sem limi
 
 
 def _solve_sqrt(q: str) -> str | None:
+    # Anti-falso-positivo: se houver operações matemáticas em cadeia, delega para o LocalMathResolver
+    _chained_ops = ['mais', 'menos', 'vezes', 'dividid', '+', '-', '*', '/']
+    if any(op in q.lower() for op in _chained_ops):
+        return None
+
     m = re.search(r"raiz\s+quadrada\s+de\s+(-?\d+(?:[\.,]\d+)?)", q, flags=re.I)
     if not m:
         return None

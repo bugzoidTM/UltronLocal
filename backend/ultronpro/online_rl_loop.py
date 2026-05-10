@@ -790,12 +790,31 @@ def stop_background_loop() -> dict[str, Any]:
 
 def status(limit: int = 20) -> dict[str, Any]:
     observation = _observe_environment()
+    st = _load_state()
+    
+    # Calculate surprise trend (last 30 cycles)
+    try:
+        rows = _read_jsonl(RUN_LOG_PATH, limit=30)
+        surprises = []
+        for row in rows:
+            u = row.get("after", {}).get("vitals", {}).get("uncertainty_load")
+            if u is not None:
+                surprises.append(float(u))
+        
+        if len(surprises) >= 2:
+            delta = surprises[-1] - surprises[0]
+            st["surprise_trend"] = "decreasing" if delta < -0.05 else "increasing" if delta > 0.05 else "stable"
+        else:
+            st["surprise_trend"] = "unknown"
+    except Exception:
+        st["surprise_trend"] = "unknown"
+
     return {
         "ok": True,
         "schema": RUN_SCHEMA,
         "enabled": _enabled(),
         "running": _TASK is not None and not _TASK.done(),
-        "state": _load_state(),
+        "state": st,
         "candidates": candidate_actions(observation, include_cooldown=True),
         "policy": rl_policy.policy_summary(limit=limit),
         "recent_runs": _read_jsonl(RUN_LOG_PATH, limit=limit),

@@ -1,0 +1,129 @@
+{
+  "scenarios": [
+    {
+      "id": "scn_1776199257_f91107",
+      "name": "resolver_conflito_epistemico",
+      "hypotheses": [
+        {
+          "id": "hyp_1776199257_1",
+          "description": "Perguntar ao usuario",
+          "predicted_outcome": "resolucao definitiva",
+          "confidence": 0.5,
+          "risk": 0.3,
+          "cost": 0.3,
+          "benefit": 0.9,
+          "evidence_for": [],
+          "evidence_against": [],
+          "causal_chain": []
+        },
+        {
+          "id": "hyp_1776199257_0",
+          "description": "Buscar na Wikipedia",
+          "predicted_outcome": "confirmacao parcial",
+          "confidence": 0.7,
+          "risk": 0.1,
+          "cost": 0.3,
+          "benefit": 0.6,
+          "evidence_for": [],
+          "evidence_against": [],
+          "causal_chain": []
+        },
+        {
+          "id": "hyp_1776199257_2",
+          "description": "Ignorar o conflito",
+          "predicted_outcome": "conflito persiste",
+          "confidence": 0.9,
+          "risk": 0.05,
+          "cost": 0.3,
+          "benefit": 0.1,
+          "evidence_for": [],
+          "evidence_against": [],
+          "causal_chain": []
+        }
+      ],
+      "chosen_hypothesis_id": "hyp_1776199257_1",
+      "simulated_outcome": {
+        "hypothesis_id": "hyp_1776199257_1",
+        "hypothesis_description": "Perguntar ao usuario",
+        "expected_result": "resolucao definitiva",
+        "composite_score": 0.36,
+        "risk_accepted": 0.3,
+        "alternatives_rejected": 2,
+        "rejection_reasons": [
+          {
+            "id": "hyp_1776199257_0",
+            "description": "Buscar na Wikipedia",
+            "score": 0.355,
+            "gap": 0.005
+          },
+          {
+            "id": "hyp_1776199257_2",
+            "description": "Ignorar o conflito",
+            "score": 0.25,
+            "gap": 0.11
+          }
+        ]
+      },
+      "actual_outcome": {
+        "result": "confirmacao parcial",
+        "success": true
+      },
+      "surprise_score": 0.8,
+      "lessons": [
+        "Alta surpresa (0.80): o modelo de mundo/previsão falhou para esse tipo de ação.",
+        "Sucesso inesperado: o modelo subestimou capacidade ou superestimou risco.",
+        "A hipótese escolhida não previu corretamente o resultado, mesmo com sucesso."
+      ],
+      "competencies_extracted": [],
+      "ts_created": 1776199257,
+      "ts_resolved": 1776199257,
+      "status": "learned"
+    },
+    {
+      "id": "scn_1776794222_03d396",
+      "name": "action:ask_evidence:8385",
+      "hypotheses": [
+        {
+          "id": "hyp_1776794222_0",
+          "description": "ask_evidence: (motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxo",
+          "predicted_outcome": "unknown",
+          "confidence": 0.476,
+          "risk": 0.18,
+          "cost": 0.3,
+          "benefit": 0.476,
+          "evidence_for": [],
+          "evidence_against": [],
+          "causal_chain": []
+        }
+      ],
+      "chosen_hypothesis_id": "hyp_1776794222_0",
+      "simulated_outcome": {
+        "hypothesis_id": "hyp_1776794222_0",
+        "hypothesis_description": "ask_evidence: (motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxo",
+        "expected_result": "unknown",
+        "composite_score": 0.2284,
+        "risk_accepted": 0.18,
+        "alternatives_rejected": 0,
+        "rejection_reasons": []
+      },
+      "actual_outcome": {
+        "result": "done",
+        "success": true,
+        "latency_ms": 601,
+        "risk_reason": ""
+      },
+      "surprise_score": 0.8,
+      "lessons": [
+        "Alta surpresa (0.80): o modelo de mundo/previsão falhou para esse tipo de ação.",
+        "Sucesso inesperado: o modelo subestimou capacidade ou superestimou risco.",
+        "A hipótese escolhida não previu corretamente o resultado, mesmo com sucesso."
+      ],
+      "competencies_extracted": [],
+      "ts_created": 1776794222,
+      "ts_resolved": 1776794222,
+      "status": "learned"
+    }
+  ],
+  "sim_count": 2,
+  "updated_at": 1776794222
+}

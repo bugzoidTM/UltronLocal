@@ -1,34 +1,51 @@
 {
   "ok": true,
-  "id": "sleep_digest_2026-05-08_3a3fdda1ee89acf2",
+  "id": "sleep_digest_2026-05-10_5aba91b3ac8ddc53",
   "schema": "ultron.sleep_episodic_digest.v1",
-  "ts": 1778265403,
-  "day": "2026-05-08",
-  "checksum": "3a3fdda1ee89acf2",
-  "source_count": 28,
+  "ts": 1778454268,
+  "day": "2026-05-10",
+  "checksum": "5aba91b3ac8ddc53",
+  "source_count": 34,
   "pruned": 0,
-  "abstracted": 0,
-  "abstractions_tested": 78,
+  "abstracted": 1,
+  "abstractions_tested": 12,
   "sql_promoted_to_episodic": 0,
-  "episodic_enrichment_records": 5,
+  "episodic_enrichment_records": 0,
   "active_investigation_executed": 3,
-  "active_investigation_injected": 2,
-  "stagnation_status": "recovered_by_episodic_enrichment",
+  "active_investigation_injected": 3,
+  "stagnation_status": "healthy_progress",
   "themes": [
     {
-      "domain": "self_introspection",
-      "action_kind": "episodic_compiler",
-      "episode_count": 6,
-      "ok_count": 6,
+      "domain": "chat_interaction",
+      "action_kind": "chat_final_ultron_infer",
+      "episode_count": 8,
+      "ok_count": 8,
       "failure_count": 0,
       "mean_surprise": 0.15,
       "keywords": [
-        "episodic_compiler"
+        "chat_final_ultron_infer"
       ],
       "examples": [
-        "episodic_compiler success",
-        "episodic_compiler success",
-        "episodic_compiler success"
+        "chat_final_ultron_infer success",
+        "chat_final_ultron_infer success",
+        "chat_final_ultron_infer success"
+      ]
+    },
+    {
+      "domain": "chat_interaction",
+      "action_kind": "local_llm_unavailable",
+      "episode_count": 4,
+      "ok_count": 4,
+      "failure_count": 0,
+      "mean_surprise": 0.15,
+      "keywords": [
+        "failure",
+        "local_llm_unavailable"
+      ],
+      "examples": [
+        "local_llm_unavailable failure",
+        "local_llm_unavailable failure",
+        "local_llm_unavailable failure"
       ]
     },
     {
@@ -47,19 +64,20 @@
       ]
     },
     {
-      "domain": "planning",
-      "action_kind": "causal_graph_enrichment",
+      "domain": "chat_interaction",
+      "action_kind": "own_reasoning",
       "episode_count": 1,
       "ok_count": 1,
       "failure_count": 0,
       "mean_surprise": 0.15,
       "keywords": [
-        "causal_graph_enrichment"
+        "failure",
+        "own_reasoning"
       ],
       "examples": [
-        "causal_graph_enrichment success"
+        "own_reasoning failure"
       ]
     }
   ],
-  "structured_episode_id": "ep_1778265544_565167"
+  "structured_episode_id": "ep_1778454328_370913"
 }

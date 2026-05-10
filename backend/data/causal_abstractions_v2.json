@@ -5176,6 +5176,103 @@
       "usage_count": 0,
       "success_count": 0,
       "baseline_gain": 0.0
+    },
+    {
+      "id": "abs_1778454297_3159",
+      "domain": "chat_interaction",
+      "action_kind": "chat_final_ultron_infer",
+      "created_at": 1778454297,
+      "name": "Rollback_Atomico_Financeiro",
+      "causal_structure": "Após um rollback atomico financeiro, a taxa de sucesso aumenta significativamente.",
+      "applicability_conditions": "Em operações de arquivo com rollback, threshold de risco 0.7 resulta em sucesso > 80%",
+      "testable_prediction": "Em operações de arquivo com rollback, se o risco for menor que 0.7, a taxa de sucesso será maior que 80%.",
+      "generalization_suggestion": "Esta abstração pode ser reutilizada em outros domínios de operações de arquivo com rollback.",
+      "status": "compiled_skill",
+      "version": 1.5,
+      "test_count": 12,
+      "confirmation_count": 12,
+      "refutation_count": 0,
+      "confirmation_rate": 1.0,
+      "test_history": [
+        {
+          "ts": 1778454297,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1778454297,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1778454297,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1778454297,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1778454297,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1778454297,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1778454297,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1778454297,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1778454318,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1778454318,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1778454318,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        },
+        {
+          "ts": 1778454318,
+          "confirmed": true,
+          "surprise": 0.15,
+          "ok": true
+        }
+      ],
+      "last_tested_at": 1778454318,
+      "last_revised_at": 0,
+      "revision_count": 0,
+      "usage_count": 0,
+      "success_count": 0,
+      "baseline_gain": 0.0
     }
   ]
 }

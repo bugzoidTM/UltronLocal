@@ -1,0 +1,193 @@
+{
+  "ok": true,
+  "ts": 1778364201,
+  "episodes_total": 10,
+  "active_after": 9,
+  "pruned": 0,
+  "abstracted": 0,
+  "abstractions_tested": 0,
+  "sql_consolidation": {
+    "decayed": 1337,
+    "pruned": 7,
+    "promoted": 0
+  },
+  "episodic_enrichment": {
+    "ok": true,
+    "enabled": true,
+    "records_created": 5,
+    "eligible_candidates": 5,
+    "skipped_duplicates": 2,
+    "source_episode_count": 10,
+    "group_count": 1,
+    "items": [
+      {
+        "fingerprint": "80314eeb4e5b870b",
+        "domain": "self_introspection",
+        "action_kind": "sleep_cycle",
+        "task_type": "self_introspection",
+        "ok": true
+      },
+      {
+        "fingerprint": "de979504307f33ef",
+        "domain": "self_event.sleep_cycle_completed",
+        "action_kind": "sleep_cycle",
+        "task_type": "operations",
+        "ok": true
+      },
+      {
+        "fingerprint": "c59dea573c0f6894",
+        "domain": "self_event.abstraction_promoted",
+        "action_kind": "episodic_compiler",
+        "task_type": "self_introspection",
+        "ok": true
+      },
+      {
+        "fingerprint": "f7bc3128b063c13d",
+        "domain": "self_event.abstraction_promoted",
+        "action_kind": "episodic_compiler",
+        "task_type": "self_introspection",
+        "ok": true
+      },
+      {
+        "fingerprint": "872d0e598b98b3f4",
+        "domain": "active_gap_intervention",
+        "action_kind": "causal_graph_enrichment",
+        "task_type": "planning",
+        "ok": true
+      }
+    ],
+    "errors": [],
+    "reason": "enriched_structured_episodic_memory"
+  },
+  "nightly_episodic_digest": {
+    "ok": true,
+    "enabled": true,
+    "recorded": true,
+    "id": "sleep_digest_2026-05-09_ee512af9e0bb5857",
+    "checksum": "ee512af9e0bb5857",
+    "source_count": 21,
+    "theme_count": 1,
+    "structured_episode_id": "ep_1778364210_249630",
+    "themes": [
+      {
+        "domain": "self_introspection",
+        "action_kind": "sleep_cycle",
+        "episode_count": 1,
+        "ok_count": 1,
+        "failure_count": 0,
+        "mean_surprise": 0.15,
+        "keywords": [
+          "sleep_cycle"
+        ],
+        "examples": [
+          "sleep_cycle success"
+        ]
+      }
+    ],
+    "reason": "nightly_episodic_digest_recorded"
+  },
+  "memory_stagnation_signal": {
+    "ok": true,
+    "status": "recovered_by_episodic_enrichment",
+    "quiet_gap": true,
+    "reason": "sleep_cycle_had_no_prune_or_abstraction",
+    "action_episode_count": 1,
+    "group_count": 1,
+    "groups_below_min": 1,
+    "min_group_episodes": 3,
+    "episodic_enrichment_records": 5,
+    "nightly_digest_recorded": true,
+    "nightly_digest_id": "sleep_digest_2026-05-09_ee512af9e0bb5857",
+    "next_step": "continue_nightly_consolidation"
+  },
+  "causal_gap_investigation": {
+    "ok": true,
+    "enabled": true,
+    "epistemic_gap_perception": {
+      "ok": true,
+      "enabled": true,
+      "seeded": 0,
+      "reason": "pending_queue_not_empty"
+    },
+    "pending_before": 3,
+    "executed": 3,
+    "injected": 3,
+    "failed": 0,
+    "coverage_delta_edges": 3,
+    "coverage_gained": true,
+    "items": [
+      {
+        "investigation_id": "inv_96f2d4bfc4",
+        "ok": true,
+        "injected": true,
+        "error": null,
+        "experiment_kind": "causal_graph_enrichment",
+        "target_route": "unknown",
+        "query_terms": [
+          "chama",
+          "como"
+        ],
+        "edge": {
+          "cause": "active_investigation_gap:chama como",
+          "effect": "sandbox_experiment_observed:causal_graph_enrichment:unknown",
+          "condition": "autonomous_executor_next_cycle:inv_96f2d4bfc4"
+        }
+      },
+      {
+        "investigation_id": "inv_950d50d83e",
+        "ok": true,
+        "injected": true,
+        "error": null,
+        "experiment_kind": "causal_graph_enrichment",
+        "target_route": "active_investigation",
+        "query_terms": [
+          "meu",
+          "nome",
+          "qual"
+        ],
+        "edge": {
+          "cause": "active_investigation_gap:meu nome qual",
+          "effect": "sandbox_experiment_observed:causal_graph_enrichment:active_investigation",
+          "condition": "autonomous_executor_next_cycle:inv_950d50d83e"
+        }
+      },
+      {
+        "investigation_id": "inv_592d87de02",
+        "ok": true,
+        "injected": true,
+        "error": null,
+        "experiment_kind": "causal_graph_enrichment",
+        "target_route": "active_investigation",
+        "query_terms": [
+          "meu",
+          "nome",
+          "qual"
+        ],
+        "edge": {
+          "cause": "active_investigation_gap:meu nome qual",
+          "effect": "sandbox_experiment_observed:causal_graph_enrichment:active_investigation",
+          "condition": "autonomous_executor_next_cycle:inv_592d87de02"
+        }
+      }
+    ],
+    "reason": null
+  },
+  "epistemic_gap_perception": {
+    "ok": true,
+    "enabled": true,
+    "seeded": 0,
+    "reason": "pending_queue_not_empty"
+  },
+  "coverage_delta_edges": 3,
+  "coverage_gained": true,
+  "episodic_memory_gained": true,
+  "retention_days": 14,
+  "max_active_rows": 3000,
+  "recent_abstraction_hours": 48,
+  "min_group_episodes": 3,
+  "paths": {
+    "episodic_active": "D:\\UnidadeF\\UltronPro\\backend\\data\\episodic_memory.jsonl",
+    "episodic_archive": "D:\\UnidadeF\\UltronPro\\backend\\data\\episodic_memory_archive.jsonl",
+    "abstractions": "D:\\UnidadeF\\UltronPro\\backend\\data\\episodic_abstractions.json"
+  }
+}

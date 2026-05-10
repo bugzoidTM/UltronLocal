@@ -1,0 +1,250 @@
+{
+  "surprise_mean_first_10": 0.2761,
+  "surprise_mean_last_10": 0.74386,
+  "actions_executed": 30,
+  "consequences_learned": 30,
+  "new_goals_created": 0,
+  "repeated_failure_rate": 0.0,
+  "cycles": [
+    {
+      "cycle": 1,
+      "surprise": 0.6,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:prioritize_action_backlog"
+    },
+    {
+      "cycle": 2,
+      "surprise": 0.6,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:queue_conflict_review"
+    },
+    {
+      "cycle": 3,
+      "surprise": 0.6,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:compact_workspace_focus"
+    },
+    {
+      "cycle": 4,
+      "surprise": 0.264,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:prioritize_action_backlog"
+    },
+    {
+      "cycle": 5,
+      "surprise": 0.264,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:queue_conflict_review"
+    },
+    {
+      "cycle": 6,
+      "surprise": 0.264,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:compact_workspace_focus"
+    },
+    {
+      "cycle": 7,
+      "surprise": 0.0528,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:prioritize_action_backlog"
+    },
+    {
+      "cycle": 8,
+      "surprise": 0.0528,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:queue_conflict_review"
+    },
+    {
+      "cycle": 9,
+      "surprise": 0.0528,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:compact_workspace_focus"
+    },
+    {
+      "cycle": 10,
+      "surprise": 0.0106,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:prioritize_action_backlog"
+    },
+    {
+      "cycle": 11,
+      "surprise": 0.0106,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:queue_conflict_review"
+    },
+    {
+      "cycle": 12,
+      "surprise": 0.0106,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:compact_workspace_focus"
+    },
+    {
+      "cycle": 13,
+      "surprise": 0.0021,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:prioritize_action_backlog"
+    },
+    {
+      "cycle": 14,
+      "surprise": 0.0021,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:queue_conflict_review"
+    },
+    {
+      "cycle": 15,
+      "surprise": 0.0021,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:compact_workspace_focus"
+    },
+    {
+      "cycle": 16,
+      "surprise": 0.0004,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:prioritize_action_backlog"
+    },
+    {
+      "cycle": 17,
+      "surprise": 0.0004,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:queue_conflict_review"
+    },
+    {
+      "cycle": 18,
+      "surprise": 0.0004,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:compact_workspace_focus"
+    },
+    {
+      "cycle": 19,
+      "surprise": 0.0001,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:prioritize_action_backlog"
+    },
+    {
+      "cycle": 20,
+      "surprise": 0.0001,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:queue_conflict_review"
+    },
+    {
+      "cycle": 21,
+      "surprise": 0.0001,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:compact_workspace_focus"
+    },
+    {
+      "cycle": 22,
+      "surprise": 0.8265,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:prioritize_action_backlog"
+    },
+    {
+      "cycle": 23,
+      "surprise": 0.8265,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:queue_conflict_review"
+    },
+    {
+      "cycle": 24,
+      "surprise": 0.8265,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:compact_workspace_focus"
+    },
+    {
+      "cycle": 25,
+      "surprise": 0.8265,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:prioritize_action_backlog"
+    },
+    {
+      "cycle": 26,
+      "surprise": 0.8265,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:queue_conflict_review"
+    },
+    {
+      "cycle": 27,
+      "surprise": 0.8265,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:compact_workspace_focus"
+    },
+    {
+      "cycle": 28,
+      "surprise": 0.8265,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:prioritize_action_backlog"
+    },
+    {
+      "cycle": 29,
+      "surprise": 0.8265,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:queue_conflict_review"
+    },
+    {
+      "cycle": 30,
+      "surprise": 0.8265,
+      "utility_delta": 0.0,
+      "error": null,
+      "rollback": 0,
+      "action": "autocog:compact_workspace_focus"
+    }
+  ]
+}

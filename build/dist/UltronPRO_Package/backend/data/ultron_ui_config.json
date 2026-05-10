@@ -1,0 +1,16 @@
+{
+  "local": {
+    "enabled": true,
+    "base_url": "http://127.0.0.1:8025",
+    "timeout_sec": 9
+  },
+  "cloud": {
+    "enabled": true,
+    "provider": "free_auto",
+    "base_url": "https://text.pollinations.ai",
+    "model": "openai",
+    "api_key": "",
+    "timeout_sec": 18,
+    "max_tokens": 160
+  }
+}

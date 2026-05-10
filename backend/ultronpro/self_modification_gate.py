@@ -118,7 +118,7 @@ def check_unit_tests(timeout_sec: int = 60) -> dict[str, Any]:
         if "scratch" not in str(p)
     ]
     if not test_files:
-        return _pass("no_unit_tests_found", {"note": "no tests to run — treated as pass"})
+        return _veto("no_unit_tests_found", {"note": "unit tests are required for self-modification — no tests found"})
 
     cmd = [sys.executable, "-m", "pytest", "--tb=no", "-q"] + [str(t) for t in test_files[:20]]
     try:

@@ -257,107 +257,7 @@
       "id": "causal_reasoning_011",
       "benchmark": "causal_reasoning",
       "split": "dev",
-      "question": "Se a engrenagem A gira no sentido horário e está conectada à engrenagem B, qual o sentido de rotação de B? (cenário alternativo)",
-      "choices": [
-        {
-          "label": "A",
-          "text": "Horário"
-        },
-        {
-          "label": "B",
-          "text": "Anti-horário"
-        },
-        {
-          "label": "C",
-          "text": "Não gira"
-        },
-        {
-          "label": "D",
-          "text": "Aleatório"
-        }
-      ],
-      "answer": "B"
-    },
-    {
-      "id": "causal_reasoning_012",
-      "benchmark": "causal_reasoning",
-      "split": "dev",
-      "question": "Se chove, a rua fica molhada. A rua não está molhada. O que podemos concluir? (cenário alternativo)",
-      "choices": [
-        {
-          "label": "A",
-          "text": "Choveu muito"
-        },
-        {
-          "label": "B",
-          "text": "Não choveu"
-        },
-        {
-          "label": "C",
-          "text": "Choveu pouco"
-        },
-        {
-          "label": "D",
-          "text": "A rua secou instantaneamente"
-        }
-      ],
-      "answer": "B"
-    },
-    {
-      "id": "causal_reasoning_013",
-      "benchmark": "causal_reasoning",
-      "split": "dev",
-      "question": "Aumento da oferta de um produto com demanda constante geralmente leva a: (cenário alternativo)",
-      "choices": [
-        {
-          "label": "A",
-          "text": "Aumento de preço"
-        },
-        {
-          "label": "B",
-          "text": "Queda de preço"
-        },
-        {
-          "label": "C",
-          "text": "Escassez"
-        },
-        {
-          "label": "D",
-          "text": "Aumento da demanda"
-        }
-      ],
-      "answer": "B"
-    },
-    {
-      "id": "causal_reasoning_014",
-      "benchmark": "causal_reasoning",
-      "split": "dev",
-      "question": "Se o interruptor X corta a energia principal, o que acontece se ativarmos o interruptor Y que está em série após X, com X desligado? (cenário alternativo)",
-      "choices": [
-        {
-          "label": "A",
-          "text": "O aparelho liga"
-        },
-        {
-          "label": "B",
-          "text": "O aparelho queima"
-        },
-        {
-          "label": "C",
-          "text": "Nada acontece"
-        },
-        {
-          "label": "D",
-          "text": "A energia volta para X"
-        }
-      ],
-      "answer": "C"
-    },
-    {
-      "id": "causal_reasoning_015",
-      "benchmark": "causal_reasoning",
-      "split": "dev",
-      "question": "Uma bola é solta no vácuo. Durante a queda livre, sua aceleração: (cenário alternativo)",
+      "question": "Se um gás perfeito é expandido isobaricamente, sua temperatura:",
       "choices": [
         {
           "label": "A",
@@ -373,57 +273,157 @@
         },
         {
           "label": "D",
-          "text": "É nula"
+          "text": "Flutua aleatoriamente"
+        }
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "causal_reasoning_012",
+      "benchmark": "causal_reasoning",
+      "split": "dev",
+      "question": "Qual a consequência de remover predadores do topo de uma cadeia alimentar?",
+      "choices": [
+        {
+          "label": "A",
+          "text": "Superpopulação de presas primárias"
+        },
+        {
+          "label": "B",
+          "text": "Extinção imediata dos produtores"
+        },
+        {
+          "label": "C",
+          "text": "Equilíbrio ecológico automático"
+        },
+        {
+          "label": "D",
+          "text": "Aumento de predadores de topo"
+        }
+      ],
+      "answer": "A"
+    },
+    {
+      "id": "causal_reasoning_013",
+      "benchmark": "causal_reasoning",
+      "split": "dev",
+      "question": "Se a inflação sobe e os salários nominais se mantêm, o poder de compra:",
+      "choices": [
+        {
+          "label": "A",
+          "text": "Aumenta"
+        },
+        {
+          "label": "B",
+          "text": "Cai"
+        },
+        {
+          "label": "C",
+          "text": "Permanece o mesmo"
+        },
+        {
+          "label": "D",
+          "text": "Dobra"
+        }
+      ],
+      "answer": "B"
+    },
+    {
+      "id": "causal_reasoning_014",
+      "benchmark": "causal_reasoning",
+      "split": "dev",
+      "question": "Ao aquecer uma barra metálica em apenas uma das pontas, o calor se propaga por:",
+      "choices": [
+        {
+          "label": "A",
+          "text": "Convecção"
+        },
+        {
+          "label": "B",
+          "text": "Radiação"
+        },
+        {
+          "label": "C",
+          "text": "Condução"
+        },
+        {
+          "label": "D",
+          "text": "Evaporação"
         }
       ],
       "answer": "C"
+    },
+    {
+      "id": "causal_reasoning_015",
+      "benchmark": "causal_reasoning",
+      "split": "dev",
+      "question": "Se a taxa de natalidade supera a de mortalidade em um ecossistema fechado sem migração:",
+      "choices": [
+        {
+          "label": "A",
+          "text": "A população diminui"
+        },
+        {
+          "label": "B",
+          "text": "A população cresce"
+        },
+        {
+          "label": "C",
+          "text": "A população zera"
+        },
+        {
+          "label": "D",
+          "text": "Não há mudança"
+        }
+      ],
+      "answer": "B"
     },
     {
       "id": "causal_reasoning_016",
       "benchmark": "causal_reasoning",
       "split": "dev",
-      "question": "Se o desmatamento reduz a transpiração das árvores, isso afeta diretamente o ciclo da água diminuindo: (cenário alternativo)",
+      "question": "Um circuito paralelo tem dois resistores. Se um queima, o que ocorre com o outro?",
       "choices": [
         {
           "label": "A",
-          "text": "A infiltração"
+          "text": "Para de funcionar"
         },
         {
           "label": "B",
-          "text": "A evaporação"
+          "text": "Continua funcionando"
         },
         {
           "label": "C",
-          "text": "A precipitação local"
+          "text": "Recebe o dobro da tensão"
         },
         {
           "label": "D",
-          "text": "O escoamento"
+          "text": "Queima imediatamente"
         }
       ],
-      "answer": "C"
+      "answer": "B"
     },
     {
       "id": "causal_reasoning_017",
       "benchmark": "causal_reasoning",
       "split": "dev",
-      "question": "Na ausência de atrito, um bloco empurrado com força constante no espaço livre terá: (cenário alternativo)",
+      "question": "A adição de CO2 na atmosfera afeta a retenção de calor por causa do efeito estufa. Isso causa:",
       "choices": [
         {
           "label": "A",
-          "text": "Velocidade constante"
+          "text": "Resfriamento global"
         },
         {
           "label": "B",
-          "text": "Aceleração constante"
+          "text": "Aumento da temperatura global"
         },
         {
           "label": "C",
-          "text": "Repouso"
+          "text": "Congelamento dos oceanos"
         },
         {
           "label": "D",
-          "text": "Força centrípeta"
+          "text": "Destruição da camada de ozônio"
         }
       ],
       "answer": "B"
@@ -432,48 +432,48 @@
       "id": "causal_reasoning_018",
       "benchmark": "causal_reasoning",
       "split": "dev",
-      "question": "Se uma mutação inativa a enzima de replicação de um vírus, qual é a consequência direta? (cenário alternativo)",
+      "question": "A remoção da glândula tireoide afeta principalmente:",
       "choices": [
         {
           "label": "A",
-          "text": "O vírus sofre mutação mais rápido"
+          "text": "O metabolismo basal"
         },
         {
           "label": "B",
-          "text": "O vírus se multiplica sem controle"
+          "text": "A digestão de gorduras"
         },
         {
           "label": "C",
-          "text": "O vírus não consegue se reproduzir"
+          "text": "A filtração do sangue"
         },
         {
           "label": "D",
-          "text": "O vírus se torna bactéria"
+          "text": "A oxigenação pulmonar"
         }
       ],
-      "answer": "C"
+      "answer": "A"
     },
     {
       "id": "causal_reasoning_019",
       "benchmark": "causal_reasoning",
       "split": "dev",
-      "question": "Adicionar sal à água pura altera sua temperatura de ebulição. Como? (cenário alternativo)",
+      "question": "Aumentar a inclinação de uma rampa, mantendo a altura, afeta o esforço para subir um bloco ao:",
       "choices": [
         {
           "label": "A",
-          "text": "Diminui a temperatura de ebulição"
+          "text": "Reduzir o esforço necessário"
         },
         {
           "label": "B",
-          "text": "Aumenta a temperatura de ebulição"
+          "text": "Aumentar o esforço necessário"
         },
         {
           "label": "C",
-          "text": "Não altera"
+          "text": "Zerar o atrito"
         },
         {
           "label": "D",
-          "text": "Transforma em gelo"
+          "text": "Inverter a gravidade"
         }
       ],
       "answer": "B"
@@ -482,26 +482,26 @@
       "id": "causal_reasoning_020",
       "benchmark": "causal_reasoning",
       "split": "dev",
-      "question": "Se A causa B, e B inibe C, o aumento contínuo de A resultará em: (cenário alternativo)",
+      "question": "Se duas ondas sonoras idênticas se encontram em oposição de fase, ocorre:",
       "choices": [
         {
           "label": "A",
-          "text": "Aumento de C"
+          "text": "Ressonância"
         },
         {
           "label": "B",
-          "text": "Redução de C"
+          "text": "Interferência construtiva"
         },
         {
           "label": "C",
-          "text": "Nenhuma alteração em C"
+          "text": "Interferência destrutiva"
         },
         {
           "label": "D",
-          "text": "Aumento de A e C"
+          "text": "Batimento constante"
         }
       ],
-      "answer": "B"
+      "answer": "C"
     },
     {
       "id": "multi_step_planning_021",
@@ -757,186 +757,186 @@
       "id": "multi_step_planning_031",
       "benchmark": "multi_step_planning",
       "split": "dev",
-      "question": "Temos os blocos A, B e C empilhados nesta ordem (A no topo). Como mover C para o topo da pilha usando a mesa?",
+      "question": "Em Torre de Hanói com 3 discos (P, M, G). Para mover todos da haste 1 para a 3, o disco G deve ir para a haste 3 em que momento?",
       "choices": [
         {
           "label": "A",
-          "text": "Mover A para a mesa, mover B para A"
+          "text": "No primeiro movimento"
         },
         {
           "label": "B",
-          "text": "Mover C para A"
+          "text": "No último movimento"
         },
         {
           "label": "C",
-          "text": "Mover A para a mesa, mover B para a mesa, mover C para B, mover A para C"
+          "text": "Quando as hastes 2 e 3 estiverem vazias"
         },
         {
           "label": "D",
-          "text": "Mover C para a mesa diretamente"
+          "text": "Quando a haste 3 estiver vazia e a 2 tiver P e M"
         }
       ],
-      "answer": "C"
+      "answer": "D"
     },
     {
       "id": "multi_step_planning_032",
       "benchmark": "multi_step_planning",
       "split": "dev",
-      "question": "Para fazer um bolo assado, qual a ordem correta mínima de ações?",
+      "question": "Para fazer um risoto: (1) fritar cebola, (2) adicionar caldo aos poucos, (3) tostar arroz, (4) finalizar com manteiga. Ordem?",
       "choices": [
         {
           "label": "A",
-          "text": "Assar, misturar, quebrar ovos"
+          "text": "1,3,2,4"
         },
         {
           "label": "B",
-          "text": "Misturar, assar, quebrar ovos"
+          "text": "3,1,2,4"
         },
         {
           "label": "C",
-          "text": "Quebrar ovos, misturar, assar"
+          "text": "1,2,3,4"
         },
         {
           "label": "D",
-          "text": "Quebrar ovos, assar, misturar"
+          "text": "2,1,3,4"
         }
       ],
-      "answer": "C"
+      "answer": "A"
     },
     {
       "id": "multi_step_planning_033",
       "benchmark": "multi_step_planning",
       "split": "dev",
-      "question": "Um labirinto tem os cômodos [1]-[2]-[3]-[4]. Você está no 1 e a chave do 4 está no 3. Quantos movimentos (ir para cômodo vizinho) até abrir o 4?",
+      "question": "Para ir da Estação A à D, sabendo que A liga a B e C, B liga a D, e C não liga a lugar nenhum. Caminho:",
       "choices": [
         {
           "label": "A",
-          "text": "2"
+          "text": "A-C-D"
         },
         {
           "label": "B",
-          "text": "3"
+          "text": "A-B-C-D"
         },
         {
           "label": "C",
-          "text": "4"
+          "text": "A-B-D"
         },
         {
           "label": "D",
-          "text": "5"
+          "text": "A-D direto"
         }
       ],
-      "answer": "B"
+      "answer": "C"
     },
     {
       "id": "multi_step_planning_034",
       "benchmark": "multi_step_planning",
       "split": "dev",
-      "question": "Para enviar uma carta criptografada: 1. escrever, 2. colocar selo, 3. criptografar, 4. enviar. Qual a ordem lógica de 1 a 4?",
+      "question": "Ao vestir-se para a neve: (1) bota, (2) meia, (3) casaco, (4) blusa térmica. Ordem lógica?",
       "choices": [
         {
           "label": "A",
-          "text": "1, 2, 3, 4"
+          "text": "4,2,1,3"
         },
         {
           "label": "B",
-          "text": "1, 3, 2, 4"
+          "text": "2,4,3,1"
         },
         {
           "label": "C",
-          "text": "3, 1, 2, 4"
+          "text": "4,3,2,1"
         },
         {
           "label": "D",
-          "text": "1, 2, 4, 3"
+          "text": "2,1,4,3"
         }
       ],
-      "answer": "B"
+      "answer": "A"
     },
     {
       "id": "multi_step_planning_035",
       "benchmark": "multi_step_planning",
       "split": "dev",
-      "question": "Em Torre de Hanói com 2 discos na haste 1. Mover para haste 3. Qual o 1º movimento?",
+      "question": "Para montar um móvel: (1) ler manual, (2) separar peças, (3) parafusar base, (4) encaixar topo. Ação 2 deve ocorrer:",
       "choices": [
         {
           "label": "A",
-          "text": "Mover disco maior para 3"
+          "text": "Depois da 3"
         },
         {
           "label": "B",
-          "text": "Mover disco menor para 2"
+          "text": "Antes da 1"
         },
         {
           "label": "C",
-          "text": "Mover disco menor para 3"
+          "text": "Entre a 1 e a 3"
         },
         {
           "label": "D",
-          "text": "Mover os dois discos juntos"
+          "text": "No final"
         }
       ],
-      "answer": "B"
+      "answer": "C"
     },
     {
       "id": "multi_step_planning_036",
       "benchmark": "multi_step_planning",
       "split": "dev",
-      "question": "Você tem um lobo, uma ovelha e repolhos. Só pode levar 1 no barco. O que levar primeiro?",
+      "question": "Para enviar um email seguro: (1) anexar arquivo, (2) criptografar arquivo, (3) abrir cliente de email. Ação 2 deve ser:",
       "choices": [
         {
           "label": "A",
-          "text": "Ovelha"
+          "text": "Depois da 1"
         },
         {
           "label": "B",
-          "text": "Lobo"
+          "text": "Antes da 1"
         },
         {
           "label": "C",
-          "text": "Repolhos"
+          "text": "Depois de enviar"
         },
         {
           "label": "D",
-          "text": "Tudo junto"
+          "text": "Durante a anexação"
         }
       ],
-      "answer": "A"
+      "answer": "B"
     },
     {
       "id": "multi_step_planning_037",
       "benchmark": "multi_step_planning",
       "split": "dev",
-      "question": "Como trocar o pneu do carro de forma segura (ordem de passos)?",
+      "question": "No xadrez, para dar mate do pastor (Brancas): (1) e4, (2) Bc4, (3) Qh5, (4) Qxf7#. Ação 3 visa:",
       "choices": [
         {
           "label": "A",
-          "text": "Soltar parafusos, erguer macaco, tirar pneu"
+          "text": "Atacar o cavalo"
         },
         {
           "label": "B",
-          "text": "Erguer macaco, soltar parafusos, tirar pneu"
+          "text": "Proteger o bispo"
         },
         {
           "label": "C",
-          "text": "Tirar pneu, erguer macaco, soltar parafusos"
+          "text": "Ameaçar o peão f7 e e5"
         },
         {
           "label": "D",
-          "text": "Soltar parafusos, tirar pneu, erguer macaco"
+          "text": "Fazer roque"
         }
       ],
-      "answer": "A"
+      "answer": "C"
     },
     {
       "id": "multi_step_planning_038",
       "benchmark": "multi_step_planning",
       "split": "dev",
-      "question": "Preparar café coado: (1) Moer café, (2) Ferver água, (3) Passar água, (4) Pôr filtro. Ordem correta?",
+      "question": "Para atravessar a rua com segurança em via dupla sem semáforo: (1) olhar esquerda, (2) olhar direita, (3) atravessar metade, (4) olhar direita novamente. Ordem:",
       "choices": [
         {
           "label": "A",
-          "text": "1,2,4,3"
+          "text": "1,2,3,4"
         },
         {
           "label": "B",
@@ -944,36 +944,36 @@
         },
         {
           "label": "C",
-          "text": "1,4,2,3"
+          "text": "3,4,1,2"
         },
         {
           "label": "D",
-          "text": "qualquer uma desde que 3 seja no final"
+          "text": "1,2,4,3"
         }
       ],
-      "answer": "D"
+      "answer": "A"
     },
     {
       "id": "multi_step_planning_039",
       "benchmark": "multi_step_planning",
       "split": "dev",
-      "question": "Você está no térreo, quer ir ao 5º andar, buscar um pacote e descer ao subsolo. Mínimo de viagens de elevador?",
+      "question": "Se quero comprar pão e sacar dinheiro, mas o banco fecha antes da padaria, o que faço primeiro?",
       "choices": [
         {
           "label": "A",
-          "text": "1"
+          "text": "Comprar pão"
         },
         {
           "label": "B",
-          "text": "2"
+          "text": "Sacar dinheiro"
         },
         {
           "label": "C",
-          "text": "3"
+          "text": "Ir para casa"
         },
         {
           "label": "D",
-          "text": "4"
+          "text": "Depende do dia"
         }
       ],
       "answer": "B"
@@ -982,26 +982,26 @@
       "id": "multi_step_planning_040",
       "benchmark": "multi_step_planning",
       "split": "dev",
-      "question": "Para compilar e rodar um código C. Ordem correta?",
+      "question": "Para plantar uma semente: (1) cobrir de terra, (2) cavar buraco, (3) regar, (4) colocar semente. Ordem correta:",
       "choices": [
         {
           "label": "A",
-          "text": "Rodar, Compilar, Linkar"
+          "text": "2,4,1,3"
         },
         {
           "label": "B",
-          "text": "Compilar, Linkar, Rodar"
+          "text": "1,2,3,4"
         },
         {
           "label": "C",
-          "text": "Linkar, Compilar, Rodar"
+          "text": "4,2,1,3"
         },
         {
           "label": "D",
-          "text": "Compilar, Rodar, Linkar"
+          "text": "2,1,4,3"
         }
       ],
-      "answer": "B"
+      "answer": "A"
     },
     {
       "id": "code_debugging_041",
@@ -1257,23 +1257,23 @@
       "id": "code_debugging_051",
       "benchmark": "code_debugging",
       "split": "dev",
-      "question": "O que está errado em: def sum(a, b) return a+b (variante)",
+      "question": "Em React, o que causa um loop infinito no useEffect?",
       "choices": [
         {
           "label": "A",
-          "text": "Falta ':' após b)"
+          "text": "Falta do array de dependências ao alterar estado dentro do efeito"
         },
         {
           "label": "B",
-          "text": "return está escrito errado"
+          "text": "Uso de console.log"
         },
         {
           "label": "C",
-          "text": "Falta indentação"
+          "text": "Passar [] como dependência"
         },
         {
           "label": "D",
-          "text": "Faltam parênteses no return"
+          "text": "Retornar uma função"
         }
       ],
       "answer": "A"
@@ -1282,23 +1282,23 @@
       "id": "code_debugging_052",
       "benchmark": "code_debugging",
       "split": "dev",
-      "question": "Loop infinito em python: i=0; while i<10: print(i). Por que é infinito? (variante)",
+      "question": "Erro de 'ConcurrentModificationException' em Java ao iterar uma lista ocorre se:",
       "choices": [
         {
           "label": "A",
-          "text": "A condição while i<10 está incorreta"
+          "text": "A lista estiver vazia"
         },
         {
           "label": "B",
-          "text": "Falta i = i + 1"
+          "text": "Modificar a lista diretamente durante o foreach"
         },
         {
           "label": "C",
-          "text": "O print está fora do loop"
+          "text": "Usar um Iterator"
         },
         {
           "label": "D",
-          "text": "Não há break"
+          "text": "A lista tiver elementos nulos"
         }
       ],
       "answer": "B"
@@ -1307,48 +1307,48 @@
       "id": "code_debugging_053",
       "benchmark": "code_debugging",
       "split": "dev",
-      "question": "Em Javascript, typeof null retorna: (variante)",
+      "question": "O que resulta `0.1 + 0.2 === 0.3` em Javascript?",
       "choices": [
         {
           "label": "A",
-          "text": "'null'"
+          "text": "true"
         },
         {
           "label": "B",
-          "text": "'undefined'"
+          "text": "false"
         },
         {
           "label": "C",
-          "text": "'object'"
+          "text": "ReferenceError"
         },
         {
           "label": "D",
-          "text": "'string'"
+          "text": "TypeError"
         }
       ],
-      "answer": "C"
+      "answer": "B"
     },
     {
       "id": "code_debugging_054",
       "benchmark": "code_debugging",
       "split": "dev",
-      "question": "Erro Index Out of Bounds em arr[5] significa: (variante)",
+      "question": "O erro 'CORS policy: No Access-Control-Allow-Origin' significa:",
       "choices": [
         {
           "label": "A",
-          "text": "O array não tem o índice 5 (ex: tamanho 5 ou menor)"
+          "text": "O servidor backend proibiu a origem da requisição frontend"
         },
         {
           "label": "B",
-          "text": "O valor no índice 5 é nulo"
+          "text": "Erro de sintaxe no Javascript"
         },
         {
           "label": "C",
-          "text": "O array é infinito"
+          "text": "O banco de dados caiu"
         },
         {
           "label": "D",
-          "text": "A memória está cheia"
+          "text": "O usuário não está logado"
         }
       ],
       "answer": "A"
@@ -1357,23 +1357,23 @@
       "id": "code_debugging_055",
       "benchmark": "code_debugging",
       "split": "dev",
-      "question": "Em SQL, para buscar clientes com nome começando em 'A', o operador correto é: (variante)",
+      "question": "Em Python, `def func(a=[]): a.append(1); return a` chamado duas vezes retorna:",
       "choices": [
         {
           "label": "A",
-          "text": "LIKE 'A*'"
+          "text": "[1] e [1]"
         },
         {
           "label": "B",
-          "text": "LIKE 'A%'"
+          "text": "[1] e [1, 1]"
         },
         {
           "label": "C",
-          "text": "EQUALS 'A%'"
+          "text": "Erro de compilação"
         },
         {
           "label": "D",
-          "text": "STARTSWITH 'A'"
+          "text": "[1, 1] e [1, 1]"
         }
       ],
       "answer": "B"
@@ -1382,40 +1382,40 @@
       "id": "code_debugging_056",
       "benchmark": "code_debugging",
       "split": "dev",
-      "question": "No código Python `x = [1, 2, 3]; y = x; y.append(4)`, qual o valor de `x`? (variante)",
+      "question": "No SQL, o que acontece se fizer UPDATE sem WHERE?",
       "choices": [
         {
           "label": "A",
-          "text": "[1, 2, 3]"
+          "text": "Dá erro de sintaxe"
         },
         {
           "label": "B",
-          "text": "[1, 2, 3, 4]"
+          "text": "Atualiza apenas a primeira linha"
         },
         {
           "label": "C",
-          "text": "Error"
+          "text": "Atualiza todas as linhas da tabela"
         },
         {
           "label": "D",
-          "text": "[4]"
+          "text": "Nada acontece"
         }
       ],
-      "answer": "B"
+      "answer": "C"
     },
     {
       "id": "code_debugging_057",
       "benchmark": "code_debugging",
       "split": "dev",
-      "question": "O erro 'NullPointerException' em Java ocorre quando: (variante)",
+      "question": "O erro 'Segmentation fault' em C/C++ frequentemente indica:",
       "choices": [
         {
           "label": "A",
-          "text": "Uma variável inteira é zero"
+          "text": "Loop infinito"
         },
         {
           "label": "B",
-          "text": "Tentativa de acessar método de objeto nulo"
+          "text": "Acesso a memória não alocada ou protegida"
         },
         {
           "label": "C",
@@ -1423,7 +1423,7 @@
         },
         {
           "label": "D",
-          "text": "Falta de memória"
+          "text": "Erro de tipagem"
         }
       ],
       "answer": "B"
@@ -1432,23 +1432,23 @@
       "id": "code_debugging_058",
       "benchmark": "code_debugging",
       "split": "dev",
-      "question": "Em C, qual a falha em `char str[5]; strcpy(str, 'hello');`? (variante)",
+      "question": "Em Docker, `COPY . .` sem um `.dockerignore` pode causar:",
       "choices": [
         {
           "label": "A",
-          "text": "'hello' tem 6 caracteres (com o \\0) e o buffer é 5"
+          "text": "Aumento no tamanho da imagem com arquivos desnecessários"
         },
         {
           "label": "B",
-          "text": "strcpy não funciona com char"
+          "text": "Falha de compilação do Docker"
         },
         {
           "label": "C",
-          "text": "str deveria ser ponteiro"
+          "text": "O container não inicia"
         },
         {
           "label": "D",
-          "text": "Nenhum erro"
+          "text": "Nada, é uma boa prática absoluta"
         }
       ],
       "answer": "A"
@@ -1457,51 +1457,51 @@
       "id": "code_debugging_059",
       "benchmark": "code_debugging",
       "split": "dev",
-      "question": "O que `git push --force` faz de perigoso? (variante)",
+      "question": "Ao fazer um merge no Git e encontrar 'Merge conflict', você deve:",
       "choices": [
         {
           "label": "A",
-          "text": "Deleta o repositório local"
+          "text": "Fazer git push --force"
         },
         {
           "label": "B",
-          "text": "Sobrescreve o histórico do repositório remoto"
+          "text": "Apagar a branch"
         },
         {
           "label": "C",
-          "text": "Cancela o último commit"
+          "text": "Editar os arquivos conflitantes, git add e git commit"
         },
         {
           "label": "D",
-          "text": "Limpa o cache"
+          "text": "Ignorar e fazer git commit"
         }
       ],
-      "answer": "B"
+      "answer": "C"
     },
     {
       "id": "code_debugging_060",
       "benchmark": "code_debugging",
       "split": "dev",
-      "question": "Em HTML, qual a tag incorreta para um link? (variante)",
+      "question": "Em CSS, `z-index` não funciona se o elemento não tiver:",
       "choices": [
         {
           "label": "A",
-          "text": "<link href=''>"
+          "text": "`color` definido"
         },
         {
           "label": "B",
-          "text": "<a href=''>"
+          "text": "`position` diferente de `static`"
         },
         {
           "label": "C",
-          "text": "<a src=''>"
+          "text": "`display: block`"
         },
         {
           "label": "D",
-          "text": "Ambas A e C para links clicáveis de texto"
+          "text": "`margin: 0`"
         }
       ],
-      "answer": "D"
+      "answer": "B"
     },
     {
       "id": "math_symbolic_061",
@@ -1757,132 +1757,132 @@
       "id": "math_symbolic_071",
       "benchmark": "math_symbolic",
       "split": "dev",
-      "question": "Se 3x - 5 = 10, qual o valor de x?",
+      "question": "Se a matriz A é 3x2 e B é 2x4, a matriz A*B tem dimensão:",
       "choices": [
         {
           "label": "A",
-          "text": "3"
+          "text": "3x4"
         },
         {
           "label": "B",
-          "text": "5"
+          "text": "2x2"
         },
         {
           "label": "C",
-          "text": "15"
+          "text": "3x2"
         },
         {
           "label": "D",
-          "text": "x não existe"
+          "text": "Não é possível multiplicar"
         }
       ],
-      "answer": "B"
+      "answer": "A"
     },
     {
       "id": "math_symbolic_072",
       "benchmark": "math_symbolic",
       "split": "dev",
-      "question": "Qual a derivada de f(x) = x^3?",
+      "question": "A solução da equação quadrática x^2 - 4x + 4 = 0 é:",
       "choices": [
         {
           "label": "A",
-          "text": "x^2"
+          "text": "x=2"
         },
         {
           "label": "B",
-          "text": "3x^2"
+          "text": "x=4"
         },
         {
           "label": "C",
-          "text": "3x"
+          "text": "x=-2"
         },
         {
           "label": "D",
-          "text": "x^4/4"
+          "text": "Não possui raiz real"
         }
       ],
-      "answer": "B"
+      "answer": "A"
     },
     {
       "id": "math_symbolic_073",
       "benchmark": "math_symbolic",
       "split": "dev",
-      "question": "Seja A = {1, 2} e B = {2, 3}. Qual é A interseção B?",
+      "question": "Qual a integral indefinida de f(x) = 2x?",
       "choices": [
         {
           "label": "A",
-          "text": "{1, 2, 3}"
+          "text": "x^2 + C"
         },
         {
           "label": "B",
-          "text": "{2}"
+          "text": "2"
         },
         {
           "label": "C",
-          "text": "{1, 3}"
+          "text": "x + C"
         },
         {
           "label": "D",
-          "text": "Vazio"
+          "text": "x^2/2 + C"
         }
       ],
-      "answer": "B"
+      "answer": "A"
     },
     {
       "id": "math_symbolic_074",
       "benchmark": "math_symbolic",
       "split": "dev",
-      "question": "O próximo número na sequência 2, 4, 8, 16 é:",
+      "question": "O limite de sin(x)/x quando x tende a 0 é:",
       "choices": [
         {
           "label": "A",
-          "text": "24"
+          "text": "0"
         },
         {
           "label": "B",
-          "text": "30"
+          "text": "1"
         },
         {
           "label": "C",
-          "text": "32"
+          "text": "Infinito"
         },
         {
           "label": "D",
-          "text": "64"
-        }
-      ],
-      "answer": "C"
-    },
-    {
-      "id": "math_symbolic_075",
-      "benchmark": "math_symbolic",
-      "split": "dev",
-      "question": "Logaritmo base 10 de 1000 é:",
-      "choices": [
-        {
-          "label": "A",
-          "text": "2"
-        },
-        {
-          "label": "B",
-          "text": "3"
-        },
-        {
-          "label": "C",
-          "text": "10"
-        },
-        {
-          "label": "D",
-          "text": "100"
+          "text": "-1"
         }
       ],
       "answer": "B"
     },
     {
+      "id": "math_symbolic_075",
+      "benchmark": "math_symbolic",
+      "split": "dev",
+      "question": "Qual a probabilidade de obter soma 7 lançando dois dados de 6 faces?",
+      "choices": [
+        {
+          "label": "A",
+          "text": "1/6"
+        },
+        {
+          "label": "B",
+          "text": "1/12"
+        },
+        {
+          "label": "C",
+          "text": "1/36"
+        },
+        {
+          "label": "D",
+          "text": "1/7"
+        }
+      ],
+      "answer": "A"
+    },
+    {
       "id": "math_symbolic_076",
       "benchmark": "math_symbolic",
       "split": "dev",
-      "question": "Num triângulo retângulo, catetos medem 3 e 4. A hipotenusa é:",
+      "question": "No plano complexo, o módulo de z = 3 + 4i é:",
       "choices": [
         {
           "label": "A",
@@ -1890,15 +1890,15 @@
         },
         {
           "label": "B",
-          "text": "6"
-        },
-        {
-          "label": "C",
           "text": "7"
         },
         {
-          "label": "D",
+          "label": "C",
           "text": "25"
+        },
+        {
+          "label": "D",
+          "text": "1"
         }
       ],
       "answer": "A"
@@ -1907,73 +1907,73 @@
       "id": "math_symbolic_077",
       "benchmark": "math_symbolic",
       "split": "dev",
-      "question": "A matriz identidade 2x2 tem quais elementos na diagonal principal?",
+      "question": "A área de um círculo com raio r=2 é:",
       "choices": [
         {
           "label": "A",
-          "text": "0 e 0"
+          "text": "4*pi"
         },
         {
           "label": "B",
-          "text": "1 e 1"
+          "text": "2*pi"
         },
         {
           "label": "C",
-          "text": "1 e 0"
+          "text": "pi"
         },
         {
           "label": "D",
-          "text": "0 e 1"
+          "text": "8*pi"
         }
       ],
-      "answer": "B"
+      "answer": "A"
     },
     {
       "id": "math_symbolic_078",
       "benchmark": "math_symbolic",
       "split": "dev",
-      "question": "Qual o valor de 5 fatorial (5!)?",
+      "question": "O valor de 2 elevado a 10 é:",
       "choices": [
         {
           "label": "A",
-          "text": "20"
+          "text": "1000"
         },
         {
           "label": "B",
-          "text": "60"
+          "text": "1024"
         },
         {
           "label": "C",
-          "text": "120"
+          "text": "512"
         },
         {
           "label": "D",
-          "text": "720"
+          "text": "2048"
         }
       ],
-      "answer": "C"
+      "answer": "B"
     },
     {
       "id": "math_symbolic_079",
       "benchmark": "math_symbolic",
       "split": "dev",
-      "question": "Um produto custa 100 reais e tem 20% de desconto. Seu novo preço é:",
+      "question": "Se log2(x) = 3, então x é:",
       "choices": [
         {
           "label": "A",
-          "text": "80"
+          "text": "8"
         },
         {
           "label": "B",
-          "text": "120"
+          "text": "6"
         },
         {
           "label": "C",
-          "text": "20"
+          "text": "9"
         },
         {
           "label": "D",
-          "text": "100"
+          "text": "2^30"
         }
       ],
       "answer": "A"
@@ -1982,23 +1982,23 @@
       "id": "math_symbolic_080",
       "benchmark": "math_symbolic",
       "split": "dev",
-      "question": "A soma dos ângulos internos de um triângulo é:",
+      "question": "O cosseno de 90 graus é:",
       "choices": [
         {
           "label": "A",
-          "text": "90"
+          "text": "1"
         },
         {
           "label": "B",
-          "text": "180"
+          "text": "0"
         },
         {
           "label": "C",
-          "text": "360"
+          "text": "-1"
         },
         {
           "label": "D",
-          "text": "270"
+          "text": "Infinito"
         }
       ],
       "answer": "B"
@@ -2257,48 +2257,48 @@
       "id": "analogical_transfer_091",
       "benchmark": "analogical_transfer",
       "split": "dev",
-      "question": "Árvore está para Floresta assim como Soldado está para:",
+      "question": "Coração está para Sangue assim como Bomba está para:",
       "choices": [
         {
           "label": "A",
-          "text": "Arma"
+          "text": "Água"
         },
         {
           "label": "B",
-          "text": "Exército"
+          "text": "Motor"
         },
         {
           "label": "C",
-          "text": "Guerra"
+          "text": "Tubo"
         },
         {
           "label": "D",
-          "text": "Trincheira"
+          "text": "Pressão"
         }
       ],
-      "answer": "B"
+      "answer": "A"
     },
     {
       "id": "analogical_transfer_092",
       "benchmark": "analogical_transfer",
       "split": "dev",
-      "question": "Médico está para Hospital assim como Professor está para:",
+      "question": "Pneu está para Borracha assim como Garrafa está para:",
       "choices": [
         {
           "label": "A",
-          "text": "Alunos"
+          "text": "Líquido"
         },
         {
           "label": "B",
-          "text": "Livro"
+          "text": "Água"
         },
         {
           "label": "C",
-          "text": "Escola"
+          "text": "Vidro"
         },
         {
           "label": "D",
-          "text": "Quadro"
+          "text": "Tampa"
         }
       ],
       "answer": "C"
@@ -2307,98 +2307,98 @@
       "id": "analogical_transfer_093",
       "benchmark": "analogical_transfer",
       "split": "dev",
-      "question": "Pássaro está para Voar assim como Peixe está para:",
+      "question": "Escritor está para Livro assim como Pintor está para:",
       "choices": [
         {
           "label": "A",
-          "text": "Nadar"
+          "text": "Pincel"
         },
         {
           "label": "B",
-          "text": "Água"
+          "text": "Tinta"
         },
         {
           "label": "C",
-          "text": "Guelras"
+          "text": "Quadro"
         },
         {
           "label": "D",
-          "text": "Mergulhar"
+          "text": "Cores"
         }
       ],
-      "answer": "A"
+      "answer": "C"
     },
     {
       "id": "analogical_transfer_094",
       "benchmark": "analogical_transfer",
       "split": "dev",
-      "question": "Frio está para Gelo assim como Calor está para:",
+      "question": "Tribunal está para Juiz assim como Sala de Aula está para:",
       "choices": [
         {
           "label": "A",
-          "text": "Sol"
+          "text": "Lousa"
         },
         {
           "label": "B",
-          "text": "Fogo"
+          "text": "Aluno"
         },
         {
           "label": "C",
-          "text": "Vapor"
+          "text": "Diretor"
         },
         {
           "label": "D",
-          "text": "Luz"
+          "text": "Professor"
         }
       ],
-      "answer": "B"
+      "answer": "D"
     },
     {
       "id": "analogical_transfer_095",
       "benchmark": "analogical_transfer",
       "split": "dev",
-      "question": "Livro está para Ler assim como Música está para:",
+      "question": "Abelha está para Mel assim como Vaca está para:",
       "choices": [
         {
           "label": "A",
-          "text": "Tocar"
+          "text": "Leite"
         },
         {
           "label": "B",
-          "text": "Ouvir"
+          "text": "Pasto"
         },
         {
           "label": "C",
-          "text": "Cantar"
+          "text": "Bezerro"
         },
         {
           "label": "D",
-          "text": "Dançar"
+          "text": "Grama"
         }
       ],
-      "answer": "B"
+      "answer": "A"
     },
     {
       "id": "analogical_transfer_096",
       "benchmark": "analogical_transfer",
       "split": "dev",
-      "question": "Pedal está para Bicicleta assim como Remo está para:",
+      "question": "Telescópio está para Estrelas assim como Microscópio está para:",
       "choices": [
         {
           "label": "A",
-          "text": "Navio"
+          "text": "Lentes"
         },
         {
           "label": "B",
-          "text": "Barco"
+          "text": "Bactérias"
         },
         {
           "label": "C",
-          "text": "Água"
+          "text": "Olhos"
         },
         {
           "label": "D",
-          "text": "Hélice"
+          "text": "Laboratório"
         }
       ],
       "answer": "B"
@@ -2407,73 +2407,73 @@
       "id": "analogical_transfer_097",
       "benchmark": "analogical_transfer",
       "split": "dev",
-      "question": "Tinta está para Caneta assim como Grafite está para:",
+      "question": "Semente está para Árvore assim como Ovo está para:",
       "choices": [
         {
           "label": "A",
-          "text": "Borracha"
+          "text": "Galinha"
         },
         {
           "label": "B",
-          "text": "Lápis"
+          "text": "Ninho"
         },
         {
           "label": "C",
-          "text": "Papel"
+          "text": "Pássaro"
         },
         {
           "label": "D",
-          "text": "Desenho"
+          "text": "Casca"
         }
       ],
-      "answer": "B"
+      "answer": "C"
     },
     {
       "id": "analogical_transfer_098",
       "benchmark": "analogical_transfer",
       "split": "dev",
-      "question": "Mesa está para Madeira assim como Janela está para:",
+      "question": "Termômetro está para Temperatura assim como Balança está para:",
       "choices": [
         {
           "label": "A",
-          "text": "Parede"
+          "text": "Peso"
         },
         {
           "label": "B",
-          "text": "Vidro"
+          "text": "Volume"
         },
         {
           "label": "C",
-          "text": "Visão"
+          "text": "Distância"
         },
         {
           "label": "D",
-          "text": "Metal"
+          "text": "Graus"
         }
       ],
-      "answer": "B"
+      "answer": "A"
     },
     {
       "id": "analogical_transfer_099",
       "benchmark": "analogical_transfer",
       "split": "dev",
-      "question": "Noite está para Escuro assim como Dia está para:",
+      "question": "Mar está para Água assim como Deserto está para:",
       "choices": [
         {
           "label": "A",
-          "text": "Sol"
+          "text": "Camelo"
         },
         {
           "label": "B",
-          "text": "Manhã"
+          "text": "Cacto"
         },
         {
           "label": "C",
-          "text": "Claro"
+          "text": "Areia"
         },
         {
           "label": "D",
-          "text": "Acordar"
+          "text": "Sol"
         }
       ],
       "answer": "C"
@@ -2482,26 +2482,26 @@
       "id": "analogical_transfer_100",
       "benchmark": "analogical_transfer",
       "split": "dev",
-      "question": "Visão está para Olhos assim como Audição está para:",
+      "question": "Aranha está para Teia assim como Castor está para:",
       "choices": [
         {
           "label": "A",
-          "text": "Som"
+          "text": "Rio"
         },
         {
           "label": "B",
-          "text": "Música"
+          "text": "Madeira"
         },
         {
           "label": "C",
-          "text": "Ouvidos"
+          "text": "Dente"
         },
         {
           "label": "D",
-          "text": "Voz"
+          "text": "Represa"
         }
       ],
-      "answer": "C"
+      "answer": "D"
     }
   ]
 }

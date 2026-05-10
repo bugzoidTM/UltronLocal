@@ -1,0 +1,2072 @@
+{
+  "ok": true,
+  "resolved": true,
+  "investigation_id": "inv_267a47f201",
+  "ts": 1778363960,
+  "status": "transfer_prior_validated",
+  "reason": "no_structured_coverage",
+  "task_type": "general",
+  "query": "qual a origem da vida?",
+  "learned_route": {
+    "module": "unknown",
+    "confidence": 0.0,
+    "method": "episode_token_similarity",
+    "evidence_count": 0,
+    "examples_seen": 120,
+    "top_similarity": 0.0,
+    "margin": 0.0,
+    "module_scores": {},
+    "evidence": [],
+    "routed": false
+  },
+  "coverage": {
+    "score": 1.0,
+    "shared": [
+      "origem",
+      "vida"
+    ],
+    "query_tokens": 2,
+    "evidence_tokens": 628
+  },
+  "missing_slots": [
+    "aresta_causal_relevante"
+  ],
+  "next_experiment": {
+    "kind": "causal_transfer_prior_validation",
+    "target_route": "unknown:general",
+    "query_terms": [
+      "origem",
+      "vida"
+    ],
+    "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+    "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+  },
+  "transfer_prior": {
+    "score": 0.6208,
+    "prior_id": "transfer_b2b6cdece8",
+    "source": "cross_domain_skill",
+    "skill_id": "zshot_1776799967_abc9",
+    "skill_name": "Isomorfismo Validado: hard_eval_fs_guard_1776799966 ↔ hard_eval_api_guard_1776799966",
+    "source_domain": "hard_eval_fs_guard_1776799966",
+    "target_domain": "unknown:general",
+    "valid_domains": [
+      "hard_eval_fs_guard_1776799966",
+      "hard_eval_api_guard_1776799966"
+    ],
+    "mapping": {
+      "guarded": "auth_ok",
+      "validated": "schema_ok",
+      "reversible": "rollback_ready",
+      "resource_ok": "quota_ok"
+    },
+    "raw_score": 0.9951,
+    "p_value": 0.0417,
+    "transfer_improvement": 0.7333,
+    "base_confidence": 0.88,
+    "confidence": 0.5808,
+    "degradation": 0.2992,
+    "overlap": 0.0,
+    "transferred_policy": "Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+    "policy_hypothesis": "Se a estrutura do dominio desconhecido preservar o invariante de hard_eval_fs_guard_1776799966, usar a politica transferida como prior, nao como fato.",
+    "causal_claim": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+    "validation_required": true,
+    "validation_status": "hypothesis_needs_intervention",
+    "ok": true,
+    "type": "autoisomorphic_transfer_prior",
+    "query_tokens": [
+      "origem",
+      "vida"
+    ],
+    "task_type": "general",
+    "candidate_count": 10,
+    "origin": "autoisomorphic_mapper.transfer_prior",
+    "sir": {
+      "schema_version": "sir.v1",
+      "created_at": 1778363960,
+      "query": "qual a origem da vida?",
+      "facts": [
+        {
+          "id": "FACT_1",
+          "anchor": "[FACT_1]",
+          "text": "Prior autoisomorfico: tipo=autoisomorphic_transfer_prior; score=0.6208; origem=autoisomorphic_mapper.transfer_prior.",
+          "source": "autoisomorphic_mapper",
+          "critical": true,
+          "required_terms": [
+            "6208",
+            "autoisomorfico",
+            "autoisomorphic_mapper",
+            "autoisomorphic_transfer_prior",
+            "origem",
+            "prior",
+            "score",
+            "tipo"
+          ],
+          "numbers": [
+            "0.6208"
+          ],
+          "metadata": {}
+        },
+        {
+          "id": "FACT_2",
+          "anchor": "[FACT_2]",
+          "text": "Claim causal transferido: causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+          "source": "autoisomorphic_mapper",
+          "critical": true,
+          "required_terms": [
+            "causal",
+            "causal_transfer_prior",
+            "claim",
+            "general",
+            "hard_eval_fs_guard_1776799966",
+            "transferido",
+            "unknown"
+          ],
+          "numbers": [],
+          "metadata": {}
+        },
+        {
+          "id": "FACT_3",
+          "anchor": "[FACT_3]",
+          "text": "Politica transferida: Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+          "source": "autoisomorphic_mapper",
+          "critical": false,
+          "required_terms": [
+            "042",
+            "causal",
+            "comum",
+            "ganho",
+            "politica",
+            "topologia",
+            "transferencia",
+            "transferida"
+          ],
+          "numbers": [
+            "0.042",
+            "73.3"
+          ],
+          "metadata": {}
+        }
+      ],
+      "rules_applied": [
+        {
+          "id": "RULE_1",
+          "anchor": "[RULE_1]",
+          "rule": "Prior autoisomorfico degradado e sempre hipotetico ate validacao ativa.",
+          "input_refs": [
+            "FACT_1",
+            "FACT_2",
+            "FACT_3"
+          ],
+          "output": "Apresentar como hipotese operacional, nao como fato final.",
+          "confidence": 0.6208
+        }
+      ],
+      "constraints": [
+        {
+          "id": "CONSTRAINT_A",
+          "anchor": "[CONSTRAINT_A]",
+          "type": "no_external_facts",
+          "text": "Usar somente fatos presentes no SIR.",
+          "critical": true,
+          "metadata": {}
+        },
+        {
+          "id": "CONSTRAINT_B",
+          "anchor": "[CONSTRAINT_B]",
+          "type": "language",
+          "text": "Responder em PT-BR.",
+          "critical": true,
+          "metadata": {}
+        },
+        {
+          "id": "CONSTRAINT_C",
+          "anchor": "[CONSTRAINT_C]",
+          "type": "style",
+          "text": "Manter tom direto, sem preambulo e sem expor raciocinio interno.",
+          "critical": true,
+          "metadata": {}
+        },
+        {
+          "id": "CONSTRAINT_D",
+          "anchor": "[CONSTRAINT_D]",
+          "type": "hypothesis_only",
+          "text": "Nao promover prior autoisomorfico a conclusao sem validacao.",
+          "critical": true,
+          "metadata": {}
+        }
+      ],
+      "causal_graph_excerpt": [
+        {
+          "id": "CAUSE_1",
+          "anchor": "[CAUSE_1]",
+          "source": "hard_eval_fs_guard_1776799966",
+          "relation": "possible_isomorphism_to",
+          "target": "unknown:general",
+          "evidence_refs": [
+            "FACT_1",
+            "FACT_2",
+            "FACT_3"
+          ]
+        }
+      ],
+      "verification_status": {
+        "status": "transfer_prior_requires_validation",
+        "schema_valid": true,
+        "critical_fact_ids": [
+          "FACT_1",
+          "FACT_2"
+        ],
+        "checks": [
+          "schema_validated",
+          "hypothesis_anchored"
+        ],
+        "confidence": 0.6208
+      }
+    }
+  },
+  "candidate_modules": [],
+  "probes": {
+    "learned_route": {
+      "ok": true,
+      "prediction": {
+        "module": "unknown",
+        "confidence": 0.0,
+        "method": "episode_token_similarity",
+        "evidence_count": 0,
+        "examples_seen": 120,
+        "top_similarity": 0.0,
+        "margin": 0.0,
+        "module_scores": {},
+        "evidence": [],
+        "routed": false
+      }
+    },
+    "causal_graph": {
+      "ok": true,
+      "count": 0,
+      "items": []
+    },
+    "episodic_memory": {
+      "ok": true,
+      "count": 0,
+      "summary": "{'working_memory': {'contexto_imediato': 'Digest noturno da memoria episodica (2026-05-08): self_introspection/episodic_compiler (6 eps, keywords=episodic_compiler); self_introspection/sleep_cycle (2 eps, keywords=sleep_cycle); planning/causal_graph_enrichment (1 eps, keywords=causal_graph_enrichment)', 'estado_plano_execucao': {'num_passos': 1, 'finalizou': True, 'episode_id': 'ep_1778265544_565167'}, 'ultimos_tool_calls': [{'tool': 'sleep_cycle_digest', 'source_count': 28, 'theme_count': 3, 'stagnation_status': 'recovered_by_episodic_enrichment'}]}, 'episodic_similar': [], 'procedural_hints': {'task_type': 'general', 'best_strategies': []}, 'top_strategy_hint': None, 'budget': {'max_chars': 1800, 'actual_chars': 747, 'truncated': False}}"
+    },
+    "store": {
+      "ok": true,
+      "triples": [],
+      "insights": [],
+      "experiences": [
+        {
+          "id": 4376,
+          "source_id": "chat_session:codex-final-check",
+          "text": "Usuario: eu perguntei o nome do seu criador Ultron: A autoria que eu consigo sustentar agora e coletiva ou institucional: usuário e equipe. A origem operacional registrada e: Projeto de pesquisa AGI iniciado pelo usuário e equipe. O marco temporal recuperado para essa origem e 2026-03-21 10:47:41. Lacuna calibrada: ha "
+        },
+        {
+          "id": 4377,
+          "source_id": "chat_session:ui_movwgjbt_mjrcxitp",
+          "text": "Usuario: quem te criou? Ultron: A autoria que eu consigo sustentar agora e coletiva ou institucional: usuário e equipe. A origem operacional registrada e: Projeto de pesquisa AGI iniciado pelo usuário e equipe. O marco temporal recuperado para essa origem e 2026-03-21 10:47:41. Evidencias usadas: self_model.identity: U"
+        },
+        {
+          "id": 4382,
+          "source_id": "chat_session:ui_moyvyetk_1znlvs2h",
+          "text": "Usuario: quem te criou? Ultron: A autoria que eu consigo sustentar agora e coletiva ou institucional: usuário e equipe. A origem operacional registrada e: Projeto de pesquisa AGI iniciado pelo usuário e equipe. O marco temporal recuperado para essa origem e 2026-03-21 10:47:41. Evidencias usadas: self_model.identity: U"
+        }
+      ]
+    },
+    "workspace": {
+      "ok": true,
+      "count": 10,
+      "items": [
+        {
+          "module": "autonomous_cognition",
+          "channel": "conflict.review_needed",
+          "salience": 0.8,
+          "payload": "{\"reason\":\"autonomous_open_conflict_pressure\",\"source_action_id\":11176,\"evidence\":{\"open_conflict_count\":20}}"
+        },
+        {
+          "module": "local_world_models",
+          "channel": "model.hypothesis_induced",
+          "salience": 0.8,
+          "payload": "{\"family\": \"cognitive_architecture\", \"id\": \"hyp_1778363913_f044\", \"action\": \"autocog:queue_conflict_review\", \"hypothesis\": \"O modelo local ignora a rela\\u00e7\\u00e3o entre o n\\u00famero de open_conflict_count e a probabilidade de sucesso da a\\u00e7\\u00e3o 'autocog:queue_conflict_review'\", \"hidden_variable\": \"conflicto_aberto\", \"created_at\": 1778363913, \"stat"
+        },
+        {
+          "module": "local_world_models",
+          "channel": "model.hypothesis_induced",
+          "salience": 0.8,
+          "payload": "{\"family\": \"cognitive_architecture\", \"id\": \"hyp_1778363933_65e5\", \"action\": \"autocog:queue_conflict_review\", \"hypothesis\": \"Modelo local ignorou a vari\\u00e1vel 'workspace_count' no state_t\", \"hidden_variable\": \"workspace_count\", \"created_at\": 1778363933, \"status\": \"under_test\"}"
+        },
+        {
+          "module": "emergent_personality",
+          "channel": "identity.emergent_personality",
+          "salience": 0.86,
+          "payload": "{\"ok\": true, \"schema\": \"ultron.emergent_personality_profile.v1\", \"id\": \"personality_735569ca06eb55ac\", \"generated_at\": 1778363947, \"checksum\": \"735569ca06eb55ac\", \"substrate\": {\"window_days\": 30, \"biographic_digest_id\": \"bio_2026-05-09_1b4f5ec1812839df\", \"autobiographical_memories\": 160, \"events\": 180, \"evidence_items\": 467, \"sources\": [\"autobiographical_mem"
+        },
+        {
+          "module": "autonomous_cognition",
+          "channel": "autonomous.risk_forecast",
+          "salience": 0.88,
+          "payload": "{\"risks\":[{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than they are resolved.\",\"evidence\":{\"queued_action_count\":28},\"recommended_action\":\"prioritize_action_backlog\"},{\"risk_id\":\"open_conflict_pressure\",\"score\":1.0,\"reason\":\"Unresolved conflicts can fragment planning and memory consolidation.\",\"evidence\":{\""
+        },
+        {
+          "module": "autonomous_cognition",
+          "channel": "autonomous.risk_forecast",
+          "salience": 0.88,
+          "payload": "{\"risks\":[{\"risk_id\":\"open_conflict_pressure\",\"score\":1.0,\"reason\":\"Unresolved conflicts can fragment planning and memory consolidation.\",\"evidence\":{\"open_conflict_count\":20},\"recommended_action\":\"queue_conflict_review\"},{\"risk_id\":\"workspace_attention_pressure\",\"score\":0.42000000000000004,\"reason\":\"Global Workspace has many or highly salient unconsumed sig"
+        },
+        {
+          "module": "autonomous_cognition",
+          "channel": "autonomous.risk_forecast",
+          "salience": 0.88,
+          "payload": "{\"risks\":[{\"risk_id\":\"open_conflict_pressure\",\"score\":1.0,\"reason\":\"Unresolved conflicts can fragment planning and memory consolidation.\",\"evidence\":{\"open_conflict_count\":20},\"recommended_action\":\"queue_conflict_review\"},{\"risk_id\":\"workspace_attention_pressure\",\"score\":0.8400000000000001,\"reason\":\"Global Workspace has many or highly salient unconsumed sign"
+        },
+        {
+          "module": "autonomous_cognition",
+          "channel": "autonomous.consequence",
+          "salience": 0.8999999999999999,
+          "payload": "{\"episode_id\":\"ep_f732d8c5768dd843e2\",\"event_id\":70961,\"action_key\":\"autocog:queue_conflict_review\",\"surprise\":1.0,\"ok\":true}"
+        },
+        {
+          "module": "autonomous_cognition",
+          "channel": "autonomous.consequence",
+          "salience": 0.8999999999999999,
+          "payload": "{\"episode_id\":\"ep_cb43d0e09c8709dfd2\",\"event_id\":70973,\"action_key\":\"autocog:queue_conflict_review\",\"surprise\":1.0,\"ok\":true}"
+        },
+        {
+          "module": "autonomous_cognition",
+          "channel": "autonomous.consequence",
+          "salience": 0.8999999999999999,
+          "payload": "{\"episode_id\":\"ep_f9f5137d9bc152d6d7\",\"event_id\":70969,\"action_key\":\"autocog:queue_conflict_review\",\"surprise\":1.0,\"ok\":true}"
+        }
+      ]
+    },
+    "runtime_state": {
+      "ok": true,
+      "files": {
+        "background_guard.json": {
+          "enabled": true,
+          "state": "foreground_throttle",
+          "lag_sec": 0.009,
+          "max_lag_sec": 30.4983,
+          "consecutive_lag": 0,
+          "paused_until": 1778363999.2490497,
+          "last_pause_reason": "event_loop_lag",
+          "last_pause_at": 1778363909.2490497,
+          "last_slow_request": null,
+          "blocked_loops": 71,
+          "last_blocked_loop": "no_cloud_campaign_loop",
+          "last_log_at": 1778363940.2108743,
+          "foreground_active": 0,
+          "last_foreground_path": "/api/chat/stream",
+          "last_foreground_at": 1778363947.0951202,
+          "last_foreground_elapsed_sec": 0.027,
+          "last_pause_details": {
+            "lag_sec": 30.498,
+            "consecutive_lag": 1
+          },
+          "paused": true,
+          "paused_for_sec": 38.92230534553528
+        },
+        "runtime_health.json": {
+          "ts": 1778363909,
+          "active_goal": "Modelar taxonomia de erros cognitivos em decises",
+          "active_mission": {
+            "id": "mis_1776628887_3",
+            "title": "Long Horizon: Modelar taxonomia de erros cognitivos em decises",
+            "objective": "Catalogar vieses e estratgias de mitigao para melhorar qualidade decisria.",
+            "context": "Seeded from active goal",
+            "status": "active",
+            "created_at": 1776628887,
+            "updated_at": 1776651320,
+            "horizon_days": 14,
+            "due_at": 1777838487,
+            "checkpoints": [
+              {
+                "ts": 1776628887,
+                "signal": "autonomy_review",
+                "note": "Review: done=29, blocked=0",
+                "progress_delta": 0.058
+              },
+              {
+                "ts": 1776629114,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776629115,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776629143,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776629414,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776629415,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776629443,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776629715,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776629720,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776629743,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776630044,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776630344,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776630644,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776630946,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776631247,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776631547,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776632343,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776632498,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776632798,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776633098,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776633331,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776633635,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776633823,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776634123,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776634424,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776636820,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776637121,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776637421,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776637717,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776638004,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776638251,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776638305,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776638554,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776638605,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776638854,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776638905,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776639186,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776639205,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776639313,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776639505,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776639805,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776640109,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776640416,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776640719,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776641019,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776641090,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776641149,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776641181,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776641199,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776641269,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776641285,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776641319,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776641619,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776641919,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776642219,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776642519,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776642819,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776643119,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776643419,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776643719,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776644019,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776644321,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776644628,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776644935,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776645246,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776645552,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776645858,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776646168,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776646478,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776646796,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776647118,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776647418,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776647720,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776648020,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776648320,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776648620,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776648920,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776649220,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776649520,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776649820,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776650120,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776650420,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776650720,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776651020,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              },
+              {
+                "ts": 1776651320,
+                "signal": "mission_complete",
+                "note": "Mission complete via mission_control",
+                "progress_delta": 1.0
+              }
+            ],
+            "progress": 1.0
+          },
+          "loops": {
+            "background_enabled": true,
+            "mission_control_enabled": true,
+            "autonomy_enabled": true,
+            "judge_enabled": true,
+            "autofeeder_enabled": true,
+            "roadmap_enabled": true,
+            "agi_path_enabled": true,
+            "reflexion_enabled": true,
+            "voice_prewarm_enabled": true,
+            "metacognitive_enabled": true,
+            "recursive_si_enabled": true,
+            "inner_monologue_enabled": true,
+            "self_improvement_enabled": true,
+            "self_governance_enabled": true,
+            "sleep_cycle_enabled": true,
+            "active_discovery_enabled": true,
+            "no_cloud_campaign_enabled": true,
+            "self_talk_enabled": true,
+            "web_explorer_enabled": true,
+            "finetune_autotrigger_enabled": false
+          },
+          "cadence": {
+            "autonomy_tick_sec": 300,
+            "judge_tick_sec": 180,
+            "autofeeder_tick_sec": 300,
+            "reflexion_tick_sec": 300,
+            "no_cloud_campaign_tick_sec": 900,
+            "budget_per_min": 2
+          },
+          "autonomy_state": {
+            "ticks": 1,
+            "last_tick": 1876,
+            "last_error": null,
+            "consecutive_errors": 0
+          },
+          "background_guard": {
+            "enabled": true,
+            "state": "paused",
+            "lag_sec": 0.0116,
+            "max_lag_sec": 4.9154,
+            "consecutive_lag": 0,
+            "paused_until": 1778363878.3511946,
+            "last_pause_reason": "event_loop_lag",
+            "last_pause_at": 1778363788.3511946,
+            "last_slow_request": null,
+            "blocked_loops": 5,
+            "last_blocked_loop": "mission_control_loop",
+            "last_log_at": 1778363871.4493854,
+            "foreground_active": 0,
+            "last_foreground_path": null,
+            "last_foreground_at": 0.0,
+            "last_foreground_elapsed_sec": 0.0,
+            "last_pause_details": {
+              "lag_sec": 4.915,
+              "consecutive_lag": 1
+            },
+            "paused": false,
+            "paused_for_sec": 0.0
+          },
+          "background_binary_bus": {
+            "enabled": true,
+            "started_at": 1778363788.3511758,
+            "processed": 63,
+            "dropped": 0,
+            "sink_errors": 0,
+            "last_event": {
+              "kind": "workspace",
+              "loop": "autonomy_loop",
+              "event": "workspace_publish",
+              "at": 1778363908.9759378
+            },
+            "last_error": null,
+            "queue_size": 0,
+            "worker_alive": true,
+            "binlog_path": "D:\\UnidadeF\\UltronPro\\backend\\data\\background_bus.binlog"
+          },
+          "extra": {
+            "reason": "autonomy_tick_complete",
+            "memory_watchdog": {
+              "mem_mb": 0.0,
+              "soft_mb": 3500,
+              "hard_mb": 4200,
+              "acted": false,
+              "alerts": [],
+              "source": "autonomy_loop"
+            }
+          }
+        },
+        "no_cloud_experiment_campaign_state.json": {
+          "ok": true,
+          "status": "skipped_policy_cloud_rotation",
+          "ts": 1778265404,
+          "campaign": "local_inference_no_cloud_recovery",
+          "local_provider_policy": "cloud_rotation",
+          "forced": false,
+          "reason": "local providers disabled by resource policy; use cloud rotation only as language/interface fallback"
+        }
+      }
+    },
+    "autoisomorphic_transfer_prior": {
+      "ok": true,
+      "prior": {
+        "score": 0.6208,
+        "prior_id": "transfer_b2b6cdece8",
+        "source": "cross_domain_skill",
+        "skill_id": "zshot_1776799967_abc9",
+        "skill_name": "Isomorfismo Validado: hard_eval_fs_guard_1776799966 ↔ hard_eval_api_guard_1776799966",
+        "source_domain": "hard_eval_fs_guard_1776799966",
+        "target_domain": "unknown:general",
+        "valid_domains": [
+          "hard_eval_fs_guard_1776799966",
+          "hard_eval_api_guard_1776799966"
+        ],
+        "mapping": {
+          "guarded": "auth_ok",
+          "validated": "schema_ok",
+          "reversible": "rollback_ready",
+          "resource_ok": "quota_ok"
+        },
+        "raw_score": 0.9951,
+        "p_value": 0.0417,
+        "transfer_improvement": 0.7333,
+        "base_confidence": 0.88,
+        "confidence": 0.5808,
+        "degradation": 0.2992,
+        "overlap": 0.0,
+        "transferred_policy": "Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+        "policy_hypothesis": "Se a estrutura do dominio desconhecido preservar o invariante de hard_eval_fs_guard_1776799966, usar a politica transferida como prior, nao como fato.",
+        "causal_claim": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+        "validation_required": true,
+        "validation_status": "hypothesis_needs_intervention",
+        "ok": true,
+        "type": "autoisomorphic_transfer_prior",
+        "query_tokens": [
+          "origem",
+          "vida"
+        ],
+        "task_type": "general",
+        "candidate_count": 10,
+        "origin": "autoisomorphic_mapper.transfer_prior",
+        "sir": {
+          "schema_version": "sir.v1",
+          "created_at": 1778363960,
+          "query": "qual a origem da vida?",
+          "facts": [
+            {
+              "id": "FACT_1",
+              "anchor": "[FACT_1]",
+              "text": "Prior autoisomorfico: tipo=autoisomorphic_transfer_prior; score=0.6208; origem=autoisomorphic_mapper.transfer_prior.",
+              "source": "autoisomorphic_mapper",
+              "critical": true,
+              "required_terms": [
+                "6208",
+                "autoisomorfico",
+                "autoisomorphic_mapper",
+                "autoisomorphic_transfer_prior",
+                "origem",
+                "prior",
+                "score",
+                "tipo"
+              ],
+              "numbers": [
+                "0.6208"
+              ],
+              "metadata": {}
+            },
+            {
+              "id": "FACT_2",
+              "anchor": "[FACT_2]",
+              "text": "Claim causal transferido: causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+              "source": "autoisomorphic_mapper",
+              "critical": true,
+              "required_terms": [
+                "causal",
+                "causal_transfer_prior",
+                "claim",
+                "general",
+                "hard_eval_fs_guard_1776799966",
+                "transferido",
+                "unknown"
+              ],
+              "numbers": [],
+              "metadata": {}
+            },
+            {
+              "id": "FACT_3",
+              "anchor": "[FACT_3]",
+              "text": "Politica transferida: Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+              "source": "autoisomorphic_mapper",
+              "critical": false,
+              "required_terms": [
+                "042",
+                "causal",
+                "comum",
+                "ganho",
+                "politica",
+                "topologia",
+                "transferencia",
+                "transferida"
+              ],
+              "numbers": [
+                "0.042",
+                "73.3"
+              ],
+              "metadata": {}
+            }
+          ],
+          "rules_applied": [
+            {
+              "id": "RULE_1",
+              "anchor": "[RULE_1]",
+              "rule": "Prior autoisomorfico degradado e sempre hipotetico ate validacao ativa.",
+              "input_refs": [
+                "FACT_1",
+                "FACT_2",
+                "FACT_3"
+              ],
+              "output": "Apresentar como hipotese operacional, nao como fato final.",
+              "confidence": 0.6208
+            }
+          ],
+          "constraints": [
+            {
+              "id": "CONSTRAINT_A",
+              "anchor": "[CONSTRAINT_A]",
+              "type": "no_external_facts",
+              "text": "Usar somente fatos presentes no SIR.",
+              "critical": true,
+              "metadata": {}
+            },
+            {
+              "id": "CONSTRAINT_B",
+              "anchor": "[CONSTRAINT_B]",
+              "type": "language",
+              "text": "Responder em PT-BR.",
+              "critical": true,
+              "metadata": {}
+            },
+            {
+              "id": "CONSTRAINT_C",
+              "anchor": "[CONSTRAINT_C]",
+              "type": "style",
+              "text": "Manter tom direto, sem preambulo e sem expor raciocinio interno.",
+              "critical": true,
+              "metadata": {}
+            },
+            {
+              "id": "CONSTRAINT_D",
+              "anchor": "[CONSTRAINT_D]",
+              "type": "hypothesis_only",
+              "text": "Nao promover prior autoisomorfico a conclusao sem validacao.",
+              "critical": true,
+              "metadata": {}
+            }
+          ],
+          "causal_graph_excerpt": [
+            {
+              "id": "CAUSE_1",
+              "anchor": "[CAUSE_1]",
+              "source": "hard_eval_fs_guard_1776799966",
+              "relation": "possible_isomorphism_to",
+              "target": "unknown:general",
+              "evidence_refs": [
+                "FACT_1",
+                "FACT_2",
+                "FACT_3"
+              ]
+            }
+          ],
+          "verification_status": {
+            "status": "transfer_prior_requires_validation",
+            "schema_valid": true,
+            "critical_fact_ids": [
+              "FACT_1",
+              "FACT_2"
+            ],
+            "checks": [
+              "schema_validated",
+              "hypothesis_anchored"
+            ],
+            "confidence": 0.6208
+          }
+        }
+      }
+    }
+  },
+  "duration_ms": 114.69,
+  "causal_graph_registration": {
+    "ok": true,
+    "edge": {
+      "cause": "structured_reasoning_gap:no_structured_coverage",
+      "effect": "active_investigation:needs_experiment",
+      "condition": "structured_coverage_insufficient",
+      "support": 23,
+      "confidence": 0.99,
+      "severity": 1,
+      "knowledge_type": "observational",
+      "sources": [
+        "active_investigation"
+      ],
+      "last_evidence": {
+        "investigation_id": "inv_267a47f201",
+        "coverage": {
+          "score": 1.0,
+          "shared": [
+            "origem",
+            "vida"
+          ],
+          "query_tokens": 2,
+          "evidence_tokens": 628
+        },
+        "missing_slots": [
+          "aresta_causal_relevante"
+        ],
+        "next_experiment": {
+          "kind": "causal_transfer_prior_validation",
+          "target_route": "unknown:general",
+          "query_terms": [
+            "origem",
+            "vida"
+          ],
+          "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+          "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+        },
+        "learned_route": {
+          "module": "unknown",
+          "confidence": 0.0,
+          "method": "episode_token_similarity",
+          "evidence_count": 0,
+          "examples_seen": 120,
+          "top_similarity": 0.0,
+          "margin": 0.0,
+          "module_scores": {},
+          "evidence": [],
+          "routed": false
+        },
+        "transfer_prior": {
+          "score": 0.6208,
+          "prior_id": "transfer_b2b6cdece8",
+          "source": "cross_domain_skill",
+          "skill_id": "zshot_1776799967_abc9",
+          "skill_name": "Isomorfismo Validado: hard_eval_fs_guard_1776799966 ↔ hard_eval_api_guard_1776799966",
+          "source_domain": "hard_eval_fs_guard_1776799966",
+          "target_domain": "unknown:general",
+          "valid_domains": [
+            "hard_eval_fs_guard_1776799966",
+            "hard_eval_api_guard_1776799966"
+          ],
+          "mapping": {
+            "guarded": "auth_ok",
+            "validated": "schema_ok",
+            "reversible": "rollback_ready",
+            "resource_ok": "quota_ok"
+          },
+          "raw_score": 0.9951,
+          "p_value": 0.0417,
+          "transfer_improvement": 0.7333,
+          "base_confidence": 0.88,
+          "confidence": 0.5808,
+          "degradation": 0.2992,
+          "overlap": 0.0,
+          "transferred_policy": "Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+          "policy_hypothesis": "Se a estrutura do dominio desconhecido preservar o invariante de hard_eval_fs_guard_1776799966, usar a politica transferida como prior, nao como fato.",
+          "causal_claim": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+          "validation_required": true,
+          "validation_status": "hypothesis_needs_intervention",
+          "ok": true,
+          "type": "autoisomorphic_transfer_prior",
+          "query_tokens": [
+            "origem",
+            "vida"
+          ],
+          "task_type": "general",
+          "candidate_count": 10,
+          "origin": "autoisomorphic_mapper.transfer_prior",
+          "sir": {
+            "schema_version": "sir.v1",
+            "created_at": 1778363960,
+            "query": "qual a origem da vida?",
+            "facts": [
+              {
+                "id": "FACT_1",
+                "anchor": "[FACT_1]",
+                "text": "Prior autoisomorfico: tipo=autoisomorphic_transfer_prior; score=0.6208; origem=autoisomorphic_mapper.transfer_prior.",
+                "source": "autoisomorphic_mapper",
+                "critical": true,
+                "required_terms": [
+                  "6208",
+                  "autoisomorfico",
+                  "autoisomorphic_mapper",
+                  "autoisomorphic_transfer_prior",
+                  "origem",
+                  "prior",
+                  "score",
+                  "tipo"
+                ],
+                "numbers": [
+                  "0.6208"
+                ],
+                "metadata": {}
+              },
+              {
+                "id": "FACT_2",
+                "anchor": "[FACT_2]",
+                "text": "Claim causal transferido: causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+                "source": "autoisomorphic_mapper",
+                "critical": true,
+                "required_terms": [
+                  "causal",
+                  "causal_transfer_prior",
+                  "claim",
+                  "general",
+                  "hard_eval_fs_guard_1776799966",
+                  "transferido",
+                  "unknown"
+                ],
+                "numbers": [],
+                "metadata": {}
+              },
+              {
+                "id": "FACT_3",
+                "anchor": "[FACT_3]",
+                "text": "Politica transferida: Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+                "source": "autoisomorphic_mapper",
+                "critical": false,
+                "required_terms": [
+                  "042",
+                  "causal",
+                  "comum",
+                  "ganho",
+                  "politica",
+                  "topologia",
+                  "transferencia",
+                  "transferida"
+                ],
+                "numbers": [
+                  "0.042",
+                  "73.3"
+                ],
+                "metadata": {}
+              }
+            ],
+            "rules_applied": [
+              {
+                "id": "RULE_1",
+                "anchor": "[RULE_1]",
+                "rule": "Prior autoisomorfico degradado e sempre hipotetico ate validacao ativa.",
+                "input_refs": [
+                  "FACT_1",
+                  "FACT_2",
+                  "FACT_3"
+                ],
+                "output": "Apresentar como hipotese operacional, nao como fato final.",
+                "confidence": 0.6208
+              }
+            ],
+            "constraints": [
+              {
+                "id": "CONSTRAINT_A",
+                "anchor": "[CONSTRAINT_A]",
+                "type": "no_external_facts",
+                "text": "Usar somente fatos presentes no SIR.",
+                "critical": true,
+                "metadata": {}
+              },
+              {
+                "id": "CONSTRAINT_B",
+                "anchor": "[CONSTRAINT_B]",
+                "type": "language",
+                "text": "Responder em PT-BR.",
+                "critical": true,
+                "metadata": {}
+              },
+              {
+                "id": "CONSTRAINT_C",
+                "anchor": "[CONSTRAINT_C]",
+                "type": "style",
+                "text": "Manter tom direto, sem preambulo e sem expor raciocinio interno.",
+                "critical": true,
+                "metadata": {}
+              },
+              {
+                "id": "CONSTRAINT_D",
+                "anchor": "[CONSTRAINT_D]",
+                "type": "hypothesis_only",
+                "text": "Nao promover prior autoisomorfico a conclusao sem validacao.",
+                "critical": true,
+                "metadata": {}
+              }
+            ],
+            "causal_graph_excerpt": [
+              {
+                "id": "CAUSE_1",
+                "anchor": "[CAUSE_1]",
+                "source": "hard_eval_fs_guard_1776799966",
+                "relation": "possible_isomorphism_to",
+                "target": "unknown:general",
+                "evidence_refs": [
+                  "FACT_1",
+                  "FACT_2",
+                  "FACT_3"
+                ]
+              }
+            ],
+            "verification_status": {
+              "status": "transfer_prior_requires_validation",
+              "schema_valid": true,
+              "critical_fact_ids": [
+                "FACT_1",
+                "FACT_2"
+              ],
+              "checks": [
+                "schema_validated",
+                "hypothesis_anchored"
+              ],
+              "confidence": 0.6208
+            }
+          }
+        },
+        "prior_validation": null
+      },
+      "updated_at": 1778363960
+    }
+  },
+  "answer": "Encontrei cobertura direta insuficiente, mas nao vou parar em UNKNOWN: transferi um prior causal de hard_eval_fs_guard_1776799966 para unknown:general.\nHipotese/politica transferida: Topologia causal comum com p=0.042 e ganho de transferência de +73.3%\nConfianca calibrada do prior: 0.68 (degradada ate validacao interventiva).\nA investigacao ativa sandboxada validou o prior e registrou evidencia interventiva no grafo causal.\nLacunas restantes: aresta_causal_relevante.",
+  "execution": {
+    "ts": 1778363960,
+    "ok": true,
+    "executed": true,
+    "injected": true,
+    "investigation_id": "inv_267a47f201",
+    "query": "qual a origem da vida?",
+    "reason": "no_structured_coverage",
+    "missing_slots": [
+      "aresta_causal_relevante"
+    ],
+    "experiment": {
+      "kind": "causal_transfer_prior_validation",
+      "target_route": "unknown:general",
+      "query_terms": [
+        "origem",
+        "vida"
+      ],
+      "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+      "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+    },
+    "sandbox": {
+      "ok": true,
+      "error": null,
+      "returncode": 0,
+      "stderr": ""
+    },
+    "experiment_result": {
+      "ok": true,
+      "accepted": true,
+      "digest": "dc07396a632c6062",
+      "query_terms": [
+        "origem",
+        "vida"
+      ],
+      "missing_slots": [
+        "aresta_causal_relevante"
+      ],
+      "experiment_kind": "causal_transfer_prior_validation",
+      "target_route": "unknown:general",
+      "edge": {
+        "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+        "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
+        "condition": "active_investigation_prior_validation:inv_267a47f201",
+        "confidence": 0.6808
+      },
+      "prior_validation": {
+        "ok": true,
+        "status": "validated",
+        "category": "confirmed",
+        "confidence_before": 0.5808,
+        "confidence_after": 0.6808,
+        "query_overlap": [],
+        "source_domain": "hard_eval_fs_guard_1776799966",
+        "target_domain": "unknown:general",
+        "reason": "sandbox_validation_of_transfer_prior"
+      },
+      "episodic_episode": null,
+      "minimal_intervention": {
+        "kind": "causal_transfer_prior_validation",
+        "target_route": "unknown:general",
+        "filled_slots": [
+          "aresta_causal_relevante"
+        ],
+        "sandbox_digest": "dc07396a632c6062"
+      },
+      "acceptance_checked": true
+    },
+    "prior_validation": {
+      "ok": true,
+      "status": "validated",
+      "category": "confirmed",
+      "confidence_before": 0.5808,
+      "confidence_after": 0.6808,
+      "query_overlap": [],
+      "source_domain": "hard_eval_fs_guard_1776799966",
+      "target_domain": "unknown:general",
+      "reason": "sandbox_validation_of_transfer_prior"
+    },
+    "causal_graph": {
+      "ok": true,
+      "edge": {
+        "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+        "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
+        "condition": "active_investigation_prior_validation:inv_267a47f201",
+        "support": 1,
+        "confidence": 0.7008,
+        "severity": 1,
+        "knowledge_type": "interventional_weak",
+        "sources": [
+          "active_investigation_executor"
+        ],
+        "last_evidence": {
+          "investigation": {
+            "investigation_id": "inv_267a47f201",
+            "query": "qual a origem da vida?",
+            "reason": "no_structured_coverage",
+            "task_type": "general",
+            "status": "needs_experiment",
+            "coverage": {
+              "score": 1.0,
+              "shared": [
+                "origem",
+                "vida"
+              ],
+              "query_tokens": 2,
+              "evidence_tokens": 628
+            },
+            "missing_slots": [
+              "aresta_causal_relevante"
+            ],
+            "next_experiment": {
+              "kind": "causal_transfer_prior_validation",
+              "target_route": "unknown:general",
+              "query_terms": [
+                "origem",
+                "vida"
+              ],
+              "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+              "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+            },
+            "transfer_prior": {
+              "score": 0.6208,
+              "prior_id": "transfer_b2b6cdece8",
+              "source": "cross_domain_skill",
+              "skill_id": "zshot_1776799967_abc9",
+              "skill_name": "Isomorfismo Validado: hard_eval_fs_guard_1776799966 ↔ hard_eval_api_guard_1776799966",
+              "source_domain": "hard_eval_fs_guard_1776799966",
+              "target_domain": "unknown:general",
+              "valid_domains": [
+                "hard_eval_fs_guard_1776799966",
+                "hard_eval_api_guard_1776799966"
+              ],
+              "mapping": {
+                "guarded": "auth_ok",
+                "validated": "schema_ok",
+                "reversible": "rollback_ready",
+                "resource_ok": "quota_ok"
+              },
+              "raw_score": 0.9951,
+              "p_value": 0.0417,
+              "transfer_improvement": 0.7333,
+              "base_confidence": 0.88,
+              "confidence": 0.5808,
+              "degradation": 0.2992,
+              "overlap": 0.0,
+              "transferred_policy": "Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+              "policy_hypothesis": "Se a estrutura do dominio desconhecido preservar o invariante de hard_eval_fs_guard_1776799966, usar a politica transferida como prior, nao como fato.",
+              "causal_claim": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+              "validation_required": true,
+              "validation_status": "hypothesis_needs_intervention",
+              "ok": true,
+              "type": "autoisomorphic_transfer_prior",
+              "query_tokens": [
+                "origem",
+                "vida"
+              ],
+              "task_type": "general",
+              "candidate_count": 10,
+              "origin": "autoisomorphic_mapper.transfer_prior",
+              "sir": {
+                "schema_version": "sir.v1",
+                "created_at": 1778363960,
+                "query": "qual a origem da vida?",
+                "facts": [
+                  {
+                    "id": "FACT_1",
+                    "anchor": "[FACT_1]",
+                    "text": "Prior autoisomorfico: tipo=autoisomorphic_transfer_prior; score=0.6208; origem=autoisomorphic_mapper.transfer_prior.",
+                    "source": "autoisomorphic_mapper",
+                    "critical": true,
+                    "required_terms": [
+                      "6208",
+                      "autoisomorfico",
+                      "autoisomorphic_mapper",
+                      "autoisomorphic_transfer_prior",
+                      "origem",
+                      "prior",
+                      "score",
+                      "tipo"
+                    ],
+                    "numbers": [
+                      "0.6208"
+                    ],
+                    "metadata": {}
+                  },
+                  {
+                    "id": "FACT_2",
+                    "anchor": "[FACT_2]",
+                    "text": "Claim causal transferido: causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+                    "source": "autoisomorphic_mapper",
+                    "critical": true,
+                    "required_terms": [
+                      "causal",
+                      "causal_transfer_prior",
+                      "claim",
+                      "general",
+                      "hard_eval_fs_guard_1776799966",
+                      "transferido",
+                      "unknown"
+                    ],
+                    "numbers": [],
+                    "metadata": {}
+                  },
+                  {
+                    "id": "FACT_3",
+                    "anchor": "[FACT_3]",
+                    "text": "Politica transferida: Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+                    "source": "autoisomorphic_mapper",
+                    "critical": false,
+                    "required_terms": [
+                      "042",
+                      "causal",
+                      "comum",
+                      "ganho",
+                      "politica",
+                      "topologia",
+                      "transferencia",
+                      "transferida"
+                    ],
+                    "numbers": [
+                      "0.042",
+                      "73.3"
+                    ],
+                    "metadata": {}
+                  }
+                ],
+                "rules_applied": [
+                  {
+                    "id": "RULE_1",
+                    "anchor": "[RULE_1]",
+                    "rule": "Prior autoisomorfico degradado e sempre hipotetico ate validacao ativa.",
+                    "input_refs": [
+                      "FACT_1",
+                      "FACT_2",
+                      "FACT_3"
+                    ],
+                    "output": "Apresentar como hipotese operacional, nao como fato final.",
+                    "confidence": 0.6208
+                  }
+                ],
+                "constraints": [
+                  {
+                    "id": "CONSTRAINT_A",
+                    "anchor": "[CONSTRAINT_A]",
+                    "type": "no_external_facts",
+                    "text": "Usar somente fatos presentes no SIR.",
+                    "critical": true,
+                    "metadata": {}
+                  },
+                  {
+                    "id": "CONSTRAINT_B",
+                    "anchor": "[CONSTRAINT_B]",
+                    "type": "language",
+                    "text": "Responder em PT-BR.",
+                    "critical": true,
+                    "metadata": {}
+                  },
+                  {
+                    "id": "CONSTRAINT_C",
+                    "anchor": "[CONSTRAINT_C]",
+                    "type": "style",
+                    "text": "Manter tom direto, sem preambulo e sem expor raciocinio interno.",
+                    "critical": true,
+                    "metadata": {}
+                  },
+                  {
+                    "id": "CONSTRAINT_D",
+                    "anchor": "[CONSTRAINT_D]",
+                    "type": "hypothesis_only",
+                    "text": "Nao promover prior autoisomorfico a conclusao sem validacao.",
+                    "critical": true,
+                    "metadata": {}
+                  }
+                ],
+                "causal_graph_excerpt": [
+                  {
+                    "id": "CAUSE_1",
+                    "anchor": "[CAUSE_1]",
+                    "source": "hard_eval_fs_guard_1776799966",
+                    "relation": "possible_isomorphism_to",
+                    "target": "unknown:general",
+                    "evidence_refs": [
+                      "FACT_1",
+                      "FACT_2",
+                      "FACT_3"
+                    ]
+                  }
+                ],
+                "verification_status": {
+                  "status": "transfer_prior_requires_validation",
+                  "schema_valid": true,
+                  "critical_fact_ids": [
+                    "FACT_1",
+                    "FACT_2"
+                  ],
+                  "checks": [
+                    "schema_validated",
+                    "hypothesis_anchored"
+                  ],
+                  "confidence": 0.6208
+                }
+              }
+            }
+          },
+          "sandbox_result": {
+            "ok": true,
+            "accepted": true,
+            "digest": "dc07396a632c6062",
+            "query_terms": [
+              "origem",
+              "vida"
+            ],
+            "missing_slots": [
+              "aresta_causal_relevante"
+            ],
+            "experiment_kind": "causal_transfer_prior_validation",
+            "target_route": "unknown:general",
+            "edge": {
+              "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+              "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
+              "condition": "active_investigation_prior_validation:inv_267a47f201",
+              "confidence": 0.6808
+            },
+            "prior_validation": {
+              "ok": true,
+              "status": "validated",
+              "category": "confirmed",
+              "confidence_before": 0.5808,
+              "confidence_after": 0.6808,
+              "query_overlap": [],
+              "source_domain": "hard_eval_fs_guard_1776799966",
+              "target_domain": "unknown:general",
+              "reason": "sandbox_validation_of_transfer_prior"
+            },
+            "episodic_episode": null,
+            "minimal_intervention": {
+              "kind": "causal_transfer_prior_validation",
+              "target_route": "unknown:general",
+              "filled_slots": [
+                "aresta_causal_relevante"
+              ],
+              "sandbox_digest": "dc07396a632c6062"
+            },
+            "acceptance_checked": true
+          },
+          "duration_ms": 3045.76
+        },
+        "updated_at": 1778363963
+      }
+    },
+    "transfer_prior_causal_update": {
+      "ok": true,
+      "edge": {
+        "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+        "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
+        "condition": "active_investigation_prior_validation:inv_267a47f201",
+        "support": 2,
+        "confidence": 0.7508,
+        "severity": 1,
+        "knowledge_type": "interventional_weak",
+        "sources": [
+          "active_investigation_executor"
+        ],
+        "last_evidence": {
+          "investigation": {
+            "investigation_id": "inv_267a47f201",
+            "query": "qual a origem da vida?",
+            "reason": "no_structured_coverage",
+            "task_type": "general",
+            "status": "needs_experiment",
+            "coverage": {
+              "score": 1.0,
+              "shared": [
+                "origem",
+                "vida"
+              ],
+              "query_tokens": 2,
+              "evidence_tokens": 628
+            },
+            "missing_slots": [
+              "aresta_causal_relevante"
+            ],
+            "next_experiment": {
+              "kind": "causal_transfer_prior_validation",
+              "target_route": "unknown:general",
+              "query_terms": [
+                "origem",
+                "vida"
+              ],
+              "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+              "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+            },
+            "transfer_prior": {
+              "score": 0.6208,
+              "prior_id": "transfer_b2b6cdece8",
+              "source": "cross_domain_skill",
+              "skill_id": "zshot_1776799967_abc9",
+              "skill_name": "Isomorfismo Validado: hard_eval_fs_guard_1776799966 ↔ hard_eval_api_guard_1776799966",
+              "source_domain": "hard_eval_fs_guard_1776799966",
+              "target_domain": "unknown:general",
+              "valid_domains": [
+                "hard_eval_fs_guard_1776799966",
+                "hard_eval_api_guard_1776799966"
+              ],
+              "mapping": {
+                "guarded": "auth_ok",
+                "validated": "schema_ok",
+                "reversible": "rollback_ready",
+                "resource_ok": "quota_ok"
+              },
+              "raw_score": 0.9951,
+              "p_value": 0.0417,
+              "transfer_improvement": 0.7333,
+              "base_confidence": 0.88,
+              "confidence": 0.5808,
+              "degradation": 0.2992,
+              "overlap": 0.0,
+              "transferred_policy": "Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+              "policy_hypothesis": "Se a estrutura do dominio desconhecido preservar o invariante de hard_eval_fs_guard_1776799966, usar a politica transferida como prior, nao como fato.",
+              "causal_claim": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+              "validation_required": true,
+              "validation_status": "hypothesis_needs_intervention",
+              "ok": true,
+              "type": "autoisomorphic_transfer_prior",
+              "query_tokens": [
+                "origem",
+                "vida"
+              ],
+              "task_type": "general",
+              "candidate_count": 10,
+              "origin": "autoisomorphic_mapper.transfer_prior",
+              "sir": {
+                "schema_version": "sir.v1",
+                "created_at": 1778363960,
+                "query": "qual a origem da vida?",
+                "facts": [
+                  {
+                    "id": "FACT_1",
+                    "anchor": "[FACT_1]",
+                    "text": "Prior autoisomorfico: tipo=autoisomorphic_transfer_prior; score=0.6208; origem=autoisomorphic_mapper.transfer_prior.",
+                    "source": "autoisomorphic_mapper",
+                    "critical": true,
+                    "required_terms": [
+                      "6208",
+                      "autoisomorfico",
+                      "autoisomorphic_mapper",
+                      "autoisomorphic_transfer_prior",
+                      "origem",
+                      "prior",
+                      "score",
+                      "tipo"
+                    ],
+                    "numbers": [
+                      "0.6208"
+                    ],
+                    "metadata": {}
+                  },
+                  {
+                    "id": "FACT_2",
+                    "anchor": "[FACT_2]",
+                    "text": "Claim causal transferido: causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+                    "source": "autoisomorphic_mapper",
+                    "critical": true,
+                    "required_terms": [
+                      "causal",
+                      "causal_transfer_prior",
+                      "claim",
+                      "general",
+                      "hard_eval_fs_guard_1776799966",
+                      "transferido",
+                      "unknown"
+                    ],
+                    "numbers": [],
+                    "metadata": {}
+                  },
+                  {
+                    "id": "FACT_3",
+                    "anchor": "[FACT_3]",
+                    "text": "Politica transferida: Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
+                    "source": "autoisomorphic_mapper",
+                    "critical": false,
+                    "required_terms": [
+                      "042",
+                      "causal",
+                      "comum",
+                      "ganho",
+                      "politica",
+                      "topologia",
+                      "transferencia",
+                      "transferida"
+                    ],
+                    "numbers": [
+                      "0.042",
+                      "73.3"
+                    ],
+                    "metadata": {}
+                  }
+                ],
+                "rules_applied": [
+                  {
+                    "id": "RULE_1",
+                    "anchor": "[RULE_1]",
+                    "rule": "Prior autoisomorfico degradado e sempre hipotetico ate validacao ativa.",
+                    "input_refs": [
+                      "FACT_1",
+                      "FACT_2",
+                      "FACT_3"
+                    ],
+                    "output": "Apresentar como hipotese operacional, nao como fato final.",
+                    "confidence": 0.6208
+                  }
+                ],
+                "constraints": [
+                  {
+                    "id": "CONSTRAINT_A",
+                    "anchor": "[CONSTRAINT_A]",
+                    "type": "no_external_facts",
+                    "text": "Usar somente fatos presentes no SIR.",
+                    "critical": true,
+                    "metadata": {}
+                  },
+                  {
+                    "id": "CONSTRAINT_B",
+                    "anchor": "[CONSTRAINT_B]",
+                    "type": "language",
+                    "text": "Responder em PT-BR.",
+                    "critical": true,
+                    "metadata": {}
+                  },
+                  {
+                    "id": "CONSTRAINT_C",
+                    "anchor": "[CONSTRAINT_C]",
+                    "type": "style",
+                    "text": "Manter tom direto, sem preambulo e sem expor raciocinio interno.",
+                    "critical": true,
+                    "metadata": {}
+                  },
+                  {
+                    "id": "CONSTRAINT_D",
+                    "anchor": "[CONSTRAINT_D]",
+                    "type": "hypothesis_only",
+                    "text": "Nao promover prior autoisomorfico a conclusao sem validacao.",
+                    "critical": true,
+                    "metadata": {}
+                  }
+                ],
+                "causal_graph_excerpt": [
+                  {
+                    "id": "CAUSE_1",
+                    "anchor": "[CAUSE_1]",
+                    "source": "hard_eval_fs_guard_1776799966",
+                    "relation": "possible_isomorphism_to",
+                    "target": "unknown:general",
+                    "evidence_refs": [
+                      "FACT_1",
+                      "FACT_2",
+                      "FACT_3"
+                    ]
+                  }
+                ],
+                "verification_status": {
+                  "status": "transfer_prior_requires_validation",
+                  "schema_valid": true,
+                  "critical_fact_ids": [
+                    "FACT_1",
+                    "FACT_2"
+                  ],
+                  "checks": [
+                    "schema_validated",
+                    "hypothesis_anchored"
+                  ],
+                  "confidence": 0.6208
+                }
+              }
+            }
+          },
+          "sandbox_result": {
+            "ok": true,
+            "accepted": true,
+            "digest": "dc07396a632c6062",
+            "query_terms": [
+              "origem",
+              "vida"
+            ],
+            "missing_slots": [
+              "aresta_causal_relevante"
+            ],
+            "experiment_kind": "causal_transfer_prior_validation",
+            "target_route": "unknown:general",
+            "edge": {
+              "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+              "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
+              "condition": "active_investigation_prior_validation:inv_267a47f201",
+              "confidence": 0.6808
+            },
+            "prior_validation": {
+              "ok": true,
+              "status": "validated",
+              "category": "confirmed",
+              "confidence_before": 0.5808,
+              "confidence_after": 0.6808,
+              "query_overlap": [],
+              "source_domain": "hard_eval_fs_guard_1776799966",
+              "target_domain": "unknown:general",
+              "reason": "sandbox_validation_of_transfer_prior"
+            },
+            "episodic_episode": null,
+            "minimal_intervention": {
+              "kind": "causal_transfer_prior_validation",
+              "target_route": "unknown:general",
+              "filled_slots": [
+                "aresta_causal_relevante"
+              ],
+              "sandbox_digest": "dc07396a632c6062"
+            },
+            "acceptance_checked": true
+          },
+          "prior_validation": {
+            "ok": true,
+            "status": "validated",
+            "category": "confirmed",
+            "confidence_before": 0.5808,
+            "confidence_after": 0.6808,
+            "query_overlap": [],
+            "source_domain": "hard_eval_fs_guard_1776799966",
+            "target_domain": "unknown:general",
+            "reason": "sandbox_validation_of_transfer_prior"
+          }
+        },
+        "updated_at": 1778363963
+      },
+      "delta_category": "confirmed",
+      "confidence_before": 0.7008,
+      "confidence_after": 0.7508
+    },
+    "duration_ms": 3173.88
+  },
+  "prior_validation": {
+    "ok": true,
+    "status": "validated",
+    "category": "confirmed",
+    "confidence_before": 0.5808,
+    "confidence_after": 0.6808,
+    "query_overlap": [],
+    "source_domain": "hard_eval_fs_guard_1776799966",
+    "target_domain": "unknown:general",
+    "reason": "sandbox_validation_of_transfer_prior"
+  },
+  "confidence_after_validation": 0.6808
+}

@@ -1,0 +1,102 @@
+{
+  "updated_at": 1774121316,
+  "roots": [
+    {
+      "id": "root_1774097915",
+      "title": "Modelar taxonomia de erros cognitivos em decisões",
+      "objective": "Catalogar vieses e estratégias de mitigação para melhorar qualidade decisória.",
+      "status": "active",
+      "created_at": 1774097925,
+      "updated_at": 1774097925,
+      "schema_version": "8.1",
+      "nodes": [
+        {
+          "id": "root_1774097915_clarify",
+          "goal_id": "root_1774097915",
+          "title": "Clarificar escopo e métrica de sucesso: Modelar taxonomia de erros cognitivos em decisões",
+          "objective": "Definir o que conta como conclusão do goal \"Modelar taxonomia de erros cognitivos em decisões\" e quais restrições precisam ser respeitadas.",
+          "parent_id": null,
+          "status": "done",
+          "type": "clarification",
+          "priority": 7,
+          "success_criteria": "Existe uma definição objetiva de sucesso com pelo menos 2 métricas verificáveis e restrições explícitas.",
+          "dependencies": [],
+          "estimated_cost": "low",
+          "horizon": "current_cycle",
+          "retry_count": 8,
+          "origin": "dispatcher_clarification",
+          "created_at": 1774097925,
+          "updated_at": 1774120823,
+          "last_result": "{\"objective_definition\": \"Definir claramente o escopo do goal 'Modelar taxonomia de erros cognitivos em decisões', incluindo uma descrição do que constitui a conclusão do projeto e as métricas de sucesso associadas.\", \"constraints\": [\"As métricas de sucesso devem ser mensuráveis e objetivas.\", \"Devem ser identificadas pelo menos duas métricas de sucesso.\", \"As restrições devem ser explícitas e documentadas.\"], \"verification_hint\": \"Verificar se a definição de sucesso inclui pelo menos duas métricas mensuráveis e se as restrições estão claramente documentadas.\"}",
+          "verification_note": "boot_recovery:fallback verifier: clarification evidence-based"
+        },
+        {
+          "id": "root_1774097915_execute",
+          "goal_id": "root_1774097915",
+          "title": "Executar menor experimento útil",
+          "objective": "Avançar o goal com a menor intervenção que produza evidência observável. Contexto: Catalogar vieses e estratégias de mitigação para melhorar qualidade decisória.",
+          "parent_id": "root_1774097915_clarify",
+          "status": "done",
+          "type": "execution",
+          "priority": 6,
+          "success_criteria": "Foi executado um experimento ou ação concreta e existe artefato observável do resultado.",
+          "dependencies": [
+            "root_1774097915_clarify"
+          ],
+          "estimated_cost": "medium",
+          "horizon": "current_cycle",
+          "retry_count": 0,
+          "origin": "dispatcher_execution",
+          "created_at": 1774097925,
+          "updated_at": 1774120942,
+          "last_result": "{\"strategy\": \"orchestrator_qwen_tools\", \"answer\": \"Para avançar no objetivo de catalogar vieses e estratégias de mitigação para melhorar a qualidade decisória com a menor intervenção que produza evidência observável, é essencial reconhecer as limitações atuais. Infelizmente, as buscas realizadas não forneceram informações relevantes suficientes para atingir esse objetivo. A falta de contexto necessário e a insuficiência de dados sobre vieses cognitivos, estratégias de mitigação e melhoria da qualidade decisória tornam desafiador estabelecer abstrações estáveis sobre estratégias de tomada de decisão.\\n\\nDada a ausência de informações relevantes, é importante admitir explicitamente as lacunas de contexto e os riscos associados. O risco de contradição e a incerteza epistêmica são significativos, com um escore de risco de contradição de 0,58 e uma necessidade de revisão devido à baixa cobertura do RAG. Observação: o contexto recuperado teve cobertura limitada; trate esta resposta como preliminar.\", \"prm_score\": null, \"prm_risk\": null, \"ok\": true}",
+          "verification_note": "fallback verifier: execution evidence-based"
+        },
+        {
+          "id": "root_1774097915_validate",
+          "goal_id": "root_1774097915",
+          "title": "Validar resultado contra critério objetivo",
+          "objective": "Medir se a execução realmente satisfaz o goal ou se precisa de correção.",
+          "parent_id": "root_1774097915_execute",
+          "status": "done",
+          "type": "validation",
+          "priority": 6,
+          "success_criteria": "Existe verificação explícita comparando resultado observado versus critério objetivo definido.",
+          "dependencies": [
+            "root_1774097915_execute"
+          ],
+          "estimated_cost": "low",
+          "horizon": "current_cycle",
+          "retry_count": 0,
+          "origin": "dispatcher_validation",
+          "created_at": 1774097925,
+          "updated_at": 1774120987,
+          "last_result": "{\"validation_query\": \"Existe verificação explícita comparando resultado observado versus critério objetivo definido.\", \"context_sample\": \"{\\\"strategy\\\": \\\"orchestrator_qwen_tools\\\", \\\"answer\\\": \\\"Para avançar no objetivo de catalogar vieses e estratégias de mitigação para melhorar a qualidade decisória com a menor intervenção que produza evidência observável, é essencial reconhecer as limitações atuais. Infelizmente, as buscas realizadas não forneceram informações relevantes suficientes para atingir esse objetivo. A falta de contexto neces\", \"prm_score\": 0.476, \"prm_risk\": \"high\", \"prm_reasons\": [\"good_grounding\"]}",
+          "verification_note": "fallback verifier: validation evidence-based"
+        },
+        {
+          "id": "root_1774097915_consolidate",
+          "goal_id": "root_1774097915",
+          "title": "Consolidar aprendizado e próximo ciclo",
+          "objective": "Registrar o que funcionou, o que falhou e a próxima ação recomendada.",
+          "parent_id": "root_1774097915_validate",
+          "status": "done",
+          "type": "consolidation",
+          "priority": 5,
+          "success_criteria": "Aprendizado registrado com decisão explícita de continuar, corrigir ou encerrar o goal.",
+          "dependencies": [
+            "root_1774097915_validate"
+          ],
+          "estimated_cost": "low",
+          "horizon": "next_cycle",
+          "retry_count": 0,
+          "origin": "dispatcher_consolidation",
+          "created_at": 1774097925,
+          "updated_at": 1774121316,
+          "last_result": "{\"postmortem\": {}, \"procedural_update\": {\"ok\": false}}",
+          "verification_note": "fallback verifier: consolidation evidence-based"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "ok": true,
+  "schema": "ultron.cognitive.isomorphism_validated.v1",
+  "id": "iso_f339e92a083edc",
+  "type": "cognitive.isomorphism_validated",
+  "ts": 1778102246,
+  "source": "autoisomorphic_mapper_v2",
+  "domain_source": "hard_eval_fs_guard_1778102246",
+  "domain_target": "hard_eval_api_guard_1778102246",
+  "mapping": {
+    "guarded": "auth_ok",
+    "validated": "schema_ok",
+    "reversible": "rollback_ready",
+    "resource_ok": "quota_ok"
+  },
+  "filters": [
+    {
+      "name": "raw_alignment",
+      "value": 0.995086,
+      "threshold": ">= 0.85",
+      "passed": true
+    },
+    {
+      "name": "non_triviality",
+      "value": {
+        "raw_score": 0.995086,
+        "features_compared": 4
+      },
+      "threshold": "not(raw_score >= 0.99 and features < 3)",
+      "passed": true
+    },
+    {
+      "name": "statistical_rarity",
+      "value": 0.041667,
+      "threshold": "<= 0.05",
+      "passed": true
+    },
+    {
+      "name": "transfer_utility",
+      "value": 0.733333,
+      "threshold": ">= 0.05",
+      "passed": true
+    }
+  ],
+  "structural_checks": {
+    "source_domain_present": true,
+    "target_domain_present": true,
+    "distinct_domains": true,
+    "bijective_mapping": true,
+    "mapping_size": 4
+  },
+  "features_compared": 4,
+  "raw_score": 0.995086,
+  "p_value": 0.041667,
+  "transfer_improvement": 0.733333,
+  "transfer_test": {
+    "ok": true,
+    "reason": "holdout_transfer_test",
+    "train_size": 70,
+    "holdout_size": 30,
+    "baseline_correct": 4,
+    "transfer_correct": 26,
+    "baseline_accuracy": 0.133333,
+    "transfer_accuracy": 0.866667,
+    "improvement": 0.733333,
+    "passed": true
+  },
+  "validation_status": "empirically_tested",
+  "legitimate": true,
+  "skill": {
+    "id": "zshot_1778102246_eb05",
+    "name": "Isomorfismo Validado: hard_eval_fs_guard_1778102246 ↔ hard_eval_api_guard_1778102246",
+    "valid_domains": [
+      "hard_eval_fs_guard_1778102246",
+      "hard_eval_api_guard_1778102246"
+    ]
+  },
+  "validation_evidence": {
+    "skill_status": "newly_compiled"
+  },
+  "milestone_type": "first_cognitive_isomorphism_validated",
+  "claim": "O mapper v2 encontrou um isomorfismo causal entre dominios, passou os quatro filtros epistemicos e demonstrou ganho real de transferencia."
+}
