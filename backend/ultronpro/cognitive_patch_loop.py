@@ -5,7 +5,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-from ultronpro import cognitive_patches, shadow_eval, promotion_gate, rollback_manager, gap_detector
+from ultronpro import cognitive_patches, shadow_eval, promotion_gate, rollback_manager, gap_detector, self_modification_gate
 
 LOOP_LOG_PATH = Path(__file__).resolve().parent.parent / 'data' / 'cognitive_patch_loop_runs.jsonl'
 
@@ -130,7 +130,30 @@ def process_patch(patch_id: str, *, canary_rollout_pct: int = 10) -> dict[str, A
     gate = promotion_gate.evaluate_patch_for_promotion(patch_id)
     out['promotion_gate'] = gate
     decision = str((gate or {}).get('decision') or '')
-    if decision == 'promote':
+
+    # ── Self-modification security gate ────────────────────────────────────
+    # Always run the hard gate, regardless of promotion_gate decision.
+    # The security gate veto takes absolute precedence.
+    patch_fresh = cognitive_patches.get_patch(patch_id) or patch
+    sec_gate = self_modification_gate.run_gate(patch_fresh, skip_tests=False)
+    out['security_gate'] = sec_gate
+
+    if sec_gate.get('vetoed'):
+        # Security gate blocked it — hold or reject, never promote
+        gate_decision = sec_gate.get('decision', 'hold')
+        if gate_decision == 'reject':
+            rejected = cognitive_patches.reject_patch(
+                patch_id,
+                reason=f"security_gate_veto:{sec_gate.get('reason', 'unknown')}",
+                evidence_refs=[f"security_gate:{patch_id}:{_now()}"],
+            )
+            out['final_action'] = 'reject'
+            out['patch'] = rejected
+        else:
+            out['final_action'] = 'hold'
+            out['patch'] = cognitive_patches.get_patch(patch_id)
+    elif decision == 'promote' and sec_gate.get('ok'):
+        # Both gates agree: promote
         promoted = cognitive_patches.promote_patch(patch_id, note='auto_patch_loop_promoted')
         out['final_action'] = 'promote'
         out['patch'] = promoted

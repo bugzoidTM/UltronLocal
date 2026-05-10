@@ -35,6 +35,20 @@ MIN_PRIORITY = int(os.getenv('ULTRON_RL_MIN_PRIORITY', '-3'))
 PROTECTED_KINDS = frozenset(os.getenv('ULTRON_RL_PROTECTED_KINDS',
     'auto_resolve_conflicts,clarify_laws,ground_claim_check').split(','))
 
+# Minimum executions per priority arm before Thompson Sampling is unlocked
+WARMUP_N = int(os.getenv('ULTRON_RL_WARMUP_N', '10'))
+
+# Arms that must reach WARMUP_N before free Thompson Sampling
+PRIORITY_ARMS = frozenset([
+    'trusted_acquisition',
+    'cognitive_patch_loop',
+    'sleep_digest',
+    'homeostasis_tune',
+    'epistemic_gap_scan',
+    'autonomous_cognition_tick',
+    'reflexion_tick',
+])
+
 
 def _load() -> dict[str, Any]:
     if STATE_PATH.exists():
@@ -160,8 +174,11 @@ def sample_priority(kind: str, context: str) -> int:
 def _sample_priority_from_state(state: dict[str, Any], kind: str, context: str) -> int:
     key = _arm_key(kind, context)
     arm = state['arms'].get(key)
+    n = int(arm.get('n') or 0) if arm else 0
 
-    if arm is None or int(arm.get('n') or 0) < 3:
+    # Priority arms must complete warmup before Thompson Sampling is unlocked
+    warmup_threshold = WARMUP_N if kind in PRIORITY_ARMS else 3
+    if arm is None or n < warmup_threshold:
         # Not enough data — return neutral (no boost, no penalty)
         return 0
 

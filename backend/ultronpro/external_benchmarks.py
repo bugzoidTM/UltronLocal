@@ -9,7 +9,7 @@ import unicodedata
 from pathlib import Path
 from typing import Any
 
-SUITE_PATH = Path(__file__).resolve().parent / 'benchmarks' / 'external_public_eval_v1.json'
+SUITE_PATH = Path(__file__).resolve().parent / 'benchmarks' / 'external_public_eval_v2.json'
 RUNS_PATH = Path(__file__).resolve().parent.parent / 'data' / 'external_benchmarks/public_eval_runs.jsonl'
 BASELINE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'external_benchmarks/public_eval_baseline.json'
 HINDSIGHT_PATH = Path(__file__).resolve().parent.parent / 'data' / 'external_benchmarks/hindsight_replay.jsonl'
@@ -26,6 +26,11 @@ _BENCHMARK_FAMILIES = {
     'math_reasoning_partial': 'math_reasoning',
     'causal_reasoning_partial': 'causal_reasoning',
     'analogy_transfer_partial': 'analogy_transfer',
+    'causal_reasoning': 'causal_reasoning',
+    'multi_step_planning': 'multi_step_planning',
+    'code_debugging': 'code_debugging',
+    'math_symbolic': 'math_symbolic',
+    'analogical_transfer': 'analogical_transfer',
 }
 
 _BENCHMARK_LINEAGE = {
@@ -35,6 +40,11 @@ _BENCHMARK_LINEAGE = {
     'math_reasoning_partial': 'Math-reasoning public subset v2',
     'causal_reasoning_partial': 'Causal-reasoning public subset v2',
     'analogy_transfer_partial': 'Analogy-transfer public subset v2',
+    'causal_reasoning': 'Causal-reasoning AGI v2',
+    'multi_step_planning': 'Multi-step planning AGI v2',
+    'code_debugging': 'Code debugging AGI v2',
+    'math_symbolic': 'Math/Symbolic AGI v2',
+    'analogical_transfer': 'Analogical transfer AGI v2',
 }
 
 

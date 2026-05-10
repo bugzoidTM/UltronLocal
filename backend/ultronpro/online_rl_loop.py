@@ -463,6 +463,94 @@ def _specific_outcome_score(kind: str, result: dict[str, Any]) -> tuple[float, d
     return (0.10 if result.get("ok") else 0.0), {}
 
 
+def _penalty_signals(kind: str, result: dict[str, Any], before: dict[str, Any], after: dict[str, Any]) -> dict[str, float]:
+    """Compute hard penalty signals that should never be masked by other reward terms."""
+    penalties: dict[str, float] = {
+        "hallucination": 0.0,
+        "stale_source": 0.0,
+        "source_404_as_useful": 0.0,
+        "loop_pressure": 0.0,
+        "rollback": 0.0,
+    }
+
+    # --- 404 / stale source used as useful ---
+    extraction = result.get("extraction") if isinstance(result.get("extraction"), dict) else {}
+    useful = extraction.get("useful") or []
+    if isinstance(useful, list):
+        for item in useful:
+            if isinstance(item, dict):
+                status = item.get("status_code") or item.get("http_status") or item.get("status") or 200
+                try:
+                    status_int = int(status)
+                except (TypeError, ValueError):
+                    status_int = 200
+                if status_int == 404 or str(status).lower() in ("404", "not found", "gone"):
+                    penalties["source_404_as_useful"] = min(1.0, penalties["source_404_as_useful"] + 0.30)
+                # Stale: source date older than 2 years or explicitly marked stale
+                if item.get("stale") or str(item.get("freshness", "")).lower() in ("stale", "expired"):
+                    penalties["stale_source"] = min(0.25, penalties["stale_source"] + 0.10)
+
+    # Also check the search results layer for 404s marked useful
+    search = result.get("search") if isinstance(result.get("search"), dict) else {}
+    for hit in (search.get("results") or []):
+        if isinstance(hit, dict) and hit.get("useful"):
+            s = hit.get("status_code") or hit.get("status") or 200
+            try:
+                s_int = int(s)
+            except (TypeError, ValueError):
+                s_int = 200
+            if s_int == 404:
+                penalties["source_404_as_useful"] = min(1.0, penalties["source_404_as_useful"] + 0.30)
+
+    # --- Hallucination: application claims success but extraction was empty / all failed ---
+    application = result.get("application") if isinstance(result.get("application"), dict) else {}
+    if application.get("ok") and not useful and kind == "trusted_acquisition":
+        penalties["hallucination"] = 0.25  # claimed learning with no useful extractions
+
+    # --- Loop pressure: background guard in paused state ---
+    after_vitals = after.get("vitals") if isinstance(after.get("vitals"), dict) else {}
+    # Loop pressure reflected in contradiction_stress + uncertainty high together
+    loop_p = float(after_vitals.get("contradiction_stress") or 0.0) * float(after_vitals.get("uncertainty_load") or 0.0)
+    if loop_p > 0.30:
+        penalties["loop_pressure"] = round(min(0.20, loop_p * 0.25), 4)
+
+    # --- Rollback: coherence drops sharply after action ---
+    b_vitals = before.get("vitals") if isinstance(before.get("vitals"), dict) else {}
+    coherence_drop = float(b_vitals.get("coherence_score") or 0.0) - float(after_vitals.get("coherence_score") or 0.0)
+    if coherence_drop > 0.15:
+        penalties["rollback"] = round(min(0.30, coherence_drop * 0.6), 4)
+
+    return penalties
+
+
+def _bonus_signals(result: dict[str, Any], before: dict[str, Any], after: dict[str, Any]) -> dict[str, float]:
+    """Compute bonus signals for consequence learning and surprise reduction."""
+    bonuses: dict[str, float] = {
+        "consequence_learning": 0.0,
+        "surprise_reduction": 0.0,
+        "benchmark_improvement": 0.0,
+    }
+
+    # consequence_learning: did the action create a storable causal fact?
+    if result.get("learned_consequence") or result.get("knowledge_extracted"):
+        bonuses["consequence_learning"] = 0.12
+
+    # surprise_reduction: uncertainty dropped after action
+    b_vitals = before.get("vitals") if isinstance(before.get("vitals"), dict) else {}
+    a_vitals = after.get("vitals") if isinstance(after.get("vitals"), dict) else {}
+    uncert_drop = float(b_vitals.get("uncertainty_load") or 0.0) - float(a_vitals.get("uncertainty_load") or 0.0)
+    if uncert_drop > 0.01:
+        bonuses["surprise_reduction"] = round(min(0.12, uncert_drop * 0.5), 4)
+
+    # benchmark_improvement: top_gap priority decreased (gap closed)
+    b_gap_p = float((before.get("top_gap") or {}).get("priority") or 0.0)
+    a_gap_p = float((after.get("top_gap") or {}).get("priority") or 0.0)
+    if b_gap_p > 0 and a_gap_p < b_gap_p:
+        bonuses["benchmark_improvement"] = round(min(0.10, (b_gap_p - a_gap_p) * 0.4), 4)
+
+    return bonuses
+
+
 def compute_reward(
     *,
     candidate: dict[str, Any],
@@ -477,12 +565,24 @@ def compute_reward(
     hs_delta = _homeostasis_delta(before, after)
     gap_delta = _gap_delta(before, after)
     latency_score = 1.0 - min(1.0, max(0, int(duration_ms)) / 120000.0)
+
+    # --- Bonus signals ---
+    bonuses = _bonus_signals(result, before, after)
+
+    # --- Penalty signals ---
+    penalties = _penalty_signals(kind, result, before, after)
+    total_penalty = sum(penalties.values())
+
     reward = (
-        (0.22 if ok else 0.0)
-        + (0.44 * action_score)
-        + (0.14 * _clip01(0.5 + hs_delta))
-        + (0.12 * _clip01(0.5 + gap_delta))
-        + (0.08 * latency_score)
+        (0.20 if ok else 0.0)
+        + (0.36 * action_score)
+        + (0.10 * _clip01(0.5 + hs_delta))
+        + (0.08 * _clip01(0.5 + gap_delta))
+        + (0.06 * latency_score)
+        + bonuses["consequence_learning"]
+        + bonuses["surprise_reduction"]
+        + bonuses["benchmark_improvement"]
+        - total_penalty
     )
     if not ok:
         reward -= 0.15
@@ -499,6 +599,8 @@ def compute_reward(
             "latency_score": round(latency_score, 4),
             "result_ok": ok,
         },
+        "bonuses": bonuses,
+        "penalties": penalties,
         "evidence": evidence,
     }
 
