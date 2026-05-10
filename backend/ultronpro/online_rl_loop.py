@@ -16,6 +16,7 @@ from ultronpro import (
     epistemic_curiosity,
     homeostasis,
     intrinsic_utility,
+    reflexion_agent,
     rl_policy,
     sleep_cycle,
     trusted_acquisition_loop,
@@ -73,6 +74,22 @@ ACTION_CATALOG: dict[str, dict[str, Any]] = {
         "base_priority": 0.46,
         "cooldown_sec": 180,
         "description": "refresh explicit epistemic gap map",
+    },
+    "autonomous_cognition_tick": {
+        "kind": "autonomous_cognition_tick",
+        "drive": "autonomy",
+        "cost": 0.20,
+        "base_priority": 0.60,
+        "cooldown_sec": 120,
+        "description": "execute one cycle of autonomous cognition (perceive, suggest, execute, learn)",
+    },
+    "reflexion_tick": {
+        "kind": "reflexion_tick",
+        "drive": "autonomy",
+        "cost": 0.15,
+        "base_priority": 0.55,
+        "cooldown_sec": 180,
+        "description": "execute meta-cognitive reflexion to evaluate recent traces and propose hypotheses",
     },
 }
 
@@ -227,6 +244,10 @@ def _action_need_bonus(kind: str, observation: dict[str, Any]) -> float:
         return min(0.24, stress * 0.14)
     if kind == "epistemic_gap_scan":
         return 0.09 if not top_gap else 0.04
+    if kind == "autonomous_cognition_tick":
+        return 0.20 if any(token in domain_blob for token in ("action", "plan", "execute", "autonomy")) else 0.10
+    if kind == "reflexion_tick":
+        return 0.18 if any(token in domain_blob for token in ("hypothesis", "error", "reflection", "meta")) else 0.08
     return 0.0
 
 
@@ -339,6 +360,11 @@ def _execute_candidate(candidate: dict[str, Any], *, ports: RuntimePorts | None 
             "top_gap": normalized[0] if normalized else {},
             "gaps": normalized[:8],
         }
+    if kind == "autonomous_cognition_tick":
+        from ultronpro import autonomous_cognition
+        return autonomous_cognition.tick()
+    if kind == "reflexion_tick":
+        return reflexion_agent.tick()
     return {"ok": False, "error": "unknown_action_kind", "kind": kind}
 
 
@@ -418,6 +444,21 @@ def _specific_outcome_score(kind: str, result: dict[str, Any]) -> tuple[float, d
         top = result.get("top_gap") if isinstance(result.get("top_gap"), dict) else {}
         score = 0.18 + min(0.28, count * 0.05) + min(0.22, float(top.get("priority") or 0.0) * 0.22)
         evidence = {"gap_count": count, "top_gap_id": top.get("id"), "top_gap_priority": top.get("priority")}
+        return _clip01(score), evidence
+    if kind == "autonomous_cognition_tick":
+        actions_list = result.get("actions") if isinstance(result.get("actions"), list) else []
+        actions_count = len(actions_list)
+        learned = sum(1 for a in actions_list if isinstance(a, dict) and a.get("consequence", {}).get("ok"))
+        score = 0.20 + min(0.40, actions_count * 0.20) + min(0.40, learned * 0.20)
+        evidence = {"actions_executed": actions_count, "consequences_learned": learned}
+        return _clip01(score), evidence
+    if kind == "reflexion_tick":
+        hyps = result.get("hypotheses") if isinstance(result.get("hypotheses"), list) else []
+        probes = result.get("curiosity_probes") if isinstance(result.get("curiosity_probes"), list) else []
+        score = 0.20 + min(0.40, len(hyps) * 0.20) + min(0.40, len(probes) * 0.20)
+        if result.get("review_triggered"):
+            score += 0.20
+        evidence = {"hypotheses": len(hyps), "probes": len(probes)}
         return _clip01(score), evidence
     return (0.10 if result.get("ok") else 0.0), {}
 

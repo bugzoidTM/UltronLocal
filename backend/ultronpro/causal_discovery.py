@@ -25,7 +25,7 @@ from typing import Any, Optional
 from collections import deque, defaultdict
 from statistics import mean, stdev
 
-DATA_DIR = Path(__file__).resolve().parent.parent.parent / 'data'
+DATA_DIR = Path(__file__).resolve().parent.parent / 'data'
 CAUSAL_DISCOVERY_PATH = DATA_DIR / 'causal_discovery.json'
 
 
@@ -409,32 +409,88 @@ class CausalDiscovery:
         }
 
     def simulate_intervention(self, intervention: dict[str, Any], steps: int = 3) -> dict:
-        """Simula o efeito de uma intervenção."""
-        cause = intervention.get('cause')
-        effect_size = intervention.get('effect_size', 1.0)
-        
+        """Simula o efeito de uma intervenção.
+
+        Aceita dois formatos de payload:
+          Format A (interno): {"cause": "X", "effect_size": 1.0}
+          Format B (compat):  {"action": "X", "context": {}, "magnitude": 1.0}
+        """
+        # Normalise payload — accept both formats
+        cause = (
+            intervention.get('cause')
+            or intervention.get('action')
+            or intervention.get('variable')
+        )
+        effect_size = float(
+            intervention.get('effect_size')
+            or intervention.get('magnitude')
+            or 1.0
+        )
+
         if not cause:
-            return {'error': 'Causa não especificada'}
-        
+            return {
+                'ok': False,
+                'cause': None,
+                'effect_size': effect_size,
+                'downstream_effects': [],
+                'confidence': 0.0,
+                'nodes_affected': 0,
+                'reason': 'no_cause_specified',
+            }
+
+        # If the local graph is empty, try to seed from causal_graph module
+        if not self.edges:
+            try:
+                from ultronpro import causal_graph as cg_mod
+                g = cg_mod.get_graph()
+                for edge in (g.get('edges') or [])[:40]:
+                    src = str(edge.get('source') or edge.get('from') or '').strip()
+                    tgt = str(edge.get('target') or edge.get('to') or '').strip()
+                    weight = float(edge.get('weight') or edge.get('strength') or 0.5)
+                    conf = float(edge.get('confidence') or abs(weight))
+                    if src and tgt:
+                        key = (src, tgt)
+                        if key not in self.edges:
+                            self.edges[key] = CausalEdge(
+                                cause=src, effect=tgt,
+                                strength=weight, confidence=conf,
+                                observations=1, lag=1,
+                                created_at=int(time.time()),
+                                last_seen=int(time.time()),
+                                knowledge_type='observational',
+                            )
+            except Exception:
+                pass
+
         affected_edges = [(k, e) for k, e in self.edges.items() if k[0] == cause]
-        
+
+        if not affected_edges:
+            # Try a fuzzy match (cause is substring of edge key)
+            affected_edges = [
+                (k, e) for k, e in self.edges.items()
+                if cause.lower() in k[0].lower() or cause.lower() in k[1].lower()
+            ][:10]
+
         if not affected_edges:
             return {
+                'ok': True,
                 'cause': cause,
                 'effect_size': effect_size,
                 'downstream_effects': [],
                 'confidence': 0.0,
+                'nodes_affected': 0,
+                'reason': 'no_edges_for_cause',
             }
-        
+
         downstream = []
-        visited = set()
+        visited: set[str] = set()
         queue = [(cause, effect_size)]
-        
+
         for _ in range(steps):
             if not queue:
                 break
             current_cause, current_effect = queue.pop(0)
-            
+
             for (c, e), edge in self.edges.items():
                 if c == current_cause and e not in visited:
                     downstream_effect = current_effect * edge.strength
@@ -442,13 +498,15 @@ class CausalDiscovery:
                         'node': e,
                         'effect': round(downstream_effect, 3),
                         'confidence': edge.confidence,
+                        'knowledge_type': edge.knowledge_type,
                     })
                     queue.append((e, downstream_effect))
                     visited.add(e)
-        
+
         avg_confidence = mean([d['confidence'] for d in downstream]) if downstream else 0.0
-        
+
         return {
+            'ok': True,
             'cause': cause,
             'effect_size': effect_size,
             'downstream_effects': downstream,

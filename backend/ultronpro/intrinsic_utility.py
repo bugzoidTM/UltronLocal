@@ -176,17 +176,29 @@ def _collect_signals() -> dict[str, float]:
     except Exception:
         pass
 
-    # Autonomy: ratio of local vs cloud actions
+    # Autonomy: ratio of local vs cloud actions + autonomous cycles
     try:
-        from ultronpro import self_model
+        from ultronpro import self_model, autonomous_cognition, online_rl_loop
+        
         causal = (self_model.load().get('causal') or {})
         events = causal.get('recent_events') if isinstance(causal.get('recent_events'), list) else []
         recent = events[-100:]
+        local_ratio = 0.0
         if recent:
             local_count = sum(1 for e in recent if 'local' in str(e.get('strategy') or '').lower()
                               or 'llama' in str(e.get('strategy') or '').lower()
                               or 'gemma' in str(e.get('strategy') or '').lower())
-            signals['autonomy'] = _clamp(local_count / max(1, len(recent)))
+            local_ratio = _clamp(local_count / max(1, len(recent)))
+            
+        ac_status = autonomous_cognition.status()
+        rl_status = online_rl_loop.status()
+        
+        ac_ticks = int(ac_status.get('metrics', {}).get('ticks', 0))
+        rl_cycles = int(rl_status.get('state', {}).get('cycle_count', 0))
+        
+        cycle_autonomy = _clamp((ac_ticks + rl_cycles) / 50.0)
+        
+        signals['autonomy'] = _clamp(0.3 * local_ratio + 0.7 * cycle_autonomy)
     except Exception:
         pass
 

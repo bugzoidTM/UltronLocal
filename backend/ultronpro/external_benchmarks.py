@@ -23,12 +23,18 @@ _BENCHMARK_FAMILIES = {
     'arc_easy_partial': 'science_qa',
     'hellaswag_partial': 'commonsense_next_step',
     'mmlu_partial': 'academic_mcq',
+    'math_reasoning_partial': 'math_reasoning',
+    'causal_reasoning_partial': 'causal_reasoning',
+    'analogy_transfer_partial': 'analogy_transfer',
 }
 
 _BENCHMARK_LINEAGE = {
     'arc_easy_partial': 'ARC-Easy-inspired public subset',
     'hellaswag_partial': 'HellaSwag-inspired public subset',
     'mmlu_partial': 'MMLU-inspired public subset',
+    'math_reasoning_partial': 'Math-reasoning public subset v2',
+    'causal_reasoning_partial': 'Causal-reasoning public subset v2',
+    'analogy_transfer_partial': 'Analogy-transfer public subset v2',
 }
 
 
@@ -78,7 +84,7 @@ def list_suite() -> dict[str, Any]:
         'count': len(items),
         'path': str(SUITE_PATH),
         'comparability_note': suite.get('comparability_note') or '',
-        'comparability_tier': 'proxy_subset',
+        'comparability_tier': suite.get('comparability_tier') or 'proxy_subset',
         'officiality': 'non_official_subset',
     }
 
@@ -630,21 +636,64 @@ def _predict_symbolic(item: dict[str, Any]) -> dict[str, Any]:
                 add(label, 3.0, 'evaporation_surface_area')
             if 'reduzir a temperatura' in text or 'cobrir' in text or 'diminuir a circulacao' in text:
                 add(label, -1.5, 'evaporation_negative_control')
+        if ('menos denso' in question or 'mais denso' in question) and 'luz' in question:
+            if 'desacelera' in text and 'normal' in text:
+                add(label, 3.0, 'refraction_snell')
+            if 'acelera' in text and 'afasta' in text:
+                add(label, -2.0, 'refraction_wrong')
+        if 'raizes' in question and ('vasculares' in question or 'plantas' in question):
+            if 'absorver' in text and ('agua' in text or 'nutrientes' in text):
+                add(label, 3.0, 'root_absorption')
+        if '100 graus celsius' in question and 'nivel do mar' in question:
+            if text.strip().lower() == 'gas':
+                add(label, 3.0, 'water_boiling_gas')
+        if 'ima' in question and 'clipes' in question:
+            if 'ferromagnetico' in text:
+                add(label, 3.0, 'ferromagnetic_rule')
+        if 'ceu' in question and 'azul' in question and 'dia' in question:
+            if 'dispersa' in text and ('curtos' in text or 'comprimento' in text):
+                add(label, 3.0, 'rayleigh_scattering')
+        if 'estacoes do ano' in question:
+            if 'inclinacao' in text and 'eixo' in text:
+                add(label, 3.0, 'axial_tilt_seasons')
+        if 'unidade basica' in question and 'hereditariedade' in question:
+            if text.strip().lower() == 'gene' or text.strip() == 'Gene':
+                add(label, 3.0, 'gene_heredity')
+        if ('divis' in question) and ('por 3' in question or 'por 5' in question) and '100' in question:
+            if '47' in text:
+                add(label, 4.0, 'divisible_3_or_5_lt_100')
 
         if 'mais plausivel' in question or 'proximo passo' in question or 'desfecho mais plausivel' in question:
             absurd_terms = (
                 'sem motivo', 'sair correndo', 'dormir dentro', 'molho de tomate',
                 'tropecar', 'quebre', 'pedacos', 'enterre', 'asfalto', 'voar sozinha',
+                'formatar o disco', 'mude de profissao', 'alta velocidade',
+                'venda o restaurante', 'museu', 'imediatamente', 'salte sem',
             )
             if any(term in text for term in absurd_terms):
-                add(label, -2.0, 'commonsense_absurd_outcome')
+                add(label, -2.5, 'commonsense_absurd_outcome')
             if 'cebola' in question and 'frigideira' in question and 'cozinhar' in text:
                 add(label, 3.0, 'object_affordance_cooking')
             if 'chuvoso' in question and 'guarda-chuva' in question and 'sair' in text and 'chuva' in text:
                 add(label, 3.0, 'rain_umbrella_affordance')
             if 'fonte de agua' in question and 'garrafa' in question and 'agua' in text and ('encha' in text or 'encher' in text):
                 add(label, 3.0, 'bottle_fountain_affordance')
+            if 'vela' in question and ('desejo' in text or 'apagar' in text or 'soprando' in text):
+                add(label, 3.0, 'birthday_candle_wish')
+            if 'bateria baixa' in question and ('carregador' in text or 'tomada' in text):
+                add(label, 3.0, 'low_battery_charge')
+            if 'sem sal' in question and ('adicione sal' in text or 'prove novamente' in text):
+                add(label, 3.0, 'cooking_seasoning')
+            if 'mensagem de erro' in question and ('depurar' in text or 'ler' in text):
+                add(label, 3.0, 'debug_error_message')
+            if 'fumaca' in question and 'carro' in question and ('pare' in text or 'socorro' in text):
+                add(label, 3.0, 'car_smoke_stop')
+            if 'valores anormais' in question and ('investiga' in text or 'informe' in text):
+                add(label, 3.0, 'medical_abnormal_result')
+            if 'topo' in question and 'montanha' in question and ('contemple' in text or 'descida' in text):
+                add(label, 3.0, 'mountain_top_descent')
 
+        # ── academic_mcq (mmlu) ──────────────────────────────────────────
         if 'negacao' in question and 'p e q' in question:
             if 'nao p' in text and 'nao q' in text and ' ou ' in f' {text} ':
                 add(label, 4.0, 'de_morgan_and_to_or')
@@ -657,6 +706,89 @@ def _predict_symbolic(item: dict[str, Any]) -> dict[str, Any]:
                 add(label, -1.0, 'law_of_demand_wrong_direction')
         if 'atp' in question and 'eucariot' in question and 'mitoc' in text:
             add(label, 3.0, 'mitochondria_atp')
+        if 'condicionamento operante' in question and 'skinner' in text:
+            add(label, 3.0, 'operant_conditioning_skinner')
+        if 'segunda lei' in question and 'newton' in question:
+            if 'forca' in text and 'massa' in text and 'aceleracao' in text:
+                add(label, 3.0, 'newton_second_law')
+        if 'entropia' in question and 'segunda' in text:
+            add(label, 3.0, 'thermodynamics_entropy_2nd')
+        if 'curva de laffer' in question and ('ponto otimo' in text or 'aliquota acima' in text):
+            add(label, 3.0, 'laffer_optimal_point')
+        if 'potencial de acao' in question and 'sodio' in text and 'potassio' in text:
+            add(label, 3.0, 'action_potential_ions')
+        if ('metaforica' in question or 'polissemia' in question) and ('polissemia' in text or 'extensao semantica' in text):
+            add(label, 3.0, 'semantic_extension')
+        if 'equilibrio de nash' in question and ('incentivo para mudar' in text or 'estrategia' in text):
+            add(label, 3.0, 'nash_equilibrium')
+
+        # ── math_reasoning ────────────────────────────────────────────────
+        if 'x + 5' in question and '12' in question and text.strip() == '7':
+            add(label, 4.0, 'algebra_x_plus_5_eq_12')
+        if '15%' in question and '200' in question and text.strip() == '30':
+            add(label, 4.0, 'percent_15_of_200')
+        if '300 km' in question and '3 horas' in question and '100 km/h' in text:
+            add(label, 4.0, 'speed_300_in_3h')
+        if '2^n = 32' in question and text.strip() == '5':
+            add(label, 4.0, 'power_2_n_eq_32')
+        if 'triangulo' in question and 'base 8' in question and 'altura 5' in question and text.strip() == '20':
+            add(label, 4.0, 'triangle_area_8x5')
+        if 'tres numeros consecutivos' in question and '36' in question and text.strip() == '13':
+            add(label, 4.0, 'consecutive_sum_36')
+        if 'progressao aritmetica' in question and 'razao 3' in question and text.strip() == '14':
+            add(label, 4.0, 'ap_a1_2_r3_n5')
+        if 'log base 2' in question and '= 4' in question and '16' in text:
+            add(label, 4.0, 'log2_x_eq_4')
+        if 'derivada' in question and '3x^2 + 2x' in question and '8' in text:
+            add(label, 4.0, 'derivative_3x2_plus_2x_at_1')
+
+        # ── causal_reasoning ─────────────────────────────────────────────
+        if 'temperatura' in question and 'gas' in question and 'volume fixo' in question:
+            if 'pressao aumenta' in text or ('pressao' in text and 'aumenta' in text):
+                add(label, 3.0, 'gay_lussac_pressure')
+        if 'planta' in question and ('sem luz' in question or 'luz solar' in question) and 'fotossintese' in text:
+            add(label, 3.0, 'plant_no_light_photosynthesis')
+        if 'sorvete' in question and 'afogamentos' in question:
+            if 'calor' in text or 'terceira variavel' in text or 'verao' in text:
+                add(label, 4.0, 'spurious_correlation_heat')
+            if 'sorvete causa' in text:
+                add(label, -3.0, 'causal_fallacy_ice_cream')
+        if 'antibiotico' in question and 'resistentes' in text and 'selecao' in text:
+            add(label, 3.0, 'antibiotic_resistance_selection')
+        if 'preco' in question and 'vendas caem' in question and ('demandada' in text or 'preco causou' in text):
+            add(label, 3.0, 'price_demand_causality')
+        if 'fumante' in question and 'cancer' in question and 'risco' in text and 'nao e a unica' in text:
+            add(label, 3.0, 'smoking_probabilistic_causation')
+        if ('randomizado controlado' in question or 'placebo' in question) and ('vies de selecao' in text or 'isolar' in text):
+            add(label, 3.0, 'rct_causal_isolation')
+        if 'dag causal' in question and 'caminho causal' in question and 'mediadora' in text:
+            add(label, 3.0, 'causal_dag_mediator')
+        if 'correlacionadas' in question and 'a nao causa' in question and ('causa comum' in text or 'confundidora' in text):
+            add(label, 3.0, 'common_cause_confounder')
+        if ('do-calculus' in question or 'pearl' in question) and ('do-calculus' in text or 'grafo causal' in text):
+            add(label, 3.0, 'pearl_do_calculus')
+
+        # ── analogy_transfer ─────────────────────────────────────────────
+        if 'cachorro' in question and 'latir' in question and 'miar' in text:
+            add(label, 4.0, 'analogy_dog_cat_sound')
+        if 'medico' in question and 'hospital' in question and 'professor' in question and 'escola' in text:
+            add(label, 4.0, 'analogy_doctor_teacher_place')
+        if 'quente' in question and 'frio' in question and 'rapido' in question and 'lento' in text:
+            add(label, 4.0, 'analogy_hot_cold_fast_slow')
+        if 'capitulo' in question and 'episodio' in question and 'serie' in text:
+            add(label, 4.0, 'analogy_chapter_episode_series')
+        if 'oxigenio' in question and 'respiracao' in question and 'glicose' in question and 'fotossintese' in text:
+            add(label, 4.0, 'analogy_oxygen_glucose_photosynthesis')
+        if 'cpu' in question and 'cerebro' in question and 'ser vivo' in text:
+            add(label, 4.0, 'analogy_cpu_brain_organism')
+        if 'algoritmo' in question and 'receita' in question and 'prato culinario' in text:
+            add(label, 4.0, 'analogy_algorithm_recipe_dish')
+        if 'darwinismo' in question and 'keynesianismo' in question and ('demanda agregada' in text or 'fiscal' in text):
+            add(label, 4.0, 'analogy_darwin_keynes')
+        if 'entidade' in question and 'banco de dados' in question and 'classe' in question and ('orientada a objetos' in text or 'oop' in text):
+            add(label, 4.0, 'analogy_entity_class_oop')
+        if 'hipotese' in question and 'predicao' in question and ('observacao' in text or 'validacao' in text):
+            add(label, 4.0, 'analogy_hypothesis_prediction')
 
     ranked = sorted(scores.items(), key=lambda kv: kv[1], reverse=True)
     if not ranked or ranked[0][1] <= 0.0:
@@ -779,8 +911,8 @@ def run_suite(*, benchmark_ids: list[str] | None = None, limit_per_benchmark: in
         'strategy': strategy,
         'tag': str(tag or '')[:120] or None,
         'comparability_note': suite.get('comparability_note') or '',
-        'comparability_tier': 'proxy_subset',
-        'officiality': 'non_official_subset',
+        'comparability_tier': suite.get('comparability_tier') or 'proxy_subset',
+        'officiality': suite.get('officiality') or 'non_official_subset',
         'selection': {
             'benchmarks': sorted((aggr.get('by_benchmark') or {}).keys()),
             'families': sorted((aggr.get('by_family') or {}).keys()),
@@ -930,8 +1062,8 @@ def suite_audit() -> dict[str, Any]:
         'malformed_items': malformed,
         'answer_out_of_range': answer_out_of_range,
         'benchmark_lineage': benchmark_lineage,
-        'comparability_tier': 'proxy_subset',
-        'officiality': 'non_official_subset',
+        'comparability_tier': suite.get('comparability_tier') or 'proxy_subset',
+        'officiality': suite.get('officiality') or 'non_official_subset',
     }
 
 

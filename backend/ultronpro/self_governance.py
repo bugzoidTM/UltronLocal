@@ -794,7 +794,15 @@ def narrative_coherence_status() -> dict[str, Any]:
     if not recommendations:
         recommendations.append('maintain_current_narrative')
 
+    first_person_report = ""
+    latest_biographic_digest = ids.get('latest_biographic_digest') if isinstance(ids.get('latest_biographic_digest'), dict) else {}
+    if latest_biographic_digest and latest_biographic_digest.get("narrative"):
+        first_person_report = str(latest_biographic_digest.get("narrative"))
+    elif latest_review:
+        first_person_report = str(latest_review.get("protocol_update") or "")
+
     return {
+        'first_person_report': first_person_report,
         'ok': True,
         'summary': summary,
         'narrative_coherence_score': score,
