@@ -1,10 +1,10 @@
 {
-  "ts": 1778461036,
+  "ts": 1778461800,
   "ok": true,
   "executed": true,
   "injected": true,
-  "investigation_id": "inv_22a40c9444",
-  "query": "Como se diz 'Obrigado pela ajuda' em francês?",
+  "investigation_id": "inv_4049ab2601",
+  "query": "vc snt coisa?? tm conscienssia msm ow e fake??",
   "reason": "no_structured_coverage",
   "missing_slots": [
     "aresta_causal_relevante",
@@ -14,11 +14,11 @@
     "kind": "causal_transfer_prior_validation",
     "target_route": "unknown:general",
     "query_terms": [
-      "ajuda",
-      "diz",
-      "frances",
-      "obrigado",
-      "pela"
+      "coisa",
+      "conscienssia",
+      "fake",
+      "msm",
+      "snt"
     ],
     "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
     "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
@@ -32,13 +32,13 @@
   "experiment_result": {
     "ok": true,
     "accepted": true,
-    "digest": "251fd03c3bf4b3ce",
+    "digest": "a9a8a59d56f50384",
     "query_terms": [
-      "ajuda",
-      "diz",
-      "frances",
-      "obrigado",
-      "pela"
+      "coisa",
+      "conscienssia",
+      "fake",
+      "msm",
+      "snt"
     ],
     "missing_slots": [
       "aresta_causal_relevante",
@@ -49,7 +49,7 @@
     "edge": {
       "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
       "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
-      "condition": "active_investigation_prior_validation:inv_22a40c9444",
+      "condition": "active_investigation_prior_validation:inv_4049ab2601",
       "confidence": 0.6808
     },
     "prior_validation": {
@@ -71,7 +71,7 @@
         "aresta_causal_relevante",
         "fato_estruturado_recuperavel"
       ],
-      "sandbox_digest": "251fd03c3bf4b3ce"
+      "sandbox_digest": "a9a8a59d56f50384"
     },
     "acceptance_checked": true
   },
@@ -91,7 +91,7 @@
     "edge": {
       "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
       "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
-      "condition": "active_investigation_prior_validation:inv_22a40c9444",
+      "condition": "active_investigation_prior_validation:inv_4049ab2601",
       "support": 1,
       "confidence": 0.7008,
       "severity": 1,
@@ -101,22 +101,22 @@
       ],
       "last_evidence": {
         "investigation": {
-          "investigation_id": "inv_22a40c9444",
-          "query": "Como se diz 'Obrigado pela ajuda' em francês?",
+          "investigation_id": "inv_4049ab2601",
+          "query": "vc snt coisa?? tm conscienssia msm ow e fake??",
           "reason": "no_structured_coverage",
           "task_type": "general",
           "status": "needs_experiment",
           "coverage": {
             "score": 1.0,
             "shared": [
-              "ajuda",
-              "diz",
-              "frances",
-              "obrigado",
-              "pela"
+              "coisa",
+              "conscienssia",
+              "fake",
+              "msm",
+              "snt"
             ],
             "query_tokens": 5,
-            "evidence_tokens": 522
+            "evidence_tokens": 508
           },
           "missing_slots": [
             "aresta_causal_relevante",
@@ -126,11 +126,11 @@
             "kind": "causal_transfer_prior_validation",
             "target_route": "unknown:general",
             "query_terms": [
-              "ajuda",
-              "diz",
-              "frances",
-              "obrigado",
-              "pela"
+              "coisa",
+              "conscienssia",
+              "fake",
+              "msm",
+              "snt"
             ],
             "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
             "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
@@ -168,19 +168,19 @@
             "ok": true,
             "type": "autoisomorphic_transfer_prior",
             "query_tokens": [
-              "ajuda",
-              "diz",
-              "franc",
-              "obrigado",
-              "pela"
+              "coisa",
+              "conscienssia",
+              "fake",
+              "msm",
+              "snt"
             ],
             "task_type": "general",
             "candidate_count": 10,
             "origin": "autoisomorphic_mapper.transfer_prior",
             "sir": {
               "schema_version": "sir.v1",
-              "created_at": 1778461036,
-              "query": "Como se diz 'Obrigado pela ajuda' em francês?",
+              "created_at": 1778461800,
+              "query": "vc snt coisa?? tm conscienssia msm ow e fake??",
               "facts": [
                 {
                   "id": "FACT_1",
@@ -325,13 +325,13 @@
         "sandbox_result": {
           "ok": true,
           "accepted": true,
-          "digest": "251fd03c3bf4b3ce",
+          "digest": "a9a8a59d56f50384",
           "query_terms": [
-            "ajuda",
-            "diz",
-            "frances",
-            "obrigado",
-            "pela"
+            "coisa",
+            "conscienssia",
+            "fake",
+            "msm",
+            "snt"
           ],
           "missing_slots": [
             "aresta_causal_relevante",
@@ -342,7 +342,7 @@
           "edge": {
             "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
             "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
-            "condition": "active_investigation_prior_validation:inv_22a40c9444",
+            "condition": "active_investigation_prior_validation:inv_4049ab2601",
             "confidence": 0.6808
           },
           "prior_validation": {
@@ -364,13 +364,13 @@
               "aresta_causal_relevante",
               "fato_estruturado_recuperavel"
             ],
-            "sandbox_digest": "251fd03c3bf4b3ce"
+            "sandbox_digest": "a9a8a59d56f50384"
           },
           "acceptance_checked": true
         },
-        "duration_ms": 3078.96
+        "duration_ms": 3039.21
       },
-      "updated_at": 1778461039
+      "updated_at": 1778461803
     }
   },
   "transfer_prior_causal_update": {
@@ -378,7 +378,7 @@
     "edge": {
       "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
       "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
-      "condition": "active_investigation_prior_validation:inv_22a40c9444",
+      "condition": "active_investigation_prior_validation:inv_4049ab2601",
       "support": 2,
       "confidence": 0.7508,
       "severity": 1,
@@ -388,22 +388,22 @@
       ],
       "last_evidence": {
         "investigation": {
-          "investigation_id": "inv_22a40c9444",
-          "query": "Como se diz 'Obrigado pela ajuda' em francês?",
+          "investigation_id": "inv_4049ab2601",
+          "query": "vc snt coisa?? tm conscienssia msm ow e fake??",
           "reason": "no_structured_coverage",
           "task_type": "general",
           "status": "needs_experiment",
           "coverage": {
             "score": 1.0,
             "shared": [
-              "ajuda",
-              "diz",
-              "frances",
-              "obrigado",
-              "pela"
+              "coisa",
+              "conscienssia",
+              "fake",
+              "msm",
+              "snt"
             ],
             "query_tokens": 5,
-            "evidence_tokens": 522
+            "evidence_tokens": 508
           },
           "missing_slots": [
             "aresta_causal_relevante",
@@ -413,11 +413,11 @@
             "kind": "causal_transfer_prior_validation",
             "target_route": "unknown:general",
             "query_terms": [
-              "ajuda",
-              "diz",
-              "frances",
-              "obrigado",
-              "pela"
+              "coisa",
+              "conscienssia",
+              "fake",
+              "msm",
+              "snt"
             ],
             "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
             "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
@@ -455,19 +455,19 @@
             "ok": true,
             "type": "autoisomorphic_transfer_prior",
             "query_tokens": [
-              "ajuda",
-              "diz",
-              "franc",
-              "obrigado",
-              "pela"
+              "coisa",
+              "conscienssia",
+              "fake",
+              "msm",
+              "snt"
             ],
             "task_type": "general",
             "candidate_count": 10,
             "origin": "autoisomorphic_mapper.transfer_prior",
             "sir": {
               "schema_version": "sir.v1",
-              "created_at": 1778461036,
-              "query": "Como se diz 'Obrigado pela ajuda' em francês?",
+              "created_at": 1778461800,
+              "query": "vc snt coisa?? tm conscienssia msm ow e fake??",
               "facts": [
                 {
                   "id": "FACT_1",
@@ -612,13 +612,13 @@
         "sandbox_result": {
           "ok": true,
           "accepted": true,
-          "digest": "251fd03c3bf4b3ce",
+          "digest": "a9a8a59d56f50384",
           "query_terms": [
-            "ajuda",
-            "diz",
-            "frances",
-            "obrigado",
-            "pela"
+            "coisa",
+            "conscienssia",
+            "fake",
+            "msm",
+            "snt"
           ],
           "missing_slots": [
             "aresta_causal_relevante",
@@ -629,7 +629,7 @@
           "edge": {
             "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
             "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
-            "condition": "active_investigation_prior_validation:inv_22a40c9444",
+            "condition": "active_investigation_prior_validation:inv_4049ab2601",
             "confidence": 0.6808
           },
           "prior_validation": {
@@ -651,7 +651,7 @@
               "aresta_causal_relevante",
               "fato_estruturado_recuperavel"
             ],
-            "sandbox_digest": "251fd03c3bf4b3ce"
+            "sandbox_digest": "a9a8a59d56f50384"
           },
           "acceptance_checked": true
         },
@@ -667,11 +667,11 @@
           "reason": "sandbox_validation_of_transfer_prior"
         }
       },
-      "updated_at": 1778461039
+      "updated_at": 1778461803
     },
     "delta_category": "confirmed",
     "confidence_before": 0.7008,
     "confidence_after": 0.7508
   },
-  "duration_ms": 3201.37
+  "duration_ms": 3176.83
 }

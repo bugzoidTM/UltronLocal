@@ -4591,19 +4591,19 @@
       "empirical_matrix": {
         "autocog:queue_conflict_review": {
           "outcomes": {
-            "success": 86.2
+            "success": 99.2
           },
           "expected_value": 1.0,
           "risk": 0.0,
-          "observations": 86.2
+          "observations": 99.2
         },
         "autocog:compact_workspace_focus": {
           "outcomes": {
-            "success": 38.2
+            "success": 40.2
           },
           "expected_value": 1.0,
           "risk": 0.0,
-          "observations": 38.2
+          "observations": 40.2
         },
         "struct:autocog:queue_conflict_review|active_goal_count=10|open_conflict_count=20|recent_error_count=0": {
           "outcomes": {
@@ -5439,11 +5439,11 @@
         },
         "struct:autocog:queue_conflict_review|active_goal_count=10|failed_action_count=8|open_conflict_count=20|queued_action_count=20|recent_error_count=0|workspace_count=80": {
           "outcomes": {
-            "success": 5.0
+            "success": 6.0
           },
           "expected_value": 1.0,
           "risk": 0.0,
-          "observations": 5.0
+          "observations": 6.0
         },
         "struct:autocog:queue_conflict_review|active_goal_count=10|failed_action_count=9|open_conflict_count=20|queued_action_count=22|recent_error_count=0|workspace_count=80": {
           "outcomes": {
@@ -5684,6 +5684,62 @@
           "expected_value": 1.0,
           "risk": 0.0,
           "observations": 3.0
+        },
+        "struct:autocog:queue_conflict_review|active_goal_count=10|failed_action_count=9|open_conflict_count=20|queued_action_count=20|recent_error_count=0|workspace_count=80": {
+          "outcomes": {
+            "success": 3.0
+          },
+          "expected_value": 1.0,
+          "risk": 0.0,
+          "observations": 3.0
+        },
+        "struct:autocog:queue_conflict_review|active_goal_count=10|failed_action_count=9|open_conflict_count=20|queued_action_count=18|recent_error_count=0|workspace_count=80": {
+          "outcomes": {
+            "success": 4.0
+          },
+          "expected_value": 1.0,
+          "risk": 0.0,
+          "observations": 4.0
+        },
+        "struct:autocog:queue_conflict_review|active_goal_count=10|failed_action_count=9|open_conflict_count=20|queued_action_count=23|recent_error_count=0|workspace_count=80": {
+          "outcomes": {
+            "success": 3.0
+          },
+          "expected_value": 1.0,
+          "risk": 0.0,
+          "observations": 3.0
+        },
+        "struct:autocog:compact_workspace_focus|active_goal_count=10|failed_action_count=9|open_conflict_count=20|queued_action_count=24|recent_error_count=0|workspace_count=80": {
+          "outcomes": {
+            "success": 1.0
+          },
+          "expected_value": 1.0,
+          "risk": 0.0,
+          "observations": 1.0
+        },
+        "struct:autocog:queue_conflict_review|active_goal_count=10|failed_action_count=8|open_conflict_count=20|queued_action_count=25|recent_error_count=0|workspace_count=80": {
+          "outcomes": {
+            "success": 1.0
+          },
+          "expected_value": 1.0,
+          "risk": 0.0,
+          "observations": 1.0
+        },
+        "struct:autocog:compact_workspace_focus|active_goal_count=10|failed_action_count=8|open_conflict_count=20|queued_action_count=25|recent_error_count=0|workspace_count=80": {
+          "outcomes": {
+            "success": 1.0
+          },
+          "expected_value": 1.0,
+          "risk": 0.0,
+          "observations": 1.0
+        },
+        "struct:autocog:queue_conflict_review|active_goal_count=10|failed_action_count=9|open_conflict_count=20|queued_action_count=24|recent_error_count=0|workspace_count=80": {
+          "outcomes": {
+            "success": 1.0
+          },
+          "expected_value": 1.0,
+          "risk": 0.0,
+          "observations": 1.0
         }
       },
       "hypotheses": [
@@ -5721,138 +5777,6 @@
         "workspace_count"
       ],
       "transitions": [
-        {
-          "ts": 1778162656,
-          "action": "autocog:queue_conflict_review",
-          "state_hash": "-6882743",
-          "state_t": {
-            "workspace_count": 49,
-            "high_salience_count": 44,
-            "unconsumed_high_salience_count": 44,
-            "queued_action_count": 20,
-            "failed_action_count": 8,
-            "active_goal_count": 10,
-            "open_conflict_count": 20,
-            "recent_error_count": 0
-          },
-          "actual_outcome": "success",
-          "predicted_outcome": "unknown",
-          "surprise": 1.0,
-          "metrics": {
-            "surprise_delta": 1.0,
-            "predicted_risk": 1.0
-          }
-        },
-        {
-          "ts": 1778162760,
-          "action": "autocog:queue_conflict_review",
-          "state_hash": "-4548677",
-          "state_t": {
-            "workspace_count": 67,
-            "high_salience_count": 47,
-            "unconsumed_high_salience_count": 47,
-            "queued_action_count": 20,
-            "failed_action_count": 8,
-            "active_goal_count": 10,
-            "open_conflict_count": 20,
-            "recent_error_count": 0
-          },
-          "actual_outcome": "success",
-          "predicted_outcome": "success",
-          "surprise": 1.0,
-          "metrics": {
-            "surprise_delta": 1.0,
-            "predicted_risk": 1.0
-          }
-        },
-        {
-          "ts": 1778162853,
-          "action": "autocog:queue_conflict_review",
-          "state_hash": "25027356",
-          "state_t": {
-            "workspace_count": 72,
-            "high_salience_count": 51,
-            "unconsumed_high_salience_count": 51,
-            "queued_action_count": 20,
-            "failed_action_count": 8,
-            "active_goal_count": 10,
-            "open_conflict_count": 20,
-            "recent_error_count": 0
-          },
-          "actual_outcome": "success",
-          "predicted_outcome": "success",
-          "surprise": 1.0,
-          "metrics": {
-            "surprise_delta": 1.0,
-            "predicted_risk": 1.0
-          }
-        },
-        {
-          "ts": 1778264888,
-          "action": "autocog:queue_conflict_review",
-          "state_hash": "70466972",
-          "state_t": {
-            "workspace_count": 0,
-            "high_salience_count": 0,
-            "unconsumed_high_salience_count": 0,
-            "queued_action_count": 20,
-            "failed_action_count": 7,
-            "active_goal_count": 10,
-            "open_conflict_count": 20,
-            "recent_error_count": 0
-          },
-          "actual_outcome": "success",
-          "predicted_outcome": "success",
-          "surprise": 1.0,
-          "metrics": {
-            "surprise_delta": 1.0,
-            "predicted_risk": 1.0
-          }
-        },
-        {
-          "ts": 1778265205,
-          "action": "autocog:queue_conflict_review",
-          "state_hash": "-5849718",
-          "state_t": {
-            "workspace_count": 13,
-            "high_salience_count": 3,
-            "unconsumed_high_salience_count": 3,
-            "queued_action_count": 10,
-            "failed_action_count": 7,
-            "active_goal_count": 10,
-            "open_conflict_count": 20,
-            "recent_error_count": 0
-          },
-          "actual_outcome": "success",
-          "predicted_outcome": "success",
-          "surprise": 1.0,
-          "metrics": {
-            "surprise_delta": 1.0,
-            "predicted_risk": 1.0
-          }
-        },
-        {
-          "ts": 1778265408,
-          "action": "autocog:queue_conflict_review",
-          "state_hash": "66380568",
-          "state_t": {
-            "workspace_count": 23,
-            "high_salience_count": 10,
-            "unconsumed_high_salience_count": 10,
-            "queued_action_count": 12,
-            "failed_action_count": 6,
-            "active_goal_count": 10,
-            "open_conflict_count": 20,
-            "recent_error_count": 0
-          },
-          "actual_outcome": "success",
-          "predicted_outcome": "success",
-          "surprise": 1.0,
-          "metrics": {
-            "surprise_delta": 1.0,
-            "predicted_risk": 1.0
-          }
-        },
         {
           "ts": 1778265665,
           "action": "autocog:queue_conflict_review",
@@ -7710,6 +7634,336 @@
             "high_salience_count": 35,
             "unconsumed_high_salience_count": 35,
             "queued_action_count": 16,
+            "failed_action_count": 9,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1778461150,
+          "action": "autocog:queue_conflict_review",
+          "state_hash": "-4411553",
+          "state_t": {
+            "workspace_count": 80,
+            "high_salience_count": 37,
+            "unconsumed_high_salience_count": 37,
+            "queued_action_count": 20,
+            "failed_action_count": 9,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1778461248,
+          "action": "autocog:queue_conflict_review",
+          "state_hash": "45393968",
+          "state_t": {
+            "workspace_count": 80,
+            "high_salience_count": 38,
+            "unconsumed_high_salience_count": 38,
+            "queued_action_count": 20,
+            "failed_action_count": 9,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1778461339,
+          "action": "autocog:queue_conflict_review",
+          "state_hash": "-3285500",
+          "state_t": {
+            "workspace_count": 80,
+            "high_salience_count": 41,
+            "unconsumed_high_salience_count": 41,
+            "queued_action_count": 20,
+            "failed_action_count": 9,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1778461430,
+          "action": "autocog:queue_conflict_review",
+          "state_hash": "19662019",
+          "state_t": {
+            "workspace_count": 80,
+            "high_salience_count": 43,
+            "unconsumed_high_salience_count": 43,
+            "queued_action_count": 20,
+            "failed_action_count": 8,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1778461521,
+          "action": "autocog:queue_conflict_review",
+          "state_hash": "-6279926",
+          "state_t": {
+            "workspace_count": 80,
+            "high_salience_count": 42,
+            "unconsumed_high_salience_count": 42,
+            "queued_action_count": 18,
+            "failed_action_count": 9,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1778461612,
+          "action": "autocog:queue_conflict_review",
+          "state_hash": "-6279926",
+          "state_t": {
+            "workspace_count": 80,
+            "high_salience_count": 42,
+            "unconsumed_high_salience_count": 42,
+            "queued_action_count": 18,
+            "failed_action_count": 9,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1778461703,
+          "action": "autocog:queue_conflict_review",
+          "state_hash": "26255392",
+          "state_t": {
+            "workspace_count": 80,
+            "high_salience_count": 43,
+            "unconsumed_high_salience_count": 43,
+            "queued_action_count": 18,
+            "failed_action_count": 9,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1778461793,
+          "action": "autocog:queue_conflict_review",
+          "state_hash": "26255392",
+          "state_t": {
+            "workspace_count": 80,
+            "high_salience_count": 43,
+            "unconsumed_high_salience_count": 43,
+            "queued_action_count": 18,
+            "failed_action_count": 9,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1778461904,
+          "action": "autocog:queue_conflict_review",
+          "state_hash": "50667827",
+          "state_t": {
+            "workspace_count": 80,
+            "high_salience_count": 45,
+            "unconsumed_high_salience_count": 45,
+            "queued_action_count": 23,
+            "failed_action_count": 9,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1778462038,
+          "action": "autocog:queue_conflict_review",
+          "state_hash": "50667827",
+          "state_t": {
+            "workspace_count": 80,
+            "high_salience_count": 45,
+            "unconsumed_high_salience_count": 45,
+            "queued_action_count": 23,
+            "failed_action_count": 9,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1778462128,
+          "action": "autocog:queue_conflict_review",
+          "state_hash": "-4338438",
+          "state_t": {
+            "workspace_count": 80,
+            "high_salience_count": 46,
+            "unconsumed_high_salience_count": 46,
+            "queued_action_count": 23,
+            "failed_action_count": 9,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1778462219,
+          "action": "autocog:compact_workspace_focus",
+          "state_hash": "-1114198",
+          "state_t": {
+            "workspace_count": 80,
+            "high_salience_count": 47,
+            "unconsumed_high_salience_count": 47,
+            "queued_action_count": 24,
+            "failed_action_count": 9,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1778462310,
+          "action": "autocog:queue_conflict_review",
+          "state_hash": "78715866",
+          "state_t": {
+            "workspace_count": 80,
+            "high_salience_count": 48,
+            "unconsumed_high_salience_count": 48,
+            "queued_action_count": 25,
+            "failed_action_count": 8,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1778462397,
+          "action": "autocog:compact_workspace_focus",
+          "state_hash": "43072957",
+          "state_t": {
+            "workspace_count": 80,
+            "high_salience_count": 50,
+            "unconsumed_high_salience_count": 50,
+            "queued_action_count": 25,
+            "failed_action_count": 8,
+            "active_goal_count": 10,
+            "open_conflict_count": 20,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1778462492,
+          "action": "autocog:queue_conflict_review",
+          "state_hash": "-1009722",
+          "state_t": {
+            "workspace_count": 80,
+            "high_salience_count": 48,
+            "unconsumed_high_salience_count": 48,
+            "queued_action_count": 24,
             "failed_action_count": 9,
             "active_goal_count": 10,
             "open_conflict_count": 20,

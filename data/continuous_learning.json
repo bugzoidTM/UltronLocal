@@ -5650,6 +5650,14 @@
       "latency_ms": 2058,
       "error_type": null,
       "profile": "normal"
+    },
+    {
+      "ts": 1778461336,
+      "task_type": "online_rl:epistemic_gap_scan",
+      "success": false,
+      "latency_ms": 441,
+      "error_type": null,
+      "profile": "normal"
     }
   ],
   "policy_weights": {
@@ -5659,7 +5667,8 @@
     "heartbeat": 0.7909809926574759,
     "online_rl:trusted_acquisition": 0.4312,
     "online_rl:homeostasis_tune": 0.43999999999999995,
-    "online_rl:autonomous_cognition_tick": 0.21499999999999997
+    "online_rl:autonomous_cognition_tick": 0.21499999999999997,
+    "online_rl:epistemic_gap_scan": 0.35
   },
-  "updated_at": 1778460335
+  "updated_at": 1778461336
 }

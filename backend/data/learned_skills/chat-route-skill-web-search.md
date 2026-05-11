@@ -13,14 +13,8 @@ Consultar e executar a skill web_search; se falhar, continuar o pipeline cogniti
 - action_kind: skill_web_search
 - status: promoted
 - confidence: 0.800
-- cognitive_status: transfer_validated
-- transfer_status: validated
-- transfer_score: 1.000
-
-## Transfer Gate
-- source_domain: tool_route
-- target_domains: session_context, surface_variation, voice_transcript
-- pass_rate: 1.000
 
 ## Exemplos observados
 - Eu pedi suas chaves de api
+- quem é o presidente do brasil?
+- Para que serve a instrução `git commit -m` no versionamento de código?

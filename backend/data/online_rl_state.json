@@ -3,33 +3,34 @@
   "last_action_ts": {
     "trusted_acquisition": 1778439775,
     "homeostasis_tune": 1778451706,
-    "autonomous_cognition_tick": 1778460335
+    "autonomous_cognition_tick": 1778460335,
+    "epistemic_gap_scan": 1778461336
   },
-  "cycle_count": 7,
-  "last_reward": 0.4853,
+  "cycle_count": 8,
+  "last_reward": 0.4747,
   "last_action": {
-    "kind": "autonomous_cognition_tick",
-    "drive": "autonomy",
-    "cost": 0.2,
-    "base_priority": 0.6,
-    "cooldown_sec": 120,
-    "description": "execute one cycle of autonomous cognition (perceive, suggest, execute, learn)",
+    "kind": "epistemic_gap_scan",
+    "drive": "novelty",
+    "cost": 0.1,
+    "base_priority": 0.46,
+    "cooldown_sec": 180,
+    "description": "refresh explicit epistemic gap map",
     "context": "normal",
-    "score": 1.4382,
-    "rl_priority_adjustment": 4,
-    "need_bonus": 0.1,
-    "state_pressure": 0.6711,
+    "score": 1.0893,
+    "rl_priority_adjustment": 3,
+    "need_bonus": 0.04,
+    "state_pressure": 0.6366,
     "cooldown_remaining_sec": 0,
     "non_llm": true
   },
   "last_reward_report": {
-    "reward": 0.4853,
+    "reward": 0.4747,
     "ok": false,
     "components": {
-      "action_score": 0.6,
+      "action_score": 0.5684,
       "homeostasis_delta": 0.0,
       "gap_delta": 0.0,
-      "latency_score": 0.9829,
+      "latency_score": 0.9963,
       "result_ok": true
     },
     "bonuses": {
@@ -45,10 +46,11 @@
       "rollback": 0.0
     },
     "evidence": {
-      "actions_executed": 1,
-      "consequences_learned": 1
+      "gap_count": 4,
+      "top_gap_id": "background_loop_pressure",
+      "top_gap_priority": 0.8563
     }
   },
-  "last_run_at": 1778460335,
-  "updated_at": 1778460335
+  "last_run_at": 1778461336,
+  "updated_at": 1778461336
 }

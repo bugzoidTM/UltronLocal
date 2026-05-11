@@ -1,39 +1,39 @@
 {
   "created_at": 1776626713,
-  "updated_at": 1778460767,
+  "updated_at": 1778462471,
   "drives": {
     "competence": {
-      "weight": 0.204817,
-      "desired": 0.884,
-      "observed": 0.262551,
+      "weight": 0.204051,
+      "desired": 0.908,
+      "observed": 0.26241,
       "weight_source": "stable_intrinsic_kernel"
     },
     "coherence": {
-      "weight": 0.180726,
+      "weight": 0.17801,
       "desired": 0.76,
-      "observed": 0.781639,
+      "observed": 0.784897,
       "weight_source": "stable_intrinsic_kernel"
     },
     "autonomy": {
-      "weight": 0.228349,
-      "desired": 0.848,
-      "observed": 0.299136,
+      "weight": 0.229269,
+      "desired": 0.872,
+      "observed": 0.244345,
       "weight_source": "stable_intrinsic_kernel"
     },
     "novelty": {
-      "weight": 0.175369,
-      "desired": 0.724,
+      "weight": 0.175069,
+      "desired": 0.744,
       "observed": 0.271053,
       "weight_source": "stable_intrinsic_kernel"
     },
     "integrity": {
-      "weight": 0.210739,
+      "weight": 0.2136,
       "desired": 0.96,
-      "observed": 0.741272,
+      "observed": 0.740582,
       "weight_source": "stable_intrinsic_kernel"
     }
   },
-  "utility": 0.5453,
+  "utility": 0.524,
   "utility_history": [
     {
       "ts": 1776626714,
@@ -5145,6 +5145,111 @@
           "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
         }
       }
+    },
+    {
+      "ts": 1778461101,
+      "utility": 0.5374,
+      "signals": {
+        "competence": 0.2625,
+        "coherence": 0.7735,
+        "autonomy": 0.126,
+        "novelty": 0.2711,
+        "integrity": 0.7409
+      },
+      "utility_kernel": {
+        "revision": 34,
+        "hash": "412ba33033730e22c604",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 33,
+          "accepted_evidence_count": 4716,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778461437,
+      "utility": 0.5325,
+      "signals": {
+        "competence": 0.2623,
+        "coherence": 0.7982,
+        "autonomy": 0.196,
+        "novelty": 0.2711,
+        "integrity": 0.7409
+      },
+      "utility_kernel": {
+        "revision": 36,
+        "hash": "516cf91ababc271b0866",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 35,
+          "accepted_evidence_count": 4906,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778461879,
+      "utility": 0.5304,
+      "signals": {
+        "competence": 0.2623,
+        "coherence": 0.7976,
+        "autonomy": 0.252,
+        "novelty": 0.2711,
+        "integrity": 0.74
+      },
+      "utility_kernel": {
+        "revision": 37,
+        "hash": "b377ea7ec8d0a0f959dc",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 36,
+          "accepted_evidence_count": 5020,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778462203,
+      "utility": 0.5301,
+      "signals": {
+        "competence": 0.2623,
+        "coherence": 0.7976,
+        "autonomy": 0.294,
+        "novelty": 0.2711,
+        "integrity": 0.74
+      },
+      "utility_kernel": {
+        "revision": 38,
+        "hash": "85045eb9ebef579bfc35",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 37,
+          "accepted_evidence_count": 5131,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1778462471,
+      "utility": 0.524,
+      "signals": {
+        "competence": 0.2623,
+        "coherence": 0.7723,
+        "autonomy": 0.126,
+        "novelty": 0.2711,
+        "integrity": 0.7391
+      },
+      "utility_kernel": {
+        "revision": 39,
+        "hash": "c36f7b211b379f0e48c6",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 38,
+          "accepted_evidence_count": 5244,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
     }
   ],
   "emergent_goals": [
@@ -5745,21 +5850,21 @@
     "objective_contract": "stable_intrinsic_kernel_gap_minimization",
     "priority": 0.7
   },
-  "tick_count": 441,
+  "tick_count": 446,
   "weight_hashes": [
-    "dfcc83949d6cb01a",
-    "30a60bf29f883977",
-    "fc56f3df03f7293e",
-    "12f70af7ca1e6fab",
-    "c464fb8b256318f8"
+    "910f5c04ad093562",
+    "cbdc1c3e3c96a04c",
+    "d6278ed1ced2d88a",
+    "84ba6be0e7e41157",
+    "705afaa27b4d5c32"
   ],
   "utility_kernel": {
-    "revision": 33,
-    "hash": "daa8ea9a4e7a9838b644",
+    "revision": 39,
+    "hash": "c36f7b211b379f0e48c6",
     "stability": {
       "source": "emergent_from_accepted_operational_evidence",
-      "updates": 32,
-      "accepted_evidence_count": 4619,
+      "updates": 38,
+      "accepted_evidence_count": 5244,
       "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
     }
   }

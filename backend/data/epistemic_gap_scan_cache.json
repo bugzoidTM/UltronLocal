@@ -1,116 +1,109 @@
 {
-  "ts": 1778460767.1438923,
+  "ts": 1778462471.8636394,
   "meta": {
     "cached": false,
-    "scan_ms": 24.12,
-    "gap_count": 4,
+    "scan_ms": 33.95,
+    "gap_count": 3,
     "cache_ttl_sec": 15.0
   },
   "gaps": [
     {
-      "id": "background_loop_pressure",
-      "label": "estabilidade dos loops sob carga",
-      "domain": "runtime_lifecycle",
-      "metric": "paused=False reason=event_loop_lag max_lag=4514.3054s blocked_loops=699",
-      "priority": 0.958,
-      "evidence": {
-        "background_guard": {
-          "enabled": true,
-          "state": "healthy",
-          "lag_sec": 0.0157,
-          "max_lag_sec": 4514.3054,
-          "consecutive_lag": 0,
-          "paused_until": 1778460557.6126943,
-          "last_pause_reason": "event_loop_lag",
-          "last_pause_at": 1778460467.6126943,
-          "last_slow_request": null,
-          "blocked_loops": 699,
-          "last_blocked_loop": "inner_monologue_loop",
-          "last_log_at": 1778460467.6132457,
-          "foreground_active": 0,
-          "last_foreground_path": "/api/chat",
-          "last_foreground_at": 1778453958.7678564,
-          "last_foreground_elapsed_sec": 0.2,
-          "last_pause_details": {
-            "lag_sec": 43.603,
-            "consecutive_lag": 1
-          },
-          "paused": false,
-          "paused_for_sec": 0.0
-        }
-      },
-      "next_experiment": "medir custo por loop e aplicar budget adaptativo sem desligar loops essenciais"
-    },
-    {
       "id": "causal_graph_interventional_coverage",
       "label": "cobertura interventional do grafo causal",
       "domain": "causal_graph",
-      "metric": "edges=79 strong=0 weak=60",
+      "metric": "edges=114 strong=0 weak=95",
       "priority": 0.833,
       "evidence": {
         "causal_graph": {
           "ok": true,
           "nodes": 42,
-          "edges": 79,
-          "updated_at": 1778454328,
+          "edges": 114,
+          "updated_at": 1778461803,
           "path": "D:\\UnidadeF\\UltronPro\\backend\\data\\causal_graph.json",
           "interventional_strong_edges": 0,
-          "interventional_weak_edges": 60,
+          "interventional_weak_edges": 95,
           "observational_edges": 19
         }
       },
       "next_experiment": "converter decisoes e benchmarks recentes em arestas causais com validacao interventional"
     },
     {
-      "id": "biographic_open_tension",
-      "label": "tensao aberta no digest biografico",
-      "domain": "self_model",
-      "metric": "benchmark abaixo do limiar: interventive_prediction_unseen_variants não passou (acurácia respondível 76.5%, acurácia total 65.0%, limiar 80.0%)",
-      "priority": 0.719,
-      "evidence": {
-        "digest_day": "2026-05-10",
-        "checksum": "833665d29554484e",
-        "open_tension": "benchmark abaixo do limiar: interventive_prediction_unseen_variants não passou (acurácia respondível 76.5%, acurácia total 65.0%, limiar 80.0%)"
-      },
-      "next_experiment": "transformar a tensao principal do digest em tarefa mensuravel com criterio de fechamento"
-    },
-    {
       "id": "episodic_abstraction_density",
       "label": "densidade de abstracoes episodicas reutilizaveis",
       "domain": "biographic_digest",
-      "metric": "abstracted=1 active_after=12 min_group_episodes=3",
-      "priority": 0.67,
+      "metric": "abstracted=0 active_after=13 min_group_episodes=3",
+      "priority": 0.78,
       "evidence": {
         "sleep_cycle": {
           "ok": true,
-          "ts": 1778454268,
-          "episodes_total": 17,
-          "active_after": 12,
+          "ts": 1778461338,
+          "episodes_total": 14,
+          "active_after": 13,
           "pruned": 0,
-          "abstracted": 1,
-          "abstractions_tested": 12,
+          "abstracted": 0,
+          "abstractions_tested": 51,
           "sql_consolidation": {
-            "decayed": 1619,
-            "pruned": 8,
+            "decayed": 1635,
+            "pruned": 2,
             "promoted": 0
           },
           "episodic_enrichment": {
             "ok": true,
             "enabled": true,
-            "records_created": 0,
-            "reason": "causal_abstraction_already_progressed",
-            "source_episode_count": 27,
-            "group_count": 4
+            "records_created": 5,
+            "eligible_candidates": 5,
+            "skipped_duplicates": 0,
+            "source_episode_count": 30,
+            "group_count": 5,
+            "items": [
+              {
+                "fingerprint": "e06d452a5bcbf274",
+                "domain": "self_introspection",
+                "action_kind": "sleep_cycle",
+                "task_type": "self_introspection",
+                "ok": true
+              },
+              {
+                "fingerprint": "d9eaaebd1c02ad36",
+                "domain": "self_event.sleep_cycle_completed",
+                "action_kind": "sleep_cycle",
+                "task_type": "operations",
+                "ok": true
+              },
+              {
+                "fingerprint": "fac5c55bd6336d67",
+                "domain": "self_introspection",
+                "action_kind": "episodic_compiler",
+                "task_type": "self_introspection",
+                "ok": true
+              },
+              {
+                "fingerprint": "fed8e5dd900e2ae0",
+                "domain": "sandbox_financeiro",
+                "action_kind": "episodic_compiler",
+                "task_type": "operations",
+                "ok": true
+              },
+              {
+                "fingerprint": "20472ed5ceb9f0b0",
+                "domain": "chat_interaction",
+                "action_kind": "chat_final_ultron_infer",
+                "task_type": "chat_interaction",
+                "ok": true
+              }
+            ],
+            "errors": [],
+            "reason": "enriched_structured_episodic_memory"
           },
           "nightly_episodic_digest": {
             "ok": true,
             "enabled": true,
             "recorded": true,
-            "id": "sleep_digest_2026-05-10_5aba91b3ac8ddc53",
-            "checksum": "5aba91b3ac8ddc53",
-            "source_count": 34,
-            "theme_count": 4,
-            "structured_episode_id": "ep_1778454328_370913",
+            "id": "sleep_digest_2026-05-10_c5350a492c3a15fb",
+            "checksum": "c5350a492c3a15fb",
+            "source_count": 41,
+            "theme_count": 5,
+            "structured_episode_id": "ep_1778461386_631759",
             "themes": [
               {
                 "domain": "chat_interaction",
@@ -148,14 +141,15 @@
               {
                 "domain": "self_introspection",
                 "action_kind": "sleep_cycle",
-                "episode_count": 2,
-                "ok_count": 2,
+                "episode_count": 3,
+                "ok_count": 3,
                 "failure_count": 0,
                 "mean_surprise": 0.15,
                 "keywords": [
                   "sleep_cycle"
                 ],
                 "examples": [
+                  "sleep_cycle success",
                   "sleep_cycle success",
                   "sleep_cycle success"
                 ]
@@ -180,16 +174,16 @@
           },
           "memory_stagnation_signal": {
             "ok": true,
-            "status": "healthy_progress",
-            "quiet_gap": false,
-            "reason": "sleep_cycle_produced_prune_or_abstraction",
-            "action_episode_count": 15,
-            "group_count": 4,
+            "status": "recovered_by_episodic_enrichment",
+            "quiet_gap": true,
+            "reason": "sleep_cycle_had_no_prune_or_abstraction",
+            "action_episode_count": 17,
+            "group_count": 5,
             "groups_below_min": 2,
             "min_group_episodes": 3,
-            "episodic_enrichment_records": 0,
+            "episodic_enrichment_records": 5,
             "nightly_digest_recorded": true,
-            "nightly_digest_id": "sleep_digest_2026-05-10_5aba91b3ac8ddc53",
+            "nightly_digest_id": "sleep_digest_2026-05-10_c5350a492c3a15fb",
             "next_step": "continue_nightly_consolidation"
           },
           "causal_gap_investigation": {
@@ -209,7 +203,7 @@
             "coverage_gained": true,
             "items": [
               {
-                "investigation_id": "inv_466c7d8b38",
+                "investigation_id": "inv_6b51479e00",
                 "ok": true,
                 "injected": true,
                 "error": null,
@@ -223,11 +217,11 @@
                 "edge": {
                   "cause": "active_investigation_gap:mim perguntei sobre",
                   "effect": "sandbox_experiment_observed:causal_graph_enrichment:active_investigation",
-                  "condition": "autonomous_executor_next_cycle:inv_466c7d8b38"
+                  "condition": "autonomous_executor_next_cycle:inv_6b51479e00"
                 }
               },
               {
-                "investigation_id": "inv_3c1d22cc53",
+                "investigation_id": "inv_5b3ca2b121",
                 "ok": true,
                 "injected": true,
                 "error": null,
@@ -241,25 +235,23 @@
                 "edge": {
                   "cause": "active_investigation_gap:meu nome qual",
                   "effect": "sandbox_experiment_observed:causal_graph_enrichment:active_investigation",
-                  "condition": "autonomous_executor_next_cycle:inv_3c1d22cc53"
+                  "condition": "autonomous_executor_next_cycle:inv_5b3ca2b121"
                 }
               },
               {
-                "investigation_id": "inv_98a12d9a04",
+                "investigation_id": "inv_05f7d35799",
                 "ok": true,
                 "injected": true,
                 "error": null,
                 "experiment_kind": "causal_graph_enrichment",
-                "target_route": "active_investigation",
+                "target_route": "local_reasoning",
                 "query_terms": [
-                  "mim",
-                  "perguntei",
-                  "sobre"
+                  "quanto"
                 ],
                 "edge": {
-                  "cause": "active_investigation_gap:mim perguntei sobre",
-                  "effect": "sandbox_experiment_observed:causal_graph_enrichment:active_investigation",
-                  "condition": "autonomous_executor_next_cycle:inv_98a12d9a04"
+                  "cause": "active_investigation_gap:quanto",
+                  "effect": "sandbox_experiment_observed:causal_graph_enrichment:local_reasoning",
+                  "condition": "autonomous_executor_next_cycle:inv_05f7d35799"
                 }
               }
             ],
@@ -286,6 +278,19 @@
         }
       },
       "next_experiment": "semear episodios por dominio e verificar se o sleep_cycle compila skills reutilizaveis"
+    },
+    {
+      "id": "biographic_open_tension",
+      "label": "tensao aberta no digest biografico",
+      "domain": "self_model",
+      "metric": "benchmark abaixo do limiar: interventive_prediction_unseen_variants não passou (acurácia respondível 76.5%, acurácia total 65.0%, limiar 80.0%)",
+      "priority": 0.719,
+      "evidence": {
+        "digest_day": "2026-05-10",
+        "checksum": "833665d29554484e",
+        "open_tension": "benchmark abaixo do limiar: interventive_prediction_unseen_variants não passou (acurácia respondível 76.5%, acurácia total 65.0%, limiar 80.0%)"
+      },
+      "next_experiment": "transformar a tensao principal do digest em tarefa mensuravel com criterio de fechamento"
     }
   ]
 }

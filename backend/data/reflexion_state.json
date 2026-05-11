@@ -6,14 +6,14 @@
   "auto_apply_confidence_threshold": 0.7,
   "post_action_eval_min_new_traces": 20,
   "last_line": 6,
-  "last_tick_ts": 1778460793,
-  "last_action": "none",
+  "last_tick_ts": 1778462334,
+  "last_action": "adjust_prm_thresholds",
   "pending_hypothesis_eval": {
-    "ts": 1778454535,
+    "ts": 1778462334,
     "acao": "adjust_prm_thresholds",
-    "confianca": 0.8,
-    "razao": "A meaningful failure pattern has been detected with an unstable latency issue in recent traces. Adjusting prm thresholds is recommended to address this issue.",
-    "hipotese": "Unstable latency issue detected in recent traces.",
+    "confianca": 1.0,
+    "razao": "Meaningful failure pattern detected: unstable latency issue in recent traces.",
+    "hipotese": "Adjusting prm thresholds to mitigate unstable latency issue.",
     "baseline": {
       "error_rate": 0.0,
       "outliers_gt_10s_pct": 0.0
@@ -27,8 +27,8 @@
           "medium": 0.45
         },
         "after": {
-          "low": 0.55,
-          "medium": 0.45
+          "low": 0.6,
+          "medium": 0.5
         },
         "reversible": true
       }
@@ -38,7 +38,7 @@
     "confianca_pos_acao": null,
     "status": "pending"
   },
-  "cycle_count": 1013,
+  "cycle_count": 1021,
   "curiosity_probe_interval": 5,
-  "last_confidence": 0.7
+  "last_confidence": 1.0
 }

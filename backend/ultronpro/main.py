@@ -13193,7 +13193,7 @@ async def chat_stream(req: ChatRequest):
             yield f"data: {json.dumps({'type': 'done', 'answer': 'Mensagem vazia.'})}\n\n"
             return
 
-        early_intent = _quick_smalltalk_intent(q)
+        early_intent = _intent_pre_classifier(q)
         if early_intent in ('greeting', 'thanks'):
             if early_intent == 'greeting':
                 answer = await asyncio.to_thread(_cognitive_greeting_response, q)
@@ -13207,7 +13207,7 @@ async def chat_stream(req: ChatRequest):
         # Answer them directly so the UI does not expose internal pipeline probes
         # as if they were part of the final reply.
         try:
-            if is_autobiographical_intent(q):
+            if early_intent != 'creative' and is_autobiographical_intent(q):
                 cognitive_timeout = float(os.getenv('ULTRON_COGNITIVE_RESPONSE_TIMEOUT_SEC', '12') or 12)
                 cognitive = await asyncio.wait_for(
                     asyncio.to_thread(_cognitive_response_answer, q),
@@ -13230,8 +13230,8 @@ async def chat_stream(req: ChatRequest):
         except Exception as e:
             logger.warning(f"Stream autobiographical cognitive response failed: {e}")
 
-        generated_skill_fast = _suggest_skill_name_for_chat(q)
-        if str(generated_skill_fast or '').startswith('auto_') and _is_chat_skill_executable(generated_skill_fast):
+        generated_skill_fast = _suggest_skill_name_for_chat(q) if early_intent != 'creative' else None
+        if generated_skill_fast and str(generated_skill_fast).startswith('auto_') and _is_chat_skill_executable(generated_skill_fast):
             yield f"data: {json.dumps({'type': 'progress', 'text': f'Skill gerada detectada: {generated_skill_fast}...'})}\n\n"
             try:
                 result = await _execute_skill_for_chat(q, str(generated_skill_fast))
@@ -13253,8 +13253,10 @@ async def chat_stream(req: ChatRequest):
         
         # O mesmo pipeline do chat_fast, mas executado com yields
         try:
-            from ultronpro.symbolic_reasoner import _solve_deterministic
-            det = await asyncio.wait_for(asyncio.to_thread(_solve_deterministic, q), timeout=5.0)
+            det = None
+            if early_intent != 'creative':
+                from ultronpro.symbolic_reasoner import _solve_deterministic
+                det = await asyncio.wait_for(asyncio.to_thread(_solve_deterministic, q), timeout=5.0)
             if det:
                 _record_conversation_route(q, 'symbolic', source='chat_stream')
                 yield f"data: {json.dumps({'type': 'done', 'answer': det, 'strategy': 'symbolic'})}\n\n"
@@ -13264,23 +13266,17 @@ async def chat_stream(req: ChatRequest):
         yield f"data: {json.dumps({'type': 'progress', 'text': '🧠 Raciocínio Local / Cache...'})}\n\n"
         
         try:
-            from ultronpro import local_reasoning_engine
-            local_res = await asyncio.wait_for(asyncio.to_thread(local_reasoning_engine.resolve, q), timeout=3.0)
+            local_res = {}
+            if early_intent != 'creative':
+                from ultronpro import local_reasoning_engine
+                local_res = await asyncio.wait_for(asyncio.to_thread(local_reasoning_engine.resolve, q), timeout=3.0)
             if local_res.get('resolved') and local_res.get('result'):
                 _record_conversation_route(q, 'local_logic', source='chat_stream')
                 yield f"data: {json.dumps({'type': 'done', 'answer': local_res['result'], 'strategy': 'local_logic'})}\n\n"
                 return
         except Exception: pass
 
-        early_intent = _quick_smalltalk_intent(q)
-        if early_intent in ('greeting', 'thanks'):
-            if early_intent == 'greeting':
-                answer = await asyncio.to_thread(_cognitive_greeting_response, q)
-            else:
-                answer = await asyncio.to_thread(_cognitive_thanks_response, q)
-            _record_conversation_route(q, f'intent_{early_intent}', source='chat_stream', meta={'intent': early_intent, 'fast_path': True})
-            yield f"data: {json.dumps({'type': 'done', 'answer': answer, 'strategy': f'intent_{early_intent}'})}\n\n"
-            return
+        # Removido: verificação redundante de smalltalk que existia aqui
 
         external_fact = _external_factual_decision(q)
         if external_fact.get('label') == 'external_factual':

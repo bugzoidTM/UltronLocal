@@ -1,81 +1,35 @@
 {
   "ok": true,
   "resolved": true,
-  "investigation_id": "inv_22a40c9444",
-  "ts": 1778461036,
+  "investigation_id": "inv_4049ab2601",
+  "ts": 1778461800,
   "status": "transfer_prior_validated",
   "reason": "no_structured_coverage",
   "task_type": "general",
-  "query": "Como se diz 'Obrigado pela ajuda' em francês?",
+  "query": "vc snt coisa?? tm conscienssia msm ow e fake??",
   "learned_route": {
-    "module": "intent_thanks",
-    "confidence": 0.8333,
+    "module": "unknown",
+    "confidence": 0.0,
     "method": "episode_token_similarity",
-    "evidence_count": 5,
+    "evidence_count": 0,
     "examples_seen": 120,
-    "top_similarity": 1.0,
-    "margin": 3.9961,
-    "module_scores": {
-      "causal_transfer_engine": 0.9992,
-      "intent_thanks": 4.9954
-    },
-    "evidence": [
-      {
-        "module": "causal_transfer_engine",
-        "similarity": 1.0,
-        "strategy": "non_llm_causal_transfer_prior",
-        "ok": true,
-        "source": "chat"
-      },
-      {
-        "module": "intent_thanks",
-        "similarity": 1.0,
-        "strategy": "intent_thanks",
-        "ok": true,
-        "source": "chat"
-      },
-      {
-        "module": "intent_thanks",
-        "similarity": 1.0,
-        "strategy": "intent_thanks",
-        "ok": true,
-        "source": "chat"
-      },
-      {
-        "module": "intent_thanks",
-        "similarity": 1.0,
-        "strategy": "intent_thanks",
-        "ok": true,
-        "source": "chat"
-      },
-      {
-        "module": "intent_thanks",
-        "similarity": 1.0,
-        "strategy": "intent_thanks",
-        "ok": true,
-        "source": "chat"
-      },
-      {
-        "module": "intent_thanks",
-        "similarity": 1.0,
-        "strategy": "intent_thanks",
-        "ok": true,
-        "source": "chat"
-      }
-    ],
-    "routed": true
+    "top_similarity": 0.0,
+    "margin": 0.0,
+    "module_scores": {},
+    "evidence": [],
+    "routed": false
   },
   "coverage": {
     "score": 1.0,
     "shared": [
-      "ajuda",
-      "diz",
-      "frances",
-      "obrigado",
-      "pela"
+      "coisa",
+      "conscienssia",
+      "fake",
+      "msm",
+      "snt"
     ],
     "query_tokens": 5,
-    "evidence_tokens": 522
+    "evidence_tokens": 508
   },
   "missing_slots": [
     "aresta_causal_relevante",
@@ -85,11 +39,11 @@
     "kind": "causal_transfer_prior_validation",
     "target_route": "unknown:general",
     "query_terms": [
-      "ajuda",
-      "diz",
-      "frances",
-      "obrigado",
-      "pela"
+      "coisa",
+      "conscienssia",
+      "fake",
+      "msm",
+      "snt"
     ],
     "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
     "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
@@ -127,19 +81,19 @@
     "ok": true,
     "type": "autoisomorphic_transfer_prior",
     "query_tokens": [
-      "ajuda",
-      "diz",
-      "franc",
-      "obrigado",
-      "pela"
+      "coisa",
+      "conscienssia",
+      "fake",
+      "msm",
+      "snt"
     ],
     "task_type": "general",
     "candidate_count": 10,
     "origin": "autoisomorphic_mapper.transfer_prior",
     "sir": {
       "schema_version": "sir.v1",
-      "created_at": 1778461036,
-      "query": "Como se diz 'Obrigado pela ajuda' em francês?",
+      "created_at": 1778461800,
+      "query": "vc snt coisa?? tm conscienssia msm ow e fake??",
       "facts": [
         {
           "id": "FACT_1",
@@ -285,62 +239,16 @@
     "learned_route": {
       "ok": true,
       "prediction": {
-        "module": "intent_thanks",
-        "confidence": 0.8333,
+        "module": "unknown",
+        "confidence": 0.0,
         "method": "episode_token_similarity",
-        "evidence_count": 5,
+        "evidence_count": 0,
         "examples_seen": 120,
-        "top_similarity": 1.0,
-        "margin": 3.9961,
-        "module_scores": {
-          "causal_transfer_engine": 0.9992,
-          "intent_thanks": 4.9954
-        },
-        "evidence": [
-          {
-            "module": "causal_transfer_engine",
-            "similarity": 1.0,
-            "strategy": "non_llm_causal_transfer_prior",
-            "ok": true,
-            "source": "chat"
-          },
-          {
-            "module": "intent_thanks",
-            "similarity": 1.0,
-            "strategy": "intent_thanks",
-            "ok": true,
-            "source": "chat"
-          },
-          {
-            "module": "intent_thanks",
-            "similarity": 1.0,
-            "strategy": "intent_thanks",
-            "ok": true,
-            "source": "chat"
-          },
-          {
-            "module": "intent_thanks",
-            "similarity": 1.0,
-            "strategy": "intent_thanks",
-            "ok": true,
-            "source": "chat"
-          },
-          {
-            "module": "intent_thanks",
-            "similarity": 1.0,
-            "strategy": "intent_thanks",
-            "ok": true,
-            "source": "chat"
-          },
-          {
-            "module": "intent_thanks",
-            "similarity": 1.0,
-            "strategy": "intent_thanks",
-            "ok": true,
-            "source": "chat"
-          }
-        ],
-        "routed": true
+        "top_similarity": 0.0,
+        "margin": 0.0,
+        "module_scores": {},
+        "evidence": [],
+        "routed": false
       }
     },
     "causal_graph": {
@@ -350,8 +258,8 @@
     },
     "episodic_memory": {
       "ok": true,
-      "count": 3,
-      "summary": "{'working_memory': {'contexto_imediato': 'Digest noturno da memoria episodica (2026-05-10): chat_interaction/chat_final_ultron_infer (8 eps, keywords=chat_final_ultron_infer); chat_interaction/local_llm_unavailable (4 eps, keywords=failure, local_llm_unavailable); self_introspection/sleep_cycle (2 eps, keywords=sleep_cycle); chat_interactio', 'estado_plano_execucao': {'num_passos': 1, 'finalizou': True, 'episode_id': 'ep_1778454328_370913'}, 'ultimos_tool_calls': [{'tool': 'sleep_cycle_digest', 'source_count': 34, 'theme_count': 4, 'stagnation_status': 'healthy_progress'}]}, 'episodic_similar': [{'score': 0.2542, 'strategy': 'sleep_cycle_nightly_digest', 'ok': True, 'problema': 'Digest noturno da memoria episodica (2026-05-10): chat_interaction/chat_final_ultron_infer (8 eps, k', 'resultado': 'Digest noturno 2026-05-10: pruned=0, abstracted=1, enrichment=0, active_investigation=3/3. Temas: ch', 'prm_score_final': None}, {'score': 0.2539, 'strategy': 'sleep_cycle_nightly_digest', 'ok': True, 'problema': 'Digest noturno da memoria episodica (2026-05-10): chat_interaction/chat_final_ultron_infer (2 eps, k', 'resultado': 'Digest noturno 2026-05-10: pruned=0, abstracted=0, enrichment=5, active_investigation=3/3. Temas: ch', 'prm_score_final': None}, {'score': 0.2437, 'strategy': 'sleep_cycle_nightly_digest', 'ok': True, 'problema': 'Digest noturno da memoria episodica (2026-05-10): self_event.abstraction_promoted/episodic_compiler ', 'resultado': 'Digest noturno 2026-05-10: pruned=0, abstracted=0, enrichment=4, active_investigation=3/3. Temas: se', 'prm_score_final': None}], 'pr"
+      "count": 0,
+      "summary": "{'working_memory': {'contexto_imediato': 'Digest noturno da memoria episodica (2026-05-10): chat_interaction/chat_final_ultron_infer (8 eps, keywords=chat_final_ultron_infer); chat_interaction/local_llm_unavailable (4 eps, keywords=failure, local_llm_unavailable); self_introspection/sleep_cycle (3 eps, keywords=sleep_cycle); chat_interactio', 'estado_plano_execucao': {'num_passos': 1, 'finalizou': True, 'episode_id': 'ep_1778461386_631759'}, 'ultimos_tool_calls': [{'tool': 'sleep_cycle_digest', 'source_count': 41, 'theme_count': 5, 'stagnation_status': 'recovered_by_episodic_enrichment'}]}, 'episodic_similar': [], 'procedural_hints': {'task_type': 'general', 'best_strategies': []}, 'top_strategy_hint': None, 'budget': {'max_chars': 1800, 'actual_chars': 787, 'truncated': False}}"
     },
     "store": {
       "ok": true,
@@ -367,48 +275,6 @@
           "module": "autonomous_cognition",
           "channel": "autonomous.risk_forecast",
           "salience": 0.88,
-          "payload": "{\"risks\":[{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than they are resolved.\",\"evidence\":{\"queued_action_count\":17},\"recommended_action\":\"prioritize_action_backlog\"},{\"risk_id\":\"open_conflict_pressure\",\"score\":1.0,\"reason\":\"Unresolved conflicts can fragment planning and memory consolidation.\",\"evidence\":{\""
-        },
-        {
-          "module": "autonomous_cognition",
-          "channel": "autonomous.risk_forecast",
-          "salience": 0.88,
-          "payload": "{\"risks\":[{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than they are resolved.\",\"evidence\":{\"queued_action_count\":17},\"recommended_action\":\"prioritize_action_backlog\"},{\"risk_id\":\"open_conflict_pressure\",\"score\":1.0,\"reason\":\"Unresolved conflicts can fragment planning and memory consolidation.\",\"evidence\":{\""
-        },
-        {
-          "module": "autonomous_cognition",
-          "channel": "autonomous.risk_forecast",
-          "salience": 0.88,
-          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":28,\"unconsumed_high_salience_count\":12},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"open_conflict_pressure\",\"score\":1.0,\"reason\":\"Unresolved conflicts can fragment planning an"
-        },
-        {
-          "module": "autonomous_cognition",
-          "channel": "autonomous.risk_forecast",
-          "salience": 0.88,
-          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":41,\"unconsumed_high_salience_count\":17},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"open_conflict_pressure\",\"score\":1.0,\"reason\":\"Unresolved conflicts can fragment planning an"
-        },
-        {
-          "module": "autonomous_cognition",
-          "channel": "autonomous.risk_forecast",
-          "salience": 0.88,
-          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":49,\"unconsumed_high_salience_count\":21},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"open_conflict_pressure\",\"score\":1.0,\"reason\":\"Unresolved conflicts can fragment planning an"
-        },
-        {
-          "module": "autonomous_cognition",
-          "channel": "autonomous.risk_forecast",
-          "salience": 0.88,
-          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":57,\"unconsumed_high_salience_count\":26},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"open_conflict_pressure\",\"score\":1.0,\"reason\":\"Unresolved conflicts can fragment planning an"
-        },
-        {
-          "module": "autonomous_cognition",
-          "channel": "autonomous.risk_forecast",
-          "salience": 0.88,
-          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":68,\"unconsumed_high_salience_count\":29},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
-        },
-        {
-          "module": "autonomous_cognition",
-          "channel": "autonomous.risk_forecast",
-          "salience": 0.88,
           "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":80,\"unconsumed_high_salience_count\":34},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
         },
         {
@@ -418,10 +284,52 @@
           "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":80,\"unconsumed_high_salience_count\":35},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
         },
         {
-          "module": "episodic_compiler",
-          "channel": "causal.skill_promoted",
-          "salience": 0.9,
-          "payload": "{\"id\": \"abs_1778454297_3159\", \"name\": \"Rollback_Atomico_Financeiro\", \"confirmation_rate\": 1.0, \"tests\": 5}"
+          "module": "autonomous_cognition",
+          "channel": "autonomous.risk_forecast",
+          "salience": 0.88,
+          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":80,\"unconsumed_high_salience_count\":37},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
+        },
+        {
+          "module": "autonomous_cognition",
+          "channel": "autonomous.risk_forecast",
+          "salience": 0.88,
+          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":80,\"unconsumed_high_salience_count\":38},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
+        },
+        {
+          "module": "autonomous_cognition",
+          "channel": "autonomous.risk_forecast",
+          "salience": 0.88,
+          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":80,\"unconsumed_high_salience_count\":41},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
+        },
+        {
+          "module": "autonomous_cognition",
+          "channel": "autonomous.risk_forecast",
+          "salience": 0.88,
+          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":80,\"unconsumed_high_salience_count\":43},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
+        },
+        {
+          "module": "autonomous_cognition",
+          "channel": "autonomous.risk_forecast",
+          "salience": 0.88,
+          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":80,\"unconsumed_high_salience_count\":42},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
+        },
+        {
+          "module": "autonomous_cognition",
+          "channel": "autonomous.risk_forecast",
+          "salience": 0.88,
+          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":80,\"unconsumed_high_salience_count\":42},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
+        },
+        {
+          "module": "autonomous_cognition",
+          "channel": "autonomous.risk_forecast",
+          "salience": 0.88,
+          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":80,\"unconsumed_high_salience_count\":43},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
+        },
+        {
+          "module": "autonomous_cognition",
+          "channel": "autonomous.risk_forecast",
+          "salience": 0.88,
+          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":80,\"unconsumed_high_salience_count\":43},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
         }
       ]
     },
@@ -431,29 +339,29 @@
         "background_guard.json": {
           "enabled": true,
           "state": "foreground_throttle",
-          "lag_sec": 0.009,
-          "max_lag_sec": 3.6496,
+          "lag_sec": 0.011,
+          "max_lag_sec": 47.7981,
           "consecutive_lag": 0,
-          "paused_until": 1778461101.5294957,
+          "paused_until": 1778461878.0197184,
           "last_pause_reason": "event_loop_lag",
-          "last_pause_at": 1778461011.5294957,
+          "last_pause_at": 1778461788.0197184,
           "last_slow_request": null,
-          "blocked_loops": 44,
-          "last_blocked_loop": "mission_control_loop",
-          "last_log_at": 1778461035.638707,
+          "blocked_loops": 647,
+          "last_blocked_loop": "autonomy_loop",
+          "last_log_at": 1778461798.7781591,
           "foreground_active": 0,
           "last_foreground_path": "/api/chat",
-          "last_foreground_at": 1778461033.4437087,
-          "last_foreground_elapsed_sec": 3.552,
+          "last_foreground_at": 1778461798.1482046,
+          "last_foreground_elapsed_sec": 14.292,
           "last_pause_details": {
-            "lag_sec": 2.678,
+            "lag_sec": 3.546,
             "consecutive_lag": 1
           },
           "paused": true,
-          "paused_for_sec": 65.8901481628418
+          "paused_for_sec": 77.9524462223053
         },
         "runtime_health.json": {
-          "ts": 1778460915,
+          "ts": 1778461598,
           "active_goal": "Modelar taxonomia de erros cognitivos em decises",
           "active_mission": {
             "id": "mis_1776628887_3",
@@ -1010,51 +918,60 @@
             "budget_per_min": 2
           },
           "autonomy_state": {
-            "ticks": 0,
-            "last_tick": null,
+            "ticks": 2,
+            "last_tick": 95158,
             "last_error": null,
             "consecutive_errors": 0
           },
           "background_guard": {
             "enabled": true,
-            "state": "healthy",
-            "lag_sec": 0.0,
-            "max_lag_sec": 0.0,
+            "state": "foreground_throttle",
+            "lag_sec": 0.0069,
+            "max_lag_sec": 47.7981,
             "consecutive_lag": 0,
-            "paused_until": 0.0,
-            "last_pause_reason": null,
-            "last_pause_at": 0.0,
+            "paused_until": 1778461674.9948237,
+            "last_pause_reason": "event_loop_lag",
+            "last_pause_at": 1778461584.9948237,
             "last_slow_request": null,
-            "blocked_loops": 0,
-            "last_blocked_loop": null,
-            "last_log_at": 0.0,
-            "foreground_active": 0,
-            "last_foreground_path": null,
-            "last_foreground_at": 0.0,
-            "last_foreground_elapsed_sec": 0.0,
-            "paused": false,
-            "paused_for_sec": 0.0
+            "blocked_loops": 250,
+            "last_blocked_loop": "judge_loop",
+            "last_log_at": 1778461584.9948628,
+            "foreground_active": 1,
+            "last_foreground_path": "/api/chat",
+            "last_foreground_at": 1778461598.3487258,
+            "last_foreground_elapsed_sec": 3.552,
+            "last_pause_details": {
+              "lag_sec": 31.504,
+              "consecutive_lag": 1
+            },
+            "paused": true,
+            "paused_for_sec": 76.3003294467926
           },
           "background_binary_bus": {
             "enabled": true,
-            "started_at": 0.0,
-            "processed": 0,
+            "started_at": 1778460918.8781095,
+            "processed": 883,
             "dropped": 0,
             "sink_errors": 0,
-            "last_event": null,
+            "last_event": {
+              "kind": "event",
+              "loop": "runtime_guard",
+              "event": "foreground_begin",
+              "at": 1778461598.3487322
+            },
             "last_error": null,
             "queue_size": 0,
-            "worker_alive": false,
+            "worker_alive": true,
             "binlog_path": "D:\\UnidadeF\\UltronPro\\backend\\data\\background_bus.binlog"
           },
           "extra": {
-            "reason": "startup_complete"
+            "reason": "autofeeder_tick"
           }
         },
         "no_cloud_experiment_campaign_state.json": {
           "ok": true,
           "status": "skipped_policy_cloud_rotation",
-          "ts": 1778460467,
+          "ts": 1778461101,
           "campaign": "local_inference_no_cloud_recovery",
           "local_provider_policy": "cloud_rotation",
           "forced": false,
@@ -1097,19 +1014,19 @@
         "ok": true,
         "type": "autoisomorphic_transfer_prior",
         "query_tokens": [
-          "ajuda",
-          "diz",
-          "franc",
-          "obrigado",
-          "pela"
+          "coisa",
+          "conscienssia",
+          "fake",
+          "msm",
+          "snt"
         ],
         "task_type": "general",
         "candidate_count": 10,
         "origin": "autoisomorphic_mapper.transfer_prior",
         "sir": {
           "schema_version": "sir.v1",
-          "created_at": 1778461036,
-          "query": "Como se diz 'Obrigado pela ajuda' em francês?",
+          "created_at": 1778461800,
+          "query": "vc snt coisa?? tm conscienssia msm ow e fake??",
           "facts": [
             {
               "id": "FACT_1",
@@ -1252,14 +1169,14 @@
       }
     }
   },
-  "duration_ms": 159.86,
+  "duration_ms": 123.55,
   "causal_graph_registration": {
     "ok": true,
     "edge": {
       "cause": "structured_reasoning_gap:no_structured_coverage",
       "effect": "active_investigation:needs_experiment",
       "condition": "structured_coverage_insufficient",
-      "support": 72,
+      "support": 96,
       "confidence": 0.99,
       "severity": 1,
       "knowledge_type": "observational",
@@ -1267,18 +1184,18 @@
         "active_investigation"
       ],
       "last_evidence": {
-        "investigation_id": "inv_22a40c9444",
+        "investigation_id": "inv_4049ab2601",
         "coverage": {
           "score": 1.0,
           "shared": [
-            "ajuda",
-            "diz",
-            "frances",
-            "obrigado",
-            "pela"
+            "coisa",
+            "conscienssia",
+            "fake",
+            "msm",
+            "snt"
           ],
           "query_tokens": 5,
-          "evidence_tokens": 522
+          "evidence_tokens": 508
         },
         "missing_slots": [
           "aresta_causal_relevante",
@@ -1288,72 +1205,26 @@
           "kind": "causal_transfer_prior_validation",
           "target_route": "unknown:general",
           "query_terms": [
-            "ajuda",
-            "diz",
-            "frances",
-            "obrigado",
-            "pela"
+            "coisa",
+            "conscienssia",
+            "fake",
+            "msm",
+            "snt"
           ],
           "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
           "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
         },
         "learned_route": {
-          "module": "intent_thanks",
-          "confidence": 0.8333,
+          "module": "unknown",
+          "confidence": 0.0,
           "method": "episode_token_similarity",
-          "evidence_count": 5,
+          "evidence_count": 0,
           "examples_seen": 120,
-          "top_similarity": 1.0,
-          "margin": 3.9961,
-          "module_scores": {
-            "causal_transfer_engine": 0.9992,
-            "intent_thanks": 4.9954
-          },
-          "evidence": [
-            {
-              "module": "causal_transfer_engine",
-              "similarity": 1.0,
-              "strategy": "non_llm_causal_transfer_prior",
-              "ok": true,
-              "source": "chat"
-            },
-            {
-              "module": "intent_thanks",
-              "similarity": 1.0,
-              "strategy": "intent_thanks",
-              "ok": true,
-              "source": "chat"
-            },
-            {
-              "module": "intent_thanks",
-              "similarity": 1.0,
-              "strategy": "intent_thanks",
-              "ok": true,
-              "source": "chat"
-            },
-            {
-              "module": "intent_thanks",
-              "similarity": 1.0,
-              "strategy": "intent_thanks",
-              "ok": true,
-              "source": "chat"
-            },
-            {
-              "module": "intent_thanks",
-              "similarity": 1.0,
-              "strategy": "intent_thanks",
-              "ok": true,
-              "source": "chat"
-            },
-            {
-              "module": "intent_thanks",
-              "similarity": 1.0,
-              "strategy": "intent_thanks",
-              "ok": true,
-              "source": "chat"
-            }
-          ],
-          "routed": true
+          "top_similarity": 0.0,
+          "margin": 0.0,
+          "module_scores": {},
+          "evidence": [],
+          "routed": false
         },
         "transfer_prior": {
           "score": 0.6208,
@@ -1388,19 +1259,19 @@
           "ok": true,
           "type": "autoisomorphic_transfer_prior",
           "query_tokens": [
-            "ajuda",
-            "diz",
-            "franc",
-            "obrigado",
-            "pela"
+            "coisa",
+            "conscienssia",
+            "fake",
+            "msm",
+            "snt"
           ],
           "task_type": "general",
           "candidate_count": 10,
           "origin": "autoisomorphic_mapper.transfer_prior",
           "sir": {
             "schema_version": "sir.v1",
-            "created_at": 1778461036,
-            "query": "Como se diz 'Obrigado pela ajuda' em francês?",
+            "created_at": 1778461800,
+            "query": "vc snt coisa?? tm conscienssia msm ow e fake??",
             "facts": [
               {
                 "id": "FACT_1",
@@ -1543,17 +1414,17 @@
         },
         "prior_validation": null
       },
-      "updated_at": 1778461036
+      "updated_at": 1778461800
     }
   },
   "answer": "Encontrei cobertura direta insuficiente, mas nao vou parar em UNKNOWN: transferi um prior causal de hard_eval_fs_guard_1776799966 para unknown:general.\nHipotese/politica transferida: Topologia causal comum com p=0.042 e ganho de transferência de +73.3%\nConfianca calibrada do prior: 0.68 (degradada ate validacao interventiva).\nA investigacao ativa sandboxada validou o prior e registrou evidencia interventiva no grafo causal.\nLacunas restantes: aresta_causal_relevante, fato_estruturado_recuperavel.",
   "execution": {
-    "ts": 1778461036,
+    "ts": 1778461800,
     "ok": true,
     "executed": true,
     "injected": true,
-    "investigation_id": "inv_22a40c9444",
-    "query": "Como se diz 'Obrigado pela ajuda' em francês?",
+    "investigation_id": "inv_4049ab2601",
+    "query": "vc snt coisa?? tm conscienssia msm ow e fake??",
     "reason": "no_structured_coverage",
     "missing_slots": [
       "aresta_causal_relevante",
@@ -1563,11 +1434,11 @@
       "kind": "causal_transfer_prior_validation",
       "target_route": "unknown:general",
       "query_terms": [
-        "ajuda",
-        "diz",
-        "frances",
-        "obrigado",
-        "pela"
+        "coisa",
+        "conscienssia",
+        "fake",
+        "msm",
+        "snt"
       ],
       "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
       "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
@@ -1581,13 +1452,13 @@
     "experiment_result": {
       "ok": true,
       "accepted": true,
-      "digest": "251fd03c3bf4b3ce",
+      "digest": "a9a8a59d56f50384",
       "query_terms": [
-        "ajuda",
-        "diz",
-        "frances",
-        "obrigado",
-        "pela"
+        "coisa",
+        "conscienssia",
+        "fake",
+        "msm",
+        "snt"
       ],
       "missing_slots": [
         "aresta_causal_relevante",
@@ -1598,7 +1469,7 @@
       "edge": {
         "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
         "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
-        "condition": "active_investigation_prior_validation:inv_22a40c9444",
+        "condition": "active_investigation_prior_validation:inv_4049ab2601",
         "confidence": 0.6808
       },
       "prior_validation": {
@@ -1620,7 +1491,7 @@
           "aresta_causal_relevante",
           "fato_estruturado_recuperavel"
         ],
-        "sandbox_digest": "251fd03c3bf4b3ce"
+        "sandbox_digest": "a9a8a59d56f50384"
       },
       "acceptance_checked": true
     },
@@ -1640,7 +1511,7 @@
       "edge": {
         "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
         "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
-        "condition": "active_investigation_prior_validation:inv_22a40c9444",
+        "condition": "active_investigation_prior_validation:inv_4049ab2601",
         "support": 1,
         "confidence": 0.7008,
         "severity": 1,
@@ -1650,22 +1521,22 @@
         ],
         "last_evidence": {
           "investigation": {
-            "investigation_id": "inv_22a40c9444",
-            "query": "Como se diz 'Obrigado pela ajuda' em francês?",
+            "investigation_id": "inv_4049ab2601",
+            "query": "vc snt coisa?? tm conscienssia msm ow e fake??",
             "reason": "no_structured_coverage",
             "task_type": "general",
             "status": "needs_experiment",
             "coverage": {
               "score": 1.0,
               "shared": [
-                "ajuda",
-                "diz",
-                "frances",
-                "obrigado",
-                "pela"
+                "coisa",
+                "conscienssia",
+                "fake",
+                "msm",
+                "snt"
               ],
               "query_tokens": 5,
-              "evidence_tokens": 522
+              "evidence_tokens": 508
             },
             "missing_slots": [
               "aresta_causal_relevante",
@@ -1675,11 +1546,11 @@
               "kind": "causal_transfer_prior_validation",
               "target_route": "unknown:general",
               "query_terms": [
-                "ajuda",
-                "diz",
-                "frances",
-                "obrigado",
-                "pela"
+                "coisa",
+                "conscienssia",
+                "fake",
+                "msm",
+                "snt"
               ],
               "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
               "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
@@ -1717,19 +1588,19 @@
               "ok": true,
               "type": "autoisomorphic_transfer_prior",
               "query_tokens": [
-                "ajuda",
-                "diz",
-                "franc",
-                "obrigado",
-                "pela"
+                "coisa",
+                "conscienssia",
+                "fake",
+                "msm",
+                "snt"
               ],
               "task_type": "general",
               "candidate_count": 10,
               "origin": "autoisomorphic_mapper.transfer_prior",
               "sir": {
                 "schema_version": "sir.v1",
-                "created_at": 1778461036,
-                "query": "Como se diz 'Obrigado pela ajuda' em francês?",
+                "created_at": 1778461800,
+                "query": "vc snt coisa?? tm conscienssia msm ow e fake??",
                 "facts": [
                   {
                     "id": "FACT_1",
@@ -1874,13 +1745,13 @@
           "sandbox_result": {
             "ok": true,
             "accepted": true,
-            "digest": "251fd03c3bf4b3ce",
+            "digest": "a9a8a59d56f50384",
             "query_terms": [
-              "ajuda",
-              "diz",
-              "frances",
-              "obrigado",
-              "pela"
+              "coisa",
+              "conscienssia",
+              "fake",
+              "msm",
+              "snt"
             ],
             "missing_slots": [
               "aresta_causal_relevante",
@@ -1891,7 +1762,7 @@
             "edge": {
               "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
               "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
-              "condition": "active_investigation_prior_validation:inv_22a40c9444",
+              "condition": "active_investigation_prior_validation:inv_4049ab2601",
               "confidence": 0.6808
             },
             "prior_validation": {
@@ -1913,13 +1784,13 @@
                 "aresta_causal_relevante",
                 "fato_estruturado_recuperavel"
               ],
-              "sandbox_digest": "251fd03c3bf4b3ce"
+              "sandbox_digest": "a9a8a59d56f50384"
             },
             "acceptance_checked": true
           },
-          "duration_ms": 3078.96
+          "duration_ms": 3039.21
         },
-        "updated_at": 1778461039
+        "updated_at": 1778461803
       }
     },
     "transfer_prior_causal_update": {
@@ -1927,7 +1798,7 @@
       "edge": {
         "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
         "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
-        "condition": "active_investigation_prior_validation:inv_22a40c9444",
+        "condition": "active_investigation_prior_validation:inv_4049ab2601",
         "support": 2,
         "confidence": 0.7508,
         "severity": 1,
@@ -1937,22 +1808,22 @@
         ],
         "last_evidence": {
           "investigation": {
-            "investigation_id": "inv_22a40c9444",
-            "query": "Como se diz 'Obrigado pela ajuda' em francês?",
+            "investigation_id": "inv_4049ab2601",
+            "query": "vc snt coisa?? tm conscienssia msm ow e fake??",
             "reason": "no_structured_coverage",
             "task_type": "general",
             "status": "needs_experiment",
             "coverage": {
               "score": 1.0,
               "shared": [
-                "ajuda",
-                "diz",
-                "frances",
-                "obrigado",
-                "pela"
+                "coisa",
+                "conscienssia",
+                "fake",
+                "msm",
+                "snt"
               ],
               "query_tokens": 5,
-              "evidence_tokens": 522
+              "evidence_tokens": 508
             },
             "missing_slots": [
               "aresta_causal_relevante",
@@ -1962,11 +1833,11 @@
               "kind": "causal_transfer_prior_validation",
               "target_route": "unknown:general",
               "query_terms": [
-                "ajuda",
-                "diz",
-                "frances",
-                "obrigado",
-                "pela"
+                "coisa",
+                "conscienssia",
+                "fake",
+                "msm",
+                "snt"
               ],
               "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
               "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
@@ -2004,19 +1875,19 @@
               "ok": true,
               "type": "autoisomorphic_transfer_prior",
               "query_tokens": [
-                "ajuda",
-                "diz",
-                "franc",
-                "obrigado",
-                "pela"
+                "coisa",
+                "conscienssia",
+                "fake",
+                "msm",
+                "snt"
               ],
               "task_type": "general",
               "candidate_count": 10,
               "origin": "autoisomorphic_mapper.transfer_prior",
               "sir": {
                 "schema_version": "sir.v1",
-                "created_at": 1778461036,
-                "query": "Como se diz 'Obrigado pela ajuda' em francês?",
+                "created_at": 1778461800,
+                "query": "vc snt coisa?? tm conscienssia msm ow e fake??",
                 "facts": [
                   {
                     "id": "FACT_1",
@@ -2161,13 +2032,13 @@
           "sandbox_result": {
             "ok": true,
             "accepted": true,
-            "digest": "251fd03c3bf4b3ce",
+            "digest": "a9a8a59d56f50384",
             "query_terms": [
-              "ajuda",
-              "diz",
-              "frances",
-              "obrigado",
-              "pela"
+              "coisa",
+              "conscienssia",
+              "fake",
+              "msm",
+              "snt"
             ],
             "missing_slots": [
               "aresta_causal_relevante",
@@ -2178,7 +2049,7 @@
             "edge": {
               "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
               "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
-              "condition": "active_investigation_prior_validation:inv_22a40c9444",
+              "condition": "active_investigation_prior_validation:inv_4049ab2601",
               "confidence": 0.6808
             },
             "prior_validation": {
@@ -2200,7 +2071,7 @@
                 "aresta_causal_relevante",
                 "fato_estruturado_recuperavel"
               ],
-              "sandbox_digest": "251fd03c3bf4b3ce"
+              "sandbox_digest": "a9a8a59d56f50384"
             },
             "acceptance_checked": true
           },
@@ -2216,13 +2087,13 @@
             "reason": "sandbox_validation_of_transfer_prior"
           }
         },
-        "updated_at": 1778461039
+        "updated_at": 1778461803
       },
       "delta_category": "confirmed",
       "confidence_before": 0.7008,
       "confidence_after": 0.7508
     },
-    "duration_ms": 3201.37
+    "duration_ms": 3176.83
   },
   "prior_validation": {
     "ok": true,
