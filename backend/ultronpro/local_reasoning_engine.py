@@ -288,18 +288,12 @@ class LocalFactsResolver:
             conn.close()
             logger.info("Local facts database initialized")
     
-    # Verbos imperativos de criação que indicam pedido de geração, não consulta factual
-    _CREATION_VERBS = frozenset({'crie', 'cria', 'gere', 'gera', 'invente', 'inventa', 'sugira', 'sugere', 'crea', 'create', 'generate', 'invent'})
-
     @classmethod
     def can_resolve(cls, query: str) -> bool:
         """Verifica se é uma consulta de fato simples."""
         q = _normalize_query(query)
         tokens = _query_tokens(query)
         if _is_self_directed(tokens) or _requires_dialogue_context(query) or _requires_cognitive_projection(query) or _requires_external_factual_lookup(query):
-            return False
-        # Anti-falso-positivo: verbos imperativos de criação indicam geração, não consulta
-        if tokens & cls._CREATION_VERBS:
             return False
         
         # Patterns de consulta factual
@@ -326,9 +320,6 @@ class LocalFactsResolver:
             q = _normalize_query(query)
             tokens = _query_tokens(query)
             if _is_self_directed(tokens) or _requires_dialogue_context(query) or _requires_cognitive_projection(query) or _requires_external_factual_lookup(query):
-                return None
-            # Anti-falso-positivo: verbos imperativos de criação impedem consulta factual para 'nome'
-            if tokens & cls._CREATION_VERBS:
                 return None
             conn = sqlite3.connect(str(FACTS_DB))
             c = conn.cursor()

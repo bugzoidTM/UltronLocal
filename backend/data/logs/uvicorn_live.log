@@ -20349,3 +20349,169 @@ For more information check: https://deve
 2026-05-10 20:09:28,730 INFO [uvicorn] Autofeeder: Synced from LightRAG doc doc-2ace (exp_id=4642, added=3)
 2026-05-10 20:09:45,264 WARNING [uvicorn] Background guard: pausing loop affect_markers_loop for 52.8s (reason=event_loop_lag)
 2026-05-10 20:10:15,296 WARNING [uvicorn] Background guard: pausing loop affect_markers_loop for 22.8s (reason=event_loop_lag)
+2026-05-10 20:12:03,644 WARNING [uvicorn] Background guard: pausing loop meta_observer_loop for 70.9s (reason=event_loop_lag)
+2026-05-10 20:12:33,663 WARNING [uvicorn] Background guard: pausing loop meta_observer_loop for 40.9s (reason=event_loop_lag)
+2026-05-10 20:13:03,672 WARNING [uvicorn] Background guard: pausing loop self_governance_loop for 10.9s (reason=event_loop_lag)
+2026-05-10 20:13:14,891 INFO [uvicorn] [SELF-TALK] Tick #4: posture=anomaly, action=alert_and_simulate
+2026-05-10 20:13:26,844 ERROR [uvicorn] LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+2026-05-10 20:13:26,859 ERROR [uvicorn] LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+2026-05-10 20:13:29,529 WARNING [uvicorn] LLM fallback error (groq/llama-3.3-70b-versatile): Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-05-10 20:13:33,982 INFO [uvicorn] Judge: trigger detectado, usando LLM. reason=promoted_patch
+2026-05-10 20:13:58,156 WARNING [uvicorn] Background guard: pausing loop inner_monologue_loop for 66.2s (reason=event_loop_lag)
+2026-05-10 20:14:28,746 WARNING [uvicorn] Background guard: pausing loop autofeeder_loop for 35.6s (reason=event_loop_lag)
+2026-05-10 20:14:58,787 WARNING [uvicorn] Background guard: pausing loop autofeeder_loop for 5.6s (reason=event_loop_lag)
+2026-05-10 20:15:04,420 INFO [uvicorn] Reflexion triggered by workspace: workspace_trigger
+2026-05-10 20:15:18,287 INFO [uvicorn] Reflexion triggered by workspace: workspace_trigger
+2026-05-10 20:15:30,428 INFO [uvicorn] Reflexion triggered by workspace: workspace_trigger
+2026-05-10 20:15:42,729 ERROR [uvicorn] LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+2026-05-10 20:15:56,600 INFO [uvicorn] --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+2026-05-10 20:15:56,627 WARNING [uvicorn] Background guard: pausing loop voice_prewarm_loop for 90.0s (reason=event_loop_lag)
+2026-05-10 20:15:56,733 INFO [uvicorn] extract_triples (Attempt 1/3): calling LLM for 250 chars...
+2026-05-10 20:16:04,009 INFO [uvicorn] extract_triples: LLM returned 386 chars.
+2026-05-10 20:16:04,009 INFO [uvicorn] extract_triples: processing 4 items from LLM on attempt 1
+2026-05-10 20:16:04,009 INFO [uvicorn] extract_triples: returning 4 triples
+2026-05-10 20:16:04,009 INFO [uvicorn] add_triple: {'subject': 'Security', 'predicate': 'genre', 'object': 'thriller and action', 'confidence': 0.85} from exp_4645
+2026-05-10 20:16:04,013 INFO [uvicorn] add_triple: SUCCESS
+2026-05-10 20:16:04,013 INFO [uvicorn] add_triple: {'subject': 'Security', 'predicate': 'director', 'object': 'Alain Desrochers', 'confidence': 0.85} from exp_4645
+2026-05-10 20:16:04,027 INFO [uvicorn] add_triple: SUCCESS
+2026-05-10 20:16:04,032 INFO [uvicorn] add_triple: {'subject': 'Security', 'predicate': 'writer', 'object': 'Tony Mosher and John Sullivan', 'confidence': 0.85} from exp_4645
+2026-05-10 20:16:04,041 INFO [uvicorn] add_triple: SUCCESS
+2026-05-10 20:16:04,041 INFO [uvicorn] add_triple: {'subject': 'Security', 'predicate': 'cast', 'object': 'Antonio Banderas, Gabriella Wright, Ben Kingsley, Chad Lindberg, entre outros', 'confidence': 0.85} from exp_4645
+2026-05-10 20:16:04,051 INFO [uvicorn] add_triple: SUCCESS
+2026-05-10 20:16:04,474 INFO [uvicorn] Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=4645, extracted=4, added=4)
+2026-05-10 20:16:06,346 INFO [uvicorn] extract_triples (Attempt 1/3): calling LLM for 253 chars...
+2026-05-10 20:16:08,421 INFO [uvicorn] [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+2026-05-10 20:16:08,497 INFO [uvicorn] [META] Ciclo finalizado. Status: NOMINAL
+2026-05-10 20:16:09,420 INFO [uvicorn] extract_triples: LLM returned 109 chars.
+2026-05-10 20:16:09,421 INFO [uvicorn] extract_triples: processing 1 items from LLM on attempt 1
+2026-05-10 20:16:09,421 INFO [uvicorn] extract_triples: returning 1 triples
+2026-05-10 20:16:09,421 INFO [uvicorn] add_triple: {'subject': 'Resposta', 'predicate': 'é', 'object': 'direta, evidência mínima, próximo passo e incerteza', 'confidence': 0.85} from exp_4646
+2026-05-10 20:16:09,432 INFO [uvicorn] add_triple: SUCCESS
+2026-05-10 20:16:09,650 INFO [uvicorn] Autofeeder: Synced from LightRAG doc doc-7fd2 (exp_id=4646, added=1)
+2026-05-10 20:16:26,657 WARNING [uvicorn] Background guard: pausing loop voice_prewarm_loop for 60.0s (reason=event_loop_lag)
+2026-05-10 20:16:56,676 WARNING [uvicorn] Background guard: pausing loop voice_prewarm_loop for 30.0s (reason=event_loop_lag)
+2026-05-10 20:17:27,399 INFO [uvicorn] [SELF-TALK] Tick #5: posture=anomaly, action=alert_and_simulate
+2026-05-10 20:17:43,372 INFO [uvicorn] Judge: trigger detectado, usando LLM. reason=promoted_patch
+2026-05-10 20:17:43,374 WARNING [uvicorn] Background guard: pausing loop meta_observer_loop for 90.0s (reason=event_loop_lag)
+2026-05-10 20:18:13,407 WARNING [uvicorn] Background guard: pausing loop meta_observer_loop for 60.0s (reason=event_loop_lag)
+2026-05-10 20:18:43,428 WARNING [uvicorn] Background guard: pausing loop meta_observer_loop for 29.9s (reason=event_loop_lag)
+2026-05-10 20:19:31,541 ERROR [uvicorn] LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+2026-05-10 20:20:43,762 INFO [uvicorn] [SELF-TALK] Tick #6: posture=anomaly, action=alert_and_simulate
+2026-05-10 20:20:49,296 INFO [uvicorn] Judge: trigger detectado, usando LLM. reason=promoted_patch
+2026-05-10 20:20:56,669 INFO [uvicorn] Reflexion triggered by workspace: workspace_trigger
+2026-05-10 20:21:10,343 INFO [uvicorn] Reflexion triggered by workspace: workspace_trigger
+2026-05-10 20:21:30,750 WARNING [uvicorn] Background guard: pausing loop metacognitive_loop for 90.0s (reason=event_loop_lag)
+2026-05-10 20:21:30,751 WARNING [uvicorn] Judge loop budget timeout; loop remains enabled and will retry later
+2026-05-10 20:22:00,790 WARNING [uvicorn] Background guard: pausing loop metacognitive_loop for 60.0s (reason=event_loop_lag)
+2026-05-10 20:22:30,802 WARNING [uvicorn] Background guard: pausing loop metacognitive_loop for 29.9s (reason=event_loop_lag)
+2026-05-10 20:23:00,792 INFO [uvicorn] --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+2026-05-10 20:23:14,821 INFO [uvicorn] [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+2026-05-10 20:23:14,899 INFO [uvicorn] [META] Ciclo finalizado. Status: NOMINAL
+2026-05-10 20:23:22,013 WARNING [uvicorn] Autofeeder budget timeout: fetch_wikipedia_topic exceeded 8.0s
+2026-05-10 20:23:22,014 WARNING [uvicorn] Background guard: pausing loop meta_observer_loop for 90.0s (reason=event_loop_lag)
+2026-05-10 20:23:25,830 INFO [uvicorn] extract_triples (Attempt 1/3): calling LLM for 208 chars...
+2026-05-10 20:23:27,431 INFO [uvicorn] extract_triples: LLM returned 62 chars.
+2026-05-10 20:23:27,431 INFO [uvicorn] extract_triples: processing 1 items from LLM on attempt 1
+2026-05-10 20:23:27,432 INFO [uvicorn] extract_triples: returning 1 triples
+2026-05-10 20:23:27,432 INFO [uvicorn] add_triple: {'subject': 'Monnet-la-Ville', 'predicate': 'é', 'object': 'uma comuna francesa', 'confidence': 0.85} from exp_4650
+2026-05-10 20:23:27,436 INFO [uvicorn] add_triple: SUCCESS
+2026-05-10 20:23:29,191 INFO [uvicorn] LightRAG ingest ok source=wikipedia:pt quality=0.658 ep=https://lightrag.nutef.com/documents/text
+2026-05-10 20:23:29,205 INFO [uvicorn] Autofeeder: Ingested from wikipedia:pt (exp_id=4650, extracted=1, added=1)
+2026-05-10 20:23:33,302 INFO [uvicorn] extract_triples (Attempt 1/3): calling LLM for 253 chars...
+2026-05-10 20:23:34,243 INFO [uvicorn] extract_triples: LLM returned 77 chars.
+2026-05-10 20:23:34,244 INFO [uvicorn] extract_triples: processing 1 items from LLM on attempt 1
+2026-05-10 20:23:34,244 INFO [uvicorn] extract_triples: returning 1 triples
+2026-05-10 20:23:34,244 INFO [uvicorn] add_triple: {'subject': 'Banco do Brasil', 'predicate': 'foi fundado em', 'object': '12 de outubro de 1540', 'confidence': 0.85} from exp_4651
+2026-05-10 20:23:34,248 INFO [uvicorn] add_triple: SUCCESS
+2026-05-10 20:23:34,451 INFO [uvicorn] Autofeeder: Synced from LightRAG doc doc-ad98 (exp_id=4651, added=1)
+2026-05-10 20:23:52,039 WARNING [uvicorn] Background guard: pausing loop meta_observer_loop for 60.0s (reason=event_loop_lag)
+2026-05-10 20:24:22,050 WARNING [uvicorn] Background guard: pausing loop meta_observer_loop for 30.0s (reason=event_loop_lag)
+2026-05-10 20:24:56,058 INFO [uvicorn] Judge: trigger detectado, usando LLM. reason=promoted_patch
+2026-05-10 20:24:56,394 INFO [uvicorn] [SELF-TALK] Tick #7: posture=anomaly, action=alert_and_simulate
+2026-05-10 20:25:22,019 WARNING [uvicorn] Background guard: pausing loop voice_prewarm_loop for 64.4s (reason=event_loop_lag)
+2026-05-10 20:25:52,043 WARNING [uvicorn] Background guard: pausing loop voice_prewarm_loop for 34.4s (reason=event_loop_lag)
+2026-05-10 20:26:22,072 WARNING [uvicorn] Background guard: pausing loop voice_prewarm_loop for 4.4s (reason=event_loop_lag)
+2026-05-10 20:26:30,825 INFO [uvicorn] Reflexion triggered by workspace: workspace_trigger
+2026-05-10 20:27:23,475 WARNING [uvicorn] Background guard: pausing loop inner_monologue_loop for 42.3s (reason=event_loop_lag)
+2026-05-10 20:27:56,451 WARNING [uvicorn] Background guard: pausing loop self_talk_loop for 9.4s (reason=event_loop_lag)
+2026-05-10 20:28:06,232 INFO [uvicorn] Judge: trigger detectado, usando LLM. reason=promoted_patch
+2026-05-10 20:28:06,556 INFO [uvicorn] [SELF-TALK] Tick #8: posture=anomaly, action=alert_and_simulate
+2026-05-10 20:28:32,954 INFO [uvicorn] --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+2026-05-10 20:28:34,462 WARNING [uvicorn] Background guard: pausing loop autofeeder_loop for 88.5s (reason=event_loop_lag)
+2026-05-10 20:28:43,853 INFO [uvicorn] [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+2026-05-10 20:28:43,917 INFO [uvicorn] [META] Ciclo finalizado. Status: NOMINAL
+2026-05-10 20:29:04,500 WARNING [uvicorn] Background guard: pausing loop autofeeder_loop for 58.5s (reason=event_loop_lag)
+2026-05-10 20:29:34,533 WARNING [uvicorn] Background guard: pausing loop autofeeder_loop for 28.4s (reason=event_loop_lag)
+2026-05-10 20:30:03,520 INFO [uvicorn] extract_triples (Attempt 1/3): calling LLM for 250 chars...
+2026-05-10 20:30:04,409 INFO [uvicorn] extract_triples: LLM returned 94 chars.
+2026-05-10 20:30:04,409 INFO [uvicorn] extract_triples: processing 1 items from LLM on attempt 1
+2026-05-10 20:30:04,409 INFO [uvicorn] extract_triples: returning 1 triples
+2026-05-10 20:30:04,409 INFO [uvicorn] add_triple: {'subject': 'Security', 'predicate': 'é', 'object': 'um filme norte-americano de 2017 do gênero thriller e ação', 'confidence': 0.85} from exp_4655
+2026-05-10 20:30:04,411 INFO [uvicorn] add_triple: SUCCESS
+2026-05-10 20:30:04,697 INFO [uvicorn] Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=4655, extracted=1, added=1)
+2026-05-10 20:30:06,952 INFO [uvicorn] extract_triples (Attempt 1/3): calling LLM for 253 chars...
+2026-05-10 20:30:07,777 INFO [uvicorn] extract_triples: LLM returned 146 chars.
+2026-05-10 20:30:07,777 INFO [uvicorn] extract_triples: processing 1 items from LLM on attempt 1
+2026-05-10 20:30:07,778 INFO [uvicorn] extract_triples: returning 1 triples
+2026-05-10 20:30:07,778 INFO [uvicorn] add_triple: {'subject': 'Teoremas da singularidade', 'predicate': 'dizem', 'object': 'que as singularidades são uma característica genérica da relatividade geral e inevitáveis', 'confidence': 0.85} from exp_4656
+2026-05-10 20:30:07,782 INFO [uvicorn] add_triple: SUCCESS
+2026-05-10 20:30:08,004 INFO [uvicorn] Autofeeder: Synced from LightRAG doc doc-9291 (exp_id=4656, added=1)
+2026-05-10 21:45:33,612 WARNING [uvicorn] Background guard: pausing loop inner_monologue_loop for 90.0s (reason=event_loop_lag)
+2026-05-10 21:45:35,897 INFO [uvicorn] OnlineRL: action=autonomous_cognition_tick reward=0.4853 ok=False
+2026-05-10 21:46:03,628 WARNING [uvicorn] Background guard: pausing loop self_talk_loop for 60.0s (reason=event_loop_lag)
+2026-05-10 21:46:33,644 WARNING [uvicorn] Background guard: pausing loop self_talk_loop for 30.0s (reason=event_loop_lag)
+2026-05-10 21:47:03,615 INFO [uvicorn] --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+2026-05-10 21:47:13,435 INFO [uvicorn] [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+2026-05-10 21:47:13,555 INFO [uvicorn] [META] Ciclo finalizado. Status: NOMINAL
+2026-05-10 21:47:16,281 ERROR [uvicorn] LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+2026-05-10 21:47:16,436 WARNING [uvicorn] LLM fallback error (groq/llama-3.3-70b-versatile): Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-05-10 21:47:17,126 WARNING [uvicorn] LLM fallback error (openrouter/google/gemma-3-12b-it:free): Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+2026-05-10 21:47:17,886 WARNING [uvicorn] LLM fallback error (gemini/gemini-2.0-flash): Client error '429 Too Many Requests' for url 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=***REDACTED***
+For more information check: https://deve
+2026-05-10 21:47:47,588 WARNING [uvicorn] agi_path_loop: status exceeded 5.0s; loop remains enabled and will retry later
+2026-05-10 21:47:47,589 WARNING [uvicorn] roadmap_v5_loop: status exceeded 5.0s; loop remains enabled and will retry later
+2026-05-10 21:47:47,591 WARNING [uvicorn] Autofeeder budget timeout: fetch_wikipedia_topic exceeded 8.0s
+2026-05-10 21:47:47,613 WARNING [uvicorn] Background guard: pausing loop inner_monologue_loop for 90.0s (reason=event_loop_lag)
+2026-05-10 21:47:47,624 INFO [uvicorn] Judge: trigger detectado, usando LLM. reason=promoted_patch
+2026-05-10 21:47:48,100 INFO [uvicorn] [SELF-TALK] Tick #9: posture=anomaly, action=alert_and_simulate
+2026-05-10 21:47:48,675 INFO [uvicorn] extract_triples (Attempt 1/3): calling LLM for 82 chars...
+2026-05-10 21:47:58,536 INFO [uvicorn] extract_triples: LLM returned 211 chars.
+2026-05-10 21:47:58,537 INFO [uvicorn] extract_triples: processing 2 items from LLM on attempt 1
+2026-05-10 21:47:58,537 INFO [uvicorn] extract_triples: returning 2 triples
+2026-05-10 21:47:58,537 INFO [uvicorn] add_triple: {'subject': 'People', 'predicate': 'say', 'object': 'bless you', 'confidence': 0.85} from exp_4657
+2026-05-10 21:47:58,539 INFO [uvicorn] add_triple: SUCCESS
+2026-05-10 21:47:58,539 INFO [uvicorn] add_triple: {'subject': 'bless you', 'predicate': 'when you sneeze', 'object': 'heart stops for a millisecond', 'confidence': 0.85} from exp_4657
+2026-05-10 21:47:58,550 INFO [uvicorn] add_triple: SUCCESS
+2026-05-10 21:47:59,006 INFO [uvicorn] Autofeeder: Ingested from uselessfacts.jsph.pl (exp_id=4657, extracted=2, added=2)
+2026-05-10 21:48:00,906 INFO [uvicorn] extract_triples (Attempt 1/3): calling LLM for 253 chars...
+2026-05-10 21:48:16,681 INFO [uvicorn] extract_triples: LLM returned 395 chars.
+2026-05-10 21:48:16,681 INFO [uvicorn] extract_triples: processing 4 items from LLM on attempt 1
+2026-05-10 21:48:16,681 INFO [uvicorn] extract_triples: returning 4 triples
+2026-05-10 21:48:16,682 INFO [uvicorn] add_triple: {'subject': 'Posso confiar em você com dados sensíveis?', 'predicate': 'conduz', 'object': 'identidade', 'confidence': 0.85} from exp_4659
+2026-05-10 21:48:16,692 INFO [uvicorn] add_triple: SUCCESS
+2026-05-10 21:48:16,692 INFO [uvicorn] add_triple: {'subject': 'identidade', 'predicate': 'rodo localmente', 'object': 'infraestrutura', 'confidence': 0.85} from exp_4659
+2026-05-10 21:48:16,700 INFO [uvicorn] add_triple: SUCCESS
+2026-05-10 21:48:16,700 INFO [uvicorn] add_triple: {'subject': 'identidade', 'predicate': 'elimina riscos de vazamento para terceiros', 'object': 'dados sensíveis', 'confidence': 0.85} from exp_4659
+2026-05-10 21:48:16,708 INFO [uvicorn] add_triple: SUCCESS
+2026-05-10 21:48:16,709 INFO [uvicorn] add_triple: {'subject': 'identidade', 'predicate': 'garante', 'object': 'configuração do ambiente', 'confidence': 0.85} from exp_4659
+2026-05-10 21:48:16,717 INFO [uvicorn] add_triple: SUCCESS
+2026-05-10 21:48:16,959 INFO [uvicorn] Autofeeder: Synced from LightRAG doc doc-fe32 (exp_id=4659, added=4)
+2026-05-10 21:50:00,744 ERROR [uvicorn] LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+2026-05-10 21:50:48,424 INFO [uvicorn] [SELF-TALK] Tick #10: posture=anomaly, action=alert_and_simulate
+2026-05-10 21:51:09,924 INFO [uvicorn] Judge: trigger detectado, usando LLM. reason=promoted_patch
+2026-05-10 21:51:34,894 WARNING [uvicorn] Judge loop budget timeout; loop remains enabled and will retry later
+2026-05-10 21:52:13,772 ERROR [uvicorn] LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+2026-05-10 21:53:00,116 INFO [uvicorn] Reflexion triggered by workspace: workspace_trigger
+2026-05-10 21:53:13,104 INFO [uvicorn] --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+2026-05-10 21:53:16,984 WARNING [uvicorn] Background guard: pausing loop autofeeder_loop for 86.1s (reason=event_loop_lag)
+2026-05-10 21:53:23,012 INFO [uvicorn] [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+2026-05-10 21:53:23,073 INFO [uvicorn] [META] Ciclo finalizado. Status: NOMINAL
+2026-05-10 21:53:47,011 WARNING [uvicorn] Background guard: pausing loop autofeeder_loop for 56.1s (reason=event_loop_lag)
+2026-05-10 21:54:17,030 WARNING [uvicorn] Background guard: pausing loop autofeeder_loop for 26.1s (reason=event_loop_lag)
+2026-05-10 21:54:43,151 INFO [uvicorn] Judge: trigger detectado, usando LLM. reason=promoted_patch
+2026-05-10 21:54:43,497 INFO [uvicorn] [SELF-TALK] Tick #11: posture=anomaly, action=alert_and_simulate
+2026-05-10 21:54:44,336 INFO [uvicorn] extract_triples (Attempt 1/3): calling LLM for 250 chars...
+2026-05-10 21:54:49,081 INFO [uvicorn] uvicorn file log enabled path=D:\UnidadeF\UltronPro\backend\data\logs\uvicorn_live.log max_bytes=26214400 keep_bytes=8388608
+2026-05-10 21:54:55,399 ERROR [uvicorn] LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+2026-05-10 21:54:55,430 ERROR [uvicorn] LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+2026-05-10 21:54:56,599 ERROR [uvicorn] LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.

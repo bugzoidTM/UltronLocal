@@ -3,10 +3,10 @@
   "last_action_ts": {
     "trusted_acquisition": 1778439775,
     "homeostasis_tune": 1778451706,
-    "autonomous_cognition_tick": 1778454268
+    "autonomous_cognition_tick": 1778460335
   },
-  "cycle_count": 6,
-  "last_reward": 0.486,
+  "cycle_count": 7,
+  "last_reward": 0.4853,
   "last_action": {
     "kind": "autonomous_cognition_tick",
     "drive": "autonomy",
@@ -14,22 +14,22 @@
     "base_priority": 0.6,
     "cooldown_sec": 120,
     "description": "execute one cycle of autonomous cognition (perceive, suggest, execute, learn)",
-    "context": "conservative",
-    "score": 0.7907,
-    "rl_priority_adjustment": 0,
+    "context": "normal",
+    "score": 1.4382,
+    "rl_priority_adjustment": 4,
     "need_bonus": 0.1,
-    "state_pressure": 0.6334,
+    "state_pressure": 0.6711,
     "cooldown_remaining_sec": 0,
     "non_llm": true
   },
   "last_reward_report": {
-    "reward": 0.486,
+    "reward": 0.4853,
     "ok": false,
     "components": {
       "action_score": 0.6,
       "homeostasis_delta": 0.0,
       "gap_delta": 0.0,
-      "latency_score": 0.9948,
+      "latency_score": 0.9829,
       "result_ok": true
     },
     "bonuses": {
@@ -49,6 +49,6 @@
       "consequences_learned": 1
     }
   },
-  "last_run_at": 1778454268,
-  "updated_at": 1778454268
+  "last_run_at": 1778460335,
+  "updated_at": 1778460335
 }

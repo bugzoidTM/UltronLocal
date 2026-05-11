@@ -1,24 +1,32 @@
 {
   "ok": true,
   "resolved": true,
-  "investigation_id": "inv_6e5c700541",
-  "ts": 1778453952,
+  "investigation_id": "inv_22a40c9444",
+  "ts": 1778461036,
   "status": "transfer_prior_validated",
   "reason": "no_structured_coverage",
   "task_type": "general",
   "query": "Como se diz 'Obrigado pela ajuda' em francês?",
   "learned_route": {
     "module": "intent_thanks",
-    "confidence": 1.0,
+    "confidence": 0.8333,
     "method": "episode_token_similarity",
     "evidence_count": 5,
     "examples_seen": 120,
     "top_similarity": 1.0,
-    "margin": 4.9991,
+    "margin": 3.9961,
     "module_scores": {
-      "intent_thanks": 4.9991
+      "causal_transfer_engine": 0.9992,
+      "intent_thanks": 4.9954
     },
     "evidence": [
+      {
+        "module": "causal_transfer_engine",
+        "similarity": 1.0,
+        "strategy": "non_llm_causal_transfer_prior",
+        "ok": true,
+        "source": "chat"
+      },
       {
         "module": "intent_thanks",
         "similarity": 1.0,
@@ -67,7 +75,7 @@
       "pela"
     ],
     "query_tokens": 5,
-    "evidence_tokens": 511
+    "evidence_tokens": 522
   },
   "missing_slots": [
     "aresta_causal_relevante",
@@ -130,7 +138,7 @@
     "origin": "autoisomorphic_mapper.transfer_prior",
     "sir": {
       "schema_version": "sir.v1",
-      "created_at": 1778453952,
+      "created_at": 1778461036,
       "query": "Como se diz 'Obrigado pela ajuda' em francês?",
       "facts": [
         {
@@ -278,16 +286,24 @@
       "ok": true,
       "prediction": {
         "module": "intent_thanks",
-        "confidence": 1.0,
+        "confidence": 0.8333,
         "method": "episode_token_similarity",
         "evidence_count": 5,
         "examples_seen": 120,
         "top_similarity": 1.0,
-        "margin": 4.9991,
+        "margin": 3.9961,
         "module_scores": {
-          "intent_thanks": 4.9991
+          "causal_transfer_engine": 0.9992,
+          "intent_thanks": 4.9954
         },
         "evidence": [
+          {
+            "module": "causal_transfer_engine",
+            "similarity": 1.0,
+            "strategy": "non_llm_causal_transfer_prior",
+            "ok": true,
+            "source": "chat"
+          },
           {
             "module": "intent_thanks",
             "similarity": 1.0,
@@ -335,7 +351,7 @@
     "episodic_memory": {
       "ok": true,
       "count": 3,
-      "summary": "{'working_memory': {'contexto_imediato': 'Digest noturno da memoria episodica (2026-05-10): chat_interaction/chat_final_ultron_infer (2 eps, keywords=chat_final_ultron_infer); self_introspection/sleep_cycle (1 eps, keywords=sleep_cycle); chat_interaction/local_llm_unavailable (1 eps, keywords=failure, local_llm_unavailable); chat_interactio', 'estado_plano_execucao': {'num_passos': 1, 'finalizou': True, 'episode_id': 'ep_1778451741_257000'}, 'ultimos_tool_calls': [{'tool': 'sleep_cycle_digest', 'source_count': 27, 'theme_count': 4, 'stagnation_status': 'recovered_by_episodic_enrichment'}]}, 'episodic_similar': [{'score': 0.2547, 'strategy': 'sleep_cycle_nightly_digest', 'ok': True, 'problema': 'Digest noturno da memoria episodica (2026-05-10): chat_interaction/chat_final_ultron_infer (2 eps, k', 'resultado': 'Digest noturno 2026-05-10: pruned=0, abstracted=0, enrichment=5, active_investigation=3/3. Temas: ch', 'prm_score_final': None}, {'score': 0.2445, 'strategy': 'sleep_cycle_nightly_digest', 'ok': True, 'problema': 'Digest noturno da memoria episodica (2026-05-10): self_event.abstraction_promoted/episodic_compiler ', 'resultado': 'Digest noturno 2026-05-10: pruned=0, abstracted=0, enrichment=4, active_investigation=3/3. Temas: se', 'prm_score_final': None}, {'score': 0.2345, 'strategy': 'sleep_cycle_nightly_digest', 'ok': True, 'problema': 'Digest noturno da memoria episodica (2026-05-08): self_introspection/episodic_compiler (6 eps, keywo', 'resultado': 'Digest noturno 2026-05-08: pruned=0, abstracted=0, enrichment=5, active_investigation=3/2. Temas: se', 'prm_score_fin"
+      "summary": "{'working_memory': {'contexto_imediato': 'Digest noturno da memoria episodica (2026-05-10): chat_interaction/chat_final_ultron_infer (8 eps, keywords=chat_final_ultron_infer); chat_interaction/local_llm_unavailable (4 eps, keywords=failure, local_llm_unavailable); self_introspection/sleep_cycle (2 eps, keywords=sleep_cycle); chat_interactio', 'estado_plano_execucao': {'num_passos': 1, 'finalizou': True, 'episode_id': 'ep_1778454328_370913'}, 'ultimos_tool_calls': [{'tool': 'sleep_cycle_digest', 'source_count': 34, 'theme_count': 4, 'stagnation_status': 'healthy_progress'}]}, 'episodic_similar': [{'score': 0.2542, 'strategy': 'sleep_cycle_nightly_digest', 'ok': True, 'problema': 'Digest noturno da memoria episodica (2026-05-10): chat_interaction/chat_final_ultron_infer (8 eps, k', 'resultado': 'Digest noturno 2026-05-10: pruned=0, abstracted=1, enrichment=0, active_investigation=3/3. Temas: ch', 'prm_score_final': None}, {'score': 0.2539, 'strategy': 'sleep_cycle_nightly_digest', 'ok': True, 'problema': 'Digest noturno da memoria episodica (2026-05-10): chat_interaction/chat_final_ultron_infer (2 eps, k', 'resultado': 'Digest noturno 2026-05-10: pruned=0, abstracted=0, enrichment=5, active_investigation=3/3. Temas: ch', 'prm_score_final': None}, {'score': 0.2437, 'strategy': 'sleep_cycle_nightly_digest', 'ok': True, 'problema': 'Digest noturno da memoria episodica (2026-05-10): self_event.abstraction_promoted/episodic_compiler ', 'resultado': 'Digest noturno 2026-05-10: pruned=0, abstracted=0, enrichment=4, active_investigation=3/3. Temas: se', 'prm_score_final': None}], 'pr"
     },
     "store": {
       "ok": true,
@@ -348,64 +364,64 @@
       "count": 10,
       "items": [
         {
-          "module": "integration_proxy",
-          "channel": "reflexion.trigger",
-          "salience": 0.86,
-          "payload": "{\"reason\": \"integration_proxy_alert\", \"alerts\": [\"conflict_pressure\"], \"integration_proxy_score\": 0.7498, \"integration_level\": \"high\"}"
-        },
-        {
-          "module": "integration_proxy",
-          "channel": "reflexion.trigger",
-          "salience": 0.86,
-          "payload": "{\"reason\": \"integration_proxy_alert\", \"alerts\": [\"conflict_pressure\"], \"integration_proxy_score\": 0.7527, \"integration_level\": \"high\"}"
+          "module": "autonomous_cognition",
+          "channel": "autonomous.risk_forecast",
+          "salience": 0.88,
+          "payload": "{\"risks\":[{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than they are resolved.\",\"evidence\":{\"queued_action_count\":17},\"recommended_action\":\"prioritize_action_backlog\"},{\"risk_id\":\"open_conflict_pressure\",\"score\":1.0,\"reason\":\"Unresolved conflicts can fragment planning and memory consolidation.\",\"evidence\":{\""
         },
         {
           "module": "autonomous_cognition",
           "channel": "autonomous.risk_forecast",
           "salience": 0.88,
-          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":80,\"unconsumed_high_salience_count\":55},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
+          "payload": "{\"risks\":[{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than they are resolved.\",\"evidence\":{\"queued_action_count\":17},\"recommended_action\":\"prioritize_action_backlog\"},{\"risk_id\":\"open_conflict_pressure\",\"score\":1.0,\"reason\":\"Unresolved conflicts can fragment planning and memory consolidation.\",\"evidence\":{\""
         },
         {
           "module": "autonomous_cognition",
           "channel": "autonomous.risk_forecast",
           "salience": 0.88,
-          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":80,\"unconsumed_high_salience_count\":54},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
+          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":28,\"unconsumed_high_salience_count\":12},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"open_conflict_pressure\",\"score\":1.0,\"reason\":\"Unresolved conflicts can fragment planning an"
         },
         {
           "module": "autonomous_cognition",
           "channel": "autonomous.risk_forecast",
           "salience": 0.88,
-          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":80,\"unconsumed_high_salience_count\":53},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
+          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":41,\"unconsumed_high_salience_count\":17},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"open_conflict_pressure\",\"score\":1.0,\"reason\":\"Unresolved conflicts can fragment planning an"
         },
         {
           "module": "autonomous_cognition",
           "channel": "autonomous.risk_forecast",
           "salience": 0.88,
-          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":80,\"unconsumed_high_salience_count\":52},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
+          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":49,\"unconsumed_high_salience_count\":21},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"open_conflict_pressure\",\"score\":1.0,\"reason\":\"Unresolved conflicts can fragment planning an"
         },
         {
           "module": "autonomous_cognition",
           "channel": "autonomous.risk_forecast",
           "salience": 0.88,
-          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":80,\"unconsumed_high_salience_count\":50},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
+          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":57,\"unconsumed_high_salience_count\":26},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"open_conflict_pressure\",\"score\":1.0,\"reason\":\"Unresolved conflicts can fragment planning an"
         },
         {
           "module": "autonomous_cognition",
           "channel": "autonomous.risk_forecast",
           "salience": 0.88,
-          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":80,\"unconsumed_high_salience_count\":49},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
+          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":68,\"unconsumed_high_salience_count\":29},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
         },
         {
           "module": "autonomous_cognition",
           "channel": "autonomous.risk_forecast",
           "salience": 0.88,
-          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":80,\"unconsumed_high_salience_count\":49},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
+          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":80,\"unconsumed_high_salience_count\":34},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
         },
         {
           "module": "autonomous_cognition",
           "channel": "autonomous.risk_forecast",
           "salience": 0.88,
-          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":80,\"unconsumed_high_salience_count\":46},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
+          "payload": "{\"risks\":[{\"risk_id\":\"workspace_attention_pressure\",\"score\":1.0,\"reason\":\"Global Workspace has many or highly salient unconsumed signals.\",\"evidence\":{\"workspace_count\":80,\"unconsumed_high_salience_count\":35},\"recommended_action\":\"compact_workspace_focus\"},{\"risk_id\":\"queued_action_backlog\",\"score\":1.0,\"reason\":\"Queued actions are accumulating faster than th"
+        },
+        {
+          "module": "episodic_compiler",
+          "channel": "causal.skill_promoted",
+          "salience": 0.9,
+          "payload": "{\"id\": \"abs_1778454297_3159\", \"name\": \"Rollback_Atomico_Financeiro\", \"confirmation_rate\": 1.0, \"tests\": 5}"
         }
       ]
     },
@@ -415,29 +431,29 @@
         "background_guard.json": {
           "enabled": true,
           "state": "foreground_throttle",
-          "lag_sec": 0.0077,
-          "max_lag_sec": 3.6243,
+          "lag_sec": 0.009,
+          "max_lag_sec": 3.6496,
           "consecutive_lag": 0,
-          "paused_until": 1778454026.058985,
+          "paused_until": 1778461101.5294957,
           "last_pause_reason": "event_loop_lag",
-          "last_pause_at": 1778453936.058985,
+          "last_pause_at": 1778461011.5294957,
           "last_slow_request": null,
-          "blocked_loops": 28,
-          "last_blocked_loop": "autonomy_loop",
-          "last_log_at": 1778453938.1502779,
-          "foreground_active": 1,
+          "blocked_loops": 44,
+          "last_blocked_loop": "mission_control_loop",
+          "last_log_at": 1778461035.638707,
+          "foreground_active": 0,
           "last_foreground_path": "/api/chat",
-          "last_foreground_at": 1778453952.1711943,
-          "last_foreground_elapsed_sec": 3.125,
+          "last_foreground_at": 1778461033.4437087,
+          "last_foreground_elapsed_sec": 3.552,
           "last_pause_details": {
-            "lag_sec": 2.389,
+            "lag_sec": 2.678,
             "consecutive_lag": 1
           },
           "paused": true,
-          "paused_for_sec": 73.84104442596436
+          "paused_for_sec": 65.8901481628418
         },
         "runtime_health.json": {
-          "ts": 1778453848,
+          "ts": 1778460915,
           "active_goal": "Modelar taxonomia de erros cognitivos em decises",
           "active_mission": {
             "id": "mis_1776628887_3",
@@ -1038,7 +1054,7 @@
         "no_cloud_experiment_campaign_state.json": {
           "ok": true,
           "status": "skipped_policy_cloud_rotation",
-          "ts": 1778453671,
+          "ts": 1778460467,
           "campaign": "local_inference_no_cloud_recovery",
           "local_provider_policy": "cloud_rotation",
           "forced": false,
@@ -1092,7 +1108,7 @@
         "origin": "autoisomorphic_mapper.transfer_prior",
         "sir": {
           "schema_version": "sir.v1",
-          "created_at": 1778453952,
+          "created_at": 1778461036,
           "query": "Como se diz 'Obrigado pela ajuda' em francês?",
           "facts": [
             {
@@ -1236,14 +1252,14 @@
       }
     }
   },
-  "duration_ms": 127.17,
+  "duration_ms": 159.86,
   "causal_graph_registration": {
     "ok": true,
     "edge": {
       "cause": "structured_reasoning_gap:no_structured_coverage",
       "effect": "active_investigation:needs_experiment",
       "condition": "structured_coverage_insufficient",
-      "support": 64,
+      "support": 72,
       "confidence": 0.99,
       "severity": 1,
       "knowledge_type": "observational",
@@ -1251,7 +1267,7 @@
         "active_investigation"
       ],
       "last_evidence": {
-        "investigation_id": "inv_6e5c700541",
+        "investigation_id": "inv_22a40c9444",
         "coverage": {
           "score": 1.0,
           "shared": [
@@ -1262,7 +1278,7 @@
             "pela"
           ],
           "query_tokens": 5,
-          "evidence_tokens": 511
+          "evidence_tokens": 522
         },
         "missing_slots": [
           "aresta_causal_relevante",
@@ -1283,16 +1299,24 @@
         },
         "learned_route": {
           "module": "intent_thanks",
-          "confidence": 1.0,
+          "confidence": 0.8333,
           "method": "episode_token_similarity",
           "evidence_count": 5,
           "examples_seen": 120,
           "top_similarity": 1.0,
-          "margin": 4.9991,
+          "margin": 3.9961,
           "module_scores": {
-            "intent_thanks": 4.9991
+            "causal_transfer_engine": 0.9992,
+            "intent_thanks": 4.9954
           },
           "evidence": [
+            {
+              "module": "causal_transfer_engine",
+              "similarity": 1.0,
+              "strategy": "non_llm_causal_transfer_prior",
+              "ok": true,
+              "source": "chat"
+            },
             {
               "module": "intent_thanks",
               "similarity": 1.0,
@@ -1375,7 +1399,7 @@
           "origin": "autoisomorphic_mapper.transfer_prior",
           "sir": {
             "schema_version": "sir.v1",
-            "created_at": 1778453952,
+            "created_at": 1778461036,
             "query": "Como se diz 'Obrigado pela ajuda' em francês?",
             "facts": [
               {
@@ -1519,16 +1543,16 @@
         },
         "prior_validation": null
       },
-      "updated_at": 1778453952
+      "updated_at": 1778461036
     }
   },
   "answer": "Encontrei cobertura direta insuficiente, mas nao vou parar em UNKNOWN: transferi um prior causal de hard_eval_fs_guard_1776799966 para unknown:general.\nHipotese/politica transferida: Topologia causal comum com p=0.042 e ganho de transferência de +73.3%\nConfianca calibrada do prior: 0.68 (degradada ate validacao interventiva).\nA investigacao ativa sandboxada validou o prior e registrou evidencia interventiva no grafo causal.\nLacunas restantes: aresta_causal_relevante, fato_estruturado_recuperavel.",
   "execution": {
-    "ts": 1778453952,
+    "ts": 1778461036,
     "ok": true,
     "executed": true,
     "injected": true,
-    "investigation_id": "inv_6e5c700541",
+    "investigation_id": "inv_22a40c9444",
     "query": "Como se diz 'Obrigado pela ajuda' em francês?",
     "reason": "no_structured_coverage",
     "missing_slots": [
@@ -1557,7 +1581,7 @@
     "experiment_result": {
       "ok": true,
       "accepted": true,
-      "digest": "5303b3bbe27bc433",
+      "digest": "251fd03c3bf4b3ce",
       "query_terms": [
         "ajuda",
         "diz",
@@ -1574,7 +1598,7 @@
       "edge": {
         "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
         "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
-        "condition": "active_investigation_prior_validation:inv_6e5c700541",
+        "condition": "active_investigation_prior_validation:inv_22a40c9444",
         "confidence": 0.6808
       },
       "prior_validation": {
@@ -1596,7 +1620,7 @@
           "aresta_causal_relevante",
           "fato_estruturado_recuperavel"
         ],
-        "sandbox_digest": "5303b3bbe27bc433"
+        "sandbox_digest": "251fd03c3bf4b3ce"
       },
       "acceptance_checked": true
     },
@@ -1616,7 +1640,7 @@
       "edge": {
         "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
         "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
-        "condition": "active_investigation_prior_validation:inv_6e5c700541",
+        "condition": "active_investigation_prior_validation:inv_22a40c9444",
         "support": 1,
         "confidence": 0.7008,
         "severity": 1,
@@ -1626,7 +1650,7 @@
         ],
         "last_evidence": {
           "investigation": {
-            "investigation_id": "inv_6e5c700541",
+            "investigation_id": "inv_22a40c9444",
             "query": "Como se diz 'Obrigado pela ajuda' em francês?",
             "reason": "no_structured_coverage",
             "task_type": "general",
@@ -1641,7 +1665,7 @@
                 "pela"
               ],
               "query_tokens": 5,
-              "evidence_tokens": 511
+              "evidence_tokens": 522
             },
             "missing_slots": [
               "aresta_causal_relevante",
@@ -1704,7 +1728,7 @@
               "origin": "autoisomorphic_mapper.transfer_prior",
               "sir": {
                 "schema_version": "sir.v1",
-                "created_at": 1778453952,
+                "created_at": 1778461036,
                 "query": "Como se diz 'Obrigado pela ajuda' em francês?",
                 "facts": [
                   {
@@ -1850,7 +1874,7 @@
           "sandbox_result": {
             "ok": true,
             "accepted": true,
-            "digest": "5303b3bbe27bc433",
+            "digest": "251fd03c3bf4b3ce",
             "query_terms": [
               "ajuda",
               "diz",
@@ -1867,7 +1891,7 @@
             "edge": {
               "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
               "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
-              "condition": "active_investigation_prior_validation:inv_6e5c700541",
+              "condition": "active_investigation_prior_validation:inv_22a40c9444",
               "confidence": 0.6808
             },
             "prior_validation": {
@@ -1889,13 +1913,13 @@
                 "aresta_causal_relevante",
                 "fato_estruturado_recuperavel"
               ],
-              "sandbox_digest": "5303b3bbe27bc433"
+              "sandbox_digest": "251fd03c3bf4b3ce"
             },
             "acceptance_checked": true
           },
-          "duration_ms": 3053.58
+          "duration_ms": 3078.96
         },
-        "updated_at": 1778453955
+        "updated_at": 1778461039
       }
     },
     "transfer_prior_causal_update": {
@@ -1903,7 +1927,7 @@
       "edge": {
         "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
         "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
-        "condition": "active_investigation_prior_validation:inv_6e5c700541",
+        "condition": "active_investigation_prior_validation:inv_22a40c9444",
         "support": 2,
         "confidence": 0.7508,
         "severity": 1,
@@ -1913,7 +1937,7 @@
         ],
         "last_evidence": {
           "investigation": {
-            "investigation_id": "inv_6e5c700541",
+            "investigation_id": "inv_22a40c9444",
             "query": "Como se diz 'Obrigado pela ajuda' em francês?",
             "reason": "no_structured_coverage",
             "task_type": "general",
@@ -1928,7 +1952,7 @@
                 "pela"
               ],
               "query_tokens": 5,
-              "evidence_tokens": 511
+              "evidence_tokens": 522
             },
             "missing_slots": [
               "aresta_causal_relevante",
@@ -1991,7 +2015,7 @@
               "origin": "autoisomorphic_mapper.transfer_prior",
               "sir": {
                 "schema_version": "sir.v1",
-                "created_at": 1778453952,
+                "created_at": 1778461036,
                 "query": "Como se diz 'Obrigado pela ajuda' em francês?",
                 "facts": [
                   {
@@ -2137,7 +2161,7 @@
           "sandbox_result": {
             "ok": true,
             "accepted": true,
-            "digest": "5303b3bbe27bc433",
+            "digest": "251fd03c3bf4b3ce",
             "query_terms": [
               "ajuda",
               "diz",
@@ -2154,7 +2178,7 @@
             "edge": {
               "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
               "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
-              "condition": "active_investigation_prior_validation:inv_6e5c700541",
+              "condition": "active_investigation_prior_validation:inv_22a40c9444",
               "confidence": 0.6808
             },
             "prior_validation": {
@@ -2176,7 +2200,7 @@
                 "aresta_causal_relevante",
                 "fato_estruturado_recuperavel"
               ],
-              "sandbox_digest": "5303b3bbe27bc433"
+              "sandbox_digest": "251fd03c3bf4b3ce"
             },
             "acceptance_checked": true
           },
@@ -2192,13 +2216,13 @@
             "reason": "sandbox_validation_of_transfer_prior"
           }
         },
-        "updated_at": 1778453955
+        "updated_at": 1778461039
       },
       "delta_category": "confirmed",
       "confidence_before": 0.7008,
       "confidence_after": 0.7508
     },
-    "duration_ms": 3183.72
+    "duration_ms": 3201.37
   },
   "prior_validation": {
     "ok": true,

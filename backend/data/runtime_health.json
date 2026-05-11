@@ -1,5 +1,5 @@
 {
-  "ts": 1778454638,
+  "ts": 1778460915,
   "active_goal": "Modelar taxonomia de erros cognitivos em decisões",
   "active_mission": {
     "id": "mis_1776628887_3",
@@ -556,56 +556,44 @@
     "budget_per_min": 2
   },
   "autonomy_state": {
-    "ticks": 2,
-    "last_tick": 88094,
+    "ticks": 0,
+    "last_tick": null,
     "last_error": null,
     "consecutive_errors": 0
   },
   "background_guard": {
     "enabled": true,
-    "state": "paused",
-    "lag_sec": 0.0027,
-    "max_lag_sec": 64.4748,
+    "state": "healthy",
+    "lag_sec": 0.0,
+    "max_lag_sec": 0.0,
     "consecutive_lag": 0,
-    "paused_until": 1778454638.0761857,
-    "last_pause_reason": "event_loop_lag",
-    "last_pause_at": 1778454548.0761857,
+    "paused_until": 0.0,
+    "last_pause_reason": null,
+    "last_pause_at": 0.0,
     "last_slow_request": null,
-    "blocked_loops": 230,
-    "last_blocked_loop": "mission_control_loop",
-    "last_log_at": 1778454615.2964752,
+    "blocked_loops": 0,
+    "last_blocked_loop": null,
+    "last_log_at": 0.0,
     "foreground_active": 0,
-    "last_foreground_path": "/api/chat",
-    "last_foreground_at": 1778453958.7678564,
-    "last_foreground_elapsed_sec": 0.2,
-    "last_pause_details": {
-      "lag_sec": 64.475,
-      "consecutive_lag": 1
-    },
+    "last_foreground_path": null,
+    "last_foreground_at": 0.0,
+    "last_foreground_elapsed_sec": 0.0,
     "paused": false,
     "paused_for_sec": 0.0
   },
   "background_binary_bus": {
     "enabled": true,
-    "started_at": 1778453850.5492306,
-    "processed": 885,
+    "started_at": 0.0,
+    "processed": 0,
     "dropped": 0,
     "sink_errors": 0,
-    "last_event": {
-      "kind": "guard_state",
-      "loop": "runtime_guard",
-      "event": "guard_state_write",
-      "at": 1778454636.4797316
-    },
+    "last_event": null,
     "last_error": null,
     "queue_size": 0,
-    "worker_alive": true,
+    "worker_alive": false,
     "binlog_path": "D:\\UnidadeF\\UltronPro\\backend\\data\\background_bus.binlog"
   },
   "extra": {
-    "reason": "affect_markers_tick",
-    "risk_posture": "stable",
-    "threat": 0.52,
-    "frustration": 0.3351
+    "reason": "startup_complete"
   }
 }

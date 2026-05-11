@@ -12002,19 +12002,26 @@ def _cognitive_identity_response(query: str) -> str:
     return ''
 
 
-def _quick_smalltalk_intent(query: str) -> str | None:
+def _intent_pre_classifier(query: str) -> str | None:
     text = unicodedata.normalize('NFKD', str(query or '').lower())
     text = ''.join(ch for ch in text if not unicodedata.combining(ch))
     text = re.sub(r'[^a-z0-9\s]+', ' ', text)
     text = re.sub(r'\s+', ' ', text).strip()
     if not text:
         return None
+
+    # Anti-falso-positivo global: verbos criativos são classificados como 'creative' e pulam os resolver locais
+    _creative_verbs = {'crie', 'gere', 'cria', 'invente', 'sugira', 'elabore', 'desenhe'}
+    tokens = set(text.split())
+    if tokens & _creative_verbs:
+        return 'creative'
+
     # Anti-falso-positivo global: perguntas não são smalltalk (intercepta skill_memory)
     _interrogative_markers = (
         'como se diz', 'como fala', 'como escreve', 'como fica', 'o que significa',
         'qual e', 'qual a', 'traduz', 'traduza', 'traducao', 'em frances', 'em ingles',
         'em espanhol', 'em alemao', 'em italiano', 'em japones', 'em chines',
-        'como diz', 'crie', 'gere', 'cria', 'invente', 'sugira',
+        'como diz',
     )
     has_interrogative = any(m in text for m in _interrogative_markers)
     if has_interrogative:
@@ -12612,7 +12619,7 @@ async def chat_fast(req: ChatRequest):
         novelty=novelty,
     )
 
-    early_intent = _quick_smalltalk_intent(q)
+    early_intent = _intent_pre_classifier(q)
     if early_intent == 'greeting':
         ans = await asyncio.to_thread(_cognitive_greeting_response, q)
         dt = int((time.time() - t0) * 1000)
@@ -12638,9 +12645,9 @@ async def chat_fast(req: ChatRequest):
             'fast_path': True,
         })
     
-    # --- NÃ­vel 1: SimbÃ³lico puro (math, lÃ³gica) ---
-    generated_skill_fast = _suggest_skill_name_for_chat(q)
-    if str(generated_skill_fast or '').startswith('auto_') and _is_chat_skill_executable(generated_skill_fast):
+    # --- Nível 1: Simbólico puro (math, lógica) ---
+    generated_skill_fast = _suggest_skill_name_for_chat(q) if early_intent != 'creative' else None
+    if generated_skill_fast and str(generated_skill_fast).startswith('auto_') and _is_chat_skill_executable(generated_skill_fast):
         try:
             result = await _execute_skill_for_chat(q, str(generated_skill_fast))
             answer = str(getattr(result, 'output', '') or '').strip()
@@ -12664,7 +12671,7 @@ async def chat_fast(req: ChatRequest):
             logger.warning(f"Generated skill fast-path failed: {e}")
 
     try:
-        if is_autobiographical_intent(q):
+        if early_intent != 'creative' and is_autobiographical_intent(q):
             cognitive_timeout = float(os.getenv('ULTRON_COGNITIVE_RESPONSE_TIMEOUT_SEC', '12') or 12)
             cognitive = await asyncio.wait_for(
                 asyncio.to_thread(_cognitive_response_answer, q),
@@ -12695,8 +12702,10 @@ async def chat_fast(req: ChatRequest):
         logger.warning(f"Chat autobiographical cognitive response failed: {e}")
 
     try:
-        from ultronpro.symbolic_reasoner import _solve_deterministic
-        det = await asyncio.wait_for(asyncio.to_thread(_solve_deterministic, q), timeout=5.0)
+        det = None
+        if early_intent != 'creative':
+            from ultronpro.symbolic_reasoner import _solve_deterministic
+            det = await asyncio.wait_for(asyncio.to_thread(_solve_deterministic, q), timeout=5.0)
         if det:
             dt = int((time.time() - t0) * 1000)
             qs.update_valence(0.15)
@@ -12714,10 +12723,12 @@ async def chat_fast(req: ChatRequest):
     # factual shapes are routed to web_search.
     try:
         cognitive_timeout = float(os.getenv('ULTRON_COGNITIVE_RESPONSE_TIMEOUT_SEC', '12') or 12)
-        cognitive = await asyncio.wait_for(
-            asyncio.to_thread(_cognitive_response_first_refusal, q),
-            timeout=cognitive_timeout,
-        )
+        cognitive = {}
+        if early_intent != 'creative':
+            cognitive = await asyncio.wait_for(
+                asyncio.to_thread(_cognitive_response_first_refusal, q),
+                timeout=cognitive_timeout,
+            )
         strategy = str(cognitive.get('strategy') or '')
         module = str(cognitive.get('module') or '')
         confidence = float(cognitive.get('confidence') or 0.0)
@@ -12751,18 +12762,20 @@ async def chat_fast(req: ChatRequest):
     except Exception as e:
         logger.warning(f"Cognitive first-refusal failed in chat: {e}")
 
-    external_web = await _external_factual_web_search_payload(q, t0, qs)
+    external_web = await _external_factual_web_search_payload(q, t0, qs) if early_intent != 'creative' else None
     if external_web:
         payload, meta = external_web
         return _learned_chat_response(q, payload, meta=meta)
 
-    # --- NÃ­vel 1.5: Motor de RaciocÃ­nio Local (Regras, Math, Facts) ---
+    # --- Nível 1.5: Motor de Raciocínio Local (Regras, Math, Facts) ---
     try:
-        from ultronpro import local_reasoning_engine
-        local_res = await asyncio.wait_for(
-            asyncio.to_thread(local_reasoning_engine.resolve, q),
-            timeout=3.0
-        )
+        local_res = {}
+        if early_intent != 'creative':
+            from ultronpro import local_reasoning_engine
+            local_res = await asyncio.wait_for(
+                asyncio.to_thread(local_reasoning_engine.resolve, q),
+                timeout=3.0
+            )
         if local_res.get('resolved') and local_res.get('result'):
             dt = int((time.time() - t0) * 1000)
             logger.info(f"LocalReasoning: {local_res.get('method')} resolved in {dt}ms")
