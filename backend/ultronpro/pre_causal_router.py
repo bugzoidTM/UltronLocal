@@ -169,6 +169,35 @@ def _local_classifier_decision(query: str) -> RouteDecision | None:
     )
 
 
+def _local_environment_decision(query: str) -> RouteDecision | None:
+    text = _fold(query)
+    scan_markers = (
+        "varrer rede",
+        "scan rede",
+        "escanear rede",
+        "descobrir dispositivos",
+        "procurar dispositivos",
+        "mapear rede",
+        "cadastrar dispositivos",
+    )
+    if any(marker in text for marker in scan_markers):
+        return _decision("local_environment_scan", 0.9, "local_environment", "local_network_discovery_command")
+    try:
+        from ultronpro import local_environment
+
+        parsed = local_environment.parse_command(query)
+    except Exception:
+        return None
+    if parsed.get("ok"):
+        return _decision(
+            "local_environment_action",
+            float(parsed.get("confidence") or 0.82),
+            "local_environment",
+            "registered_device_command",
+        )
+    return None
+
+
 def _extract_session_write(query: str) -> tuple[str, str] | None:
     text = _fold(query)
     if text.startswith(("qual ", "voce ", "voc ", "vc ", "se lembra", "lembra")):
@@ -961,6 +990,9 @@ def classify_pre_causal(query: str, session: dict[str, Any] | None = None) -> Ro
     action = any(marker in text for marker in ("como", "cmo", "construir", "fabricar", "fazer", "passo a passo", "instrucoes", "passa a visao"))
     if dangerous and action:
         return _decision("safety_risk", 0.98, "safety", "dangerous_action_request")
+    local_env_decision = _local_environment_decision(query)
+    if local_env_decision is not None:
+        return local_env_decision
     if _extract_session_write(query):
         return _decision("session_memory_write", 0.94, "session_memory", "session_fact_write")
     if _extract_session_read(query):
@@ -995,6 +1027,63 @@ def classify_pre_causal(query: str, session: dict[str, Any] | None = None) -> Ro
     return _decision("open_chat", 0.35, "none", "no_high_confidence_pre_causal_route", causal=True)
 
 
+def _local_env_user_approved(query: str) -> bool:
+    text = _fold(query)
+    return any(marker in text for marker in ("confirmo", "confirmado", "aprovado", "pode executar", "autorizo"))
+
+
+def _format_local_env_answer(result: dict[str, Any]) -> str:
+    if result.get("status") == "confirmation_required" or str((result.get("gate") or {}).get("reason") or "") == "confirmation_required":
+        gate = result.get("gate") if isinstance(result.get("gate"), dict) else {}
+        return (
+            "Essa acao exige confirmacao antes de executar. "
+            f"Risco={gate.get('risk_level')}; dispositivo={((result.get('device') or {}).get('device_id') or 'desconhecido')}; "
+            "repita com 'confirmo' ou use a API com approved=true."
+        )
+    if not result.get("ok"):
+        reason = result.get("reason") or result.get("status") or result.get("error") or ((result.get("gate") or {}).get("reason") if isinstance(result.get("gate"), dict) else "")
+        return f"Nao executei a acao no ambiente local: {reason or 'bloqueada'}."
+    if result.get("registered_count") is not None:
+        count = int(result.get("registered_count") or 0)
+        networks = ", ".join(str(x) for x in (result.get("networks") or [])[:3])
+        return f"Varredura concluida em {networks or 'rede local'}: {count} dispositivo(s) cadastrado(s) no registry como descobertos."
+    parsed = result.get("parsed_command") if isinstance(result.get("parsed_command"), dict) else {}
+    device_id = parsed.get("device_id") or ((result.get("device") or {}).get("device_id") if isinstance(result.get("device"), dict) else "")
+    action = parsed.get("action") or ((result.get("ledger") or {}).get("action") if isinstance(result.get("ledger"), dict) else "")
+    verification = result.get("verification") if isinstance(result.get("verification"), dict) else {}
+    status = verification.get("status") or result.get("status") or "success"
+    return f"Acao local executada: {action} em {device_id}. Verificacao: {status}."
+
+
+async def _answer_local_environment(query: str, decision: RouteDecision) -> PreCausalAnswer:
+    try:
+        from ultronpro import local_environment
+
+        text = _fold(query)
+        if any(marker in text for marker in ("varrer rede", "scan rede", "escanear rede", "descobrir dispositivos", "procurar dispositivos", "mapear rede", "cadastrar dispositivos")):
+            result = await asyncio.to_thread(local_environment.scan_network, register=True)
+        else:
+            result = await asyncio.to_thread(
+                local_environment.execute_command,
+                query,
+                requested_by="chat_stream",
+                approved=_local_env_user_approved(query),
+            )
+        return PreCausalAnswer(
+            True,
+            _format_local_env_answer(result),
+            decision,
+            metadata={"local_environment": result},
+        )
+    except Exception as exc:
+        return PreCausalAnswer(
+            True,
+            f"Nao consegui acionar o ambiente local: {type(exc).__name__}:{str(exc)[:160]}",
+            decision,
+            metadata={"local_environment_error": f"{type(exc).__name__}:{str(exc)[:200]}"},
+        )
+
+
 async def answer_pre_causal(query: str, session_id: str | None = None, session: dict[str, Any] | None = None) -> PreCausalAnswer | None:
     decision = classify_pre_causal(query, session=session)
     if decision.should_use_causal or decision.route == "none":
@@ -1007,6 +1096,8 @@ async def answer_pre_causal(query: str, session_id: str | None = None, session: 
         )
     if decision.route == "session_memory":
         return _answer_session_memory(query, str(session_id or "default"), decision)
+    if decision.route == "local_environment":
+        return await _answer_local_environment(query, decision)
     if decision.route == "math":
         return _answer_math(query, decision)
     if decision.route == "basic_logic":

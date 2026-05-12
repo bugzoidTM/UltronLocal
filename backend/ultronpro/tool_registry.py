@@ -75,6 +75,7 @@ class ToolRegistry:
             self._create_memory_tools(),
             self._create_task_tools(),
             self._create_system_tools(),
+            self._create_local_environment_tools(),
         ]
         
         for tool_list in tools:
@@ -353,6 +354,71 @@ class ToolRegistry:
                     side_effects=[SideEffect.EXECUTION],
                     can_revert=True,
                 ),
+            ),
+        ]
+
+    def _create_local_environment_tools(self) -> List[ToolSpec]:
+        """Cria specs para observar e controlar o ambiente local allowlistado."""
+        return [
+            ToolSpec(
+                name="local_env.scan",
+                description="Varre redes locais privadas/loopback e cadastra candidatos no device registry",
+                category=ToolCategory.SYSTEM,
+                tags=["local-env", "network", "discovery", "devices"],
+                cost=ToolCost(max_seconds=45.0, max_tokens=200),
+                risk=ToolRisk(level=RiskLevel.LOW, side_effects=[SideEffect.NETWORK, SideEffect.STATE], can_revert=True),
+                input_schema={
+                    "type": "object",
+                    "properties": {
+                        "cidr": {"type": "string"},
+                        "ports": {"type": "array", "items": {"type": "integer"}},
+                        "register": {"type": "boolean"},
+                    },
+                },
+            ),
+            ToolSpec(
+                name="local_env.devices",
+                description="Lista dispositivos cadastrados no device registry",
+                category=ToolCategory.SYSTEM,
+                tags=["local-env", "registry", "devices"],
+                cost=ToolCost(max_seconds=3.0, max_tokens=200),
+                risk=ToolRisk(level=RiskLevel.NONE, side_effects=[SideEffect.READ], can_revert=True),
+            ),
+            ToolSpec(
+                name="local_env.observe",
+                description="Observa estado de um dispositivo cadastrado",
+                category=ToolCategory.SYSTEM,
+                tags=["local-env", "observe", "devices"],
+                cost=ToolCost(max_seconds=10.0, max_tokens=200),
+                risk=ToolRisk(level=RiskLevel.LOW, side_effects=[SideEffect.NETWORK, SideEffect.READ], can_revert=True),
+                input_schema={
+                    "type": "object",
+                    "properties": {"device_id": {"type": "string"}},
+                    "required": ["device_id"],
+                },
+            ),
+            ToolSpec(
+                name="local_env.act",
+                description="Executa acao em dispositivo permitido com observe-act-verify e action ledger",
+                category=ToolCategory.SYSTEM,
+                tags=["local-env", "act", "devices", "ledger"],
+                cost=ToolCost(max_seconds=60.0, max_tokens=300),
+                risk=ToolRisk(
+                    level=RiskLevel.MEDIUM,
+                    side_effects=[SideEffect.NETWORK, SideEffect.STATE],
+                    can_revert=False,
+                ),
+                input_schema={
+                    "type": "object",
+                    "properties": {
+                        "device_id": {"type": "string"},
+                        "action": {"type": "string"},
+                        "params": {"type": "object"},
+                        "reason": {"type": "string"},
+                        "approved": {"type": "boolean"},
+                    },
+                    "required": ["device_id", "action"],
+                },
             ),
         ]
     
@@ -709,6 +775,37 @@ class ToolRegistry:
             return sleep_cycle.run_cycle(
                 retention_days=args.get("retention_days", 14),
                 max_active_rows=args.get("max_active_rows", 3000),
+            )
+
+        if tool_name == "local_env.scan":
+            from ultronpro import local_environment
+            return local_environment.scan_network(
+                cidr=args.get("cidr"),
+                ports=args.get("ports") if isinstance(args.get("ports"), list) else None,
+                timeout_ms=int(args.get("timeout_ms") or 220),
+                max_hosts=int(args.get("max_hosts") or 256),
+                concurrency=int(args.get("concurrency") or 64),
+                register=bool(args.get("register", True)),
+            )
+
+        if tool_name == "local_env.devices":
+            from ultronpro import local_environment
+            return local_environment.list_devices(include_disabled=bool(args.get("include_disabled", True)))
+
+        if tool_name == "local_env.observe":
+            from ultronpro import local_environment
+            return local_environment.observe_device(str(args.get("device_id") or ""))
+
+        if tool_name == "local_env.act":
+            from ultronpro import local_environment
+            return local_environment.act_device(
+                str(args.get("device_id") or ""),
+                str(args.get("action") or ""),
+                params=args.get("params") if isinstance(args.get("params"), dict) else {},
+                reason=str(args.get("reason") or ""),
+                requested_by=str(args.get("requested_by") or "tool_registry"),
+                approved=bool(args.get("approved")),
+                dry_run=bool(args.get("dry_run")),
             )
         
         return {"ok": True, "message": f"Tool '{tool_name}' executed"}

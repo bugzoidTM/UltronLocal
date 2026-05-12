@@ -17045,6 +17045,7 @@ from ultronpro.api.phenomenal import router as phenomenal_router
 from ultronpro.api.working_memory import router as working_memory_router
 from ultronpro.api.vision import router as vision_router
 from ultronpro.api.world_model import router as world_model_router
+from ultronpro.api.local_env import router as local_env_router
 
 app.include_router(memory_router)
 app.include_router(tasks_router)
@@ -17055,6 +17056,7 @@ app.include_router(phenomenal_router)
 app.include_router(working_memory_router)
 app.include_router(vision_router)
 app.include_router(world_model_router)
+app.include_router(local_env_router)
 app.include_router(self_healer_router)
 app.include_router(mental_sim_router)
 app.include_router(benchmarks_router)
