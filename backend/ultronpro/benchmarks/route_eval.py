@@ -777,6 +777,7 @@ def run_route_eval(
     learn_failures: bool = True,
     dry_run_learning: bool = False,
     propose_patches: bool = True,
+    record_competence: bool = True,
 ) -> dict[str, Any]:
     started = time.time()
     actual_run_id = run_id or uuid.uuid4().hex
@@ -835,6 +836,15 @@ def run_route_eval(
         if learn_failures
         else {"ok": True, "disabled": True, "failure_count": total - passed}
     )
+    if record_competence:
+        try:
+            from ultronpro import competence_ledger
+
+            report["competence_ledger"] = competence_ledger.record_route_eval_report(report)
+        except Exception as exc:
+            report["competence_ledger"] = {"ok": False, "error": f"{type(exc).__name__}:{str(exc)[:200]}"}
+    else:
+        report["competence_ledger"] = {"ok": True, "disabled": True}
     return report
 
 
@@ -855,6 +865,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--no-learn-from-failures", action="store_true", help="Do not append failed route cases to episodic memory.")
     parser.add_argument("--dry-run-learning", action="store_true", help="Build learning episodes/proposals without writing memory or patch ledgers.")
     parser.add_argument("--no-patch-proposals", action="store_true", help="Record failure episodes but do not create router patch proposals.")
+    parser.add_argument("--no-competence-ledger", action="store_true", help="Do not update the competence ledger from this run.")
     args = parser.parse_args(argv)
 
     report = run_route_eval(
@@ -864,6 +875,7 @@ def main(argv: list[str] | None = None) -> int:
         learn_failures=not args.no_learn_from_failures,
         dry_run_learning=args.dry_run_learning,
         propose_patches=not args.no_patch_proposals,
+        record_competence=not args.no_competence_ledger,
     )
     text = json.dumps(report, ensure_ascii=False, indent=2)
     print(text)

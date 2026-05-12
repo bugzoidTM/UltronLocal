@@ -60,6 +60,12 @@ async def evaluate_queries(items: list[dict[str, Any]], top_k: int = 5) -> dict[
         'rows': rows,
     }
     try:
+        from ultronpro import competence_ledger
+
+        report['competence_ledger'] = competence_ledger.record_rag_eval_report(report)
+    except Exception as exc:
+        report['competence_ledger'] = {'ok': False, 'error': f'{type(exc).__name__}:{str(exc)[:200]}'}
+    try:
         rag_eval_store.persist_run(report)
     except Exception:
         pass

@@ -62,3 +62,17 @@ async def benchmark_epistemic_ledger():
     """Valida o ledger epistêmico unificado e seus gates de promoção."""
     from ultronpro import epistemic_ledger
     return epistemic_ledger.run_selftest()
+
+
+@router.get("/competence-ledger")
+async def benchmark_competence_ledger():
+    """Mostra o ledger operacional de competencias observadas."""
+    from ultronpro import competence_ledger
+    return competence_ledger.status()
+
+
+@router.get("/competence-ledger/selftest")
+async def benchmark_competence_ledger_selftest():
+    """Valida atualizacao dinamica do competence ledger."""
+    from ultronpro import competence_ledger
+    return competence_ledger.run_selftest()
