@@ -1,36 +1,39 @@
 {
   "schema": "ultron.online_rl_cycle.v1",
   "last_action_ts": {
-    "trusted_acquisition": 1778439775,
-    "homeostasis_tune": 1778451706,
-    "autonomous_cognition_tick": 1778460335,
-    "epistemic_gap_scan": 1778461336
+    "trusted_acquisition": 1778524461,
+    "homeostasis_tune": 1778546863,
+    "autonomous_cognition_tick": 1778548712,
+    "epistemic_gap_scan": 1778461336,
+    "reflexion_tick": 1778605209,
+    "cognitive_patch_loop": 1778508525,
+    "sleep_digest": 1778604718
   },
-  "cycle_count": 8,
-  "last_reward": 0.4747,
+  "cycle_count": 26,
+  "last_reward": 0.3319,
   "last_action": {
-    "kind": "epistemic_gap_scan",
-    "drive": "novelty",
-    "cost": 0.1,
-    "base_priority": 0.46,
+    "kind": "reflexion_tick",
+    "drive": "autonomy",
+    "cost": 0.15,
+    "base_priority": 0.55,
     "cooldown_sec": 180,
-    "description": "refresh explicit epistemic gap map",
+    "description": "execute meta-cognitive reflexion to evaluate recent traces and propose hypotheses",
     "context": "normal",
-    "score": 1.0893,
-    "rl_priority_adjustment": 3,
-    "need_bonus": 0.04,
-    "state_pressure": 0.6366,
+    "score": 1.3689,
+    "rl_priority_adjustment": 4,
+    "need_bonus": 0.08,
+    "state_pressure": 0.6296,
     "cooldown_remaining_sec": 0,
     "non_llm": true
   },
   "last_reward_report": {
-    "reward": 0.4747,
+    "reward": 0.3319,
     "ok": false,
     "components": {
-      "action_score": 0.5684,
+      "action_score": 0.2,
       "homeostasis_delta": 0.0,
-      "gap_delta": 0.0,
-      "latency_score": 0.9963,
+      "gap_delta": -0.125,
+      "latency_score": 0.9983,
       "result_ok": true
     },
     "bonuses": {
@@ -42,15 +45,14 @@
       "hallucination": 0.0,
       "stale_source": 0.0,
       "source_404_as_useful": 0.0,
-      "loop_pressure": 0.0797,
+      "loop_pressure": 0.08,
       "rollback": 0.0
     },
     "evidence": {
-      "gap_count": 4,
-      "top_gap_id": "background_loop_pressure",
-      "top_gap_priority": 0.8563
+      "hypotheses": 0,
+      "probes": 0
     }
   },
-  "last_run_at": 1778461336,
-  "updated_at": 1778461336
+  "last_run_at": 1778605209,
+  "updated_at": 1778605209
 }

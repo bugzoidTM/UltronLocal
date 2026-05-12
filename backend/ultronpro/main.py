@@ -12376,6 +12376,270 @@ def _synthesize_chat_answer_from_sir(
     )
 
 
+_CAUSAL_SYNTHESIS_MODULES = {'active_investigation', 'causal_transfer_engine'}
+_CAUSAL_SYNTHESIS_STRATEGY_PREFIXES = (
+    'non_llm_active_investigation',
+    'non_llm_causal_transfer_prior',
+)
+
+
+def _json_safe(value: Any) -> Any:
+    try:
+        return json.loads(json.dumps(value, ensure_ascii=False, default=str))
+    except Exception:
+        return str(value)
+
+
+def _compact_dict(src: dict[str, Any] | None, keys: tuple[str, ...]) -> dict[str, Any]:
+    data = src if isinstance(src, dict) else {}
+    return {key: _json_safe(data.get(key)) for key in keys if data.get(key) is not None}
+
+
+def _compact_transfer_prior(prior: dict[str, Any] | None) -> dict[str, Any] | None:
+    if not isinstance(prior, dict) or not prior:
+        return None
+    return _compact_dict(
+        prior,
+        (
+            'type',
+            'source',
+            'source_domain',
+            'target_domain',
+            'score',
+            'confidence',
+            'validation_required',
+            'validation_status',
+            'transferred_policy',
+            'policy_hypothesis',
+            'causal_claim',
+        ),
+    )
+
+
+def _compact_inference_trace(trace: dict[str, Any] | None) -> dict[str, Any] | None:
+    if not isinstance(trace, dict) or not trace:
+        return None
+    premises = []
+    for item in (trace.get('premises') or [])[:8]:
+        if isinstance(item, dict):
+            premises.append(_compact_dict(item, ('id', 'source', 'modality', 'statement', 'confidence', 'role')))
+    steps = []
+    for item in (trace.get('inference_steps') or [])[:6]:
+        if isinstance(item, dict):
+            steps.append(_compact_dict(item, ('id', 'rule', 'rule_type', 'input_ids', 'conclusion', 'confidence', 'rationale')))
+    gaps = []
+    for item in (trace.get('gaps') or [])[:8]:
+        if isinstance(item, dict):
+            gaps.append(_compact_dict(item, ('id', 'dimension', 'missing_slot', 'gap_kind', 'reason', 'source', 'proposed_intervention')))
+    return {
+        'schema': trace.get('schema'),
+        'formalism': trace.get('formalism'),
+        'task_type': trace.get('task_type'),
+        'premise_count': len(trace.get('premises') or []),
+        'step_count': len(trace.get('inference_steps') or []),
+        'gap_count': len(trace.get('gaps') or []),
+        'premises': _json_safe(premises),
+        'inference_steps': _json_safe(steps),
+        'gaps': _json_safe(gaps),
+        'conclusion': _json_safe(trace.get('conclusion') or {}),
+    }
+
+
+def _compact_causal_evidence(evidence: dict[str, Any] | None) -> dict[str, Any]:
+    if not isinstance(evidence, dict):
+        return {}
+    execution = evidence.get('investigation_execution') if isinstance(evidence.get('investigation_execution'), dict) else {}
+    learned_route = evidence.get('learned_route') if isinstance(evidence.get('learned_route'), dict) else {}
+    investigation_route = evidence.get('investigation_route') if isinstance(evidence.get('investigation_route'), dict) else {}
+    return {
+        'reason': evidence.get('reason'),
+        'investigation_id': evidence.get('investigation_id'),
+        'status': evidence.get('status'),
+        'coverage': _json_safe(evidence.get('coverage') or {}),
+        'missing_slots': _json_safe(evidence.get('missing_slots') or []),
+        'next_experiment': _json_safe(evidence.get('next_experiment') or {}),
+        'candidate_modules': _json_safe(evidence.get('candidate_modules') or []),
+        'learned_route': _compact_dict(learned_route, ('module', 'confidence', 'method', 'routed')),
+        'investigation_route': _compact_dict(investigation_route, ('module', 'confidence', 'method', 'routed')),
+        'transfer_prior': _compact_transfer_prior(evidence.get('transfer_prior') if isinstance(evidence.get('transfer_prior'), dict) else None),
+        'prior_validation': _json_safe(evidence.get('prior_validation') or {}),
+        'investigation_execution': _compact_dict(execution, ('ok', 'executed', 'injected', 'duration_ms', 'prior_validation')),
+    }
+
+
+def _cognitive_needs_backend_synthesis(cognitive: dict[str, Any] | None) -> bool:
+    data = cognitive if isinstance(cognitive, dict) else {}
+    module = str(data.get('module') or '')
+    strategy = str(data.get('strategy') or '')
+    evidence = data.get('evidence_summary') if isinstance(data.get('evidence_summary'), dict) else {}
+    return (
+        module in _CAUSAL_SYNTHESIS_MODULES
+        or any(strategy.startswith(prefix) for prefix in _CAUSAL_SYNTHESIS_STRATEGY_PREFIXES)
+        or bool(evidence.get('investigation_id') or evidence.get('transfer_prior'))
+    )
+
+
+def _chat_causal_trace_payload(cognitive: dict[str, Any]) -> dict[str, Any]:
+    evidence = cognitive.get('evidence_summary') if isinstance(cognitive.get('evidence_summary'), dict) else {}
+    trace = {
+        'schema': 'ultron.chat.causal_trace.v1',
+        'source_strategy': cognitive.get('strategy'),
+        'source_module': cognitive.get('module'),
+        'confidence': cognitive.get('confidence'),
+        'task_type': cognitive.get('task_type'),
+        'evidence_summary': _compact_causal_evidence(evidence),
+    }
+    gap_signal = cognitive.get('gap_signal') if isinstance(cognitive.get('gap_signal'), dict) else {}
+    if gap_signal:
+        trace['gap_signal'] = _json_safe(gap_signal)
+    inference_trace = _compact_inference_trace(cognitive.get('inference_trace') if isinstance(cognitive.get('inference_trace'), dict) else None)
+    if inference_trace:
+        trace['inference_trace'] = inference_trace
+    return _json_safe(trace)
+
+
+def _human_missing_slot(slot: Any) -> str:
+    key = str(slot or '').strip()
+    labels = {
+        'aresta_causal_relevante': 'uma relacao causal relevante',
+        'fato_estruturado_recuperavel': 'um fato estruturado recuperavel',
+        'episodio_relevante': 'uma memoria episodica relevante',
+        'support_confidence': 'suporte suficiente para uma conclusao',
+        'premise': 'uma premissa verificavel',
+    }
+    return labels.get(key, key.replace('_', ' ') or 'evidencia verificavel')
+
+
+def _confidence_label(value: Any) -> str:
+    try:
+        conf = float(value)
+    except Exception:
+        return 'nao calibrada'
+    if conf >= 0.70:
+        return 'razoavel'
+    if conf >= 0.45:
+        return 'moderada'
+    return 'baixa'
+
+
+def _internal_causal_debug_text(text: str) -> bool:
+    folded = unicodedata.normalize('NFKD', str(text or '').lower())
+    folded = ''.join(ch for ch in folded if not unicodedata.combining(ch))
+    markers = (
+        'encontrei cobertura direta insuficiente',
+        'transferi um prior causal',
+        'lacunas restantes',
+        'unknown: meu nucleo estruturado',
+        'investigacao ativa iniciada',
+    )
+    return any(marker in folded for marker in markers)
+
+
+def _render_causal_synthesis_fallback(query: str, cognitive: dict[str, Any]) -> str:
+    evidence = cognitive.get('evidence_summary') if isinstance(cognitive.get('evidence_summary'), dict) else {}
+    missing = evidence.get('missing_slots') if isinstance(evidence.get('missing_slots'), list) else []
+    prior = evidence.get('transfer_prior') if isinstance(evidence.get('transfer_prior'), dict) else {}
+    prior_validation = evidence.get('prior_validation') if isinstance(evidence.get('prior_validation'), dict) else {}
+    status = str(prior_validation.get('status') or evidence.get('status') or '')
+    confidence = prior_validation.get('confidence_after') or cognitive.get('confidence')
+    missing_text = ', '.join(_human_missing_slot(item) for item in missing[:3])
+
+    if prior:
+        if status == 'validated':
+            lead = (
+                'Ainda nao tenho evidencia direta suficiente para transformar isso em uma resposta final segura. '
+                'O motor causal encontrou uma hipotese operacional, testou-a em sandbox e ela saiu sustentada como pista, '
+                'mas nao como fato conclusivo.'
+            )
+        elif status == 'refuted':
+            lead = (
+                'A verificacao causal rejeitou a hipotese que parecia reaproveitavel, entao nao vou forcar uma resposta. '
+                'O estado correto agora e manter a pergunta em aberto ate entrar evidencia melhor.'
+            )
+        else:
+            lead = (
+                'Ainda nao tenho evidencia direta suficiente para responder com seguranca. '
+                'O motor causal encontrou uma hipotese operacional reaproveitavel, mas ela continua sendo apenas uma pista ate validacao.'
+            )
+    else:
+        lead = (
+            'Ainda nao tenho cobertura interna suficiente para responder com seguranca. '
+            'O backend registrou a investigacao causal em vez de inventar uma conclusao.'
+        )
+
+    details: list[str] = []
+    label = _confidence_label(confidence)
+    if label != 'nao calibrada':
+        details.append(f'A confianca atual e {label}.')
+    if missing_text:
+        details.append(f'Para fechar a resposta, falta {missing_text}.')
+    next_exp = evidence.get('next_experiment') if isinstance(evidence.get('next_experiment'), dict) else {}
+    if next_exp.get('kind'):
+        details.append(f"O proximo passo registrado e {str(next_exp.get('kind'))}.")
+    return ' '.join([lead, *details]).strip()
+
+
+def _synthesize_causal_cognitive_answer(query: str, cognitive: dict[str, Any]) -> dict[str, Any]:
+    fallback = _render_causal_synthesis_fallback(query, cognitive)
+    if str(os.getenv('ULTRON_CHAT_BACKEND_CAUSAL_LLM_SYNTHESIS', '0')).strip().lower() in ('1', 'true', 'yes', 'on'):
+        try:
+            prompt = (
+                'Converta o resultado causal estruturado abaixo em uma resposta final limpa para o usuario. '
+                'Nao exponha IDs internos, p-values, nomes de slots, rotas, modulos ou logs. '
+                'Nao invente fatos ausentes. Mantenha PT-BR natural, honesto e conciso.\n\n'
+                f'Pergunta do usuario: {query}\n\n'
+                f'Traco causal compacto:\n{json.dumps(_chat_causal_trace_payload(cognitive), ensure_ascii=False, default=str)}\n\n'
+                f'Resposta deterministica segura se o modelo falhar:\n{fallback}'
+            )
+            candidate = _chat_local_complete(
+                prompt,
+                system='Sintetizador backend de respostas causais. Use somente o traco fornecido.',
+                max_tokens=220,
+                inject_persona=False,
+                strategy='local',
+            )
+            candidate = str(candidate or '').strip()
+            if candidate and not _internal_causal_debug_text(candidate):
+                return {'answer': candidate, 'strategy': 'backend_causal_llm_synthesis', 'fallback': fallback}
+        except Exception as exc:
+            logger.warning('Backend causal synthesis failed: %s', exc)
+    return {'answer': fallback, 'strategy': 'backend_causal_deterministic_synthesis', 'fallback': fallback}
+
+
+def _finalize_cognitive_chat_payload(query: str, cognitive: dict[str, Any]) -> dict[str, Any]:
+    data = cognitive if isinstance(cognitive, dict) else {}
+    if not _cognitive_needs_backend_synthesis(data):
+        return {
+            'answer': str(data.get('answer') or ''),
+            'strategy': data.get('strategy') or 'non_llm_cognitive_response',
+            'cognitive_core': True,
+            'module': data.get('module'),
+            'confidence': data.get('confidence'),
+            'evidence_summary': data.get('evidence_summary'),
+        }
+
+    synthesis = _synthesize_causal_cognitive_answer(query, data)
+    answer = str(synthesis.get('answer') or '').strip()
+    trace = _chat_causal_trace_payload(data)
+    strategy = str(data.get('strategy') or 'non_llm_cognitive_response')
+    return {
+        'answer': answer,
+        'synthesized_text': answer,
+        'strategy': f'{strategy}_backend_synthesis',
+        'source_strategy': strategy,
+        'cognitive_core': True,
+        'module': data.get('module'),
+        'confidence': data.get('confidence'),
+        'trace_causal': trace,
+        'causal_trace': trace,
+        'synthesis': {
+            'strategy': synthesis.get('strategy'),
+            'source': 'backend',
+            'raw_answer_suppressed': True,
+        },
+    }
+
+
 def _chat_last_resort_model_answer(
     query: str,
     session_id: str | None = None,
@@ -12678,24 +12942,30 @@ async def chat_fast(req: ChatRequest):
                 timeout=cognitive_timeout,
             )
             if cognitive.get('resolved') and cognitive.get('answer'):
-                answer = await asyncio.to_thread(_ensure_chat_answer_constraints, q, str(cognitive.get('answer') or ''))
+                final_payload = _finalize_cognitive_chat_payload(q, cognitive)
+                answer = await asyncio.to_thread(_ensure_chat_answer_constraints, q, str(final_payload.get('answer') or ''))
                 if answer:
                     dt = int((time.time() - t0) * 1000)
                     qs.update_valence(0.12)
                     qs.update_coherence(0.84)
                     qs.update_all_qualia()
                     qs.generate_narrative()
-                    strategy = cognitive.get('strategy') or 'non_llm_cognitive_response'
-                    return _learned_chat_response(q, {
+                    final_payload.update({
                         'ok': True,
                         'answer': answer,
-                        'strategy': strategy,
                         'latency_ms': dt,
-                        'cognitive_core': True,
-                        'module': cognitive.get('module'),
-                        'confidence': cognitive.get('confidence'),
                         'qualia': qs.generate_report(),
-                    }, meta={'module': cognitive.get('module'), 'cognitive_core': True, 'fast_autobiographical': True})
+                    })
+                    return _learned_chat_response(
+                        q,
+                        final_payload,
+                        meta={
+                            'module': cognitive.get('module'),
+                            'cognitive_core': True,
+                            'fast_autobiographical': True,
+                            'trace_causal': final_payload.get('trace_causal'),
+                        },
+                    )
     except asyncio.TimeoutError:
         logger.warning("Chat autobiographical cognitive response timed out")
     except Exception as e:
@@ -12859,24 +13129,29 @@ async def chat_fast(req: ChatRequest):
             timeout=cognitive_timeout,
         )
         if cognitive.get('resolved') and cognitive.get('answer'):
-            answer = await asyncio.to_thread(_ensure_chat_answer_constraints, q, str(cognitive.get('answer') or ''))
+            final_payload = _finalize_cognitive_chat_payload(q, cognitive)
+            answer = await asyncio.to_thread(_ensure_chat_answer_constraints, q, str(final_payload.get('answer') or ''))
             if answer:
                 dt = int((time.time() - t0) * 1000)
                 qs.update_valence(0.12)
                 qs.update_coherence(0.82)
                 qs.update_all_qualia()
                 qs.generate_narrative()
-                return _learned_chat_response(q, {
+                final_payload.update({
                     'ok': True,
                     'answer': answer,
-                    'strategy': cognitive.get('strategy') or 'non_llm_cognitive_response',
                     'latency_ms': dt,
-                    'cognitive_core': True,
-                    'module': cognitive.get('module'),
-                    'confidence': cognitive.get('confidence'),
-                    'evidence_summary': cognitive.get('evidence_summary'),
                     'qualia': qs.generate_report(),
-                }, meta={'module': cognitive.get('module'), 'cognitive_core': True})
+                })
+                return _learned_chat_response(
+                    q,
+                    final_payload,
+                    meta={
+                        'module': cognitive.get('module'),
+                        'cognitive_core': True,
+                        'trace_causal': final_payload.get('trace_causal'),
+                    },
+                )
     except asyncio.TimeoutError:
         logger.warning("Cognitive response timed out")
     except Exception as e:
@@ -13214,16 +13489,23 @@ async def chat_stream(req: ChatRequest):
                     timeout=cognitive_timeout,
                 )
                 if cognitive.get('resolved') and cognitive.get('answer'):
-                    answer = await asyncio.to_thread(_ensure_chat_answer_constraints, q, str(cognitive.get('answer') or ''))
+                    final_payload = _finalize_cognitive_chat_payload(q, cognitive)
+                    answer = await asyncio.to_thread(_ensure_chat_answer_constraints, q, str(final_payload.get('answer') or ''))
                     if answer:
-                        strategy = cognitive.get('strategy') or 'non_llm_cognitive_response'
+                        final_payload.update({'type': 'done', 'answer': answer})
+                        strategy = final_payload.get('strategy') or 'non_llm_cognitive_response'
                         _record_conversation_route(
                             q,
-                            strategy,
+                            str(strategy),
                             source='chat_stream',
-                            meta={'module': cognitive.get('module'), 'cognitive_core': True, 'fast_autobiographical': True},
+                            meta={
+                                'module': cognitive.get('module'),
+                                'cognitive_core': True,
+                                'fast_autobiographical': True,
+                                'trace_causal': final_payload.get('trace_causal'),
+                            },
                         )
-                        yield f"data: {json.dumps({'type': 'done', 'answer': answer, 'strategy': strategy, 'cognitive_core': True, 'module': cognitive.get('module'), 'confidence': cognitive.get('confidence')})}\n\n"
+                        yield f"data: {json.dumps(final_payload, ensure_ascii=False)}\n\n"
                         return
         except asyncio.TimeoutError:
             logger.warning("Stream autobiographical cognitive response timed out")
@@ -13309,16 +13591,22 @@ async def chat_stream(req: ChatRequest):
                 timeout=cognitive_timeout,
             )
             if cognitive.get('resolved') and cognitive.get('answer'):
-                answer = await asyncio.to_thread(_ensure_chat_answer_constraints, q, str(cognitive.get('answer') or ''))
+                final_payload = _finalize_cognitive_chat_payload(q, cognitive)
+                answer = await asyncio.to_thread(_ensure_chat_answer_constraints, q, str(final_payload.get('answer') or ''))
                 if answer:
-                    strategy = cognitive.get('strategy') or 'non_llm_cognitive_response'
+                    final_payload.update({'type': 'done', 'answer': answer})
+                    strategy = final_payload.get('strategy') or 'non_llm_cognitive_response'
                     _record_conversation_route(
                         q,
-                        strategy,
+                        str(strategy),
                         source='chat_stream',
-                        meta={'module': cognitive.get('module'), 'cognitive_core': True},
+                        meta={
+                            'module': cognitive.get('module'),
+                            'cognitive_core': True,
+                            'trace_causal': final_payload.get('trace_causal'),
+                        },
                     )
-                    yield f"data: {json.dumps({'type': 'done', 'answer': answer, 'strategy': strategy, 'cognitive_core': True, 'module': cognitive.get('module'), 'confidence': cognitive.get('confidence')})}\n\n"
+                    yield f"data: {json.dumps(final_payload, ensure_ascii=False)}\n\n"
                     return
         except asyncio.TimeoutError:
             logger.warning("Stream cognitive response timed out")
@@ -13343,20 +13631,28 @@ async def chat_stream(req: ChatRequest):
                         timeout=cognitive_timeout,
                     )
                     if _abio_cognitive.get('resolved') and _abio_cognitive.get('answer'):
+                        final_payload = _finalize_cognitive_chat_payload(q, _abio_cognitive)
                         _abio_det_ans = await asyncio.to_thread(
                             _ensure_chat_answer_constraints,
                             q,
-                            str(_abio_cognitive.get('answer') or ''),
+                            str(final_payload.get('answer') or ''),
                         )
                         if _abio_det_ans:
-                            strategy = _abio_cognitive.get('strategy') or ('autobiographical_' + _abio_cat)
+                            final_payload.update({'type': 'done', 'answer': _abio_det_ans.strip(), 'autobiographical': True})
+                            strategy = final_payload.get('strategy') or ('autobiographical_' + _abio_cat)
                             _record_conversation_route(
                                 q,
-                                strategy,
+                                str(strategy),
                                 source='chat_stream',
-                                meta={'module': _abio_cognitive.get('module'), 'category': _abio_cat, 'cognitive_core': True, 'legacy_route_rescue': True},
+                                meta={
+                                    'module': _abio_cognitive.get('module'),
+                                    'category': _abio_cat,
+                                    'cognitive_core': True,
+                                    'legacy_route_rescue': True,
+                                    'trace_causal': final_payload.get('trace_causal'),
+                                },
                             )
-                            yield f"data: {json.dumps({'type': 'done', 'answer': _abio_det_ans.strip(), 'strategy': strategy, 'autobiographical': True, 'cognitive_core': True, 'confidence': _abio_cognitive.get('confidence')})}\n\n"
+                            yield f"data: {json.dumps(final_payload, ensure_ascii=False)}\n\n"
                             return
                 except Exception as e:
                     logger.warning(f"Autobiographical cognitive rescue failed: {e}")

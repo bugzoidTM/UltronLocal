@@ -1,5 +1,5 @@
 {
-  "ts": 1778462492,
+  "ts": 1778605490,
   "active_goal": "Modelar taxonomia de erros cognitivos em decisões",
   "active_mission": {
     "id": "mis_1776628887_3",
@@ -557,41 +557,45 @@
   },
   "autonomy_state": {
     "ticks": 1,
-    "last_tick": 96193,
+    "last_tick": 238873,
     "last_error": null,
     "consecutive_errors": 0
   },
   "background_guard": {
     "enabled": true,
     "state": "healthy",
-    "lag_sec": 0.0138,
-    "max_lag_sec": 1.1447,
+    "lag_sec": 0.005,
+    "max_lag_sec": 87.2334,
     "consecutive_lag": 0,
-    "paused_until": 0.0,
-    "last_pause_reason": null,
-    "last_pause_at": 0.0,
+    "paused_until": 1778605426.0600717,
+    "last_pause_reason": "event_loop_lag",
+    "last_pause_at": 1778605336.0600717,
     "last_slow_request": null,
-    "blocked_loops": 0,
-    "last_blocked_loop": null,
-    "last_log_at": 0.0,
+    "blocked_loops": 580,
+    "last_blocked_loop": "recursive_si_loop",
+    "last_log_at": 1778605396.1123915,
     "foreground_active": 0,
     "last_foreground_path": "/api/chat/stream",
-    "last_foreground_at": 1778462407.4097779,
-    "last_foreground_elapsed_sec": 0.009,
+    "last_foreground_at": 1778605019.2796776,
+    "last_foreground_elapsed_sec": 5.22,
+    "last_pause_details": {
+      "lag_sec": 36.525,
+      "consecutive_lag": 1
+    },
     "paused": false,
     "paused_for_sec": 0.0
   },
   "background_binary_bus": {
     "enabled": true,
-    "started_at": 1778462384.8786,
-    "processed": 52,
+    "started_at": 1778604783.0040095,
+    "processed": 1556,
     "dropped": 0,
     "sink_errors": 0,
     "last_event": {
       "kind": "workspace",
-      "loop": "autonomy_loop",
+      "loop": "judge_loop",
       "event": "workspace_publish",
-      "at": 1778462491.9007413
+      "at": 1778605457.1644726
     },
     "last_error": null,
     "queue_size": 0,
@@ -599,14 +603,6 @@
     "binlog_path": "D:\\UnidadeF\\UltronPro\\backend\\data\\background_bus.binlog"
   },
   "extra": {
-    "reason": "autonomy_tick_complete",
-    "memory_watchdog": {
-      "mem_mb": 0.0,
-      "soft_mb": 3500,
-      "hard_mb": 4200,
-      "acted": false,
-      "alerts": [],
-      "source": "autonomy_loop"
-    }
+    "reason": "judge_timeout"
   }
 }

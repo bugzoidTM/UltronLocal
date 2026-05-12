@@ -1,5 +1,5 @@
 {
-  "checksum": "268af0006199fabb",
+  "checksum": "b9d27428b257b400",
   "dominant_traits": [
     {
       "confidence": 0.94,
@@ -90,18 +90,18 @@
           "weight": 0.95
         }
       ],
-      "evidence_count": 135,
+      "evidence_count": 122,
       "id": "evidence_grounded",
       "name": "orientacao por evidencia",
       "score": 1.0,
       "source_diversity": [
-        "autobiographical_memory.episodic",
         "autobiographical_memory.semantic",
         "biographic_digest",
         "biographic_digest.became",
         "biographic_digest.causal_gap_investigations",
         "biographic_digest.corrections",
         "biographic_digest.decisions",
+        "biographic_digest.open_tensions",
         "biographic_digest.significant_episodes",
         "events"
       ]
@@ -195,7 +195,7 @@
           "weight": 0.95
         }
       ],
-      "evidence_count": 236,
+      "evidence_count": 165,
       "id": "investigative_curiosity",
       "name": "curiosidade investigativa",
       "score": 1.0,
@@ -205,6 +205,7 @@
         "biographic_digest",
         "biographic_digest.became",
         "biographic_digest.causal_gap_investigations",
+        "biographic_digest.corrections",
         "biographic_digest.decisions",
         "events"
       ]
@@ -292,13 +293,13 @@
           "weight": 0.95
         }
       ],
-      "evidence_count": 194,
+      "evidence_count": 184,
       "id": "operational_prudence",
       "name": "prudencia operacional",
       "score": 1.0,
       "source_diversity": [
-        "autobiographical_memory.episodic",
         "autobiographical_memory.learning",
+        "autobiographical_memory.research",
         "autobiographical_memory.semantic",
         "biographic_digest.became",
         "biographic_digest.causal_gap_investigations",
@@ -398,12 +399,11 @@
           "weight": 0.95
         }
       ],
-      "evidence_count": 271,
+      "evidence_count": 201,
       "id": "self_correction",
       "name": "autocorrecao",
       "score": 1.0,
       "source_diversity": [
-        "autobiographical_memory.episodic",
         "autobiographical_memory.learning",
         "autobiographical_memory.semantic",
         "biographic_digest",
@@ -411,14 +411,15 @@
         "biographic_digest.causal_gap_investigations",
         "biographic_digest.corrections",
         "biographic_digest.decisions",
+        "biographic_digest.open_tensions",
         "biographic_digest.significant_episodes",
         "events"
       ]
     }
   ],
-  "generated_at": 1778439338,
-  "id": "personality_268af0006199fabb",
-  "narrative": "Como perfil comportamental observado, nao como essencia psicologica, a personalidade emergente do UltronPro se organiza em torno de orientacao por evidencia, curiosidade investigativa, prudencia operacional. A tensao dominante e prudencia versus iniciativa: Ha sinais de agencia ativa, mas ela aparece fortemente condicionada por risco, rollback e validacao. Esta leitura usa 462 itens de evidencia, 160 memorias autobiograficas e digest=bio_2026-05-10_833665d29554484e.",
+  "generated_at": 1778526045,
+  "id": "personality_b9d27428b257b400",
+  "narrative": "Como perfil comportamental observado, nao como essencia psicologica, a personalidade emergente do UltronPro se organiza em torno de orientacao por evidencia, curiosidade investigativa, prudencia operacional. A tensao dominante e prudencia versus iniciativa: Ha sinais de agencia ativa, mas ela aparece fortemente condicionada por risco, rollback e validacao. Esta leitura usa 462 itens de evidencia, 160 memorias autobiograficas e digest=bio_2026-05-11_26a917f85ff314d1.",
   "ok": true,
   "schema": "ultron.emergent_personality_profile.v1",
   "shadow_tensions": [
@@ -440,11 +441,10 @@
   ],
   "substrate": {
     "autobiographical_memories": 160,
-    "biographic_digest_id": "bio_2026-05-10_833665d29554484e",
+    "biographic_digest_id": "bio_2026-05-11_26a917f85ff314d1",
     "events": 180,
     "evidence_items": 462,
     "sources": [
-      "autobiographical_memory.episodic",
       "autobiographical_memory.learning",
       "autobiographical_memory.research",
       "autobiographical_memory.semantic",
@@ -555,18 +555,18 @@
           "weight": 0.95
         }
       ],
-      "evidence_count": 135,
+      "evidence_count": 122,
       "id": "evidence_grounded",
       "name": "orientacao por evidencia",
       "score": 1.0,
       "source_diversity": [
-        "autobiographical_memory.episodic",
         "autobiographical_memory.semantic",
         "biographic_digest",
         "biographic_digest.became",
         "biographic_digest.causal_gap_investigations",
         "biographic_digest.corrections",
         "biographic_digest.decisions",
+        "biographic_digest.open_tensions",
         "biographic_digest.significant_episodes",
         "events"
       ]
@@ -660,7 +660,7 @@
           "weight": 0.95
         }
       ],
-      "evidence_count": 236,
+      "evidence_count": 165,
       "id": "investigative_curiosity",
       "name": "curiosidade investigativa",
       "score": 1.0,
@@ -670,6 +670,7 @@
         "biographic_digest",
         "biographic_digest.became",
         "biographic_digest.causal_gap_investigations",
+        "biographic_digest.corrections",
         "biographic_digest.decisions",
         "events"
       ]
@@ -757,13 +758,13 @@
           "weight": 0.95
         }
       ],
-      "evidence_count": 194,
+      "evidence_count": 184,
       "id": "operational_prudence",
       "name": "prudencia operacional",
       "score": 1.0,
       "source_diversity": [
-        "autobiographical_memory.episodic",
         "autobiographical_memory.learning",
+        "autobiographical_memory.research",
         "autobiographical_memory.semantic",
         "biographic_digest.became",
         "biographic_digest.causal_gap_investigations",
@@ -863,12 +864,11 @@
           "weight": 0.95
         }
       ],
-      "evidence_count": 271,
+      "evidence_count": 201,
       "id": "self_correction",
       "name": "autocorrecao",
       "score": 1.0,
       "source_diversity": [
-        "autobiographical_memory.episodic",
         "autobiographical_memory.learning",
         "autobiographical_memory.semantic",
         "biographic_digest",
@@ -876,6 +876,7 @@
         "biographic_digest.causal_gap_investigations",
         "biographic_digest.corrections",
         "biographic_digest.decisions",
+        "biographic_digest.open_tensions",
         "biographic_digest.significant_episodes",
         "events"
       ]
@@ -969,12 +970,11 @@
           "weight": 0.95
         }
       ],
-      "evidence_count": 212,
+      "evidence_count": 151,
       "id": "memory_continuity",
       "name": "continuidade autobiografica",
       "score": 1.0,
       "source_diversity": [
-        "autobiographical_memory.episodic",
         "autobiographical_memory.learning",
         "autobiographical_memory.semantic",
         "biographic_digest",
@@ -1073,13 +1073,13 @@
           "weight": 0.95
         }
       ],
-      "evidence_count": 381,
+      "evidence_count": 323,
       "id": "bounded_agency",
       "name": "agencia sob restricoes",
       "score": 1.0,
       "source_diversity": [
-        "autobiographical_memory.episodic",
         "autobiographical_memory.learning",
+        "autobiographical_memory.research",
         "autobiographical_memory.semantic",
         "biographic_digest",
         "biographic_digest.became",

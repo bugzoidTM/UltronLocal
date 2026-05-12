@@ -87,7 +87,39 @@
       "priority": 0.7,
       "kind": "emergent_intrinsic",
       "status": "active"
+    },
+    {
+      "id": "goal_73e4556898",
+      "ts": 1778463783,
+      "text": "Aumentar taxa de resolução local de 23% para 89%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "priority": 0.75,
+      "kind": "emergent_intrinsic",
+      "status": "active"
+    },
+    {
+      "id": "goal_7ef6ca1217",
+      "ts": 1778507491,
+      "text": "Aumentar taxa de resolução local de 40% para 94%. Expandir capacidade do planner simbólico para resolver sem chamada de nuvem.",
+      "priority": 0.68,
+      "kind": "emergent_intrinsic",
+      "status": "active"
+    },
+    {
+      "id": "goal_c56f0c2fdb",
+      "ts": 1778515202,
+      "text": "Elevar qualidade média das ações de 26% para 96%. Foco: domínios com confidence_by_domain < 0.5, priorizando grounding verificável.",
+      "priority": 0.69,
+      "kind": "emergent_intrinsic",
+      "status": "active"
+    },
+    {
+      "id": "goal_96c8770eff",
+      "ts": 1778525088,
+      "text": "Expandir cobertura de conhecimento. Saturação de novidade atual: 27%, alvo: 94%. Explorar domínios com menos de 5 triplas no grafo causal.",
+      "priority": 0.69,
+      "kind": "emergent_intrinsic",
+      "status": "active"
     }
   ],
-  "updated_at": 1778460442
+  "updated_at": 1778525088
 }

@@ -1,20 +1,36 @@
 {
   "ok": true,
-  "id": "sleep_digest_2026-05-10_c5350a492c3a15fb",
+  "id": "sleep_digest_2026-05-12_34503df4d1bcaf86",
   "schema": "ultron.sleep_episodic_digest.v1",
-  "ts": 1778461338,
-  "day": "2026-05-10",
-  "checksum": "c5350a492c3a15fb",
-  "source_count": 41,
+  "ts": 1778605298,
+  "day": "2026-05-12",
+  "checksum": "34503df4d1bcaf86",
+  "source_count": 72,
   "pruned": 0,
   "abstracted": 0,
-  "abstractions_tested": 51,
+  "abstractions_tested": 240,
   "sql_promoted_to_episodic": 0,
   "episodic_enrichment_records": 5,
   "active_investigation_executed": 3,
   "active_investigation_injected": 3,
   "stagnation_status": "recovered_by_episodic_enrichment",
   "themes": [
+    {
+      "domain": "self_introspection",
+      "action_kind": "sleep_cycle",
+      "episode_count": 11,
+      "ok_count": 11,
+      "failure_count": 0,
+      "mean_surprise": 0.15,
+      "keywords": [
+        "sleep_cycle"
+      ],
+      "examples": [
+        "sleep_cycle success",
+        "sleep_cycle success",
+        "sleep_cycle success"
+      ]
+    },
     {
       "domain": "chat_interaction",
       "action_kind": "chat_final_ultron_infer",
@@ -29,6 +45,38 @@
         "chat_final_ultron_infer success",
         "chat_final_ultron_infer success",
         "chat_final_ultron_infer success"
+      ]
+    },
+    {
+      "domain": "self_introspection",
+      "action_kind": "episodic_compiler",
+      "episode_count": 8,
+      "ok_count": 8,
+      "failure_count": 0,
+      "mean_surprise": 0.15,
+      "keywords": [
+        "episodic_compiler"
+      ],
+      "examples": [
+        "episodic_compiler success",
+        "episodic_compiler success",
+        "episodic_compiler success"
+      ]
+    },
+    {
+      "domain": "biographic_digest",
+      "action_kind": "episodic_evidence_collection",
+      "episode_count": 6,
+      "ok_count": 6,
+      "failure_count": 0,
+      "mean_surprise": 0.15,
+      "keywords": [
+        "episodic_evidence_collection"
+      ],
+      "examples": [
+        "episodic_evidence_collection success",
+        "episodic_evidence_collection success",
+        "episodic_evidence_collection success"
       ]
     },
     {
@@ -49,22 +97,6 @@
       ]
     },
     {
-      "domain": "self_introspection",
-      "action_kind": "sleep_cycle",
-      "episode_count": 3,
-      "ok_count": 3,
-      "failure_count": 0,
-      "mean_surprise": 0.15,
-      "keywords": [
-        "sleep_cycle"
-      ],
-      "examples": [
-        "sleep_cycle success",
-        "sleep_cycle success",
-        "sleep_cycle success"
-      ]
-    },
-    {
       "domain": "chat_interaction",
       "action_kind": "own_reasoning",
       "episode_count": 1,
@@ -78,21 +110,7 @@
       "examples": [
         "own_reasoning failure"
       ]
-    },
-    {
-      "domain": "self_introspection",
-      "action_kind": "episodic_compiler",
-      "episode_count": 1,
-      "ok_count": 1,
-      "failure_count": 0,
-      "mean_surprise": 0.15,
-      "keywords": [
-        "episodic_compiler"
-      ],
-      "examples": [
-        "episodic_compiler success"
-      ]
     }
   ],
-  "structured_episode_id": "ep_1778461386_631759"
+  "structured_episode_id": "ep_1778605379_376619"
 }

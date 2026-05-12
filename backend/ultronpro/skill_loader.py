@@ -335,7 +335,7 @@ class SkillLoader:
                 if score > 0:
                     scored.append((score, s))
             
-            scored.sort(reverse=True)
+            scored.sort(key=lambda item: (-float(item[0]), str(item[1].name)))
             results = [s for _, s in scored]
         
         return results
@@ -395,7 +395,7 @@ class SkillLoader:
                 scored.append((score, s))
         
         if scored:
-            scored.sort(reverse=True)
+            scored.sort(key=lambda item: (-float(item[0]), str(item[1].name)))
             return scored[0][1]
         
         return None

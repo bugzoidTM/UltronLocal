@@ -896,11 +896,23 @@ def synthesize_answer_with_sir(
     fallback_text: str | None = None,
     max_attempts: int = 2,
     max_tokens: int = 700,
+    allow_model: bool = True,
 ) -> dict[str, Any]:
     validate_sir(sir)
     feedback: dict[str, Any] | None = None
     attempts: list[dict[str, Any]] = []
     last_verification: dict[str, Any] | None = None
+
+    if not allow_model:
+        answer = deterministic_answer_from_sir(sir, fallback_text=fallback_text)
+        return {
+            "ok": True,
+            "answer": answer,
+            "strategy": "sir_deterministic_fallback",
+            "sir": compression_payload(sir),
+            "verification": verify_answer_against_sir(answer, sir),
+            "attempts": [{"attempt": 0, "skipped_model": True, "reason": "allow_model_false"}],
+        }
 
     for attempt in range(max(1, int(max_attempts or 1))):
         prompt = build_llm_payload(sir, feedback=feedback)

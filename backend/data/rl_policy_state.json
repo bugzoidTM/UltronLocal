@@ -17,51 +17,60 @@
       "updated_at": 0
     },
     "auto_resolve_conflicts|normal": {
-      "alpha": 201.108087,
-      "beta": 190.566061,
+      "alpha": 195.074844,
+      "beta": 184.849079,
       "ema_reward": 0.621716,
       "n": 609,
       "last_reward": 0.5213,
       "updated_at": 1776787654
     },
     "trusted_acquisition|normal": {
-      "alpha": 5.837183,
-      "beta": 5.114893,
-      "ema_reward": 0.546376,
-      "n": 10,
-      "last_reward": 0.55,
-      "updated_at": 1778440479
+      "alpha": 5.89351,
+      "beta": 6.670004,
+      "ema_reward": 0.418914,
+      "n": 12,
+      "last_reward": 0.0,
+      "updated_at": 1778524461,
+      "n_real": 2,
+      "sum_reward_real": 0.2386,
+      "mean_reward_real": 0.1193
     },
     "cognitive_patch_loop|normal": {
-      "alpha": 5.994474,
-      "beta": 5.07051,
-      "ema_reward": 0.55,
-      "n": 10,
-      "last_reward": 0.55,
-      "updated_at": 1778440479
+      "alpha": 6.198857,
+      "beta": 5.504178,
+      "ema_reward": 0.52435,
+      "n": 11,
+      "last_reward": 0.3961,
+      "updated_at": 1778508525,
+      "n_real": 1,
+      "sum_reward_real": 0.3961,
+      "mean_reward_real": 0.3961
     },
     "sleep_digest|normal": {
-      "alpha": 6.11585,
-      "beta": 5.17495,
-      "ema_reward": 0.55,
-      "n": 10,
-      "last_reward": 0.55,
-      "updated_at": 1778440479
+      "alpha": 7.009109,
+      "beta": 5.912967,
+      "ema_reward": 0.549023,
+      "n": 12,
+      "last_reward": 0.5508,
+      "updated_at": 1778604717,
+      "n_real": 2,
+      "sum_reward_real": 1.093,
+      "mean_reward_real": 0.5465
     },
     "homeostasis_tune|normal": {
-      "alpha": 7.03145,
-      "beta": 6.2593499999999995,
-      "ema_reward": 0.521589,
-      "n": 12,
-      "last_reward": 0.3624,
-      "updated_at": 1778451706,
-      "n_real": 1,
-      "sum_reward_real": 0.3624,
-      "mean_reward_real": 0.3624
+      "alpha": 8.054346,
+      "beta": 7.747729,
+      "ema_reward": 0.488101,
+      "n": 15,
+      "last_reward": 0.4507,
+      "updated_at": 1778546863,
+      "n_real": 4,
+      "sum_reward_real": 1.6343999999999999,
+      "mean_reward_real": 0.4086
     },
     "epistemic_gap_scan|normal": {
-      "alpha": 6.7345950000000006,
-      "beta": 5.818105,
+      "alpha": 6.532557,
+      "beta": 5.643562,
       "ema_reward": 0.53745,
       "n": 11,
       "last_reward": 0.4747,
@@ -71,39 +80,42 @@
       "mean_reward_real": 0.4747
     },
     "autonomous_cognition_tick|normal": {
-      "alpha": 6.790299999999999,
-      "beta": 5.8497,
-      "ema_reward": 0.539217,
-      "n": 11,
-      "last_reward": 0.4853,
-      "updated_at": 1778460335,
-      "n_real": 1,
-      "sum_reward_real": 0.4853,
-      "mean_reward_real": 0.4853
+      "alpha": 8.171761,
+      "beta": 7.029039,
+      "ema_reward": 0.539864,
+      "n": 14,
+      "last_reward": 0.5657,
+      "updated_at": 1778548712,
+      "n_real": 4,
+      "sum_reward_real": 2.102,
+      "mean_reward_real": 0.5255
     },
     "reflexion_tick|normal": {
-      "alpha": 6.3709999999999996,
-      "beta": 5.389,
-      "ema_reward": 0.55,
-      "n": 10,
-      "last_reward": 0.55,
-      "updated_at": 1778440479
+      "alpha": 7.174765,
+      "beta": 7.172435,
+      "ema_reward": 0.466207,
+      "n": 13,
+      "last_reward": 0.3319,
+      "updated_at": 1778605209,
+      "n_real": 3,
+      "sum_reward_real": 1.0154,
+      "mean_reward_real": 0.3385
     },
     "autonomous_cognition_tick|conservative": {
-      "alpha": 1.486,
-      "beta": 1.514,
-      "ema_reward": 0.486,
-      "n": 1,
-      "n_real": 1,
+      "alpha": 3.299843,
+      "beta": 3.490157,
+      "ema_reward": 0.478947,
+      "n": 5,
+      "n_real": 5,
       "n_synthetic": 0,
-      "mean_reward_real": 0.486,
+      "mean_reward_real": 0.4804,
       "mean_reward_synthetic": 0.0,
-      "sum_reward_real": 0.486,
+      "sum_reward_real": 2.4019000000000004,
       "sum_reward_synthetic": 0.0,
-      "last_reward": 0.486,
-      "updated_at": 1778454268
+      "last_reward": 0.4701,
+      "updated_at": 1778526262
     }
   },
-  "global_updates": 685,
-  "updated_at": 1778461336
+  "global_updates": 703,
+  "updated_at": 1778605209
 }

@@ -2,18 +2,18 @@
   "enabled": true,
   "auto_tick_sec": 600,
   "target_agi_percent": 90.0,
-  "last_tick_at": 1778462147,
+  "last_tick_at": 1778605209,
   "last_reason": "cognitive_hardening_needed",
   "gaps": {
-    "agi_target_gap": 35.3,
+    "agi_target_gap": 36.2,
     "learning_gap": 0.0,
     "adaptation_gap": 75.0,
-    "autonomy_gap": 7.5,
+    "autonomy_gap": 12.0,
     "grounding_gap": 82.0,
     "critique_gap": 78.0,
     "memory_gap": 78.0,
     "hallucination_excess": 0.88,
-    "execution_gap": 15
+    "execution_gap": 18
   },
   "actions": [
     "tighten_grounding_and_feedback",
@@ -23,990 +23,6 @@
     "prioritize_grounding_tasks"
   ],
   "history": [
-    {
-      "ts": 1776697725,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 24.8,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 30.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 30
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776698479,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 25.7,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 34.5,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 33
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776699097,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 26.3,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 37.5,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 35
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776699914,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 26.6,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 39.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 36
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776701443,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 27.2,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 42.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 38
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776702274,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 27.8,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 45.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 40
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776703063,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 27.8,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 45.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 40
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776704083,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.1,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 46.5,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 41
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776704707,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.1,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 46.5,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 41
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776705376,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.1,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 46.5,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 41
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776706065,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 27.8,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 45.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 40
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776706949,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.1,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 46.5,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 41
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776708010,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.7,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 49.5,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 43
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776708692,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 29.0,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 51.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 44
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776709790,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 29.0,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 51.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 44
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776710883,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 29.0,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 51.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 44
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776711835,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 29.0,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 51.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 44
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776712449,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.7,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 49.5,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 43
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776713071,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.4,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 48.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 42
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776713964,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.4,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 48.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 42
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776714942,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.7,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 49.5,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 43
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776715633,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.7,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 49.5,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 43
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776716348,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.4,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 48.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 42
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776716969,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.7,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 49.5,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 43
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776717612,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.7,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 49.5,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 43
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776718670,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.4,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 48.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 42
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776719959,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.7,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 49.5,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 43
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776720678,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 29.0,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 51.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 44
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776721349,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 29.0,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 51.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 44
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776722858,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 29.0,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 51.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 44
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776723218,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 29.0,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 51.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 44
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776723871,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.4,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 48.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 42
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776733360,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.7,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 49.5,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 43
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776733990,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 29.0,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 51.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 44
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776734961,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.4,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 48.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 42
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776735618,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.4,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 48.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 42
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776736263,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.1,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 46.5,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 41
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776736968,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 27.8,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 45.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 40
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776791605,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 28.1,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 46.5,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 41
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776792247,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 27.8,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 45.0,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 40
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
-    {
-      "ts": 1776792868,
-      "event": "tick",
-      "triggered": false,
-      "gaps": {
-        "agi_target_gap": 27.5,
-        "learning_gap": 0.0,
-        "adaptation_gap": 75.0,
-        "autonomy_gap": 43.5,
-        "grounding_gap": 82.0,
-        "critique_gap": 78.0,
-        "memory_gap": 78.0,
-        "hallucination_excess": 0.88,
-        "execution_gap": 39
-      },
-      "actions": [
-        "tighten_grounding_and_feedback",
-        "strengthen_internal_critique",
-        "discipline_memory_writeback",
-        "raise_safe_autonomy_throughput",
-        "prioritize_grounding_tasks"
-      ],
-      "reason": "cognitive_hardening_needed"
-    },
     {
       "ts": 1776794957,
       "event": "tick",
@@ -3608,6 +2624,990 @@
         "memory_gap": 78.0,
         "hallucination_excess": 0.88,
         "execution_gap": 15
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778462621,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.9,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 10.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 17
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778462918,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.6,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 9.0,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 16
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778463814,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 36.2,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 12.0,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 18
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778504726,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 36.2,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 12.0,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 18
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778505333,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.9,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 10.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 17
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778506099,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 34.7,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 4.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 13
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778507054,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.3,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 7.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 15
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778507717,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.9,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 10.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 17
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778508345,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.6,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 9.0,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 16
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778508990,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 34.7,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 4.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 13
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778513581,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.0,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 6.0,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 14
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778514558,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 34.7,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 4.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 13
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778515163,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 34.7,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 4.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 13
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778519157,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 36.5,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 13.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 19
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778520127,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 36.2,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 12.0,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 18
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778520727,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.9,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 10.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 17
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778521327,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 36.2,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 12.0,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 18
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778521927,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 36.2,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 12.0,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 18
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778522581,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.3,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 7.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 15
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778523219,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.3,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 7.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 15
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778523872,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.9,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 10.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 17
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778524541,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.3,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 7.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 15
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778525200,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.0,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 6.0,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 14
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778525835,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.6,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 9.0,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 16
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778526469,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.6,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 9.0,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 16
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778527113,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 36.2,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 12.0,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 18
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778527774,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.9,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 10.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 17
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778528440,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.0,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 6.0,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 14
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778529119,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.3,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 7.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 15
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778529785,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.3,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 7.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 15
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778530437,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.0,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 6.0,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 14
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778531065,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 34.4,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 3.0,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 12
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778545180,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.6,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 9.0,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 16
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778546080,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.9,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 10.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 17
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778546698,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.6,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 9.0,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 16
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778547674,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 36.2,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 12.0,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 18
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778548361,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 36.5,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 13.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 19
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778548973,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.9,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 10.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 17
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778549685,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.9,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 10.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 17
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778604524,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 35.3,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 7.5,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 15
+      },
+      "actions": [
+        "tighten_grounding_and_feedback",
+        "strengthen_internal_critique",
+        "discipline_memory_writeback",
+        "raise_safe_autonomy_throughput",
+        "prioritize_grounding_tasks"
+      ],
+      "reason": "cognitive_hardening_needed"
+    },
+    {
+      "ts": 1778605209,
+      "event": "tick",
+      "triggered": false,
+      "gaps": {
+        "agi_target_gap": 36.2,
+        "learning_gap": 0.0,
+        "adaptation_gap": 75.0,
+        "autonomy_gap": 12.0,
+        "grounding_gap": 82.0,
+        "critique_gap": 78.0,
+        "memory_gap": 78.0,
+        "hallucination_excess": 0.88,
+        "execution_gap": 18
       },
       "actions": [
         "tighten_grounding_and_feedback",

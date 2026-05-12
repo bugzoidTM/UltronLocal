@@ -268,24 +268,12 @@ class UltronLLMClient:
     def voice_reply(self, command: str) -> str:
         """
         Motor de resposta da UI. Hierarquia:
-        1. Cérebro Causal do backend (orquestração completa, memória de sessão)
-        2. Se o backend retornar debug interno (investigação causal), o Qwen
-           atua como sintetizador linguístico das premissas coletadas.
-        3. Fallback puro ao Qwen se o backend estiver offline.
+        1. Cerebro causal do backend, ja responsavel por sintetizar texto final
+           e expor o traco causal em metadados estruturados.
+        2. Fallback puro ao Qwen se o backend estiver offline.
         """
-        # Marcadores de resposta interna do motor de investigação ativa
-        _INTERNAL_MARKERS = (
-            "Encontrei cobertura direta insuficiente",
-            "transferi um prior causal",
-            "Lacunas restantes:",
-            "UNKNOWN: meu nucleo estruturado",
-            "Investigacao ativa iniciada:",
-            "[AVISO: a LLM local",
-        )
-
         brain_answer: str | None = None
         brain_data: dict = {}
-        backend_online = False
 
         # Tenta o Cérebro Causal (Motor Unificado) com sessão persistente
         try:
@@ -295,51 +283,19 @@ class UltronLLMClient:
                     json={"message": command, "session_id": "ui_voice_session"},
                 )
                 if res.status_code == 200:
-                    backend_online = True
                     brain_data = res.json()
-                    ans = brain_data.get("answer") or ""
+                    ans = brain_data.get("synthesized_text") or brain_data.get("answer") or ""
                     if ans:
                         brain_answer = ans
         except Exception:
             pass
 
-        # Se o backend retornou algo, verifica se é linguagem natural ou debug interno
+        # O backend e o dono da orquestracao: a UI consome apenas o texto final.
+        # Evidencias/trace causal ficam nos metadados da API, sem segunda inferencia local.
         if brain_answer is not None:
-            is_internal = any(m in brain_answer for m in _INTERNAL_MARKERS)
-
-            if not is_internal:
-                # Resposta já é linguagem natural da orquestração — usa diretamente
-                trace = brain_data.get("trace") or {}
-                self.last_route = f"causal_brain (via {trace.get('module', 'unknown')})"
-                return brain_answer
-
-            # O backend coletou premissas causais mas não sintetizou em linguagem natural.
-            # Usa o Qwen como núcleo linguístico para verbalizar o que foi encontrado.
-            # Extrai as lacunas e o contexto reportado pelo motor causal.
-            context_hint = brain_answer[:600]
-            system_synth = (
-                "Você é UltronPro, um assistente AGI. O seu motor de raciocínio investigou "
-                "a pergunta do usuário e coletou as seguintes premissas e lacunas internas:\n\n"
-                f"{context_hint}\n\n"
-                "Com base nesse contexto interno, responda ao usuário de forma natural, honesta e concisa "
-                "em português brasileiro. Se não houver evidência suficiente, diga isso claramente mas de "
-                "forma amigável, sem expor o jargão técnico interno."
-            )
-            try:
-                synth = self.complete(
-                    command,
-                    system=system_synth,
-                    max_tokens=180,
-                    temperature=0.3,
-                )
-                if synth:
-                    self.last_route = "causal_brain→qwen_synthesis"
-                    return synth
-            except Exception:
-                pass
-
-            # Se a síntese falhar, retorna o brain_answer como estava (melhor que nada)
-            self.last_route = "causal_brain (raw)"
+            trace = brain_data.get("trace_causal") or brain_data.get("causal_trace") or {}
+            module = trace.get("source_module") if isinstance(trace, dict) else None
+            self.last_route = f"causal_brain (via {module or brain_data.get('module') or 'backend'})"
             return brain_answer
 
         # Backend offline — Qwen puro como fallback

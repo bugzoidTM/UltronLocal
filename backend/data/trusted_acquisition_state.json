@@ -1,60 +1,73 @@
 {
   "schema": "ultron.trusted_acquisition_run.v1",
-  "last_run_id": "ta_8d7075c7030a",
-  "last_ts": 1778439773,
-  "last_ok": true,
+  "last_run_id": "ta_1d2cc8ea975b",
+  "last_ts": 1778524459,
+  "last_ok": false,
   "last_need": {
     "schema": "ultron.acquisition_need.v1",
-    "id": "causal_graph_interventional_coverage",
-    "label": "cobertura interventional do grafo causal",
-    "domain": "causal_graph",
-    "metric": "edges=27 strong=0 weak=8",
-    "priority": 0.833,
+    "id": "background_loop_pressure",
+    "label": "estabilidade dos loops sob carga",
+    "domain": "runtime_lifecycle",
+    "metric": "paused=True reason=event_loop_lag max_lag=4388.7752s blocked_loops=2259",
+    "priority": 0.958,
     "rank": 1,
     "total_candidates": 4,
     "evidence": {
-      "causal_graph": {
-        "ok": true,
-        "nodes": 37,
-        "edges": 27,
-        "updated_at": 1778265543,
-        "path": "D:\\UnidadeF\\UltronPro\\backend\\data\\causal_graph.json",
-        "interventional_strong_edges": 0,
-        "interventional_weak_edges": 8,
-        "observational_edges": 19
+      "background_guard": {
+        "enabled": true,
+        "state": "paused",
+        "lag_sec": 0.0008,
+        "max_lag_sec": 4388.7752,
+        "consecutive_lag": 0,
+        "paused_until": 1778524540.859876,
+        "last_pause_reason": "event_loop_lag",
+        "last_pause_at": 1778524450.859876,
+        "last_slow_request": null,
+        "blocked_loops": 2259,
+        "last_blocked_loop": "meta_observer_loop",
+        "last_log_at": 1778524450.8600576,
+        "foreground_active": 0,
+        "last_foreground_path": null,
+        "last_foreground_at": 0.0,
+        "last_foreground_elapsed_sec": 0.0,
+        "last_pause_details": {
+          "lag_sec": 27.76,
+          "consecutive_lag": 1
+        },
+        "paused": true,
+        "paused_for_sec": 81.9637336730957
       }
     },
-    "next_experiment": "converter decisoes e benchmarks recentes em arestas causais com validacao interventional",
+    "next_experiment": "medir custo por loop e aplicar budget adaptativo sem desligar loops essenciais",
     "need_terms": [
-      "causal_graph_interventional_coverage",
-      "cobertura",
-      "interventional",
-      "grafo",
-      "causal",
-      "causal_graph",
-      "edges",
-      "strong",
-      "weak",
-      "converter",
-      "decisoes",
-      "benchmarks",
-      "recentes",
-      "arestas",
-      "causais",
-      "validacao"
+      "background_loop_pressure",
+      "estabilidade",
+      "loops",
+      "sob",
+      "carga",
+      "runtime_lifecycle",
+      "paused",
+      "true",
+      "reason",
+      "event_loop_lag",
+      "max_lag",
+      "4388",
+      "7752s",
+      "blocked_loops",
+      "2259",
+      "medir"
     ],
-    "search_query": "causal_graph causal_graph_interventional_coverage cobertura interventional grafo causal causal_graph edges strong documentation reliable source",
+    "search_query": "runtime_lifecycle background_loop_pressure estabilidade loops sob carga runtime_lifecycle paused true documentation reliable source",
     "application_target": "knowledge",
     "decision_rule": "highest_epistemic_gap_priority_then_stable_id",
-    "need_id": "need_84c537dcfc48"
+    "need_id": "need_32dd1c88c3bd"
   },
   "last_application": {
-    "ok": true,
-    "mode": "knowledge",
-    "source_id": "trusted:causal-learn.readthedocs.io:103e03799f",
-    "experience_id": 4531,
-    "insight_id": 16697,
-    "event_id": 72348
+    "ok": false,
+    "mode": "none",
+    "reason": "no_useful_extraction"
   },
-  "last_gaps_remaining": []
+  "last_gaps_remaining": [
+    "trusted_source_missing_or_no_useful_content"
+  ]
 }
