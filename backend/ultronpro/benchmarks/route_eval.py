@@ -778,6 +778,7 @@ def run_route_eval(
     dry_run_learning: bool = False,
     propose_patches: bool = True,
     record_competence: bool = True,
+    learn_from_traces: bool = True,
 ) -> dict[str, Any]:
     started = time.time()
     actual_run_id = run_id or uuid.uuid4().hex
@@ -845,6 +846,18 @@ def run_route_eval(
             report["competence_ledger"] = {"ok": False, "error": f"{type(exc).__name__}:{str(exc)[:200]}"}
     else:
         report["competence_ledger"] = {"ok": True, "disabled": True}
+    if learn_from_traces:
+        try:
+            from ultronpro import trace_learning
+
+            report["trace_learning"] = trace_learning.learn_from_route_eval_report(
+                report,
+                dry_run=dry_run_learning,
+            )
+        except Exception as exc:
+            report["trace_learning"] = {"ok": False, "error": f"{type(exc).__name__}:{str(exc)[:200]}"}
+    else:
+        report["trace_learning"] = {"ok": True, "disabled": True}
     return report
 
 
@@ -866,6 +879,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--dry-run-learning", action="store_true", help="Build learning episodes/proposals without writing memory or patch ledgers.")
     parser.add_argument("--no-patch-proposals", action="store_true", help="Record failure episodes but do not create router patch proposals.")
     parser.add_argument("--no-competence-ledger", action="store_true", help="Do not update the competence ledger from this run.")
+    parser.add_argument("--no-trace-learning", action="store_true", help="Do not convert route_decision/trace_rag into learning signals.")
     args = parser.parse_args(argv)
 
     report = run_route_eval(
@@ -876,6 +890,7 @@ def main(argv: list[str] | None = None) -> int:
         dry_run_learning=args.dry_run_learning,
         propose_patches=not args.no_patch_proposals,
         record_competence=not args.no_competence_ledger,
+        learn_from_traces=not args.no_trace_learning,
     )
     text = json.dumps(report, ensure_ascii=False, indent=2)
     print(text)

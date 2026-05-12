@@ -76,3 +76,17 @@ async def benchmark_competence_ledger_selftest():
     """Valida atualizacao dinamica do competence ledger."""
     from ultronpro import competence_ledger
     return competence_ledger.run_selftest()
+
+
+@router.get("/trace-learning")
+async def benchmark_trace_learning():
+    """Mostra aprendizado derivado de route_decision e trace_rag."""
+    from ultronpro import trace_learning
+    return trace_learning.status()
+
+
+@router.get("/trace-learning/selftest")
+async def benchmark_trace_learning_selftest():
+    """Valida conversao de trace em sinais de aprendizado."""
+    from ultronpro import trace_learning
+    return trace_learning.run_selftest()
