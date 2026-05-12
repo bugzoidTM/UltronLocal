@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import sys
@@ -445,16 +446,336 @@ def evaluate_case(case: RouteEvalCase, payload: dict[str, Any], progress: list[s
     }
 
 
+def _failure_type(item: dict[str, Any]) -> str:
+    if item.get("ok"):
+        return ""
+    if not item.get("route_ok"):
+        return "wrong_route"
+    if not item.get("strategy_ok"):
+        return "wrong_strategy"
+    if not item.get("answer_ok"):
+        return "bad_answer"
+    return "unknown_failure"
+
+
+def _predicted_route(item: dict[str, Any]) -> str:
+    route = str(item.get("actual_route") or "").strip()
+    if route:
+        return route
+    strategy = str(item.get("actual_strategy") or "").strip()
+    if strategy and strategy != "exception":
+        return strategy
+    intent = str(item.get("actual_intent") or "").strip()
+    return intent or "unknown"
+
+
+def _patch_candidate(item: dict[str, Any], failure_type: str) -> str:
+    expected_route = str(item.get("expected_route") or "unknown").strip()
+    expected_intent = str(item.get("expected_intent") or "unknown").strip()
+    predicted = _predicted_route(item)
+    if failure_type == "wrong_route":
+        return (
+            f"Teach the pre-causal router to recognize the generic intent '{expected_intent}' "
+            f"and route it to '{expected_route}' instead of '{predicted}', using route patterns, "
+            "features, or local-router training examples, not a query-specific final answer."
+        )
+    if failure_type == "wrong_strategy":
+        return (
+            f"Align the selected strategy with route '{expected_route}' so the resolver contract is explicit "
+            "and the causal fallback is not used for this competence."
+        )
+    if failure_type == "bad_answer":
+        issues = ", ".join(str(x) for x in (item.get("answer_issues") or [])[:4])
+        return (
+            f"Improve the resolver behind route '{expected_route}' for issue(s): {issues or 'answer_quality'}, "
+            "keeping retrieval/tool use separate from routing and avoiding fixed benchmark answers."
+        )
+    return "Investigate the route-eval failure and propose a generic router or resolver improvement."
+
+
+def _failure_episode_meta(item: dict[str, Any], *, run_id: str, failure_type: str) -> dict[str, Any]:
+    patch_candidate = _patch_candidate(item, failure_type)
+    return {
+        "query": str(item.get("prompt") or ""),
+        "predicted_route": _predicted_route(item),
+        "correct_route": str(item.get("expected_route") or ""),
+        "predicted_intent": str(item.get("actual_intent") or ""),
+        "correct_intent": str(item.get("expected_intent") or ""),
+        "failure_type": failure_type,
+        "patch_candidate": patch_candidate,
+        "case_id": str(item.get("case_id") or ""),
+        "run_id": run_id,
+        "route_decision": item.get("route_decision") if isinstance(item.get("route_decision"), dict) else {},
+        "answer_issues": item.get("answer_issues") if isinstance(item.get("answer_issues"), list) else [],
+        "trace_rag_present": bool(item.get("trace_rag")),
+        "requires_self_modification_gate": True,
+        "do_not_hardcode_answer": True,
+        "source": "route_eval",
+    }
+
+
+def _failure_action_id(item: dict[str, Any], *, run_id: str, failure_type: str) -> int:
+    key = "|".join(
+        [
+            "route_eval_failure",
+            run_id,
+            str(item.get("case_id") or ""),
+            str(item.get("expected_route") or ""),
+            _predicted_route(item),
+            failure_type,
+        ]
+    )
+    return int(hashlib.sha1(key.encode("utf-8", errors="ignore")).hexdigest()[:8], 16)
+
+
+def _proposal_key(item: dict[str, Any], failure_type: str) -> str:
+    return "|".join(
+        [
+            failure_type,
+            str(item.get("expected_intent") or ""),
+            str(item.get("expected_route") or ""),
+            _predicted_route(item),
+        ]
+    )
+
+
+def _compact_gate_result(gate: dict[str, Any] | None) -> dict[str, Any]:
+    if not isinstance(gate, dict):
+        return {}
+    checks = gate.get("checks") if isinstance(gate.get("checks"), list) else []
+    return {
+        "ok": bool(gate.get("ok")),
+        "vetoed": bool(gate.get("vetoed")),
+        "decision": str(gate.get("decision") or ""),
+        "reason": str(gate.get("reason") or ""),
+        "check_reasons": [
+            str(check.get("reason") or check.get("check") or "")
+            for check in checks[:6]
+            if isinstance(check, dict)
+        ],
+    }
+
+
+def _create_or_update_patch_proposal(group: list[dict[str, Any]], *, run_id: str, dry_run: bool) -> dict[str, Any]:
+    first = group[0]
+    failure_type = _failure_type(first) or "unknown_failure"
+    expected_route = str(first.get("expected_route") or "unknown")
+    expected_intent = str(first.get("expected_intent") or "unknown")
+    predicted_routes = sorted({_predicted_route(item) for item in group})
+    problem_pattern = f"route_eval:{failure_type}:{expected_intent}->{expected_route}:predicted={','.join(predicted_routes)[:120]}"
+    sample_queries = [str(item.get("prompt") or "")[:240] for item in group[:5]]
+    payload = {
+        "kind": "routing_patch",
+        "source": "route_eval.learning",
+        "problem_pattern": problem_pattern[:300],
+        "hypothesis": (
+            f"Route-eval observed {len(group)} failure(s) where generic intent '{expected_intent}' "
+            f"should use route '{expected_route}' but predicted {predicted_routes}. The fix must improve "
+            "routing/resolver competence, not add query-specific final answers."
+        ),
+        "proposed_change": {
+            "target_module": "ultronpro.pre_causal_router",
+            "target_function": "classify_pre_causal",
+            "candidate_action": "add_generic_route_pattern_or_train_local_router",
+            "failure_type": failure_type,
+            "expected_intent": expected_intent,
+            "expected_route": expected_route,
+            "predicted_routes": predicted_routes,
+            "do_not_hardcode_answer": True,
+            "samples": [
+                {
+                    "case_id": str(item.get("case_id") or ""),
+                    "query": str(item.get("prompt") or "")[:240],
+                    "predicted_route": _predicted_route(item),
+                    "correct_route": str(item.get("expected_route") or ""),
+                    "patch_candidate": _patch_candidate(item, failure_type),
+                }
+                for item in group[:5]
+            ],
+        },
+        "expected_gain": "Reduce wrong-route failures before causal fallback while preserving answer generation inside resolvers/RAG.",
+        "risk_level": "medium",
+        "status": "proposed",
+        "evidence_refs": [f"route_eval:{run_id}:{str(item.get('case_id') or '')}" for item in group[:10]],
+        "benchmark_before": {
+            "run_id": run_id,
+            "failure_type": failure_type,
+            "observed_count": len(group),
+            "sample_queries": sample_queries,
+            "expected_route": expected_route,
+            "predicted_routes": predicted_routes,
+        },
+        "tags": ["route-eval", failure_type, expected_route, "no-hardcoded-answer"],
+        "notes": "Created from route-eval failure episodes; hold behind self-modification gate before any code change.",
+    }
+    if dry_run:
+        return {
+            "ok": True,
+            "dry_run": True,
+            "problem_pattern": payload["problem_pattern"],
+            "patch": payload,
+            "self_modification_gate": {
+                "decision": "not_run",
+                "reason": "dry_run_learning",
+                "would_require_gate": True,
+            },
+        }
+
+    try:
+        from ultronpro import cognitive_patches, self_modification_gate
+
+        existing = None
+        for patch in cognitive_patches.list_patches(limit=400):
+            if str(patch.get("problem_pattern") or "") != payload["problem_pattern"]:
+                continue
+            if str(patch.get("status") or "proposed") in {"rejected", "rolled_back", "archived", "promoted"}:
+                continue
+            existing = patch
+            break
+
+        if existing:
+            evidence = [str(x) for x in (existing.get("evidence_refs") or []) if str(x).strip()]
+            for ref in payload["evidence_refs"]:
+                if ref not in evidence:
+                    evidence.append(ref)
+            before = existing.get("benchmark_before") if isinstance(existing.get("benchmark_before"), dict) else {}
+            sample_set = [str(x) for x in (before.get("sample_queries") or []) if str(x).strip()]
+            for query in sample_queries:
+                if query and query not in sample_set:
+                    sample_set.append(query)
+            patch = cognitive_patches.append_revision(
+                str(existing.get("id") or ""),
+                {
+                    "evidence_refs": evidence[:30],
+                    "benchmark_before": {
+                        **before,
+                        "run_id": run_id,
+                        "observed_count": int(before.get("observed_count") or 0) + len(group),
+                        "sample_queries": sample_set[:8],
+                        "expected_route": expected_route,
+                        "predicted_routes": sorted(set(predicted_routes + [str(x) for x in (before.get("predicted_routes") or [])])),
+                    },
+                    "notes": payload["notes"],
+                },
+                new_status=str(existing.get("status") or "proposed"),
+            ) or existing
+        else:
+            patch = cognitive_patches.create_patch(payload)
+
+        gate = self_modification_gate.run_gate(patch, skip_tests=True)
+        patch_with_gate = cognitive_patches.append_revision(
+            str(patch.get("id") or ""),
+            {
+                "benchmark_after": {
+                    **(patch.get("benchmark_after") if isinstance(patch.get("benchmark_after"), dict) else {}),
+                    "self_modification_gate_preview": _compact_gate_result(gate),
+                },
+                "notes": (
+                    f"{str(patch.get('notes') or payload['notes'])[:900]}\n"
+                    f"self_modification_gate_preview={str(gate.get('decision') or '')}; "
+                    f"vetoed={bool(gate.get('vetoed'))}"
+                )[:1200],
+            },
+            new_status=str(patch.get("status") or "proposed"),
+        ) or patch
+        return {
+            "ok": True,
+            "dry_run": False,
+            "patch_id": patch.get("id"),
+            "status": patch_with_gate.get("status"),
+            "problem_pattern": payload["problem_pattern"],
+            "self_modification_gate": _compact_gate_result(gate),
+        }
+    except Exception as exc:
+        return {
+            "ok": False,
+            "dry_run": False,
+            "problem_pattern": payload["problem_pattern"],
+            "error": f"{type(exc).__name__}:{str(exc)[:240]}",
+        }
+
+
+def learn_from_route_failures(report: dict[str, Any], *, dry_run: bool = False, propose_patches: bool = True) -> dict[str, Any]:
+    run_id = str(report.get("run_id") or uuid.uuid4().hex)
+    failures = [item for item in (report.get("items") or []) if isinstance(item, dict) and not item.get("ok")]
+    episode_results: list[dict[str, Any]] = []
+    for item in failures:
+        failure_type = _failure_type(item) or "unknown_failure"
+        meta = _failure_episode_meta(item, run_id=run_id, failure_type=failure_type)
+        episode = {
+            "query": meta["query"],
+            "predicted_route": meta["predicted_route"],
+            "correct_route": meta["correct_route"],
+            "failure_type": failure_type,
+            "patch_candidate": meta["patch_candidate"],
+            "case_id": meta["case_id"],
+        }
+        if dry_run:
+            episode_results.append({"ok": True, "dry_run": True, "episode": episode, "meta": meta})
+            continue
+        try:
+            from ultronpro import episodic_memory
+
+            episodic_memory.append_episode(
+                action_id=_failure_action_id(item, run_id=run_id, failure_type=failure_type),
+                kind="route_eval.failure",
+                text=f"run={run_id} case={str(item.get('case_id') or '')}: {str(item.get('prompt') or '')}",
+                task_type=f"router_learning:{str(item.get('expected_route') or 'unknown')}",
+                strategy=str(item.get("actual_strategy") or _predicted_route(item) or "route_eval"),
+                ok=False,
+                latency_ms=max(1, int(item.get("latency_ms") or 1)),
+                error=failure_type,
+                meta={
+                    **meta,
+                    "outcome": "failure",
+                    "tool": str(item.get("actual_strategy") or _predicted_route(item) or "route_eval"),
+                    "error_class": failure_type,
+                },
+                authorship_origin="route_eval",
+            )
+            episode_results.append({"ok": True, "dry_run": False, "episode": episode})
+        except Exception as exc:
+            episode_results.append({
+                "ok": False,
+                "dry_run": False,
+                "episode": episode,
+                "error": f"{type(exc).__name__}:{str(exc)[:200]}",
+            })
+
+    proposals: list[dict[str, Any]] = []
+    if propose_patches and failures:
+        grouped: dict[str, list[dict[str, Any]]] = {}
+        for item in failures:
+            grouped.setdefault(_proposal_key(item, _failure_type(item) or "unknown_failure"), []).append(item)
+        proposals = [
+            _create_or_update_patch_proposal(group, run_id=run_id, dry_run=dry_run)
+            for group in grouped.values()
+        ]
+
+    return {
+        "ok": all(item.get("ok") for item in episode_results) and all(item.get("ok") for item in proposals),
+        "dry_run": dry_run,
+        "failure_count": len(failures),
+        "episodes_recorded": sum(1 for item in episode_results if item.get("ok") and not item.get("dry_run")),
+        "episodes_planned": sum(1 for item in episode_results if item.get("ok") and item.get("dry_run")),
+        "patch_proposals": proposals,
+    }
+
+
 def run_route_eval(
     *,
     base_url: str,
     cases: list[RouteEvalCase],
     timeout: float = 160.0,
     run_id: str | None = None,
+    learn_failures: bool = True,
+    dry_run_learning: bool = False,
+    propose_patches: bool = True,
 ) -> dict[str, Any]:
     started = time.time()
+    actual_run_id = run_id or uuid.uuid4().hex
     session_ids = {
-        group: f"route_eval_{run_id or uuid.uuid4().hex}_{group}"
+        group: f"route_eval_{actual_run_id}_{group}"
         for group in sorted({case.session_group for case in cases})
     }
     items: list[dict[str, Any]] = []
@@ -489,8 +810,8 @@ def run_route_eval(
     answer_passed = sum(1 for item in items if item["answer_ok"])
     strategy_passed = sum(1 for item in items if item["strategy_ok"])
     passed = sum(1 for item in items if item["ok"])
-    return {
-        "run_id": run_id or uuid.uuid4().hex,
+    report = {
+        "run_id": actual_run_id,
         "base_url": base_url,
         "ts": int(time.time()),
         "duration_sec": round(time.time() - started, 3),
@@ -503,6 +824,12 @@ def run_route_eval(
         "overall_accuracy": round(passed / max(1, total), 4),
         "items": items,
     }
+    report["learning"] = (
+        learn_from_route_failures(report, dry_run=dry_run_learning, propose_patches=propose_patches)
+        if learn_failures
+        else {"ok": True, "disabled": True, "failure_count": total - passed}
+    )
+    return report
 
 
 def _append_jsonl(path: Path, report: dict[str, Any]) -> None:
@@ -519,12 +846,18 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", type=Path, default=None, help="Optional JSON report path.")
     parser.add_argument("--jsonl", type=Path, default=None, help="Optional JSONL history path.")
     parser.add_argument("--fail-on-bad", action="store_true")
+    parser.add_argument("--no-learn-from-failures", action="store_true", help="Do not append failed route cases to episodic memory.")
+    parser.add_argument("--dry-run-learning", action="store_true", help="Build learning episodes/proposals without writing memory or patch ledgers.")
+    parser.add_argument("--no-patch-proposals", action="store_true", help="Record failure episodes but do not create router patch proposals.")
     args = parser.parse_args(argv)
 
     report = run_route_eval(
         base_url=args.base_url,
         cases=_load_cases(args.cases),
         timeout=args.timeout,
+        learn_failures=not args.no_learn_from_failures,
+        dry_run_learning=args.dry_run_learning,
+        propose_patches=not args.no_patch_proposals,
     )
     text = json.dumps(report, ensure_ascii=False, indent=2)
     print(text)
