@@ -107,6 +107,47 @@ def _decision(intent: str, confidence: float, route: str, reason: str, *, causal
     )
 
 
+def _rag_threshold(rag_type: str) -> float:
+    try:
+        from ultronpro import rag_router
+
+        return float(rag_router.threshold_for(rag_type))
+    except Exception:
+        defaults = {
+            "rag_facts": 0.42,
+            "rag_code": 0.30,
+            "rag_user_memory": 0.26,
+            "rag_project_docs": 0.34,
+            "rag_self_model": 0.24,
+            "rag_runtime_logs": 0.24,
+        }
+        return float(defaults.get(str(rag_type or ""), 0.0))
+
+
+def _rag_source(rag_type: str, item: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "source": item.get("source"),
+        "score": item.get("score"),
+        "id": item.get("id"),
+        "chunk_id": item.get("chunk_id"),
+        "rag_type": rag_type,
+        "threshold": _rag_threshold(rag_type),
+    }
+
+
+def _typed_trace(rag_type: str, *, sources: list[dict[str, Any]] | None = None, lookup_query: str = "", evidence_count: int | None = None, errors: list[str] | None = None) -> dict[str, Any]:
+    trace = {
+        "rag_type": rag_type,
+        "threshold": _rag_threshold(rag_type),
+        "sources": list(sources or []),
+        "lookup_query": str(lookup_query or ""),
+        "evidence_count": int(evidence_count if evidence_count is not None else len(sources or [])),
+    }
+    if errors:
+        trace["errors"] = list(errors)
+    return trace
+
+
 def _local_classifier_decision(query: str) -> RouteDecision | None:
     try:
         from ultronpro import intent_classifier
@@ -209,15 +250,28 @@ def _answer_session_memory(query: str, session_id: str, decision: RouteDecision)
         for alias in _memory_aliases(key):
             memory[alias] = value
         label = key.replace("_", " ")
-        return PreCausalAnswer(True, f"Entendido: registrei {label} como {value}.", decision)
+        trace = _typed_trace(
+            "rag_user_memory",
+            sources=[{"source": "session_memory.write", "score": 1.0, "chunk_id": key, "rag_type": "rag_user_memory", "threshold": _rag_threshold("rag_user_memory")}],
+            lookup_query=query,
+            evidence_count=1,
+        )
+        return PreCausalAnswer(True, f"Entendido: registrei {label} como {value}.", decision, trace_rag=trace)
 
     read_key = _extract_session_read(query)
     if read_key:
         for alias in _ordered_memory_aliases(read_key):
             if alias in memory:
                 label = "animal favorito" if alias == "animal_favorito" else read_key.replace("_", " ")
-                return PreCausalAnswer(True, f"Voce me disse que {label} e {memory[alias]}.", decision)
-        return PreCausalAnswer(True, "Nao encontrei esse dado na memoria desta sessao.", decision)
+                trace = _typed_trace(
+                    "rag_user_memory",
+                    sources=[{"source": "session_memory.read", "score": 1.0, "chunk_id": alias, "rag_type": "rag_user_memory", "threshold": _rag_threshold("rag_user_memory")}],
+                    lookup_query=query,
+                    evidence_count=1,
+                )
+                return PreCausalAnswer(True, f"Voce me disse que {label} e {memory[alias]}.", decision, trace_rag=trace)
+        trace = _typed_trace("rag_user_memory", sources=[], lookup_query=query, evidence_count=0)
+        return PreCausalAnswer(True, "Nao encontrei esse dado na memoria desta sessao.", decision, trace_rag=trace)
     return None
 
 
@@ -390,8 +444,11 @@ def _answer_programming_fact_from_tool(query: str, decision: RouteDecision) -> P
         return None
     answer = f"`git commit -m` cria um commit usando a mensagem informada na propria linha de comando; na ajuda local do Git, a opcao aparece como: {evidence_line}."
     trace = {
-        "sources": [{"source": "local_tool.git_commit_help", "score": 1.0, "chunk_id": "git_commit_-m"}],
+        "rag_type": "rag_code",
+        "threshold": _rag_threshold("rag_code"),
+        "sources": [{"source": "local_tool.git_commit_help", "score": 1.0, "chunk_id": "git_commit_-m", "rag_type": "rag_code", "threshold": _rag_threshold("rag_code")}],
         "evidence_count": 1,
+        "lookup_query": query,
     }
     return PreCausalAnswer(True, answer, decision, trace_rag=trace)
 
@@ -578,7 +635,7 @@ async def _stable_fact_evidence(query: str) -> tuple[list[dict[str, Any]], dict[
 
     lookup_query = await _rewrite_stable_fact_query(query)
     evidence: list[dict[str, Any]] = []
-    trace: dict[str, Any] = {"sources": [], "lookup_query": lookup_query}
+    trace: dict[str, Any] = _typed_trace("rag_facts", sources=[], lookup_query=lookup_query, evidence_count=0)
 
     quoted = _extract_quoted_text(query)
     folded_query = _fold(query)
@@ -616,7 +673,7 @@ async def _stable_fact_evidence(query: str) -> tuple[list[dict[str, Any]], dict[
             trace.setdefault("errors", []).append(f"wikipedia_title:{type(exc).__name__}")
         if max((float(item.get("score") or 0.0) for item in evidence), default=0.0) >= 0.75:
             evidence.sort(key=lambda item: float(item.get("score") or 0.0), reverse=True)
-            trace["sources"] = [{"source": e.get("source"), "score": e.get("score"), "id": e.get("id"), "chunk_id": e.get("chunk_id")} for e in evidence[:5]]
+            trace["sources"] = [_rag_source("rag_facts", e) for e in evidence[:5]]
             trace["evidence_count"] = len(evidence)
             return evidence[:5], trace
 
@@ -812,7 +869,7 @@ async def _stable_fact_evidence(query: str) -> tuple[list[dict[str, Any]], dict[
             trace.setdefault("errors", []).append(f"web_search:{type(exc).__name__}")
 
     evidence.sort(key=lambda item: float(item.get("score") or 0.0), reverse=True)
-    trace["sources"] = [{"source": e.get("source"), "score": e.get("score"), "id": e.get("id"), "chunk_id": e.get("chunk_id")} for e in evidence[:5]]
+    trace["sources"] = [_rag_source("rag_facts", e) for e in evidence[:5]]
     trace["evidence_count"] = len(evidence)
     return evidence[:5], trace
 
@@ -821,7 +878,7 @@ async def _answer_stable_fact(query: str, decision: RouteDecision) -> PreCausalA
     try:
         evidence, trace = await asyncio.wait_for(_stable_fact_evidence(query), timeout=18.0)
     except asyncio.TimeoutError:
-        trace = {"sources": [], "evidence_count": 0, "errors": ["stable_fact_timeout"]}
+        trace = _typed_trace("rag_facts", sources=[], lookup_query=query, evidence_count=0, errors=["stable_fact_timeout"])
         evidence = []
     if not evidence:
         return PreCausalAnswer(
@@ -854,6 +911,44 @@ async def _answer_stable_fact(query: str, decision: RouteDecision) -> PreCausalA
     if not answer:
         answer = str(evidence[0].get("text") or "").strip()
     return PreCausalAnswer(True, answer, decision, trace_rag=trace)
+
+
+def _self_model_trace(query: str) -> dict[str, Any]:
+    try:
+        from ultronpro import self_model
+
+        sm = self_model.load()
+    except Exception as exc:
+        return _typed_trace("rag_self_model", sources=[], lookup_query=query, evidence_count=0, errors=[f"self_model:{type(exc).__name__}"])
+    sources: list[dict[str, Any]] = []
+    identity = sm.get("identity") if isinstance(sm.get("identity"), dict) else {}
+    if identity:
+        sources.append({
+            "source": "self_model.identity",
+            "score": 1.0,
+            "chunk_id": "identity",
+            "rag_type": "rag_self_model",
+            "threshold": _rag_threshold("rag_self_model"),
+        })
+    operational = sm.get("operational") if isinstance(sm.get("operational"), dict) else {}
+    if operational:
+        sources.append({
+            "source": "self_model.operational",
+            "score": 0.84,
+            "chunk_id": "operational",
+            "rag_type": "rag_self_model",
+            "threshold": _rag_threshold("rag_self_model"),
+        })
+    causal = sm.get("causal") if isinstance(sm.get("causal"), dict) else {}
+    if causal:
+        sources.append({
+            "source": "self_model.causal",
+            "score": 0.72,
+            "chunk_id": "causal",
+            "rag_type": "rag_self_model",
+            "threshold": _rag_threshold("rag_self_model"),
+        })
+    return _typed_trace("rag_self_model", sources=sources[:4], lookup_query=query, evidence_count=len(sources))
 
 
 def classify_pre_causal(query: str, session: dict[str, Any] | None = None) -> RouteDecision:
@@ -935,5 +1030,6 @@ async def answer_pre_causal(query: str, session_id: str | None = None, session: 
             True,
             "Nao tenho sentimentos ou consciencia subjetiva humana. Tenho estados internos, memoria, objetivos e guardrails, mas isso nao equivale a experiencia consciente genuina.",
             decision,
+            trace_rag=_self_model_trace(query),
         )
     return None

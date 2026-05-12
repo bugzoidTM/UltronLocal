@@ -16,7 +16,7 @@ async def evaluate_queries(items: list[dict[str, Any]], top_k: int = 5) -> dict[
     rows = []
     for item in items or []:
         query = str(item.get('query') or '').strip()
-        expected_domains = list(item.get('expected_domains') or [])
+        expected_domains = [rag_router.normalize_domain(x) for x in list(item.get('expected_domains') or [])]
         task_type = str(item.get('task_type') or 'general')
         if not query:
             continue

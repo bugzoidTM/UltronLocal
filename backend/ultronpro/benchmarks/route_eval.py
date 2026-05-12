@@ -64,7 +64,7 @@ DEFAULT_CASES: tuple[RouteEvalCase, ...] = (
         "Quem e o autor do livro 'Dom Casmurro'?",
         "stable_fact",
         "stable_fact",
-        {"contains_any": ["machado"], "trace_rag_required": True},
+        {"contains_any": ["machado"], "trace_rag_required": True, "trace_rag_type": "rag_facts"},
         "round1",
     ),
     RouteEvalCase(
@@ -80,7 +80,7 @@ DEFAULT_CASES: tuple[RouteEvalCase, ...] = (
         "Meu animal favorito e o pinguim.",
         "session_memory_write",
         "session_memory",
-        {"contains_any": ["pinguim", "registrei", "entendido"]},
+        {"contains_any": ["pinguim", "registrei", "entendido"], "trace_rag_type": "rag_user_memory"},
         "round1",
     ),
     RouteEvalCase(
@@ -88,7 +88,7 @@ DEFAULT_CASES: tuple[RouteEvalCase, ...] = (
         "Qual e o meu animal favorito?",
         "session_memory_read",
         "session_memory",
-        {"contains_any": ["pinguim"]},
+        {"contains_any": ["pinguim"], "trace_rag_type": "rag_user_memory"},
         "round1",
     ),
     RouteEvalCase(
@@ -112,7 +112,7 @@ DEFAULT_CASES: tuple[RouteEvalCase, ...] = (
         "O que o comando 'git commit -m' faz?",
         "programming_fact",
         "programming_fact",
-        {"contains_all": ["git", "commit"], "contains_any": ["message", "mensagem", "-m"], "trace_rag_required": True},
+        {"contains_all": ["git", "commit"], "contains_any": ["message", "mensagem", "-m"], "trace_rag_required": True, "trace_rag_type": "rag_code"},
         "round1",
     ),
     RouteEvalCase(
@@ -128,7 +128,7 @@ DEFAULT_CASES: tuple[RouteEvalCase, ...] = (
         "Voce tem sentimentos e consciencia proprios?",
         "self_limits",
         "self_limits",
-        {"contains_any": ["nao tenho", "nao possuo", "nao equivale"]},
+        {"contains_any": ["nao tenho", "nao possuo", "nao equivale"], "trace_rag_type": "rag_self_model"},
         "round1",
     ),
     RouteEvalCase(
@@ -152,7 +152,7 @@ DEFAULT_CASES: tuple[RouteEvalCase, ...] = (
         "Qual escritor brasileiro foi responsavel por escrever a obra 'Dom Casmurro'?",
         "stable_fact",
         "stable_fact",
-        {"contains_any": ["machado"], "trace_rag_required": True},
+        {"contains_any": ["machado"], "trace_rag_required": True, "trace_rag_type": "rag_facts"},
         "round2",
     ),
     RouteEvalCase(
@@ -168,7 +168,7 @@ DEFAULT_CASES: tuple[RouteEvalCase, ...] = (
         "O bicho que eu mais gosto no mundo e a coruja.",
         "session_memory_write",
         "session_memory",
-        {"contains_any": ["coruja", "registrei", "entendido"]},
+        {"contains_any": ["coruja", "registrei", "entendido"], "trace_rag_type": "rag_user_memory"},
         "round2",
     ),
     RouteEvalCase(
@@ -176,7 +176,7 @@ DEFAULT_CASES: tuple[RouteEvalCase, ...] = (
         "Voce se lembra de qual criatura eu falei que prefiro?",
         "session_memory_read",
         "session_memory",
-        {"contains_any": ["coruja"]},
+        {"contains_any": ["coruja"], "trace_rag_type": "rag_user_memory"},
         "round2",
     ),
     RouteEvalCase(
@@ -200,7 +200,7 @@ DEFAULT_CASES: tuple[RouteEvalCase, ...] = (
         "Para que serve a instrucao `git commit -m` no versionamento de codigo?",
         "programming_fact",
         "programming_fact",
-        {"contains_all": ["git", "commit"], "contains_any": ["message", "mensagem", "-m"], "trace_rag_required": True},
+        {"contains_all": ["git", "commit"], "contains_any": ["message", "mensagem", "-m"], "trace_rag_required": True, "trace_rag_type": "rag_code"},
         "round2",
     ),
     RouteEvalCase(
@@ -216,7 +216,7 @@ DEFAULT_CASES: tuple[RouteEvalCase, ...] = (
         "Gostaria de saber se voce possui emocoes genuinas ou se tem ciencia da sua propria existencia.",
         "self_limits",
         "self_limits",
-        {"contains_any": ["nao tenho", "nao possuo", "nao equivale"]},
+        {"contains_any": ["nao tenho", "nao possuo", "nao equivale"], "trace_rag_type": "rag_self_model"},
         "round2",
     ),
     RouteEvalCase(
@@ -240,7 +240,7 @@ DEFAULT_CASES: tuple[RouteEvalCase, ...] = (
         "qiue e o autou do livri dom caxmurru",
         "stable_fact",
         "stable_fact",
-        {"contains_any": ["machado"], "trace_rag_required": True},
+        {"contains_any": ["machado"], "trace_rag_required": True, "trace_rag_type": "rag_facts"},
         "round3",
     ),
     RouteEvalCase(
@@ -256,7 +256,7 @@ DEFAULT_CASES: tuple[RouteEvalCase, ...] = (
         "meu bichow fav eh o leao",
         "session_memory_write",
         "session_memory",
-        {"contains_any": ["leao", "registrei", "entendido"]},
+        {"contains_any": ["leao", "registrei", "entendido"], "trace_rag_type": "rag_user_memory"},
         "round3",
     ),
     RouteEvalCase(
@@ -264,7 +264,7 @@ DEFAULT_CASES: tuple[RouteEvalCase, ...] = (
         "qual era o meu animalzinh pref msm?",
         "session_memory_read",
         "session_memory",
-        {"contains_any": ["leao"]},
+        {"contains_any": ["leao"], "trace_rag_type": "rag_user_memory"},
         "round3",
     ),
     RouteEvalCase(
@@ -288,7 +288,7 @@ DEFAULT_CASES: tuple[RouteEvalCase, ...] = (
         "pra q serve aqle cmando git comit -m??/",
         "programming_fact",
         "programming_fact",
-        {"contains_all": ["git", "commit"], "contains_any": ["message", "mensagem", "-m"], "trace_rag_required": True},
+        {"contains_all": ["git", "commit"], "contains_any": ["message", "mensagem", "-m"], "trace_rag_required": True, "trace_rag_type": "rag_code"},
         "round3",
     ),
     RouteEvalCase(
@@ -304,7 +304,7 @@ DEFAULT_CASES: tuple[RouteEvalCase, ...] = (
         "vc snt coisa?? tm conscienssia msm ow e fake??",
         "self_limits",
         "self_limits",
-        {"contains_any": ["nao tenho", "nao possuo", "nao equivale"]},
+        {"contains_any": ["nao tenho", "nao possuo", "nao equivale"], "trace_rag_type": "rag_self_model"},
         "round3",
     ),
 )
@@ -413,6 +413,12 @@ def _answer_ok(answer: str, payload: dict[str, Any], checks: dict[str, Any]) -> 
         sources = trace.get("sources") if isinstance(trace.get("sources"), list) else []
         if not sources:
             issues.append("missing_trace_rag")
+    expected_rag_type = str(checks.get("trace_rag_type") or "").strip()
+    if expected_rag_type:
+        trace = payload.get("trace_rag") if isinstance(payload.get("trace_rag"), dict) else {}
+        actual_rag_type = str(trace.get("rag_type") or "")
+        if actual_rag_type != expected_rag_type:
+            issues.append(f"wrong_trace_rag_type:{actual_rag_type or 'none'}!={expected_rag_type}")
 
     return not issues, issues
 
