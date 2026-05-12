@@ -107,6 +107,27 @@ def _decision(intent: str, confidence: float, route: str, reason: str, *, causal
     )
 
 
+def _local_classifier_decision(query: str) -> RouteDecision | None:
+    try:
+        from ultronpro import intent_classifier
+
+        prediction = intent_classifier.predict_intent(query)
+        threshold = intent_classifier.confidence_threshold()
+    except Exception:
+        return None
+    if float(prediction.confidence or 0.0) < threshold:
+        return None
+    if prediction.route == "none":
+        return None
+    return _decision(
+        prediction.intent,
+        prediction.confidence,
+        prediction.route,
+        f"local_intent_classifier:{prediction.reason}",
+        causal=prediction.should_use_causal,
+    )
+
+
 def _extract_session_write(query: str) -> tuple[str, str] | None:
     text = _fold(query)
     if text.startswith(("qual ", "voce ", "voc ", "vc ", "se lembra", "lembra")):
@@ -873,6 +894,9 @@ def classify_pre_causal(query: str, session: dict[str, Any] | None = None) -> Ro
         return _decision("self_limits", 0.9, "self_limits", "self_capability_limits")
     if any(marker in text for marker in ("causa", "causal", "consequencia", "diagnost", "planej", "hipotese", "simule", "preveja")):
         return _decision("causal_reasoning", 0.82, "causal", "causal_or_planning_request", causal=True)
+    classifier_decision = _local_classifier_decision(query)
+    if classifier_decision is not None:
+        return classifier_decision
     return _decision("open_chat", 0.35, "none", "no_high_confidence_pre_causal_route", causal=True)
 
 
