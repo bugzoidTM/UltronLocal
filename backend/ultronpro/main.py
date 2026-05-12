@@ -11310,6 +11310,26 @@ def _deterministic_reasoning(query: str, query_lower: str) -> str:
     return _reasoning_engine(query, query_lower)
 
 
+def _chat_fold_ascii(text: str) -> str:
+    folded = unicodedata.normalize('NFKD', str(text or '').lower())
+    folded = ''.join(ch for ch in folded if not unicodedata.combining(ch))
+    folded = re.sub(r'[^a-z0-9\s`/\-]+', ' ', folded)
+    return re.sub(r'\s+', ' ', folded).strip()
+
+
+def _quick_smalltalk_intent(query: str) -> str | None:
+    try:
+        intent = _intent_pre_classifier(query)
+        return intent if intent in {'greeting', 'thanks'} else None
+    except Exception:
+        text = _chat_fold_ascii(query)
+        if len(text) < 40 and any(text == item or text.startswith(item + ' ') for item in ('oi', 'ola', 'bom dia', 'boa tarde', 'boa noite')):
+            return 'greeting'
+        if len(text) < 80 and any(item in text for item in ('obrigad', 'thanks', 'valeu')):
+            return 'thanks'
+        return None
+
+
 def _classify_query_type(query: str) -> str:
     """Classifica tipo de query deterministicamente."""
     query_lower = query.lower()
@@ -12883,6 +12903,32 @@ async def chat_fast(req: ChatRequest):
         novelty=novelty,
     )
 
+    try:
+        from ultronpro import pre_causal_router
+
+        pre_causal = await pre_causal_router.answer_pre_causal(q, session_id=session_id)
+    except Exception as e:
+        logger.warning(f"Pre-causal router failed in chat: {e}")
+        pre_causal = None
+    if pre_causal and pre_causal.ok and str(pre_causal.answer or '').strip():
+        dt = int((time.time() - t0) * 1000)
+        qs.update_valence(0.12)
+        qs.update_coherence(0.9)
+        qs.update_all_qualia()
+        qs.generate_narrative()
+        pre_payload = pre_causal.payload()
+        pre_payload.update({
+            'latency_ms': dt,
+            'qualia': qs.generate_report(),
+            'fast_path': True,
+        })
+        return _learned_chat_response(
+            q,
+            pre_payload,
+            meta={'module': 'pre_causal_router', 'route_decision': pre_payload.get('route_decision')},
+            session_id=session_id,
+        )
+
     early_intent = _intent_pre_classifier(q)
     if early_intent == 'greeting':
         ans = await asyncio.to_thread(_cognitive_greeting_response, q)
@@ -13466,6 +13512,26 @@ async def chat_stream(req: ChatRequest):
         q_memory = q_memory_outer
         if not q:
             yield f"data: {json.dumps({'type': 'done', 'answer': 'Mensagem vazia.'})}\n\n"
+            return
+
+        try:
+            from ultronpro import pre_causal_router
+
+            pre_causal = await pre_causal_router.answer_pre_causal(q, session_id=session_id)
+        except Exception as e:
+            logger.warning(f"Pre-causal router failed in stream: {e}")
+            pre_causal = None
+        if pre_causal and pre_causal.ok and str(pre_causal.answer or '').strip():
+            done_payload = pre_causal.payload()
+            strategy = str(done_payload.get('strategy') or 'pre_causal')
+            meta = {
+                'module': 'pre_causal_router',
+                'route_decision': done_payload.get('route_decision'),
+                'trace_rag': done_payload.get('trace_rag'),
+            }
+            _record_conversation_route(q, strategy, source='chat_stream', meta=meta)
+            done_payload.update({'type': 'done'})
+            yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"
             return
 
         early_intent = _intent_pre_classifier(q)

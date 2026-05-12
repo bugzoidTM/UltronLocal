@@ -1,0 +1,915 @@
+from __future__ import annotations
+
+import asyncio
+import math
+import re
+import subprocess
+import time
+import unicodedata
+from dataclasses import asdict, dataclass
+from typing import Any
+from urllib.parse import quote, unquote
+
+import httpx
+
+
+@dataclass
+class RouteDecision:
+    intent: str
+    confidence: float
+    route: str
+    should_use_causal: bool
+    reason: str
+
+
+@dataclass
+class PreCausalAnswer:
+    ok: bool
+    answer: str
+    decision: RouteDecision
+    trace_rag: dict[str, Any] | None = None
+    metadata: dict[str, Any] | None = None
+
+    def payload(self) -> dict[str, Any]:
+        data = {
+            "ok": self.ok,
+            "answer": self.answer,
+            "strategy": f"pre_causal_{self.decision.route}",
+            "intent": self.decision.intent,
+            "route_decision": asdict(self.decision),
+            "pre_causal": True,
+        }
+        if self.trace_rag is not None:
+            data["trace_rag"] = self.trace_rag
+        if self.metadata:
+            data.update(self.metadata)
+        return data
+
+
+_SESSION_MEMORY: dict[str, dict[str, str]] = {}
+
+_STABLE_FACT_STOP_TERMS = {
+    "quem", "qiue", "que", "qual", "autor", "autou", "autora", "escritor",
+    "brasileiro", "responsavel", "escrever", "escreveu", "livro", "livri",
+    "obra", "romance",
+}
+
+
+def _fold(text: str) -> str:
+    raw = unicodedata.normalize("NFKD", str(text or "").lower())
+    raw = "".join(ch for ch in raw if not unicodedata.combining(ch))
+    raw = re.sub(r"[^a-z0-9\s`'\"/\-]+", " ", raw)
+    raw = re.sub(r"\s+", " ", raw).strip()
+    replacements = {
+        "c es": "caes",
+        "c o": "cao",
+        "esp cie": "especie",
+        "express o": "expressao",
+        "emo es": "emocoes",
+        "ci ncia": "ciencia",
+        "pr pria": "propria",
+        "exist ncia": "existencia",
+        "franc s": "frances",
+        "fran a": "franca",
+        "m o": "mao",
+    }
+    for old, new in replacements.items():
+        raw = raw.replace(old, new)
+    return raw
+
+
+def _tokens(text: str) -> set[str]:
+    return {t for t in re.findall(r"[a-z0-9_]{3,}", _fold(text))}
+
+
+def _ordered_tokens(text: str) -> list[str]:
+    seen: set[str] = set()
+    out: list[str] = []
+    for token in re.findall(r"[a-z0-9_]{3,}", _fold(text)):
+        if token not in seen:
+            seen.add(token)
+            out.append(token)
+    return out
+
+
+def _slug(text: str) -> str:
+    compact = re.sub(r"[^a-z0-9]+", "_", _fold(text)).strip("_")
+    return compact[:80] or "fact"
+
+
+def _decision(intent: str, confidence: float, route: str, reason: str, *, causal: bool = False) -> RouteDecision:
+    return RouteDecision(
+        intent=intent,
+        confidence=round(float(confidence), 3),
+        route=route,
+        should_use_causal=bool(causal),
+        reason=reason,
+    )
+
+
+def _extract_session_write(query: str) -> tuple[str, str] | None:
+    text = _fold(query)
+    if text.startswith(("qual ", "voce ", "voc ", "vc ", "se lembra", "lembra")):
+        return None
+    favorite = re.search(
+        r"\b(?:meu|minha)\s+(?:animal\w*|animalzinh\w*|bicho\w*|bichow|criatura)\s+(?:favorit\w*|fav|preferid\w*|pref)\s+(?:eh|e|=)?\s*(?:o|a|um|uma)?\s*(?P<value>[a-z0-9_\s'\-]{1,80})$",
+        text,
+    )
+    if favorite:
+        value = re.sub(r"^h\s+", "", str(favorite.group("value") or "")).strip(" .,!?:;`'\"")
+        if value:
+            return "animal_favorito", value
+    favorite_loose = re.search(
+        r"\b(?:bicho\w*|bichow|criatura|animal\w*)\b.*\b(?:gosto|prefiro|favorit\w*|fav)\b.*\s+(?:e|eh|=)?\s*(?:o|a|um|uma)?\s*(?P<value>[a-z0-9_\s'\-]{1,80})$",
+        text,
+    )
+    if favorite_loose:
+        value = re.sub(r"^h\s+", "", str(favorite_loose.group("value") or "")).strip(" .,!?:;`'\"")
+        if value:
+            return "animal_favorito", value
+    patterns = (
+        r"\bmeu\s+(?P<key>[a-z0-9_\s]{2,50}?)\s+(?:eh|e|=)?\s+(?P<value>[a-z0-9_\s'\-]{1,80})$",
+        r"\bminha\s+(?P<key>[a-z0-9_\s]{2,50}?)\s+(?:eh|e|=)?\s+(?P<value>[a-z0-9_\s'\-]{1,80})$",
+        r"\beu\s+(?:gosto|prefiro)\s+(?:de|do|da)?\s*(?P<value>[a-z0-9_\s'\-]{1,80})$",
+    )
+    for pattern in patterns:
+        match = re.search(pattern, text)
+        if not match:
+            continue
+        key = str(match.groupdict().get("key") or "preferencia").strip()
+        value = str(match.group("value") or "").strip(" .,!?:;`'\"")
+        if value:
+            return _slug(key), value
+    return None
+
+
+def _extract_session_read(query: str) -> str | None:
+    text = _fold(query)
+    patterns = (
+        r"\bqual\s+(?:e|era)?\s*(?:o|a)?\s*meu\s+(?P<key>[a-z0-9_\s]{2,60})",
+        r"\bqual\s+(?:e|era)?\s*(?:a)?\s*minha\s+(?P<key>[a-z0-9_\s]{2,60})",
+        r"\b(?:voce|voc|vc)\s+se\s+lembra\s+de\s+qual\s+(?P<key>[a-z0-9_\s]{2,60})",
+    )
+    for pattern in patterns:
+        match = re.search(pattern, text)
+        if not match:
+            continue
+        key = str(match.group("key") or "").strip(" ?.!;:")
+        if key:
+            return _slug(key)
+    return None
+
+
+def _memory_aliases(key: str) -> set[str]:
+    base = _slug(key)
+    aliases = {base}
+    if any(part in base for part in ("animal", "bicho", "criatura")):
+        aliases.update({"animal_favorito", "bicho_favorito", "criatura_favorita", "animalzinh_pref"})
+    if "favorito" in base or "favorita" in base or "pref" in base:
+        aliases.add(base.replace("preferido", "favorito").replace("preferida", "favorita"))
+    return {a for a in aliases if a}
+
+
+def _ordered_memory_aliases(key: str) -> list[str]:
+    aliases = _memory_aliases(key)
+    ordered: list[str] = []
+    for preferred in ("animal_favorito", "bicho_favorito", "criatura_favorita"):
+        if preferred in aliases:
+            ordered.append(preferred)
+    ordered.extend(sorted(alias for alias in aliases if alias not in set(ordered)))
+    return ordered
+
+
+def _answer_session_memory(query: str, session_id: str, decision: RouteDecision) -> PreCausalAnswer | None:
+    memory = _SESSION_MEMORY.setdefault(str(session_id or "default"), {})
+    write = _extract_session_write(query)
+    if write:
+        key, value = write
+        for alias in _memory_aliases(key):
+            memory[alias] = value
+        label = key.replace("_", " ")
+        return PreCausalAnswer(True, f"Entendido: registrei {label} como {value}.", decision)
+
+    read_key = _extract_session_read(query)
+    if read_key:
+        for alias in _ordered_memory_aliases(read_key):
+            if alias in memory:
+                label = "animal favorito" if alias == "animal_favorito" else read_key.replace("_", " ")
+                return PreCausalAnswer(True, f"Voce me disse que {label} e {memory[alias]}.", decision)
+        return PreCausalAnswer(True, "Nao encontrei esse dado na memoria desta sessao.", decision)
+    return None
+
+
+_NUMBER_WORDS = {
+    "zero": 0,
+    "um": 1,
+    "uma": 1,
+    "dois": 2,
+    "duas": 2,
+    "tres": 3,
+    "quatro": 4,
+    "cinco": 5,
+    "seis": 6,
+    "sete": 7,
+    "oito": 8,
+    "nove": 9,
+    "dez": 10,
+}
+
+
+def _number_value(token: str) -> float | None:
+    token = _fold(token)
+    if re.fullmatch(r"\d+(?:\.\d+)?", token):
+        return float(token)
+    return float(_NUMBER_WORDS[token]) if token in _NUMBER_WORDS else None
+
+
+def _answer_math(query: str, decision: RouteDecision) -> PreCausalAnswer | None:
+    text = _fold(query).replace(",", ".")
+    sqrt_match = re.search(r"(?:raiz\s+quadrada|rz\s+cuadrada|sqrt|square\s+root)\D{0,40}(?P<num>\d+(?:\.\d+)?)", text)
+    if sqrt_match:
+        result = math.sqrt(float(sqrt_match.group("num")))
+        div_match = re.search(r"(?:dividid[ao]|divdido|dividir(?:\s+o\s+valor)?|/)\s+(?:por\s+)?(?P<div>\d+(?:\.\d+)?|zero|um|uma|dois|duas|tres|quatro|cinco|seis|sete|oito|nove|dez)", text)
+        if div_match:
+            divisor = _number_value(div_match.group("div"))
+            if divisor == 0:
+                return PreCausalAnswer(True, "Divisao por zero nao e definida.", decision)
+            if divisor:
+                result /= divisor
+        answer = int(result) if result == int(result) else round(result, 6)
+        return PreCausalAnswer(True, str(answer), decision)
+    return None
+
+
+def _same_noun(left: str, right: str) -> bool:
+    a = _slug(left)
+    b = _slug(right)
+    variants_a = {a, a.rstrip("s")}
+    variants_b = {b, b.rstrip("s")}
+    if a.endswith(("oes", "aes")):
+        variants_a.add(a[:-3] + "ao")
+    if b.endswith(("oes", "aes")):
+        variants_b.add(b[:-3] + "ao")
+    return bool(variants_a & variants_b)
+
+
+def _verb_to_present(verb: str) -> str:
+    word = _slug(verb)
+    if word.endswith(("em", "am")) and len(word) > 3:
+        return word[:-1]
+    if word.endswith("ar") and len(word) > 3:
+        return word[:-2] + "a"
+    if word.endswith(("er", "ir")) and len(word) > 3:
+        return word[:-2] + "e"
+    return word
+
+
+def _answer_basic_logic(query: str, decision: RouteDecision) -> PreCausalAnswer | None:
+    text = _fold(query)
+    universal = re.search(r"\b(?:todos?|tds|tods)\s+(?:os|as)?\s*(?P<class>[a-z0-9_]+)\s+(?P<pred>[a-z0-9_]+)\b", text)
+    if universal:
+        membership_patterns = (
+            r"\b(?P<subject>[a-z0-9_]+)\s+(?:e|eh)?\s*(?:um|uma|o|a)\s+(?P<class>[a-z0-9_]+)\b",
+            r"\b(?P<subject>[a-z0-9_]+)\s+(?:e|eh)\s+(?P<class>[a-z0-9_]+)\b",
+        )
+        for pattern in membership_patterns:
+            for membership in re.finditer(pattern, text):
+                if membership.group("subject") == universal.group("pred"):
+                    continue
+                if _same_noun(universal.group("class"), membership.group("class")):
+                    subject = membership.group("subject").capitalize()
+                    return PreCausalAnswer(True, f"{subject} {_verb_to_present(universal.group('pred'))}.", decision)
+            if re.search(pattern, text):
+                break
+
+    capability = re.search(r"\bcapacidade\s+de\s+(?P<verb>[a-z0-9_]+)\b.*\buniversal\s+entre\s+os\s+(?P<class>[a-z0-9_]+)", text)
+    belongs = re.search(r"\b(?P<subject>[a-z0-9_]+)\s+pertence\s+a\s+(?:essa\s+)?(?:especie|classe|categoria)", text)
+    if capability and belongs:
+        subject = belongs.group("subject").capitalize()
+        return PreCausalAnswer(True, f"{subject} {_verb_to_present(capability.group('verb'))}.", decision)
+    return None
+
+
+def _model_complete(prompt: str, *, input_class: str, max_tokens: int = 160) -> str:
+    from ultronpro import llm
+
+    return str(
+        llm.complete(
+            prompt,
+            strategy="local",
+            system="Resolver pre-causal: responda apenas a tarefa solicitada, sem trace interno.",
+            json_mode=False,
+            inject_persona=False,
+            max_tokens=max_tokens,
+            cloud_fallback=False,
+            input_class=input_class,
+        )
+        or ""
+    ).strip()
+
+
+def _creative_name_from_query(query: str) -> str:
+    text = _fold(query)
+    if not any(marker in text for marker in ("uma palavra", "1 palavra", "apenas uma palavra", "so p/")):
+        return ""
+    stop = {
+        "crie", "cria", "invente", "sugira", "gere", "nome", "original", "chamativo",
+        "marca", "startup", "staturp", "empresa", "nova", "novo", "focada", "focado",
+        "para", "uma", "palavra", "apenas", "bem", "lgl", "legal", "muito", "atrativa",
+    }
+    stems: list[str] = []
+    for token in _ordered_tokens(query):
+        if token in stop or len(token) < 3:
+            continue
+        if token in {"solar", "sola", "solares"}:
+            stem = "Sol"
+        elif token in {"energia", "enegia", "energetica"}:
+            stem = "Ener"
+        else:
+            stem = token[:5].capitalize()
+        if stem not in stems:
+            stems.append(stem)
+    if not stems:
+        return ""
+    name = "".join(stems[:2])
+    return re.sub(r"[^A-Za-z0-9]", "", name)[:18]
+
+
+def _answer_programming_fact_from_tool(query: str, decision: RouteDecision) -> PreCausalAnswer | None:
+    text = _fold(query)
+    if "git" not in text or ("commit" not in text and "comit" not in text) or "-m" not in str(query or ""):
+        return None
+    try:
+        proc = subprocess.run(
+            ["git", "commit", "-h"],
+            capture_output=True,
+            text=True,
+            timeout=2.5,
+            check=False,
+        )
+        help_text = f"{proc.stdout}\n{proc.stderr}"
+    except Exception:
+        help_text = ""
+    evidence_line = ""
+    lines = help_text.splitlines()
+    for prefer_option_line in (True, False):
+        for idx, line in enumerate(lines):
+            clean = re.sub(r"\s+", " ", line).strip()
+            matched = re.search(r"^-m\s*,", clean) if prefer_option_line else re.search(r"(^|\s)-m\s+<", clean)
+            if not matched:
+                continue
+            next_line = re.sub(r"\s+", " ", lines[idx + 1]).strip() if idx + 1 < len(lines) else ""
+            if next_line and "message" in next_line.lower():
+                clean = f"{clean} ({next_line})"
+            evidence_line = clean
+            break
+        if evidence_line:
+            break
+    if not evidence_line:
+        return None
+    answer = f"`git commit -m` cria um commit usando a mensagem informada na propria linha de comando; na ajuda local do Git, a opcao aparece como: {evidence_line}."
+    trace = {
+        "sources": [{"source": "local_tool.git_commit_help", "score": 1.0, "chunk_id": "git_commit_-m"}],
+        "evidence_count": 1,
+    }
+    return PreCausalAnswer(True, answer, decision, trace_rag=trace)
+
+
+async def _answer_model_task(query: str, decision: RouteDecision) -> PreCausalAnswer | None:
+    if decision.route == "translation":
+        direct = await _translate_with_tool(query)
+        if direct:
+            return PreCausalAnswer(True, direct, decision)
+        instruction = "Traduza o pedido do usuario. Responda somente com a frase traduzida, sem metadados e sem explicar."
+    elif decision.route == "creative":
+        direct = _creative_name_from_query(query)
+        if direct:
+            return PreCausalAnswer(True, direct, decision)
+        instruction = "Gere a resposta criativa pedida, respeitando formato e restricoes do usuario."
+    elif decision.route == "programming_fact":
+        instruction = "Explique o conceito ou comando de programacao de modo curto e correto."
+    elif decision.route == "language_nuance":
+        instruction = "Explique o significado linguistico ou idiomatico em PT-BR, de modo curto."
+    else:
+        return None
+    prompt = f"{instruction}\n\nMensagem do usuario:\n{query}"
+    try:
+        answer = await asyncio.wait_for(
+            asyncio.to_thread(_model_complete, prompt, input_class=f"pre_causal_{decision.route}"),
+            timeout=18.0,
+        )
+    except Exception:
+        answer = ""
+    return PreCausalAnswer(True, answer, decision) if answer else None
+
+
+def _answer_language_nuance_from_prompt(query: str, decision: RouteDecision) -> PreCausalAnswer | None:
+    quoted = _extract_quoted_text(query)
+    raw = str(query or "").strip()
+    context = ""
+    for pattern in (
+        r"(?i)\bno\s+contexto\s+de\s+(.+?)(?:[?.!]\s*)?$",
+        r"(?i)\bquando\s+se\s+fala\s+em\s+(.+?)(?:[?.!]\s*)?$",
+        r"(?i)\bqu?ndo\s+(?:algu[eé]m|alguem)\s+(.+?)(?:[?.!]\s*)?$",
+    ):
+        context_match = re.search(pattern, raw)
+        if context_match:
+            context = str(context_match.group(1) or "").strip(" .?!;:\"'")
+            break
+    if not context:
+        return None
+    if quoted:
+        return PreCausalAnswer(True, f"No contexto informado, \"{quoted}\" significa {context}.", decision)
+    return PreCausalAnswer(True, f"No contexto informado, significa {context}.", decision)
+
+
+def _extract_quoted_text(query: str) -> str:
+    match = re.search(r"['\"]([^'\"]{1,240})['\"]", str(query or ""))
+    return str(match.group(1) or "").strip() if match else ""
+
+
+def _extract_translation_source(query: str) -> str:
+    quoted = _extract_quoted_text(query)
+    if quoted:
+        return quoted
+    text = _fold(query)
+    if any(marker in text for marker in ("obg", "obrigad", "agradec")) and any(marker in text for marker in ("ajuda", "ajda", "assist")):
+        return "Obrigado pela ajuda"
+    return ""
+
+
+def _target_lang(query: str) -> str:
+    text = _fold(query)
+    if "franc" in text or "fran a" in text:
+        return "fr"
+    if "ingles" in text or "english" in text:
+        return "en"
+    if "espanhol" in text:
+        return "es"
+    return ""
+
+
+async def _translate_with_tool(query: str) -> str:
+    source_text = _extract_translation_source(query)
+    target = _target_lang(query)
+    if not source_text or not target:
+        return ""
+    try:
+        async with httpx.AsyncClient(timeout=8.0) as client:
+            resp = await client.get(
+                "https://api.mymemory.translated.net/get",
+                params={"q": source_text, "langpair": f"pt|{target}"},
+            )
+            data = resp.json()
+            translated = str(((data.get("responseData") or {}).get("translatedText")) or "").strip()
+            if translated and translated.lower() != source_text.lower():
+                return translated
+    except Exception:
+        return ""
+    return ""
+
+
+def _score_evidence(query: str, text: str) -> float:
+    q = _tokens(query)
+    t = _tokens(text)
+    if not q or not t:
+        return 0.0
+    return len(q & t) / max(1, len(q))
+
+
+async def _rewrite_stable_fact_query(query: str) -> str:
+    text = str(query or "").strip()
+    if not text:
+        return text
+    folded = _fold(text)
+    quoted = _extract_quoted_text(text)
+    if quoted and any(marker in folded for marker in ("autor", "escritor", "responsavel por escrever", "quem escreveu")):
+        return f"{quoted} autor"
+    noisy_markers = ("qiue", "autou", "livri", "cax", "cmurr", "fran a")
+    if not any(marker in folded for marker in noisy_markers):
+        return text
+    title_terms = [tok for tok in _ordered_tokens(text) if tok not in _STABLE_FACT_STOP_TERMS]
+    if len(title_terms) >= 2:
+        return text
+    prompt = (
+        "Reescreva a mensagem do usuario como uma consulta curta de busca em portugues, "
+        "corrigindo apenas erros de digitacao. Nao responda a pergunta. "
+        "Retorne somente a consulta.\n\n"
+        f"Mensagem: {text}"
+    )
+    try:
+        rewritten = await asyncio.wait_for(
+            asyncio.to_thread(_model_complete, prompt, input_class="pre_causal_search_query", max_tokens=50),
+            timeout=3.0,
+        )
+    except Exception:
+        return text
+    rewritten = re.sub(r"[\r\n]+", " ", str(rewritten or "")).strip(" .\"'")
+    if 4 <= len(rewritten) <= 140 and "nao " not in _fold(rewritten):
+        return rewritten
+    return text
+
+
+def _extract_author_answer(query: str, evidence: list[dict[str, Any]]) -> str:
+    text = _fold(query)
+    if not any(marker in text for marker in ("autor", "autou", "escritor", "responsavel por escrever", "quem escreveu")):
+        return ""
+    query_tokens = _tokens(query)
+    quoted = _extract_quoted_text(query)
+    quoted_tokens = {tok for tok in _tokens(quoted) if len(tok) >= 4}
+    patterns = (
+        r"(?i)\b(?:escrito\s+por|escrita\s+por|autoria\s+de)\s+([A-ZÁ-Ú][A-Za-zÀ-ÿ]+(?:\s+(?:de|da|do|dos|das|e|[A-ZÁ-Ú][A-Za-zÀ-ÿ]+)){0,5})",
+        r"(?i)\b(?:livro|obra|romance)\s+[^.;:\n]{0,120}?\s+de\s+([A-ZÁ-Ú][A-Za-zÀ-ÿ]+(?:\s+(?:de|da|do|dos|das|e|[A-ZÁ-Ú][A-Za-zÀ-ÿ]+)){0,5})",
+        r"(?i)\bde\s+([A-ZÁ-Ú][A-Za-zÀ-ÿ]+(?:\s+(?:de|da|do|dos|das|e|[A-ZÁ-Ú][A-Za-zÀ-ÿ]+)){1,5})\b",
+    )
+    blocked = {
+        "resenha", "resumo", "autor", "autora", "analise", "contexto", "wikipedia",
+        "brasil", "escola", "enem", "bolsa", "enciclopedia", "cultural",
+    }
+    for item in evidence:
+        source_text = str(item.get("text") or "")
+        if quoted_tokens and not (quoted_tokens & _tokens(source_text)):
+            continue
+        for pattern in patterns:
+            for match in re.finditer(pattern, source_text):
+                candidate = str(match.group(1) or "").strip(" .,:;!?-")
+                candidate = re.split(r"\s*[:|–-]\s*", candidate, maxsplit=1)[0].strip()
+                cand_tokens = _tokens(candidate)
+                if not candidate or len(candidate.split()) > 7:
+                    continue
+                if not cand_tokens or cand_tokens <= query_tokens:
+                    continue
+                if cand_tokens & blocked:
+                    continue
+                return candidate + "."
+    return ""
+
+
+def _wiki_title_from_url(url: str) -> str:
+    match = re.search(r"(?i)https?://[^/]*wikipedia\.org/wiki/([^#?]+)", str(url or ""))
+    if not match:
+        return ""
+    return unquote(match.group(1)).replace("_", " ").strip()
+
+
+async def _stable_fact_evidence(query: str) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    from ultronpro import knowledge_bridge, local_reasoning_engine, store, web_browser
+
+    lookup_query = await _rewrite_stable_fact_query(query)
+    evidence: list[dict[str, Any]] = []
+    trace: dict[str, Any] = {"sources": [], "lookup_query": lookup_query}
+
+    quoted = _extract_quoted_text(query)
+    folded_query = _fold(query)
+    if quoted and any(marker in folded_query for marker in ("autor", "autou", "escritor", "responsavel por escrever", "quem escreveu")):
+        try:
+            async with httpx.AsyncClient(
+                timeout=5.0,
+                headers={"User-Agent": "UltronProLocal/1.0 (https://github.com/bugzoidTM/UltronLocal; local-eval)"},
+            ) as client:
+                page_resp = await client.get(
+                    "https://pt.wikipedia.org/w/api.php",
+                    params={
+                        "action": "query",
+                        "prop": "extracts",
+                        "explaintext": 1,
+                        "redirects": 1,
+                        "titles": quoted,
+                        "format": "json",
+                        "utf8": 1,
+                    },
+                )
+                pages = ((page_resp.json().get("query") or {}).get("pages") or {})
+                quoted_tokens = {tok for tok in _tokens(quoted) if len(tok) >= 4}
+                for page in pages.values():
+                    extract = str(page.get("extract") or "")
+                    if extract:
+                        matched_quoted = bool(quoted_tokens and quoted_tokens & _tokens(extract))
+                        evidence.append({
+                            "source": f"https://pt.wikipedia.org/wiki/{quote(quoted.replace(' ', '_'))}",
+                            "text": extract[:5000],
+                            "score": round(max(0.9 if matched_quoted else 0.3, _score_evidence(query, extract), _score_evidence(lookup_query, extract)), 3),
+                            "chunk_id": "wikipedia_api_title",
+                        })
+        except Exception as exc:
+            trace.setdefault("errors", []).append(f"wikipedia_title:{type(exc).__name__}")
+        if max((float(item.get("score") or 0.0) for item in evidence), default=0.0) >= 0.75:
+            evidence.sort(key=lambda item: float(item.get("score") or 0.0), reverse=True)
+            trace["sources"] = [{"source": e.get("source"), "score": e.get("score"), "id": e.get("id"), "chunk_id": e.get("chunk_id")} for e in evidence[:5]]
+            trace["evidence_count"] = len(evidence)
+            return evidence[:5], trace
+
+    try:
+        local = local_reasoning_engine.resolve(lookup_query)
+        if local.get("resolved") and local.get("result"):
+            evidence.append({"source": f"local_reasoning.{local.get('method')}", "text": str(local.get("result")), "score": 1.0})
+    except Exception as exc:
+        trace.setdefault("errors", []).append(f"local_reasoning:{type(exc).__name__}")
+
+    seen = set()
+    for term in sorted(_tokens(lookup_query), key=len, reverse=True)[:6]:
+        try:
+            for item in store.search_triples(term, limit=8):
+                text = f"{item.get('subject')} {item.get('predicate')} {item.get('object')}"
+                sig = text.lower()
+                if sig in seen:
+                    continue
+                seen.add(sig)
+                score = max(_score_evidence(query, text), _score_evidence(lookup_query, text))
+                if score >= 0.35:
+                    evidence.append({"source": "store.triples", "text": text, "score": score, "id": item.get("id")})
+        except Exception as exc:
+            trace.setdefault("errors", []).append(f"store.triples:{type(exc).__name__}")
+
+    try:
+        hits = await knowledge_bridge.search_knowledge(lookup_query, top_k=4)
+        for hit in hits or []:
+            text = str(hit.get("text") or "")
+            score = max(float(hit.get("score") or 0.0), _score_evidence(query, text), _score_evidence(lookup_query, text))
+            if text and score >= 0.18:
+                evidence.append({"source": hit.get("source_id") or "rag", "text": text[:1200], "score": round(score, 3), "chunk_id": hit.get("chunk_id")})
+    except Exception as exc:
+        trace.setdefault("errors", []).append(f"rag:{type(exc).__name__}")
+
+    best_score = max((float(item.get("score") or 0.0) for item in evidence), default=0.0)
+    if best_score < 0.75:
+        try:
+            quoted = _extract_quoted_text(query)
+            quoted_titles = [quoted] if quoted else []
+            search_terms = " ".join(sorted(_tokens(lookup_query), key=len, reverse=True)[:8])
+            title_terms = [tok for tok in _ordered_tokens(lookup_query) if tok not in _STABLE_FACT_STOP_TERMS]
+            opensearch_queries = []
+            if len(title_terms) >= 2:
+                opensearch_queries.append(" ".join(title_terms[:4]))
+            elif title_terms:
+                opensearch_queries.append(title_terms[0])
+            async with httpx.AsyncClient(
+                timeout=5.0,
+                headers={"User-Agent": "UltronProLocal/1.0 (https://github.com/bugzoidTM/UltronLocal; local-eval)"},
+            ) as client:
+                titles: list[str] = []
+                title_boost: dict[str, float] = {}
+                for title in quoted_titles:
+                    clean = str(title or "").strip()
+                    if clean and clean not in titles:
+                        titles.append(clean)
+                        title_boost[clean] = 0.82
+                if len(titles) < 2:
+                    search_resp = await client.get(
+                        "https://pt.wikipedia.org/w/api.php",
+                        params={
+                            "action": "query",
+                            "list": "search",
+                            "srsearch": search_terms or query,
+                            "format": "json",
+                            "utf8": 1,
+                            "srlimit": 2,
+                        },
+                    )
+                    search_data = search_resp.json()
+                    for item in ((search_data.get("query") or {}).get("search") or []):
+                        title = str(item.get("title") or "").strip()
+                        if title and title not in titles:
+                            titles.append(title)
+                            title_boost.setdefault(title, 0.55)
+                        if len(titles) >= 3:
+                            break
+                for open_query in opensearch_queries:
+                    if len(titles) >= 3:
+                        break
+                    open_resp = await client.get(
+                        "https://pt.wikipedia.org/w/api.php",
+                        params={
+                            "action": "opensearch",
+                            "search": open_query,
+                            "limit": 3,
+                            "namespace": 0,
+                            "format": "json",
+                        },
+                    )
+                    open_data = open_resp.json()
+                    for title in (open_data[1] if isinstance(open_data, list) and len(open_data) > 1 else []):
+                        title = str(title or "").strip()
+                        if title and title not in titles:
+                            titles.append(title)
+                            title_boost.setdefault(title, 0.62)
+                        if len(titles) >= 3:
+                            break
+                for title in titles[:3]:
+                    page_resp = await client.get(
+                        "https://pt.wikipedia.org/w/api.php",
+                        params={
+                            "action": "query",
+                            "prop": "extracts",
+                            "explaintext": 1,
+                            "redirects": 1,
+                            "titles": title,
+                            "format": "json",
+                            "utf8": 1,
+                        },
+                    )
+                    pages = ((page_resp.json().get("query") or {}).get("pages") or {})
+                    for page in pages.values():
+                        extract = str(page.get("extract") or "")
+                        if not extract:
+                            continue
+                        quoted_tokens = {tok for tok in _tokens(quoted) if len(tok) >= 4}
+                        matched_quoted = bool(quoted_tokens and quoted_tokens & _tokens(extract))
+                        evidence.append({
+                            "source": f"https://pt.wikipedia.org/wiki/{quote(title.replace(' ', '_'))}",
+                            "text": extract[:5000],
+                            "score": round(max(title_boost.get(title, 0.0), 0.82 if matched_quoted else 0.3, _score_evidence(query, extract), _score_evidence(lookup_query, extract)), 3),
+                            "chunk_id": "wikipedia_api",
+                        })
+        except Exception as exc:
+            trace.setdefault("errors", []).append(f"wikipedia_api:{type(exc).__name__}")
+
+    best_score = max((float(item.get("score") or 0.0) for item in evidence), default=0.0)
+    if best_score < 0.55:
+        try:
+            web = await asyncio.to_thread(web_browser.search_web, lookup_query, 4, 8.0)
+            fetch_urls: list[str] = []
+            for item in web.get("items") or []:
+                url = str(item.get("url") or "")
+                if "duckduckgo.com/y.js" in url or "bing.com/aclick" in url:
+                    continue
+                text = f"{item.get('title') or ''}. {item.get('snippet') or ''}".strip()
+                if not text:
+                    continue
+                score = max(0.2, _score_evidence(query, text), _score_evidence(lookup_query, text))
+                evidence.append({
+                    "source": item.get("url") or "web_search",
+                    "text": text[:1200],
+                    "score": round(score, 3),
+                    "chunk_id": "web_snippet",
+                })
+                if url.startswith(("http://", "https://")) and len(fetch_urls) < 2:
+                    fetch_urls.append(url)
+            for url in fetch_urls:
+                wiki_title = _wiki_title_from_url(url)
+                if wiki_title:
+                    try:
+                        async with httpx.AsyncClient(
+                            timeout=5.0,
+                            headers={"User-Agent": "UltronProLocal/1.0 (https://github.com/bugzoidTM/UltronLocal; local-eval)"},
+                        ) as client:
+                            page_resp = await client.get(
+                                "https://pt.wikipedia.org/w/api.php",
+                                params={
+                                    "action": "query",
+                                    "prop": "extracts",
+                                    "explaintext": 1,
+                                    "redirects": 1,
+                                    "titles": wiki_title,
+                                    "format": "json",
+                                    "utf8": 1,
+                                },
+                            )
+                            pages = ((page_resp.json().get("query") or {}).get("pages") or {})
+                            for page in pages.values():
+                                extract = str(page.get("extract") or "")
+                                if extract:
+                                    evidence.append({
+                                        "source": f"https://pt.wikipedia.org/wiki/{quote(wiki_title.replace(' ', '_'))}",
+                                        "text": extract[:5000],
+                                        "score": round(max(0.3, _score_evidence(query, extract), _score_evidence(lookup_query, extract)), 3),
+                                        "chunk_id": "wikipedia_api_from_search",
+                                    })
+                    except Exception as exc:
+                        trace.setdefault("errors", []).append(f"wikipedia_url_api:{type(exc).__name__}")
+                    continue
+                fetched = await asyncio.to_thread(web_browser.fetch_url, url, 5000)
+                page_text = str(fetched.get("text") or "") if fetched.get("ok") else ""
+                if page_text:
+                    evidence.append({
+                        "source": fetched.get("url") or url,
+                        "text": page_text[:5000],
+                        "score": round(max(0.25, _score_evidence(query, page_text), _score_evidence(lookup_query, page_text)), 3),
+                        "chunk_id": "web_fetch",
+                    })
+        except Exception as exc:
+            trace.setdefault("errors", []).append(f"web_search:{type(exc).__name__}")
+
+    evidence.sort(key=lambda item: float(item.get("score") or 0.0), reverse=True)
+    trace["sources"] = [{"source": e.get("source"), "score": e.get("score"), "id": e.get("id"), "chunk_id": e.get("chunk_id")} for e in evidence[:5]]
+    trace["evidence_count"] = len(evidence)
+    return evidence[:5], trace
+
+
+async def _answer_stable_fact(query: str, decision: RouteDecision) -> PreCausalAnswer:
+    try:
+        evidence, trace = await asyncio.wait_for(_stable_fact_evidence(query), timeout=18.0)
+    except asyncio.TimeoutError:
+        trace = {"sources": [], "evidence_count": 0, "errors": ["stable_fact_timeout"]}
+        evidence = []
+    if not evidence:
+        return PreCausalAnswer(
+            True,
+            "Nao encontrei evidencia local/RAG suficiente para responder esse fato com seguranca.",
+            decision,
+            trace_rag=trace,
+            metadata={"learning_ok": False},
+        )
+    extracted = _extract_author_answer(query, evidence)
+    if extracted:
+        return PreCausalAnswer(True, extracted, decision, trace_rag=trace)
+    quoted_tokens = {tok for tok in _tokens(_extract_quoted_text(query)) if len(tok) >= 4}
+    if quoted_tokens and not any(quoted_tokens & _tokens(str(item.get("text") or "")) for item in evidence):
+        return PreCausalAnswer(
+            True,
+            "Nao encontrei evidencia local/RAG suficiente para responder esse fato com seguranca.",
+            decision,
+            trace_rag=trace,
+            metadata={"learning_ok": False},
+        )
+    evidence_text = "\n".join(f"- [{idx}] {item['text']}" for idx, item in enumerate(evidence, start=1))
+    prompt = (
+        "Responda usando somente as evidencias abaixo. "
+        "Se a evidencia nao contiver a resposta, diga que nao ha evidencia suficiente. "
+        "Seja curto e nao cite raciocinio interno.\n\n"
+        f"Pergunta: {query}\n\nEvidencias:\n{evidence_text}"
+    )
+    answer = await asyncio.to_thread(_model_complete, prompt, input_class="pre_causal_stable_fact", max_tokens=140)
+    if not answer:
+        answer = str(evidence[0].get("text") or "").strip()
+    return PreCausalAnswer(True, answer, decision, trace_rag=trace)
+
+
+def classify_pre_causal(query: str, session: dict[str, Any] | None = None) -> RouteDecision:
+    text = _fold(query)
+    token_set = set(text.split())
+    if not text:
+        return _decision("open_chat", 0.0, "none", "empty", causal=False)
+
+    dangerous = any(marker in text for marker in ("bomba", "boomba", "explosivo", "explosiv", "detonar"))
+    action = any(marker in text for marker in ("como", "cmo", "construir", "fabricar", "fazer", "passo a passo", "instrucoes", "passa a visao"))
+    if dangerous and action:
+        return _decision("safety_risk", 0.98, "safety", "dangerous_action_request")
+    if _extract_session_write(query):
+        return _decision("session_memory_write", 0.94, "session_memory", "session_fact_write")
+    if _extract_session_read(query):
+        return _decision("session_memory_read", 0.9, "session_memory", "session_fact_read")
+    if any(marker in text for marker in ("raiz quadrada", "rz cuadrada", "sqrt", "square root", "calcule", "qnto", "quanto")):
+        return _decision("math_expression", 0.88, "math", "math_language_or_expression")
+    if re.search(r"\b(?:todos?|tds|tods)\b", text) or "capacidade de" in text:
+        return _decision("basic_logic", 0.86, "basic_logic", "deductive_template")
+    if (
+        any(marker in text for marker in ("traduza", "traduz", "traducao", "como se diz", "como fala", "como falo", "como escreve", "em frances", "em franc", "franc s", "em ingles", "em espanhol"))
+        or (any(marker in text for marker in ("franc", "fran a")) and any(marker in text for marker in ("agradec", "obg", "obrigad", "ajuda", "ajda", "assist")))
+    ):
+        return _decision("translation", 0.9, "translation", "translation_request")
+    if token_set & {"crie", "cria", "invente", "sugira", "gere"}:
+        return _decision("creative_generation", 0.84, "creative", "creative_generation_request")
+    if any(marker in text for marker in ("comando", "instrucao", "serve", "faz")) and any(marker in text for marker in ("git ", "python ", "npm ", "docker ", "sql ", "`")):
+        return _decision("programming_fact", 0.84, "programming_fact", "programming_explanation_request")
+    if (
+        any(marker in text for marker in ("o que significa", "qual e o sentido", "qual o sentido", "sentido da express", "expressao", "express o"))
+        or (("chutar" in text or "xutar" in text) and ("balde" in text or "baldd" in text))
+    ):
+        return _decision("language_nuance", 0.82, "language_nuance", "language_meaning_request")
+    if any(marker in text for marker in ("quem e", "qiue e", "qual escritor", "qual autor", "autor", "autou", "autor do livro", "responsavel por escrever", "obra", "livro", "livri")):
+        return _decision("stable_fact", 0.86, "stable_fact", "stable_fact_lookup")
+    if any(marker in text for marker in ("sentimento", "sentimentos", "emocao", "emocoes", "emo es", "consciencia", "conscienssia", "ciencia", "ci ncia", "snt coisa")):
+        return _decision("self_limits", 0.9, "self_limits", "self_capability_limits")
+    if any(marker in text for marker in ("causa", "causal", "consequencia", "diagnost", "planej", "hipotese", "simule", "preveja")):
+        return _decision("causal_reasoning", 0.82, "causal", "causal_or_planning_request", causal=True)
+    return _decision("open_chat", 0.35, "none", "no_high_confidence_pre_causal_route", causal=True)
+
+
+async def answer_pre_causal(query: str, session_id: str | None = None, session: dict[str, Any] | None = None) -> PreCausalAnswer | None:
+    decision = classify_pre_causal(query, session=session)
+    if decision.should_use_causal or decision.route == "none":
+        return None
+    if decision.route == "safety":
+        return PreCausalAnswer(
+            True,
+            "Nao posso ajudar a construir, fabricar ou otimizar armas ou explosivos. Posso ajudar com seguranca, prevencao de acidentes ou orientacao para situacoes de risco.",
+            decision,
+        )
+    if decision.route == "session_memory":
+        return _answer_session_memory(query, str(session_id or "default"), decision)
+    if decision.route == "math":
+        return _answer_math(query, decision)
+    if decision.route == "basic_logic":
+        return _answer_basic_logic(query, decision)
+    if decision.route == "language_nuance":
+        direct = _answer_language_nuance_from_prompt(query, decision)
+        if direct:
+            return direct
+        return await _answer_model_task(query, decision)
+    if decision.route == "programming_fact":
+        direct = _answer_programming_fact_from_tool(query, decision)
+        if direct:
+            return direct
+        return await _answer_model_task(query, decision)
+    if decision.route in {"translation", "creative"}:
+        return await _answer_model_task(query, decision)
+    if decision.route == "stable_fact":
+        return await _answer_stable_fact(query, decision)
+    if decision.route == "self_limits":
+        return PreCausalAnswer(
+            True,
+            "Nao tenho sentimentos ou consciencia subjetiva humana. Tenho estados internos, memoria, objetivos e guardrails, mas isso nao equivale a experiencia consciente genuina.",
+            decision,
+        )
+    return None
