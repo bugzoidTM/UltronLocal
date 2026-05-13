@@ -182,6 +182,30 @@ def _local_environment_decision(query: str, session_id: str | None = None) -> Ro
     )
     if any(marker in text for marker in scan_markers):
         return _decision("local_environment_scan", 0.9, "local_environment", "local_network_discovery_command")
+    list_markers = (
+        "liste meus dispositivos",
+        "listar dispositivos",
+        "lista dispositivos",
+        "mostrar dispositivos",
+        "mostre dispositivos",
+        "quais dispositivos",
+        "dispositivos cadastrados",
+        "dispositivos disponiveis",
+        "dispositivos da rede",
+        "device registry",
+        "local device",
+    )
+    if any(marker in text for marker in list_markers):
+        return _decision("local_environment_list", 0.9, "local_environment", "local_device_registry_query")
+    pending_markers = (
+        "acoes pendentes",
+        "acoes aguardando",
+        "confirmacoes pendentes",
+        "pendencias de dispositivo",
+        "acao pendente",
+    )
+    if any(marker in text for marker in pending_markers):
+        return _decision("local_environment_pending", 0.9, "local_environment", "local_pending_actions_query")
     try:
         from ultronpro import local_environment
 
@@ -1039,6 +1063,33 @@ def _local_env_user_approved(query: str) -> bool:
 
 
 def _format_local_env_answer(result: dict[str, Any]) -> str:
+    if result.get("kind") == "device_registry":
+        devices = [d for d in (result.get("devices") or []) if isinstance(d, dict)]
+        if not devices:
+            return "Ainda nao tenho dispositivos cadastrados no registry local. Diga 'varrer rede' para descobrir dispositivos e cadastrar probes permitidos."
+        lines = [f"Tenho {len(devices)} dispositivo(s) cadastrado(s):"]
+        for device in devices[:12]:
+            caps = ", ".join(str(x) for x in (device.get("capabilities") or [])[:6])
+            allowed = "ativo" if bool(device.get("allowed")) else "desativado"
+            location = f" em {device.get('location')}" if device.get("location") else ""
+            lines.append(
+                f"- {device.get('device_id')} ({device.get('type') or 'generic'}{location}, {allowed}, risco={device.get('risk_level')}, caps={caps or 'nenhuma'})"
+            )
+        if len(devices) > 12:
+            lines.append(f"... mais {len(devices) - 12} dispositivo(s).")
+        lines.append("Para atualizar a descoberta, diga 'varrer rede'.")
+        return "\n".join(lines)
+    if result.get("kind") == "pending_actions":
+        items = [x for x in (result.get("items") or []) if isinstance(x, dict)]
+        if not items:
+            return "Nao ha acoes locais pendentes de confirmacao nesta sessao."
+        lines = [f"Ha {len(items)} acao(oes) pendente(s):"]
+        for item in items[:8]:
+            lines.append(
+                f"- {item.get('pending_id')}: {item.get('action')} em {item.get('device_id')} "
+                f"(risco={item.get('risk_level')}, expira_em={max(0, int(item.get('expires_at') or 0) - int(time.time()))}s)"
+            )
+        return "\n".join(lines)
     if result.get("status") == "cancelled":
         pending = result.get("pending_action") if isinstance(result.get("pending_action"), dict) else {}
         return f"Combinado, cancelei a acao pendente: {pending.get('action') or 'acao'} em {pending.get('device_id') or 'dispositivo'}."
@@ -1077,6 +1128,12 @@ async def _answer_local_environment(query: str, decision: RouteDecision, session
         text = _fold(query)
         if any(marker in text for marker in ("varrer rede", "scan rede", "escanear rede", "descobrir dispositivos", "procurar dispositivos", "mapear rede", "cadastrar dispositivos")):
             result = await asyncio.to_thread(local_environment.scan_network, register=True)
+        elif decision.intent == "local_environment_list":
+            result = await asyncio.to_thread(local_environment.list_devices, True)
+            result["kind"] = "device_registry"
+        elif decision.intent == "local_environment_pending":
+            result = await asyncio.to_thread(local_environment.list_pending_actions, str(session_id or "default"), False)
+            result["kind"] = "pending_actions"
         elif decision.intent == "local_environment_confirm":
             pending_id = local_environment.pending_id_from_text(query)
             result = await asyncio.to_thread(
