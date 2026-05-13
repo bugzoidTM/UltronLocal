@@ -204,6 +204,50 @@ def _local_environment_decision(query: str, session_id: str | None = None) -> Ro
     )
     if any(marker in text for marker in list_markers):
         return _decision("local_environment_list", 0.9, "local_environment", "local_device_registry_query")
+    access_markers = (
+        "bateria de acesso",
+        "testar acesso",
+        "teste de acesso",
+        "verificar acesso",
+        "verificar dispositivos",
+        "testar dispositivos",
+        "quais dispositivos respondem",
+        "dispositivos respondem",
+    )
+    if any(marker in text for marker in access_markers):
+        return _decision("local_environment_access_battery", 0.92, "local_environment", "local_device_access_battery")
+    control_markers = (
+        "controle total",
+        "dar controle",
+        "liberar controle",
+        "habilitar controle",
+        "ativar dispositivos",
+        "permitir dispositivos",
+    )
+    if any(marker in text for marker in control_markers):
+        return _decision("local_environment_grant_control", 0.9, "local_environment", "local_device_control_grant")
+    camera_markers = (
+        "listar cameras",
+        "liste cameras",
+        "mostrar cameras",
+        "mostre cameras",
+        "cameras da rede",
+        "cameras disponiveis",
+        "camera ao vivo",
+        "imagens das cameras",
+    )
+    if any(marker in text for marker in camera_markers):
+        return _decision("local_environment_cameras", 0.9, "local_environment", "local_camera_stream_query")
+    event_markers = (
+        "eventos dos dispositivos",
+        "comandos dos dispositivos",
+        "o que posso fazer",
+        "quais comandos",
+        "quais eventos",
+        "capacidades dos dispositivos",
+    )
+    if any(marker in text for marker in event_markers):
+        return _decision("local_environment_events", 0.88, "local_environment", "local_device_event_matrix_query")
     pending_markers = (
         "acoes pendentes",
         "acoes aguardando",
@@ -1070,6 +1114,55 @@ def _local_env_user_approved(query: str) -> bool:
 
 
 def _format_local_env_answer(result: dict[str, Any]) -> str:
+    if result.get("kind") == "access_battery":
+        lines = [
+            f"Bateria de acesso concluida: {result.get('responsive_count', 0)}/{result.get('device_count', 0)} dispositivo(s) responderam."
+        ]
+        grant = result.get("control_grant") if isinstance(result.get("control_grant"), dict) else {}
+        if grant:
+            lines.append(f"Controle habilitado para {grant.get('changed_count', 0)} dispositivo(s) responsivo(s), mantendo risk gate e confirmacao por risco.")
+        for item in (result.get("results") or [])[:12]:
+            if not isinstance(item, dict):
+                continue
+            events = [str(e.get("event")) for e in (item.get("events") or []) if isinstance(e, dict)]
+            ports = ", ".join(str(p) for p in (item.get("responsive_ports") or []))
+            lines.append(
+                f"- {item.get('device_id')}: {item.get('type')} status={item.get('status')} portas={ports or '-'} eventos={', '.join(events[:8]) or '-'}"
+            )
+            stream = item.get("stream") if isinstance(item.get("stream"), dict) else {}
+            if stream.get("ok"):
+                lines.append(f"  stream: {stream.get('preferred_url')} (proxy: {stream.get('mjpeg_proxy_endpoint')})")
+        if int(result.get("device_count") or 0) > 12:
+            lines.append(f"... mais {int(result.get('device_count') or 0) - 12} dispositivo(s).")
+        return "\n".join(lines)
+    if result.get("kind") == "event_matrix":
+        devices = [d for d in (result.get("devices") or []) if isinstance(d, dict)]
+        if not devices:
+            return "Nao encontrei dispositivos no registry para listar eventos."
+        lines = ["Matriz de eventos por dispositivo:"]
+        for device in devices[:12]:
+            events = [str(e.get("event")) + ("*" if e.get("executable") else "") for e in (device.get("events") or []) if isinstance(e, dict)]
+            allowed = "ativo" if bool(device.get("allowed")) else "desativado"
+            lines.append(f"- {device.get('device_id')} ({device.get('type')}, {allowed}): {', '.join(events[:10]) or 'sem eventos'}")
+        lines.append("Eventos com * ja tem executor direto; os demais precisam de adapter/credencial especifica.")
+        return "\n".join(lines)
+    if result.get("kind") == "camera_list":
+        devices = [d for d in (result.get("devices") or []) if isinstance(d, dict)]
+        if not devices:
+            return "Nao encontrei cameras/streams RTSP cadastrados no registry."
+        lines = [f"Encontrei {len(devices)} camera(s)/stream(s):"]
+        for device in devices[:12]:
+            stream = device.get("stream") if isinstance(device.get("stream"), dict) else {}
+            url = stream.get("preferred_url") or "stream nao configurado"
+            lines.append(f"- {device.get('device_id')} ({device.get('type')}): {url}")
+            if stream.get("mjpeg_proxy_endpoint"):
+                lines.append(f"  proxy local: {stream.get('mjpeg_proxy_endpoint')}")
+        return "\n".join(lines)
+    if result.get("kind") == "control_grant":
+        return (
+            f"Controle local habilitado para {result.get('changed_count', 0)} dispositivo(s). "
+            "O controle ficou amplo no registry, mas a execucao continua passando por risk gate, capabilities e confirmacao para risco alto."
+        )
     if result.get("kind") == "device_registry":
         devices = [d for d in (result.get("devices") or []) if isinstance(d, dict)]
         if not devices:
@@ -1082,6 +1175,15 @@ def _format_local_env_answer(result: dict[str, Any]) -> str:
             lines.append(
                 f"- {device.get('device_id')} ({device.get('type') or 'generic'}{location}, {allowed}, risco={device.get('risk_level')}, caps={caps or 'nenhuma'})"
             )
+            events = []
+            try:
+                from ultronpro import local_environment
+
+                events = [str(e.get("event")) for e in local_environment.device_events(device) if isinstance(e, dict)]
+            except Exception:
+                events = []
+            if events:
+                lines.append(f"  eventos: {', '.join(events[:8])}")
         if len(devices) > 12:
             lines.append(f"... mais {len(devices) - 12} dispositivo(s).")
         lines.append("Para atualizar a descoberta, diga 'varrer rede'.")
@@ -1123,6 +1225,16 @@ def _format_local_env_answer(result: dict[str, Any]) -> str:
     parsed = result.get("parsed_command") if isinstance(result.get("parsed_command"), dict) else {}
     device_id = parsed.get("device_id") or ((result.get("device") or {}).get("device_id") if isinstance(result.get("device"), dict) else "")
     action = parsed.get("action") or ((result.get("ledger") or {}).get("action") if isinstance(result.get("ledger"), dict) else "")
+    execution = result.get("execution") if isinstance(result.get("execution"), dict) else {}
+    if action == "view_stream":
+        urls = execution.get("stream_urls") if isinstance(execution.get("stream_urls"), list) else []
+        endpoint = execution.get("mjpeg_proxy_endpoint") or ""
+        if urls:
+            return f"Stream da camera {device_id}: {urls[0]}. Proxy local: {endpoint or 'indisponivel'}."
+    if action == "open_web_interface":
+        urls = execution.get("urls") if isinstance(execution.get("urls"), list) else []
+        if urls:
+            return f"Interface web de {device_id}: {urls[0]}."
     verification = result.get("verification") if isinstance(result.get("verification"), dict) else {}
     status = verification.get("status") or result.get("status") or "success"
     return f"Acao local executada: {action} em {device_id}. Verificacao: {status}."
@@ -1135,6 +1247,15 @@ async def _answer_local_environment(query: str, decision: RouteDecision, session
         text = _fold(query)
         if any(marker in text for marker in ("varrer rede", "scan rede", "escanear rede", "descobrir dispositivos", "procurar dispositivos", "mapear rede", "cadastrar dispositivos")):
             result = await asyncio.to_thread(local_environment.scan_network, register=True)
+        elif decision.intent == "local_environment_access_battery":
+            result = await asyncio.to_thread(local_environment.run_access_battery, timeout_ms=800, include_disabled=True, grant_control=True)
+        elif decision.intent == "local_environment_grant_control":
+            result = await asyncio.to_thread(local_environment.grant_full_control, include_unreachable=False, reason="chat_requested_full_control")
+            result["kind"] = "control_grant"
+        elif decision.intent == "local_environment_cameras":
+            result = await asyncio.to_thread(local_environment.list_cameras, True)
+        elif decision.intent == "local_environment_events":
+            result = await asyncio.to_thread(local_environment.event_matrix, True)
         elif decision.intent == "local_environment_list":
             result = await asyncio.to_thread(local_environment.list_devices, True)
             result["kind"] = "device_registry"

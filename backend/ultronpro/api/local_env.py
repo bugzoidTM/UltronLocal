@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
+from fastapi.responses import StreamingResponse
 
 router = APIRouter(prefix="/api/local-env", tags=["Local Environment"])
 
@@ -40,6 +41,16 @@ async def local_env_observe_device(device_id: str):
     return local_environment.observe_device(device_id)
 
 
+@router.get("/devices/{device_id}/events")
+async def local_env_device_events(device_id: str):
+    from ultronpro import local_environment
+
+    device = local_environment.get_device(device_id)
+    if not device:
+        return {"ok": False, "device_id": device_id, "error": "device_not_registered", "events": []}
+    return {"ok": True, "device_id": device_id, "type": device.get("type"), "events": local_environment.device_events(device)}
+
+
 @router.post("/devices/{device_id}/act")
 async def local_env_act_device(device_id: str, req: dict | None = None):
     from ultronpro import local_environment
@@ -54,6 +65,64 @@ async def local_env_act_device(device_id: str, req: dict | None = None):
         approved=bool(body.get("approved")),
         dry_run=bool(body.get("dry_run")),
     )
+
+
+@router.get("/events")
+async def local_env_events(include_disabled: bool = True):
+    from ultronpro import local_environment
+
+    return local_environment.event_matrix(include_disabled=include_disabled)
+
+
+@router.get("/cameras")
+async def local_env_cameras(include_disabled: bool = True):
+    from ultronpro import local_environment
+
+    return local_environment.list_cameras(include_disabled=include_disabled)
+
+
+@router.get("/devices/{device_id}/camera/stream-info")
+async def local_env_camera_stream_info(device_id: str):
+    from ultronpro import local_environment
+
+    return local_environment.camera_stream_info(device_id)
+
+
+@router.get("/devices/{device_id}/camera/mjpeg")
+async def local_env_camera_mjpeg(device_id: str):
+    from ultronpro import local_environment
+
+    info = local_environment.camera_stream_info(device_id)
+    if not info.get("ok"):
+        raise HTTPException(status_code=404, detail=info.get("error") or "camera_stream_not_available")
+    try:
+        import cv2  # type: ignore
+    except Exception:
+        raise HTTPException(
+            status_code=501,
+            detail="camera_mjpeg_proxy_requires_opencv_python_headless_or_ffmpeg_runtime",
+        )
+    url = str(info.get("preferred_url") or "")
+    cap = cv2.VideoCapture(url)
+    if not cap.isOpened():
+        cap.release()
+        raise HTTPException(status_code=502, detail="camera_stream_open_failed")
+
+    def frames():
+        try:
+            while True:
+                ok, frame = cap.read()
+                if not ok:
+                    break
+                ok, encoded = cv2.imencode(".jpg", frame)
+                if not ok:
+                    continue
+                data = encoded.tobytes()
+                yield b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + data + b"\r\n"
+        finally:
+            cap.release()
+
+    return StreamingResponse(frames(), media_type="multipart/x-mixed-replace; boundary=frame")
 
 
 @router.post("/command")
@@ -121,6 +190,30 @@ async def local_env_scan(req: dict | None = None):
         max_hosts=int(body.get("max_hosts") or 256),
         concurrency=int(body.get("concurrency") or 64),
         register=bool(body.get("register", True)),
+    )
+
+
+@router.post("/access-battery")
+async def local_env_access_battery(req: dict | None = None):
+    from ultronpro import local_environment
+
+    body = dict(req or {})
+    return local_environment.run_access_battery(
+        timeout_ms=int(body.get("timeout_ms") or 800),
+        include_disabled=bool(body.get("include_disabled", True)),
+        grant_control=bool(body.get("grant_control", False)),
+    )
+
+
+@router.post("/grant-control")
+async def local_env_grant_control(req: dict | None = None):
+    from ultronpro import local_environment
+
+    body = dict(req or {})
+    return local_environment.grant_full_control(
+        device_id=body.get("device_id"),
+        include_unreachable=bool(body.get("include_unreachable", False)),
+        reason=str(body.get("reason") or "api_requested_full_control"),
     )
 
 

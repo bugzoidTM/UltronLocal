@@ -15,6 +15,7 @@ import unicodedata
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -31,8 +32,19 @@ CAPABILITY_RISK: dict[str, int] = {
     "turn_off": 1,
     "set_brightness": 1,
     "send_notification": 1,
+    "open_web_interface": 0,
+    "view_stream": 0,
+    "capture_snapshot": 1,
     "wake_device": 2,
     "set_temperature": 2,
+    "media_play": 1,
+    "media_pause": 1,
+    "volume_up": 1,
+    "volume_down": 1,
+    "mute": 1,
+    "send_key": 1,
+    "launch_app": 1,
+    "set_input": 1,
     "start_service": 3,
     "stop_service": 3,
     "restart_service": 3,
@@ -49,11 +61,20 @@ DEFAULT_DISCOVERY_PORTS = [
     5000,
     5001,
     5357,
+    7000,
+    8001,
+    8002,
+    8008,
+    8009,
     8000,
     8080,
+    8060,
     8123,
     32400,
+    9080,
     9100,
+    9197,
+    55000,
     22,
 ]
 
@@ -554,6 +575,117 @@ def _tcp_port_open(host: str, port: int, timeout_sec: float) -> bool:
             pass
 
 
+def _tcp_probe(host: str, port: int, timeout_sec: float) -> dict[str, Any]:
+    started = time.time()
+    ok = _tcp_port_open(host, port, timeout_sec)
+    return {
+        "kind": "tcp",
+        "ok": ok,
+        "port": int(port),
+        "latency_ms": int((time.time() - started) * 1000),
+    }
+
+
+def _http_probe(host: str, port: int, timeout_sec: float) -> dict[str, Any]:
+    scheme = "https" if int(port) == 443 else "http"
+    url = f"{scheme}://{host}:{int(port)}/"
+    started = time.time()
+    try:
+        with httpx.Client(timeout=timeout_sec, verify=False, follow_redirects=False) as client:
+            try:
+                resp = client.head(url)
+            except Exception:
+                resp = client.get(url)
+        headers = {
+            key.lower(): value
+            for key, value in resp.headers.items()
+            if key.lower() in {"server", "www-authenticate", "content-type", "location"}
+        }
+        return {
+            "kind": "http",
+            "ok": True,
+            "port": int(port),
+            "url": url,
+            "status_code": int(resp.status_code),
+            "headers": headers,
+            "latency_ms": int((time.time() - started) * 1000),
+        }
+    except Exception as exc:
+        tcp = _tcp_probe(host, port, timeout_sec)
+        tcp.update({
+            "kind": "http",
+            "url": url,
+            "http_ok": False,
+            "error": f"{type(exc).__name__}:{str(exc)[:160]}",
+        })
+        return tcp
+
+
+def _rtsp_probe(host: str, port: int, timeout_sec: float) -> dict[str, Any]:
+    started = time.time()
+    line = ""
+    try:
+        with socket.create_connection((host, int(port)), timeout=max(0.05, timeout_sec)) as sock:
+            sock.settimeout(max(0.05, timeout_sec))
+            req = (
+                f"OPTIONS rtsp://{host}:{int(port)}/ RTSP/1.0\r\n"
+                "CSeq: 1\r\n"
+                "User-Agent: UltronPro-LocalEnv/1.0\r\n\r\n"
+            ).encode("ascii", errors="ignore")
+            sock.sendall(req)
+            raw = sock.recv(512)
+        line = raw.decode("latin-1", errors="ignore").splitlines()[0:1][0] if raw else ""
+        return {
+            "kind": "rtsp",
+            "ok": True,
+            "port": int(port),
+            "status_line": _safe(line, 160),
+            "latency_ms": int((time.time() - started) * 1000),
+        }
+    except Exception as exc:
+        tcp = _tcp_probe(host, port, timeout_sec)
+        tcp.update({
+            "kind": "rtsp",
+            "rtsp_ok": False,
+            "error": f"{type(exc).__name__}:{str(exc)[:160]}",
+        })
+        return tcp
+
+
+def _ssh_probe(host: str, port: int, timeout_sec: float) -> dict[str, Any]:
+    started = time.time()
+    try:
+        with socket.create_connection((host, int(port)), timeout=max(0.05, timeout_sec)) as sock:
+            sock.settimeout(max(0.05, timeout_sec))
+            raw = sock.recv(160)
+        banner = raw.decode("latin-1", errors="ignore").strip()
+        return {
+            "kind": "ssh",
+            "ok": True,
+            "port": int(port),
+            "banner": _safe(banner, 160),
+            "latency_ms": int((time.time() - started) * 1000),
+        }
+    except Exception as exc:
+        tcp = _tcp_probe(host, port, timeout_sec)
+        tcp.update({
+            "kind": "ssh",
+            "ssh_ok": False,
+            "error": f"{type(exc).__name__}:{str(exc)[:160]}",
+        })
+        return tcp
+
+
+def _probe_access_port(host: str, port: int, timeout_sec: float) -> dict[str, Any]:
+    if int(port) in {80, 443, 5000, 5001, 5357, 7000, 8000, 8001, 8002, 8008, 8060, 8080, 8123, 32400, 9080, 9197, 55000}:
+        return _http_probe(host, port, timeout_sec)
+    if int(port) == 554:
+        return _rtsp_probe(host, port, timeout_sec)
+    if int(port) == 22:
+        return _ssh_probe(host, port, timeout_sec)
+    return _tcp_probe(host, port, timeout_sec)
+
+
 def _scan_host(host: str, ports: list[int], timeout_sec: float) -> dict[str, Any] | None:
     open_ports = [port for port in ports if _tcp_port_open(host, port, timeout_sec)]
     if not open_ports:
@@ -570,10 +702,18 @@ def _classify_open_ports(open_ports: list[int]) -> dict[str, Any]:
     ports = set(int(p) for p in open_ports)
     if 8123 in ports:
         return {"type": "home_assistant_hub", "adapter_hint": "home_assistant", "name_hint": "Home Assistant"}
-    if 9100 in ports:
-        return {"type": "printer", "adapter_hint": "network_probe", "name_hint": "Network printer"}
     if 554 in ports:
         return {"type": "camera_or_rtsp_device", "adapter_hint": "network_probe", "name_hint": "RTSP device"}
+    if 8060 in ports:
+        return {"type": "roku_tv_or_streamer", "adapter_hint": "network_probe", "name_hint": "Roku TV/Streamer"}
+    if ports & {8001, 8002, 55000}:
+        return {"type": "samsung_tv_or_media_device", "adapter_hint": "network_probe", "name_hint": "Samsung TV/Media device"}
+    if ports & {8008, 8009}:
+        return {"type": "chromecast_or_google_cast", "adapter_hint": "network_probe", "name_hint": "Chromecast/Google Cast"}
+    if ports & {7000, 9080, 9197}:
+        return {"type": "smart_tv_or_media_device", "adapter_hint": "network_probe", "name_hint": "Smart TV/Media device"}
+    if 9100 in ports:
+        return {"type": "printer", "adapter_hint": "network_probe", "name_hint": "Network printer"}
     if 1883 in ports:
         return {"type": "mqtt_broker", "adapter_hint": "network_probe", "name_hint": "MQTT broker"}
     if 32400 in ports:
@@ -585,24 +725,192 @@ def _classify_open_ports(open_ports: list[int]) -> dict[str, Any]:
     return {"type": "network_device", "adapter_hint": "network_probe", "name_hint": "Network device"}
 
 
+def _web_ports(open_ports: list[int]) -> list[int]:
+    web = {80, 443, 5000, 5001, 5357, 7000, 8000, 8001, 8002, 8008, 8060, 8080, 8123, 32400, 9080, 9197, 55000}
+    return [int(p) for p in open_ports if int(p) in web]
+
+
+def _web_urls(ip: str, open_ports: list[int]) -> list[str]:
+    urls: list[str] = []
+    for port in _web_ports(open_ports):
+        scheme = "https" if int(port) == 443 else "http"
+        default = (scheme == "http" and port == 80) or (scheme == "https" and port == 443)
+        url = f"{scheme}://{ip}/" if default else f"{scheme}://{ip}:{port}/"
+        if url not in urls:
+            urls.append(url)
+    return urls
+
+
+def _rtsp_url_candidates(ip: str, open_ports: list[int], config: dict[str, Any] | None = None) -> list[str]:
+    config = config if isinstance(config, dict) else {}
+    configured = str(config.get("stream_url") or "").strip()
+    if configured:
+        return [configured]
+    path = str(config.get("stream_path") or "").strip()
+    if path:
+        if not path.startswith("/"):
+            path = "/" + path
+        return [f"rtsp://{ip}:554{path}"]
+    if 554 not in {int(p) for p in open_ports}:
+        return []
+    candidates = [
+        f"rtsp://{ip}:554/",
+        f"rtsp://{ip}:554/stream1",
+        f"rtsp://{ip}:554/live",
+        f"rtsp://{ip}:554/h264",
+        f"rtsp://{ip}:554/cam/realmonitor?channel=1&subtype=0",
+        f"rtsp://{ip}:554/h264/ch1/main/av_stream",
+    ]
+    return list(dict.fromkeys(candidates))
+
+
+def _capabilities_for_type(device_type: str, open_ports: list[int]) -> list[str]:
+    dtype = str(device_type or "")
+    caps = ["read_state"]
+    if _web_ports(open_ports):
+        caps.append("open_web_interface")
+    if dtype == "camera_or_rtsp_device" or 554 in {int(p) for p in open_ports}:
+        caps.extend(["view_stream", "capture_snapshot"])
+    if dtype in {
+        "roku_tv_or_streamer",
+        "samsung_tv_or_media_device",
+        "chromecast_or_google_cast",
+        "smart_tv_or_media_device",
+        "media_server",
+    }:
+        caps.extend([
+            "turn_on",
+            "turn_off",
+            "media_play",
+            "media_pause",
+            "volume_up",
+            "volume_down",
+            "mute",
+            "send_key",
+            "launch_app",
+            "set_input",
+        ])
+    return list(dict.fromkeys(caps))
+
+
+def _aliases_for_type(ip: str, device_type: str, name_hint: str) -> list[str]:
+    aliases = [ip, name_hint, device_type]
+    if "camera" in device_type or "rtsp" in device_type:
+        aliases.extend(["camera", "cameras", "stream", "rtsp", f"camera {ip}"])
+    if "tv" in device_type or "cast" in device_type or "media" in device_type or "roku" in device_type:
+        aliases.extend(["tv", "televisao", "televisão", "media", "controle remoto", f"tv {ip}"])
+    if "printer" in device_type:
+        aliases.extend(["impressora", "printer"])
+    return [x for x in dict.fromkeys(_safe(a, 80) for a in aliases) if x]
+
+
+def _event_descriptor(capability: str, device: dict[str, Any], *, executable: bool = True, detail: dict[str, Any] | None = None) -> dict[str, Any]:
+    risk = int(CAPABILITY_RISK.get(capability, 4))
+    return {
+        "event": capability,
+        "risk_level": risk,
+        "requires_confirmation": bool(device.get("requires_confirmation")) or risk >= int(os.getenv("ULTRON_LOCAL_ENV_CONFIRM_RISK", "3") or 3),
+        "registered_capability": capability in set(device.get("capabilities") or []),
+        "executable": bool(executable),
+        "detail": detail or {},
+    }
+
+
+def device_events(device: dict[str, Any]) -> list[dict[str, Any]]:
+    if not isinstance(device, dict):
+        return []
+    config = device.get("config") if isinstance(device.get("config"), dict) else {}
+    ip = str(config.get("ip") or "").strip()
+    ports = [int(p) for p in (config.get("last_access_ports") or config.get("last_discovered_ports") or config.get("open_ports") or [])]
+    dtype = str(device.get("type") or "")
+    events: list[dict[str, Any]] = []
+    if "read_state" in set(device.get("capabilities") or []):
+        events.append(_event_descriptor("read_state", device, detail={"protocol": str(device.get("adapter") or "mock")}))
+    if "open_web_interface" in set(device.get("capabilities") or []):
+        events.append(_event_descriptor("open_web_interface", device, detail={"urls": _web_urls(ip, ports)}))
+    if "view_stream" in set(device.get("capabilities") or []):
+        urls = _rtsp_url_candidates(ip, ports, config)
+        events.append(_event_descriptor(
+            "view_stream",
+            device,
+            executable=bool(urls),
+            detail={
+                "protocol": "rtsp",
+                "real_time": True,
+                "url_candidates": urls,
+                "mjpeg_proxy_endpoint": f"/api/local-env/devices/{device.get('device_id')}/camera/mjpeg",
+                "requires_camera_credentials": not bool(config.get("stream_url")),
+            },
+        ))
+    if "capture_snapshot" in set(device.get("capabilities") or []):
+        events.append(_event_descriptor(
+            "capture_snapshot",
+            device,
+            executable=bool(config.get("snapshot_url") or config.get("stream_url")),
+            detail={"requires_snapshot_url_or_rtsp_decoder": True},
+        ))
+    remote_events = [
+        "turn_on",
+        "turn_off",
+        "media_play",
+        "media_pause",
+        "volume_up",
+        "volume_down",
+        "mute",
+        "send_key",
+        "launch_app",
+        "set_input",
+    ]
+    for event in remote_events:
+        if event not in set(device.get("capabilities") or []):
+            continue
+        executable = dtype == "roku_tv_or_streamer" and 8060 in set(ports)
+        if event == "turn_on" and not executable:
+            executable = bool(config.get("mac"))
+        events.append(_event_descriptor(
+            event,
+            device,
+            executable=executable,
+            detail={
+                "adapter": "roku_ecp" if dtype == "roku_tv_or_streamer" and 8060 in set(ports) else "adapter_config_required",
+                "hint": "Configure Home Assistant, Roku ECP, Samsung/WebOS adapter or MAC/WOL for reliable TV control." if not executable else "",
+            },
+        ))
+    return events
+
+
 def _device_from_discovery(hit: dict[str, Any]) -> dict[str, Any]:
     ip = str(hit.get("ip") or "").strip()
     fp = hit.get("fingerprint") if isinstance(hit.get("fingerprint"), dict) else {}
     device_id = f"net_{ip.replace('.', '_').replace(':', '_')}"
     open_ports = [int(p) for p in (hit.get("open_ports") or [])]
+    device_type = str(fp.get("type") or "network_device")
+    name_hint = str(fp.get("name_hint") or "Network device")
+    caps = _capabilities_for_type(device_type, open_ports)
     return {
         "device_id": device_id,
-        "name": f"{fp.get('name_hint') or 'Network device'} {ip}",
-        "type": str(fp.get("type") or "network_device"),
+        "name": f"{name_hint} {ip}",
+        "type": device_type,
         "location": "rede_local",
         "adapter": "network_probe",
-        "capabilities": ["read_state"],
-        "risk_level": 0,
+        "capabilities": caps,
+        "risk_level": max([CAPABILITY_RISK.get(c, 0) for c in caps] or [0]),
         "requires_confirmation": False,
         "allowed": False,
-        "aliases": [ip, str(fp.get("name_hint") or ""), str(fp.get("type") or "")],
-        "config": {"ip": ip, "open_ports": open_ports, "discovered_by": "tcp_port_probe"},
-        "metadata": {"discovered": True, "fingerprint": fp, "observed_at": hit.get("observed_at")},
+        "aliases": _aliases_for_type(ip, device_type, name_hint),
+        "config": {
+            "ip": ip,
+            "open_ports": open_ports,
+            "web_urls": _web_urls(ip, open_ports),
+            "rtsp_url_candidates": _rtsp_url_candidates(ip, open_ports),
+            "discovered_by": "tcp_port_probe",
+        },
+        "metadata": {
+            "discovered": True,
+            "fingerprint": fp,
+            "observed_at": hit.get("observed_at"),
+            "event_model_version": 1,
+        },
     }
 
 
@@ -611,7 +919,12 @@ def _merge_discovered_device(existing: dict[str, Any] | None, discovered: dict[s
         return _normalize_device(discovered)
     merged = dict(existing)
     merged["name"] = existing.get("name") or discovered.get("name")
-    merged["type"] = existing.get("type") or discovered.get("type")
+    existing_type = str(existing.get("type") or "")
+    discovered_type = str(discovered.get("type") or "")
+    if existing_type in {"", "network_device", "http_device"} and discovered_type not in {"", "network_device", "http_device"}:
+        merged["type"] = discovered_type
+    else:
+        merged["type"] = existing.get("type") or discovered.get("type")
     merged["location"] = existing.get("location") or discovered.get("location")
     merged["adapter"] = existing.get("adapter") or discovered.get("adapter")
     merged["risk_level"] = int(existing.get("risk_level") or discovered.get("risk_level") or 0)
@@ -628,6 +941,7 @@ def _merge_discovered_device(existing: dict[str, Any] | None, discovered: dict[s
     meta = dict(existing.get("metadata") if isinstance(existing.get("metadata"), dict) else {})
     meta.update(discovered.get("metadata") if isinstance(discovered.get("metadata"), dict) else {})
     meta["last_seen_discovery"] = _now()
+    meta["events"] = device_events(merged)
     merged["metadata"] = meta
     merged["updated_at"] = _now()
     return _normalize_device(merged)
@@ -1027,6 +1341,87 @@ def _notification_execute(device: dict[str, Any], action: str, params: dict[str,
     return {"ok": True, "adapter": "notification", "notification": row}
 
 
+def _roku_key(action: str, params: dict[str, Any]) -> str:
+    explicit = str(params.get("key") or params.get("button") or "").strip()
+    if explicit:
+        return explicit
+    return {
+        "turn_on": "PowerOn",
+        "turn_off": "PowerOff",
+        "media_play": "Play",
+        "media_pause": "Play",
+        "volume_up": "VolumeUp",
+        "volume_down": "VolumeDown",
+        "mute": "VolumeMute",
+    }.get(action, "")
+
+
+def _roku_ecp_request(ip: str, path: str, *, timeout_sec: float = 4.0) -> dict[str, Any]:
+    url = f"http://{ip}:8060{path}"
+    with httpx.Client(timeout=timeout_sec) as client:
+        resp = client.post(url)
+        resp.raise_for_status()
+    return {"ok": True, "url": url, "status_code": int(resp.status_code)}
+
+
+def _network_probe_execute(device: dict[str, Any], action: str, params: dict[str, Any]) -> dict[str, Any]:
+    config = device.get("config") if isinstance(device.get("config"), dict) else {}
+    ip = str(config.get("ip") or "").strip()
+    ports = [int(p) for p in (config.get("last_access_ports") or config.get("last_discovered_ports") or config.get("open_ports") or [])]
+    dtype = str(device.get("type") or "")
+    if action == "open_web_interface":
+        urls = _web_urls(ip, ports)
+        return {"ok": bool(urls), "adapter": "network_probe", "action": action, "urls": urls, "error": "" if urls else "no_web_interface_detected"}
+    if action == "view_stream":
+        urls = _rtsp_url_candidates(ip, ports, config)
+        return {
+            "ok": bool(urls),
+            "adapter": "network_probe",
+            "action": action,
+            "real_time": bool(urls),
+            "stream_urls": urls,
+            "mjpeg_proxy_endpoint": f"/api/local-env/devices/{device.get('device_id')}/camera/mjpeg",
+            "error": "" if urls else "no_stream_url_detected",
+        }
+    if action == "capture_snapshot":
+        snapshot_url = str(config.get("snapshot_url") or "").strip()
+        if not snapshot_url:
+            return {"ok": False, "adapter": "network_probe", "action": action, "error": "snapshot_url_not_configured"}
+        with httpx.Client(timeout=float(config.get("timeout_sec") or 8.0), verify=False) as client:
+            resp = client.get(snapshot_url)
+            resp.raise_for_status()
+        return {
+            "ok": True,
+            "adapter": "network_probe",
+            "action": action,
+            "content_type": resp.headers.get("content-type"),
+            "bytes": len(resp.content or b""),
+        }
+    if dtype == "roku_tv_or_streamer" and 8060 in set(ports):
+        if action == "launch_app":
+            app_id = str(params.get("app_id") or params.get("value") or "").strip()
+            if not app_id:
+                return {"ok": False, "adapter": "roku_ecp", "action": action, "error": "app_id_required"}
+            return {**_roku_ecp_request(ip, f"/launch/{app_id}"), "adapter": "roku_ecp", "action": action}
+        if action == "send_key":
+            key = _roku_key(action, params)
+            if not key:
+                return {"ok": False, "adapter": "roku_ecp", "action": action, "error": "key_required"}
+            return {**_roku_ecp_request(ip, f"/keypress/{quote(key)}"), "adapter": "roku_ecp", "action": action, "key": key}
+        if action in {"turn_on", "turn_off", "media_play", "media_pause", "volume_up", "volume_down", "mute"}:
+            key = _roku_key(action, params)
+            return {**_roku_ecp_request(ip, f"/keypress/{quote(key)}"), "adapter": "roku_ecp", "action": action, "key": key}
+    if action == "turn_on" and config.get("mac"):
+        return _wol_execute(device, "wake_device", params)
+    return {
+        "ok": False,
+        "adapter": "network_probe",
+        "action": action,
+        "error": "adapter_configuration_required",
+        "hint": "Configure um adapter especifico (Home Assistant, Roku ECP, Samsung/WebOS ou endpoint HTTP) para executar este comando com verificacao.",
+    }
+
+
 def _network_probe_observe(device: dict[str, Any]) -> dict[str, Any]:
     config = device.get("config") if isinstance(device.get("config"), dict) else {}
     ip = str(config.get("ip") or "").strip()
@@ -1088,6 +1483,8 @@ def _execute_adapter(device: dict[str, Any], action: str, params: dict[str, Any]
             return _wol_execute(device, action, params)
         if adapter == "notification":
             return _notification_execute(device, action, params)
+        if adapter == "network_probe":
+            return _network_probe_execute(device, action, params)
         return {"ok": False, "error": f"unsupported_adapter:{adapter}"}
     except subprocess.TimeoutExpired:
         return {"ok": False, "error": "timeout"}
@@ -1296,6 +1693,273 @@ def recent_actions(limit: int = 50) -> dict[str, Any]:
     return {"ok": True, "path": str(ACTION_LEDGER_PATH), "items": rows, "count": len(rows)}
 
 
+def _control_grant_payload(*, reason: str, responsive: bool, scope: str = "registered_capabilities") -> dict[str, Any]:
+    return {
+        "granted": bool(responsive),
+        "scope": scope,
+        "reason": _safe(reason, 240),
+        "requires_registry": True,
+        "requires_user_command": True,
+        "risk_gate_active": True,
+        "granted_at": _now(),
+    }
+
+
+def grant_full_control(
+    device_id: str | None = None,
+    *,
+    include_unreachable: bool = False,
+    reason: str = "user_requested_full_control",
+) -> dict[str, Any]:
+    reg = _load_registry()
+    devices = reg.setdefault("devices", {})
+    changed: list[dict[str, Any]] = []
+    skipped: list[dict[str, Any]] = []
+    for did, device in list(devices.items()):
+        if device_id and str(did) != str(device_id):
+            continue
+        if not isinstance(device, dict):
+            continue
+        meta = device.get("metadata") if isinstance(device.get("metadata"), dict) else {}
+        last_access = meta.get("last_access_test") if isinstance(meta.get("last_access_test"), dict) else {}
+        responsive = bool(last_access.get("ok"))
+        if not include_unreachable and last_access and not responsive:
+            skipped.append({"device_id": did, "reason": "last_access_test_not_responsive"})
+            continue
+        device["allowed"] = True
+        device["metadata"] = dict(meta)
+        device["metadata"]["control_grant"] = _control_grant_payload(reason=reason, responsive=True)
+        device["metadata"]["control_mode"] = "full_registered_capability_control"
+        device["updated_at"] = _now()
+        devices[did] = _normalize_device(device)
+        changed.append({
+            "device_id": did,
+            "capabilities": devices[did].get("capabilities") or [],
+            "risk_level": devices[did].get("risk_level"),
+            "requires_confirmation": devices[did].get("requires_confirmation"),
+        })
+    _save_registry(reg)
+    _append_jsonl(ACTION_LEDGER_PATH, {
+        "ts": _now(),
+        "ledger_id": f"lea_grant_{_hash([device_id, include_unreachable, changed])}",
+        "device_id": str(device_id or "*"),
+        "action": "grant_full_control",
+        "requested_by": "ultronpro",
+        "reason": _safe(reason, 500),
+        "risk_level": 1,
+        "approved": True,
+        "ok": True,
+        "result": "success",
+        "changed_count": len(changed),
+        "skipped_count": len(skipped),
+        "changed": changed[:100],
+        "skipped": skipped[:100],
+    })
+    return {"ok": True, "changed": changed, "changed_count": len(changed), "skipped": skipped, "skipped_count": len(skipped), "path": str(REGISTRY_PATH)}
+
+
+def test_device_access(device_id: str, *, timeout_ms: int = 800, persist: bool = True) -> dict[str, Any]:
+    device = get_device(device_id)
+    if not device:
+        return {"ok": False, "device_id": str(device_id or ""), "error": "device_not_registered"}
+    config = device.get("config") if isinstance(device.get("config"), dict) else {}
+    ip = str(config.get("ip") or "").strip()
+    ports = _normalize_ports([int(p) for p in (config.get("open_ports") or config.get("last_discovered_ports") or [])]) if ip else []
+    timeout_sec = max(0.05, min(3.0, float(timeout_ms or 800) / 1000.0))
+    started = time.time()
+    port_probes: list[dict[str, Any]] = []
+    for port in ports:
+        port_probes.append(_probe_access_port(ip, int(port), timeout_sec))
+    observation = observe_device(str(device.get("device_id") or ""))
+    responsive_ports = [int(p.get("port") or 0) for p in port_probes if bool(p.get("ok"))]
+    ok = bool(responsive_ports) or bool(observation.get("ok"))
+    status = "responsive" if ok else "unresponsive"
+    inferred_type = str(device.get("type") or "")
+    inferred_caps = list(device.get("capabilities") or [])
+    if ip and responsive_ports:
+        fp = _classify_open_ports(responsive_ports)
+        inferred_type = str(fp.get("type") or inferred_type)
+        inferred_caps = list(dict.fromkeys([*inferred_caps, *_capabilities_for_type(inferred_type, responsive_ports)]))
+    device_view = dict(device)
+    device_view["type"] = inferred_type
+    device_view["capabilities"] = inferred_caps
+    if ip and responsive_ports:
+        cfg_view = dict(config)
+        cfg_view["last_access_ports"] = responsive_ports
+        cfg_view.setdefault("web_urls", _web_urls(ip, responsive_ports))
+        cfg_view.setdefault("rtsp_url_candidates", _rtsp_url_candidates(ip, responsive_ports, config))
+        device_view["config"] = cfg_view
+    events = device_events(device_view)
+    result = {
+        "ok": ok,
+        "status": status,
+        "device_id": device.get("device_id"),
+        "name": device.get("name"),
+        "type": inferred_type,
+        "adapter": device.get("adapter"),
+        "ip": ip,
+        "ports_tested": ports,
+        "responsive_ports": responsive_ports,
+        "port_probes": port_probes,
+        "events": events,
+        "event_count": len(events),
+        "stream": camera_stream_info_for_device(device_view) if any(e.get("event") == "view_stream" for e in events) else None,
+        "observation": {
+            "ok": bool(observation.get("ok")),
+            "state": observation.get("state") if isinstance(observation.get("state"), dict) else None,
+            "error": observation.get("error"),
+        },
+        "latency_ms": int((time.time() - started) * 1000),
+        "tested_at": _now(),
+    }
+    if persist:
+        reg = _load_registry()
+        devices = reg.setdefault("devices", {})
+        current = devices.get(str(device.get("device_id") or ""))
+        if isinstance(current, dict):
+            if ip and responsive_ports:
+                discovered = _device_from_discovery({
+                    "ip": ip,
+                    "open_ports": responsive_ports,
+                    "fingerprint": _classify_open_ports(responsive_ports),
+                    "observed_at": result["tested_at"],
+                })
+                current = _merge_discovered_device(current, discovered)
+            meta = current.get("metadata") if isinstance(current.get("metadata"), dict) else {}
+            meta["last_access_test"] = {
+                "ok": ok,
+                "status": status,
+                "tested_at": result["tested_at"],
+                "responsive_ports": responsive_ports,
+                "latency_ms": result["latency_ms"],
+                "type": inferred_type,
+                "event_count": len(events),
+            }
+            meta["events"] = events
+            current["metadata"] = meta
+            if responsive_ports:
+                cfg = current.get("config") if isinstance(current.get("config"), dict) else {}
+                cfg["last_access_ports"] = responsive_ports
+                cfg["web_urls"] = _web_urls(ip, responsive_ports)
+                cfg["rtsp_url_candidates"] = _rtsp_url_candidates(ip, responsive_ports, cfg)
+                current["config"] = cfg
+            current["updated_at"] = _now()
+            devices[str(current.get("device_id"))] = _normalize_device(current)
+            _save_registry(reg)
+    return result
+
+
+def camera_stream_info_for_device(device: dict[str, Any]) -> dict[str, Any]:
+    if not isinstance(device, dict):
+        return {"ok": False, "error": "device_not_registered"}
+    config = device.get("config") if isinstance(device.get("config"), dict) else {}
+    ip = str(config.get("ip") or "").strip()
+    ports = [int(p) for p in (config.get("last_access_ports") or config.get("last_discovered_ports") or config.get("open_ports") or [])]
+    urls = _rtsp_url_candidates(ip, ports, config)
+    return {
+        "ok": bool(urls),
+        "device_id": device.get("device_id"),
+        "type": device.get("type"),
+        "real_time": bool(urls),
+        "protocol": "rtsp" if urls else "",
+        "url_candidates": urls,
+        "preferred_url": urls[0] if urls else "",
+        "mjpeg_proxy_endpoint": f"/api/local-env/devices/{device.get('device_id')}/camera/mjpeg",
+        "snapshot_supported": bool(config.get("snapshot_url")),
+        "needs_credentials_or_path": bool(urls) and not bool(config.get("stream_url")),
+        "decoder_available": _opencv_available(),
+    }
+
+
+def camera_stream_info(device_id: str) -> dict[str, Any]:
+    device = get_device(device_id)
+    if not device:
+        return {"ok": False, "device_id": str(device_id or ""), "error": "device_not_registered"}
+    return camera_stream_info_for_device(device)
+
+
+def _opencv_available() -> bool:
+    try:
+        __import__("cv2")
+        return True
+    except Exception:
+        return False
+
+
+def list_cameras(include_disabled: bool = True) -> dict[str, Any]:
+    devices = [d for d in list_devices(include_disabled=include_disabled).get("devices", []) if isinstance(d, dict)]
+    cameras = []
+    for device in devices:
+        caps = set(device.get("capabilities") or [])
+        dtype = str(device.get("type") or "")
+        if "view_stream" in caps or "camera" in dtype or "rtsp" in dtype:
+            row = dict(device)
+            row["events"] = device_events(device)
+            row["stream"] = camera_stream_info_for_device(device)
+            cameras.append(row)
+    return {"ok": True, "kind": "camera_list", "count": len(cameras), "devices": cameras}
+
+
+def event_matrix(include_disabled: bool = True) -> dict[str, Any]:
+    devices = [d for d in list_devices(include_disabled=include_disabled).get("devices", []) if isinstance(d, dict)]
+    rows = []
+    for device in devices:
+        rows.append({
+            "device_id": device.get("device_id"),
+            "name": device.get("name"),
+            "type": device.get("type"),
+            "allowed": bool(device.get("allowed")),
+            "adapter": device.get("adapter"),
+            "events": device_events(device),
+        })
+    return {"ok": True, "kind": "event_matrix", "count": len(rows), "devices": rows}
+
+
+def run_access_battery(
+    *,
+    timeout_ms: int = 800,
+    include_disabled: bool = True,
+    grant_control: bool = False,
+) -> dict[str, Any]:
+    devices = [d for d in list_devices(include_disabled=include_disabled).get("devices", []) if isinstance(d, dict)]
+    results = [test_device_access(str(d.get("device_id") or ""), timeout_ms=timeout_ms, persist=True) for d in devices]
+    responsive = [r for r in results if bool(r.get("ok"))]
+    grant = None
+    if grant_control:
+        grant = grant_full_control(
+            include_unreachable=False,
+            reason="access_battery_responsive_devices_full_control",
+        )
+    row = {
+        "ts": _now(),
+        "ledger_id": f"lea_access_{_hash([timeout_ms, include_disabled, grant_control, results])}",
+        "device_id": "local_environment",
+        "action": "access_battery",
+        "requested_by": "ultronpro",
+        "reason": "test_registered_device_access",
+        "risk_level": 0,
+        "approved": True,
+        "ok": True,
+        "result": "success",
+        "device_count": len(results),
+        "responsive_count": len(responsive),
+        "grant_control": bool(grant_control),
+        "control_grant": grant,
+    }
+    _append_jsonl(ACTION_LEDGER_PATH, row)
+    return {
+        "ok": True,
+        "kind": "access_battery",
+        "device_count": len(results),
+        "responsive_count": len(responsive),
+        "unresponsive_count": len(results) - len(responsive),
+        "results": results,
+        "control_grant": grant,
+        "ledger": row,
+        "registry_path": str(REGISTRY_PATH),
+    }
+
+
 def parse_command(text: str) -> dict[str, Any]:
     raw = str(text or "").strip()
     folded = _fold(raw)
@@ -1303,12 +1967,40 @@ def parse_command(text: str) -> dict[str, Any]:
         return {"ok": False, "reason": "empty_command"}
     action = ""
     params: dict[str, Any] = {}
+    if any(x in folded for x in ("abrir interface", "interface web", "abrir web", "painel web", "pagina do dispositivo")):
+        action = "open_web_interface"
+    if any(x in folded for x in ("abrir camera", "mostrar camera", "ver camera", "stream camera", "camera ao vivo", "imagem da camera", "imagens da camera")):
+        action = "view_stream"
+    if any(x in folded for x in ("capturar imagem", "snapshot", "tirar foto", "foto da camera")):
+        action = "capture_snapshot"
     if any(x in folded for x in ("status", "estado", "observar", "observe", "ler estado")):
         action = "read_state"
     if any(x in folded for x in ("ligar", "acender", "ative", "ativar", "turn on")):
         action = "turn_on"
     if any(x in folded for x in ("desligar", "apagar", "desative", "desativar", "turn off")):
         action = "turn_off"
+    if any(x in folded for x in ("play", "reproduzir", "continuar video", "tocar midia")):
+        action = "media_play"
+    if any(x in folded for x in ("pause", "pausar", "pausa", "parar video")):
+        action = "media_pause"
+    if any(x in folded for x in ("aumentar volume", "volume mais", "volume up")):
+        action = "volume_up"
+    if any(x in folded for x in ("diminuir volume", "baixar volume", "volume menos", "volume down")):
+        action = "volume_down"
+    if any(x in folded for x in ("mutar", "mudo", "mute", "silenciar")):
+        action = "mute"
+    if any(x in folded for x in ("apertar tecla", "pressionar tecla", "send key", "enviar tecla")):
+        action = "send_key"
+        m = re.search(r"(?:tecla|key)\s+([a-z0-9_:-]{1,40})", folded)
+        if m:
+            params["key"] = m.group(1)
+    if any(x in folded for x in ("abrir app", "launch app", "iniciar app")):
+        action = "launch_app"
+        m = re.search(r"(?:app|aplicativo)\s+([a-z0-9_:-]{1,40})", folded)
+        if m:
+            params["app_id"] = m.group(1)
+    if any(x in folded for x in ("trocar entrada", "mudar entrada", "set input", "entrada hdmi")):
+        action = "set_input"
     if "brilho" in folded or "brightness" in folded:
         action = "set_brightness"
         m = re.search(r"(\d{1,3})\s*%?", folded)

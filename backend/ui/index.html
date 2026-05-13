@@ -741,6 +741,9 @@
           <div class="btn-group">
             <button class="btn btn-sm btn-secondary" onclick="sendUltronMainChat('liste meus dispositivos da rede')">Dispositivos</button>
             <button class="btn btn-sm btn-secondary" onclick="sendUltronMainChat('varrer rede')">Varrer rede</button>
+            <button class="btn btn-sm btn-secondary" onclick="sendUltronMainChat('testar acesso dos dispositivos e dar controle total')">Testar acesso</button>
+            <button class="btn btn-sm btn-secondary" onclick="sendUltronMainChat('mostrar cameras da rede')">Câmeras</button>
+            <button class="btn btn-sm btn-secondary" onclick="sendUltronMainChat('quais eventos dos dispositivos?')">Eventos</button>
             <button class="btn btn-sm btn-secondary" onclick="sendUltronMainChat('ações pendentes')">Pendências</button>
             <button class="btn btn-sm btn-secondary" onclick="runMetacognitionInterview()">🧪 Rodar entrevista</button>
             <button class="btn btn-sm btn-secondary" onclick="loadMetacognitionWeeklySummary()">📅 Resumo semanal</button>
@@ -749,7 +752,7 @@
         <div class="card-body">
           <div class="chat-composer">
             <div class="chat-input-wrap">
-              <textarea id="ultronMainChatInput" placeholder="Digite um comando ou pergunta: liste dispositivos, varrer rede, acender lâmpada da sala..." style="min-height:110px;"></textarea>
+              <textarea id="ultronMainChatInput" placeholder="Digite um comando: testar acesso, mostrar câmeras, abrir camera 192.168.68.100, ligar TV da sala..." style="min-height:110px;"></textarea>
               <div class="chat-audio-row">
                 <div id="chatAudioMeter" class="chat-audio-meter" aria-hidden="true"><span id="chatAudioMeterFill" class="chat-audio-meter-fill"></span></div>
                 <div id="chatAudioStatus" class="chat-audio-status" aria-live="polite"></div>
