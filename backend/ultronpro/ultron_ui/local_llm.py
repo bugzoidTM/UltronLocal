@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-import os
 import concurrent.futures
+import json
+import os
 from typing import Any
 
 import httpx
@@ -224,6 +225,7 @@ class UltronLLMClient:
         self.last_route = ""
         self.last_model = ""
         self.last_error = ""
+        self.last_payload: dict[str, Any] = {}
 
     def complete(
         self,
@@ -268,10 +270,39 @@ class UltronLLMClient:
     def voice_reply(self, command: str) -> str:
         """
         Motor de resposta da UI. Hierarquia:
-        1. Cerebro causal do backend, ja responsavel por sintetizar texto final
-           e expor o traco causal em metadados estruturados.
-        2. Fallback puro ao Qwen se o backend estiver offline.
+        1. /api/voice/chat, com roteamento de comandos e ambiente.
+        2. /api/chat/stream, para reaproveitar o caminho do chat web.
+        3. Fallback puro ao Qwen se o backend estiver offline.
         """
+        voice_data = self._backend_voice_chat(command)
+        voice_answer = _payload_text(voice_data)
+        if _is_usable_reply(voice_answer):
+            strategy = str(voice_data.get("strategy") or "backend").strip()
+            self.last_route = f"voice_chat:{strategy}"
+            self.last_model = "backend"
+            self.last_error = ""
+            self.last_payload = voice_data
+            return voice_answer
+
+        stream_data = self._backend_chat_stream(command)
+        stream_answer = _payload_text(stream_data)
+        if _is_usable_reply(stream_answer):
+            strategy = str(stream_data.get("strategy") or "backend_stream").strip()
+            self.last_route = f"chat_stream:{strategy}"
+            self.last_model = "backend"
+            self.last_error = ""
+            self.last_payload = stream_data
+            return stream_answer
+
+        system = (
+            "Voce e UltronPro, um assistente de voz. Responda em portugues brasileiro. "
+            "Seja curto, pratico e natural para voz."
+        )
+        prompt = f"Comando de voz do usuario: {command}\nResponda em no maximo duas frases."
+        self.last_route = "local_llm_fallback"
+        self.last_payload = {}
+        return self.complete(prompt, system=system, max_tokens=64, temperature=0.25)
+
         brain_answer: str | None = None
         brain_data: dict = {}
 
@@ -307,6 +338,47 @@ class UltronLLMClient:
         self.last_route = "local_llm_fallback"
         return self.complete(prompt, system=system, max_tokens=64, temperature=0.25)
 
+    def _backend_voice_chat(self, command: str) -> dict[str, Any]:
+        try:
+            with httpx.Client(timeout=55.0) as client:
+                res = client.post(
+                    "http://127.0.0.1:8000/api/voice/chat",
+                    json={"text": command, "session_id": "ui_voice_session"},
+                )
+                if res.status_code == 200:
+                    data = res.json() if res.text else {}
+                    return data if isinstance(data, dict) else {}
+        except Exception as exc:
+            self.last_error = f"voice_chat:{type(exc).__name__}:{str(exc)[:120]}"
+        return {}
+
+    def _backend_chat_stream(self, command: str) -> dict[str, Any]:
+        try:
+            with httpx.Client(timeout=65.0) as client:
+                with client.stream(
+                    "POST",
+                    "http://127.0.0.1:8000/api/chat/stream",
+                    json={"message": command, "session_id": "ui_voice_session"},
+                ) as res:
+                    if res.status_code != 200:
+                        return {}
+                    for line in res.iter_lines():
+                        if not line:
+                            continue
+                        value = str(line).strip()
+                        if not value.startswith("data:"):
+                            continue
+                        raw = value.split("data:", 1)[1].strip()
+                        try:
+                            payload = json.loads(raw)
+                        except Exception:
+                            continue
+                        if isinstance(payload, dict) and payload.get("type") == "done":
+                            return payload
+        except Exception as exc:
+            self.last_error = f"chat_stream:{type(exc).__name__}:{str(exc)[:120]}"
+        return {}
+
     def runtime_description(self) -> str:
         if self.last_route:
             model = self.last_model or "modelo não informado pelo provedor"
@@ -341,6 +413,18 @@ def _extract_chat_text(payload: Any) -> str:
     return str(content or "").strip()
 
 
+def _payload_text(payload: Any) -> str:
+    if not isinstance(payload, dict):
+        return ""
+    return str(
+        payload.get("reply")
+        or payload.get("synthesized_text")
+        or payload.get("answer")
+        or payload.get("text")
+        or ""
+    ).strip()
+
+
 def _raise_for_status_with_body(response: httpx.Response) -> None:
     try:
         response.raise_for_status()
@@ -369,6 +453,20 @@ def _is_usable_reply(text: str) -> bool:
     if not value:
         return False
     low = value.lower()
+    normalized = (
+        low.replace("ã£", "a")
+        .replace("ã", "a")
+        .replace("á", "a")
+        .replace("à", "a")
+        .replace("â", "a")
+        .replace("é", "e")
+        .replace("ê", "e")
+        .replace("í", "i")
+        .replace("ó", "o")
+        .replace("õ", "o")
+        .replace("ú", "u")
+        .replace("ç", "c")
+    )
     bad_markers = (
         "cadastre-se",
         "sign up",
@@ -377,8 +475,13 @@ def _is_usable_reply(text: str) -> bool:
         "forbidden",
         "request limit",
         "rate limit",
+        "nao ha evidencia suficiente",
+        "nao ha evidencia direta suficiente",
+        "nao encontrei evidencia",
+        "lacuna causal",
+        "lacunas restantes",
     )
-    return not any(marker in low for marker in bad_markers)
+    return not any(marker in normalized for marker in bad_markers)
 
 
 def _run_g4f_once(

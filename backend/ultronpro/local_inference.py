@@ -25,6 +25,8 @@ DEFAULT_DIMS = int(os.getenv("ULTRON_LOCAL_INFERENCE_DIMS", "128") or 128)
 DEFAULT_TIMEOUT_SEC = float(os.getenv("ULTRON_LOCAL_INFERENCE_TIMEOUT_SEC", "1.5") or 1.5)
 ROOT = Path(__file__).resolve().parents[2]
 CRATE_DIR = ROOT / "backend" / "rust" / "ultron_local_infer"
+_BINARY_CACHE: dict[str, tuple[bool, str]] = {}
+_WINDOWS_REQUIRED_DLLS = ("libunwind.dll",)
 
 
 def _env_flag(name: str, default: str = "1") -> bool:
@@ -51,11 +53,56 @@ def candidate_binary_paths() -> list[Path]:
     return paths
 
 
+def _path_has_file(directory: Path, name: str) -> bool:
+    try:
+        return (directory / name).exists()
+    except Exception:
+        return False
+
+
+def _windows_dll_available(name: str, exe_dir: Path) -> bool:
+    if os.name != "nt":
+        return True
+    candidates: list[Path] = [exe_dir]
+    for env_name in ("SystemRoot", "WINDIR"):
+        root = os.getenv(env_name)
+        if root:
+            candidates.extend([Path(root), Path(root) / "System32"])
+    candidates.extend(Path(p) for p in os.getenv("PATH", "").split(os.pathsep) if p)
+    seen: set[str] = set()
+    for directory in candidates:
+        key = str(directory).lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        if _path_has_file(directory, name):
+            return True
+    return False
+
+
+def _binary_usable(path: Path) -> tuple[bool, str]:
+    key = str(path)
+    cached = _BINARY_CACHE.get(key)
+    if cached is not None:
+        return cached
+    if os.name == "nt":
+        missing = [dll for dll in _WINDOWS_REQUIRED_DLLS if not _windows_dll_available(dll, path.parent)]
+        if missing:
+            result = (False, "missing_dll:" + ",".join(missing))
+            _BINARY_CACHE[key] = result
+            return result
+    result = (True, "ok")
+    _BINARY_CACHE[key] = result
+    return result
+
+
 def binary_path() -> Path | None:
     for path in candidate_binary_paths():
         try:
             if path.exists() and path.is_file():
-                return path
+                usable, _ = _binary_usable(path)
+                if usable:
+                    return path
         except Exception:
             continue
     return None
@@ -115,6 +162,7 @@ def _call_engine(args: list[str], *, stdin: str | None = None, timeout_sec: floa
     if not exe:
         return None
     try:
+        creationflags = getattr(subprocess, "CREATE_NO_WINDOW", 0) if os.name == "nt" else 0
         proc = subprocess.run(
             [str(exe), *args],
             input=stdin,
@@ -123,6 +171,7 @@ def _call_engine(args: list[str], *, stdin: str | None = None, timeout_sec: floa
             capture_output=True,
             timeout=float(timeout_sec if timeout_sec is not None else DEFAULT_TIMEOUT_SEC),
             check=False,
+            creationflags=creationflags,
         )
         if proc.returncode != 0:
             return None
@@ -279,11 +328,22 @@ def _hard_negative_terms(toks: list[str]) -> set[str]:
 
 def status() -> dict[str, Any]:
     exe = binary_path()
+    skipped = []
+    for path in candidate_binary_paths():
+        try:
+            if not path.exists() or not path.is_file():
+                continue
+            usable, reason = _binary_usable(path)
+            if not usable:
+                skipped.append({"path": str(path), "reason": reason})
+        except Exception:
+            continue
     return {
         "ok": True,
         "enabled": _env_flag("ULTRON_LOCAL_INFERENCE_ENABLED", "1"),
         "rust_available": bool(exe),
         "binary_path": str(exe) if exe else "",
+        "skipped_binaries": skipped,
         "crate_dir": str(CRATE_DIR),
         "fallback": "python_deterministic",
         "dims": DEFAULT_DIMS,

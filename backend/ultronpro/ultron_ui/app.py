@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 import os
+import json
 import math
 import random
 import re
 import sys
 import threading
 import time
+import urllib.request
+import webbrowser
 from typing import Any
 
 from PyQt5.QtCore import QEasingCurve, QPropertyAnimation, QPointF, Qt, QThread, QTimer, pyqtSignal
@@ -320,6 +323,30 @@ def _looks_like_runtime_query(text: str) -> bool:
     if "rota" in text or "llm" in text:
         return True
     return "modelo" in text and any(hint in text for hint in _RUNTIME_QUERY_HINTS)
+
+
+def _launch_urls_from_text(text: str) -> list[str]:
+    value = str(text or "").strip()
+    if "stream da camera" not in value.lower():
+        return []
+    proxy = re.search(r"proxy local:\s*(/api/[^\s.]+)", value, flags=re.IGNORECASE)
+    if proxy:
+        proxy_url = "http://127.0.0.1:8000" + proxy.group(1)
+        info_url = proxy_url.rsplit("/mjpeg", 1)[0] + "/stream-info"
+        try:
+            with urllib.request.urlopen(info_url, timeout=2.0) as resp:
+                info = json.loads(resp.read().decode("utf-8", errors="ignore") or "{}")
+            if isinstance(info, dict) and info.get("decoder_available"):
+                return [proxy_url]
+            direct = str((info or {}).get("preferred_url") or "").strip()
+            if direct:
+                return [direct]
+        except Exception:
+            return [proxy_url]
+    rtsp = re.search(r"(rtsp://[^\s]+)", value, flags=re.IGNORECASE)
+    if rtsp:
+        return [rtsp.group(1).rstrip(".")]
+    return []
 
 
 class ApprovalDialog(QDialog):
@@ -655,6 +682,9 @@ class UltronWindow(QMainWindow):
         self.pulse.set_mode("listening")
         if payload.get("route"):
             self._append_system(f"Rota LLM: {payload.get('route')}")
+        for url in _launch_urls_from_text(reply):
+            if webbrowser.open(url):
+                self._append_system(f"Abrindo: {url}")
         self._append_assistant(reply)
         self._say(reply)
         self._schedule_microphone_resume()

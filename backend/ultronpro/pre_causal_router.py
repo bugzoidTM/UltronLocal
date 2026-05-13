@@ -229,8 +229,14 @@ def _local_environment_decision(query: str, session_id: str | None = None) -> Ro
     camera_markers = (
         "listar cameras",
         "liste cameras",
+        "mostra cameras",
+        "mostra camera",
         "mostrar cameras",
+        "mostrar camera",
         "mostre cameras",
+        "mostre camera",
+        "abre minha camera",
+        "abrir minha camera",
         "cameras da rede",
         "cameras disponiveis",
         "camera ao vivo",
@@ -276,6 +282,12 @@ def _local_environment_decision(query: str, session_id: str | None = None) -> Ro
             "local_environment",
             "registered_device_command",
         )
+    if parsed.get("action") and parsed.get("reason") in {"ambiguous_device", "no_registered_device_matched"}:
+        return _decision("local_environment_action", 0.72, "local_environment", f"device_command_{parsed.get('reason')}")
+    if any(marker in text for marker in ("camera", "cameras")) and any(
+        marker in text for marker in ("abre", "abrir", "mostra", "mostrar", "mostre", "ver", "veja", "stream", "imagem")
+    ):
+        return _decision("local_environment_cameras", 0.86, "local_environment", "generic_camera_query")
     return None
 
 
@@ -1061,6 +1073,46 @@ def _self_model_trace(query: str) -> dict[str, Any]:
     return _typed_trace("rag_self_model", sources=sources[:4], lookup_query=query, evidence_count=len(sources))
 
 
+def _is_self_identity_query(text: str) -> bool:
+    identity_markers = (
+        "quem e vc",
+        "quem e voce",
+        "quem voce e",
+        "quem vc e",
+        "o que e vc",
+        "o que e voce",
+        "o que voce e",
+        "o que vc e",
+        "qual seu nome",
+        "qual e seu nome",
+        "como voce se chama",
+        "como vc se chama",
+        "seu nome",
+    )
+    return any(marker in text for marker in identity_markers)
+
+
+def _answer_self_identity(query: str, decision: RouteDecision) -> PreCausalAnswer:
+    try:
+        from ultronpro import self_model
+
+        sm = self_model.load()
+    except Exception:
+        sm = {}
+    identity = sm.get("identity") if isinstance(sm.get("identity"), dict) else {}
+    name = str(identity.get("name") or identity.get("agent_name") or "UltronPro").strip()
+    role = str(
+        identity.get("role")
+        or identity.get("description")
+        or "assistente local orientado a conversa, memoria e acoes autorizadas"
+    ).strip()
+    answer = (
+        f"Sou {name}, um {role}. "
+        "Posso conversar, lembrar contexto desta sessao e controlar dispositivos cadastrados quando houver permissao."
+    )
+    return PreCausalAnswer(True, answer, decision, trace_rag=_self_model_trace(query))
+
+
 def classify_pre_causal(query: str, session: dict[str, Any] | None = None, session_id: str | None = None) -> RouteDecision:
     text = _fold(query)
     token_set = set(text.split())
@@ -1096,6 +1148,10 @@ def classify_pre_causal(query: str, session: dict[str, Any] | None = None, sessi
         or (("chutar" in text or "xutar" in text) and ("balde" in text or "baldd" in text))
     ):
         return _decision("language_nuance", 0.82, "language_nuance", "language_meaning_request")
+    if _is_self_identity_query(text):
+        return _decision("self_identity", 0.95, "self_identity", "assistant_identity_query")
+    if any(marker in text for marker in ("voce gosta", "vc gosta", "voce prefere", "vc prefere", "voce quer", "vc quer")):
+        return _decision("self_limits", 0.86, "self_limits", "assistant_preference_limit")
     if any(marker in text for marker in ("quem e", "qiue e", "qual escritor", "qual autor", "autor", "autou", "autor do livro", "responsavel por escrever", "obra", "livro", "livri")):
         return _decision("stable_fact", 0.86, "stable_fact", "stable_fact_lookup")
     if any(marker in text for marker in ("sentimento", "sentimentos", "emocao", "emocoes", "emo es", "consciencia", "conscienssia", "ciencia", "ci ncia", "snt coisa")):
@@ -1217,6 +1273,31 @@ def _format_local_env_answer(result: dict[str, Any]) -> str:
         )
     if not result.get("ok"):
         reason = result.get("reason") or result.get("status") or result.get("error") or ((result.get("gate") or {}).get("reason") if isinstance(result.get("gate"), dict) else "")
+        if reason == "ambiguous_device":
+            candidates = [str(x) for x in (result.get("candidates") or []) if x]
+            labels: list[str] = []
+            try:
+                from ultronpro import local_environment
+
+                for candidate in candidates[:5]:
+                    device = local_environment.get_device(candidate) or {}
+                    label = str(device.get("name") or candidate)
+                    dtype = str(device.get("type") or "").strip()
+                    location = str(device.get("location") or "").strip()
+                    detail = ", ".join(x for x in (label, dtype, location) if x)
+                    labels.append(f"{candidate} ({detail})")
+            except Exception:
+                labels = candidates[:5]
+            suffix = ", ".join(labels or candidates[:5]) or "mais de um dispositivo"
+            action = result.get("action") or "acao"
+            return f"Encontrei mais de um dispositivo para {action}. Especifique qual: {suffix}."
+        if reason == "no_registered_device_matched":
+            action = result.get("action") or "acao"
+            return f"Entendi a acao {action}, mas nao encontrei um dispositivo cadastrado correspondente. Diga 'liste meus dispositivos' para ver os nomes disponiveis."
+        execution = result.get("execution") if isinstance(result.get("execution"), dict) else {}
+        if reason == "execution_failed" and execution.get("hint"):
+            action = execution.get("action") or ((result.get("ledger") or {}).get("action") if isinstance(result.get("ledger"), dict) else "acao")
+            return f"Entendi o comando {action}, mas o adapter atual nao consegue executar. {execution.get('hint')}"
         return f"Nao executei a acao no ambiente local: {reason or 'bloqueada'}."
     if result.get("registered_count") is not None:
         count = int(result.get("registered_count") or 0)
@@ -1253,7 +1334,26 @@ async def _answer_local_environment(query: str, decision: RouteDecision, session
             result = await asyncio.to_thread(local_environment.grant_full_control, include_unreachable=False, reason="chat_requested_full_control")
             result["kind"] = "control_grant"
         elif decision.intent == "local_environment_cameras":
-            result = await asyncio.to_thread(local_environment.list_cameras, True)
+            open_camera = any(marker in text for marker in ("abre", "abrir", "ver", "veja", "stream", "camera ao vivo", "imagem"))
+            list_all = any(marker in text for marker in ("cameras", "listar", "liste", "mostre cameras", "mostra cameras", "mostrar cameras"))
+            if open_camera and not list_all:
+                cameras = await asyncio.to_thread(local_environment.list_cameras, True)
+                devices = [d for d in (cameras.get("devices") or []) if isinstance(d, dict)]
+                if devices:
+                    config = devices[0].get("config") if isinstance(devices[0].get("config"), dict) else {}
+                    target = str(config.get("ip") or devices[0].get("device_id") or "").strip()
+                    result = await asyncio.to_thread(
+                        local_environment.execute_command,
+                        f"abrir camera {target}",
+                        requested_by="chat_stream",
+                        approved=True,
+                        session_id=str(session_id or "default"),
+                    )
+                    result["default_camera_selected"] = devices[0].get("device_id")
+                else:
+                    result = cameras
+            else:
+                result = await asyncio.to_thread(local_environment.list_cameras, True)
         elif decision.intent == "local_environment_events":
             result = await asyncio.to_thread(local_environment.event_matrix, True)
         elif decision.intent == "local_environment_list":
@@ -1331,9 +1431,19 @@ async def answer_pre_causal(query: str, session_id: str | None = None, session: 
         return await _answer_model_task(query, decision)
     if decision.route in {"translation", "creative"}:
         return await _answer_model_task(query, decision)
+    if decision.route == "self_identity":
+        return _answer_self_identity(query, decision)
     if decision.route == "stable_fact":
         return await _answer_stable_fact(query, decision)
     if decision.route == "self_limits":
+        folded = _fold(query)
+        if any(marker in folded for marker in ("gosta", "prefere", "quer")):
+            return PreCausalAnswer(
+                True,
+                "Nao tenho gostos pessoais. Posso avaliar estado, listar dispositivos e cameras, e executar comandos autorizados pelo registry e pelo risk gate.",
+                decision,
+                trace_rag=_self_model_trace(query),
+            )
         return PreCausalAnswer(
             True,
             "Nao tenho sentimentos ou consciencia subjetiva humana. Tenho estados internos, memoria, objetivos e guardrails, mas isso nao equivale a experiencia consciente genuina.",

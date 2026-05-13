@@ -15490,7 +15490,7 @@ async def voice_chat(req: VoiceChatRequest):
             pass
 
     if is_creation_intent(txt):
-        ans = 'Fui desenvolvido no projeto UltronPro (Nutef) pelo seu time local, nÃ£o pelo personagem da Marvel.'
+        ans = 'Fui desenvolvido no projeto UltronPro (Nutef) pelo seu time local, nao pelo personagem da Marvel.'
         store.db.add_event('voice_chat', "ðŸŽ™ï¸ voice chat latency=0ms ok=True strategy=identity_guard")
         _trace_emit_voice(ans, 'identity_guard', outcome='success')
         _record_chat_turn_episode(txt, ans, strategy='identity_guard', source='voice_chat', session_id=session_id)
