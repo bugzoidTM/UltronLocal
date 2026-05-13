@@ -229,6 +229,16 @@ def _local_environment_decision(query: str, session_id: str | None = None) -> Ro
     )
     if any(marker in text for marker in context_device_terms) and any(term in text for term in device_type_terms):
         return _decision("local_environment_context_question", 0.84, "local_environment", "local_device_context_followup")
+    if any(marker in text for marker in ("qual delas", "qual deles", "qual desses", "qual dessas", "deles", "delas", "essas", "esses")) and any(
+        marker in text for marker in ("abrir", "abre", "ver", "consigo", "posso", "funciona", "usar", "controlar")
+    ):
+        try:
+            from ultronpro import session_memory
+
+            if session_memory.get_value(session_id, "context.local_environment", include_long_term=False):
+                return _decision("local_environment_context_question", 0.82, "local_environment", "local_environment_contextual_followup")
+        except Exception:
+            pass
     access_markers = (
         "bateria de acesso",
         "testar acesso",
@@ -449,16 +459,34 @@ def _is_session_context_read(query: str) -> bool:
     return any(marker in text for marker in markers)
 
 
+def _is_contextual_followup(query: str) -> bool:
+    text = _fold(query)
+    if not text:
+        return False
+    if re.fullmatch(r"(?:e\s+)?(?:isso|isto|esse|essa|esses|essas|aquilo|ele|ela|eles|elas)\??", text):
+        return True
+    patterns = (
+        r"^(?:e|entao|agora)\b",
+        r"\b(?:isso|isto|esse|essa|esses|essas|aquilo|disso|dessa|desse|desses|dessas)\b",
+        r"\b(?:ele|ela|eles|elas|deles|delas)\b",
+        r"\b(?:qual|quais|quem|onde|como|quando|porque|por que)\s+(?:deles|delas|desses|dessas|desse|dessa|isso|ele|ela|eles|elas)\b",
+        r"\b(?:continue|continua|retome|prossiga)\b",
+    )
+    return any(re.search(pattern, text) for pattern in patterns)
+
+
 def _answer_session_context(query: str, session_id: str, decision: RouteDecision) -> PreCausalAnswer:
     try:
         from ultronpro import session_memory, store
 
+        is_context_read = _is_session_context_read(query)
+        is_short_context_ref = bool(re.fullmatch(r"(?:e\s+)?(?:isso|isto|esse|essa|esses|essas|aquilo|ele|ela|eles|elas)\??", _fold(query)))
         contexts = session_memory.recent_context(session_id, limit=5)
         if contexts:
             latest = contexts[0]
             value = latest.get("value") if isinstance(latest.get("value"), dict) else {}
             summary = str((value or {}).get("summary") or "").strip()
-            if summary:
+            if summary and is_context_read:
                 trace = _typed_trace(
                     "rag_user_memory",
                     sources=[{"source": "sqlite.pre_causal_memory.context", "score": 1.0, "chunk_id": latest.get("key"), "rag_type": "rag_user_memory", "threshold": _rag_threshold("rag_user_memory")}],
@@ -466,7 +494,15 @@ def _answer_session_context(query: str, session_id: str, decision: RouteDecision
                     evidence_count=1,
                 )
                 return PreCausalAnswer(True, f"Estamos falando sobre {summary}.", decision, trace_rag=trace)
-        episodes = store.list_episodic_episodes(session_id=str(session_id or "default"), episode_type="chat_turn", limit=3)
+            if summary and is_short_context_ref:
+                trace = _typed_trace(
+                    "rag_user_memory",
+                    sources=[{"source": "sqlite.pre_causal_memory.context", "score": 1.0, "chunk_id": latest.get("key"), "rag_type": "rag_user_memory", "threshold": _rag_threshold("rag_user_memory")}],
+                    lookup_query=query,
+                    evidence_count=1,
+                )
+                return PreCausalAnswer(True, f"Voce esta se referindo ao contexto recente: {summary}", decision, trace_rag=trace)
+        episodes = store.list_episodic_episodes(session_id=str(session_id or "default"), episode_type="chat_turn", limit=5)
         parts = []
         for ep in episodes:
             user_text = str(ep.get("user_text") or "").strip()
@@ -478,7 +514,53 @@ def _answer_session_context(query: str, session_id: str, decision: RouteDecision
         if parts:
             short = " | ".join(parts[:4])[:500]
             trace = _typed_trace("rag_user_memory", sources=[{"source": "sqlite.episodic_episodes", "score": 0.8, "chunk_id": "recent_chat_turns", "rag_type": "rag_user_memory", "threshold": _rag_threshold("rag_user_memory")}], lookup_query=query, evidence_count=len(parts))
-            return PreCausalAnswer(True, f"Pelo contexto recente, estamos nessa conversa: {short}", decision, trace_rag=trace)
+            if is_context_read:
+                return PreCausalAnswer(True, f"Pelo contexto recente, estamos nessa conversa: {short}", decision, trace_rag=trace)
+            if is_short_context_ref:
+                context_subject = ""
+                for item in contexts[:3]:
+                    value = item.get("value") if isinstance(item.get("value"), dict) else {}
+                    context_subject = str((value or {}).get("summary") or (value or {}).get("topic") or "").strip()
+                    if context_subject:
+                        break
+                latest_user = next(
+                    (
+                        str(ep.get("user_text") or "").strip()
+                        for ep in episodes
+                        if str(ep.get("user_text") or "").strip()
+                        and not _is_session_context_read(str(ep.get("user_text") or ""))
+                        and not _is_contextual_followup(str(ep.get("user_text") or ""))
+                        and not re.fullmatch(r"(?:e\s+)?(?:isso|isto|esse|essa|esses|essas|aquilo|ele|ela|eles|elas)\??", _fold(str(ep.get("user_text") or "")))
+                    ),
+                    "",
+                )
+                subject = context_subject or latest_user or short
+                return PreCausalAnswer(True, f"Voce esta se referindo ao contexto recente: {subject}", decision, trace_rag=trace)
+            prompt_context = []
+            if contexts:
+                for item in contexts[:3]:
+                    value = item.get("value") if isinstance(item.get("value"), dict) else {}
+                    if value:
+                        prompt_context.append(str(value.get("summary") or value.get("answer") or value)[:700])
+            for ep in reversed(episodes[:5]):
+                user_text = str(ep.get("user_text") or "").strip()
+                assistant_text = str(ep.get("assistant_text") or "").strip()
+                if user_text or assistant_text:
+                    prompt_context.append(f"Usuario: {user_text}\nUltron: {assistant_text}"[:900])
+            prompt = (
+                "Use o contexto da conversa para resolver referencias como 'isso', 'ele', 'desses' ou continuacoes. "
+                "Responda de modo natural e curto. Nao invente comandos, ferramentas, URLs ou nomes que nao aparecam no contexto. "
+                "Se o contexto nao for suficiente, diga exatamente o que precisa esclarecer.\n\n"
+                f"Contexto recente:\n{chr(10).join(prompt_context)[-2600:]}\n\n"
+                f"Mensagem atual:\n{query}"
+            )
+            try:
+                answer = _model_complete(prompt, input_class="pre_causal_session_context", max_tokens=120)
+            except Exception:
+                answer = ""
+            if answer:
+                return PreCausalAnswer(True, answer, decision, trace_rag=trace)
+            return PreCausalAnswer(True, f"Pelo contexto recente, voce esta se referindo a: {short}", decision, trace_rag=trace)
     except Exception as exc:
         trace = _typed_trace("rag_user_memory", sources=[], lookup_query=query, evidence_count=0, errors=[f"session_context:{type(exc).__name__}"])
         return PreCausalAnswer(True, "Tentei recuperar o contexto, mas a memoria local nao respondeu agora.", decision, trace_rag=trace)
@@ -1221,6 +1303,8 @@ def classify_pre_causal(query: str, session: dict[str, Any] | None = None, sessi
         return _decision("session_memory_read", 0.9, "session_memory", "session_fact_read")
     if _is_session_context_read(query):
         return _decision("session_context_read", 0.88, "session_context", "session_context_recall")
+    if _is_contextual_followup(query):
+        return _decision("session_context_followup", 0.78, "session_context", "contextual_followup_reference")
     if any(marker in text for marker in ("raiz quadrada", "rz cuadrada", "sqrt", "square root", "calcule", "qnto", "quanto")):
         return _decision("math_expression", 0.88, "math", "math_language_or_expression")
     if re.search(r"\b(?:todos?|tds|tods)\b", text) or "capacidade de" in text:
@@ -1304,6 +1388,67 @@ def _local_env_group_summary(devices: list[dict[str, Any]]) -> tuple[str, dict[s
     return ", ".join(labels) if labels else "nenhum grupo identificado", groups
 
 
+def _local_env_capability_labels(device: dict[str, Any]) -> list[str]:
+    caps = set(str(x) for x in (device.get("capabilities") or []) if str(x))
+    labels: list[str] = []
+    ordered = (
+        ("read_state", "ler estado"),
+        ("open_web_interface", "abrir interface web"),
+        ("view_stream", "ver imagem ao vivo"),
+        ("capture_snapshot", "capturar snapshot"),
+        ("turn_on", "ligar"),
+        ("turn_off", "desligar"),
+        ("media_play", "play"),
+        ("media_pause", "pause"),
+        ("volume_up", "aumentar volume"),
+        ("volume_down", "diminuir volume"),
+        ("mute", "mudo"),
+        ("send_key", "enviar tecla"),
+        ("launch_app", "abrir app"),
+        ("set_input", "trocar entrada"),
+        ("wake_device", "acordar dispositivo"),
+        ("start_service", "iniciar servico"),
+        ("stop_service", "parar servico"),
+        ("restart_service", "reiniciar servico"),
+        ("run_script", "rodar script"),
+    )
+    for cap, label in ordered:
+        if cap in caps:
+            labels.append(label)
+    return labels
+
+
+def _local_env_capability_phrase(device: dict[str, Any], *, limit: int = 6) -> str:
+    labels = _local_env_capability_labels(device)
+    if not labels:
+        return "sem eventos declarados"
+    suffix = "" if len(labels) <= limit else f" e mais {len(labels) - limit}"
+    return ", ".join(labels[:limit]) + suffix
+
+
+def _local_env_camera_stream_hint(device: dict[str, Any]) -> str:
+    stream = device.get("stream") if isinstance(device.get("stream"), dict) else {}
+    preferred = str(stream.get("preferred_url") or "").strip()
+    proxy = str(stream.get("mjpeg_proxy_endpoint") or "").strip()
+    if not preferred:
+        try:
+            from ultronpro import local_environment
+
+            info = local_environment.camera_stream_info_for_device(device)
+            if isinstance(info, dict):
+                preferred = str(info.get("preferred_url") or "").strip()
+                proxy = str(info.get("mjpeg_proxy_endpoint") or "").strip()
+        except Exception:
+            pass
+    if preferred and proxy:
+        return f"stream {preferred}; proxy {proxy}"
+    if preferred:
+        return f"stream {preferred}"
+    if proxy:
+        return f"proxy {proxy}"
+    return _local_env_capability_phrase(device)
+
+
 def _remember_local_env_context(session_id: str | None, query: str, result: dict[str, Any], answer: str) -> None:
     try:
         from ultronpro import session_memory
@@ -1347,6 +1492,12 @@ def _answer_local_environment_context_question(query: str, decision: RouteDecisi
             devices = [d for d in local_environment.list_devices(include_disabled=True).get("devices", []) if isinstance(d, dict)]
         text = _fold(query)
         summary, groups = _local_env_group_summary(devices)
+        trace = _typed_trace(
+            "rag_user_memory",
+            sources=[{"source": "sqlite.pre_causal_memory.context.local_environment", "score": 1.0, "chunk_id": "context.local_environment", "rag_type": "rag_user_memory", "threshold": _rag_threshold("rag_user_memory")}],
+            lookup_query=query,
+            evidence_count=len(devices),
+        )
         target = ""
         if any(term in text for term in ("computador", "pc", "notebook", "desktop")):
             target = "computador"
@@ -1356,16 +1507,41 @@ def _answer_local_environment_context_question(query: str, decision: RouteDecisi
             target = "tv"
         elif "roteador" in text:
             target = "roteador"
+        wants_open = any(term in text for term in ("abrir", "abre", "ver", "visualizar", "imagem", "stream", "ao vivo", "assistir"))
+        wants_control = any(term in text for term in ("controlar", "usar", "ligar", "desligar", "volume", "play", "pause", "mudo", "comando", "comandos"))
+        wants_events = any(term in text for term in ("consigo", "posso", "da pra", "daria", "funciona", "eventos", "acoes", "acao", "capacidades", "capabilities"))
+        if not target:
+            if wants_open and groups.get("camera"):
+                target = "camera"
+            elif wants_control and groups.get("tv"):
+                target = "tv"
+            elif wants_open and groups.get("http"):
+                target = "http"
         if target:
             matched = groups.get(target) or []
-            trace = _typed_trace(
-                "rag_user_memory",
-                sources=[{"source": "sqlite.pre_causal_memory.context.local_environment", "score": 1.0, "chunk_id": "context.local_environment", "rag_type": "rag_user_memory", "threshold": _rag_threshold("rag_user_memory")}],
-                lookup_query=query,
-                evidence_count=len(devices),
-            )
             if matched:
-                labels = ", ".join(_local_env_device_label(d) for d in matched[:6])
+                if target == "camera" and (wants_open or wants_events):
+                    openable = [d for d in matched if {"view_stream", "open_web_interface"} & set(str(x) for x in (d.get("capabilities") or []))]
+                    selected = openable or matched
+                    lines = [f"Das cameras que tenho no contexto, consigo tentar abrir {len(selected)}:"]
+                    for device in selected[:6]:
+                        lines.append(f"- {_local_env_device_label(device)}: {_local_env_camera_stream_hint(device)}")
+                    lines.append("Para abrir, fale algo como 'abrir camera' ou 'abrir camera 192.168.68.100'.")
+                    if len(selected) > 6:
+                        lines.append(f"Ha mais {len(selected) - 6} camera(s) no contexto.")
+                    return PreCausalAnswer(True, "\n".join(lines), decision, trace_rag=trace)
+                if target == "tv" and (wants_control or wants_events):
+                    lines = [f"Tenho {len(matched)} TV/dispositivo(s) de midia no contexto:"]
+                    for device in matched[:6]:
+                        lines.append(f"- {_local_env_device_label(device)}: {_local_env_capability_phrase(device)}")
+                    lines.append("Comandos como ligar, desligar, play, pause e volume passam pelo capability model e pelo risk gate.")
+                    return PreCausalAnswer(True, "\n".join(lines), decision, trace_rag=trace)
+                if target == "http" and (wants_open or wants_events):
+                    lines = [f"Estes dispositivos genericos podem ter interface web abrivel:"]
+                    for device in matched[:6]:
+                        lines.append(f"- {_local_env_device_label(device)}: {_local_env_capability_phrase(device)}")
+                    return PreCausalAnswer(True, "\n".join(lines), decision, trace_rag=trace)
+                labels = ", ".join(f"{_local_env_device_label(d)} [{_local_env_capability_phrase(d, limit=4)}]" for d in matched[:6])
                 return PreCausalAnswer(True, f"Pelo que eu tenho cadastrado agora, estes parecem ser {target}: {labels}.", decision, trace_rag=trace)
             if target == "computador":
                 return PreCausalAnswer(
@@ -1375,6 +1551,18 @@ def _answer_local_environment_context_question(query: str, decision: RouteDecisi
                     trace_rag=trace,
                 )
             return PreCausalAnswer(True, f"Nessa lista eu nao encontrei {target}. O que tenho no contexto e: {summary}.", decision, trace_rag=trace)
+        if wants_events:
+            lines = [f"No contexto recente eu tenho {len(devices)} dispositivo(s): {summary}."]
+            if groups.get("camera"):
+                labels = ", ".join(_local_env_device_label(d) for d in groups["camera"][:4])
+                lines.append(f"Cameras que posso tentar abrir/ver: {labels}.")
+            if groups.get("tv"):
+                labels = ", ".join(_local_env_device_label(d) for d in groups["tv"][:4])
+                lines.append(f"TVs/midia que posso controlar por capacidade declarada: {labels}.")
+            if groups.get("http"):
+                labels = ", ".join(_local_env_device_label(d) for d in groups["http"][:4])
+                lines.append(f"Outros com interface web/estado: {labels}.")
+            return PreCausalAnswer(True, "\n".join(lines), decision, trace_rag=trace)
     except Exception as exc:
         trace = _typed_trace("rag_user_memory", sources=[], lookup_query=query, evidence_count=0, errors=[f"local_env_context:{type(exc).__name__}"])
         return PreCausalAnswer(True, "Nao consegui recuperar o contexto dos dispositivos agora. Diga 'liste meus dispositivos' para eu refazer a leitura.", decision, trace_rag=trace)
