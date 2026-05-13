@@ -85,6 +85,24 @@ _VOICE_COMMAND_HINTS = {
     "porque",
     "por",
     "ultron",
+    "acende",
+    "acender",
+    "apaga",
+    "apagar",
+    "liga",
+    "ligar",
+    "desliga",
+    "desligar",
+    "dispositivo",
+    "dispositivos",
+    "luz",
+    "luzes",
+    "lampada",
+    "lâmpada",
+    "varrer",
+    "rede",
+    "confirmo",
+    "cancelar",
 }
 
 _RUNTIME_QUERY_HINTS = {
@@ -578,7 +596,7 @@ class UltronWindow(QMainWindow):
         clean = str(text or "").strip()
         if not clean:
             return
-        if not self.gate.activated:
+        if not self.gate.activated and from_voice:
             self._append_user(clean)
             result = self.gate.handle_transcript(clean)
             self.status.setText(result.message)
@@ -589,6 +607,10 @@ class UltronWindow(QMainWindow):
             if result.state == "lockout":
                 QTimer.singleShot(1800, self.close)
             return
+        if not self.gate.activated and not from_voice:
+            self.gate.activated = True
+            self.status.setText("Modo texto ativo")
+            self._append_system("Entrada por texto ativada; comandos livres liberados.")
         if from_voice and not self._accept_voice_command(clean):
             return
         self._append_user(clean)

@@ -15496,6 +15496,23 @@ async def voice_chat(req: VoiceChatRequest):
         _record_chat_turn_episode(txt, ans, strategy='identity_guard', source='voice_chat', session_id=session_id)
         return {'ok': True, 'reply': ans, 'strategy': 'identity_guard'}
 
+    try:
+        from ultronpro import pre_causal_router
+
+        pre_causal = await pre_causal_router.answer_pre_causal(txt, session_id=session_id)
+    except Exception as e:
+        logger.warning(f"Pre-causal router failed in voice_chat: {e}")
+        pre_causal = None
+    if pre_causal and pre_causal.ok and str(pre_causal.answer or '').strip():
+        payload = pre_causal.payload()
+        ans = str(payload.get('answer') or pre_causal.answer or '').strip()
+        strategy = str(payload.get('strategy') or 'pre_causal')
+        store.db.add_event('voice_chat', f"voice chat latency=0ms ok=True strategy={strategy}")
+        _trace_emit_voice(ans, strategy, outcome='success')
+        _record_chat_turn_episode(txt, ans, strategy=strategy, source='voice_chat', session_id=session_id)
+        payload.update({'ok': True, 'reply': ans, 'strategy': strategy})
+        return payload
+
     t0 = int(time.time() * 1000)
     # Modo rÃ¡pido para GUI de voz: local primeiro, sem fallback pesado
     attempts = [('local', f"Pergunta do usuÃ¡rio (voz): {txt}\nResponda em portuguÃªs brasileiro, de forma prÃ¡tica, em no mÃ¡ximo 1 frase curta.")]

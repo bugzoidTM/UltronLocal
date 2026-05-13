@@ -737,8 +737,11 @@
     <div id="tab-chat" class="tab-content">
       <div class="card" style="margin-bottom: 20px;">
         <div class="card-header">
-          <div class="card-title"><span class="icon">💬</span> Chat com UltronPro (metacognição)</div>
+          <div class="card-title"><span class="icon">💬</span> Chat e comandos do UltronPro</div>
           <div class="btn-group">
+            <button class="btn btn-sm btn-secondary" onclick="sendUltronMainChat('liste meus dispositivos da rede')">Dispositivos</button>
+            <button class="btn btn-sm btn-secondary" onclick="sendUltronMainChat('varrer rede')">Varrer rede</button>
+            <button class="btn btn-sm btn-secondary" onclick="sendUltronMainChat('ações pendentes')">Pendências</button>
             <button class="btn btn-sm btn-secondary" onclick="runMetacognitionInterview()">🧪 Rodar entrevista</button>
             <button class="btn btn-sm btn-secondary" onclick="loadMetacognitionWeeklySummary()">📅 Resumo semanal</button>
           </div>
@@ -746,7 +749,7 @@
         <div class="card-body">
           <div class="chat-composer">
             <div class="chat-input-wrap">
-              <textarea id="ultronMainChatInput" placeholder="Pergunte sobre aprendizado, abstrações consolidadas ou ciclo de sono..." style="min-height:110px;"></textarea>
+              <textarea id="ultronMainChatInput" placeholder="Digite um comando ou pergunta: liste dispositivos, varrer rede, acender lâmpada da sala..." style="min-height:110px;"></textarea>
               <div class="chat-audio-row">
                 <div id="chatAudioMeter" class="chat-audio-meter" aria-hidden="true"><span id="chatAudioMeterFill" class="chat-audio-meter-fill"></span></div>
                 <div id="chatAudioStatus" class="chat-audio-status" aria-live="polite"></div>

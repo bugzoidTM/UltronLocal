@@ -184,14 +184,21 @@ def _local_environment_decision(query: str, session_id: str | None = None) -> Ro
         return _decision("local_environment_scan", 0.9, "local_environment", "local_network_discovery_command")
     list_markers = (
         "liste meus dispositivos",
+        "liste os dispositivos",
+        "meus dispositivos",
+        "listar meus dispositivos",
         "listar dispositivos",
         "lista dispositivos",
+        "lista meus dispositivos",
         "mostrar dispositivos",
+        "mostrar meus dispositivos",
         "mostre dispositivos",
+        "mostre meus dispositivos",
         "quais dispositivos",
         "dispositivos cadastrados",
         "dispositivos disponiveis",
         "dispositivos da rede",
+        "dispositivos locais",
         "device registry",
         "local device",
     )
