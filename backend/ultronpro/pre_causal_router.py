@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import json
 import math
 import re
 import subprocess
@@ -44,9 +45,6 @@ class PreCausalAnswer:
         if self.metadata:
             data.update(self.metadata)
         return data
-
-
-_SESSION_MEMORY: dict[str, dict[str, str]] = {}
 
 _STABLE_FACT_STOP_TERMS = {
     "quem", "qiue", "que", "qual", "autor", "autou", "autora", "escritor",
@@ -204,6 +202,33 @@ def _local_environment_decision(query: str, session_id: str | None = None) -> Ro
     )
     if any(marker in text for marker in list_markers):
         return _decision("local_environment_list", 0.9, "local_environment", "local_device_registry_query")
+    context_device_terms = (
+        "qual desses",
+        "qual destes",
+        "qual deles",
+        "qual delas",
+        "desses dispositivos",
+        "destes dispositivos",
+        "dispositivo e",
+        "dispositivo eh",
+        "na rede e",
+        "na rede eh",
+    )
+    device_type_terms = (
+        "computador",
+        "pc",
+        "notebook",
+        "desktop",
+        "camera",
+        "cameras",
+        "tv",
+        "televisao",
+        "roteador",
+        "celular",
+        "telefone",
+    )
+    if any(marker in text for marker in context_device_terms) and any(term in text for term in device_type_terms):
+        return _decision("local_environment_context_question", 0.84, "local_environment", "local_device_context_followup")
     access_markers = (
         "bateria de acesso",
         "testar acesso",
@@ -364,37 +389,101 @@ def _ordered_memory_aliases(key: str) -> list[str]:
     return ordered
 
 
+def _memory_display_value(key: str, value: str) -> str:
+    clean = str(value or "").strip()
+    if _slug(key) in {"nome", "meu_nome", "name"} and clean:
+        return " ".join(part.capitalize() for part in clean.split())
+    return clean
+
+
 def _answer_session_memory(query: str, session_id: str, decision: RouteDecision) -> PreCausalAnswer | None:
-    memory = _SESSION_MEMORY.setdefault(str(session_id or "default"), {})
+    from ultronpro import session_memory
+
     write = _extract_session_write(query)
     if write:
         key, value = write
+        value = _memory_display_value(key, value)
         for alias in _memory_aliases(key):
-            memory[alias] = value
+            session_memory.remember_user_fact(session_id, alias, value, source_query=query)
         label = key.replace("_", " ")
         trace = _typed_trace(
             "rag_user_memory",
-            sources=[{"source": "session_memory.write", "score": 1.0, "chunk_id": key, "rag_type": "rag_user_memory", "threshold": _rag_threshold("rag_user_memory")}],
+            sources=[{"source": "sqlite.pre_causal_memory.write", "score": 1.0, "chunk_id": key, "rag_type": "rag_user_memory", "threshold": _rag_threshold("rag_user_memory")}],
             lookup_query=query,
             evidence_count=1,
         )
-        return PreCausalAnswer(True, f"Entendido: registrei {label} como {value}.", decision, trace_rag=trace)
+        return PreCausalAnswer(True, f"Combinado, vou lembrar: seu {label} e {value}.", decision, trace_rag=trace)
 
     read_key = _extract_session_read(query)
     if read_key:
         for alias in _ordered_memory_aliases(read_key):
-            if alias in memory:
+            hit = session_memory.get_value(session_id, alias, include_long_term=True)
+            if hit:
                 label = "animal favorito" if alias == "animal_favorito" else read_key.replace("_", " ")
+                source = "sqlite.pre_causal_memory.long_term" if hit.get("scope") == "long_term" else "sqlite.pre_causal_memory.session"
                 trace = _typed_trace(
                     "rag_user_memory",
-                    sources=[{"source": "session_memory.read", "score": 1.0, "chunk_id": alias, "rag_type": "rag_user_memory", "threshold": _rag_threshold("rag_user_memory")}],
+                    sources=[{"source": source, "score": 1.0, "chunk_id": alias, "rag_type": "rag_user_memory", "threshold": _rag_threshold("rag_user_memory")}],
                     lookup_query=query,
                     evidence_count=1,
                 )
-                return PreCausalAnswer(True, f"Voce me disse que {label} e {memory[alias]}.", decision, trace_rag=trace)
+                return PreCausalAnswer(True, f"Sim, eu lembro: seu {label} e {hit.get('value')}.", decision, trace_rag=trace)
         trace = _typed_trace("rag_user_memory", sources=[], lookup_query=query, evidence_count=0)
-        return PreCausalAnswer(True, "Nao encontrei esse dado na memoria desta sessao.", decision, trace_rag=trace)
+        return PreCausalAnswer(True, "Ainda nao tenho esse dado salvo. Se voce me disser, eu guardo na memoria.", decision, trace_rag=trace)
     return None
+
+
+def _is_session_context_read(query: str) -> bool:
+    text = _fold(query)
+    markers = (
+        "do que estamos falando",
+        "sobre o que estamos falando",
+        "qual e o contexto",
+        "qual o contexto",
+        "o que estavamos falando",
+        "o que falamos",
+        "retome o contexto",
+        "continua de onde",
+        "continue de onde",
+    )
+    return any(marker in text for marker in markers)
+
+
+def _answer_session_context(query: str, session_id: str, decision: RouteDecision) -> PreCausalAnswer:
+    try:
+        from ultronpro import session_memory, store
+
+        contexts = session_memory.recent_context(session_id, limit=5)
+        if contexts:
+            latest = contexts[0]
+            value = latest.get("value") if isinstance(latest.get("value"), dict) else {}
+            summary = str((value or {}).get("summary") or "").strip()
+            if summary:
+                trace = _typed_trace(
+                    "rag_user_memory",
+                    sources=[{"source": "sqlite.pre_causal_memory.context", "score": 1.0, "chunk_id": latest.get("key"), "rag_type": "rag_user_memory", "threshold": _rag_threshold("rag_user_memory")}],
+                    lookup_query=query,
+                    evidence_count=1,
+                )
+                return PreCausalAnswer(True, f"Estamos falando sobre {summary}.", decision, trace_rag=trace)
+        episodes = store.list_episodic_episodes(session_id=str(session_id or "default"), episode_type="chat_turn", limit=3)
+        parts = []
+        for ep in episodes:
+            user_text = str(ep.get("user_text") or "").strip()
+            assistant_text = str(ep.get("assistant_text") or "").strip()
+            if user_text:
+                parts.append(user_text)
+            if assistant_text:
+                parts.append(assistant_text)
+        if parts:
+            short = " | ".join(parts[:4])[:500]
+            trace = _typed_trace("rag_user_memory", sources=[{"source": "sqlite.episodic_episodes", "score": 0.8, "chunk_id": "recent_chat_turns", "rag_type": "rag_user_memory", "threshold": _rag_threshold("rag_user_memory")}], lookup_query=query, evidence_count=len(parts))
+            return PreCausalAnswer(True, f"Pelo contexto recente, estamos nessa conversa: {short}", decision, trace_rag=trace)
+    except Exception as exc:
+        trace = _typed_trace("rag_user_memory", sources=[], lookup_query=query, evidence_count=0, errors=[f"session_context:{type(exc).__name__}"])
+        return PreCausalAnswer(True, "Tentei recuperar o contexto, mas a memoria local nao respondeu agora.", decision, trace_rag=trace)
+    trace = _typed_trace("rag_user_memory", sources=[], lookup_query=query, evidence_count=0)
+    return PreCausalAnswer(True, "Ainda nao tenho contexto suficiente nesta sessao. Podemos comecar por uma pergunta ou comando novo.", decision, trace_rag=trace)
 
 
 _NUMBER_WORDS = {
@@ -1130,6 +1219,8 @@ def classify_pre_causal(query: str, session: dict[str, Any] | None = None, sessi
         return _decision("session_memory_write", 0.94, "session_memory", "session_fact_write")
     if _extract_session_read(query):
         return _decision("session_memory_read", 0.9, "session_memory", "session_fact_read")
+    if _is_session_context_read(query):
+        return _decision("session_context_read", 0.88, "session_context", "session_context_recall")
     if any(marker in text for marker in ("raiz quadrada", "rz cuadrada", "sqrt", "square root", "calcule", "qnto", "quanto")):
         return _decision("math_expression", 0.88, "math", "math_language_or_expression")
     if re.search(r"\b(?:todos?|tds|tods)\b", text) or "capacidade de" in text:
@@ -1169,6 +1260,127 @@ def _local_env_user_approved(query: str) -> bool:
     return any(marker in text for marker in ("confirmo", "confirmado", "aprovado", "pode executar", "autorizo"))
 
 
+def _local_env_device_bucket(device: dict[str, Any]) -> str:
+    dtype = _fold(str(device.get("type") or ""))
+    caps = {_fold(str(x)) for x in (device.get("capabilities") or [])}
+    if "camera" in dtype or "rtsp" in dtype or "view_stream" in caps:
+        return "camera"
+    if "tv" in dtype or "media" in dtype or {"media_play", "volume_up", "send_key"} & caps:
+        return "tv"
+    if "router" in dtype or "gateway" in dtype or "roteador" in dtype:
+        return "roteador"
+    if any(term in dtype for term in ("computer", "computador", "pc", "desktop", "notebook", "laptop")):
+        return "computador"
+    return "http"
+
+
+def _local_env_device_label(device: dict[str, Any]) -> str:
+    device_id = str(device.get("device_id") or "").strip()
+    name = str(device.get("name") or "").strip()
+    dtype = str(device.get("type") or "dispositivo").strip()
+    ip = str(((device.get("config") if isinstance(device.get("config"), dict) else {}) or {}).get("ip") or "").strip()
+    label = name if name and name != device_id else dtype
+    if ip and ip not in label:
+        label = f"{label} {ip}"
+    return f"{device_id} ({label})" if device_id else label
+
+
+def _local_env_group_summary(devices: list[dict[str, Any]]) -> tuple[str, dict[str, list[dict[str, Any]]]]:
+    groups: dict[str, list[dict[str, Any]]] = {"camera": [], "tv": [], "roteador": [], "computador": [], "http": []}
+    for device in devices:
+        groups.setdefault(_local_env_device_bucket(device), []).append(device)
+    labels = []
+    names = {
+        "camera": "camera(s)",
+        "tv": "TV/dispositivo(s) de midia",
+        "roteador": "roteador(es)",
+        "computador": "computador(es)",
+        "http": "dispositivo(s) HTTP/generico(s)",
+    }
+    for key in ("camera", "tv", "roteador", "computador", "http"):
+        count = len(groups.get(key) or [])
+        if count:
+            labels.append(f"{count} {names[key]}")
+    return ", ".join(labels) if labels else "nenhum grupo identificado", groups
+
+
+def _remember_local_env_context(session_id: str | None, query: str, result: dict[str, Any], answer: str) -> None:
+    try:
+        from ultronpro import session_memory
+
+        devices: list[dict[str, Any]] = []
+        if isinstance(result.get("devices"), list):
+            devices = [d for d in result.get("devices") if isinstance(d, dict)]
+        elif isinstance(result.get("results"), list):
+            for item in result.get("results") or []:
+                if isinstance(item, dict) and isinstance(item.get("device"), dict):
+                    devices.append(item["device"])
+        elif isinstance(result.get("device"), dict):
+            devices = [result["device"]]
+        summary, groups = _local_env_group_summary(devices)
+        payload = {
+            "topic": "ambiente local e dispositivos da rede",
+            "summary": summary,
+            "query": str(query or "")[:500],
+            "answer": str(answer or "")[:1200],
+            "kind": result.get("kind") or result.get("status") or "local_environment",
+            "device_ids": [str(d.get("device_id") or "") for d in devices if d.get("device_id")],
+            "groups": {key: [str(d.get("device_id") or "") for d in value if d.get("device_id")] for key, value in groups.items()},
+        }
+        session_memory.set_value(session_id, "context.last_topic", payload, scope="session", source="local_environment")
+        session_memory.set_value(session_id, "context.local_environment", payload, scope="session", source="local_environment")
+    except Exception:
+        pass
+
+
+def _answer_local_environment_context_question(query: str, decision: RouteDecision, session_id: str | None = None) -> PreCausalAnswer:
+    try:
+        from ultronpro import local_environment, session_memory
+
+        hit = session_memory.get_value(session_id, "context.local_environment", include_long_term=False)
+        payload = hit.get("value") if isinstance(hit, dict) and isinstance(hit.get("value"), dict) else {}
+        context_ids = [str(x) for x in (payload.get("device_ids") or []) if x]
+        if context_ids:
+            devices = [local_environment.get_device(device_id) for device_id in context_ids]
+            devices = [d for d in devices if isinstance(d, dict)]
+        else:
+            devices = [d for d in local_environment.list_devices(include_disabled=True).get("devices", []) if isinstance(d, dict)]
+        text = _fold(query)
+        summary, groups = _local_env_group_summary(devices)
+        target = ""
+        if any(term in text for term in ("computador", "pc", "notebook", "desktop")):
+            target = "computador"
+        elif "camera" in text or "cameras" in text:
+            target = "camera"
+        elif "tv" in text or "televisao" in text:
+            target = "tv"
+        elif "roteador" in text:
+            target = "roteador"
+        if target:
+            matched = groups.get(target) or []
+            trace = _typed_trace(
+                "rag_user_memory",
+                sources=[{"source": "sqlite.pre_causal_memory.context.local_environment", "score": 1.0, "chunk_id": "context.local_environment", "rag_type": "rag_user_memory", "threshold": _rag_threshold("rag_user_memory")}],
+                lookup_query=query,
+                evidence_count=len(devices),
+            )
+            if matched:
+                labels = ", ".join(_local_env_device_label(d) for d in matched[:6])
+                return PreCausalAnswer(True, f"Pelo que eu tenho cadastrado agora, estes parecem ser {target}: {labels}.", decision, trace_rag=trace)
+            if target == "computador":
+                return PreCausalAnswer(
+                    True,
+                    f"Nessa lista eu nao identifiquei nenhum computador com seguranca. O registry mostra {summary}. O computador que voce esta usando e a maquina onde a UI roda, mas ele nao apareceu cadastrado como dispositivo da rede.",
+                    decision,
+                    trace_rag=trace,
+                )
+            return PreCausalAnswer(True, f"Nessa lista eu nao encontrei {target}. O que tenho no contexto e: {summary}.", decision, trace_rag=trace)
+    except Exception as exc:
+        trace = _typed_trace("rag_user_memory", sources=[], lookup_query=query, evidence_count=0, errors=[f"local_env_context:{type(exc).__name__}"])
+        return PreCausalAnswer(True, "Nao consegui recuperar o contexto dos dispositivos agora. Diga 'liste meus dispositivos' para eu refazer a leitura.", decision, trace_rag=trace)
+    return PreCausalAnswer(True, "Ainda nao tenho uma lista recente de dispositivos como contexto. Diga 'liste meus dispositivos' primeiro.", decision)
+
+
 def _format_local_env_answer(result: dict[str, Any]) -> str:
     if result.get("kind") == "access_battery":
         lines = [
@@ -1195,24 +1407,31 @@ def _format_local_env_answer(result: dict[str, Any]) -> str:
         devices = [d for d in (result.get("devices") or []) if isinstance(d, dict)]
         if not devices:
             return "Nao encontrei dispositivos no registry para listar eventos."
-        lines = ["Matriz de eventos por dispositivo:"]
-        for device in devices[:12]:
-            events = [str(e.get("event")) + ("*" if e.get("executable") else "") for e in (device.get("events") or []) if isinstance(e, dict)]
-            allowed = "ativo" if bool(device.get("allowed")) else "desativado"
-            lines.append(f"- {device.get('device_id')} ({device.get('type')}, {allowed}): {', '.join(events[:10]) or 'sem eventos'}")
-        lines.append("Eventos com * ja tem executor direto; os demais precisam de adapter/credencial especifica.")
+        summary, groups = _local_env_group_summary(devices)
+        lines = [f"Posso trabalhar com {len(devices)} dispositivo(s): {summary}."]
+        if groups.get("camera"):
+            labels = ", ".join(_local_env_device_label(d) for d in groups["camera"][:3])
+            lines.append(f"Cameras: {labels}. Eventos: ver stream e capturar snapshot quando o runtime permitir.")
+        if groups.get("tv"):
+            labels = ", ".join(_local_env_device_label(d) for d in groups["tv"][:3])
+            lines.append(f"TVs/midia: {labels}. Eventos: abrir interface, ligar/desligar, play/pause, volume, mute e tecla; alguns exigem adapter especifico.")
+        if groups.get("http"):
+            labels = ", ".join(_local_env_device_label(d) for d in groups["http"][:4])
+            lines.append(f"HTTP/genericos: {labels}. Eventos seguros: ler estado e abrir interface web.")
+        lines.append("Pode falar naturalmente, por exemplo: 'abrir camera 192.168.68.100' ou 'aumentar volume da TV 192.168.68.104'.")
         return "\n".join(lines)
     if result.get("kind") == "camera_list":
         devices = [d for d in (result.get("devices") or []) if isinstance(d, dict)]
         if not devices:
             return "Nao encontrei cameras/streams RTSP cadastrados no registry."
-        lines = [f"Encontrei {len(devices)} camera(s)/stream(s):"]
+        lines = [f"Encontrei {len(devices)} camera(s) na rede."]
         for device in devices[:12]:
             stream = device.get("stream") if isinstance(device.get("stream"), dict) else {}
             url = stream.get("preferred_url") or "stream nao configurado"
-            lines.append(f"- {device.get('device_id')} ({device.get('type')}): {url}")
+            lines.append(f"- {_local_env_device_label(device)}: {url}")
             if stream.get("mjpeg_proxy_endpoint"):
                 lines.append(f"  proxy local: {stream.get('mjpeg_proxy_endpoint')}")
+        lines.append("Se quiser, diga 'abrir camera' para abrir a primeira, ou diga o IP de uma camera especifica.")
         return "\n".join(lines)
     if result.get("kind") == "control_grant":
         return (
@@ -1223,26 +1442,19 @@ def _format_local_env_answer(result: dict[str, Any]) -> str:
         devices = [d for d in (result.get("devices") or []) if isinstance(d, dict)]
         if not devices:
             return "Ainda nao tenho dispositivos cadastrados no registry local. Diga 'varrer rede' para descobrir dispositivos e cadastrar probes permitidos."
-        lines = [f"Tenho {len(devices)} dispositivo(s) cadastrado(s):"]
-        for device in devices[:12]:
-            caps = ", ".join(str(x) for x in (device.get("capabilities") or [])[:6])
-            allowed = "ativo" if bool(device.get("allowed")) else "desativado"
-            location = f" em {device.get('location')}" if device.get("location") else ""
-            lines.append(
-                f"- {device.get('device_id')} ({device.get('type') or 'generic'}{location}, {allowed}, risco={device.get('risk_level')}, caps={caps or 'nenhuma'})"
-            )
-            events = []
-            try:
-                from ultronpro import local_environment
-
-                events = [str(e.get("event")) for e in local_environment.device_events(device) if isinstance(e, dict)]
-            except Exception:
-                events = []
-            if events:
-                lines.append(f"  eventos: {', '.join(events[:8])}")
-        if len(devices) > 12:
-            lines.append(f"... mais {len(devices) - 12} dispositivo(s).")
-        lines.append("Para atualizar a descoberta, diga 'varrer rede'.")
+        summary, groups = _local_env_group_summary(devices)
+        lines = [f"Tenho {len(devices)} dispositivo(s) no registry: {summary}."]
+        if groups.get("camera"):
+            labels = ", ".join(_local_env_device_label(d) for d in groups["camera"][:5])
+            lines.append(f"Cameras: {labels}.")
+        if groups.get("tv"):
+            labels = ", ".join(_local_env_device_label(d) for d in groups["tv"][:5])
+            lines.append(f"TVs/midia: {labels}.")
+        if groups.get("http"):
+            labels = ", ".join(_local_env_device_label(d) for d in groups["http"][:5])
+            extra = len(groups["http"]) - 5
+            lines.append(f"Outros HTTP/genericos: {labels}" + (f" e mais {extra}." if extra > 0 else "."))
+        lines.append("Guardei esse contexto. Agora voce pode perguntar 'qual desses e camera?' ou mandar um comando como 'abrir camera 192.168.68.100'.")
         return "\n".join(lines)
     if result.get("kind") == "pending_actions":
         items = [x for x in (result.get("items") or []) if isinstance(x, dict)]
@@ -1333,6 +1545,8 @@ async def _answer_local_environment(query: str, decision: RouteDecision, session
         elif decision.intent == "local_environment_grant_control":
             result = await asyncio.to_thread(local_environment.grant_full_control, include_unreachable=False, reason="chat_requested_full_control")
             result["kind"] = "control_grant"
+        elif decision.intent == "local_environment_context_question":
+            return _answer_local_environment_context_question(query, decision, session_id=session_id)
         elif decision.intent == "local_environment_cameras":
             open_camera = any(marker in text for marker in ("abre", "abrir", "ver", "veja", "stream", "camera ao vivo", "imagem"))
             list_all = any(marker in text for marker in ("cameras", "listar", "liste", "mostre cameras", "mostra cameras", "mostrar cameras"))
@@ -1386,9 +1600,11 @@ async def _answer_local_environment(query: str, decision: RouteDecision, session
                 approved=_local_env_user_approved(query),
                 session_id=str(session_id or "default"),
             )
+        answer = _format_local_env_answer(result)
+        _remember_local_env_context(session_id, query, result, answer)
         return PreCausalAnswer(
             True,
-            _format_local_env_answer(result),
+            answer,
             decision,
             metadata={"local_environment": result},
         )
@@ -1413,6 +1629,8 @@ async def answer_pre_causal(query: str, session_id: str | None = None, session: 
         )
     if decision.route == "session_memory":
         return _answer_session_memory(query, str(session_id or "default"), decision)
+    if decision.route == "session_context":
+        return _answer_session_context(query, str(session_id or "default"), decision)
     if decision.route == "local_environment":
         return await _answer_local_environment(query, decision, session_id=session_id)
     if decision.route == "math":

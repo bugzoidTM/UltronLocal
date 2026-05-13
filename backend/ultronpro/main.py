@@ -15515,7 +15515,9 @@ async def voice_chat(req: VoiceChatRequest):
 
     t0 = int(time.time() * 1000)
     # Modo rÃ¡pido para GUI de voz: local primeiro, sem fallback pesado
-    attempts = [('local', f"Pergunta do usuÃ¡rio (voz): {txt}\nResponda em portuguÃªs brasileiro, de forma prÃ¡tica, em no mÃ¡ximo 1 frase curta.")]
+    session_context = _chat_session_context(session_id, max_chars=1200)
+    context_block = f"Contexto recente da conversa:\n{session_context}\n\n" if session_context else ""
+    attempts = [('local', f"{context_block}Pergunta do usuario (voz): {txt}\nResponda em portugues brasileiro, com tom amigavel e pratico, em no maximo 2 frases curtas.")]
 
     ans = ''
     used = 'default'
