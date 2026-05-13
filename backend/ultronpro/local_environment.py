@@ -23,6 +23,7 @@ DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 REGISTRY_PATH = DATA_DIR / "local_device_registry.json"
 RUNTIME_STATE_PATH = DATA_DIR / "local_environment_state.json"
 ACTION_LEDGER_PATH = DATA_DIR / "local_environment_action_ledger.jsonl"
+PENDING_ACTIONS_PATH = DATA_DIR / "local_environment_pending_actions.json"
 
 CAPABILITY_RISK: dict[str, int] = {
     "read_state": 0,
@@ -140,6 +141,242 @@ def _save_runtime_state(data: dict[str, Any]) -> dict[str, Any]:
     data.setdefault("notifications", [])
     _write_json(RUNTIME_STATE_PATH, data)
     return data
+
+
+def _pending_ttl_seconds() -> int:
+    try:
+        return max(30, min(3600, int(os.getenv("ULTRON_LOCAL_ENV_PENDING_TTL_SEC", "300") or 300)))
+    except Exception:
+        return 300
+
+
+def _default_pending_actions() -> dict[str, Any]:
+    return {"ok": True, "version": 1, "updated_at": 0, "pending_actions": {}}
+
+
+def _load_pending_actions() -> dict[str, Any]:
+    data = _read_json(PENDING_ACTIONS_PATH, _default_pending_actions())
+    if not isinstance(data, dict):
+        data = _default_pending_actions()
+    pending = data.get("pending_actions")
+    if isinstance(pending, list):
+        pending = {str(x.get("pending_id") or _hash(x)): x for x in pending if isinstance(x, dict)}
+    if not isinstance(pending, dict):
+        pending = {}
+    data.setdefault("ok", True)
+    data.setdefault("version", 1)
+    data["pending_actions"] = pending
+    return data
+
+
+def _save_pending_actions(data: dict[str, Any]) -> dict[str, Any]:
+    out = dict(_default_pending_actions())
+    out.update(data or {})
+    out["updated_at"] = _now()
+    out.setdefault("pending_actions", {})
+    _write_json(PENDING_ACTIONS_PATH, out)
+    return out
+
+
+def _session_key(session_id: str | None) -> str:
+    return _safe(session_id or "default", 120) or "default"
+
+
+def _pending_is_active(row: dict[str, Any], *, session_id: str | None = None, now: int | None = None) -> bool:
+    if not isinstance(row, dict):
+        return False
+    if str(row.get("status") or "") != "pending":
+        return False
+    if session_id is not None and _session_key(str(row.get("session_id") or "")) != _session_key(session_id):
+        return False
+    return int(row.get("expires_at") or 0) >= int(now or _now())
+
+
+def _public_pending(row: dict[str, Any]) -> dict[str, Any]:
+    out = dict(row or {})
+    if isinstance(out.get("params"), dict):
+        out["params_hash"] = _hash(out.get("params"))
+    return out
+
+
+def is_confirmation_text(text: str) -> bool:
+    folded = _fold(text)
+    if not folded:
+        return False
+    if folded in {"sim", "ok", "confirmo", "confirmado", "autorizo", "aprovado", "pode", "prosseguir", "prossiga"}:
+        return True
+    return bool(re.search(r"\b(confirmo|confirmado|autorizo|aprovado|pode executar|execute agora|pode seguir|prosseguir|prossiga)\b", folded))
+
+
+def is_cancel_text(text: str) -> bool:
+    folded = _fold(text)
+    if not folded:
+        return False
+    if folded in {"nao", "não", "cancelar", "cancela", "cancelado", "pare"}:
+        return True
+    return bool(re.search(r"\b(cancelar|cancela|cancelado|nao execute|nao executar|deixa quieto|pare)\b", folded))
+
+
+def _pending_id_from_text(text: str) -> str:
+    m = re.search(r"\blpa_[a-f0-9]{12}\b", _fold(text))
+    return str(m.group(0)) if m else ""
+
+
+def pending_id_from_text(text: str) -> str:
+    return _pending_id_from_text(text)
+
+
+def create_pending_action(
+    parsed: dict[str, Any],
+    device: dict[str, Any] | None,
+    gate: dict[str, Any],
+    *,
+    text: str,
+    requested_by: str,
+    session_id: str | None,
+) -> dict[str, Any]:
+    now = _now()
+    ttl = _pending_ttl_seconds()
+    sid = _session_key(session_id)
+    params = parsed.get("params") if isinstance(parsed.get("params"), dict) else {}
+    pending_id = f"lpa_{_hash([sid, parsed.get('device_id'), parsed.get('action'), params, text, now])}"
+    row = {
+        "pending_id": pending_id,
+        "status": "pending",
+        "session_id": sid,
+        "created_at": now,
+        "expires_at": now + ttl,
+        "ttl_seconds": ttl,
+        "device_id": str(parsed.get("device_id") or ""),
+        "device_name": _safe((device or {}).get("name") or parsed.get("device_id"), 120),
+        "action": str(parsed.get("action") or ""),
+        "params": params,
+        "reason": _safe(text, 500),
+        "requested_by": _safe(requested_by, 120),
+        "risk_level": int(gate.get("risk_level") or 0),
+        "requires_confirmation": bool(gate.get("requires_confirmation")),
+        "gate": dict(gate or {}),
+        "parsed_command": dict(parsed or {}),
+        "confirmation_hint": f"confirmo {pending_id}",
+    }
+    data = _load_pending_actions()
+    pending = data.setdefault("pending_actions", {})
+    pending[pending_id] = row
+    _save_pending_actions(data)
+    return _public_pending(row)
+
+
+def list_pending_actions(session_id: str | None = None, include_expired: bool = False) -> dict[str, Any]:
+    data = _load_pending_actions()
+    now = _now()
+    items: list[dict[str, Any]] = []
+    changed = False
+    for pending_id, row in list((data.get("pending_actions") or {}).items()):
+        if not isinstance(row, dict):
+            continue
+        if str(row.get("status") or "") == "pending" and int(row.get("expires_at") or 0) < now:
+            row["status"] = "expired"
+            row["expired_at"] = now
+            data["pending_actions"][pending_id] = row
+            changed = True
+        if session_id is not None and _session_key(str(row.get("session_id") or "")) != _session_key(session_id):
+            continue
+        if include_expired or _pending_is_active(row, now=now):
+            items.append(_public_pending(row))
+    if changed:
+        _save_pending_actions(data)
+    items.sort(key=lambda x: int(x.get("created_at") or 0), reverse=True)
+    return {"ok": True, "path": str(PENDING_ACTIONS_PATH), "items": items, "count": len(items)}
+
+
+def latest_pending_action(session_id: str | None = None, pending_id: str | None = None) -> dict[str, Any]:
+    data = _load_pending_actions()
+    now = _now()
+    selected: dict[str, Any] | None = None
+    if pending_id:
+        row = (data.get("pending_actions") or {}).get(str(pending_id))
+        if isinstance(row, dict) and _pending_is_active(row, session_id=session_id, now=now):
+            selected = row
+    else:
+        rows = [
+            row
+            for row in (data.get("pending_actions") or {}).values()
+            if isinstance(row, dict) and _pending_is_active(row, session_id=session_id, now=now)
+        ]
+        rows.sort(key=lambda x: int(x.get("created_at") or 0), reverse=True)
+        selected = rows[0] if rows else None
+    if not selected:
+        return {"ok": False, "reason": "no_active_pending_action", "path": str(PENDING_ACTIONS_PATH)}
+    return {"ok": True, "pending_action": _public_pending(selected)}
+
+
+def confirm_pending_action(
+    session_id: str | None = None,
+    pending_id: str | None = None,
+    *,
+    approved_by: str = "chat_stream",
+) -> dict[str, Any]:
+    data = _load_pending_actions()
+    pending = data.setdefault("pending_actions", {})
+    lookup_id = str(pending_id or "").strip()
+    if not lookup_id:
+        found = latest_pending_action(session_id=session_id)
+        lookup_id = str((found.get("pending_action") or {}).get("pending_id") or "") if found.get("ok") else ""
+    row = pending.get(lookup_id) if lookup_id else None
+    if not isinstance(row, dict) or not _pending_is_active(row, session_id=session_id):
+        return {"ok": False, "reason": "no_active_pending_action", "pending_id": lookup_id}
+    now = _now()
+    row["status"] = "executing"
+    row["approved_at"] = now
+    row["approved_by"] = _safe(approved_by, 120)
+    pending[lookup_id] = row
+    _save_pending_actions(data)
+    result = act_device(
+        str(row.get("device_id") or ""),
+        str(row.get("action") or ""),
+        params=row.get("params") if isinstance(row.get("params"), dict) else {},
+        reason=str(row.get("reason") or ""),
+        requested_by=approved_by,
+        approved=True,
+    )
+    data = _load_pending_actions()
+    pending = data.setdefault("pending_actions", {})
+    row = pending.get(lookup_id, row)
+    row["status"] = "executed" if result.get("ok") else "failed"
+    row["executed_at"] = _now()
+    row["result_status"] = result.get("status")
+    row["result_ok"] = bool(result.get("ok"))
+    ledger = result.get("ledger") if isinstance(result.get("ledger"), dict) else {}
+    if ledger.get("ledger_id"):
+        row["ledger_id"] = ledger.get("ledger_id")
+    pending[lookup_id] = row
+    _save_pending_actions(data)
+    result["pending_action"] = _public_pending(row)
+    result["confirmed_pending_action"] = _public_pending(row)
+    return result
+
+
+def cancel_pending_action(
+    session_id: str | None = None,
+    pending_id: str | None = None,
+    *,
+    reason: str = "user_cancelled",
+) -> dict[str, Any]:
+    data = _load_pending_actions()
+    pending = data.setdefault("pending_actions", {})
+    lookup_id = str(pending_id or "").strip()
+    if not lookup_id:
+        found = latest_pending_action(session_id=session_id)
+        lookup_id = str((found.get("pending_action") or {}).get("pending_id") or "") if found.get("ok") else ""
+    row = pending.get(lookup_id) if lookup_id else None
+    if not isinstance(row, dict) or not _pending_is_active(row, session_id=session_id):
+        return {"ok": False, "reason": "no_active_pending_action", "pending_id": lookup_id}
+    row["status"] = "cancelled"
+    row["cancelled_at"] = _now()
+    row["cancel_reason"] = _safe(reason, 160)
+    pending[lookup_id] = row
+    _save_pending_actions(data)
+    return {"ok": True, "status": "cancelled", "pending_action": _public_pending(row)}
 
 
 def _normalize_device(raw: dict[str, Any]) -> dict[str, Any]:
@@ -1142,6 +1379,7 @@ def execute_command(
     requested_by: str = "user",
     approved: bool = False,
     dry_run: bool = False,
+    session_id: str | None = None,
 ) -> dict[str, Any]:
     parsed = parse_command(text)
     if not parsed.get("ok"):
@@ -1155,6 +1393,18 @@ def execute_command(
         approved=approved,
         dry_run=dry_run,
     )
+    if (
+        out.get("status") == "confirmation_required"
+        or str((out.get("gate") or {}).get("reason") or "") == "confirmation_required"
+    ):
+        out["pending_action"] = create_pending_action(
+            parsed,
+            out.get("device") if isinstance(out.get("device"), dict) else get_device(str(parsed.get("device_id") or "")),
+            out.get("gate") if isinstance(out.get("gate"), dict) else {},
+            text=text,
+            requested_by=requested_by,
+            session_id=session_id,
+        )
     out["parsed_command"] = parsed
     return out
 
@@ -1168,12 +1418,14 @@ def status() -> dict[str, Any]:
         "registry_path": str(REGISTRY_PATH),
         "state_path": str(RUNTIME_STATE_PATH),
         "ledger_path": str(ACTION_LEDGER_PATH),
+        "pending_path": str(PENDING_ACTIONS_PATH),
         "device_count": registry.get("count"),
         "enabled_device_count": len([d for d in registry.get("devices", []) if bool(d.get("allowed"))]),
         "capability_model": capability_model(),
         "devices": registry.get("devices"),
         "runtime_state": state,
         "recent_actions": actions.get("items"),
+        "pending_actions": list_pending_actions(include_expired=False).get("items"),
     }
 
 
@@ -1181,11 +1433,13 @@ def run_selftest() -> dict[str, Any]:
     old_registry = REGISTRY_PATH
     old_state = RUNTIME_STATE_PATH
     old_ledger = ACTION_LEDGER_PATH
+    old_pending = PENDING_ACTIONS_PATH
     with tempfile.TemporaryDirectory(prefix="local-env-") as td:
         base = Path(td)
         globals()["REGISTRY_PATH"] = base / "registry.json"
         globals()["RUNTIME_STATE_PATH"] = base / "state.json"
         globals()["ACTION_LEDGER_PATH"] = base / "ledger.jsonl"
+        globals()["PENDING_ACTIONS_PATH"] = base / "pending.json"
 
         from ultronpro import causal_graph, episodic_memory
 
@@ -1236,6 +1490,24 @@ def run_selftest() -> dict[str, Any]:
             )
             parsed = execute_command("acender lampada da sala", requested_by="selftest")
             blocked = act_device("lampada_sala_01", "restart_service", requested_by="selftest")
+            critical = upsert_device({
+                "device_id": "lampada_critica_01",
+                "name": "Lampada critica",
+                "type": "smart_light",
+                "location": "laboratorio",
+                "adapter": "mock",
+                "capabilities": ["read_state", "turn_on", "turn_off"],
+                "risk_level": 3,
+                "requires_confirmation": True,
+                "allowed": True,
+                "aliases": ["lampada critica"],
+            })
+            pending = execute_command(
+                "acender lampada critica",
+                requested_by="selftest",
+                session_id="selftest-session",
+            )
+            confirmed = confirm_pending_action("selftest-session", approved_by="selftest")
             scan = scan_network(
                 cidr="127.0.0.1/32",
                 ports=[server_port],
@@ -1252,15 +1524,22 @@ def run_selftest() -> dict[str, Any]:
                     and act.get("ok")
                     and parsed.get("ok")
                     and not blocked.get("ok")
+                    and critical.get("ok")
+                    and bool((pending.get("pending_action") or {}).get("pending_id"))
+                    and confirmed.get("ok")
                     and scan.get("registered_count") == 1
-                    and ledger.get("count", 0) >= 4
+                    and ledger.get("count", 0) >= 6
                     and ACTION_LEDGER_PATH.exists()
+                    and PENDING_ACTIONS_PATH.exists()
                 ),
                 "device": dev,
                 "before": before,
                 "act": act,
                 "parsed": parsed,
                 "blocked": blocked,
+                "critical": critical,
+                "pending": pending,
+                "confirmed": confirmed,
                 "scan": scan,
                 "ledger": ledger,
             }
@@ -1277,6 +1556,7 @@ def run_selftest() -> dict[str, Any]:
             globals()["REGISTRY_PATH"] = old_registry
             globals()["RUNTIME_STATE_PATH"] = old_state
             globals()["ACTION_LEDGER_PATH"] = old_ledger
+            globals()["PENDING_ACTIONS_PATH"] = old_pending
             causal_graph.GRAPH_PATH = old_graph
             causal_graph.EDGE_LOG_PATH = old_edges
             episodic_memory.EPISODIC_PATH = old_epi

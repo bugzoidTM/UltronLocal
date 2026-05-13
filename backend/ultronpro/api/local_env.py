@@ -66,6 +66,38 @@ async def local_env_command(req: dict):
         requested_by=str(body.get("requested_by") or "api"),
         approved=bool(body.get("approved")),
         dry_run=bool(body.get("dry_run")),
+        session_id=str(body.get("session_id") or "api"),
+    )
+
+
+@router.get("/pending")
+async def local_env_pending(session_id: str | None = None, include_expired: bool = False):
+    from ultronpro import local_environment
+
+    return local_environment.list_pending_actions(session_id=session_id, include_expired=include_expired)
+
+
+@router.post("/pending/{pending_id}/confirm")
+async def local_env_confirm_pending(pending_id: str, req: dict | None = None):
+    from ultronpro import local_environment
+
+    body = dict(req or {})
+    return local_environment.confirm_pending_action(
+        session_id=str(body.get("session_id") or "api"),
+        pending_id=pending_id,
+        approved_by=str(body.get("approved_by") or body.get("requested_by") or "api"),
+    )
+
+
+@router.post("/pending/{pending_id}/cancel")
+async def local_env_cancel_pending(pending_id: str, req: dict | None = None):
+    from ultronpro import local_environment
+
+    body = dict(req or {})
+    return local_environment.cancel_pending_action(
+        session_id=str(body.get("session_id") or "api"),
+        pending_id=pending_id,
+        reason=str(body.get("reason") or "api_cancelled"),
     )
 
 
@@ -104,4 +136,3 @@ async def local_env_selftest():
     from ultronpro import local_environment
 
     return local_environment.run_selftest()
-

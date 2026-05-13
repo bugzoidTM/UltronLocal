@@ -169,7 +169,7 @@ def _local_classifier_decision(query: str) -> RouteDecision | None:
     )
 
 
-def _local_environment_decision(query: str) -> RouteDecision | None:
+def _local_environment_decision(query: str, session_id: str | None = None) -> RouteDecision | None:
     text = _fold(query)
     scan_markers = (
         "varrer rede",
@@ -185,6 +185,12 @@ def _local_environment_decision(query: str) -> RouteDecision | None:
     try:
         from ultronpro import local_environment
 
+        pending_id = local_environment.pending_id_from_text(query)
+        has_pending = local_environment.latest_pending_action(session_id=session_id, pending_id=pending_id or None).get("ok")
+        if has_pending and local_environment.is_confirmation_text(query):
+            return _decision("local_environment_confirm", 0.96, "local_environment", "local_action_confirmation")
+        if has_pending and local_environment.is_cancel_text(query):
+            return _decision("local_environment_cancel", 0.96, "local_environment", "local_action_cancel")
         parsed = local_environment.parse_command(query)
     except Exception:
         return None
@@ -980,7 +986,7 @@ def _self_model_trace(query: str) -> dict[str, Any]:
     return _typed_trace("rag_self_model", sources=sources[:4], lookup_query=query, evidence_count=len(sources))
 
 
-def classify_pre_causal(query: str, session: dict[str, Any] | None = None) -> RouteDecision:
+def classify_pre_causal(query: str, session: dict[str, Any] | None = None, session_id: str | None = None) -> RouteDecision:
     text = _fold(query)
     token_set = set(text.split())
     if not text:
@@ -990,7 +996,7 @@ def classify_pre_causal(query: str, session: dict[str, Any] | None = None) -> Ro
     action = any(marker in text for marker in ("como", "cmo", "construir", "fabricar", "fazer", "passo a passo", "instrucoes", "passa a visao"))
     if dangerous and action:
         return _decision("safety_risk", 0.98, "safety", "dangerous_action_request")
-    local_env_decision = _local_environment_decision(query)
+    local_env_decision = _local_environment_decision(query, session_id=session_id)
     if local_env_decision is not None:
         return local_env_decision
     if _extract_session_write(query):
@@ -1033,12 +1039,21 @@ def _local_env_user_approved(query: str) -> bool:
 
 
 def _format_local_env_answer(result: dict[str, Any]) -> str:
+    if result.get("status") == "cancelled":
+        pending = result.get("pending_action") if isinstance(result.get("pending_action"), dict) else {}
+        return f"Combinado, cancelei a acao pendente: {pending.get('action') or 'acao'} em {pending.get('device_id') or 'dispositivo'}."
+    pending = result.get("pending_action") if isinstance(result.get("pending_action"), dict) else {}
     if result.get("status") == "confirmation_required" or str((result.get("gate") or {}).get("reason") or "") == "confirmation_required":
         gate = result.get("gate") if isinstance(result.get("gate"), dict) else {}
+        pending_id = pending.get("pending_id") or ""
+        ttl = int(pending.get("ttl_seconds") or 300)
+        device_id = pending.get("device_id") or ((result.get("device") or {}).get("device_id") or "desconhecido")
+        action = pending.get("action") or ((result.get("ledger") or {}).get("action") if isinstance(result.get("ledger"), dict) else "acao")
         return (
-            "Essa acao exige confirmacao antes de executar. "
-            f"Risco={gate.get('risk_level')}; dispositivo={((result.get('device') or {}).get('device_id') or 'desconhecido')}; "
-            "repita com 'confirmo' ou use a API com approved=true."
+            "Preciso da sua confirmacao antes de executar. "
+            f"Acao: {action} em {device_id}; risco={gate.get('risk_level')}. "
+            f"Diga 'confirmo' nos proximos {ttl} segundos para executar, ou 'cancelar' para descartar."
+            + (f" Token: {pending_id}." if pending_id else "")
         )
     if not result.get("ok"):
         reason = result.get("reason") or result.get("status") or result.get("error") or ((result.get("gate") or {}).get("reason") if isinstance(result.get("gate"), dict) else "")
@@ -1055,19 +1070,36 @@ def _format_local_env_answer(result: dict[str, Any]) -> str:
     return f"Acao local executada: {action} em {device_id}. Verificacao: {status}."
 
 
-async def _answer_local_environment(query: str, decision: RouteDecision) -> PreCausalAnswer:
+async def _answer_local_environment(query: str, decision: RouteDecision, session_id: str | None = None) -> PreCausalAnswer:
     try:
         from ultronpro import local_environment
 
         text = _fold(query)
         if any(marker in text for marker in ("varrer rede", "scan rede", "escanear rede", "descobrir dispositivos", "procurar dispositivos", "mapear rede", "cadastrar dispositivos")):
             result = await asyncio.to_thread(local_environment.scan_network, register=True)
+        elif decision.intent == "local_environment_confirm":
+            pending_id = local_environment.pending_id_from_text(query)
+            result = await asyncio.to_thread(
+                local_environment.confirm_pending_action,
+                str(session_id or "default"),
+                pending_id or None,
+                approved_by="chat_stream",
+            )
+        elif decision.intent == "local_environment_cancel":
+            pending_id = local_environment.pending_id_from_text(query)
+            result = await asyncio.to_thread(
+                local_environment.cancel_pending_action,
+                str(session_id or "default"),
+                pending_id or None,
+                reason="chat_cancelled",
+            )
         else:
             result = await asyncio.to_thread(
                 local_environment.execute_command,
                 query,
                 requested_by="chat_stream",
                 approved=_local_env_user_approved(query),
+                session_id=str(session_id or "default"),
             )
         return PreCausalAnswer(
             True,
@@ -1085,7 +1117,7 @@ async def _answer_local_environment(query: str, decision: RouteDecision) -> PreC
 
 
 async def answer_pre_causal(query: str, session_id: str | None = None, session: dict[str, Any] | None = None) -> PreCausalAnswer | None:
-    decision = classify_pre_causal(query, session=session)
+    decision = classify_pre_causal(query, session=session, session_id=session_id)
     if decision.should_use_causal or decision.route == "none":
         return None
     if decision.route == "safety":
@@ -1097,7 +1129,7 @@ async def answer_pre_causal(query: str, session_id: str | None = None, session: 
     if decision.route == "session_memory":
         return _answer_session_memory(query, str(session_id or "default"), decision)
     if decision.route == "local_environment":
-        return await _answer_local_environment(query, decision)
+        return await _answer_local_environment(query, decision, session_id=session_id)
     if decision.route == "math":
         return _answer_math(query, decision)
     if decision.route == "basic_logic":
