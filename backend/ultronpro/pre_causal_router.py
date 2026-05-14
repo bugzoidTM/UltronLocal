@@ -167,8 +167,83 @@ def _local_classifier_decision(query: str) -> RouteDecision | None:
     )
 
 
+_CONTROL_MODE_KEY = "mode.local_environment_control"
+
+
+def _control_mode_command(text: str) -> str:
+    if any(
+        marker in text
+        for marker in (
+            "sair do modo controle",
+            "sair modo controle",
+            "desativar modo controle",
+            "desligar modo controle",
+            "encerrar modo controle",
+            "voltar ao chat normal",
+            "voltar para chat normal",
+            "modo conversa normal",
+        )
+    ):
+        return "off"
+    if any(
+        marker in text
+        for marker in (
+            "ativar modo controle",
+            "ativa modo controle",
+            "entrar no modo controle",
+            "entrar modo controle",
+            "iniciar modo controle",
+            "ligar modo controle",
+            "modo controle",
+        )
+    ):
+        return "on"
+    return ""
+
+
+def _control_mode_active(session_id: str | None) -> bool:
+    try:
+        from ultronpro import session_memory
+
+        hit = session_memory.get_value(session_id, _CONTROL_MODE_KEY, include_long_term=False)
+        value = hit.get("value") if isinstance(hit, dict) else None
+        if isinstance(value, dict):
+            return bool(value.get("active"))
+        return str(value).strip().lower() in {"1", "true", "yes", "on", "ativo", "active"}
+    except Exception:
+        return False
+
+
+def _set_control_mode(session_id: str | None, active: bool, *, source_query: str = "") -> None:
+    try:
+        from ultronpro import session_memory
+
+        session_memory.set_value(
+            session_id,
+            _CONTROL_MODE_KEY,
+            {
+                "active": bool(active),
+                "domain": "local_environment",
+                "scope": "devices_network_hardware",
+                "exit_phrase": "sair do modo controle",
+                "updated_at": time.time(),
+            },
+            scope="session",
+            source="local_environment_control_mode",
+            meta={"source_query": source_query},
+        )
+    except Exception:
+        pass
+
+
 def _local_environment_decision(query: str, session_id: str | None = None) -> RouteDecision | None:
     text = _fold(query)
+    mode_command = _control_mode_command(text)
+    if mode_command == "on":
+        return _decision("local_environment_control_mode_on", 0.99, "local_environment", "control_mode_activation")
+    if mode_command == "off":
+        return _decision("local_environment_control_mode_off", 0.99, "local_environment", "control_mode_deactivation")
+    control_mode = _control_mode_active(session_id)
     scan_markers = (
         "varrer rede",
         "scan rede",
@@ -178,13 +253,13 @@ def _local_environment_decision(query: str, session_id: str | None = None) -> Ro
         "mapear rede",
         "cadastrar dispositivos",
     )
-    if any(marker in text for marker in scan_markers):
+    if control_mode and any(marker in text for marker in scan_markers):
         return _decision("local_environment_scan", 0.9, "local_environment", "local_network_discovery_command")
-    if any(marker in text for marker in ("home assistant", "homeassistant", "ha ")) and any(
+    if control_mode and any(marker in text for marker in ("home assistant", "homeassistant", "ha ")) and any(
         marker in text for marker in ("sincronizar", "integrar", "importar", "descobrir", "conectar", "listar entidades", "puxar entidades")
     ):
         return _decision("local_environment_home_assistant_import", 0.92, "local_environment", "home_assistant_registry_import")
-    if any(marker in text for marker in ("renome", "chame", "chamar", "nomeie", "apelide")) and any(
+    if control_mode and any(marker in text for marker in ("renome", "chame", "chamar", "nomeie", "apelide")) and any(
         marker in text for marker in ("camera", "webcam", "tv", "dispositivo", "192.", "net_")
     ):
         return _decision("local_environment_rename_device", 0.9, "local_environment", "local_device_rename")
@@ -208,7 +283,7 @@ def _local_environment_decision(query: str, session_id: str | None = None) -> Ro
         "device registry",
         "local device",
     )
-    if any(marker in text for marker in list_markers):
+    if control_mode and any(marker in text for marker in list_markers):
         return _decision("local_environment_list", 0.9, "local_environment", "local_device_registry_query")
     context_device_terms = (
         "qual desses",
@@ -235,9 +310,9 @@ def _local_environment_decision(query: str, session_id: str | None = None) -> Ro
         "celular",
         "telefone",
     )
-    if any(marker in text for marker in context_device_terms) and any(term in text for term in device_type_terms):
+    if control_mode and any(marker in text for marker in context_device_terms) and any(term in text for term in device_type_terms):
         return _decision("local_environment_context_question", 0.84, "local_environment", "local_device_context_followup")
-    if any(marker in text for marker in ("qual delas", "qual deles", "qual desses", "qual dessas", "deles", "delas", "essas", "esses")) and any(
+    if control_mode and any(marker in text for marker in ("qual delas", "qual deles", "qual desses", "qual dessas", "deles", "delas", "essas", "esses")) and any(
         marker in text for marker in ("abrir", "abre", "ver", "consigo", "posso", "funciona", "usar", "controlar")
     ):
         try:
@@ -257,7 +332,7 @@ def _local_environment_decision(query: str, session_id: str | None = None) -> Ro
         "quais dispositivos respondem",
         "dispositivos respondem",
     )
-    if any(marker in text for marker in access_markers):
+    if control_mode and any(marker in text for marker in access_markers):
         return _decision("local_environment_access_battery", 0.92, "local_environment", "local_device_access_battery")
     control_markers = (
         "controle total",
@@ -267,7 +342,7 @@ def _local_environment_decision(query: str, session_id: str | None = None) -> Ro
         "ativar dispositivos",
         "permitir dispositivos",
     )
-    if any(marker in text for marker in control_markers):
+    if control_mode and any(marker in text for marker in control_markers):
         return _decision("local_environment_grant_control", 0.9, "local_environment", "local_device_control_grant")
     camera_markers = (
         "listar cameras",
@@ -285,7 +360,7 @@ def _local_environment_decision(query: str, session_id: str | None = None) -> Ro
         "camera ao vivo",
         "imagens das cameras",
     )
-    if any(marker in text for marker in camera_markers):
+    if control_mode and any(marker in text for marker in camera_markers):
         return _decision("local_environment_cameras", 0.9, "local_environment", "local_camera_stream_query")
     event_markers = (
         "eventos dos dispositivos",
@@ -295,7 +370,7 @@ def _local_environment_decision(query: str, session_id: str | None = None) -> Ro
         "quais eventos",
         "capacidades dos dispositivos",
     )
-    if any(marker in text for marker in event_markers):
+    if control_mode and any(marker in text for marker in event_markers):
         return _decision("local_environment_events", 0.88, "local_environment", "local_device_event_matrix_query")
     pending_markers = (
         "acoes pendentes",
@@ -304,33 +379,35 @@ def _local_environment_decision(query: str, session_id: str | None = None) -> Ro
         "pendencias de dispositivo",
         "acao pendente",
     )
-    if any(marker in text for marker in pending_markers):
+    if control_mode and any(marker in text for marker in pending_markers):
         return _decision("local_environment_pending", 0.9, "local_environment", "local_pending_actions_query")
     try:
         from ultronpro import local_environment
 
         pending_id = local_environment.pending_id_from_text(query)
         has_pending = local_environment.latest_pending_action(session_id=session_id, pending_id=pending_id or None).get("ok")
-        if has_pending and local_environment.is_confirmation_text(query):
+        if control_mode and has_pending and local_environment.is_confirmation_text(query):
             return _decision("local_environment_confirm", 0.96, "local_environment", "local_action_confirmation")
-        if has_pending and local_environment.is_cancel_text(query):
+        if control_mode and has_pending and local_environment.is_cancel_text(query):
             return _decision("local_environment_cancel", 0.96, "local_environment", "local_action_cancel")
-        parsed = local_environment.parse_command(query)
+        parsed = local_environment.parse_command(query) if control_mode else {"ok": False}
     except Exception:
         return None
-    if parsed.get("ok"):
+    if control_mode and parsed.get("ok"):
         return _decision(
             "local_environment_action",
             float(parsed.get("confidence") or 0.82),
             "local_environment",
             "registered_device_command",
         )
-    if parsed.get("action") and parsed.get("reason") in {"ambiguous_device", "no_registered_device_matched"}:
+    if control_mode and parsed.get("action") and parsed.get("reason") in {"ambiguous_device", "no_registered_device_matched"}:
         return _decision("local_environment_action", 0.72, "local_environment", f"device_command_{parsed.get('reason')}")
-    if any(marker in text for marker in ("camera", "cameras", "webcam", "webcams")) and any(
+    if control_mode and any(marker in text for marker in ("camera", "cameras", "webcam", "webcams")) and any(
         marker in text for marker in ("abre", "abrir", "mostra", "mostrar", "mostre", "ver", "veja", "stream", "imagem")
     ):
         return _decision("local_environment_cameras", 0.86, "local_environment", "generic_camera_query")
+    if control_mode:
+        return _decision("local_environment_control_mode_context", 0.78, "local_environment", "control_mode_default_domain")
     return None
 
 
@@ -1343,6 +1420,8 @@ def classify_pre_causal(query: str, session: dict[str, Any] | None = None, sessi
         return _decision("causal_reasoning", 0.82, "causal", "causal_or_planning_request", causal=True)
     classifier_decision = _local_classifier_decision(query)
     if classifier_decision is not None:
+        if classifier_decision.route == "local_environment" and not _control_mode_active(session_id):
+            return _decision("open_chat", 0.35, "none", "local_environment_requires_control_mode", causal=True)
         return classifier_decision
     return _decision("open_chat", 0.35, "none", "no_high_confidence_pre_causal_route", causal=True)
 
@@ -1779,7 +1858,47 @@ async def _answer_local_environment(query: str, decision: RouteDecision, session
         from ultronpro import local_environment
 
         text = _fold(query)
-        if any(marker in text for marker in ("varrer rede", "scan rede", "escanear rede", "descobrir dispositivos", "procurar dispositivos", "mapear rede", "cadastrar dispositivos")):
+        if decision.intent == "local_environment_control_mode_on":
+            _set_control_mode(session_id, True, source_query=query)
+            answer = (
+                "Modo controle ativado. A partir de agora vou tratar esta conversa como comandos e perguntas sobre "
+                "dispositivos, rede e hardware. Para voltar ao chat normal, diga: sair do modo controle."
+            )
+            result = {
+                "ok": True,
+                "kind": "control_mode",
+                "active": True,
+                "scope": "devices_network_hardware",
+                "session_id": str(session_id or "default"),
+            }
+            _remember_local_env_context(session_id, query, result, answer)
+            return PreCausalAnswer(True, answer, decision, metadata={"local_environment": result})
+        if decision.intent == "local_environment_control_mode_off":
+            _set_control_mode(session_id, False, source_query=query)
+            answer = "Modo controle desativado. Voltei para o chat normal."
+            result = {
+                "ok": True,
+                "kind": "control_mode",
+                "active": False,
+                "session_id": str(session_id or "default"),
+            }
+            return PreCausalAnswer(True, answer, decision, metadata={"local_environment": result})
+        if decision.intent == "local_environment_control_mode_context":
+            devices = await asyncio.to_thread(local_environment.list_devices, True)
+            count = int(devices.get("count") or 0)
+            answer = (
+                f"Modo controle ativo. Estou interpretando esta conversa como ambiente local: dispositivos, rede e hardware. "
+                f"Tenho {count} dispositivo(s) no registry. Voce pode pedir, por exemplo: listar dispositivos, varrer rede, "
+                "abrir webcam local, listar cameras, testar acesso, ou executar um comando em um dispositivo. "
+                "Para sair, diga: sair do modo controle."
+            )
+            result = {
+                "ok": True,
+                "kind": "control_mode_context",
+                "active": True,
+                "device_count": count,
+            }
+        elif any(marker in text for marker in ("varrer rede", "scan rede", "escanear rede", "descobrir dispositivos", "procurar dispositivos", "mapear rede", "cadastrar dispositivos")):
             result = await asyncio.to_thread(local_environment.scan_network, register=True)
         elif decision.intent == "local_environment_access_battery":
             result = await asyncio.to_thread(local_environment.run_access_battery, timeout_ms=800, include_disabled=True, grant_control=True)
@@ -1846,7 +1965,8 @@ async def _answer_local_environment(query: str, decision: RouteDecision, session
                 approved=_local_env_user_approved(query),
                 session_id=str(session_id or "default"),
             )
-        answer = _format_local_env_answer(result)
+        if decision.intent != "local_environment_control_mode_context":
+            answer = _format_local_env_answer(result)
         _remember_local_env_context(session_id, query, result, answer)
         return PreCausalAnswer(
             True,

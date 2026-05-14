@@ -20,8 +20,9 @@ budget:
   max_calls: 12
   max_cost_usd: 0.0
 when_to_use: |
-  Use este skill quando o usuario pedir comandos livres sobre dispositivos locais,
-  automacao residencial, TV, camera, servicos da maquina, scripts ou rede local.
+  Use este skill quando o usuario ativar explicitamente o modo controle ou, ja em modo controle,
+  pedir comandos livres sobre dispositivos locais, automacao residencial, TV, camera,
+  servicos da maquina, scripts ou rede local.
   A rota deve sempre consultar o Device Registry, aplicar capability model e risk gate,
   executar observe -> act -> verify, e registrar Action Ledger.
 path: local_environment_protocols
@@ -42,7 +43,9 @@ Competencia operacional para controlar dispositivos cadastrados no ambiente loca
 
 ## Contrato
 
-1. Interpretar comando em texto livre.
+0. Fora do modo controle, nao tratar conversa normal como manipulacao de dispositivos.
+   O usuario entra dizendo `ativar modo controle` e sai dizendo `sair do modo controle`.
+1. Em modo controle, interpretar comando em texto livre.
 2. Selecionar dispositivo pelo registry e aliases.
 3. Selecionar protocolo nativo quando disponivel:
    - Mock apenas para dispositivos simulados.
