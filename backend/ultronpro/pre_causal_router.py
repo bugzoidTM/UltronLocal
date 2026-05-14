@@ -180,6 +180,14 @@ def _local_environment_decision(query: str, session_id: str | None = None) -> Ro
     )
     if any(marker in text for marker in scan_markers):
         return _decision("local_environment_scan", 0.9, "local_environment", "local_network_discovery_command")
+    if any(marker in text for marker in ("home assistant", "homeassistant", "ha ")) and any(
+        marker in text for marker in ("sincronizar", "integrar", "importar", "descobrir", "conectar", "listar entidades", "puxar entidades")
+    ):
+        return _decision("local_environment_home_assistant_import", 0.92, "local_environment", "home_assistant_registry_import")
+    if any(marker in text for marker in ("renome", "chame", "chamar", "nomeie", "apelide")) and any(
+        marker in text for marker in ("camera", "webcam", "tv", "dispositivo", "192.", "net_")
+    ):
+        return _decision("local_environment_rename_device", 0.9, "local_environment", "local_device_rename")
     list_markers = (
         "liste meus dispositivos",
         "liste os dispositivos",
@@ -319,7 +327,7 @@ def _local_environment_decision(query: str, session_id: str | None = None) -> Ro
         )
     if parsed.get("action") and parsed.get("reason") in {"ambiguous_device", "no_registered_device_matched"}:
         return _decision("local_environment_action", 0.72, "local_environment", f"device_command_{parsed.get('reason')}")
-    if any(marker in text for marker in ("camera", "cameras")) and any(
+    if any(marker in text for marker in ("camera", "cameras", "webcam", "webcams")) and any(
         marker in text for marker in ("abre", "abrir", "mostra", "mostrar", "mostre", "ver", "veja", "stream", "imagem")
     ):
         return _decision("local_environment_cameras", 0.86, "local_environment", "generic_camera_query")
@@ -1430,6 +1438,7 @@ def _local_env_camera_stream_hint(device: dict[str, Any]) -> str:
     stream = device.get("stream") if isinstance(device.get("stream"), dict) else {}
     preferred = str(stream.get("preferred_url") or "").strip()
     proxy = str(stream.get("mjpeg_proxy_endpoint") or "").strip()
+    viewer = str(stream.get("viewer_url") or "").strip()
     if not preferred:
         try:
             from ultronpro import local_environment
@@ -1438,8 +1447,13 @@ def _local_env_camera_stream_hint(device: dict[str, Any]) -> str:
             if isinstance(info, dict):
                 preferred = str(info.get("preferred_url") or "").strip()
                 proxy = str(info.get("mjpeg_proxy_endpoint") or "").strip()
+                viewer = str(info.get("viewer_url") or "").strip()
         except Exception:
             pass
+    else:
+        viewer = str(stream.get("viewer_url") or "").strip()
+    if viewer:
+        return f"visualizacao {viewer}"
     if preferred and proxy:
         return f"stream {preferred}; proxy {proxy}"
     if preferred:
@@ -1626,7 +1640,7 @@ def _format_local_env_answer(result: dict[str, Any]) -> str:
         lines = [f"Encontrei {len(devices)} camera(s) na rede."]
         for device in devices[:12]:
             stream = device.get("stream") if isinstance(device.get("stream"), dict) else {}
-            url = stream.get("preferred_url") or "stream nao configurado"
+            url = stream.get("viewer_url") or stream.get("preferred_url") or "stream nao configurado"
             lines.append(f"- {_local_env_device_label(device)}: {url}")
             if stream.get("mjpeg_proxy_endpoint"):
                 lines.append(f"  proxy local: {stream.get('mjpeg_proxy_endpoint')}")
@@ -1637,6 +1651,15 @@ def _format_local_env_answer(result: dict[str, Any]) -> str:
             f"Controle local habilitado para {result.get('changed_count', 0)} dispositivo(s). "
             "O controle ficou amplo no registry, mas a execucao continua passando por risk gate, capabilities e confirmacao para risco alto."
         )
+    if result.get("kind") == "home_assistant_import":
+        if result.get("ok"):
+            count = int(result.get("imported_count") or 0)
+            return f"Sincronizei o Home Assistant e importei {count} entidade(s) para o registry local. Agora posso rotear comandos por nome amigavel, entidade ou alias."
+        return f"Nao consegui sincronizar o Home Assistant: {result.get('error') or 'configuracao ausente'}. Configure ULTRON_HOME_ASSISTANT_URL e ULTRON_HOME_ASSISTANT_TOKEN."
+    if result.get("kind") == "device_rename":
+        if result.get("ok"):
+            return f"Pronto. Vou lembrar esse dispositivo como {result.get('name')}."
+        return f"Nao consegui renomear o dispositivo: {result.get('error') or result.get('reason') or 'dispositivo nao encontrado'}."
     if result.get("kind") == "device_registry":
         devices = [d for d in (result.get("devices") or []) if isinstance(d, dict)]
         if not devices:
@@ -1704,6 +1727,8 @@ def _format_local_env_answer(result: dict[str, Any]) -> str:
             return f"Encontrei mais de um dispositivo para {action}. Especifique qual: {suffix}."
         if reason == "no_registered_device_matched":
             action = result.get("action") or "acao"
+            if action == "view_stream":
+                return "Entendi que voce quer abrir uma camera/webcam, mas nao encontrei um stream cadastrado para esse alvo. Para webcam de outro computador, ela precisa aparecer como entidade Camera no Home Assistant ou como endpoint RTSP/MJPEG/HTTP permitido no registry."
             return f"Entendi a acao {action}, mas nao encontrei um dispositivo cadastrado correspondente. Diga 'liste meus dispositivos' para ver os nomes disponiveis."
         execution = result.get("execution") if isinstance(result.get("execution"), dict) else {}
         if reason == "execution_failed" and execution.get("hint"):
@@ -1716,21 +1741,29 @@ def _format_local_env_answer(result: dict[str, Any]) -> str:
         networks = ", ".join(str(x) for x in (result.get("networks") or [])[:3])
         return f"Varredura concluida em {networks or 'rede local'}: {count} dispositivo(s) cadastrado(s) no registry como descobertos."
     parsed = result.get("parsed_command") if isinstance(result.get("parsed_command"), dict) else {}
-    device_id = parsed.get("device_id") or ((result.get("device") or {}).get("device_id") if isinstance(result.get("device"), dict) else "")
+    device = result.get("device") if isinstance(result.get("device"), dict) else {}
+    device_id = parsed.get("device_id") or device.get("device_id") or ""
+    device_label = str(device.get("name") or device_id or "dispositivo").strip()
     action = parsed.get("action") or ((result.get("ledger") or {}).get("action") if isinstance(result.get("ledger"), dict) else "")
     execution = result.get("execution") if isinstance(result.get("execution"), dict) else {}
     if action == "view_stream":
         urls = execution.get("stream_urls") if isinstance(execution.get("stream_urls"), list) else []
         endpoint = execution.get("mjpeg_proxy_endpoint") or ""
+        viewer = execution.get("viewer_url") or execution.get("viewer_endpoint") or ""
         if urls:
-            return f"Stream da camera {device_id}: {urls[0]}. Proxy local: {endpoint or 'indisponivel'}."
+            external = execution.get("external_player") if isinstance(execution.get("external_player"), dict) else {}
+            if external.get("ok"):
+                opened = f" Abri o stream no {external.get('player') or 'player externo'} instalado nesta maquina."
+            else:
+                opened = " Abri a visualizacao local no navegador." if execution.get("opened_browser") else ""
+            return f"{device_label} pronta ao vivo: {viewer or endpoint or urls[0]}.{opened}"
     if action == "open_web_interface":
         urls = execution.get("urls") if isinstance(execution.get("urls"), list) else []
         if urls:
-            return f"Interface web de {device_id}: {urls[0]}."
+            return f"Interface web de {device_label}: {urls[0]}."
     verification = result.get("verification") if isinstance(result.get("verification"), dict) else {}
     status = verification.get("status") or result.get("status") or "success"
-    return f"Acao local executada: {action} em {device_id}. Verificacao: {status}."
+    return f"Acao local executada: {action} em {device_label}. Verificacao: {status}."
 
 
 async def _answer_local_environment(query: str, decision: RouteDecision, session_id: str | None = None) -> PreCausalAnswer:
@@ -1745,6 +1778,11 @@ async def _answer_local_environment(query: str, decision: RouteDecision, session
         elif decision.intent == "local_environment_grant_control":
             result = await asyncio.to_thread(local_environment.grant_full_control, include_unreachable=False, reason="chat_requested_full_control")
             result["kind"] = "control_grant"
+        elif decision.intent == "local_environment_home_assistant_import":
+            result = await asyncio.to_thread(local_environment.import_home_assistant_entities)
+        elif decision.intent == "local_environment_rename_device":
+            result = await asyncio.to_thread(local_environment.rename_device_from_text, query)
+            result["kind"] = "device_rename"
         elif decision.intent == "local_environment_context_question":
             return _answer_local_environment_context_question(query, decision, session_id=session_id)
         elif decision.intent == "local_environment_cameras":

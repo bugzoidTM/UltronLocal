@@ -45,12 +45,15 @@ Competencia operacional para controlar dispositivos cadastrados no ambiente loca
 1. Interpretar comando em texto livre.
 2. Selecionar dispositivo pelo registry e aliases.
 3. Selecionar protocolo nativo quando disponivel:
-   - Roku ECP para Roku/TV na porta 8060.
-   - Samsung Remote WebSocket para Samsung/Tizen nas portas 8001/8002.
-   - HTTP endpoints declarados no registry.
+   - Mock apenas para dispositivos simulados.
+   - Home Assistant para entidades importadas via REST API.
+   - MQTT publish direto, sem biblioteca externa, para topicos cadastrados.
+   - Servicos locais e scripts registrados.
+   - HTTP endpoints customizados declarados no registry.
    - Wake-on-LAN quando houver MAC cadastrado.
    - RTSP/MJPEG proxy para cameras.
-   - Local service/script para servicos e automacoes da maquina.
+   - Roku ECP para Roku/TV na porta 8060.
+   - Samsung Remote WebSocket para Samsung/Tizen nas portas 8001/8002 quando Home Assistant nao cobrir.
 4. Executar somente capabilities registradas e permitidas.
 5. Confirmar acoes de risco alto antes da execucao.
 6. Registrar Action Ledger, trace e aprendizado causal.
@@ -59,11 +62,16 @@ Competencia operacional para controlar dispositivos cadastrados no ambiente loca
 
 ```text
 Usuario: aumentar volume da TV 192.168.68.104
-Rota: local_environment -> device net_192_168_68_104 -> volume_up -> samsung_ws
+Rota preferida: local_environment -> media_player Home Assistant -> volume_up
+Fallback: local_environment -> device net_192_168_68_104 -> volume_up -> samsung_ws
 ```
 
 ```text
 Usuario: abrir camera 192.168.68.100
-Rota: local_environment -> camera RTSP -> view_stream -> proxy MJPEG
+Rota: local_environment -> camera RTSP/Home Assistant -> view_stream -> viewer local MJPEG
 ```
 
+```text
+Usuario: renomeie camera 192.168.68.100 para Camera da Sala
+Rota: local_environment -> registry rename -> aliases persistentes
+```

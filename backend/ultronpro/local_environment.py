@@ -7,6 +7,7 @@ import json
 import os
 import platform
 import re
+import shutil
 import socket
 import ssl
 import subprocess
@@ -15,6 +16,7 @@ import tempfile
 import threading
 import time
 import unicodedata
+import webbrowser
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
@@ -88,6 +90,13 @@ def _now() -> int:
 
 def _safe(value: Any, limit: int = 500) -> str:
     return " ".join(str(value or "").strip().split())[:limit]
+
+
+def _slug(value: Any, limit: int = 120) -> str:
+    raw = unicodedata.normalize("NFKD", str(value or "").lower())
+    raw = "".join(ch for ch in raw if not unicodedata.combining(ch))
+    raw = re.sub(r"[^a-z0-9_.:-]+", "_", raw).strip("_")
+    return raw[:limit] or "item"
 
 
 def _hash(value: Any) -> str:
@@ -455,6 +464,43 @@ def get_device(device_id: str) -> dict[str, Any] | None:
     return (_load_registry().get("devices") or {}).get(did)
 
 
+def find_device_for_text(text: str, *, action: str | None = None, include_disabled: bool = False) -> dict[str, Any]:
+    folded = _fold(text)
+    devices = [d for d in list_devices(include_disabled=include_disabled).get("devices", []) if isinstance(d, dict)]
+    if action:
+        devices = [d for d in devices if action in set(d.get("capabilities") or [])]
+    scored: list[tuple[int, dict[str, Any]]] = []
+    for device in devices:
+        config = device.get("config") if isinstance(device.get("config"), dict) else {}
+        terms = {
+            _fold(device.get("device_id")),
+            _fold(device.get("name")),
+            _fold(device.get("type")),
+            _fold(device.get("location")),
+            _fold(config.get("ip")),
+            _fold(config.get("entity_id")),
+        }
+        terms.update(_fold(x) for x in (device.get("aliases") or []))
+        terms = {t for t in terms if t}
+        score = 0
+        for term in terms:
+            if term and term in folded:
+                score += max(1, min(10, len(term.split()) + 2))
+        if score:
+            scored.append((score, device))
+    if not scored:
+        return {"ok": False, "reason": "no_registered_device_matched", "action": action or ""}
+    scored.sort(key=lambda item: item[0], reverse=True)
+    if len(scored) > 1 and scored[0][0] == scored[1][0]:
+        return {
+            "ok": False,
+            "reason": "ambiguous_device",
+            "action": action or "",
+            "candidates": [d.get("device_id") for _, d in scored[:5]],
+        }
+    return {"ok": True, "device": scored[0][1], "score": scored[0][0], "confidence": round(min(0.99, 0.55 + scored[0][0] / 20.0), 4)}
+
+
 def upsert_device(device: dict[str, Any]) -> dict[str, Any]:
     try:
         normalized = _normalize_device(device or {})
@@ -467,6 +513,67 @@ def upsert_device(device: dict[str, Any]) -> dict[str, Any]:
     reg.setdefault("devices", {})[normalized["device_id"]] = normalized
     _save_registry(reg)
     return {"ok": True, "device": normalized, "path": str(REGISTRY_PATH)}
+
+
+def rename_device(device_id: str, new_name: str, *, aliases: list[str] | None = None, source: str = "user") -> dict[str, Any]:
+    reg = _load_registry()
+    devices = reg.setdefault("devices", {})
+    did = str(device_id or "").strip()
+    device = devices.get(did)
+    if not isinstance(device, dict):
+        return {"ok": False, "error": "device_not_found", "device_id": did}
+    clean_name = _safe(new_name, 120)
+    if not clean_name:
+        return {"ok": False, "error": "new_name_required", "device_id": did}
+    current_aliases = [str(x).strip() for x in (device.get("aliases") or []) if str(x).strip()]
+    additions = [clean_name, _fold(clean_name), *(aliases or [])]
+    for alias in additions:
+        alias = str(alias or "").strip()
+        if alias and alias not in current_aliases:
+            current_aliases.append(alias[:80])
+    device["name"] = clean_name
+    device["aliases"] = list(dict.fromkeys(current_aliases))[:30]
+    meta = device.get("metadata") if isinstance(device.get("metadata"), dict) else {}
+    meta.setdefault("rename_history", []).append({"ts": _now(), "name": clean_name, "source": _safe(source, 80)})
+    meta["last_renamed_at"] = _now()
+    device["metadata"] = meta
+    device["updated_at"] = _now()
+    devices[did] = _normalize_device(device)
+    _save_registry(reg)
+    return {"ok": True, "device": devices[did], "device_id": did, "name": clean_name, "path": str(REGISTRY_PATH)}
+
+
+def rename_device_from_text(text: str) -> dict[str, Any]:
+    raw = str(text or "").strip()
+    folded = _fold(raw)
+    patterns = [
+        r"(?:renome(?:ar|ie)|chame|chamar|nomeie|apelide)\s+(?P<target>.+?)\s+(?:para|como|de)\s+(?P<name>.+)$",
+        r"(?P<target>camera|webcam|tv|dispositivo).+?(?:vai se chamar|chama|deve se chamar)\s+(?P<name>.+)$",
+    ]
+    target_text = ""
+    name = ""
+    for pattern in patterns:
+        match = re.search(pattern, raw, flags=re.IGNORECASE)
+        if match:
+            target_text = str(match.groupdict().get("target") or "").strip()
+            name = str(match.groupdict().get("name") or "").strip()
+            break
+    if not name:
+        match = re.search(r"\b(?:para|como|de)\s+(.+)$", raw, flags=re.IGNORECASE)
+        if match:
+            name = match.group(1).strip()
+            target_text = raw[: match.start()].strip()
+    name = re.sub(r"^[\"'“”]+|[\"'“”\.\!]+$", "", name).strip()
+    if not name:
+        return {"ok": False, "reason": "new_name_not_found"}
+    lookup_text = target_text or raw
+    found = find_device_for_text(lookup_text, include_disabled=True)
+    if not found.get("ok") and any(word in folded for word in ("camera", "webcam")):
+        found = find_device_for_text("camera " + lookup_text, action="view_stream", include_disabled=True)
+    if not found.get("ok"):
+        return found
+    device = found.get("device") if isinstance(found.get("device"), dict) else {}
+    return rename_device(str(device.get("device_id") or ""), name, aliases=[name], source="chat")
 
 
 def remove_device(device_id: str) -> dict[str, Any]:
@@ -572,6 +679,31 @@ def _device_ports(config: dict[str, Any] | None) -> list[int]:
         if isinstance(values, list):
             raw.extend(values)
     return _normalize_ports([int(p) for p in raw if str(p).strip().isdigit()]) if raw else []
+
+
+def _public_base_url() -> str:
+    return str(os.getenv("ULTRON_LOCAL_ENV_PUBLIC_BASE_URL") or "http://127.0.0.1:8000").rstrip("/")
+
+
+def _local_api_path(path: str) -> str:
+    suffix = "/" + str(path or "").lstrip("/")
+    return f"{_public_base_url()}{suffix}"
+
+
+def _maybe_open_local_url(path_or_url: str, *, enabled: bool | None = None) -> bool:
+    if enabled is None:
+        enabled = str(os.getenv("ULTRON_LOCAL_ENV_OPEN_BROWSER", "1")).strip().lower() not in {"0", "false", "no", "off"}
+    if not enabled:
+        return False
+    url = str(path_or_url or "").strip()
+    if url.startswith("/"):
+        url = _local_api_path(url)
+    if not url:
+        return False
+    try:
+        return bool(webbrowser.open(url, new=2, autoraise=True))
+    except Exception:
+        return False
 
 
 def _tcp_port_open(host: str, port: int, timeout_sec: float) -> bool:
@@ -804,6 +936,41 @@ def _capabilities_for_type(device_type: str, open_ports: list[int]) -> list[str]
             "set_input",
         ])
     return list(dict.fromkeys(caps))
+
+
+def _ha_capabilities_for_domain(domain: str) -> list[str]:
+    domain = str(domain or "").strip().lower()
+    caps = ["read_state"]
+    if domain in {"light"}:
+        caps.extend(["turn_on", "turn_off", "set_brightness"])
+    elif domain in {"switch", "input_boolean", "automation", "script"}:
+        caps.extend(["turn_on", "turn_off"])
+    elif domain == "media_player":
+        caps.extend(["turn_on", "turn_off", "media_play", "media_pause", "volume_up", "volume_down", "mute", "set_input"])
+    elif domain == "climate":
+        caps.extend(["turn_on", "turn_off", "set_temperature"])
+    elif domain == "camera":
+        caps.extend(["view_stream", "capture_snapshot"])
+    elif domain in {"cover", "fan", "lock"}:
+        caps.extend(["turn_on", "turn_off"])
+    return list(dict.fromkeys(caps))
+
+
+def _ha_device_type_for_domain(domain: str) -> str:
+    domain = str(domain or "").strip().lower()
+    return {
+        "light": "smart_light",
+        "switch": "smart_switch",
+        "input_boolean": "virtual_switch",
+        "media_player": "home_assistant_media_player",
+        "camera": "home_assistant_camera",
+        "climate": "thermostat",
+        "script": "home_assistant_script",
+        "automation": "home_assistant_automation",
+        "fan": "fan",
+        "cover": "cover",
+        "lock": "lock",
+    }.get(domain, f"home_assistant_{domain or 'entity'}")
 
 
 def _aliases_for_type(ip: str, device_type: str, name_hint: str) -> list[str]:
@@ -1174,15 +1341,136 @@ def _ha_headers(config: dict[str, Any]) -> dict[str, str]:
     token_env = str(config.get("token_env") or "").strip()
     if token_env:
         token = os.getenv(token_env, token)
+    if not token:
+        token = os.getenv("ULTRON_HOME_ASSISTANT_TOKEN", "")
     headers = {"Content-Type": "application/json"}
     if token:
         headers["Authorization"] = f"Bearer {token}"
     return headers
 
 
+def _ha_base_url(config: dict[str, Any] | None = None) -> str:
+    config = config if isinstance(config, dict) else {}
+    return str(config.get("base_url") or os.getenv("ULTRON_HOME_ASSISTANT_URL") or "").rstrip("/")
+
+
+def _ha_state_url(config: dict[str, Any], entity_id: str, *, stream: bool = False) -> str:
+    base_url = _ha_base_url(config)
+    encoded = quote(str(entity_id or ""), safe="")
+    if stream:
+        return f"{base_url}/api/camera_proxy_stream/{encoded}"
+    return f"{base_url}/api/camera_proxy/{encoded}"
+
+
+def home_assistant_status(config: dict[str, Any] | None = None) -> dict[str, Any]:
+    cfg = config if isinstance(config, dict) else {}
+    base_url = _ha_base_url(cfg)
+    if not base_url:
+        return {"ok": False, "configured": False, "error": "home_assistant_url_not_configured"}
+    try:
+        with httpx.Client(timeout=float(cfg.get("timeout_sec") or 6.0)) as client:
+            resp = client.get(f"{base_url}/api/", headers=_ha_headers(cfg))
+            resp.raise_for_status()
+            text = resp.text[:300]
+        return {"ok": True, "configured": True, "base_url": base_url, "status_code": resp.status_code, "message": text}
+    except Exception as exc:
+        return {"ok": False, "configured": True, "base_url": base_url, "error": f"{type(exc).__name__}:{str(exc)[:200]}"}
+
+
+def _ha_entity_to_device(entity: dict[str, Any], *, base_url: str, token_env: str = "ULTRON_HOME_ASSISTANT_TOKEN") -> dict[str, Any] | None:
+    entity_id = str(entity.get("entity_id") or "").strip()
+    if "." not in entity_id:
+        return None
+    domain = entity_id.split(".", 1)[0]
+    if domain not in {"light", "switch", "input_boolean", "media_player", "camera", "climate", "script", "automation", "fan", "cover", "lock"}:
+        return None
+    attrs = entity.get("attributes") if isinstance(entity.get("attributes"), dict) else {}
+    friendly = _safe(attrs.get("friendly_name") or entity_id, 120)
+    caps = _ha_capabilities_for_domain(domain)
+    aliases = [entity_id, friendly, _fold(friendly), domain]
+    if domain == "media_player":
+        aliases.extend(["tv", "televisao", "media", "som", "controle remoto"])
+    if domain == "camera":
+        aliases.extend(["camera", "cameras", "webcam", "stream"])
+    device = {
+        "device_id": f"ha_{_slug(entity_id)}",
+        "name": friendly,
+        "type": _ha_device_type_for_domain(domain),
+        "location": _safe(attrs.get("area_id") or attrs.get("room") or "home_assistant", 80),
+        "adapter": "home_assistant",
+        "capabilities": caps,
+        "risk_level": max([CAPABILITY_RISK.get(cap, 0) for cap in caps] or [0]),
+        "requires_confirmation": False,
+        "allowed": True,
+        "aliases": list(dict.fromkeys(aliases))[:30],
+        "config": {
+            "base_url": base_url,
+            "token_env": token_env,
+            "entity_id": entity_id,
+            "domain": domain,
+            "state": entity.get("state"),
+        },
+        "metadata": {
+            "source": "home_assistant",
+            "imported_at": _now(),
+            "attributes": {k: attrs.get(k) for k in ("device_class", "supported_features", "media_content_type", "manufacturer", "model_name") if k in attrs},
+        },
+    }
+    return device
+
+
+def import_home_assistant_entities(*, include_domains: list[str] | None = None, base_url: str | None = None, token_env: str = "ULTRON_HOME_ASSISTANT_TOKEN") -> dict[str, Any]:
+    cfg = {"base_url": base_url or os.getenv("ULTRON_HOME_ASSISTANT_URL") or "", "token_env": token_env}
+    ha_url = _ha_base_url(cfg)
+    if not ha_url:
+        return {"ok": False, "kind": "home_assistant_import", "error": "home_assistant_url_not_configured", "hint": "Defina ULTRON_HOME_ASSISTANT_URL e ULTRON_HOME_ASSISTANT_TOKEN."}
+    domains = {str(x).strip() for x in (include_domains or []) if str(x).strip()}
+    try:
+        with httpx.Client(timeout=float(os.getenv("ULTRON_HOME_ASSISTANT_TIMEOUT_SEC", "10") or 10)) as client:
+            resp = client.get(f"{ha_url}/api/states", headers=_ha_headers(cfg))
+            resp.raise_for_status()
+            states = resp.json()
+    except Exception as exc:
+        return {"ok": False, "kind": "home_assistant_import", "error": f"{type(exc).__name__}:{str(exc)[:220]}", "base_url": ha_url}
+    if not isinstance(states, list):
+        return {"ok": False, "kind": "home_assistant_import", "error": "home_assistant_states_not_list", "base_url": ha_url}
+    imported: list[dict[str, Any]] = []
+    skipped = 0
+    for entity in states:
+        if not isinstance(entity, dict):
+            continue
+        entity_id = str(entity.get("entity_id") or "")
+        domain = entity_id.split(".", 1)[0] if "." in entity_id else ""
+        if domains and domain not in domains:
+            skipped += 1
+            continue
+        device = _ha_entity_to_device(entity, base_url=ha_url, token_env=token_env)
+        if not device:
+            skipped += 1
+            continue
+        out = upsert_device(device)
+        if out.get("ok") and isinstance(out.get("device"), dict):
+            imported.append(out["device"])
+    _append_jsonl(ACTION_LEDGER_PATH, {
+        "ts": _now(),
+        "ledger_id": f"lea_ha_import_{_hash([ha_url, len(imported), skipped])}",
+        "device_id": "home_assistant",
+        "action": "import_home_assistant_entities",
+        "requested_by": "ultronpro",
+        "reason": "sync_home_assistant_registry",
+        "risk_level": 0,
+        "approved": True,
+        "ok": True,
+        "result": "success",
+        "imported_count": len(imported),
+        "skipped_count": skipped,
+    })
+    return {"ok": True, "kind": "home_assistant_import", "base_url": ha_url, "imported_count": len(imported), "skipped_count": skipped, "devices": imported}
+
+
 def _home_assistant_observe(device: dict[str, Any]) -> dict[str, Any]:
     config = device.get("config") if isinstance(device.get("config"), dict) else {}
-    base_url = str(config.get("base_url") or os.getenv("ULTRON_HOME_ASSISTANT_URL") or "").rstrip("/")
+    base_url = _ha_base_url(config)
     entity_id = str(config.get("entity_id") or "").strip()
     if not base_url or not entity_id:
         return {"ok": False, "error": "home_assistant_missing_base_url_or_entity_id"}
@@ -1196,45 +1484,105 @@ def _home_assistant_observe(device: dict[str, Any]) -> dict[str, Any]:
 
 def _home_assistant_execute(device: dict[str, Any], action: str, params: dict[str, Any]) -> dict[str, Any]:
     config = device.get("config") if isinstance(device.get("config"), dict) else {}
-    base_url = str(config.get("base_url") or os.getenv("ULTRON_HOME_ASSISTANT_URL") or "").rstrip("/")
+    base_url = _ha_base_url(config)
     entity_id = str(config.get("entity_id") or "").strip()
     if not base_url or not entity_id:
         return {"ok": False, "error": "home_assistant_missing_base_url_or_entity_id"}
     domain = str(config.get("domain") or entity_id.split(".", 1)[0] or "homeassistant")
-    service = {
-        "turn_on": "turn_on",
-        "turn_off": "turn_off",
-        "set_brightness": "turn_on",
-        "set_temperature": "set_temperature",
-    }.get(action)
+    service_domain = domain
+    service = None
+    payload: dict[str, Any] = {"entity_id": entity_id}
+    if action in {"turn_on", "turn_off"}:
+        service = "turn_on" if action == "turn_on" else "turn_off"
+    elif action == "set_brightness":
+        service = "turn_on"
+        payload["brightness_pct"] = max(0, min(100, int(params.get("brightness") or params.get("value") or 0)))
+    elif action == "set_temperature":
+        service = "set_temperature"
+        payload["temperature"] = float(params.get("temperature") or params.get("value") or 22)
+    elif action in {"media_play", "media_pause"}:
+        service_domain = "media_player"
+        service = "media_play" if action == "media_play" else "media_pause"
+    elif action in {"volume_up", "volume_down"}:
+        service_domain = "media_player"
+        service = "volume_up" if action == "volume_up" else "volume_down"
+    elif action == "mute":
+        service_domain = "media_player"
+        service = "volume_mute"
+        payload["is_volume_muted"] = True
+    elif action == "set_input":
+        service_domain = "media_player"
+        service = "select_source"
+        payload["source"] = str(params.get("source") or params.get("input") or params.get("value") or "").strip()
+        if not payload["source"]:
+            return {"ok": False, "error": "home_assistant_source_required"}
+    elif action == "capture_snapshot" and domain == "camera":
+        url = _ha_state_url(config, entity_id, stream=False)
+        with httpx.Client(timeout=float(config.get("timeout_sec") or 8.0)) as client:
+            resp = client.get(url, headers=_ha_headers(config))
+            resp.raise_for_status()
+        return {"ok": True, "adapter": "home_assistant", "action": action, "content_type": resp.headers.get("content-type"), "bytes": len(resp.content or b"")}
+    elif action == "view_stream" and domain == "camera":
+        viewer_endpoint = f"/api/local-env/devices/{device.get('device_id')}/camera/view"
+        viewer_url = _local_api_path(viewer_endpoint)
+        opened = _maybe_open_local_url(viewer_url, enabled=bool(params.get("open_viewer", True)))
+        return {
+            "ok": True,
+            "adapter": "home_assistant",
+            "action": action,
+            "real_time": True,
+            "stream_urls": [_ha_state_url(config, entity_id, stream=True)],
+            "mjpeg_proxy_endpoint": f"/api/local-env/devices/{device.get('device_id')}/camera/mjpeg",
+            "viewer_endpoint": viewer_endpoint,
+            "viewer_url": viewer_url,
+            "opened_browser": opened,
+        }
     if not service:
         return {"ok": False, "error": f"unsupported_home_assistant_action:{action}"}
-    payload: dict[str, Any] = {"entity_id": entity_id}
-    if action == "set_brightness":
-        payload["brightness_pct"] = max(0, min(100, int(params.get("brightness") or params.get("value") or 0)))
-    if action == "set_temperature":
-        payload["temperature"] = float(params.get("temperature") or params.get("value") or 22)
+    repeat = _bounded_repeat(params) if action in {"volume_up", "volume_down"} else 1
+    raws: list[Any] = []
     with httpx.Client(timeout=float(config.get("timeout_sec") or 8.0)) as client:
-        resp = client.post(f"{base_url}/api/services/{domain}/{service}", headers=_ha_headers(config), json=payload)
-        resp.raise_for_status()
-        try:
-            raw = resp.json()
-        except Exception:
-            raw = {"status_code": resp.status_code}
-    return {"ok": True, "adapter": "home_assistant", "action": action, "service": f"{domain}.{service}", "raw": raw}
+        for idx in range(repeat):
+            resp = client.post(f"{base_url}/api/services/{service_domain}/{service}", headers=_ha_headers(config), json=payload)
+            resp.raise_for_status()
+            try:
+                raws.append(resp.json())
+            except Exception:
+                raws.append({"status_code": resp.status_code})
+            if idx + 1 < repeat:
+                time.sleep(max(0.02, min(0.5, float(params.get("delay_sec") or 0.08))))
+    return {"ok": True, "adapter": "home_assistant", "action": action, "service": f"{service_domain}.{service}", "repeat": repeat, "raw": raws[-3:]}
 
 
 def _http_request(config: dict[str, Any], action: str) -> dict[str, Any]:
+    return _http_request_with_params(config, action, {})
+
+
+def _render_http_template(value: Any, params: dict[str, Any], action: str) -> Any:
+    if isinstance(value, str):
+        data = {"action": action, **{str(k): v for k, v in (params or {}).items()}}
+        try:
+            return value.format(**data)
+        except Exception:
+            return value
+    if isinstance(value, dict):
+        return {k: _render_http_template(v, params, action) for k, v in value.items()}
+    if isinstance(value, list):
+        return [_render_http_template(v, params, action) for v in value]
+    return value
+
+
+def _http_request_with_params(config: dict[str, Any], action: str, params: dict[str, Any]) -> dict[str, Any]:
     endpoints = config.get("endpoints") if isinstance(config.get("endpoints"), dict) else {}
     spec = endpoints.get(action)
     if not isinstance(spec, dict):
         return {"ok": False, "error": f"http_endpoint_not_configured:{action}"}
-    url = str(spec.get("url") or "").strip()
+    url = str(_render_http_template(spec.get("url") or "", params, action)).strip()
     if not url:
         return {"ok": False, "error": "http_url_required"}
     method = str(spec.get("method") or "GET").upper()
-    headers = spec.get("headers") if isinstance(spec.get("headers"), dict) else {}
-    payload = spec.get("json") if isinstance(spec.get("json"), dict) else None
+    headers = _render_http_template(spec.get("headers") if isinstance(spec.get("headers"), dict) else {}, params, action)
+    payload = _render_http_template(spec.get("json") if isinstance(spec.get("json"), dict) else None, params, action)
     timeout = float(spec.get("timeout_sec") or config.get("timeout_sec") or 6.0)
     with httpx.Client(timeout=timeout) as client:
         resp = client.request(method, url, headers=headers, json=payload)
@@ -1256,10 +1604,97 @@ def _http_observe(device: dict[str, Any]) -> dict[str, Any]:
 
 def _http_execute(device: dict[str, Any], action: str, params: dict[str, Any]) -> dict[str, Any]:
     config = device.get("config") if isinstance(device.get("config"), dict) else {}
-    res = _http_request(config, action)
+    res = _http_request_with_params(config, action, params)
     if not res.get("ok"):
         return res
     return {"ok": True, "adapter": "http", "action": action, "response": res}
+
+
+def _mqtt_packet_remaining_length(length: int) -> bytes:
+    out = bytearray()
+    value = max(0, int(length))
+    while True:
+        encoded = value % 128
+        value //= 128
+        if value > 0:
+            encoded |= 128
+        out.append(encoded)
+        if value == 0:
+            break
+    return bytes(out)
+
+
+def _mqtt_utf8(value: str) -> bytes:
+    raw = str(value or "").encode("utf-8")
+    return struct.pack("!H", len(raw)) + raw
+
+
+def _mqtt_publish(host: str, port: int, topic: str, payload: str, *, username: str = "", password: str = "", client_id: str = "ultronpro", timeout_sec: float = 5.0) -> dict[str, Any]:
+    if not host or not topic:
+        return {"ok": False, "error": "mqtt_host_or_topic_required"}
+    variable = _mqtt_utf8("MQTT") + bytes([4])
+    flags = 0x02
+    if username:
+        flags |= 0x80
+    if password:
+        flags |= 0x40
+    variable += bytes([flags]) + struct.pack("!H", 30)
+    payload_bytes = _mqtt_utf8(client_id or f"ultronpro-{_hash(time.time())}")
+    if username:
+        payload_bytes += _mqtt_utf8(username)
+    if password:
+        payload_bytes += _mqtt_utf8(password)
+    connect = bytes([0x10]) + _mqtt_packet_remaining_length(len(variable) + len(payload_bytes)) + variable + payload_bytes
+    topic_bytes = _mqtt_utf8(topic)
+    message = str(payload or "").encode("utf-8")
+    publish = bytes([0x30]) + _mqtt_packet_remaining_length(len(topic_bytes) + len(message)) + topic_bytes + message
+    disconnect = bytes([0xE0, 0x00])
+    started = time.time()
+    with socket.create_connection((host, int(port or 1883)), timeout=max(0.5, timeout_sec)) as sock:
+        sock.settimeout(max(0.5, timeout_sec))
+        sock.sendall(connect)
+        ack = sock.recv(4)
+        if len(ack) < 4 or ack[0] != 0x20 or ack[3] != 0:
+            return {"ok": False, "error": f"mqtt_connect_refused:{ack.hex()}"}
+        sock.sendall(publish)
+        sock.sendall(disconnect)
+    return {"ok": True, "topic": topic, "bytes": len(message), "latency_ms": int((time.time() - started) * 1000)}
+
+
+def _mqtt_config(device: dict[str, Any]) -> dict[str, Any]:
+    config = device.get("config") if isinstance(device.get("config"), dict) else {}
+    mqtt = config.get("mqtt") if isinstance(config.get("mqtt"), dict) else config
+    return mqtt if isinstance(mqtt, dict) else {}
+
+
+def _mqtt_execute(device: dict[str, Any], action: str, params: dict[str, Any]) -> dict[str, Any]:
+    mqtt = _mqtt_config(device)
+    topics = mqtt.get("topics") if isinstance(mqtt.get("topics"), dict) else {}
+    payloads = mqtt.get("payloads") if isinstance(mqtt.get("payloads"), dict) else {}
+    topic = str(topics.get(action) or mqtt.get(f"{action}_topic") or "").strip()
+    if not topic:
+        return {"ok": False, "adapter": "mqtt", "action": action, "error": f"mqtt_topic_not_configured:{action}"}
+    payload = str(payloads.get(action) if action in payloads else params.get("payload") if params.get("payload") is not None else action)
+    username = str(mqtt.get("username") or os.getenv(str(mqtt.get("username_env") or "ULTRON_MQTT_USERNAME")) or "")
+    password = str(mqtt.get("password") or os.getenv(str(mqtt.get("password_env") or "ULTRON_MQTT_PASSWORD")) or "")
+    res = _mqtt_publish(
+        str(mqtt.get("host") or os.getenv("ULTRON_MQTT_HOST") or ""),
+        int(mqtt.get("port") or os.getenv("ULTRON_MQTT_PORT") or 1883),
+        topic,
+        payload,
+        username=username,
+        password=password,
+        client_id=str(mqtt.get("client_id") or "ultronpro"),
+        timeout_sec=float(mqtt.get("timeout_sec") or 5.0),
+    )
+    return {**res, "adapter": "mqtt", "action": action}
+
+
+def _mqtt_observe(device: dict[str, Any]) -> dict[str, Any]:
+    mqtt = _mqtt_config(device)
+    state_topic = str(mqtt.get("state_topic") or "").strip()
+    state = {"state": "mqtt_configured" if state_topic else "mqtt_publish_only", "state_topic": state_topic}
+    return _typed_observation(device, state, adapter="mqtt")
 
 
 def _valid_service_name(value: str) -> bool:
@@ -1595,6 +2030,19 @@ def _network_probe_execute(device: dict[str, Any], action: str, params: dict[str
         return {"ok": bool(urls), "adapter": "network_probe", "action": action, "urls": urls, "error": "" if urls else "no_web_interface_detected"}
     if action == "view_stream":
         urls = _rtsp_url_candidates(ip, ports, config)
+        viewer_endpoint = f"/api/local-env/devices/{device.get('device_id')}/camera/view"
+        viewer_url = _local_api_path(viewer_endpoint)
+        decoder = camera_decoder_status(protocol="rtsp")
+        opened = False
+        external = None
+        if urls and bool(params.get("open_viewer", True)):
+            if decoder.get("can_proxy"):
+                opened = _maybe_open_local_url(viewer_url, enabled=True)
+            elif decoder.get("can_open_external"):
+                external = open_camera_external(str(device.get("device_id") or ""))
+                opened = bool(external.get("ok")) if isinstance(external, dict) else False
+            else:
+                opened = _maybe_open_local_url(viewer_url, enabled=True)
         return {
             "ok": bool(urls),
             "adapter": "network_probe",
@@ -1602,6 +2050,11 @@ def _network_probe_execute(device: dict[str, Any], action: str, params: dict[str
             "real_time": bool(urls),
             "stream_urls": urls,
             "mjpeg_proxy_endpoint": f"/api/local-env/devices/{device.get('device_id')}/camera/mjpeg",
+            "viewer_endpoint": viewer_endpoint,
+            "viewer_url": viewer_url,
+            "opened_browser": opened,
+            "decoder": decoder,
+            "external_player": external,
             "error": "" if urls else "no_stream_url_detected",
         }
     if action == "capture_snapshot":
@@ -1688,15 +2141,18 @@ def observe_device(device_id: str) -> dict[str, Any]:
     if "read_state" not in set(device.get("capabilities") or []):
         return {"ok": False, "error": "read_state_not_allowed", "device_id": device.get("device_id")}
     adapter = str(device.get("adapter") or "mock")
+    config = device.get("config") if isinstance(device.get("config"), dict) else {}
     try:
         if adapter == "mock":
             return _mock_observe(device)
-        if adapter == "home_assistant":
+        if adapter == "home_assistant" or (config.get("entity_id") and _ha_base_url(config)):
             return _home_assistant_observe(device)
-        if adapter == "http":
-            return _http_observe(device)
+        if adapter == "mqtt" or isinstance(config.get("mqtt"), dict):
+            return _mqtt_observe(device)
         if adapter == "local_service":
             return _service_observe(device)
+        if adapter == "http" or isinstance(config.get("endpoints"), dict):
+            return _http_observe(device)
         if adapter == "network_probe":
             return _network_probe_observe(device)
         if adapter in {"local_script", "wake_on_lan", "notification"}:
@@ -1708,23 +2164,44 @@ def observe_device(device_id: str) -> dict[str, Any]:
 
 def _execute_adapter(device: dict[str, Any], action: str, params: dict[str, Any]) -> dict[str, Any]:
     adapter = str(device.get("adapter") or "mock")
+    config = device.get("config") if isinstance(device.get("config"), dict) else {}
     if action == "read_state":
         return observe_device(str(device.get("device_id")))
     try:
         if adapter == "mock":
             return _mock_execute(device, action, params)
-        if adapter == "home_assistant":
-            return _home_assistant_execute(device, action, params)
-        if adapter == "http":
-            return _http_execute(device, action, params)
+        if adapter == "home_assistant" or (config.get("entity_id") and _ha_base_url(config)):
+            res = _home_assistant_execute(device, action, params)
+            if res.get("ok") or not (isinstance(config.get("mqtt"), dict) or "service_name" in config or isinstance(config.get("endpoints"), dict)):
+                return res
+        if adapter == "mqtt" or isinstance(config.get("mqtt"), dict):
+            res = _mqtt_execute(device, action, params)
+            if res.get("ok") or adapter == "mqtt":
+                return res
         if adapter == "local_service":
             return _service_execute(device, action, params)
+        if adapter == "http" or isinstance(config.get("endpoints"), dict):
+            res = _http_execute(device, action, params)
+            if res.get("ok") or adapter == "http":
+                return res
         if adapter == "local_script":
             return _script_execute(device, action, params)
         if adapter == "wake_on_lan":
             return _wol_execute(device, action, params)
         if adapter == "notification":
             return _notification_execute(device, action, params)
+        if isinstance(config.get("mqtt"), dict):
+            res = _mqtt_execute(device, action, params)
+            if res.get("ok"):
+                return res
+        if "service_name" in config:
+            res = _service_execute(device, action, params)
+            if res.get("ok"):
+                return res
+        if isinstance(config.get("endpoints"), dict):
+            res = _http_execute(device, action, params)
+            if res.get("ok"):
+                return res
         if adapter == "network_probe":
             return _network_probe_execute(device, action, params)
         return {"ok": False, "error": f"unsupported_adapter:{adapter}"}
@@ -2097,19 +2574,33 @@ def camera_stream_info_for_device(device: dict[str, Any]) -> dict[str, Any]:
     config = device.get("config") if isinstance(device.get("config"), dict) else {}
     ip = str(config.get("ip") or "").strip()
     ports = _device_ports(config)
-    urls = _rtsp_url_candidates(ip, ports, config)
+    adapter = str(device.get("adapter") or "")
+    entity_id = str(config.get("entity_id") or "")
+    domain = str(config.get("domain") or (entity_id.split(".", 1)[0] if entity_id else ""))
+    if adapter == "home_assistant" and domain == "camera":
+        urls = [_ha_state_url(config, entity_id, stream=True)] if _ha_base_url(config) and entity_id else []
+        protocol = "home_assistant"
+    else:
+        urls = _rtsp_url_candidates(ip, ports, config)
+        protocol = "rtsp" if urls else ""
+    decoder = camera_decoder_status(protocol=protocol)
+    viewer_endpoint = f"/api/local-env/devices/{device.get('device_id')}/camera/view"
     return {
         "ok": bool(urls),
         "device_id": device.get("device_id"),
+        "name": device.get("name"),
         "type": device.get("type"),
         "real_time": bool(urls),
-        "protocol": "rtsp" if urls else "",
+        "protocol": protocol,
         "url_candidates": urls,
         "preferred_url": urls[0] if urls else "",
         "mjpeg_proxy_endpoint": f"/api/local-env/devices/{device.get('device_id')}/camera/mjpeg",
+        "viewer_endpoint": viewer_endpoint,
+        "viewer_url": _local_api_path(viewer_endpoint),
         "snapshot_supported": bool(config.get("snapshot_url")),
         "needs_credentials_or_path": bool(urls) and not bool(config.get("stream_url")),
-        "decoder_available": _opencv_available(),
+        "decoder_available": bool(decoder.get("can_proxy")),
+        "decoder": decoder,
     }
 
 
@@ -2126,6 +2617,71 @@ def _opencv_available() -> bool:
         return True
     except Exception:
         return False
+
+
+def _ffmpeg_path() -> str:
+    configured = str(os.getenv("ULTRON_FFMPEG_PATH") or "").strip()
+    if configured and Path(configured).exists():
+        return configured
+    return shutil.which("ffmpeg") or ""
+
+
+def _vlc_path() -> str:
+    configured = str(os.getenv("ULTRON_VLC_PATH") or "").strip()
+    if configured and Path(configured).exists():
+        return configured
+    found = shutil.which("vlc")
+    if found:
+        return found
+    candidates = [
+        Path(os.getenv("ProgramFiles", r"C:\Program Files")) / "VideoLAN" / "VLC" / "vlc.exe",
+        Path(os.getenv("ProgramFiles(x86)", r"C:\Program Files (x86)")) / "VideoLAN" / "VLC" / "vlc.exe",
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            return str(candidate)
+    return ""
+
+
+def camera_decoder_status(*, protocol: str = "") -> dict[str, Any]:
+    cv2_ok = _opencv_available()
+    ffmpeg = _ffmpeg_path()
+    vlc = _vlc_path()
+    proto = str(protocol or "").strip()
+    direct_proxy = proto == "home_assistant"
+    opencv_rtsp_proxy_enabled = os.getenv("ULTRON_ALLOW_OPENCV_RTSP_PROXY", "").strip().lower() in {"1", "true", "yes", "on"}
+    opencv_can_proxy = bool(cv2_ok and (proto != "rtsp" or opencv_rtsp_proxy_enabled))
+    can_proxy = bool(direct_proxy or ffmpeg or opencv_can_proxy)
+    return {
+        "ok": bool(cv2_ok or ffmpeg or vlc or direct_proxy),
+        "protocol": proto,
+        "opencv": cv2_ok,
+        "ffmpeg_path": ffmpeg,
+        "vlc_path": vlc,
+        "can_proxy": can_proxy,
+        "can_open_external": bool(vlc),
+        "preferred": "home_assistant"
+        if direct_proxy
+        else ("ffmpeg" if ffmpeg else ("opencv" if opencv_can_proxy else ("vlc" if vlc else ""))),
+    }
+
+
+def open_camera_external(device_id: str) -> dict[str, Any]:
+    info = camera_stream_info(device_id)
+    if not info.get("ok"):
+        return {"ok": False, "error": info.get("error") or "camera_stream_not_available", "stream_info": info}
+    url = str(info.get("preferred_url") or "").strip()
+    if not url:
+        return {"ok": False, "error": "stream_url_not_available", "stream_info": info}
+    vlc = _vlc_path()
+    if vlc:
+        try:
+            subprocess.Popen([vlc, url], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            return {"ok": True, "player": "vlc", "player_path": vlc, "url": url, "stream_info": info}
+        except Exception as exc:
+            return {"ok": False, "player": "vlc", "error": f"{type(exc).__name__}:{str(exc)[:200]}", "stream_info": info}
+    opened = _maybe_open_local_url(url)
+    return {"ok": bool(opened), "player": "system_browser", "url": url, "stream_info": info, "error": "" if opened else "external_player_not_available"}
 
 
 def list_cameras(include_disabled: bool = True) -> dict[str, Any]:
@@ -2211,8 +2767,9 @@ def parse_command(text: str) -> dict[str, Any]:
     params: dict[str, Any] = {}
     if any(x in folded for x in ("abrir interface", "interface web", "abrir web", "painel web", "pagina do dispositivo")):
         action = "open_web_interface"
-    if any(x in folded for x in ("abrir camera", "mostrar camera", "ver camera", "stream camera", "camera ao vivo", "imagem da camera", "imagens da camera")):
+    if any(x in folded for x in ("abrir camera", "mostrar camera", "ver camera", "stream camera", "camera ao vivo", "imagem da camera", "imagens da camera", "abrir webcam", "mostrar webcam", "ver webcam", "webcam ao vivo")):
         action = "view_stream"
+        params["open_viewer"] = True
     if any(x in folded for x in ("capturar imagem", "snapshot", "tirar foto", "foto da camera")):
         action = "capture_snapshot"
     if any(x in folded for x in ("status", "estado", "observar", "observe", "ler estado")):
@@ -2285,40 +2842,18 @@ def parse_command(text: str) -> dict[str, Any]:
     if not action:
         return {"ok": False, "reason": "no_supported_action_detected"}
 
-    devices = [d for d in list_devices(include_disabled=False).get("devices", []) if action in set(d.get("capabilities") or [])]
-    scored: list[tuple[int, dict[str, Any]]] = []
-    for device in devices:
-        terms = {
-            _fold(device.get("device_id")),
-            _fold(device.get("name")),
-            _fold(device.get("type")),
-            _fold(device.get("location")),
-        }
-        terms.update(_fold(x) for x in (device.get("aliases") or []))
-        terms = {t for t in terms if t}
-        score = 0
-        for term in terms:
-            if term and term in folded:
-                score += max(1, min(8, len(term.split()) + 2))
-        if score:
-            scored.append((score, device))
-    if not scored:
-        return {"ok": False, "reason": "no_registered_device_matched", "action": action}
-    scored.sort(key=lambda item: item[0], reverse=True)
-    if len(scored) > 1 and scored[0][0] == scored[1][0]:
-        return {
-            "ok": False,
-            "reason": "ambiguous_device",
-            "action": action,
-            "candidates": [d.get("device_id") for _, d in scored[:5]],
-        }
-    device = scored[0][1]
+    found = find_device_for_text(raw, action=action, include_disabled=False)
+    if not found.get("ok"):
+        out = dict(found)
+        out["action"] = action
+        return out
+    device = found.get("device") if isinstance(found.get("device"), dict) else {}
     return {
         "ok": True,
         "device_id": device.get("device_id"),
         "action": action,
         "params": params,
-        "confidence": round(min(0.99, 0.55 + scored[0][0] / 20.0), 4),
+        "confidence": found.get("confidence") or 0.82,
         "reason": "matched_registered_device_and_capability",
     }
 
