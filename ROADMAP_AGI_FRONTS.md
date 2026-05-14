@@ -129,6 +129,13 @@ Conclusão da auditoria de stress: O paradigma mudou. A métrica saiu de "quanti
 - [CONCLUIDO 100%] Front 4 sobe de 80% para 82% pela separacao explicita entre conversa normal e controle de ambiente, preservando integridade operacional e reduzindo comandos acidentais.
 - [CONCLUIDO 100%] Front 5 sobe de 78% para 80% porque o estado conversacional agora regula foco operacional e interface de agencia; ainda falta benchmark longitudinal de conversa+controle+aprendizado.
 
+### Marco de prova de aprendizado - 2026-05-14
+
+- [FEITO] Criado benchmark reprodutivel `learning_proof`, exposto em `/api/benchmarks/learning-proof`, para provar aprendizado sem adicionar novas competencias operacionais.
+- [FEITO] A prova roda em diretorio temporario e mede delta before/after: antes, sem episodios, `learned_intent` nao roteia; depois de uma falha rotulada `causal -> translation`, uma consulta parecida passa a prever `translation`.
+- [FEITO] A evidencia separa reforco positivo e negativo: o exemplo correto cria evidencia positiva para `translation`, enquanto o uso indevido do causal vira evidencia negativa contra `causal`.
+- [FEITO] A proposta de auto-modificacao gerada declara `requires_self_modification_gate=true` e `do_not_hardcode_answer=true`; portanto o marco testa aprendizado de rota, nao fixture de resposta.
+
 ## Front 1 — Plasticidade estrutural real
 _Status do front: 84%_
 

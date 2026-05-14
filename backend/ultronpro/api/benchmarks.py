@@ -90,3 +90,10 @@ async def benchmark_trace_learning_selftest():
     """Valida conversao de trace em sinais de aprendizado."""
     from ultronpro import trace_learning
     return trace_learning.run_selftest()
+
+
+@router.get("/learning-proof")
+async def benchmark_learning_proof():
+    """Prova before/after de aprendizado de rota sem novas competencias."""
+    from ultronpro import learning_proof
+    return learning_proof.run_learning_proof()
