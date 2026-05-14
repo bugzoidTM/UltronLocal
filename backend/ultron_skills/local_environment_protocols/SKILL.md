@@ -46,6 +46,8 @@ Competencia operacional para controlar dispositivos cadastrados no ambiente loca
 0. Fora do modo controle, nao tratar conversa normal como manipulacao de dispositivos.
    O usuario entra dizendo `ativar modo controle` e sai dizendo `sair do modo controle`.
 1. Em modo controle, interpretar comando em texto livre.
+   Pedidos como `liste apenas as TVs`, `mostre so as cameras` ou `quais estao offline`
+   devem virar consultas filtradas ao registry, nao ajuda generica.
 2. Selecionar dispositivo pelo registry e aliases.
 3. Selecionar protocolo nativo quando disponivel:
    - Mock apenas para dispositivos simulados.

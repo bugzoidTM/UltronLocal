@@ -236,6 +236,64 @@ def _set_control_mode(session_id: str | None, active: bool, *, source_query: str
         pass
 
 
+def _local_env_filter_key_from_text(text: str) -> str:
+    folded = _fold(text)
+    if any(term in folded for term in ("camera", "cameras", "webcam", "webcams", "rtsp", "stream")):
+        return "camera"
+    if re.search(r"\btvs?\b", folded) or any(term in folded for term in ("televisao", "televisoes", "midia", "media player")):
+        return "tv"
+    if any(term in folded for term in ("roteador", "router", "gateway")):
+        return "roteador"
+    if any(term in folded for term in ("computador", "computadores", "notebook", "desktop", "laptop", " pc ", "pcs")):
+        return "computador"
+    if any(term in folded for term in ("offline", "inativo", "inativos", "desligado", "desligados", "nao respondem", "sem resposta", "unresponsive")):
+        return "unresponsive"
+    if any(term in folded for term in ("online", "ativo", "ativos", "respondem", "responsivo", "responsivos", "reachable")):
+        return "responsive"
+    if any(term in folded for term in ("http", "web", "interface", "generico", "genericos")):
+        return "http"
+    return ""
+
+
+def _local_env_filter_label(filter_key: str) -> str:
+    return {
+        "camera": "cameras",
+        "tv": "TVs/dispositivos de midia",
+        "roteador": "roteadores",
+        "computador": "computadores",
+        "http": "dispositivos HTTP/genericos",
+        "responsive": "dispositivos responsivos",
+        "unresponsive": "dispositivos inativos/sem resposta",
+    }.get(str(filter_key or ""), "dispositivos")
+
+
+def _local_env_list_like(text: str) -> bool:
+    folded = _fold(text)
+    return any(
+        marker in folded
+        for marker in (
+            "liste",
+            "listar",
+            "lista",
+            "mostre",
+            "mostrar",
+            "mostra",
+            "quais",
+            "so os",
+            "so as",
+            "apenas os",
+            "apenas as",
+            "somente os",
+            "somente as",
+            "disponiveis",
+            "cadastrados",
+            "cadastradas",
+            "tenho",
+            "tem ",
+        )
+    )
+
+
 def _local_environment_decision(query: str, session_id: str | None = None) -> RouteDecision | None:
     text = _fold(query)
     mode_command = _control_mode_command(text)
@@ -283,6 +341,8 @@ def _local_environment_decision(query: str, session_id: str | None = None) -> Ro
         "device registry",
         "local device",
     )
+    if control_mode and _local_env_list_like(text) and _local_env_filter_key_from_text(text):
+        return _decision("local_environment_list_filtered", 0.91, "local_environment", "local_device_registry_filtered_query")
     if control_mode and any(marker in text for marker in list_markers):
         return _decision("local_environment_list", 0.9, "local_environment", "local_device_registry_query")
     context_device_terms = (
@@ -1445,6 +1505,26 @@ def _local_env_device_bucket(device: dict[str, Any]) -> str:
     return "http"
 
 
+def _local_env_is_responsive(device: dict[str, Any]) -> bool:
+    meta = device.get("metadata") if isinstance(device.get("metadata"), dict) else {}
+    last_access = meta.get("last_access_test") if isinstance(meta.get("last_access_test"), dict) else {}
+    if "ok" in last_access:
+        return bool(last_access.get("ok"))
+    state = str(((device.get("state") if isinstance(device.get("state"), dict) else {}) or {}).get("state") or "").lower()
+    return state in {"online", "reachable", "on", "running"}
+
+
+def _local_env_apply_filter(devices: list[dict[str, Any]], filter_key: str) -> list[dict[str, Any]]:
+    key = str(filter_key or "").strip()
+    if not key:
+        return devices
+    if key == "responsive":
+        return [d for d in devices if _local_env_is_responsive(d)]
+    if key == "unresponsive":
+        return [d for d in devices if not _local_env_is_responsive(d)]
+    return [d for d in devices if _local_env_device_bucket(d) == key]
+
+
 def _local_env_device_label(device: dict[str, Any]) -> str:
     device_id = str(device.get("device_id") or "").strip()
     name = str(device.get("name") or "").strip()
@@ -1742,8 +1822,21 @@ def _format_local_env_answer(result: dict[str, Any]) -> str:
     if result.get("kind") == "device_registry":
         devices = [d for d in (result.get("devices") or []) if isinstance(d, dict)]
         if not devices:
+            label = str(result.get("filter_label") or "dispositivos").strip()
+            if result.get("filter"):
+                return f"Nao encontrei {label} no registry local agora."
             return "Ainda nao tenho dispositivos cadastrados no registry local. Diga 'varrer rede' para descobrir dispositivos e cadastrar probes permitidos."
         summary, groups = _local_env_group_summary(devices)
+        if result.get("filter"):
+            label = str(result.get("filter_label") or _local_env_filter_label(str(result.get("filter") or ""))).strip()
+            total = int(result.get("total_count") or len(devices))
+            lines = [f"Encontrei {len(devices)} {label} no registry" + (f" (de {total} dispositivo(s) totais)." if total != len(devices) else ".")]
+            for device in devices[:15]:
+                status = "responsivo" if _local_env_is_responsive(device) else "sem resposta recente"
+                lines.append(f"- {_local_env_device_label(device)}: {status}; eventos: {_local_env_capability_phrase(device)}")
+            if len(devices) > 15:
+                lines.append(f"... mais {len(devices) - 15}.")
+            return "\n".join(lines)
         lines = [f"Tenho {len(devices)} dispositivo(s) no registry: {summary}."]
         if groups.get("camera"):
             labels = ", ".join(_local_env_device_label(d) for d in groups["camera"][:5])
@@ -1935,9 +2028,17 @@ async def _answer_local_environment(query: str, decision: RouteDecision, session
                 result = await asyncio.to_thread(local_environment.list_cameras, True)
         elif decision.intent == "local_environment_events":
             result = await asyncio.to_thread(local_environment.event_matrix, True)
-        elif decision.intent == "local_environment_list":
+        elif decision.intent in {"local_environment_list", "local_environment_list_filtered"}:
             result = await asyncio.to_thread(local_environment.list_devices, True)
             result["kind"] = "device_registry"
+            if decision.intent == "local_environment_list_filtered":
+                original_devices = [d for d in (result.get("devices") or []) if isinstance(d, dict)]
+                filter_key = _local_env_filter_key_from_text(text)
+                result["total_count"] = len(original_devices)
+                result["filter"] = filter_key
+                result["filter_label"] = _local_env_filter_label(filter_key)
+                result["devices"] = _local_env_apply_filter(original_devices, filter_key)
+                result["count"] = len(result["devices"])
         elif decision.intent == "local_environment_pending":
             result = await asyncio.to_thread(local_environment.list_pending_actions, str(session_id or "default"), False)
             result["kind"] = "pending_actions"
