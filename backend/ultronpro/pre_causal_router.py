@@ -1735,11 +1735,19 @@ def _format_local_env_answer(result: dict[str, Any]) -> str:
             action = execution.get("action") or ((result.get("ledger") or {}).get("action") if isinstance(result.get("ledger"), dict) else "acao")
             adapter = execution.get("adapter") or "adapter local"
             return f"Tentei executar {action} via {adapter}, mas nao consegui. {execution.get('hint')}"
+        if reason == "execution_failed" and execution.get("action") == "view_stream":
+            error = execution.get("error") or "stream_nao_validado"
+            if execution.get("auth_required"):
+                return "Encontrei a camera, mas ela exige credenciais para abrir o RTSP. Configure usuario/senha, stream_url completo, ou importe a camera pelo Home Assistant."
+            return f"Encontrei a camera, mas nenhum caminho RTSP abriu automaticamente ainda. Diagnostico: {error}. Vou manter o dispositivo cadastrado para voce ajustar stream_url/credenciais."
         return f"Nao executei a acao no ambiente local: {reason or 'bloqueada'}."
     if result.get("registered_count") is not None:
         count = int(result.get("registered_count") or 0)
+        inactive = int(result.get("inactive_registered_count") or 0)
+        webcams = int(((result.get("local_webcams") or {}).get("count") if isinstance(result.get("local_webcams"), dict) else 0) or 0)
         networks = ", ".join(str(x) for x in (result.get("networks") or [])[:3])
-        return f"Varredura concluida em {networks or 'rede local'}: {count} dispositivo(s) cadastrado(s) no registry como descobertos."
+        extra = f" Inclui {webcams} webcam(ns) local(is) e manteve {inactive} dispositivo(s) ja conhecidos como nao observados nesta rodada."
+        return f"Varredura concluida em {networks or 'rede local'}: {count} dispositivo(s) cadastrado(s) no registry como descobertos.{extra}"
     parsed = result.get("parsed_command") if isinstance(result.get("parsed_command"), dict) else {}
     device = result.get("device") if isinstance(result.get("device"), dict) else {}
     device_id = parsed.get("device_id") or device.get("device_id") or ""
@@ -1776,7 +1784,7 @@ async def _answer_local_environment(query: str, decision: RouteDecision, session
         elif decision.intent == "local_environment_access_battery":
             result = await asyncio.to_thread(local_environment.run_access_battery, timeout_ms=800, include_disabled=True, grant_control=True)
         elif decision.intent == "local_environment_grant_control":
-            result = await asyncio.to_thread(local_environment.grant_full_control, include_unreachable=False, reason="chat_requested_full_control")
+            result = await asyncio.to_thread(local_environment.grant_full_control, include_unreachable=True, reason="chat_requested_full_control")
             result["kind"] = "control_grant"
         elif decision.intent == "local_environment_home_assistant_import":
             result = await asyncio.to_thread(local_environment.import_home_assistant_entities)

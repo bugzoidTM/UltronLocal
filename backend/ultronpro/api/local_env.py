@@ -120,19 +120,48 @@ async def local_env_cameras(include_disabled: bool = True):
 
 
 @router.get("/devices/{device_id}/camera/stream-info")
-async def local_env_camera_stream_info(device_id: str):
+async def local_env_camera_stream_info(device_id: str, validate_stream: bool = False):
     from ultronpro import local_environment
 
-    return local_environment.camera_stream_info(device_id)
+    return local_environment.camera_stream_info(device_id, validate_stream=validate_stream)
 
 
 @router.get("/devices/{device_id}/camera/mjpeg")
 def local_env_camera_mjpeg(device_id: str):
     from ultronpro import local_environment
 
-    info = local_environment.camera_stream_info(device_id)
+    info = local_environment.camera_stream_info(device_id, validate_stream=True)
     if not info.get("ok"):
-        raise HTTPException(status_code=404, detail=info.get("error") or "camera_stream_not_available")
+        status = 424 if info.get("url_candidates") else 404
+        raise HTTPException(status_code=status, detail=info.get("error") or info.get("stream_error") or "camera_stream_not_available")
+    if info.get("protocol") == "local_webcam":
+        try:
+            import cv2  # type: ignore
+        except Exception:
+            raise HTTPException(status_code=424, detail="opencv_decoder_unavailable")
+        device = local_environment.get_device(device_id) or {}
+        config = device.get("config") if isinstance(device.get("config"), dict) else {}
+        index = int(config.get("camera_index") or 0)
+        backend_flag = getattr(cv2, "CAP_DSHOW", 0)
+        cap = cv2.VideoCapture(index, backend_flag) if backend_flag else cv2.VideoCapture(index)
+        if not cap.isOpened():
+            cap.release()
+            raise HTTPException(status_code=502, detail="local_webcam_open_failed")
+
+        def local_frames():
+            try:
+                while True:
+                    ok, frame = cap.read()
+                    if not ok:
+                        break
+                    ok, encoded = cv2.imencode(".jpg", frame)
+                    if not ok:
+                        continue
+                    yield b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + encoded.tobytes() + b"\r\n"
+            finally:
+                cap.release()
+
+        return StreamingResponse(local_frames(), media_type="multipart/x-mixed-replace; boundary=frame")
     if info.get("protocol") == "home_assistant":
         device = local_environment.get_device(device_id) or {}
         config = device.get("config") if isinstance(device.get("config"), dict) else {}
@@ -178,6 +207,7 @@ def local_env_camera_mjpeg(device_id: str):
                 ],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.DEVNULL,
+                creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
             )
             try:
                 if proc.stdout is not None:
@@ -233,9 +263,32 @@ def local_env_camera_snapshot(device_id: str):
             resp = client.get(url, headers=local_environment._ha_headers(config))  # noqa: SLF001
             resp.raise_for_status()
         return Response(content=resp.content, media_type=resp.headers.get("content-type") or "image/jpeg")
-    info = local_environment.camera_stream_info(device_id)
+    info = local_environment.camera_stream_info(device_id, validate_stream=True)
     if not info.get("ok"):
-        raise HTTPException(status_code=404, detail=info.get("error") or "camera_stream_not_available")
+        status = 424 if info.get("url_candidates") else 404
+        raise HTTPException(status_code=status, detail=info.get("error") or info.get("stream_error") or "camera_stream_not_available")
+    if info.get("protocol") == "local_webcam":
+        try:
+            import cv2  # type: ignore
+        except Exception:
+            raise HTTPException(status_code=424, detail="opencv_decoder_unavailable")
+        device = local_environment.get_device(device_id) or {}
+        config = device.get("config") if isinstance(device.get("config"), dict) else {}
+        index = int(config.get("camera_index") or 0)
+        backend_flag = getattr(cv2, "CAP_DSHOW", 0)
+        cap = cv2.VideoCapture(index, backend_flag) if backend_flag else cv2.VideoCapture(index)
+        try:
+            if not cap.isOpened():
+                raise HTTPException(status_code=502, detail="local_webcam_open_failed")
+            ok, frame = cap.read()
+            if not ok:
+                raise HTTPException(status_code=502, detail="local_webcam_frame_read_failed")
+            ok, encoded = cv2.imencode(".jpg", frame)
+            if not ok:
+                raise HTTPException(status_code=500, detail="local_webcam_frame_encode_failed")
+            return Response(content=encoded.tobytes(), media_type="image/jpeg")
+        finally:
+            cap.release()
     decoder = info.get("decoder") if isinstance(info.get("decoder"), dict) else {}
     ffmpeg = local_environment._ffmpeg_path()  # noqa: SLF001
     if ffmpeg:
@@ -259,6 +312,7 @@ def local_env_camera_snapshot(device_id: str):
             ],
             capture_output=True,
             timeout=12,
+            creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
         )
         if proc.returncode != 0 or not proc.stdout:
             raise HTTPException(status_code=502, detail="camera_snapshot_ffmpeg_failed")
@@ -288,15 +342,15 @@ def local_env_camera_snapshot(device_id: str):
 def local_env_camera_view(device_id: str):
     from ultronpro import local_environment
 
-    info = local_environment.camera_stream_info(device_id)
-    if not info.get("ok"):
+    info = local_environment.camera_stream_info(device_id, validate_stream=True)
+    if not info.get("ok") and not info.get("url_candidates"):
         raise HTTPException(status_code=404, detail=info.get("error") or "camera_stream_not_available")
     name = str(info.get("name") or device_id)
     mjpeg = str(info.get("mjpeg_proxy_endpoint") or f"/api/local-env/devices/{device_id}/camera/mjpeg")
     snapshot = f"/api/local-env/devices/{device_id}/camera/snapshot"
     decoder = info.get("decoder") if isinstance(info.get("decoder"), dict) else {}
-    can_proxy = bool(decoder.get("can_proxy"))
-    can_external = bool(decoder.get("can_open_external"))
+    can_proxy = bool(decoder.get("can_proxy")) and bool(info.get("ok"))
+    can_external = bool(decoder.get("can_open_external")) and bool(info.get("ok"))
     if can_proxy:
         body = f'<main><img src="{mjpeg}" alt="{name}" /></main>'
         script = ""
@@ -311,10 +365,15 @@ def local_env_camera_view(device_id: str):
         )
         script = f"<script>fetch('/api/local-env/devices/{device_id}/camera/open-external', {{method:'POST'}}).catch(()=>{{}})</script>"
     else:
+        stream_error = str(info.get("stream_error") or info.get("error") or "stream_not_validated")
+        hint = "A camera respondeu na rede, mas nenhum caminho RTSP testado abriu. Configure usuario/senha ou stream_path/stream_url, ou importe a camera pelo Home Assistant/ONVIF com credenciais."
+        if info.get("auth_required"):
+            hint = "A camera exige credenciais. Configure usuario/senha ou stream_url completo no registry, ou importe a entidade pelo Home Assistant."
         body = (
             "<main><section>"
-            "<h1>Decoder de camera indisponivel</h1>"
-            "<p>O stream foi encontrado, mas RTSP precisa de um decoder local. Configure uma entidade Camera no Home Assistant, defina ULTRON_FFMPEG_PATH apontando para ffmpeg, ou instale um runtime com OpenCV.</p>"
+            "<h1>Stream da camera nao abriu automaticamente</h1>"
+            f"<p>{hint}</p>"
+            f"<p>Diagnostico: <code>{stream_error}</code></p>"
             f'<p><code>{info.get("preferred_url") or ""}</code></p>'
             "</section></main>"
         )
@@ -417,6 +476,10 @@ async def local_env_scan(req: dict | None = None):
         max_hosts=int(body.get("max_hosts") or 256),
         concurrency=int(body.get("concurrency") or 64),
         register=bool(body.get("register", True)),
+        include_arp=bool(body.get("include_arp", True)),
+        include_onvif=bool(body.get("include_onvif", True)),
+        include_mdns=bool(body.get("include_mdns", True)),
+        include_local_webcams=bool(body.get("include_local_webcams", True)),
     )
 
 

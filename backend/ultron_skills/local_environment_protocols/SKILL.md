@@ -51,7 +51,9 @@ Competencia operacional para controlar dispositivos cadastrados no ambiente loca
    - Servicos locais e scripts registrados.
    - HTTP endpoints customizados declarados no registry.
    - Wake-on-LAN quando houver MAC cadastrado.
-   - RTSP/MJPEG proxy para cameras.
+   - RTSP/MJPEG proxy para cameras com OpenCV/ffmpeg e validacao de stream antes de abrir player externo.
+   - ONVIF WS-Discovery, mDNS, ARP cache e probe TCP para descoberta de dispositivos.
+   - Webcam local via OpenCV como dispositivo `local_media`.
    - Roku ECP para Roku/TV na porta 8060.
    - Samsung Remote WebSocket para Samsung/Tizen nas portas 8001/8002 quando Home Assistant nao cobrir.
 4. Executar somente capabilities registradas e permitidas.
@@ -68,7 +70,8 @@ Fallback: local_environment -> device net_192_168_68_104 -> volume_up -> samsung
 
 ```text
 Usuario: abrir camera 192.168.68.100
-Rota: local_environment -> camera RTSP/Home Assistant -> view_stream -> viewer local MJPEG
+Rota: local_environment -> camera RTSP/Home Assistant/local_media -> validar stream -> view_stream -> viewer local MJPEG
+Se o RTSP exigir credenciais ou caminho proprietario, registrar diagnostico e pedir stream_url/credenciais em vez de abrir URL invalida.
 ```
 
 ```text
