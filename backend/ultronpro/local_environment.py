@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import hashlib
 import ipaddress
 import json
@@ -7,7 +8,9 @@ import os
 import platform
 import re
 import socket
+import ssl
 import subprocess
+import struct
 import tempfile
 import threading
 import time
@@ -561,6 +564,16 @@ def _normalize_ports(ports: list[int] | None) -> list[int]:
     return out or list(DEFAULT_DISCOVERY_PORTS)
 
 
+def _device_ports(config: dict[str, Any] | None) -> list[int]:
+    config = config if isinstance(config, dict) else {}
+    raw: list[Any] = []
+    for key in ("last_access_ports", "last_discovered_ports", "open_ports"):
+        values = config.get(key)
+        if isinstance(values, list):
+            raw.extend(values)
+    return _normalize_ports([int(p) for p in raw if str(p).strip().isdigit()]) if raw else []
+
+
 def _tcp_port_open(host: str, port: int, timeout_sec: float) -> bool:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
@@ -821,7 +834,7 @@ def device_events(device: dict[str, Any]) -> list[dict[str, Any]]:
         return []
     config = device.get("config") if isinstance(device.get("config"), dict) else {}
     ip = str(config.get("ip") or "").strip()
-    ports = [int(p) for p in (config.get("last_access_ports") or config.get("last_discovered_ports") or config.get("open_ports") or [])]
+    ports = _device_ports(config)
     dtype = str(device.get("type") or "")
     events: list[dict[str, Any]] = []
     if "read_state" in set(device.get("capabilities") or []):
@@ -864,16 +877,26 @@ def device_events(device: dict[str, Any]) -> list[dict[str, Any]]:
     for event in remote_events:
         if event not in set(device.get("capabilities") or []):
             continue
-        executable = dtype == "roku_tv_or_streamer" and 8060 in set(ports)
+        executable = (dtype == "roku_tv_or_streamer" and 8060 in set(ports)) or (
+            dtype == "samsung_tv_or_media_device" and bool({8001, 8002} & set(ports))
+        )
         if event == "turn_on" and not executable:
             executable = bool(config.get("mac"))
+        if dtype == "roku_tv_or_streamer" and 8060 in set(ports):
+            adapter_hint = "roku_ecp"
+        elif dtype == "samsung_tv_or_media_device" and bool({8001, 8002} & set(ports)):
+            adapter_hint = "samsung_ws"
+        elif event == "turn_on" and config.get("mac"):
+            adapter_hint = "wake_on_lan"
+        else:
+            adapter_hint = "adapter_config_required"
         events.append(_event_descriptor(
             event,
             device,
             executable=executable,
             detail={
-                "adapter": "roku_ecp" if dtype == "roku_tv_or_streamer" and 8060 in set(ports) else "adapter_config_required",
-                "hint": "Configure Home Assistant, Roku ECP, Samsung/WebOS adapter or MAC/WOL for reliable TV control." if not executable else "",
+                "adapter": adapter_hint,
+                "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control." if not executable else "",
             },
         ))
     return events
@@ -1364,10 +1387,208 @@ def _roku_ecp_request(ip: str, path: str, *, timeout_sec: float = 4.0) -> dict[s
     return {"ok": True, "url": url, "status_code": int(resp.status_code)}
 
 
+def _bounded_repeat(params: dict[str, Any], *, default: int = 1) -> int:
+    try:
+        repeat = int(params.get("repeat") or params.get("times") or params.get("amount") or default)
+    except Exception:
+        repeat = default
+    limit = int(os.getenv("ULTRON_LOCAL_ENV_MAX_KEY_REPEAT", "200") or 200)
+    return max(1, min(max(1, limit), repeat))
+
+
+def _repeatable_keypress_request(adapter: str, request_fn: Any, key_path: str, *, repeat: int, delay_sec: float = 0.08) -> dict[str, Any]:
+    attempts: list[dict[str, Any]] = []
+    ok_count = 0
+    for idx in range(max(1, repeat)):
+        res = request_fn(key_path)
+        attempts.append({"index": idx + 1, "ok": bool(res.get("ok")), "status_code": res.get("status_code"), "error": res.get("error")})
+        if not res.get("ok"):
+            return {"ok": False, "adapter": adapter, "sent_count": ok_count, "repeat": repeat, "attempts": attempts[-5:], "error": res.get("error") or "keypress_failed"}
+        ok_count += 1
+        if idx + 1 < repeat and delay_sec > 0:
+            time.sleep(delay_sec)
+    return {"ok": True, "adapter": adapter, "sent_count": ok_count, "repeat": repeat, "attempts": attempts[-5:]}
+
+
+def _ws_client_frame_text(text: str) -> bytes:
+    payload = str(text or "").encode("utf-8")
+    frame = bytearray([0x81])
+    length = len(payload)
+    if length <= 125:
+        frame.append(0x80 | length)
+    elif length <= 65535:
+        frame.append(0x80 | 126)
+        frame.extend(struct.pack("!H", length))
+    else:
+        frame.append(0x80 | 127)
+        frame.extend(struct.pack("!Q", length))
+    mask = os.urandom(4)
+    frame.extend(mask)
+    frame.extend(byte ^ mask[idx % 4] for idx, byte in enumerate(payload))
+    return bytes(frame)
+
+
+def _websocket_connect(host: str, port: int, path: str, *, tls: bool, timeout_sec: float) -> socket.socket:
+    raw = socket.create_connection((host, int(port)), timeout=max(0.5, timeout_sec))
+    sock: socket.socket = raw
+    if tls:
+        ctx = ssl._create_unverified_context()
+        sock = ctx.wrap_socket(raw, server_hostname=host)
+    sock.settimeout(max(0.5, timeout_sec))
+    key = base64.b64encode(os.urandom(16)).decode("ascii")
+    req = (
+        f"GET {path} HTTP/1.1\r\n"
+        f"Host: {host}:{int(port)}\r\n"
+        "Upgrade: websocket\r\n"
+        "Connection: Upgrade\r\n"
+        f"Sec-WebSocket-Key: {key}\r\n"
+        "Sec-WebSocket-Version: 13\r\n"
+        "Origin: http://localhost\r\n"
+        "\r\n"
+    )
+    sock.sendall(req.encode("ascii", errors="ignore"))
+    data = b""
+    deadline = time.time() + max(1.0, timeout_sec)
+    while b"\r\n\r\n" not in data and time.time() < deadline:
+        chunk = sock.recv(4096)
+        if not chunk:
+            break
+        data += chunk
+    head = data.decode("latin-1", errors="ignore")
+    if " 101 " not in head.split("\r\n", 1)[0]:
+        try:
+            sock.close()
+        finally:
+            pass
+        raise RuntimeError(_safe(head.split("\r\n", 1)[0] or "websocket_handshake_failed", 180))
+    return sock
+
+
+def _samsung_key(action: str, params: dict[str, Any]) -> str:
+    explicit = str(params.get("key") or params.get("button") or "").strip()
+    if explicit:
+        key = explicit.upper().replace("-", "_")
+        aliases = {
+            "VOLUP": "KEY_VOLUP",
+            "VOLUMEUP": "KEY_VOLUP",
+            "VOLDOWN": "KEY_VOLDOWN",
+            "VOLUMEDOWN": "KEY_VOLDOWN",
+            "MUTE": "KEY_MUTE",
+            "POWER": "KEY_POWER",
+            "PLAY": "KEY_PLAY",
+            "PAUSE": "KEY_PAUSE",
+            "HOME": "KEY_HOME",
+            "SOURCE": "KEY_SOURCE",
+            "HDMI": "KEY_SOURCE",
+        }
+        return aliases.get(key, key if key.startswith("KEY_") else f"KEY_{key}")
+    return {
+        "turn_on": "KEY_POWERON",
+        "turn_off": "KEY_POWEROFF",
+        "media_play": "KEY_PLAY",
+        "media_pause": "KEY_PAUSE",
+        "volume_up": "KEY_VOLUP",
+        "volume_down": "KEY_VOLDOWN",
+        "mute": "KEY_MUTE",
+        "send_key": "",
+        "set_input": "KEY_SOURCE",
+    }.get(action, "")
+
+
+def _samsung_tv_execute(device: dict[str, Any], action: str, params: dict[str, Any]) -> dict[str, Any]:
+    config = device.get("config") if isinstance(device.get("config"), dict) else {}
+    ip = str(config.get("ip") or "").strip()
+    if not ip:
+        return {"ok": False, "adapter": "samsung_ws", "action": action, "error": "missing_ip"}
+    if action == "launch_app":
+        return {
+            "ok": False,
+            "adapter": "samsung_ws",
+            "action": action,
+            "error": "launch_app_requires_samsung_app_id_protocol",
+            "hint": "O controle remoto WebSocket cobre teclas, volume, play/pause e power. Launch app precisa de app id Tizen especifico.",
+        }
+    key = _samsung_key(action, params)
+    if not key:
+        return {"ok": False, "adapter": "samsung_ws", "action": action, "error": "key_required"}
+    ports = _device_ports(config)
+    configured_ports = config.get("remote_ports")
+    if isinstance(configured_ports, list) and configured_ports:
+        ports = _normalize_ports([int(p) for p in configured_ports])
+    candidates: list[tuple[int, bool]] = []
+    if 8002 in ports:
+        candidates.append((8002, True))
+    if 8001 in ports:
+        candidates.append((8001, False))
+    if not candidates:
+        return {
+            "ok": False,
+            "adapter": "samsung_ws",
+            "action": action,
+            "error": "samsung_websocket_port_not_detected",
+            "hint": "Refaca a varredura ou cadastre remote_ports=[8001,8002] no registry do dispositivo.",
+        }
+    app_name = str(config.get("client_name") or os.getenv("ULTRON_SAMSUNG_REMOTE_NAME") or "UltronPro").strip()
+    encoded_name = base64.b64encode(app_name.encode("utf-8", errors="ignore")).decode("ascii")
+    timeout_sec = float(config.get("timeout_sec") or 5.0)
+    repeat = _bounded_repeat(params)
+    delay = max(0.02, min(0.5, float(params.get("delay_sec") or config.get("key_delay_sec") or 0.08)))
+    payload = json.dumps(
+        {
+            "method": "ms.remote.control",
+            "params": {
+                "Cmd": "Click",
+                "DataOfCmd": key,
+                "Option": "false",
+                "TypeOfRemote": "SendRemoteKey",
+            },
+        },
+        separators=(",", ":"),
+    )
+    errors: list[dict[str, Any]] = []
+    for port, tls in candidates:
+        path = f"/api/v2/channels/samsung.remote.control?name={quote(encoded_name)}"
+        try:
+            sock = _websocket_connect(ip, port, path, tls=tls, timeout_sec=timeout_sec)
+            try:
+                for idx in range(repeat):
+                    sock.sendall(_ws_client_frame_text(payload))
+                    if idx + 1 < repeat:
+                        time.sleep(delay)
+            finally:
+                try:
+                    sock.close()
+                except Exception:
+                    pass
+            return {
+                "ok": True,
+                "adapter": "samsung_ws",
+                "action": action,
+                "key": key,
+                "repeat": repeat,
+                "sent_count": repeat,
+                "port": port,
+                "tls": tls,
+                "pairing_note": "Se for o primeiro uso, a TV pode pedir autorizacao na tela.",
+            }
+        except Exception as exc:
+            errors.append({"port": port, "tls": tls, "error": f"{type(exc).__name__}:{str(exc)[:180]}"})
+    return {
+        "ok": False,
+        "adapter": "samsung_ws",
+        "action": action,
+        "key": key,
+        "repeat": repeat,
+        "error": "samsung_websocket_failed",
+        "attempts": errors,
+        "hint": "Verifique se a TV esta ligada e aceite a solicitacao de controle remoto exibida na tela.",
+    }
+
+
 def _network_probe_execute(device: dict[str, Any], action: str, params: dict[str, Any]) -> dict[str, Any]:
     config = device.get("config") if isinstance(device.get("config"), dict) else {}
     ip = str(config.get("ip") or "").strip()
-    ports = [int(p) for p in (config.get("last_access_ports") or config.get("last_discovered_ports") or config.get("open_ports") or [])]
+    ports = _device_ports(config)
     dtype = str(device.get("type") or "")
     if action == "open_web_interface":
         urls = _web_urls(ip, ports)
@@ -1407,12 +1628,29 @@ def _network_probe_execute(device: dict[str, Any], action: str, params: dict[str
             key = _roku_key(action, params)
             if not key:
                 return {"ok": False, "adapter": "roku_ecp", "action": action, "error": "key_required"}
-            return {**_roku_ecp_request(ip, f"/keypress/{quote(key)}"), "adapter": "roku_ecp", "action": action, "key": key}
+            repeat = _bounded_repeat(params)
+            res = _repeatable_keypress_request("roku_ecp", lambda path: _roku_ecp_request(ip, path), f"/keypress/{quote(key)}", repeat=repeat)
+            return {**res, "action": action, "key": key}
         if action in {"turn_on", "turn_off", "media_play", "media_pause", "volume_up", "volume_down", "mute"}:
             key = _roku_key(action, params)
-            return {**_roku_ecp_request(ip, f"/keypress/{quote(key)}"), "adapter": "roku_ecp", "action": action, "key": key}
+            repeat = _bounded_repeat(params)
+            res = _repeatable_keypress_request("roku_ecp", lambda path: _roku_ecp_request(ip, path), f"/keypress/{quote(key)}", repeat=repeat)
+            return {**res, "action": action, "key": key}
     if action == "turn_on" and config.get("mac"):
         return _wol_execute(device, "wake_device", params)
+    if (dtype == "samsung_tv_or_media_device" or {8001, 8002, 55000} & set(ports)) and action in {
+        "turn_on",
+        "turn_off",
+        "media_play",
+        "media_pause",
+        "volume_up",
+        "volume_down",
+        "mute",
+        "send_key",
+        "launch_app",
+        "set_input",
+    }:
+        return _samsung_tv_execute(device, action, params)
     return {
         "ok": False,
         "adapter": "network_probe",
@@ -1427,7 +1665,7 @@ def _network_probe_observe(device: dict[str, Any]) -> dict[str, Any]:
     ip = str(config.get("ip") or "").strip()
     if not ip:
         return {"ok": False, "error": "network_probe_missing_ip"}
-    ports = _normalize_ports([int(p) for p in (config.get("open_ports") or config.get("last_discovered_ports") or DEFAULT_DISCOVERY_PORTS)])
+    ports = _normalize_ports(_device_ports(config) or DEFAULT_DISCOVERY_PORTS)
     timeout_sec = max(0.05, min(2.0, float(config.get("timeout_ms") or 220) / 1000.0))
     open_ports = [port for port in ports if _tcp_port_open(ip, port, timeout_sec)]
     state = {
@@ -1436,7 +1674,11 @@ def _network_probe_observe(device: dict[str, Any]) -> dict[str, Any]:
         "open_ports": open_ports,
         "fingerprint": _classify_open_ports(open_ports) if open_ports else {},
     }
-    return _typed_observation(device, state, adapter="network_probe")
+    out = _typed_observation(device, state, adapter="network_probe")
+    out["ok"] = bool(open_ports)
+    if not open_ports:
+        out["error"] = "network_device_unreachable"
+    return out
 
 
 def observe_device(device_id: str) -> dict[str, Any]:
@@ -1764,7 +2006,7 @@ def test_device_access(device_id: str, *, timeout_ms: int = 800, persist: bool =
         return {"ok": False, "device_id": str(device_id or ""), "error": "device_not_registered"}
     config = device.get("config") if isinstance(device.get("config"), dict) else {}
     ip = str(config.get("ip") or "").strip()
-    ports = _normalize_ports([int(p) for p in (config.get("open_ports") or config.get("last_discovered_ports") or [])]) if ip else []
+    ports = _normalize_ports(_device_ports(config)) if ip and _device_ports(config) else []
     timeout_sec = max(0.05, min(3.0, float(timeout_ms or 800) / 1000.0))
     started = time.time()
     port_probes: list[dict[str, Any]] = []
@@ -1854,7 +2096,7 @@ def camera_stream_info_for_device(device: dict[str, Any]) -> dict[str, Any]:
         return {"ok": False, "error": "device_not_registered"}
     config = device.get("config") if isinstance(device.get("config"), dict) else {}
     ip = str(config.get("ip") or "").strip()
-    ports = [int(p) for p in (config.get("last_access_ports") or config.get("last_discovered_ports") or config.get("open_ports") or [])]
+    ports = _device_ports(config)
     urls = _rtsp_url_candidates(ip, ports, config)
     return {
         "ok": bool(urls),
@@ -1985,8 +2227,24 @@ def parse_command(text: str) -> dict[str, Any]:
         action = "media_pause"
     if any(x in folded for x in ("aumentar volume", "volume mais", "volume up")):
         action = "volume_up"
+        m = re.search(r"(?:aumentar volume|volume mais|volume up|volume)\s+(\d{1,3})", folded)
+        if m:
+            amount = max(1, min(200, int(m.group(1))))
+            params["repeat"] = amount
+            if amount >= 50:
+                params["risk_level"] = 3
+            elif amount >= 20:
+                params["risk_level"] = 2
     if any(x in folded for x in ("diminuir volume", "baixar volume", "volume menos", "volume down")):
         action = "volume_down"
+        m = re.search(r"(?:diminuir volume|baixar volume|volume menos|volume down|volume)\s+(\d{1,3})", folded)
+        if m:
+            amount = max(1, min(200, int(m.group(1))))
+            params["repeat"] = amount
+            if amount >= 50:
+                params["risk_level"] = 3
+            elif amount >= 20:
+                params["risk_level"] = 2
     if any(x in folded for x in ("mutar", "mudo", "mute", "silenciar")):
         action = "mute"
     if any(x in folded for x in ("apertar tecla", "pressionar tecla", "send key", "enviar tecla")):

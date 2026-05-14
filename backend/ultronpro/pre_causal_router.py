@@ -1601,8 +1601,19 @@ def _format_local_env_answer(result: dict[str, Any]) -> str:
             labels = ", ".join(_local_env_device_label(d) for d in groups["camera"][:3])
             lines.append(f"Cameras: {labels}. Eventos: ver stream e capturar snapshot quando o runtime permitir.")
         if groups.get("tv"):
-            labels = ", ".join(_local_env_device_label(d) for d in groups["tv"][:3])
-            lines.append(f"TVs/midia: {labels}. Eventos: abrir interface, ligar/desligar, play/pause, volume, mute e tecla; alguns exigem adapter especifico.")
+            tv_lines = []
+            for device in groups["tv"][:3]:
+                events = device.get("events") if isinstance(device.get("events"), list) else []
+                adapters = sorted({
+                    str(((event.get("detail") if isinstance(event, dict) else {}) or {}).get("adapter") or "")
+                    for event in events
+                    if isinstance(event, dict)
+                    and event.get("event") in {"turn_on", "turn_off", "media_play", "media_pause", "volume_up", "volume_down", "mute", "send_key"}
+                    and event.get("executable")
+                })
+                adapter_text = ", ".join(a for a in adapters if a) or "adapter pendente"
+                tv_lines.append(f"{_local_env_device_label(device)} via {adapter_text}")
+            lines.append(f"TVs/midia: {'; '.join(tv_lines)}. Eventos: abrir interface, ligar/desligar, play/pause, volume, mute e tecla.")
         if groups.get("http"):
             labels = ", ".join(_local_env_device_label(d) for d in groups["http"][:4])
             lines.append(f"HTTP/genericos: {labels}. Eventos seguros: ler estado e abrir interface web.")
@@ -1697,7 +1708,8 @@ def _format_local_env_answer(result: dict[str, Any]) -> str:
         execution = result.get("execution") if isinstance(result.get("execution"), dict) else {}
         if reason == "execution_failed" and execution.get("hint"):
             action = execution.get("action") or ((result.get("ledger") or {}).get("action") if isinstance(result.get("ledger"), dict) else "acao")
-            return f"Entendi o comando {action}, mas o adapter atual nao consegue executar. {execution.get('hint')}"
+            adapter = execution.get("adapter") or "adapter local"
+            return f"Tentei executar {action} via {adapter}, mas nao consegui. {execution.get('hint')}"
         return f"Nao executei a acao no ambiente local: {reason or 'bloqueada'}."
     if result.get("registered_count") is not None:
         count = int(result.get("registered_count") or 0)
