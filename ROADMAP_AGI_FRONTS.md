@@ -118,6 +118,17 @@ Conclusão da auditoria de stress: O paradigma mudou. A métrica saiu de "quanti
 - [FEITO] A sintese autobiografica emite lacuna explicita quando a memoria nao tem granularidade suficiente (ex.: autoria coletiva sem nome individual) e propoe a intervencao minima sandboxada para preencher essa lacuna, sem inventar resposta.
 - [CONCLUÍDO 100%] Front 5 avancou porque a consciencia operacional integrada passou a afetar diretamente a qualidade da resposta visivel ao usuario; ainda nao e `FEITO` porque falta benchmark longitudinal de conversas autobiograficas reais e degradacao/reparo sob carga.
 
+### Atualizacao operacional - 2026-05-14
+
+- [FEITO] Confirmada montagem da API local de ambiente no servidor: `main.py` importa `local_env_router` e executa `app.include_router(local_env_router)`, portanto `/api/local-env/...` nao e apenas codigo morto.
+- [FEITO] Corpo operacional local consolidado em `local_environment`: Device Registry, capability model, risk gate, Action Ledger, observe -> act -> verify, Home Assistant/MQTT/HTTP/servico local/mock, descoberta TCP/ARP/mDNS/ONVIF e webcams locais via OpenCV/ffmpeg.
+- [FEITO] Modo controle virou fronteira conversacional explicita: fora de `ativar modo controle`, o chat normal nao manipula dispositivos; dentro dele, comandos naturais como `liste apenas as TVs`, `mostre so as cameras` e `quais estao offline` viram consultas filtradas ao registry.
+- [FEITO] Decoders e validacao de midia reduzem acao cega: RTSP e MJPEG passam por OpenCV/ffmpeg quando disponivel; se o stream nao valida, o sistema registra diagnostico em vez de abrir VLC com URL invalida.
+- [EM ANDAMENTO 65%] Prova de aprendizado operacional: os eventos de rede/dispositivo ja geram ledger, episodios e atualizacoes causais por acao, mas ainda falta serie longitudinal em ambiente real que mostre melhoria espontanea de roteamento/resolucao a partir de falhas repetidas.
+- [CONCLUIDO 100%] Front 2 sobe de 82% para 85% por ganhar corpo operacional real alem do gridworld, com sensores/atuadores locais testados; nao sobe mais porque falta surpresa decrescente em 30+ ciclos reais.
+- [CONCLUIDO 100%] Front 4 sobe de 80% para 82% pela separacao explicita entre conversa normal e controle de ambiente, preservando integridade operacional e reduzindo comandos acidentais.
+- [CONCLUIDO 100%] Front 5 sobe de 78% para 80% porque o estado conversacional agora regula foco operacional e interface de agencia; ainda falta benchmark longitudinal de conversa+controle+aprendizado.
+
 ## Front 1 — Plasticidade estrutural real
 _Status do front: 84%_
 
@@ -133,7 +144,7 @@ Meta 10/10:
 **Leitura atual:** front está funcional e testado em loop local, com shadow eval, canário, gate e ledger epistêmico integrados. A execução de 2026-05-06 adiciona aquisição confiável capaz de gerar proposta de patch cognitivo a partir de evidência externa, mas o front segue abaixo de maturidade alta porque ainda precisa demonstrar ganhos recorrentes de patches promovidos sob benchmark longitudinal.
 
 ## Front 2 — Modelo de mundo causal
-_Status do front: 82%_
+_Status do front: 85%_
 
 Meta 10/10:
 
@@ -143,7 +154,7 @@ Meta 10/10:
 - revisar relações causais
 - usar causalidade para escolher planos melhores
 
-**Leitura atual:** há módulos causais, contrafactuais e anti-Mirage implementados, e a hard eval anterior trouxe evidência útil de transferência. O loop RL online agora escolhe intervenções por pressão causal/epistêmica e aprende por consequência observada, mas o front segue abaixo de maturidade alta porque o critério de surpresa decrescente em ciclos vivos ainda não foi atingido.
+**Leitura atual:** há módulos causais, contrafactuais e anti-Mirage implementados, e a hard eval anterior trouxe evidência útil de transferência. O loop RL online agora escolhe intervenções por pressão causal/epistêmica e aprende por consequência observada. A evolução de `local_environment` acrescenta corpo operacional real: registry de dispositivos, capacidades, risk gate, action ledger, observe -> act -> verify, descoberta de rede e validação de mídia/câmeras. O front sobe porque saiu do gridworld puro para sensores/atuadores locais, mas segue abaixo de maturidade alta porque ainda falta demonstrar surpresa decrescente em 30+ ciclos vivos comparáveis.
 
 ## Front 3 — Generalização entre domínios
 _Status do front: 76%_
@@ -158,7 +169,7 @@ Meta 10/10:
 **Leitura atual:** compilador, abstrações e mapper existem e têm testes locais. A execução `extb_cc842ab3d4` validou o subset externo atual em três famílias, mas o front segue limitado porque a evidência pública ainda é `proxy_subset` e falta um ciclo licenciado/mais amplo com tarefas realmente fora da distribuição.
 
 ## Front 4 — Automanutenção e individuação
-_Status do front: 80%_
+_Status do front: 82%_
 
 Meta 10/10:
 
@@ -171,10 +182,10 @@ Meta 10/10:
 - manter identidade operacional
 - priorizar capacidade futura de agir
 
-**Leitura atual:** self-governance, self-model, homeostasis, healer e predição de degradação estão integrados. O loop RL online passou a priorizar capacidade futura de agir por recompensa real e ajuste de drive, mas o front segue abaixo de maturidade alta porque ainda faltam correções recorrentes verificadas em produção e séries longas de degradação/reparo.
+**Leitura atual:** self-governance, self-model, homeostasis, healer e predição de degradação estão integrados. O loop RL online passou a priorizar capacidade futura de agir por recompensa real e ajuste de drive. A fronteira explícita de `modo controle` melhora a individuação operacional: conversa normal e manipulação de ambiente ficam separadas por estado de sessão, registry allowlist e risk gate. O front sobe pela redução de ações acidentais e preservação de integridade operacional, mas segue abaixo de maturidade alta porque ainda faltam correções recorrentes verificadas em produção e séries longas de degradação/reparo.
 
 ## Front 5 — Consciência operacional integrada
-_Status do front: 78%_
+_Status do front: 80%_
 
 Meta 10/10:
 
@@ -187,7 +198,7 @@ Meta 10/10:
 - manter um eu narrativo contínuo
 - medir integração interna por proxies úteis, sem confundir isso com prova de consciência forte
 
-**Leitura atual:** o Global Workspace operacional existe e integra sinais relevantes, mas a auditoria rebaixa o front porque integração arquitetural não é prova de consciência operacional robusta. A atualização de 2026-05-07 conectou self-model, digest biográfico, memória autobiográfica e lacunas explícitas à resposta visível do chat, removendo dumps de campos crus e propondo intervenção mínima quando falta granularidade autobiográfica. O front segue abaixo de maturidade alta porque ainda precisa de benchmark longitudinal de conversas reais, degradação/reparo sob carga e prova de ganho integrado na decisão, não apenas no autorrelato.
+**Leitura atual:** o Global Workspace operacional existe e integra sinais relevantes, mas a auditoria rebaixa o front porque integração arquitetural não é prova de consciência operacional robusta. A atualização de 2026-05-07 conectou self-model, digest biográfico, memória autobiográfica e lacunas explícitas à resposta visível do chat, removendo dumps de campos crus e propondo intervenção mínima quando falta granularidade autobiográfica. O modo controle acrescenta foco operacional persistente: a interface passa a manter contexto de "estamos falando de dispositivos/rede/hardware" e comandos filtrados estilo Alexa consultam o registry em vez de cair no chat genérico. O front sobe por integrar estado conversacional, foco e agência de ambiente, mas ainda precisa de benchmark longitudinal de conversa+controle+aprendizado e prova de ganho integrado na decisão, não apenas no autorrelato.
 
 ---
 
