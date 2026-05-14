@@ -97,3 +97,10 @@ async def benchmark_learning_proof():
     """Prova before/after de aprendizado de rota sem novas competencias."""
     from ultronpro import learning_proof
     return learning_proof.run_learning_proof()
+
+
+@router.get("/learning-proof/longitudinal")
+async def benchmark_longitudinal_learning_proof():
+    """Prova longitudinal dura: adaptacao, generalizacao, recompensa e autonomia segura."""
+    from ultronpro import learning_proof
+    return learning_proof.run_hard_longitudinal_learning_proof()

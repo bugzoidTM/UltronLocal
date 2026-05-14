@@ -135,6 +135,10 @@ Conclusão da auditoria de stress: O paradigma mudou. A métrica saiu de "quanti
 - [FEITO] A prova roda em diretorio temporario e mede delta before/after: antes, sem episodios, `learned_intent` nao roteia; depois de uma falha rotulada `causal -> translation`, uma consulta parecida passa a prever `translation`.
 - [FEITO] A evidencia separa reforco positivo e negativo: o exemplo correto cria evidencia positiva para `translation`, enquanto o uso indevido do causal vira evidencia negativa contra `causal`.
 - [FEITO] A proposta de auto-modificacao gerada declara `requires_self_modification_gate=true` e `do_not_hardcode_answer=true`; portanto o marco testa aprendizado de rota, nao fixture de resposta.
+- [FEITO] Endurecida a prova com `hard_longitudinal_learning`: 8 ciclos, 5 eixos, prompts de treino separados de holdouts/futuros, recompensa por consequencia, `competence_ledger` isolado e `rl_policy` temporario.
+- [FEITO] O primeiro ciclo teve falha nova real no eixo `safety_holdout` (`first_cycle_novel_holdout_success_rate=0.8`); a falha virou episodio/correcao, e ao final a variacao futura roteou para `safety`.
+- [FEITO] Metricas da bancada isolada: `pre_learning_success_rate=0.0`, `final_generalization_rate=1.0`, `final_window_success_rate=1.0`, `policy_updates=80/80`, `route_learning_records=40`.
+- [EM ANDAMENTO] Estas evidencias fortalecem adaptacao e aprendizado por consequencia, mas ainda nao substituem o criterio forte de 30+ ciclos vivos em producao com dispositivos, usuarios reais, regressao/rollback e deriva temporal.
 
 ## Front 1 — Plasticidade estrutural real
 _Status do front: 84%_
