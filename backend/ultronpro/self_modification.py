@@ -86,7 +86,9 @@ class SelfModificationEngine:
 
     def __init__(self):
         self.enabled = os.getenv('ULTRON_SELF_MOD_ENABLED', '1') == '1'
-        self.auto_approve = os.getenv('ULTRON_SELF_MOD_AUTO_APPROVE', '1') == '1'
+        # Default '0' — alinhado com self_modification_gate.py que também usa '0'.
+        # Sete ULTRON_SELF_MOD_AUTO_APPROVE=1 explicitamente para habilitar.
+        self.auto_approve = os.getenv('ULTRON_SELF_MOD_AUTO_APPROVE', '0') == '1'
         self._load_proposals()
 
     def _load_proposals(self):
@@ -337,66 +339,176 @@ Responda APENAS com JSON válido, sem explicações."""
             'backup_files': len(list(BACKUPS_PATH.glob('*.py'))),
         }
 
+    def _run_healer_gate(self, module: str, original_source: str, fixed_source: str) -> dict:
+        """
+        Delega ao pipeline do CodeSelfHealer:
+        sandbox → ast/compile → import check → post-apply tests → rollback.
+
+        Retorna {'ok': True, ...} se todos os checks passarem,
+        {'ok': False, 'error': ..., 'rolled_back': bool} caso contrário.
+        """
+        try:
+            from ultronpro.code_self_healer import CodeSelfHealer, HealAttempt, BACKUPS_DIR
+        except ImportError as e:
+            return {'ok': False, 'error': f'code_self_healer indisponível: {e}', 'fallback': True}
+
+        healer = CodeSelfHealer()
+        file_path = Path(__file__).resolve().parent / module
+
+        # Cria um HealAttempt temporário para reutilizar o pipeline do healer
+        attempt = HealAttempt(
+            id=f"selfmod_{int(time.time())}_{hashlib.md5(module.encode()).hexdigest()[:6]}",
+            error_id="self_modification",
+            timestamp=int(time.time()),
+            module=module,
+            original_code=original_source,
+            fixed_code=fixed_source,
+            fix_strategy="self_modification",
+            fix_description="Aplicação via SelfModificationEngine",
+            syntax_valid=False,
+            import_valid=False,
+            applied=False,
+        )
+
+        # 1. Validação sintática
+        attempt.syntax_valid = healer._validate_syntax(fixed_source)
+        if not attempt.syntax_valid:
+            return {'ok': False, 'error': 'syntax_invalid', 'rolled_back': False}
+
+        # 2. Sandbox
+        sandbox_result = healer._sandbox_validate_candidate(attempt)
+        attempt.sandbox_result = sandbox_result
+        attempt.sandbox_validated = bool(sandbox_result.get('ok'))
+        if not attempt.sandbox_validated:
+            return {
+                'ok': False,
+                'error': 'sandbox_validation_failed',
+                'sandbox': sandbox_result,
+                'rolled_back': False,
+            }
+
+        # 3. Backup
+        backup_name = f"{Path(module).stem}_{int(time.time())}.selfmod.backup"
+        backup_path = BACKUPS_DIR / backup_name
+        backup_path.write_text(original_source, encoding='utf-8')
+
+        # 4. Escreve o código corrigido
+        try:
+            file_path.write_text(fixed_source, encoding='utf-8')
+        except Exception as e:
+            return {'ok': False, 'error': f'write_failed: {e}', 'rolled_back': False}
+
+        # 5. Valida import
+        import_ok = healer._validate_import(module)
+        attempt.import_valid = import_ok
+        if not import_ok:
+            file_path.write_text(original_source, encoding='utf-8')
+            return {'ok': False, 'error': 'import_validation_failed', 'rolled_back': True}
+
+        # 6. Testes pós-aplicação
+        test_result = healer._run_post_apply_tests(attempt, file_path)
+        attempt.test_result = test_result
+        attempt.tests_passed = bool(test_result.get('ok'))
+        if not attempt.tests_passed:
+            file_path.write_text(original_source, encoding='utf-8')
+            return {
+                'ok': False,
+                'error': 'post_apply_tests_failed',
+                'tests': test_result,
+                'rolled_back': True,
+            }
+
+        return {
+            'ok': True,
+            'module': module,
+            'backup': str(backup_path),
+            'sandbox': sandbox_result,
+            'tests': test_result,
+            'deployment_status': healer._build_deployment_status(module),
+        }
+
     def apply(self, proposal_id: str, force: bool = False) -> dict:
-        """Aplica uma modificação aprovada."""
+        """
+        Aplica uma modificação aprovada.
+
+        Cada alteração passa pelo gate completo do CodeSelfHealer:
+        sandbox → import check → post-apply tests → rollback automático.
+        """
         if not self.enabled and not force:
             return {'error': 'Auto-modificação desabilitada'}
-        
+
         proposal = next((p for p in self.proposals if p.id == proposal_id), None)
         if not proposal:
             return {'error': 'Proposta não encontrada'}
-        
+
         if proposal.status not in ('validated', 'approved') and not force:
             return {'error': 'Proposta precisa ser validada primeiro'}
-        
+
         applied = []
-        
+        gate_results = []
+
         for change in proposal.changes:
             target_file = change.get('file')
-            file_path = Path(__file__).resolve().parent / target_file
-            
-            if not file_path.exists():
+            if not target_file:
                 continue
-            
+            file_path = Path(__file__).resolve().parent / target_file
+
+            if not file_path.exists():
+                gate_results.append({'file': target_file, 'ok': False, 'error': 'file_not_found'})
+                continue
+
             original = file_path.read_text(encoding='utf-8')
-            
-            backup_name = f"{file_path.stem}_{int(time.time())}.py.backup"
-            (BACKUPS_PATH / backup_name).write_text(original, encoding='utf-8')
-            
             lines = original.splitlines(keepends=True)
-            
+
+            # Calcula o source candidato (ainda não escreve em disco)
+            candidate_source: str | None = None
             if change.get('type') == 'replace':
                 start = change.get('line_start', 1) - 1
                 end = change.get('line_end', start + 1)
                 new_code = change.get('new_code', '')
-                
                 if start < len(lines):
                     new_lines = lines[:start] + [new_code + '\n'] + lines[end:]
-                    file_path.write_text(''.join(new_lines), encoding='utf-8')
-                    applied.append(change)
-            
+                    candidate_source = ''.join(new_lines)
             elif change.get('type') == 'add':
                 new_code = change.get('new_code', '')
                 position = change.get('position', 'end')
-                
                 if position == 'end':
-                    file_path.write_text(original + '\n' + new_code, encoding='utf-8')
+                    candidate_source = original + '\n' + new_code
                 elif position == 'start':
-                    file_path.write_text(new_code + '\n' + original, encoding='utf-8')
-                
+                    candidate_source = new_code + '\n' + original
+
+            if candidate_source is None:
+                gate_results.append({'file': target_file, 'ok': False, 'error': 'unsupported_change_type'})
+                continue
+
+            # Passa pelo gate do CodeSelfHealer (sandbox + import + tests + rollback)
+            gate = self._run_healer_gate(target_file, original, candidate_source)
+            gate_results.append({'file': target_file, **gate})
+
+            if gate.get('ok'):
                 applied.append(change)
-        
-        proposal.applied_at = int(time.time())
-        proposal.status = 'applied'
+            else:
+                self._log_history(
+                    proposal_id,
+                    'gate_rejected',
+                    f"{target_file}: {gate.get('error')} (rolled_back={gate.get('rolled_back')})",
+                )
+
+        if applied:
+            proposal.applied_at = int(time.time())
+            proposal.status = 'applied'
+        else:
+            proposal.status = 'gate_rejected'
+
         self._save_proposals()
-        
-        self._log_history(proposal_id, 'applied', f'{len(applied)} mudanças aplicadas')
-        
+        self._log_history(proposal_id, 'applied', f'{len(applied)} mudanças aplicadas via healer gate')
+
         return {
-            'ok': True,
+            'ok': len(applied) > 0,
             'proposal_id': proposal_id,
             'applied_count': len(applied),
             'changes': applied,
+            'gate_results': gate_results,
         }
 
     def revert(self, proposal_id: str, reason: str = '') -> dict:

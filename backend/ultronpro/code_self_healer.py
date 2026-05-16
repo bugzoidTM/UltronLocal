@@ -512,6 +512,8 @@ REGRAS:
 
         logger.info(f"CodeSelfHealer: ✓ Fix {attempt_id} applied to {attempt.module} ({attempt.fix_strategy})")
 
+        deployment = self._build_deployment_status(attempt.module)
+
         return {
             "ok": True,
             "attempt_id": attempt_id,
@@ -521,6 +523,7 @@ REGRAS:
             "backup": str(backup_path),
             "sandbox": sandbox_result,
             "tests": test_result,
+            "deployment": deployment,
         }
 
     # ── 4. Verify Fix ────────────────────────────────────
@@ -1166,6 +1169,61 @@ print(json.dumps(result, ensure_ascii=False))
         if module not in self.fix_count_per_module:
             self.fix_count_per_module[module] = []
         self.fix_count_per_module[module].append(time.time())
+
+    def _build_deployment_status(self, module: str) -> dict[str, Any]:
+        """
+        Constrói um fingerprint do estado real de implantação após uma correção.
+
+        Esclarece que 'corrigir o source local' != 'deploy completo':
+        - current_git_sha: commit HEAD atual (pode estar stale se não há commit)
+        - dirty_tree: True quando há arquivos modificados não commitados (incluindo o fix)
+        - deployment_status: string descritiva do estado
+        - requires_restart: True — processo em memória ainda usa o módulo antigo
+        """
+        git_sha = "unknown"
+        dirty_tree = True  # conservador: assume sujo se não conseguir checar
+        try:
+            sha_proc = subprocess.run(
+                ["git", "rev-parse", "--short", "HEAD"],
+                cwd=str(ULTRONPRO_DIR),
+                capture_output=True,
+                text=True,
+                timeout=5,
+            )
+            if sha_proc.returncode == 0:
+                git_sha = sha_proc.stdout.strip() or "unknown"
+
+            status_proc = subprocess.run(
+                ["git", "status", "--porcelain"],
+                cwd=str(ULTRONPRO_DIR),
+                capture_output=True,
+                text=True,
+                timeout=5,
+            )
+            if status_proc.returncode == 0:
+                dirty_tree = bool(status_proc.stdout.strip())
+        except Exception:
+            pass  # git indisponível — fallback conservador mantido
+
+        deployment_status = (
+            "local_source_modified_not_committed"
+            if dirty_tree
+            else "committed_not_restarted"
+        )
+
+        return {
+            "healer_applied": True,
+            "module": module,
+            "requires_restart": True,
+            "current_git_sha": git_sha,
+            "dirty_tree": dirty_tree,
+            "validation": "passed",
+            "deployment_status": deployment_status,
+            "note": (
+                "Source local modificado. Processo em memória ainda usa código anterior. "
+                "Reinicie o servidor para ativar a correção."
+            ),
+        }
 
     # ── Status ───────────────────────────────────────────
 

@@ -1,0 +1,432 @@
+"""
+Skill Memory Bridge — Ponte skill_memory → skill_evolution
+===========================================================
+
+Converte skills promovidas do skill_memory (SQLite + learned_skills/)
+em SKILL.md carregáveis pelo skill_loader e executáveis pelo skill_executor.
+
+Fecha o ciclo:
+  skill_memory (SQLite, promovida) → validação mínima → SKILL.md
+  → skill_loader.load_skills(force=True) → skill_executor executa
+
+Critérios mínimos para materialização (configuráveis via env):
+  ULTRON_BRIDGE_MIN_SUCCESS    = 3     (success_count mínimo)
+  ULTRON_BRIDGE_MIN_CONFIDENCE = 0.60  (confidence mínimo)
+
+Uso:
+  from ultronpro import skill_memory_bridge
+  result = skill_memory_bridge.run_bridge(dry_run=True)
+"""
+from __future__ import annotations
+
+import json
+import logging
+import os
+import re
+import time
+from pathlib import Path
+from typing import Any
+
+logger = logging.getLogger("uvicorn")
+
+# ── Configuração ───────────────────────────────────────────────────────────────
+
+DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+BRIDGE_LOG_PATH = DATA_DIR / "skill_memory_bridge_log.jsonl"
+
+# Diretório alvo: mesmo usado por skill_evolution._materialize()
+MATERIALIZED_SKILLS_DIR = Path(__file__).resolve().parent.parent / "ultron_skills"
+
+
+def _min_success() -> int:
+    return max(1, int(os.getenv("ULTRON_BRIDGE_MIN_SUCCESS", "3") or 3))
+
+
+def _min_confidence() -> float:
+    return max(0.0, min(1.0, float(os.getenv("ULTRON_BRIDGE_MIN_CONFIDENCE", "0.60") or 0.60)))
+
+
+def _now() -> int:
+    return int(time.time())
+
+
+def _slug(text: str) -> str:
+    raw = re.sub(r"[^a-z0-9]+", "_", str(text or "").lower()).strip("_")
+    return (re.sub(r"_+", "_", raw) or "skill")[:60].strip("_")
+
+
+# ── 1. Listar skills promovidas ────────────────────────────────────────────────
+
+def list_promoted_memory_skills(
+    *,
+    db_path: str | Path | None = None,
+) -> list[dict[str, Any]]:
+    """
+    Retorna todas as skills com status='promoted' do skill_memory (SQLite).
+    """
+    try:
+        from ultronpro import skill_memory
+        skill_memory.ensure_schema(db_path)
+        import sqlite3
+        # Reutiliza a lógica interna de conexão
+        conn_path = skill_memory._db_path(db_path)
+        conn = sqlite3.connect(str(conn_path), timeout=30)
+        conn.row_factory = sqlite3.Row
+        rows = conn.execute(
+            "SELECT * FROM learned_skills WHERE status='promoted' ORDER BY updated_at DESC"
+        ).fetchall()
+        conn.close()
+        return [skill_memory._row_to_dict(r) for r in rows]
+    except Exception as e:
+        logger.warning(f"SkillMemoryBridge: list_promoted_memory_skills error: {e}")
+        return []
+
+
+# ── 2. Validar candidata à materialização ─────────────────────────────────────
+
+def validate_memory_skill_for_materialization(
+    skill: dict[str, Any],
+    *,
+    min_success: int | None = None,
+    min_confidence: float | None = None,
+) -> dict[str, Any]:
+    """
+    Verifica se uma skill do skill_memory atende aos critérios mínimos
+    para ser materializada como SKILL.md executável.
+
+    Retorna {'ok': True/False, 'reason': str, 'checks': list}.
+    """
+    checks: list[dict[str, Any]] = []
+    min_s = min_success if min_success is not None else _min_success()
+    min_c = min_confidence if min_confidence is not None else _min_confidence()
+
+    def _check(name: str, passed: bool, detail: str) -> bool:
+        checks.append({"check": name, "passed": passed, "detail": detail})
+        return passed
+
+    # 1. Status promovido
+    status = str(skill.get("status") or "")
+    ok = _check("status_promoted", status == "promoted", f"status={status}")
+
+    # 2. success_count suficiente
+    sc = int(skill.get("success_count") or 0)
+    ok = _check("min_success_count", sc >= min_s, f"success_count={sc} >= {min_s}") and ok
+
+    # 3. confidence suficiente
+    conf = float(skill.get("confidence") or 0.0)
+    ok = _check("min_confidence", conf >= min_c, f"confidence={conf:.3f} >= {min_c}") and ok
+
+    # 4. Descrição/summary não vazia
+    summary = str(skill.get("summary") or "").strip()
+    ok = _check("has_summary", bool(summary), f"summary={'present' if summary else 'missing'}") and ok
+
+    # 5. Nome não vazio
+    name = str(skill.get("name") or "").strip()
+    ok = _check("has_name", bool(name), f"name={'present' if name else 'missing'}") and ok
+
+    # 6. Sem regressão grave registrada (failure_count não pode dominar)
+    fc = int(skill.get("failure_count") or 0)
+    total = sc + fc
+    failure_rate = fc / max(1, total)
+    ok = _check(
+        "low_failure_rate",
+        failure_rate < 0.5,
+        f"failure_rate={failure_rate:.2f} (failures={fc}, successes={sc})",
+    ) and ok
+
+    if not ok:
+        first_fail = next((c for c in checks if not c["passed"]), None)
+        reason = first_fail["check"] if first_fail else "unknown"
+    else:
+        reason = "all_checks_passed"
+
+    return {"ok": ok, "reason": reason, "checks": checks, "skill_name": name}
+
+
+# ── 3. Materializar SKILL.md ──────────────────────────────────────────────────
+
+def _build_skill_md(skill: dict[str, Any]) -> str:
+    """Gera o conteúdo SKILL.md com frontmatter compatível com skill_loader."""
+    name = str(skill.get("name") or "skill")
+    title = str(skill.get("title") or name)
+    summary = str(skill.get("summary") or "")
+    when_to_use = str(skill.get("when_to_use") or "").strip()
+    instructions = str(skill.get("instructions") or "").strip()
+    action_kind = str(skill.get("action_kind") or "learned")
+    tags: list[str] = list(skill.get("tags") or [])
+
+    # Garante tags obrigatórias
+    for tag in ["memory_bridge", "learned", action_kind]:
+        if tag and tag not in tags:
+            tags.append(tag)
+
+    tags_yaml = "\n".join(f'  - "{t}"' for t in tags[:12])
+
+    # when_to_use como bloco YAML
+    when_lines = "\n".join(f"  {line}" for line in when_to_use.splitlines()) if when_to_use else "  Consulte skill_memory para correspondência semântica."
+
+    frontmatter = (
+        "---\n"
+        "path: auto/memory_bridge\n"
+        f'description: "{summary[:200]}"\n'
+        "allowed_tools: []\n"
+        "budget:\n"
+        "  max_seconds: 3\n"
+        "risk_level: low\n"
+        "when_to_use: |\n"
+        f"{when_lines}\n"
+        "success_checks: []\n"
+        "tags:\n"
+        f"{tags_yaml}\n"
+        "enabled: true\n"
+        "version: 1.0.0\n"
+        "author: skill_memory_bridge\n"
+        "---\n\n"
+    )
+
+    body = (
+        f"# {title}\n\n"
+        f"{summary}\n\n"
+    )
+    if instructions:
+        body += f"## Instruções\n\n{instructions}\n\n"
+
+    # Exemplos observados
+    examples: list[dict] = list(skill.get("examples") or [])
+    if examples:
+        body += "## Exemplos observados\n\n"
+        for ex in examples[-5:]:
+            q = str(ex.get("query") or "").strip()
+            if q:
+                body += f"- {q[:200]}\n"
+        body += "\n"
+
+    body += (
+        f"*Materializada automaticamente via skill_memory_bridge "
+        f"a partir de skill_memory '{name}' "
+        f"(success_count={skill.get('success_count', 0)}, "
+        f"confidence={float(skill.get('confidence') or 0):.3f}).*\n"
+    )
+
+    return frontmatter + body
+
+
+def materialize_memory_skill_as_skill_md(
+    skill: dict[str, Any],
+    *,
+    skills_dir: str | Path | None = None,
+) -> dict[str, Any]:
+    """
+    Converte uma skill do skill_memory em SKILL.md no MATERIALIZED_SKILLS_DIR.
+
+    O nome do diretório é prefixado com 'mem_' para distinguir de skills
+    geradas pelo skill_evolution (prefixo 'auto_').
+
+    Retorna {'ok': bool, 'path': str, 'skill_name': str}.
+    """
+    name = str(skill.get("name") or "")
+    if not name:
+        return {"ok": False, "reason": "empty_name"}
+
+    root = Path(skills_dir) if skills_dir else MATERIALIZED_SKILLS_DIR
+    skill_dir_name = f"mem_{_slug(name)}"
+    skill_dir = root / skill_dir_name
+    skill_dir.mkdir(parents=True, exist_ok=True)
+
+    skill_file = skill_dir / "SKILL.md"
+    try:
+        content = _build_skill_md(skill)
+        skill_file.write_text(content, encoding="utf-8")
+        logger.info(f"SkillMemoryBridge: Materializado {skill_dir_name} → {skill_file}")
+        return {
+            "ok": True,
+            "path": str(skill_file),
+            "skill_dir": skill_dir_name,
+            "skill_name": skill_dir_name,
+        }
+    except Exception as e:
+        logger.error(f"SkillMemoryBridge: Erro ao materializar {name}: {e}")
+        return {"ok": False, "reason": str(e), "skill_name": name}
+
+
+# ── 4. Recarregar skill_loader ─────────────────────────────────────────────────
+
+def reload_skill_loader() -> dict[str, Any]:
+    """Força recarga do skill_loader após materialização."""
+    try:
+        from ultronpro import skill_loader
+        skills = skill_loader.load_skills(force=True)
+        return {"ok": True, "loaded_count": len(skills)}
+    except Exception as e:
+        logger.warning(f"SkillMemoryBridge: reload_skill_loader error: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+# ── 5. Registrar evento ────────────────────────────────────────────────────────
+
+def record_bridge_event(
+    skill_name: str,
+    result: dict[str, Any],
+    *,
+    action: str = "materialize",
+) -> None:
+    """Grava evento no log JSONL persistente."""
+    entry = {
+        "ts": _now(),
+        "action": action,
+        "skill_name": skill_name,
+        **{k: v for k, v in result.items() if k in ("ok", "reason", "path", "skill_dir")},
+    }
+    try:
+        BRIDGE_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with BRIDGE_LOG_PATH.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    except Exception as e:
+        logger.debug(f"SkillMemoryBridge: record_bridge_event failed: {e}")
+
+
+# ── 6. Pipeline completo ───────────────────────────────────────────────────────
+
+def run_bridge(
+    *,
+    dry_run: bool = False,
+    min_success: int | None = None,
+    min_confidence: float | None = None,
+    db_path: str | Path | None = None,
+    skills_dir: str | Path | None = None,
+    limit: int = 50,
+) -> dict[str, Any]:
+    """
+    Pipeline completo: list promoted → validate → materialize → reload.
+
+    Args:
+        dry_run: Se True, apenas lista e valida, sem gravar SKILL.md.
+        min_success: Override do critério mínimo de success_count.
+        min_confidence: Override do critério mínimo de confidence.
+        db_path: Path do SQLite do skill_memory (padrão: automático).
+        skills_dir: Diretório destino das skills materializadas.
+        limit: Máximo de skills a processar por execução.
+
+    Returns:
+        {
+            "ok": bool,
+            "dry_run": bool,
+            "promoted_found": int,
+            "eligible": int,
+            "materialized": int,
+            "skipped": int,
+            "failed": int,
+            "details": list[dict],
+            "reload": dict | None,
+        }
+    """
+    started = _now()
+    promoted = list_promoted_memory_skills(db_path=db_path)[:limit]
+    details: list[dict[str, Any]] = []
+    materialized = 0
+    skipped = 0
+    failed = 0
+
+    for skill in promoted:
+        name = str(skill.get("name") or "")
+        validation = validate_memory_skill_for_materialization(
+            skill,
+            min_success=min_success,
+            min_confidence=min_confidence,
+        )
+
+        if not validation["ok"]:
+            skipped += 1
+            details.append({
+                "skill_name": name,
+                "action": "skipped",
+                "reason": validation["reason"],
+                "checks": validation["checks"],
+            })
+            continue
+
+        if dry_run:
+            materialized += 1
+            details.append({
+                "skill_name": name,
+                "action": "would_materialize",
+                "dry_run": True,
+                "checks": validation["checks"],
+            })
+            continue
+
+        result = materialize_memory_skill_as_skill_md(skill, skills_dir=skills_dir)
+        record_bridge_event(name, result)
+
+        if result.get("ok"):
+            materialized += 1
+            details.append({
+                "skill_name": name,
+                "action": "materialized",
+                "path": result.get("path"),
+                "skill_dir": result.get("skill_dir"),
+                "checks": validation["checks"],
+            })
+        else:
+            failed += 1
+            details.append({
+                "skill_name": name,
+                "action": "failed",
+                "reason": result.get("reason"),
+                "checks": validation["checks"],
+            })
+
+    reload_result: dict[str, Any] | None = None
+    if not dry_run and materialized > 0:
+        reload_result = reload_skill_loader()
+
+    elapsed = _now() - started
+    return {
+        "ok": True,
+        "dry_run": dry_run,
+        "promoted_found": len(promoted),
+        "eligible": materialized + failed,
+        "materialized": materialized,
+        "skipped": skipped,
+        "failed": failed,
+        "elapsed_sec": elapsed,
+        "details": details,
+        "reload": reload_result,
+    }
+
+
+# ── 7. Status ──────────────────────────────────────────────────────────────────
+
+def status(*, db_path: str | Path | None = None) -> dict[str, Any]:
+    """Retorna estado atual da bridge sem modificar nada."""
+    promoted = list_promoted_memory_skills(db_path=db_path)
+    eligible = [
+        s for s in promoted
+        if validate_memory_skill_for_materialization(s)["ok"]
+    ]
+
+    # Conta SKILL.md já materializados pela bridge
+    root = MATERIALIZED_SKILLS_DIR
+    mem_skills = [d.name for d in root.iterdir() if d.is_dir() and d.name.startswith("mem_")] if root.exists() else []
+
+    # Tail do log
+    log_tail: list[dict] = []
+    if BRIDGE_LOG_PATH.exists():
+        lines = BRIDGE_LOG_PATH.read_text(encoding="utf-8", errors="ignore").splitlines()
+        for ln in lines[-20:]:
+            try:
+                log_tail.append(json.loads(ln))
+            except Exception:
+                pass
+
+    return {
+        "ok": True,
+        "promoted_in_memory": len(promoted),
+        "eligible_for_bridge": len(eligible),
+        "materialized_skills": mem_skills,
+        "materialized_count": len(mem_skills),
+        "min_success": _min_success(),
+        "min_confidence": _min_confidence(),
+        "log_path": str(BRIDGE_LOG_PATH),
+        "recent_events": log_tail,
+    }
