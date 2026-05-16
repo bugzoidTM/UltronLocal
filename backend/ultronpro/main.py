@@ -6009,6 +6009,34 @@ async def healer_verify_loop():
 
 ACTIVE_DISCOVERY_INTERVAL_SEC = 3600  # 1 hora
 
+SKILL_BRIDGE_INTERVAL_SEC = int(os.getenv('ULTRON_SKILL_BRIDGE_INTERVAL', '600'))  # 10 min
+SKILL_BRIDGE_LOOP_ENABLED = int(os.getenv('ULTRON_SKILL_BRIDGE_LOOP_ENABLED', '1')) == 1
+
+async def skill_bridge_loop():
+    """Worker periódico para materializar skills aprendidas."""
+    logger.info("🌉 Skill memory bridge loop started")
+    await asyncio.sleep(_loop_start_delay('skill_bridge_loop', 200))
+    while True:
+        if await runtime_guard.checkpoint("skill_bridge_loop"):
+            continue
+        try:
+            from ultronpro import skill_memory_bridge
+            
+            # Executa a bridge (compacta/materializa e faz o load se necessário)
+            result = await asyncio.to_thread(skill_memory_bridge.run_bridge, dry_run=False, limit=20)
+            
+            if result.get("materialized", 0) > 0:
+                logger.info(f"🌉 Skill Bridge: {result['materialized']} skills materializadas (falhas: {result['failed']})")
+                store.db.add_event(
+                    "skill_bridge",
+                    f"materialized={result['materialized']} failed={result['failed']}"
+                )
+        except Exception as e:
+            logger.warning(f"Skill bridge loop error: {e}")
+        
+        await asyncio.sleep(SKILL_BRIDGE_INTERVAL_SEC)
+
+
 async def no_cloud_campaign_loop():
     """Runs low-risk local-inference recovery campaigns without disabling core loops."""
     logger.info("No-cloud campaign loop started")
@@ -6196,9 +6224,11 @@ async def sleep_cycle_run(retention_days: int = 14, max_active_rows: int = 3000)
     return result
 
 
+_skill_bridge_task = None
+
 @app.on_event("startup")
 async def startup_event():
-    global _autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task, _reflexion_task, _self_governance_task, _meta_observer_task, _affect_task, _narrative_task, _integration_task, _sleep_cycle_task, _healer_verify_task, _background_guard_task, _inner_monologue_task, _self_improvement_task, _recursive_si_task, _active_discovery_task, _no_cloud_campaign_task
+    global _autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task, _reflexion_task, _self_governance_task, _meta_observer_task, _affect_task, _narrative_task, _integration_task, _sleep_cycle_task, _healer_verify_task, _background_guard_task, _inner_monologue_task, _self_improvement_task, _recursive_si_task, _active_discovery_task, _no_cloud_campaign_task, _skill_bridge_task
     logger.info("Starting UltronPRO...")
     store.init_db()
     graph.init()
@@ -6382,6 +6412,11 @@ async def startup_event():
     else:
         logger.info("No-cloud campaign loop disabled by env")
 
+    if SKILL_BRIDGE_LOOP_ENABLED:
+        _skill_bridge_task = asyncio.create_task(skill_bridge_loop())
+    else:
+        logger.info("Skill bridge loop disabled by env")
+
     if BACKGROUND_LOOPS_ENABLED:
         try:
             lh_start = longitudinal_harness.start_background_loop()
@@ -6533,7 +6568,7 @@ async def _recursive_si_loop():
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    global _autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task, _reflexion_task, _self_governance_task, _meta_observer_task, _affect_task, _narrative_task, _integration_task, _sleep_cycle_task, _healer_verify_task, _background_guard_task, _inner_monologue_task, _self_improvement_task, _recursive_si_task, _active_discovery_task, _no_cloud_campaign_task
+    global _autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task, _reflexion_task, _self_governance_task, _meta_observer_task, _affect_task, _narrative_task, _integration_task, _sleep_cycle_task, _healer_verify_task, _background_guard_task, _inner_monologue_task, _self_improvement_task, _recursive_si_task, _active_discovery_task, _no_cloud_campaign_task, _skill_bridge_task
     for t in (
         _background_guard_task,
         _autofeeder_task,
@@ -6555,6 +6590,7 @@ async def shutdown_event():
         _recursive_si_task,
         _active_discovery_task,
         _no_cloud_campaign_task,
+        _skill_bridge_task,
     ):
         if t:
             t.cancel()
