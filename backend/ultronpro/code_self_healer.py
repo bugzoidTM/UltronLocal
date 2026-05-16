@@ -512,7 +512,18 @@ REGRAS:
 
         logger.info(f"CodeSelfHealer: ✓ Fix {attempt_id} applied to {attempt.module} ({attempt.fix_strategy})")
 
-        deployment = self._build_deployment_status(attempt.module)
+        # Defensivo: _build_deployment_status pode não existir em runtimes com código parcialmente revertido
+        if hasattr(self, '_build_deployment_status'):
+            deployment = self._build_deployment_status(attempt.module)
+        else:
+            deployment = {
+                'module': attempt.module,
+                'source_modified': True,
+                'requires_restart': True,
+                'commit_created': False,
+                'pushed': False,
+                'deployment_scope': 'local_source',
+            }
 
         return {
             "ok": True,

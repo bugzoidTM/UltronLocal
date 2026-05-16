@@ -418,13 +418,26 @@ Responda APENAS com JSON válido, sem explicações."""
                 'rolled_back': True,
             }
 
+        # Fingerprint de deployment — defensivo: funciona mesmo em versões antigas do healer
+        if hasattr(healer, '_build_deployment_status'):
+            deployment_status = healer._build_deployment_status(module)
+        else:
+            deployment_status = {
+                'module': module,
+                'source_modified': True,
+                'requires_restart': True,
+                'commit_created': False,
+                'pushed': False,
+                'deployment_scope': 'local_source',
+            }
+
         return {
             'ok': True,
             'module': module,
             'backup': str(backup_path),
             'sandbox': sandbox_result,
             'tests': test_result,
-            'deployment_status': healer._build_deployment_status(module),
+            'deployment_status': deployment_status,
         }
 
     def apply(self, proposal_id: str, force: bool = False) -> dict:
