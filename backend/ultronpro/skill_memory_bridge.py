@@ -298,101 +298,102 @@ def run_bridge(
 ) -> dict[str, Any]:
     """
     Pipeline completo: list promoted → validate → materialize → reload.
-
-    Args:
-        dry_run: Se True, apenas lista e valida, sem gravar SKILL.md.
-        min_success: Override do critério mínimo de success_count.
-        min_confidence: Override do critério mínimo de confidence.
-        db_path: Path do SQLite do skill_memory (padrão: automático).
-        skills_dir: Diretório destino das skills materializadas.
-        limit: Máximo de skills a processar por execução.
-
-    Returns:
-        {
-            "ok": bool,
-            "dry_run": bool,
-            "promoted_found": int,
-            "eligible": int,
-            "materialized": int,
-            "skipped": int,
-            "failed": int,
-            "details": list[dict],
-            "reload": dict | None,
-        }
     """
-    started = _now()
-    promoted = list_promoted_memory_skills(db_path=db_path)[:limit]
-    details: list[dict[str, Any]] = []
-    materialized = 0
-    skipped = 0
-    failed = 0
+    lock_file = BRIDGE_LOG_PATH.with_suffix(".lock")
+    try:
+        # Tenta criar o lock file (falha se já existir)
+        # O'O_CREAT | os.O_EXCL' garante atomicidade em nível de sistema operacional.
+        fd = os.open(str(lock_file), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+        os.close(fd)
+    except FileExistsError:
+        # Se for um lock muito antigo (ex: app crashou), libera após 5 minutos
+        if lock_file.exists() and time.time() - lock_file.stat().st_mtime > 300:
+            try:
+                lock_file.unlink()
+            except Exception:
+                pass
+        return {"ok": True, "skipped": True, "reason": "bridge_already_running"}
 
-    for skill in promoted:
-        name = str(skill.get("name") or "")
-        validation = validate_memory_skill_for_materialization(
-            skill,
-            min_success=min_success,
-            min_confidence=min_confidence,
-        )
+    try:
+        started = _now()
+        promoted = list_promoted_memory_skills(db_path=db_path)[:limit]
+        details: list[dict[str, Any]] = []
+        materialized = 0
+        skipped = 0
+        failed = 0
 
-        if not validation["ok"]:
-            skipped += 1
-            details.append({
-                "skill_name": name,
-                "action": "skipped",
-                "reason": validation["reason"],
-                "checks": validation["checks"],
-            })
-            continue
+        for skill in promoted:
+            name = str(skill.get("name") or "")
+            validation = validate_memory_skill_for_materialization(
+                skill,
+                min_success=min_success,
+                min_confidence=min_confidence,
+            )
 
-        if dry_run:
-            materialized += 1
-            details.append({
-                "skill_name": name,
-                "action": "would_materialize",
-                "dry_run": True,
-                "checks": validation["checks"],
-            })
-            continue
+            if not validation["ok"]:
+                skipped += 1
+                details.append({
+                    "skill_name": name,
+                    "action": "skipped",
+                    "reason": validation["reason"],
+                    "checks": validation["checks"],
+                })
+                continue
 
-        result = materialize_memory_skill_as_skill_md(skill, skills_dir=skills_dir)
-        record_bridge_event(name, result)
+            if dry_run:
+                materialized += 1
+                details.append({
+                    "skill_name": name,
+                    "action": "would_materialize",
+                    "dry_run": True,
+                    "checks": validation["checks"],
+                })
+                continue
 
-        if result.get("ok"):
-            materialized += 1
-            details.append({
-                "skill_name": name,
-                "action": "materialized",
-                "path": result.get("path"),
-                "skill_dir": result.get("skill_dir"),
-                "checks": validation["checks"],
-            })
-        else:
-            failed += 1
-            details.append({
-                "skill_name": name,
-                "action": "failed",
-                "reason": result.get("reason"),
-                "checks": validation["checks"],
-            })
+            result = materialize_memory_skill_as_skill_md(skill, skills_dir=skills_dir)
+            record_bridge_event(name, result)
 
-    reload_result: dict[str, Any] | None = None
-    if not dry_run and materialized > 0:
-        reload_result = reload_skill_loader()
+            if result.get("ok"):
+                materialized += 1
+                details.append({
+                    "skill_name": name,
+                    "action": "materialized",
+                    "path": result.get("path"),
+                    "skill_dir": result.get("skill_dir"),
+                    "checks": validation["checks"],
+                })
+            else:
+                failed += 1
+                details.append({
+                    "skill_name": name,
+                    "action": "failed",
+                    "reason": result.get("reason"),
+                    "checks": validation["checks"],
+                })
 
-    elapsed = _now() - started
-    return {
-        "ok": True,
-        "dry_run": dry_run,
-        "promoted_found": len(promoted),
-        "eligible": materialized + failed,
-        "materialized": materialized,
-        "skipped": skipped,
-        "failed": failed,
-        "elapsed_sec": elapsed,
-        "details": details,
-        "reload": reload_result,
-    }
+        reload_result: dict[str, Any] | None = None
+        if not dry_run and materialized > 0:
+            reload_result = reload_skill_loader()
+
+        elapsed = _now() - started
+        return {
+            "ok": True,
+            "dry_run": dry_run,
+            "promoted_found": len(promoted),
+            "eligible": materialized + failed,
+            "materialized": materialized,
+            "skipped": skipped,
+            "failed": failed,
+            "elapsed_sec": elapsed,
+            "details": details,
+            "reload": reload_result,
+        }
+    finally:
+        try:
+            if lock_file.exists():
+                lock_file.unlink()
+        except Exception:
+            pass
 
 
 # ── 7. Status ──────────────────────────────────────────────────────────────────
