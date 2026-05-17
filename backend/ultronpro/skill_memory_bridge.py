@@ -485,6 +485,65 @@ def execute_memory_bridge_skill(
     started = _now()
     slug = str(skill_name or "").removeprefix("mem_")  # ex: "chat_intent_greeting"
 
+    # ── Competence Ledger gate ─────────────────────────────────────────────────
+    # Classifica a intent da skill e aplica a política de execução antes de
+    # tentar qualquer match determinístico.
+    try:
+        from ultronpro import skill_memory as _sm_mod
+        _candidate = slug.replace("_", "-")
+        _skill_meta = _sm_mod.get_skill(_candidate, db_path=db_path)
+        if _skill_meta and str(_skill_meta.get("status") or "") == "promoted":
+            _intent = _classify_mem_intent(_skill_meta)
+
+            if _intent == "resolver":
+                # Este domínio tem resolver próprio — mem_* não deve responder
+                record_bridge_event(skill_name, {"ok": False, "source": "competence_ledger",
+                    "reason": "resolver_domain"}, action="gate")
+                return {
+                    "ok": False,
+                    "output": None,
+                    "source": "competence_ledger",
+                    "skill_name": skill_name,
+                    "deterministic": False,
+                    "success": False,
+                    "reason": "resolver_domain: encaminhado ao pipeline cognitivo",
+                    "elapsed_ms": int((_now() - started) * 1000),
+                }
+
+            if _intent == "smalltalk":
+                # Usa template adaptativo — sem copiar exemplos desatualizados
+                output = _render_adaptive_smalltalk(task, _skill_meta)
+                if output:
+                    quality = _evaluate_response_quality(task, output, {
+                        "source": "template", "match_score": 1.0,
+                        "matched_query": task, "matched_answer": output,
+                    }, _skill_meta)
+                    _sm_mod.record_skill_use(
+                        _candidate,
+                        success=quality["success"],
+                        route="competence_ledger_template",
+                        task=task,
+                        expected=quality.get("expected"),
+                        output=output,
+                        db_path=db_path,
+                    )
+                    record_bridge_event(skill_name, {"ok": True, "source": "template",
+                        "intent": "smalltalk", "quality": quality}, action="execute")
+                    return {
+                        "ok": True,
+                        "output": output,
+                        "source": "competence_ledger_template",
+                        "skill_name": skill_name,
+                        "deterministic": True,
+                        "success": quality["success"],
+                        "quality": quality,
+                        "elapsed_ms": int((_now() - started) * 1000),
+                    }
+
+            # intent == "open" → continua para o pipeline determinístico abaixo
+    except Exception as _e:
+        logger.debug(f"Competence Ledger gate error: {_e}")
+
     # ── tentativa 1: match exato pelo nome ─────────────────────────────────────
     try:
         from ultronpro import skill_memory
@@ -576,6 +635,136 @@ def execute_memory_bridge_skill(
         "success": False,
         "elapsed_ms": int((_now() - started) * 1000),
     }
+
+
+# ── Competence Ledger ──────────────────────────────────────────────────────────
+#
+# Define a política de execução para skills mem_*:
+#
+#   smalltalk  → responde via template adaptativo (hora do sistema, contexto)
+#   resolver   → NUNCA responde via mem_*; encaminha ao pipeline cognitivo
+#   open       → encaminha ao pipeline cognitivo (LLM + resolvers)
+#
+# Skills no domínio "resolver" têm competências determinísticas próprias
+# (matemática, tradução, lógica, segurança, ambiente local) e mem_* não deve
+# copiar respostas antigas nesses domínios.
+
+import datetime as _datetime
+
+_COMPETENCE_LEDGER: dict[str, dict[str, Any]] = {
+    "smalltalk": {
+        # Intents que usam template adaptativo (rápido, sem LLM)
+        "patterns": {"greeting", "thanks", "farewell", "smalltalk", "saudacao",
+                     "agradecimento", "despedida", "cumprimento"},
+        "strategy": "template",
+    },
+    "resolver": {
+        # Intents que têm resolver determinístico → bloqueia mem_*
+        "patterns": {"math", "translation", "logic", "safety", "local_env",
+                     "programming", "calcul", "traduz", "logica", "seguranca"},
+        "strategy": "block",
+    },
+}
+
+
+def _classify_mem_intent(skill: dict[str, Any]) -> str:
+    """
+    Classifica a estratégia de execução de uma skill mem_*.
+
+    Retorna:
+        "smalltalk"  → resposta via template adaptativo
+        "resolver"   → bloqueia mem_*, envia ao pipeline
+        "open"       → encaminha ao pipeline cognitivo
+    """
+    name = str(skill.get("name") or "").lower()
+    tags = [str(t).lower() for t in (skill.get("tags") or [])]
+    tokens = set((name + " " + " ".join(tags)).split())
+    # Também verifica substrings do nome (ex: "chat-intent-greeting" → "greeting")
+    name_parts = set(name.replace("-", " ").replace("_", " ").split())
+    all_tokens = tokens | name_parts
+
+    for strategy, cfg in _COMPETENCE_LEDGER.items():
+        if any(p in all_tokens or any(p in tok for tok in all_tokens)
+               for p in cfg["patterns"]):
+            return strategy
+
+    return "open"
+
+
+# Templates adaptativos para smalltalk — sensíveis ao período do dia
+_GREETING_MORNING = ["Bom dia!", "Bom dia! Como posso ajudar?", "Bom dia! Tudo pronto."]
+_GREETING_AFTERNOON = ["Boa tarde!", "Boa tarde! Como posso ajudar?", "Boa tarde! Em que posso ajudar?"]
+_GREETING_EVENING = ["Boa noite!", "Boa noite! Como posso ajudar?", "Boa noite! Em que posso ajudar?"]
+_GREETING_GENERIC = ["Olá!", "Olá! Como posso ajudar?", "Oi! Em que posso ajudar?"]
+
+_THANKS_TEMPLATES = [
+    "Disponha!", "Por nada!", "Sempre à disposição!",
+    "Foi um prazer!", "Fico feliz em ajudar!", "Conte comigo!",
+]
+
+
+def _current_period() -> str:
+    """Retorna o período do dia: morning, afternoon ou evening."""
+    hour = _datetime.datetime.now().hour
+    if 5 <= hour < 12:
+        return "morning"
+    if 12 <= hour < 18:
+        return "afternoon"
+    return "evening"
+
+
+def _render_adaptive_smalltalk(task: str, skill: dict[str, Any]) -> str | None:
+    """
+    Gera resposta de smalltalk adaptada ao contexto (período do dia, tipo de intent).
+
+    Retorna None se não consegue classificar — executor usa LLM normalmente.
+    """
+    import hashlib
+    t = task.lower().strip()
+    name = str(skill.get("name") or "").lower()
+    period = _current_period()
+
+    # Detecta tipo de smalltalk
+    is_greeting = any(k in name or k in t for k in
+                      ("greeting", "saudacao", "cumprimento", "bom dia", "boa tarde",
+                       "boa noite", "ola", "oi", "hello", "hi ", "hey"))
+    is_thanks = any(k in name or k in t for k in
+                    ("thanks", "agradecimento", "obrigado", "obrigada",
+                     "valeu", "grato", "thank"))
+    is_farewell = any(k in name or k in t for k in
+                      ("farewell", "despedida", "tchau", "bye", "até logo", "até mais"))
+
+    # Seed determinístico por sessão (evita resposta idêntica a cada chamada)
+    seed = int(hashlib.md5(f"{task[:20]}{_datetime.date.today()}".encode()).hexdigest(), 16)
+
+    if is_thanks:
+        return _THANKS_TEMPLATES[seed % len(_THANKS_TEMPLATES)]
+
+    if is_farewell:
+        farewell_templates = ["Até logo!", "Até mais!", "Boa continuação!", "Cuide-se!"]
+        return farewell_templates[seed % len(farewell_templates)]
+
+    if is_greeting:
+        # Detecta período explícito na tarefa
+        task_period = None
+        if any(k in t for k in ("bom dia", "good morning", "buenos dias")):
+            task_period = "morning"
+        elif any(k in t for k in ("boa tarde", "good afternoon", "buenas tardes")):
+            task_period = "afternoon"
+        elif any(k in t for k in ("boa noite", "good evening", "good night", "buenas noches")):
+            task_period = "evening"
+
+        # Usa período da tarefa se explícito; caso contrário, usa período atual
+        active_period = task_period or period
+
+        if active_period == "morning":
+            return _GREETING_MORNING[seed % len(_GREETING_MORNING)]
+        if active_period == "afternoon":
+            return _GREETING_AFTERNOON[seed % len(_GREETING_AFTERNOON)]
+        return _GREETING_EVENING[seed % len(_GREETING_EVENING)]
+
+    # Genérico
+    return _GREETING_GENERIC[seed % len(_GREETING_GENERIC)]
 
 
 # ── Avaliação de qualidade semântica ───────────────────────────────────────────
