@@ -472,12 +472,18 @@ def learn_from_chat_turn(
     except Exception:
         pass
 
-    # Hook automático: quando uma skill é promovida, aciona a bridge imediatamente
-    # para materializar o SKILL.md sem esperar o próximo ciclo periódico.
+    # Hook automático: quando uma skill é promovida, dispara a bridge em thread
+    # daemon para não bloquear a resposta do chat (fire-and-forget real).
     if status == "promoted":
         try:
+            import threading
             from ultronpro import skill_memory_bridge
-            skill_memory_bridge.run_bridge(dry_run=False, limit=10)
+            threading.Thread(
+                target=skill_memory_bridge.run_bridge,
+                kwargs={"dry_run": False, "limit": 10},
+                daemon=True,
+                name="skill_bridge_hook",
+            ).start()
         except Exception:
             pass
 
