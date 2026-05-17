@@ -494,17 +494,20 @@ def execute_memory_bridge_skill(
         skill = skill_memory.get_skill(candidate_name, db_path=db_path)
 
         if skill and str(skill.get("status") or "") == "promoted":
-            output = _build_deterministic_output(skill, task)
+            output, match_meta = _build_deterministic_output(skill, task)
+            quality = _evaluate_response_quality(task, output, match_meta, skill)
             record_bridge_event(
                 skill_name,
-                {"ok": True, "source": "exact_match", "task_len": len(task)},
+                {"ok": True, "source": "exact_match", "task_len": len(task),
+                 "quality": quality},
                 action="execute",
             )
             skill_memory.record_skill_use(
                 candidate_name,
-                success=bool(output),
+                success=quality["success"],
                 route="memory_bridge_exact",
                 task=task,
+                expected=quality.get("expected"),
                 output=output,
                 db_path=db_path,
             )
@@ -514,7 +517,8 @@ def execute_memory_bridge_skill(
                 "source": "exact_match",
                 "skill_name": skill_name,
                 "deterministic": True,
-                "success": bool(output),
+                "success": quality["success"],
+                "quality": quality,
                 "elapsed_ms": int((_now() - started) * 1000),
             }
     except Exception as e:
@@ -527,17 +531,20 @@ def execute_memory_bridge_skill(
         results = skill_memory.search(task, limit=1, include_candidates=False, min_score=0.35, db_path=db_path)
         if results:
             best = results[0]
-            output = _build_deterministic_output(best, task)
+            output, match_meta = _build_deterministic_output(best, task)
+            quality = _evaluate_response_quality(task, output, match_meta, best)
             record_bridge_event(
                 skill_name,
-                {"ok": True, "source": "semantic_match", "score": best.get("score")},
+                {"ok": True, "source": "semantic_match", "score": best.get("score"),
+                 "quality": quality},
                 action="execute",
             )
             skill_memory.record_skill_use(
                 str(best.get("name") or ""),
-                success=bool(output),
+                success=quality["success"],
                 route="memory_bridge_semantic",
                 task=task,
+                expected=quality.get("expected"),
                 output=output,
                 db_path=db_path,
             )
@@ -547,7 +554,8 @@ def execute_memory_bridge_skill(
                 "source": "semantic_match",
                 "skill_name": skill_name,
                 "deterministic": True,
-                "success": bool(output),
+                "success": quality["success"],
+                "quality": quality,
                 "elapsed_ms": int((_now() - started) * 1000),
             }
     except Exception as e:
@@ -570,20 +578,214 @@ def execute_memory_bridge_skill(
     }
 
 
-def _build_deterministic_output(skill: dict[str, Any], task: str) -> str:
+# ── Avaliação de qualidade semântica ───────────────────────────────────────────
+
+# Mapeamento de domínios com regras heurísticas de validação.
+# Cada regra recebe (task, output) e retorna (success: bool, reason: str).
+_DOMAIN_RULES: dict[str, Any] = {}
+
+
+def _register_domain_rule(pattern: str):
+    """Decorator para registrar regras de domínio."""
+    def wrapper(fn):
+        _DOMAIN_RULES[pattern] = fn
+        return fn
+    return wrapper
+
+
+@_register_domain_rule("greeting")
+def _rule_greeting(task: str, output: str) -> tuple[bool, str]:
+    """Valida saudações: período do dia deve ser coerente."""
+    t = task.lower().strip()
+    o = output.lower().strip()
+
+    morning_tokens = {"bom dia", "good morning", "buenos dias"}
+    evening_tokens = {"boa noite", "good evening", "buenas noches", "good night"}
+    afternoon_tokens = {"boa tarde", "good afternoon", "buenas tardes"}
+
+    task_period = None
+    for tok in morning_tokens:
+        if tok in t:
+            task_period = "morning"
+            break
+    if not task_period:
+        for tok in afternoon_tokens:
+            if tok in t:
+                task_period = "afternoon"
+                break
+    if not task_period:
+        for tok in evening_tokens:
+            if tok in t:
+                task_period = "evening"
+                break
+
+    if not task_period:
+        return True, "no_period_detected"
+
+    # Detecta conflito de período na resposta
+    output_has_morning = any(tok in o for tok in morning_tokens)
+    output_has_afternoon = any(tok in o for tok in afternoon_tokens)
+    output_has_evening = any(tok in o for tok in evening_tokens)
+
+    if task_period == "morning" and output_has_evening:
+        return False, "period_mismatch: task=morning, output=evening"
+    if task_period == "morning" and output_has_afternoon:
+        return False, "period_mismatch: task=morning, output=afternoon"
+    if task_period == "evening" and output_has_morning:
+        return False, "period_mismatch: task=evening, output=morning"
+    if task_period == "evening" and output_has_afternoon:
+        return False, "period_mismatch: task=evening, output=afternoon"
+    if task_period == "afternoon" and output_has_morning:
+        return False, "period_mismatch: task=afternoon, output=morning"
+    if task_period == "afternoon" and output_has_evening:
+        return False, "period_mismatch: task=afternoon, output=evening"
+
+    return True, "period_ok"
+
+
+@_register_domain_rule("thanks")
+def _rule_thanks(task: str, output: str) -> tuple[bool, str]:
+    """Valida agradecimentos: resposta deve conter reconhecimento."""
+    o = output.lower().strip()
+    ack_tokens = ["disponha", "nada", "prazer", "welcome", "obrigado",
+                  "agradec", "sempre", "conte comigo", "por nada"]
+    if any(tok in o for tok in ack_tokens):
+        return True, "ack_found"
+    if len(o) < 3:
+        return False, "empty_response_to_thanks"
+    return True, "ack_assumed"
+
+
+def _match_domain_rules(task: str, output: str, skill: dict[str, Any]) -> tuple[bool | None, str]:
+    """
+    Aplica regras de domínio ao par (task, output).
+    Retorna (success, reason). success=None se nenhuma regra se aplica.
+    """
+    skill_name = str(skill.get("name") or "").lower()
+    tags = [str(t).lower() for t in (skill.get("tags") or [])]
+    all_tokens = skill_name + " " + " ".join(tags)
+
+    for pattern, rule_fn in _DOMAIN_RULES.items():
+        if pattern in all_tokens:
+            success, reason = rule_fn(task, output)
+            return success, f"domain_rule:{pattern}:{reason}"
+
+    return None, "no_domain_rule"
+
+
+def _evaluate_response_quality(
+    task: str,
+    output: str,
+    match_meta: dict[str, Any],
+    skill: dict[str, Any],
+) -> dict[str, Any]:
+    """
+    Avalia a qualidade semântica da resposta de uma skill mem_*.
+
+    Critérios (em ordem de prioridade):
+      1. Regras de domínio (greeting, thanks, etc.)
+      2. Confiança do match de exemplo (token overlap)
+      3. Output não-vazio
+
+    Retorna:
+      {
+          "success": bool,
+          "confidence": float (0-1),
+          "expected": str | None,
+          "reason": str,
+      }
+    """
+    if not output or not output.strip():
+        return {
+            "success": False,
+            "confidence": 0.0,
+            "expected": None,
+            "reason": "empty_output",
+        }
+
+    # 1. Regras de domínio
+    domain_success, domain_reason = _match_domain_rules(task, output, skill)
+    if domain_success is not None:
+        return {
+            "success": domain_success,
+            "confidence": 0.95 if domain_success else 0.85,
+            "expected": match_meta.get("matched_answer"),
+            "reason": domain_reason,
+        }
+
+    # 2. Confiança do match de exemplo
+    match_score = float(match_meta.get("match_score", 0))
+    matched_query = match_meta.get("matched_query", "")
+    source = match_meta.get("source", "")
+
+    if source == "example" and match_score > 0:
+        # Score alto de overlap = alta confiança de que o exemplo é adequado
+        task_tokens = set(task.lower().split())
+        query_tokens = set(matched_query.lower().split())
+        # Jaccard-like para medir adequação
+        union = task_tokens | query_tokens
+        intersection = task_tokens & query_tokens
+        jaccard = len(intersection) / max(len(union), 1)
+
+        if jaccard < 0.20 and match_score <= 1:
+            # Exemplo muito diferente da tarefa — provavelmente irrelevante
+            return {
+                "success": False,
+                "confidence": 0.6,
+                "expected": match_meta.get("matched_answer"),
+                "reason": f"low_example_relevance: jaccard={jaccard:.2f}",
+            }
+
+        return {
+            "success": True,
+            "confidence": min(0.5 + jaccard, 1.0),
+            "expected": match_meta.get("matched_answer"),
+            "reason": f"example_match: jaccard={jaccard:.2f}, score={match_score}",
+        }
+
+    # 3. Fallback: instruções/summary — assume sucesso com confiança moderada
+    return {
+        "success": True,
+        "confidence": 0.5,
+        "expected": None,
+        "reason": f"fallback_output: source={source}",
+    }
+
+
+# ── Construção de resposta determinística ──────────────────────────────────────
+
+def _build_deterministic_output(
+    skill: dict[str, Any], task: str
+) -> tuple[str, dict[str, Any]]:
     """
     Constrói uma resposta determinística a partir dos metadados da skill.
     Prioriza: instruções → exemplos similares → summary.
+
+    Retorna:
+        (output_text, match_meta)
+
+    match_meta contém:
+        source: 'instruction' | 'example' | 'summary'
+        match_score: float (overlap de tokens com exemplo)
+        matched_query: str (query do exemplo que casou)
+        matched_answer: str (resposta do exemplo que casou)
     """
     instructions = str(skill.get("instructions") or "").strip()
     summary = str(skill.get("summary") or "").strip()
     examples: list[dict] = list(skill.get("examples") or [])
 
     parts: list[str] = []
+    match_meta: dict[str, Any] = {
+        "source": "none",
+        "match_score": 0.0,
+        "matched_query": "",
+        "matched_answer": "",
+    }
 
     # Instrução direta
     if instructions:
         parts.append(instructions)
+        match_meta["source"] = "instruction"
 
     # Exemplo mais similar (busca simples por tokens compartilhados)
     if examples:
@@ -602,10 +804,17 @@ def _build_deterministic_output(skill: dict[str, Any], task: str) -> str:
             ans = str(best_ex.get("answer_summary") or "").strip()
             if ans:
                 parts.append(f"\n*Baseado em interação anterior similar:* {ans}")
+                match_meta.update({
+                    "source": "example",
+                    "match_score": best_score,
+                    "matched_query": str(best_ex.get("query") or ""),
+                    "matched_answer": ans,
+                })
 
     # Summary como fallback
     if not parts and summary:
         parts.append(summary)
+        match_meta["source"] = "summary"
 
-    return "\n".join(parts).strip()
+    return "\n".join(parts).strip(), match_meta
 
