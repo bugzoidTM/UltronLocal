@@ -471,6 +471,16 @@ def learn_from_chat_turn(
         store.publish_workspace("skill_memory", "skill.learned", _json_dumps(payload), salience=0.58, ttl_sec=1800)
     except Exception:
         pass
+
+    # Hook automático: quando uma skill é promovida, aciona a bridge imediatamente
+    # para materializar o SKILL.md sem esperar o próximo ciclo periódico.
+    if status == "promoted":
+        try:
+            from ultronpro import skill_memory_bridge
+            skill_memory_bridge.run_bridge(dry_run=False, limit=10)
+        except Exception:
+            pass
+
     return {"ok": True, "skill": data}
 
 

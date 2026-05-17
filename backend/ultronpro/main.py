@@ -6224,6 +6224,57 @@ async def sleep_cycle_run(retention_days: int = 14, max_active_rows: int = 3000)
     return result
 
 
+# ==================== SKILL MEMORY BRIDGE ENDPOINTS ====================
+
+@app.get("/api/skill-memory-bridge/status")
+async def skill_memory_bridge_status():
+    """
+    Retorna o estado atual da ponte skill_memory → skill_evolution.
+    Mostra quantas skills estão promovidas, elegíveis e já materializadas.
+    """
+    try:
+        from ultronpro import skill_memory_bridge
+        return await asyncio.to_thread(skill_memory_bridge.status)
+    except Exception as e:
+        logger.warning(f"skill_memory_bridge status error: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@app.post("/api/skill-memory-bridge/run")
+async def skill_memory_bridge_run(
+    dry_run: bool = False,
+    limit: int = 20,
+    min_success: int | None = None,
+    min_confidence: float | None = None,
+):
+    """
+    Executa manualmente a ponte skill_memory → SKILL.md.
+
+    - **dry_run**: Se True, apenas valida sem gravar arquivos.
+    - **limit**: Máximo de skills a processar nesta execução.
+    - **min_success**: Override do critério mínimo de success_count.
+    - **min_confidence**: Override do critério mínimo de confidence.
+    """
+    try:
+        from ultronpro import skill_memory_bridge
+        result = await asyncio.to_thread(
+            skill_memory_bridge.run_bridge,
+            dry_run=dry_run,
+            limit=limit,
+            min_success=min_success,
+            min_confidence=min_confidence,
+        )
+        if not dry_run and result.get("materialized", 0) > 0:
+            store.db.add_event(
+                "skill_bridge_manual",
+                f"materialized={result['materialized']} failed={result['failed']} dry_run={dry_run}",
+            )
+        return result
+    except Exception as e:
+        logger.warning(f"skill_memory_bridge run error: {e}")
+        return {"ok": False, "error": str(e)}
+
+
 _skill_bridge_task = None
 
 @app.on_event("startup")
