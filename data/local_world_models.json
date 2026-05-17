@@ -4599,11 +4599,11 @@
         },
         "autocog:compact_workspace_focus": {
           "outcomes": {
-            "success": 504.2
+            "success": 505.2
           },
           "expected_value": 1.0,
           "risk": 0.0,
-          "observations": 504.2
+          "observations": 505.2
         },
         "struct:autocog:queue_conflict_review|active_goal_count=10|open_conflict_count=20|recent_error_count=0": {
           "outcomes": {
@@ -19468,6 +19468,14 @@
           "expected_value": 1.0,
           "risk": 0.0,
           "observations": 1.0
+        },
+        "struct:autocog:compact_workspace_focus|active_goal_count=10|failed_action_count=9|high_salience_count=0|open_conflict_count=4|queued_action_count=15|recent_error_count=0|unconsumed_high_salience_count=0|workspace_count=0": {
+          "outcomes": {
+            "success": 1.0
+          },
+          "expected_value": 1.0,
+          "risk": 0.0,
+          "observations": 1.0
         }
       },
       "hypotheses": [
@@ -19508,28 +19516,6 @@
         "workspace_count"
       ],
       "transitions": [
-        {
-          "ts": 1778954762,
-          "action": "autocog:queue_conflict_review",
-          "state_hash": "-7262409",
-          "state_t": {
-            "workspace_count": 80,
-            "high_salience_count": 44,
-            "unconsumed_high_salience_count": 44,
-            "queued_action_count": 21,
-            "failed_action_count": 9,
-            "active_goal_count": 10,
-            "open_conflict_count": 7,
-            "recent_error_count": 0
-          },
-          "actual_outcome": "success",
-          "predicted_outcome": "success",
-          "surprise": 0.0,
-          "metrics": {
-            "surprise_delta": 0.0,
-            "predicted_risk": 0.0
-          }
-        },
         {
           "ts": 1778954853,
           "action": "autocog:compact_workspace_focus",
@@ -21691,6 +21677,28 @@
             "failed_action_count": 9,
             "active_goal_count": 10,
             "open_conflict_count": 5,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1779038209,
+          "action": "autocog:compact_workspace_focus",
+          "state_hash": "-3317271",
+          "state_t": {
+            "workspace_count": 0,
+            "high_salience_count": 0,
+            "unconsumed_high_salience_count": 0,
+            "queued_action_count": 15,
+            "failed_action_count": 9,
+            "active_goal_count": 10,
+            "open_conflict_count": 4,
             "recent_error_count": 0
           },
           "actual_outcome": "success",

@@ -1,24 +1,20 @@
 {
   "enabled": true,
   "state": "healthy",
-  "lag_sec": 0.0035,
-  "max_lag_sec": 5313.0155,
+  "lag_sec": 0.0139,
+  "max_lag_sec": 0.4344,
   "consecutive_lag": 0,
-  "paused_until": 1778963609.4482439,
-  "last_pause_reason": "event_loop_lag",
-  "last_pause_at": 1778963519.4482439,
+  "paused_until": 0.0,
+  "last_pause_reason": null,
+  "last_pause_at": 0.0,
   "last_slow_request": null,
-  "blocked_loops": 4028,
-  "last_blocked_loop": "voice_prewarm_loop",
-  "last_log_at": 1778963580.5672052,
+  "blocked_loops": 0,
+  "last_blocked_loop": null,
+  "last_log_at": 0.0,
   "foreground_active": 0,
   "last_foreground_path": null,
   "last_foreground_at": 0.0,
   "last_foreground_elapsed_sec": 0.0,
-  "last_pause_details": {
-    "lag_sec": 2.245,
-    "consecutive_lag": 1
-  },
   "paused": false,
   "paused_for_sec": 0.0
 }

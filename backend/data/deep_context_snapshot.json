@@ -1,5 +1,5 @@
 {
-  "ts": 1778935777,
+  "ts": 1779038175,
   "reason": "boot_recovery_complete",
   "active_goal": {
     "id": 2,
@@ -652,13 +652,13 @@
   },
   "recent_causal_deltas": [
     {
-      "ts": 1778808145,
+      "ts": 1778957940,
       "edge": {
-        "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
-        "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
-        "condition": "active_investigation_prior_validation:inv_de7c184577",
-        "support": 2,
-        "confidence": 0.7508,
+        "cause": "active_investigation_gap:144 153 arestas benchmarks causais causal causal_graph cobertura com converter",
+        "effect": "sandbox_experiment_observed:causal_graph_enrichment:causal_graph",
+        "condition": "autonomous_executor_next_cycle:gap_causal_graph_interventional_coverage_4ba27fb867",
+        "support": 1,
+        "confidence": 0.68,
         "severity": 1,
         "knowledge_type": "interventional_weak",
         "sources": [
@@ -666,875 +666,100 @@
         ],
         "last_evidence": {
           "investigation": {
-            "investigation_id": "inv_de7c184577",
-            "query": "mostrar cameras da rede",
-            "reason": "no_structured_coverage",
-            "task_type": "general",
+            "investigation_id": "gap_causal_graph_interventional_coverage_4ba27fb867",
+            "query": "cobertura interventional do grafo causal. causal_graph. edges=153 strong=0 weak=144. converter decisoes e benchmarks recentes em arestas causais com validacao interventional",
+            "reason": "proactive_epistemic_gap",
+            "task_type": "causal_graph",
             "status": "needs_experiment",
             "coverage": {
-              "score": 1.0,
-              "shared": [
-                "cameras",
-                "mostrar",
-                "rede"
-              ],
-              "query_tokens": 3,
-              "evidence_tokens": 529
+              "score": 0.0,
+              "shared": [],
+              "query_tokens": 17,
+              "evidence_tokens": 0
             },
             "missing_slots": [
               "aresta_causal_relevante",
-              "fato_estruturado_recuperavel"
+              "evidencia_interna_suficiente"
             ],
             "next_experiment": {
-              "kind": "causal_transfer_prior_validation",
-              "target_route": "unknown:general",
+              "kind": "causal_graph_enrichment",
+              "target_route": "causal_graph",
               "query_terms": [
-                "cameras",
-                "mostrar",
-                "rede"
+                "144",
+                "153",
+                "arestas",
+                "benchmarks",
+                "causais",
+                "causal",
+                "causal_graph",
+                "cobertura",
+                "com",
+                "converter",
+                "edges",
+                "grafo"
               ],
-              "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
-              "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+              "action": "converter decisoes e benchmarks recentes em arestas causais com validacao interventional",
+              "acceptance": "o resultado sandboxado deve produzir uma aresta causal auditavel ou uma refutacao explicita"
             },
-            "transfer_prior": {
-              "score": 0.6208,
-              "prior_id": "transfer_b2b6cdece8",
-              "source": "cross_domain_skill",
-              "skill_id": "zshot_1776799967_abc9",
-              "skill_name": "Isomorfismo Validado: hard_eval_fs_guard_1776799966 ↔ hard_eval_api_guard_1776799966",
-              "source_domain": "hard_eval_fs_guard_1776799966",
-              "target_domain": "unknown:general",
-              "valid_domains": [
-                "hard_eval_fs_guard_1776799966",
-                "hard_eval_api_guard_1776799966"
-              ],
-              "mapping": {
-                "guarded": "auth_ok",
-                "validated": "schema_ok",
-                "reversible": "rollback_ready",
-                "resource_ok": "quota_ok"
-              },
-              "raw_score": 0.9951,
-              "p_value": 0.0417,
-              "transfer_improvement": 0.7333,
-              "base_confidence": 0.88,
-              "confidence": 0.5808,
-              "degradation": 0.2992,
-              "overlap": 0.0,
-              "transferred_policy": "Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
-              "policy_hypothesis": "Se a estrutura do dominio desconhecido preservar o invariante de hard_eval_fs_guard_1776799966, usar a politica transferida como prior, nao como fato.",
-              "causal_claim": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
-              "validation_required": true,
-              "validation_status": "hypothesis_needs_intervention",
-              "ok": true,
-              "type": "autoisomorphic_transfer_prior",
-              "query_tokens": [
-                "cameras",
-                "mostrar",
-                "rede"
-              ],
-              "task_type": "general",
-              "candidate_count": 10,
-              "origin": "autoisomorphic_mapper.transfer_prior",
-              "sir": {
-                "schema_version": "sir.v1",
-                "created_at": 1778808142,
-                "query": "mostrar cameras da rede",
-                "facts": [
-                  {
-                    "id": "FACT_1",
-                    "anchor": "[FACT_1]",
-                    "text": "Prior autoisomorfico: tipo=autoisomorphic_transfer_prior; score=0.6208; origem=autoisomorphic_mapper.transfer_prior.",
-                    "source": "autoisomorphic_mapper",
-                    "critical": true,
-                    "required_terms": [
-                      "6208",
-                      "autoisomorfico",
-                      "autoisomorphic_mapper",
-                      "autoisomorphic_transfer_prior",
-                      "origem",
-                      "prior",
-                      "score",
-                      "tipo"
-                    ],
-                    "numbers": [
-                      "0.6208"
-                    ],
-                    "metadata": {}
-                  },
-                  {
-                    "id": "FACT_2",
-                    "anchor": "[FACT_2]",
-                    "text": "Claim causal transferido: causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
-                    "source": "autoisomorphic_mapper",
-                    "critical": true,
-                    "required_terms": [
-                      "causal",
-                      "causal_transfer_prior",
-                      "claim",
-                      "general",
-                      "hard_eval_fs_guard_1776799966",
-                      "transferido",
-                      "unknown"
-                    ],
-                    "numbers": [],
-                    "metadata": {}
-                  },
-                  {
-                    "id": "FACT_3",
-                    "anchor": "[FACT_3]",
-                    "text": "Politica transferida: Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
-                    "source": "autoisomorphic_mapper",
-                    "critical": false,
-                    "required_terms": [
-                      "042",
-                      "causal",
-                      "comum",
-                      "ganho",
-                      "politica",
-                      "topologia",
-                      "transferencia",
-                      "transferida"
-                    ],
-                    "numbers": [
-                      "0.042",
-                      "73.3"
-                    ],
-                    "metadata": {}
-                  }
-                ],
-                "rules_applied": [
-                  {
-                    "id": "RULE_1",
-                    "anchor": "[RULE_1]",
-                    "rule": "Prior autoisomorfico degradado e sempre hipotetico ate validacao ativa.",
-                    "input_refs": [
-                      "FACT_1",
-                      "FACT_2",
-                      "FACT_3"
-                    ],
-                    "output": "Apresentar como hipotese operacional, nao como fato final.",
-                    "confidence": 0.6208
-                  }
-                ],
-                "constraints": [
-                  {
-                    "id": "CONSTRAINT_A",
-                    "anchor": "[CONSTRAINT_A]",
-                    "type": "no_external_facts",
-                    "text": "Usar somente fatos presentes no SIR.",
-                    "critical": true,
-                    "metadata": {}
-                  },
-                  {
-                    "id": "CONSTRAINT_B",
-                    "anchor": "[CONSTRAINT_B]",
-                    "type": "language",
-                    "text": "Responder em PT-BR.",
-                    "critical": true,
-                    "metadata": {}
-                  },
-                  {
-                    "id": "CONSTRAINT_C",
-                    "anchor": "[CONSTRAINT_C]",
-                    "type": "style",
-                    "text": "Manter tom direto, sem preambulo e sem expor raciocinio interno.",
-                    "critical": true,
-                    "metadata": {}
-                  },
-                  {
-                    "id": "CONSTRAINT_D",
-                    "anchor": "[CONSTRAINT_D]",
-                    "type": "hypothesis_only",
-                    "text": "Nao promover prior autoisomorfico a conclusao sem validacao.",
-                    "critical": true,
-                    "metadata": {}
-                  }
-                ],
-                "causal_graph_excerpt": [
-                  {
-                    "id": "CAUSE_1",
-                    "anchor": "[CAUSE_1]",
-                    "source": "hard_eval_fs_guard_1776799966",
-                    "relation": "possible_isomorphism_to",
-                    "target": "unknown:general",
-                    "evidence_refs": [
-                      "FACT_1",
-                      "FACT_2",
-                      "FACT_3"
-                    ]
-                  }
-                ],
-                "verification_status": {
-                  "status": "transfer_prior_requires_validation",
-                  "schema_valid": true,
-                  "critical_fact_ids": [
-                    "FACT_1",
-                    "FACT_2"
-                  ],
-                  "checks": [
-                    "schema_validated",
-                    "hypothesis_anchored"
-                  ],
-                  "confidence": 0.6208
-                }
-              }
-            }
+            "transfer_prior": null
           },
           "sandbox_result": {
             "ok": true,
             "accepted": true,
-            "digest": "72848fadd1e8aec5",
+            "digest": "ff6e1a0b103ed394",
             "query_terms": [
-              "cameras",
-              "mostrar",
-              "rede"
+              "144",
+              "153",
+              "arestas",
+              "benchmarks",
+              "causais",
+              "causal",
+              "causal_graph",
+              "cobertura",
+              "com",
+              "converter",
+              "edges",
+              "grafo"
             ],
             "missing_slots": [
               "aresta_causal_relevante",
-              "fato_estruturado_recuperavel"
+              "evidencia_interna_suficiente"
             ],
-            "experiment_kind": "causal_transfer_prior_validation",
-            "target_route": "unknown:general",
+            "experiment_kind": "causal_graph_enrichment",
+            "target_route": "causal_graph",
             "edge": {
-              "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
-              "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general",
-              "condition": "active_investigation_prior_validation:inv_de7c184577",
-              "confidence": 0.6808
+              "cause": "active_investigation_gap:144 153 arestas benchmarks causais causal causal_graph cobertura com converter",
+              "effect": "sandbox_experiment_observed:causal_graph_enrichment:causal_graph",
+              "condition": "autonomous_executor_next_cycle:gap_causal_graph_interventional_coverage_4ba27fb867",
+              "confidence": 0.66
             },
-            "prior_validation": {
-              "ok": true,
-              "status": "validated",
-              "category": "confirmed",
-              "confidence_before": 0.5808,
-              "confidence_after": 0.6808,
-              "query_overlap": [],
-              "source_domain": "hard_eval_fs_guard_1776799966",
-              "target_domain": "unknown:general",
-              "reason": "sandbox_validation_of_transfer_prior"
-            },
+            "prior_validation": null,
             "episodic_episode": null,
             "minimal_intervention": {
-              "kind": "causal_transfer_prior_validation",
-              "target_route": "unknown:general",
+              "kind": "causal_graph_enrichment",
+              "target_route": "causal_graph",
               "filled_slots": [
                 "aresta_causal_relevante",
-                "fato_estruturado_recuperavel"
+                "evidencia_interna_suficiente"
               ],
-              "sandbox_digest": "72848fadd1e8aec5"
+              "sandbox_digest": "ff6e1a0b103ed394"
             },
             "acceptance_checked": true
           },
-          "prior_validation": {
-            "ok": true,
-            "status": "validated",
-            "category": "confirmed",
-            "confidence_before": 0.5808,
-            "confidence_after": 0.6808,
-            "query_overlap": [],
-            "source_domain": "hard_eval_fs_guard_1776799966",
-            "target_domain": "unknown:general",
-            "reason": "sandbox_validation_of_transfer_prior"
-          }
+          "duration_ms": 2661.31
         },
-        "updated_at": 1778808145
-      },
-      "source": "active_investigation_executor",
-      "delta_category": "confirmed",
-      "confidence_before": 0.7008,
-      "confidence_after": 0.7508
-    },
-    {
-      "ts": 1778808154,
-      "edge": {
-        "cause": "structured_reasoning_gap:no_structured_coverage",
-        "effect": "active_investigation:needs_experiment",
-        "condition": "structured_coverage_insufficient",
-        "support": 75,
-        "confidence": 0.99,
-        "severity": 1,
-        "knowledge_type": "observational",
-        "sources": [
-          "active_investigation"
-        ],
-        "last_evidence": {
-          "investigation_id": "inv_a24f198b58",
-          "coverage": {
-            "score": 1.0,
-            "shared": [
-              "abstracoes",
-              "ciclo",
-              "consolidou",
-              "das",
-              "faca",
-              "importantes",
-              "mais",
-              "que",
-              "resumo",
-              "semana",
-              "sono",
-              "ultima",
-              "ultron"
-            ],
-            "query_tokens": 13,
-            "evidence_tokens": 644
-          },
-          "missing_slots": [
-            "aresta_causal_relevante"
-          ],
-          "next_experiment": {
-            "kind": "causal_transfer_prior_validation",
-            "target_route": "unknown:self",
-            "query_terms": [
-              "abstracoes",
-              "ciclo",
-              "consolidou",
-              "das",
-              "faca",
-              "importantes",
-              "mais",
-              "que",
-              "resumo",
-              "semana",
-              "sono",
-              "ultima"
-            ],
-            "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:self com experimento sandboxado antes de aumentar a confianca",
-            "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
-          },
-          "learned_route": {
-            "module": "unknown",
-            "confidence": 0.0,
-            "method": "episode_token_similarity",
-            "evidence_count": 0,
-            "examples_seen": 120,
-            "top_similarity": 0.0,
-            "margin": 0.0,
-            "module_scores": {},
-            "evidence": [],
-            "routed": false
-          },
-          "transfer_prior": {
-            "score": 0.6208,
-            "prior_id": "transfer_b2b6cdece8",
-            "source": "cross_domain_skill",
-            "skill_id": "zshot_1776799967_abc9",
-            "skill_name": "Isomorfismo Validado: hard_eval_fs_guard_1776799966 ↔ hard_eval_api_guard_1776799966",
-            "source_domain": "hard_eval_fs_guard_1776799966",
-            "target_domain": "unknown:self",
-            "valid_domains": [
-              "hard_eval_fs_guard_1776799966",
-              "hard_eval_api_guard_1776799966"
-            ],
-            "mapping": {
-              "guarded": "auth_ok",
-              "validated": "schema_ok",
-              "reversible": "rollback_ready",
-              "resource_ok": "quota_ok"
-            },
-            "raw_score": 0.9951,
-            "p_value": 0.0417,
-            "transfer_improvement": 0.7333,
-            "base_confidence": 0.88,
-            "confidence": 0.5808,
-            "degradation": 0.2992,
-            "overlap": 0.0,
-            "transferred_policy": "Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
-            "policy_hypothesis": "Se a estrutura do dominio desconhecido preservar o invariante de hard_eval_fs_guard_1776799966, usar a politica transferida como prior, nao como fato.",
-            "causal_claim": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:self",
-            "validation_required": true,
-            "validation_status": "hypothesis_needs_intervention",
-            "ok": true,
-            "type": "autoisomorphic_transfer_prior",
-            "query_tokens": [
-              "abstra",
-              "ciclo",
-              "consolidou",
-              "das",
-              "importantes",
-              "ltima",
-              "mais",
-              "resumo",
-              "semana",
-              "sono",
-              "ultron",
-              "voc"
-            ],
-            "task_type": "self",
-            "candidate_count": 10,
-            "origin": "autoisomorphic_mapper.transfer_prior",
-            "sir": {
-              "schema_version": "sir.v1",
-              "created_at": 1778808154,
-              "query": "Ultron, faça um resumo das abstrações mais importantes que você consolidou no ciclo de sono da última semana.",
-              "facts": [
-                {
-                  "id": "FACT_1",
-                  "anchor": "[FACT_1]",
-                  "text": "Prior autoisomorfico: tipo=autoisomorphic_transfer_prior; score=0.6208; origem=autoisomorphic_mapper.transfer_prior.",
-                  "source": "autoisomorphic_mapper",
-                  "critical": true,
-                  "required_terms": [
-                    "6208",
-                    "autoisomorfico",
-                    "autoisomorphic_mapper",
-                    "autoisomorphic_transfer_prior",
-                    "origem",
-                    "prior",
-                    "score",
-                    "tipo"
-                  ],
-                  "numbers": [
-                    "0.6208"
-                  ],
-                  "metadata": {}
-                },
-                {
-                  "id": "FACT_2",
-                  "anchor": "[FACT_2]",
-                  "text": "Claim causal transferido: causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:self",
-                  "source": "autoisomorphic_mapper",
-                  "critical": true,
-                  "required_terms": [
-                    "causal",
-                    "causal_transfer_prior",
-                    "claim",
-                    "hard_eval_fs_guard_1776799966",
-                    "self",
-                    "transferido",
-                    "unknown"
-                  ],
-                  "numbers": [],
-                  "metadata": {}
-                },
-                {
-                  "id": "FACT_3",
-                  "anchor": "[FACT_3]",
-                  "text": "Politica transferida: Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
-                  "source": "autoisomorphic_mapper",
-                  "critical": false,
-                  "required_terms": [
-                    "042",
-                    "causal",
-                    "comum",
-                    "ganho",
-                    "politica",
-                    "topologia",
-                    "transferencia",
-                    "transferida"
-                  ],
-                  "numbers": [
-                    "0.042",
-                    "73.3"
-                  ],
-                  "metadata": {}
-                }
-              ],
-              "rules_applied": [
-                {
-                  "id": "RULE_1",
-                  "anchor": "[RULE_1]",
-                  "rule": "Prior autoisomorfico degradado e sempre hipotetico ate validacao ativa.",
-                  "input_refs": [
-                    "FACT_1",
-                    "FACT_2",
-                    "FACT_3"
-                  ],
-                  "output": "Apresentar como hipotese operacional, nao como fato final.",
-                  "confidence": 0.6208
-                }
-              ],
-              "constraints": [
-                {
-                  "id": "CONSTRAINT_A",
-                  "anchor": "[CONSTRAINT_A]",
-                  "type": "no_external_facts",
-                  "text": "Usar somente fatos presentes no SIR.",
-                  "critical": true,
-                  "metadata": {}
-                },
-                {
-                  "id": "CONSTRAINT_B",
-                  "anchor": "[CONSTRAINT_B]",
-                  "type": "language",
-                  "text": "Responder em PT-BR.",
-                  "critical": true,
-                  "metadata": {}
-                },
-                {
-                  "id": "CONSTRAINT_C",
-                  "anchor": "[CONSTRAINT_C]",
-                  "type": "style",
-                  "text": "Manter tom direto, sem preambulo e sem expor raciocinio interno.",
-                  "critical": true,
-                  "metadata": {}
-                },
-                {
-                  "id": "CONSTRAINT_D",
-                  "anchor": "[CONSTRAINT_D]",
-                  "type": "hypothesis_only",
-                  "text": "Nao promover prior autoisomorfico a conclusao sem validacao.",
-                  "critical": true,
-                  "metadata": {}
-                }
-              ],
-              "causal_graph_excerpt": [
-                {
-                  "id": "CAUSE_1",
-                  "anchor": "[CAUSE_1]",
-                  "source": "hard_eval_fs_guard_1776799966",
-                  "relation": "possible_isomorphism_to",
-                  "target": "unknown:self",
-                  "evidence_refs": [
-                    "FACT_1",
-                    "FACT_2",
-                    "FACT_3"
-                  ]
-                }
-              ],
-              "verification_status": {
-                "status": "transfer_prior_requires_validation",
-                "schema_valid": true,
-                "critical_fact_ids": [
-                  "FACT_1",
-                  "FACT_2"
-                ],
-                "checks": [
-                  "schema_validated",
-                  "hypothesis_anchored"
-                ],
-                "confidence": 0.6208
-              }
-            }
-          },
-          "prior_validation": null
-        },
-        "updated_at": 1778808154
-      },
-      "source": "active_investigation"
-    },
-    {
-      "ts": 1778808157,
-      "edge": {
-        "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:self",
-        "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:self",
-        "condition": "active_investigation_prior_validation:inv_a24f198b58",
-        "support": 1,
-        "confidence": 0.7008,
-        "severity": 1,
-        "knowledge_type": "interventional_weak",
-        "sources": [
-          "active_investigation_executor"
-        ],
-        "last_evidence": {
-          "investigation": {
-            "investigation_id": "inv_a24f198b58",
-            "query": "Ultron, faça um resumo das abstrações mais importantes que você consolidou no ciclo de sono da última semana.",
-            "reason": "no_structured_coverage",
-            "task_type": "self",
-            "status": "needs_experiment",
-            "coverage": {
-              "score": 1.0,
-              "shared": [
-                "abstracoes",
-                "ciclo",
-                "consolidou",
-                "das",
-                "faca",
-                "importantes",
-                "mais",
-                "que",
-                "resumo",
-                "semana",
-                "sono",
-                "ultima",
-                "ultron"
-              ],
-              "query_tokens": 13,
-              "evidence_tokens": 644
-            },
-            "missing_slots": [
-              "aresta_causal_relevante"
-            ],
-            "next_experiment": {
-              "kind": "causal_transfer_prior_validation",
-              "target_route": "unknown:self",
-              "query_terms": [
-                "abstracoes",
-                "ciclo",
-                "consolidou",
-                "das",
-                "faca",
-                "importantes",
-                "mais",
-                "que",
-                "resumo",
-                "semana",
-                "sono",
-                "ultima"
-              ],
-              "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:self com experimento sandboxado antes de aumentar a confianca",
-              "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
-            },
-            "transfer_prior": {
-              "score": 0.6208,
-              "prior_id": "transfer_b2b6cdece8",
-              "source": "cross_domain_skill",
-              "skill_id": "zshot_1776799967_abc9",
-              "skill_name": "Isomorfismo Validado: hard_eval_fs_guard_1776799966 ↔ hard_eval_api_guard_1776799966",
-              "source_domain": "hard_eval_fs_guard_1776799966",
-              "target_domain": "unknown:self",
-              "valid_domains": [
-                "hard_eval_fs_guard_1776799966",
-                "hard_eval_api_guard_1776799966"
-              ],
-              "mapping": {
-                "guarded": "auth_ok",
-                "validated": "schema_ok",
-                "reversible": "rollback_ready",
-                "resource_ok": "quota_ok"
-              },
-              "raw_score": 0.9951,
-              "p_value": 0.0417,
-              "transfer_improvement": 0.7333,
-              "base_confidence": 0.88,
-              "confidence": 0.5808,
-              "degradation": 0.2992,
-              "overlap": 0.0,
-              "transferred_policy": "Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
-              "policy_hypothesis": "Se a estrutura do dominio desconhecido preservar o invariante de hard_eval_fs_guard_1776799966, usar a politica transferida como prior, nao como fato.",
-              "causal_claim": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:self",
-              "validation_required": true,
-              "validation_status": "hypothesis_needs_intervention",
-              "ok": true,
-              "type": "autoisomorphic_transfer_prior",
-              "query_tokens": [
-                "abstra",
-                "ciclo",
-                "consolidou",
-                "das",
-                "importantes",
-                "ltima",
-                "mais",
-                "resumo",
-                "semana",
-                "sono",
-                "ultron",
-                "voc"
-              ],
-              "task_type": "self",
-              "candidate_count": 10,
-              "origin": "autoisomorphic_mapper.transfer_prior",
-              "sir": {
-                "schema_version": "sir.v1",
-                "created_at": 1778808154,
-                "query": "Ultron, faça um resumo das abstrações mais importantes que você consolidou no ciclo de sono da última semana.",
-                "facts": [
-                  {
-                    "id": "FACT_1",
-                    "anchor": "[FACT_1]",
-                    "text": "Prior autoisomorfico: tipo=autoisomorphic_transfer_prior; score=0.6208; origem=autoisomorphic_mapper.transfer_prior.",
-                    "source": "autoisomorphic_mapper",
-                    "critical": true,
-                    "required_terms": [
-                      "6208",
-                      "autoisomorfico",
-                      "autoisomorphic_mapper",
-                      "autoisomorphic_transfer_prior",
-                      "origem",
-                      "prior",
-                      "score",
-                      "tipo"
-                    ],
-                    "numbers": [
-                      "0.6208"
-                    ],
-                    "metadata": {}
-                  },
-                  {
-                    "id": "FACT_2",
-                    "anchor": "[FACT_2]",
-                    "text": "Claim causal transferido: causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:self",
-                    "source": "autoisomorphic_mapper",
-                    "critical": true,
-                    "required_terms": [
-                      "causal",
-                      "causal_transfer_prior",
-                      "claim",
-                      "hard_eval_fs_guard_1776799966",
-                      "self",
-                      "transferido",
-                      "unknown"
-                    ],
-                    "numbers": [],
-                    "metadata": {}
-                  },
-                  {
-                    "id": "FACT_3",
-                    "anchor": "[FACT_3]",
-                    "text": "Politica transferida: Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
-                    "source": "autoisomorphic_mapper",
-                    "critical": false,
-                    "required_terms": [
-                      "042",
-                      "causal",
-                      "comum",
-                      "ganho",
-                      "politica",
-                      "topologia",
-                      "transferencia",
-                      "transferida"
-                    ],
-                    "numbers": [
-                      "0.042",
-                      "73.3"
-                    ],
-                    "metadata": {}
-                  }
-                ],
-                "rules_applied": [
-                  {
-                    "id": "RULE_1",
-                    "anchor": "[RULE_1]",
-                    "rule": "Prior autoisomorfico degradado e sempre hipotetico ate validacao ativa.",
-                    "input_refs": [
-                      "FACT_1",
-                      "FACT_2",
-                      "FACT_3"
-                    ],
-                    "output": "Apresentar como hipotese operacional, nao como fato final.",
-                    "confidence": 0.6208
-                  }
-                ],
-                "constraints": [
-                  {
-                    "id": "CONSTRAINT_A",
-                    "anchor": "[CONSTRAINT_A]",
-                    "type": "no_external_facts",
-                    "text": "Usar somente fatos presentes no SIR.",
-                    "critical": true,
-                    "metadata": {}
-                  },
-                  {
-                    "id": "CONSTRAINT_B",
-                    "anchor": "[CONSTRAINT_B]",
-                    "type": "language",
-                    "text": "Responder em PT-BR.",
-                    "critical": true,
-                    "metadata": {}
-                  },
-                  {
-                    "id": "CONSTRAINT_C",
-                    "anchor": "[CONSTRAINT_C]",
-                    "type": "style",
-                    "text": "Manter tom direto, sem preambulo e sem expor raciocinio interno.",
-                    "critical": true,
-                    "metadata": {}
-                  },
-                  {
-                    "id": "CONSTRAINT_D",
-                    "anchor": "[CONSTRAINT_D]",
-                    "type": "hypothesis_only",
-                    "text": "Nao promover prior autoisomorfico a conclusao sem validacao.",
-                    "critical": true,
-                    "metadata": {}
-                  }
-                ],
-                "causal_graph_excerpt": [
-                  {
-                    "id": "CAUSE_1",
-                    "anchor": "[CAUSE_1]",
-                    "source": "hard_eval_fs_guard_1776799966",
-                    "relation": "possible_isomorphism_to",
-                    "target": "unknown:self",
-                    "evidence_refs": [
-                      "FACT_1",
-                      "FACT_2",
-                      "FACT_3"
-                    ]
-                  }
-                ],
-                "verification_status": {
-                  "status": "transfer_prior_requires_validation",
-                  "schema_valid": true,
-                  "critical_fact_ids": [
-                    "FACT_1",
-                    "FACT_2"
-                  ],
-                  "checks": [
-                    "schema_validated",
-                    "hypothesis_anchored"
-                  ],
-                  "confidence": 0.6208
-                }
-              }
-            }
-          },
-          "sandbox_result": {
-            "ok": true,
-            "accepted": true,
-            "digest": "418ad5b1206e9f0d",
-            "query_terms": [
-              "abstracoes",
-              "ciclo",
-              "consolidou",
-              "das",
-              "faca",
-              "importantes",
-              "mais",
-              "que",
-              "resumo",
-              "semana",
-              "sono",
-              "ultima"
-            ],
-            "missing_slots": [
-              "aresta_causal_relevante"
-            ],
-            "experiment_kind": "causal_transfer_prior_validation",
-            "target_route": "unknown:self",
-            "edge": {
-              "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:self",
-              "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:self",
-              "condition": "active_investigation_prior_validation:inv_a24f198b58",
-              "confidence": 0.6808
-            },
-            "prior_validation": {
-              "ok": true,
-              "status": "validated",
-              "category": "confirmed",
-              "confidence_before": 0.5808,
-              "confidence_after": 0.6808,
-              "query_overlap": [],
-              "source_domain": "hard_eval_fs_guard_1776799966",
-              "target_domain": "unknown:self",
-              "reason": "sandbox_validation_of_transfer_prior"
-            },
-            "episodic_episode": null,
-            "minimal_intervention": {
-              "kind": "causal_transfer_prior_validation",
-              "target_route": "unknown:self",
-              "filled_slots": [
-                "aresta_causal_relevante"
-              ],
-              "sandbox_digest": "418ad5b1206e9f0d"
-            },
-            "acceptance_checked": true
-          },
-          "duration_ms": 3095.02
-        },
-        "updated_at": 1778808157
+        "updated_at": 1778957940
       },
       "source": "active_investigation_executor"
     },
     {
-      "ts": 1778808157,
+      "ts": 1778957943,
       "edge": {
-        "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:self",
-        "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:self",
-        "condition": "active_investigation_prior_validation:inv_a24f198b58",
-        "support": 2,
-        "confidence": 0.7508,
+        "cause": "active_investigation_gap:0155s 3038 5313 adaptativo aplicar blocked_loops budget carga custo desligar",
+        "effect": "sandbox_experiment_observed:runtime_pressure_probe:runtime_lifecycle",
+        "condition": "autonomous_executor_next_cycle:gap_background_loop_pressure_deeb766cb9",
+        "support": 1,
+        "confidence": 0.68,
         "severity": 1,
         "knowledge_type": "interventional_weak",
         "sources": [
@@ -1542,325 +767,99 @@
         ],
         "last_evidence": {
           "investigation": {
-            "investigation_id": "inv_a24f198b58",
-            "query": "Ultron, faça um resumo das abstrações mais importantes que você consolidou no ciclo de sono da última semana.",
-            "reason": "no_structured_coverage",
-            "task_type": "self",
+            "investigation_id": "gap_background_loop_pressure_deeb766cb9",
+            "query": "estabilidade dos loops sob carga. runtime_lifecycle. paused=False reason=event_loop_lag max_lag=5313.0155s blocked_loops=3038. medir custo por loop e aplicar budget adaptativo sem desligar loops essenciais",
+            "reason": "proactive_epistemic_gap",
+            "task_type": "runtime_lifecycle",
             "status": "needs_experiment",
             "coverage": {
-              "score": 1.0,
-              "shared": [
-                "abstracoes",
-                "ciclo",
-                "consolidou",
-                "das",
-                "faca",
-                "importantes",
-                "mais",
-                "que",
-                "resumo",
-                "semana",
-                "sono",
-                "ultima",
-                "ultron"
-              ],
-              "query_tokens": 13,
-              "evidence_tokens": 644
+              "score": 0.0,
+              "shared": [],
+              "query_tokens": 25,
+              "evidence_tokens": 0
             },
             "missing_slots": [
-              "aresta_causal_relevante"
+              "evidencia_interna_suficiente",
+              "resultado_runtime_mensuravel"
             ],
             "next_experiment": {
-              "kind": "causal_transfer_prior_validation",
-              "target_route": "unknown:self",
+              "kind": "runtime_pressure_probe",
+              "target_route": "runtime_lifecycle",
               "query_terms": [
-                "abstracoes",
-                "ciclo",
-                "consolidou",
-                "das",
-                "faca",
-                "importantes",
-                "mais",
-                "que",
-                "resumo",
-                "semana",
-                "sono",
-                "ultima"
+                "0155s",
+                "3038",
+                "5313",
+                "adaptativo",
+                "aplicar",
+                "blocked_loops",
+                "budget",
+                "carga",
+                "custo",
+                "desligar",
+                "dos",
+                "essenciais"
               ],
-              "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:self com experimento sandboxado antes de aumentar a confianca",
-              "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+              "action": "medir custo por loop e aplicar budget adaptativo sem desligar loops essenciais",
+              "acceptance": "o resultado sandboxado deve produzir uma aresta causal auditavel ou uma refutacao explicita"
             },
-            "transfer_prior": {
-              "score": 0.6208,
-              "prior_id": "transfer_b2b6cdece8",
-              "source": "cross_domain_skill",
-              "skill_id": "zshot_1776799967_abc9",
-              "skill_name": "Isomorfismo Validado: hard_eval_fs_guard_1776799966 ↔ hard_eval_api_guard_1776799966",
-              "source_domain": "hard_eval_fs_guard_1776799966",
-              "target_domain": "unknown:self",
-              "valid_domains": [
-                "hard_eval_fs_guard_1776799966",
-                "hard_eval_api_guard_1776799966"
-              ],
-              "mapping": {
-                "guarded": "auth_ok",
-                "validated": "schema_ok",
-                "reversible": "rollback_ready",
-                "resource_ok": "quota_ok"
-              },
-              "raw_score": 0.9951,
-              "p_value": 0.0417,
-              "transfer_improvement": 0.7333,
-              "base_confidence": 0.88,
-              "confidence": 0.5808,
-              "degradation": 0.2992,
-              "overlap": 0.0,
-              "transferred_policy": "Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
-              "policy_hypothesis": "Se a estrutura do dominio desconhecido preservar o invariante de hard_eval_fs_guard_1776799966, usar a politica transferida como prior, nao como fato.",
-              "causal_claim": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:self",
-              "validation_required": true,
-              "validation_status": "hypothesis_needs_intervention",
-              "ok": true,
-              "type": "autoisomorphic_transfer_prior",
-              "query_tokens": [
-                "abstra",
-                "ciclo",
-                "consolidou",
-                "das",
-                "importantes",
-                "ltima",
-                "mais",
-                "resumo",
-                "semana",
-                "sono",
-                "ultron",
-                "voc"
-              ],
-              "task_type": "self",
-              "candidate_count": 10,
-              "origin": "autoisomorphic_mapper.transfer_prior",
-              "sir": {
-                "schema_version": "sir.v1",
-                "created_at": 1778808154,
-                "query": "Ultron, faça um resumo das abstrações mais importantes que você consolidou no ciclo de sono da última semana.",
-                "facts": [
-                  {
-                    "id": "FACT_1",
-                    "anchor": "[FACT_1]",
-                    "text": "Prior autoisomorfico: tipo=autoisomorphic_transfer_prior; score=0.6208; origem=autoisomorphic_mapper.transfer_prior.",
-                    "source": "autoisomorphic_mapper",
-                    "critical": true,
-                    "required_terms": [
-                      "6208",
-                      "autoisomorfico",
-                      "autoisomorphic_mapper",
-                      "autoisomorphic_transfer_prior",
-                      "origem",
-                      "prior",
-                      "score",
-                      "tipo"
-                    ],
-                    "numbers": [
-                      "0.6208"
-                    ],
-                    "metadata": {}
-                  },
-                  {
-                    "id": "FACT_2",
-                    "anchor": "[FACT_2]",
-                    "text": "Claim causal transferido: causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:self",
-                    "source": "autoisomorphic_mapper",
-                    "critical": true,
-                    "required_terms": [
-                      "causal",
-                      "causal_transfer_prior",
-                      "claim",
-                      "hard_eval_fs_guard_1776799966",
-                      "self",
-                      "transferido",
-                      "unknown"
-                    ],
-                    "numbers": [],
-                    "metadata": {}
-                  },
-                  {
-                    "id": "FACT_3",
-                    "anchor": "[FACT_3]",
-                    "text": "Politica transferida: Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
-                    "source": "autoisomorphic_mapper",
-                    "critical": false,
-                    "required_terms": [
-                      "042",
-                      "causal",
-                      "comum",
-                      "ganho",
-                      "politica",
-                      "topologia",
-                      "transferencia",
-                      "transferida"
-                    ],
-                    "numbers": [
-                      "0.042",
-                      "73.3"
-                    ],
-                    "metadata": {}
-                  }
-                ],
-                "rules_applied": [
-                  {
-                    "id": "RULE_1",
-                    "anchor": "[RULE_1]",
-                    "rule": "Prior autoisomorfico degradado e sempre hipotetico ate validacao ativa.",
-                    "input_refs": [
-                      "FACT_1",
-                      "FACT_2",
-                      "FACT_3"
-                    ],
-                    "output": "Apresentar como hipotese operacional, nao como fato final.",
-                    "confidence": 0.6208
-                  }
-                ],
-                "constraints": [
-                  {
-                    "id": "CONSTRAINT_A",
-                    "anchor": "[CONSTRAINT_A]",
-                    "type": "no_external_facts",
-                    "text": "Usar somente fatos presentes no SIR.",
-                    "critical": true,
-                    "metadata": {}
-                  },
-                  {
-                    "id": "CONSTRAINT_B",
-                    "anchor": "[CONSTRAINT_B]",
-                    "type": "language",
-                    "text": "Responder em PT-BR.",
-                    "critical": true,
-                    "metadata": {}
-                  },
-                  {
-                    "id": "CONSTRAINT_C",
-                    "anchor": "[CONSTRAINT_C]",
-                    "type": "style",
-                    "text": "Manter tom direto, sem preambulo e sem expor raciocinio interno.",
-                    "critical": true,
-                    "metadata": {}
-                  },
-                  {
-                    "id": "CONSTRAINT_D",
-                    "anchor": "[CONSTRAINT_D]",
-                    "type": "hypothesis_only",
-                    "text": "Nao promover prior autoisomorfico a conclusao sem validacao.",
-                    "critical": true,
-                    "metadata": {}
-                  }
-                ],
-                "causal_graph_excerpt": [
-                  {
-                    "id": "CAUSE_1",
-                    "anchor": "[CAUSE_1]",
-                    "source": "hard_eval_fs_guard_1776799966",
-                    "relation": "possible_isomorphism_to",
-                    "target": "unknown:self",
-                    "evidence_refs": [
-                      "FACT_1",
-                      "FACT_2",
-                      "FACT_3"
-                    ]
-                  }
-                ],
-                "verification_status": {
-                  "status": "transfer_prior_requires_validation",
-                  "schema_valid": true,
-                  "critical_fact_ids": [
-                    "FACT_1",
-                    "FACT_2"
-                  ],
-                  "checks": [
-                    "schema_validated",
-                    "hypothesis_anchored"
-                  ],
-                  "confidence": 0.6208
-                }
-              }
-            }
+            "transfer_prior": null
           },
           "sandbox_result": {
             "ok": true,
             "accepted": true,
-            "digest": "418ad5b1206e9f0d",
+            "digest": "a473b483fe43de17",
             "query_terms": [
-              "abstracoes",
-              "ciclo",
-              "consolidou",
-              "das",
-              "faca",
-              "importantes",
-              "mais",
-              "que",
-              "resumo",
-              "semana",
-              "sono",
-              "ultima"
+              "0155s",
+              "3038",
+              "5313",
+              "adaptativo",
+              "aplicar",
+              "blocked_loops",
+              "budget",
+              "carga",
+              "custo",
+              "desligar",
+              "dos",
+              "essenciais"
             ],
             "missing_slots": [
-              "aresta_causal_relevante"
+              "evidencia_interna_suficiente",
+              "resultado_runtime_mensuravel"
             ],
-            "experiment_kind": "causal_transfer_prior_validation",
-            "target_route": "unknown:self",
+            "experiment_kind": "runtime_pressure_probe",
+            "target_route": "runtime_lifecycle",
             "edge": {
-              "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:self",
-              "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:self",
-              "condition": "active_investigation_prior_validation:inv_a24f198b58",
-              "confidence": 0.6808
+              "cause": "active_investigation_gap:0155s 3038 5313 adaptativo aplicar blocked_loops budget carga custo desligar",
+              "effect": "sandbox_experiment_observed:runtime_pressure_probe:runtime_lifecycle",
+              "condition": "autonomous_executor_next_cycle:gap_background_loop_pressure_deeb766cb9",
+              "confidence": 0.66
             },
-            "prior_validation": {
-              "ok": true,
-              "status": "validated",
-              "category": "confirmed",
-              "confidence_before": 0.5808,
-              "confidence_after": 0.6808,
-              "query_overlap": [],
-              "source_domain": "hard_eval_fs_guard_1776799966",
-              "target_domain": "unknown:self",
-              "reason": "sandbox_validation_of_transfer_prior"
-            },
+            "prior_validation": null,
             "episodic_episode": null,
             "minimal_intervention": {
-              "kind": "causal_transfer_prior_validation",
-              "target_route": "unknown:self",
+              "kind": "runtime_pressure_probe",
+              "target_route": "runtime_lifecycle",
               "filled_slots": [
-                "aresta_causal_relevante"
+                "evidencia_interna_suficiente",
+                "resultado_runtime_mensuravel"
               ],
-              "sandbox_digest": "418ad5b1206e9f0d"
+              "sandbox_digest": "a473b483fe43de17"
             },
             "acceptance_checked": true
           },
-          "prior_validation": {
-            "ok": true,
-            "status": "validated",
-            "category": "confirmed",
-            "confidence_before": 0.5808,
-            "confidence_after": 0.6808,
-            "query_overlap": [],
-            "source_domain": "hard_eval_fs_guard_1776799966",
-            "target_domain": "unknown:self",
-            "reason": "sandbox_validation_of_transfer_prior"
-          }
+          "duration_ms": 2666.79
         },
-        "updated_at": 1778808157
+        "updated_at": 1778957943
       },
-      "source": "active_investigation_executor",
-      "delta_category": "confirmed",
-      "confidence_before": 0.7008,
-      "confidence_after": 0.7508
+      "source": "active_investigation_executor"
     },
     {
-      "ts": 1778935619,
+      "ts": 1778960520,
       "edge": {
         "cause": "structured_reasoning_gap:proactive_epistemic_gap",
         "effect": "active_investigation:needs_experiment",
         "condition": "structured_coverage_insufficient",
-        "support": 50,
+        "support": 70,
         "confidence": 0.99,
         "severity": 1,
         "knowledge_type": "observational",
@@ -1868,7 +867,65 @@
           "active_investigation"
         ],
         "last_evidence": {
-          "investigation_id": "gap_causal_graph_interventional_coverage_199aca68f6",
+          "investigation_id": "gap_background_loop_pressure_b3df07059a",
+          "coverage": {
+            "score": 0.0,
+            "shared": [],
+            "query_tokens": 25,
+            "evidence_tokens": 0
+          },
+          "missing_slots": [
+            "evidencia_interna_suficiente",
+            "resultado_runtime_mensuravel"
+          ],
+          "next_experiment": {
+            "kind": "runtime_pressure_probe",
+            "target_route": "runtime_lifecycle",
+            "query_terms": [
+              "0155s",
+              "3512",
+              "5313",
+              "adaptativo",
+              "aplicar",
+              "blocked_loops",
+              "budget",
+              "carga",
+              "custo",
+              "desligar",
+              "dos",
+              "essenciais"
+            ],
+            "action": "medir custo por loop e aplicar budget adaptativo sem desligar loops essenciais",
+            "acceptance": "o resultado sandboxado deve produzir uma aresta causal auditavel ou uma refutacao explicita"
+          },
+          "learned_route": {
+            "routed": true,
+            "module": "runtime_lifecycle",
+            "method": "epistemic_curiosity_gap_scan",
+            "confidence": 0.958
+          },
+          "transfer_prior": null,
+          "prior_validation": null
+        },
+        "updated_at": 1778960520
+      },
+      "source": "active_investigation"
+    },
+    {
+      "ts": 1778960520,
+      "edge": {
+        "cause": "structured_reasoning_gap:proactive_epistemic_gap",
+        "effect": "active_investigation:needs_experiment",
+        "condition": "structured_coverage_insufficient",
+        "support": 71,
+        "confidence": 0.99,
+        "severity": 1,
+        "knowledge_type": "observational",
+        "sources": [
+          "active_investigation"
+        ],
+        "last_evidence": {
+          "investigation_id": "gap_causal_graph_interventional_coverage_43c2ccd163",
           "coverage": {
             "score": 0.0,
             "shared": [],
@@ -1883,8 +940,8 @@
             "kind": "causal_graph_enrichment",
             "target_route": "causal_graph",
             "query_terms": [
-              "127",
-              "136",
+              "147",
+              "156",
               "arestas",
               "benchmarks",
               "causais",
@@ -1908,17 +965,17 @@
           "transfer_prior": null,
           "prior_validation": null
         },
-        "updated_at": 1778935619
+        "updated_at": 1778960520
       },
       "source": "active_investigation"
     },
     {
-      "ts": 1778935619,
+      "ts": 1778960520,
       "edge": {
         "cause": "structured_reasoning_gap:proactive_epistemic_gap",
         "effect": "active_investigation:needs_experiment",
         "condition": "structured_coverage_insufficient",
-        "support": 51,
+        "support": 72,
         "confidence": 0.99,
         "severity": 1,
         "knowledge_type": "observational",
@@ -1926,7 +983,7 @@
           "active_investigation"
         ],
         "last_evidence": {
-          "investigation_id": "gap_episodic_abstraction_density_fac874a2c2",
+          "investigation_id": "gap_episodic_abstraction_density_0a95a47d49",
           "coverage": {
             "score": 0.0,
             "shared": [],
@@ -1961,21 +1018,21 @@
             "routed": true,
             "module": "biographic_digest",
             "method": "epistemic_curiosity_gap_scan",
-            "confidence": 0.78
+            "confidence": 0.67
           },
           "transfer_prior": null,
           "prior_validation": null
         },
-        "updated_at": 1778935619
+        "updated_at": 1778960520
       },
       "source": "active_investigation"
     },
     {
-      "ts": 1778935622,
+      "ts": 1778960524,
       "edge": {
         "cause": "active_investigation_gap:abstracoes abstracted active_after biographic_digest compila densidade dominio episodicas episodios min_group_episodes",
         "effect": "sandbox_experiment_observed:episodic_evidence_collection:biographic_digest",
-        "condition": "autonomous_executor_next_cycle:gap_episodic_abstraction_density_fac874a2c2",
+        "condition": "autonomous_executor_next_cycle:gap_episodic_abstraction_density_0a95a47d49",
         "support": 1,
         "confidence": 0.68,
         "severity": 1,
@@ -1985,8 +1042,8 @@
         ],
         "last_evidence": {
           "investigation": {
-            "investigation_id": "gap_episodic_abstraction_density_fac874a2c2",
-            "query": "densidade de abstracoes episodicas reutilizaveis. biographic_digest. abstracted=0 active_after=57 min_group_episodes=3. semear episodios por dominio e verificar se o sleep_cycle compila skills reutilizaveis",
+            "investigation_id": "gap_episodic_abstraction_density_0a95a47d49",
+            "query": "densidade de abstracoes episodicas reutilizaveis. biographic_digest. abstracted=1 active_after=74 min_group_episodes=3. semear episodios por dominio e verificar se o sleep_cycle compila skills reutilizaveis",
             "reason": "proactive_epistemic_gap",
             "task_type": "biographic_digest",
             "status": "needs_experiment",
@@ -2025,7 +1082,7 @@
           "sandbox_result": {
             "ok": true,
             "accepted": true,
-            "digest": "1cd6d0f381d4e7f9",
+            "digest": "3474c4187bf6c177",
             "query_terms": [
               "abstracoes",
               "abstracted",
@@ -2049,20 +1106,20 @@
             "edge": {
               "cause": "active_investigation_gap:abstracoes abstracted active_after biographic_digest compila densidade dominio episodicas episodios min_group_episodes",
               "effect": "sandbox_experiment_observed:episodic_evidence_collection:biographic_digest",
-              "condition": "autonomous_executor_next_cycle:gap_episodic_abstraction_density_fac874a2c2",
+              "condition": "autonomous_executor_next_cycle:gap_episodic_abstraction_density_0a95a47d49",
               "confidence": 0.66
             },
             "prior_validation": null,
             "episodic_episode": {
-              "action_id": 483840243,
+              "action_id": 880067608,
               "kind": "active_gap_intervention",
-              "text": "Intervencao minima para lacuna episodica: densidade de abstracoes episodicas reutilizaveis. biographic_digest. abstracted=0 active_after=57 min_group_episodes=3. semear episodios por dominio e verificar se o sleep_cycle compila skills reutilizaveis",
+              "text": "Intervencao minima para lacuna episodica: densidade de abstracoes episodicas reutilizaveis. biographic_digest. abstracted=1 active_after=74 min_group_episodes=3. semear episodios por dominio e verificar se o sleep_cycle compila skills reutilizaveis",
               "task_type": "biographic_digest",
               "strategy": "episodic_evidence_collection",
               "ok": true,
               "latency_ms": 1,
               "meta": {
-                "investigation_id": "gap_episodic_abstraction_density_fac874a2c2",
+                "investigation_id": "gap_episodic_abstraction_density_0a95a47d49",
                 "missing_slots": [
                   "episodio_relevante",
                   "evidencia_interna_suficiente"
@@ -2082,7 +1139,7 @@
                   "reutilizaveis"
                 ],
                 "target_route": "biographic_digest",
-                "sandbox_digest": "1cd6d0f381d4e7f9",
+                "sandbox_digest": "3474c4187bf6c177",
                 "outcome": "success",
                 "error_class": "none"
               },
@@ -2095,22 +1152,22 @@
                 "episodio_relevante",
                 "evidencia_interna_suficiente"
               ],
-              "sandbox_digest": "1cd6d0f381d4e7f9"
+              "sandbox_digest": "3474c4187bf6c177"
             },
             "acceptance_checked": true
           },
-          "duration_ms": 3085.75
+          "duration_ms": 3064.52
         },
-        "updated_at": 1778935622
+        "updated_at": 1778960524
       },
       "source": "active_investigation_executor"
     },
     {
-      "ts": 1778935625,
+      "ts": 1778960527,
       "edge": {
-        "cause": "active_investigation_gap:127 136 arestas benchmarks causais causal causal_graph cobertura com converter",
+        "cause": "active_investigation_gap:147 156 arestas benchmarks causais causal causal_graph cobertura com converter",
         "effect": "sandbox_experiment_observed:causal_graph_enrichment:causal_graph",
-        "condition": "autonomous_executor_next_cycle:gap_causal_graph_interventional_coverage_199aca68f6",
+        "condition": "autonomous_executor_next_cycle:gap_causal_graph_interventional_coverage_43c2ccd163",
         "support": 1,
         "confidence": 0.68,
         "severity": 1,
@@ -2120,8 +1177,8 @@
         ],
         "last_evidence": {
           "investigation": {
-            "investigation_id": "gap_causal_graph_interventional_coverage_199aca68f6",
-            "query": "cobertura interventional do grafo causal. causal_graph. edges=136 strong=0 weak=127. converter decisoes e benchmarks recentes em arestas causais com validacao interventional",
+            "investigation_id": "gap_causal_graph_interventional_coverage_43c2ccd163",
+            "query": "cobertura interventional do grafo causal. causal_graph. edges=156 strong=0 weak=147. converter decisoes e benchmarks recentes em arestas causais com validacao interventional",
             "reason": "proactive_epistemic_gap",
             "task_type": "causal_graph",
             "status": "needs_experiment",
@@ -2139,8 +1196,8 @@
               "kind": "causal_graph_enrichment",
               "target_route": "causal_graph",
               "query_terms": [
-                "127",
-                "136",
+                "147",
+                "156",
                 "arestas",
                 "benchmarks",
                 "causais",
@@ -2160,10 +1217,10 @@
           "sandbox_result": {
             "ok": true,
             "accepted": true,
-            "digest": "22cba565215ea131",
+            "digest": "e67adae1ff1047f0",
             "query_terms": [
-              "127",
-              "136",
+              "147",
+              "156",
               "arestas",
               "benchmarks",
               "causais",
@@ -2182,9 +1239,9 @@
             "experiment_kind": "causal_graph_enrichment",
             "target_route": "causal_graph",
             "edge": {
-              "cause": "active_investigation_gap:127 136 arestas benchmarks causais causal causal_graph cobertura com converter",
+              "cause": "active_investigation_gap:147 156 arestas benchmarks causais causal causal_graph cobertura com converter",
               "effect": "sandbox_experiment_observed:causal_graph_enrichment:causal_graph",
-              "condition": "autonomous_executor_next_cycle:gap_causal_graph_interventional_coverage_199aca68f6",
+              "condition": "autonomous_executor_next_cycle:gap_causal_graph_interventional_coverage_43c2ccd163",
               "confidence": 0.66
             },
             "prior_validation": null,
@@ -2196,13 +1253,114 @@
                 "aresta_causal_relevante",
                 "evidencia_interna_suficiente"
               ],
-              "sandbox_digest": "22cba565215ea131"
+              "sandbox_digest": "e67adae1ff1047f0"
             },
             "acceptance_checked": true
           },
-          "duration_ms": 2708.62
+          "duration_ms": 2640.99
         },
-        "updated_at": 1778935625
+        "updated_at": 1778960527
+      },
+      "source": "active_investigation_executor"
+    },
+    {
+      "ts": 1778960530,
+      "edge": {
+        "cause": "active_investigation_gap:0155s 3512 5313 adaptativo aplicar blocked_loops budget carga custo desligar",
+        "effect": "sandbox_experiment_observed:runtime_pressure_probe:runtime_lifecycle",
+        "condition": "autonomous_executor_next_cycle:gap_background_loop_pressure_b3df07059a",
+        "support": 1,
+        "confidence": 0.68,
+        "severity": 1,
+        "knowledge_type": "interventional_weak",
+        "sources": [
+          "active_investigation_executor"
+        ],
+        "last_evidence": {
+          "investigation": {
+            "investigation_id": "gap_background_loop_pressure_b3df07059a",
+            "query": "estabilidade dos loops sob carga. runtime_lifecycle. paused=True reason=event_loop_lag max_lag=5313.0155s blocked_loops=3512. medir custo por loop e aplicar budget adaptativo sem desligar loops essenciais",
+            "reason": "proactive_epistemic_gap",
+            "task_type": "runtime_lifecycle",
+            "status": "needs_experiment",
+            "coverage": {
+              "score": 0.0,
+              "shared": [],
+              "query_tokens": 25,
+              "evidence_tokens": 0
+            },
+            "missing_slots": [
+              "evidencia_interna_suficiente",
+              "resultado_runtime_mensuravel"
+            ],
+            "next_experiment": {
+              "kind": "runtime_pressure_probe",
+              "target_route": "runtime_lifecycle",
+              "query_terms": [
+                "0155s",
+                "3512",
+                "5313",
+                "adaptativo",
+                "aplicar",
+                "blocked_loops",
+                "budget",
+                "carga",
+                "custo",
+                "desligar",
+                "dos",
+                "essenciais"
+              ],
+              "action": "medir custo por loop e aplicar budget adaptativo sem desligar loops essenciais",
+              "acceptance": "o resultado sandboxado deve produzir uma aresta causal auditavel ou uma refutacao explicita"
+            },
+            "transfer_prior": null
+          },
+          "sandbox_result": {
+            "ok": true,
+            "accepted": true,
+            "digest": "248c36ffa00c0117",
+            "query_terms": [
+              "0155s",
+              "3512",
+              "5313",
+              "adaptativo",
+              "aplicar",
+              "blocked_loops",
+              "budget",
+              "carga",
+              "custo",
+              "desligar",
+              "dos",
+              "essenciais"
+            ],
+            "missing_slots": [
+              "evidencia_interna_suficiente",
+              "resultado_runtime_mensuravel"
+            ],
+            "experiment_kind": "runtime_pressure_probe",
+            "target_route": "runtime_lifecycle",
+            "edge": {
+              "cause": "active_investigation_gap:0155s 3512 5313 adaptativo aplicar blocked_loops budget carga custo desligar",
+              "effect": "sandbox_experiment_observed:runtime_pressure_probe:runtime_lifecycle",
+              "condition": "autonomous_executor_next_cycle:gap_background_loop_pressure_b3df07059a",
+              "confidence": 0.66
+            },
+            "prior_validation": null,
+            "episodic_episode": null,
+            "minimal_intervention": {
+              "kind": "runtime_pressure_probe",
+              "target_route": "runtime_lifecycle",
+              "filled_slots": [
+                "evidencia_interna_suficiente",
+                "resultado_runtime_mensuravel"
+              ],
+              "sandbox_digest": "248c36ffa00c0117"
+            },
+            "acceptance_checked": true
+          },
+          "duration_ms": 2622.12
+        },
+        "updated_at": 1778960530
       },
       "source": "active_investigation_executor"
     }

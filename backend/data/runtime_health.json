@@ -1,5 +1,5 @@
 {
-  "ts": 1778963632,
+  "ts": 1779038174,
   "active_goal": "Modelar taxonomia de erros cognitivos em decisões",
   "active_mission": {
     "id": "mis_1776628887_3",
@@ -556,54 +556,44 @@
     "budget_per_min": 2
   },
   "autonomy_state": {
-    "ticks": 71,
-    "last_tick": 176809,
+    "ticks": 0,
+    "last_tick": null,
     "last_error": null,
     "consecutive_errors": 0
   },
   "background_guard": {
     "enabled": true,
     "state": "healthy",
-    "lag_sec": 0.0139,
-    "max_lag_sec": 5313.0155,
+    "lag_sec": 0.0,
+    "max_lag_sec": 0.0,
     "consecutive_lag": 0,
-    "paused_until": 1778963609.4482439,
-    "last_pause_reason": "event_loop_lag",
-    "last_pause_at": 1778963519.4482439,
+    "paused_until": 0.0,
+    "last_pause_reason": null,
+    "last_pause_at": 0.0,
     "last_slow_request": null,
-    "blocked_loops": 4028,
-    "last_blocked_loop": "voice_prewarm_loop",
-    "last_log_at": 1778963580.5672052,
+    "blocked_loops": 0,
+    "last_blocked_loop": null,
+    "last_log_at": 0.0,
     "foreground_active": 0,
     "last_foreground_path": null,
     "last_foreground_at": 0.0,
     "last_foreground_elapsed_sec": 0.0,
-    "last_pause_details": {
-      "lag_sec": 2.245,
-      "consecutive_lag": 1
-    },
     "paused": false,
     "paused_for_sec": 0.0
   },
   "background_binary_bus": {
     "enabled": true,
-    "started_at": 1778935778.7342265,
-    "processed": 21250,
+    "started_at": 0.0,
+    "processed": 0,
     "dropped": 0,
     "sink_errors": 0,
-    "last_event": {
-      "kind": "guard_state",
-      "loop": "runtime_guard",
-      "event": "guard_state_write",
-      "at": 1778963631.8361151
-    },
+    "last_event": null,
     "last_error": null,
     "queue_size": 0,
-    "worker_alive": true,
+    "worker_alive": false,
     "binlog_path": "D:\\sistemas\\UltronPro\\backend\\data\\background_bus.binlog"
   },
   "extra": {
-    "reason": "judge_tick",
-    "judge_out": "{'open_conflicts': 5, 'resolved': 1, 'needs_human': 0, 'attempted': 1}"
+    "reason": "startup_complete"
   }
 }
