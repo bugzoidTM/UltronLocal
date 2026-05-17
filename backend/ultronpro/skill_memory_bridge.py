@@ -430,3 +430,150 @@ def status(*, db_path: str | Path | None = None) -> dict[str, Any]:
         "log_path": str(BRIDGE_LOG_PATH),
         "recent_events": log_tail,
     }
+
+
+# ── 8. Identificar skill mem_* ─────────────────────────────────────────────────
+
+def is_memory_bridge_skill(skill_name: str) -> bool:
+    """Retorna True se o nome da skill corresponde a uma skill materializada pela bridge."""
+    return str(skill_name or "").startswith("mem_")
+
+
+# ── 9. Executar skill mem_* por rota determinística ───────────────────────────
+
+def execute_memory_bridge_skill(
+    skill_name: str,
+    task: str,
+    *,
+    production: bool = True,
+    db_path: str | Path | None = None,
+) -> dict[str, Any]:
+    """
+    Executa uma skill mem_* por rota determinística antes de acionar LLM.
+
+    Estratégia de execução (em ordem de preferência):
+      1. Busca a skill no skill_memory pelo nome exato → devolve instruções + exemplos.
+      2. Busca semântica em skill_memory para a tarefa → resposta baseada em exemplos.
+      3. Retorna metadados da skill para que o caller possa complementar via LLM.
+
+    Retorna dict compatível com SkillExecutor._execute_builtin_skill():
+      {
+          "ok": bool,
+          "output": str,          # resposta determinística (pode ser vazia)
+          "source": str,          # "exact_match" | "semantic_match" | "metadata_only"
+          "skill_name": str,
+          "deterministic": bool,
+          "success": bool,
+      }
+    """
+    started = _now()
+    slug = str(skill_name or "").removeprefix("mem_")  # ex: "chat_intent_greeting"
+
+    # ── tentativa 1: match exato pelo nome ─────────────────────────────────────
+    try:
+        from ultronpro import skill_memory
+
+        # Converte slug mem_ de volta para o formato interno (underscores → hyphens)
+        candidate_name = slug.replace("_", "-")
+        skill = skill_memory.get_skill(candidate_name, db_path=db_path)
+
+        if skill and str(skill.get("status") or "") == "promoted":
+            output = _build_deterministic_output(skill, task)
+            record_bridge_event(
+                skill_name,
+                {"ok": True, "source": "exact_match", "task_len": len(task)},
+                action="execute",
+            )
+            return {
+                "ok": True,
+                "output": output,
+                "source": "exact_match",
+                "skill_name": skill_name,
+                "deterministic": True,
+                "success": bool(output),
+                "elapsed_ms": int((_now() - started) * 1000),
+            }
+    except Exception as e:
+        logger.debug(f"SkillMemoryBridge execute exact_match error: {e}")
+
+    # ── tentativa 2: busca semântica pela tarefa ────────────────────────────────
+    try:
+        from ultronpro import skill_memory
+
+        results = skill_memory.search(task, limit=1, include_candidates=False, min_score=0.35, db_path=db_path)
+        if results:
+            best = results[0]
+            output = _build_deterministic_output(best, task)
+            record_bridge_event(
+                skill_name,
+                {"ok": True, "source": "semantic_match", "score": best.get("score")},
+                action="execute",
+            )
+            return {
+                "ok": True,
+                "output": output,
+                "source": "semantic_match",
+                "skill_name": skill_name,
+                "deterministic": True,
+                "success": bool(output),
+                "elapsed_ms": int((_now() - started) * 1000),
+            }
+    except Exception as e:
+        logger.debug(f"SkillMemoryBridge execute semantic_match error: {e}")
+
+    # ── fallback: retorna None para que skill_executor use LLM ─────────────────
+    record_bridge_event(
+        skill_name,
+        {"ok": False, "source": "no_match"},
+        action="execute",
+    )
+    return {
+        "ok": False,
+        "output": None,
+        "source": "no_match",
+        "skill_name": skill_name,
+        "deterministic": False,
+        "success": False,
+        "elapsed_ms": int((_now() - started) * 1000),
+    }
+
+
+def _build_deterministic_output(skill: dict[str, Any], task: str) -> str:
+    """
+    Constrói uma resposta determinística a partir dos metadados da skill.
+    Prioriza: instruções → exemplos similares → summary.
+    """
+    instructions = str(skill.get("instructions") or "").strip()
+    summary = str(skill.get("summary") or "").strip()
+    examples: list[dict] = list(skill.get("examples") or [])
+
+    parts: list[str] = []
+
+    # Instrução direta
+    if instructions:
+        parts.append(instructions)
+
+    # Exemplo mais similar (busca simples por tokens compartilhados)
+    if examples:
+        task_lower = task.lower()
+        best_ex: dict[str, Any] | None = None
+        best_score = 0.0
+        for ex in examples[-10:]:
+            q = str(ex.get("query") or "").lower()
+            if not q:
+                continue
+            common = sum(1 for token in task_lower.split() if len(token) > 2 and token in q)
+            if common > best_score:
+                best_score = common
+                best_ex = ex
+        if best_ex and best_score > 0:
+            ans = str(best_ex.get("answer_summary") or "").strip()
+            if ans:
+                parts.append(f"\n*Baseado em interação anterior similar:* {ans}")
+
+    # Summary como fallback
+    if not parts and summary:
+        parts.append(summary)
+
+    return "\n".join(parts).strip()
+

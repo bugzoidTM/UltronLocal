@@ -309,6 +309,24 @@ class SkillExecutor:
         except Exception:
             pass
 
+        # Execução determinística para skills mem_* (materializadas pela skill_memory_bridge)
+        try:
+            from ultronpro import skill_memory_bridge
+
+            if skill_memory_bridge.is_memory_bridge_skill(skill_name):
+                result = skill_memory_bridge.execute_memory_bridge_skill(skill_name, task, production=True)
+                if result.get("ok") and result.get("output"):
+                    return {
+                        "output": result["output"],
+                        "tools_used": ["skill_memory_bridge"],
+                        "success": True,
+                        "source": result.get("source", "memory_bridge"),
+                    }
+                # sem match determinístico → deixa cair no LLM (retorna None)
+                return None
+        except Exception:
+            pass
+
         if skill_name != 'web_search':
             return None
 
