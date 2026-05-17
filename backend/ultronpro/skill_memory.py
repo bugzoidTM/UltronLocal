@@ -120,9 +120,25 @@ def ensure_schema(db_path: str | Path | None = None) -> dict[str, Any]:
             )
             """
         )
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS skill_execution_log(
+              id INTEGER PRIMARY KEY AUTOINCREMENT,
+              ts REAL NOT NULL,
+              skill_name TEXT NOT NULL,
+              success INTEGER NOT NULL,
+              route TEXT,
+              task TEXT,
+              expected TEXT,
+              output TEXT
+            )
+            """
+        )
         conn.execute("CREATE INDEX IF NOT EXISTS idx_learned_skills_name ON learned_skills(name)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_learned_skills_status ON learned_skills(status)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_learned_skills_action ON learned_skills(action_kind)")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_skill_execution_log_name ON skill_execution_log(skill_name)")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_skill_execution_log_ts ON skill_execution_log(ts)")
         fts_ok = True
         try:
             conn.execute(
@@ -623,6 +639,49 @@ def ensure_autoreflex_base_skill(*, db_path: str | Path | None = None, skills_di
         db_path=db_path,
         skills_dir=skills_dir,
     )
+
+
+def record_skill_use(
+    skill_name: str,
+    success: bool,
+    *,
+    route: str | None = None,
+    task: str | None = None,
+    expected: str | None = None,
+    output: str | None = None,
+    db_path: str | Path | None = None,
+) -> dict[str, Any]:
+    """Registra uso de uma skill e atualiza timestamp de ultimo uso."""
+    if not _enabled():
+        return {"ok": False, "error": "disabled"}
+        
+    ts = _now()
+    try:
+        with _LOCK, _connect(db_path) as conn:
+            # Insere no log de execucao
+            conn.execute(
+                """
+                INSERT INTO skill_execution_log(ts, skill_name, success, route, task, expected, output)
+                VALUES(?, ?, ?, ?, ?, ?, ?)
+                """,
+                (ts, skill_name, 1 if success else 0, route, task, expected, output)
+            )
+            
+            # Atualiza last_used_at e contadores agregados
+            if success:
+                conn.execute(
+                    "UPDATE learned_skills SET last_used_at=?, success_count=success_count+1 WHERE name=?",
+                    (ts, skill_name)
+                )
+            else:
+                conn.execute(
+                    "UPDATE learned_skills SET last_used_at=?, failure_count=failure_count+1 WHERE name=?",
+                    (ts, skill_name)
+                )
+        return {"ok": True}
+    except Exception as e:
+        logger.warning(f"Erro ao registrar uso da skill {skill_name}: {e}")
+        return {"ok": False, "error": str(e)}
 
 
 def status(*, db_path: str | Path | None = None) -> dict[str, Any]:

@@ -51,6 +51,10 @@ def _max_idle_days() -> float:
     return float(os.getenv("ULTRON_GOV_MAX_IDLE_DAYS", "30"))
 
 
+def _window_size() -> int:
+    return int(os.getenv("ULTRON_GOV_WINDOW", "50"))
+
+
 def _now() -> float:
     return time.time()
 
@@ -75,7 +79,7 @@ def _record_gov_event(skill_name: str, action: str, reason: str, detail: dict[st
 
 # ── Health score ───────────────────────────────────────────────────────────────
 
-def compute_health(skill: dict[str, Any]) -> dict[str, Any]:
+def compute_health(skill: dict[str, Any], *, db_path: str | Path | None = None) -> dict[str, Any]:
     """
     Calcula o health score de uma skill promovida.
 
@@ -88,9 +92,33 @@ def compute_health(skill: dict[str, Any]) -> dict[str, Any]:
             "issues": list[str],
         }
     """
-    success = int(skill.get("success_count") or 0)
-    failure = int(skill.get("failure_count") or 0)
-    total = success + failure
+    skill_name = skill.get("name")
+    
+    # Tenta pegar histórico recente
+    recent_total = 0
+    recent_failure = 0
+    try:
+        from ultronpro import skill_memory
+        with skill_memory._LOCK, skill_memory._connect(db_path) as conn:
+            rows = conn.execute(
+                "SELECT success FROM skill_execution_log WHERE skill_name=? ORDER BY ts DESC LIMIT ?",
+                (skill_name, _window_size())
+            ).fetchall()
+            recent_total = len(rows)
+            recent_success = sum(1 for r in rows if r["success"])
+            recent_failure = recent_total - recent_success
+    except Exception:
+        pass
+
+    if recent_total > 0:
+        total = recent_total
+        failure = recent_failure
+    else:
+        # Fallback para o acumulado
+        success = int(skill.get("success_count") or 0)
+        failure = int(skill.get("failure_count") or 0)
+        total = success + failure
+        
     last_used = skill.get("last_used_at")
 
     issues: list[str] = []
@@ -224,70 +252,100 @@ def run_governor(
     if not _enabled():
         return {"ok": True, "skipped": True, "reason": "governor_disabled"}
 
-    started = _now()
+    lock_file = GOV_LOG_PATH.with_suffix(".lock")
+    lock_file.parent.mkdir(parents=True, exist_ok=True)
+
+    def _try_acquire_lock() -> bool:
+        try:
+            fd = os.open(str(lock_file), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+            os.close(fd)
+            return True
+        except FileExistsError:
+            return False
+
+    if not _try_acquire_lock():
+        if lock_file.exists() and time.time() - lock_file.stat().st_mtime > 300:
+            logger.warning("skill_memory_governor: removendo lock orfao antigo")
+            try:
+                lock_file.unlink()
+            except Exception:
+                pass
+            if not _try_acquire_lock():
+                return {"ok": True, "skipped": True, "reason": "governor_already_running"}
+        else:
+            return {"ok": True, "skipped": True, "reason": "governor_already_running"}
 
     try:
-        from ultronpro import skill_memory
-        with skill_memory._LOCK, skill_memory._connect(db_path) as conn:
-            rows = conn.execute(
-                "SELECT * FROM learned_skills WHERE status='promoted' ORDER BY confidence DESC LIMIT ?",
-                (limit,)
-            ).fetchall()
-        promoted = [skill_memory._row_to_dict(r) for r in rows]
-    except Exception as e:
-        return {"ok": False, "error": str(e)}
+        started = _now()
+    
+        try:
+            from ultronpro import skill_memory
+            with skill_memory._LOCK, skill_memory._connect(db_path) as conn:
+                rows = conn.execute(
+                    "SELECT * FROM learned_skills WHERE status='promoted' ORDER BY confidence DESC LIMIT ?",
+                    (limit,)
+                ).fetchall()
+            promoted = [skill_memory._row_to_dict(r) for r in rows]
+        except Exception as e:
+            return {"ok": False, "error": str(e)}
+    
+        details: list[dict[str, Any]] = []
+        healthy_count = 0
+        demoted_count = 0
+        would_demote_count = 0
+    
+        for skill in promoted:
+            name = str(skill.get("name") or "")
+            health = compute_health(skill, db_path=db_path)
 
-    details: list[dict[str, Any]] = []
-    healthy_count = 0
-    demoted_count = 0
-    would_demote_count = 0
+            if health["healthy"]:
+                healthy_count += 1
+                details.append({
+                    "skill": name,
+                    "action": "kept",
+                    "health": health,
+                })
+                continue
+    
+            # Skill com problema detectado
+            reason = "; ".join(health["issues"])
+    
+            if dry_run:
+                would_demote_count += 1
+                details.append({
+                    "skill": name,
+                    "action": "would_demote",
+                    "reason": reason,
+                    "health": health,
+                })
+            else:
+                result = demote_skill(name, reason, db_path=db_path, remove_skill_md=True)
+                demoted_count += 1
+                details.append({
+                    "skill": name,
+                    "action": "demoted",
+                    "reason": reason,
+                    "health": health,
+                    "result": result,
+                })
 
-    for skill in promoted:
-        name = str(skill.get("name") or "")
-        health = compute_health(skill)
-
-        if health["healthy"]:
-            healthy_count += 1
-            details.append({
-                "skill": name,
-                "action": "kept",
-                "health": health,
-            })
-            continue
-
-        # Skill com problema detectado
-        reason = "; ".join(health["issues"])
-
-        if dry_run:
-            would_demote_count += 1
-            details.append({
-                "skill": name,
-                "action": "would_demote",
-                "reason": reason,
-                "health": health,
-            })
-        else:
-            result = demote_skill(name, reason, db_path=db_path, remove_skill_md=True)
-            demoted_count += 1
-            details.append({
-                "skill": name,
-                "action": "demoted",
-                "reason": reason,
-                "health": health,
-                "result": result,
-            })
-
-    elapsed = _now() - started
-    return {
-        "ok": True,
-        "dry_run": dry_run,
-        "evaluated": len(promoted),
-        "healthy": healthy_count,
-        "demoted": demoted_count,
-        "would_demote": would_demote_count,
-        "elapsed_sec": round(elapsed, 3),
-        "details": details,
-    }
+        elapsed = _now() - started
+        return {
+            "ok": True,
+            "dry_run": dry_run,
+            "evaluated": len(promoted),
+            "healthy": healthy_count,
+            "demoted": demoted_count,
+            "would_demote": would_demote_count,
+            "elapsed_sec": round(elapsed, 3),
+            "details": details,
+        }
+    finally:
+        try:
+            if lock_file.exists():
+                lock_file.unlink()
+        except Exception:
+            pass
 
 
 # ── Status ─────────────────────────────────────────────────────────────────────
@@ -305,7 +363,7 @@ def status(*, db_path: str | Path | None = None) -> dict[str, Any]:
         return {"ok": False, "error": str(e)}
 
     healths = [
-        {"skill": s.get("name"), **compute_health(s)}
+        {"skill": s.get("name"), **compute_health(s, db_path=db_path)}
         for s in promoted
     ]
     unhealthy = [h for h in healths if not h["healthy"]]

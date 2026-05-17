@@ -500,6 +500,14 @@ def execute_memory_bridge_skill(
                 {"ok": True, "source": "exact_match", "task_len": len(task)},
                 action="execute",
             )
+            skill_memory.record_skill_use(
+                candidate_name,
+                success=bool(output),
+                route="memory_bridge_exact",
+                task=task,
+                output=output,
+                db_path=db_path,
+            )
             return {
                 "ok": True,
                 "output": output,
@@ -524,6 +532,14 @@ def execute_memory_bridge_skill(
                 skill_name,
                 {"ok": True, "source": "semantic_match", "score": best.get("score")},
                 action="execute",
+            )
+            skill_memory.record_skill_use(
+                str(best.get("name") or ""),
+                success=bool(output),
+                route="memory_bridge_semantic",
+                task=task,
+                output=output,
+                db_path=db_path,
             )
             return {
                 "ok": True,
