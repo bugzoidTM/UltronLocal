@@ -1,0 +1,348 @@
+INFO:     uvicorn file log enabled path=D:\UnidadeF\UltronPro\backend\data\logs\uvicorn_live.log max_bytes=26214400 keep_bytes=8388608
+INFO:     Started server process [9984]
+INFO:     Waiting for application startup.
+INFO:     Starting UltronPRO...
+INFO:     Loaded settings. LightRAG URL: https://lightrag.nutef.com
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Qwen llama-server already running
+INFO:     Qwen runtime monitor started
+INFO:     [META] Unidade de Reflexão Metacognitiva Unificada iniciada.
+INFO:     Longitudinal harness loop started
+INFO:     [SELF-TALK] OODA loop started (interval=180s)
+INFO:     Autonomous cognition loop started
+INFO:     Online RL loop started
+INFO:     Ultron loops startup complete
+INFO:     Operational Memory initialized: session=998f62ab3d78
+INFO:     Operational Memory initialized: session=abb6444cd41d
+INFO:     Background guard started (lag_pause=2.00s, pause=90s, slow_request=4.00s)
+INFO:     Autofeeder started
+INFO:     Autonomy loop started
+INFO:     Judge loop started
+INFO:     Recursive self-improvement loop started
+INFO:     Voice prewarm loop started
+INFO:     Roadmap V5 orchestrator loop started
+INFO:     AGI path loop started
+INFO:     Self-improvement loop started
+INFO:     Reflexion loop started
+INFO:     Self-governance loop started
+INFO:     Meta-observer loop started
+INFO:     Affect markers loop started
+INFO:     Narrative summary loop started
+INFO:     Integration proxy loop started
+INFO:     \U0001f634 Sleep cycle loop started (interval=21600s)
+INFO:     \U0001fa79 Healer verify loop started
+INFO:     \u2697\ufe0f Active Discovery loop started
+INFO:     No-cloud campaign loop started
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Background bootstrap disabled by env
+INFO:     Background source backfill disabled by env
+INFO:     Background recovery: ok
+INFO:     Phenomenal consciousness activated: already_active
+INFO:     WebExplorer: Iniciando (ULTRON_WEB_EXPLORER=1, interval=900s, max_links=1)
+INFO:     WebExplorer: Motor de exploração iniciado em background.
+INFO:     WebExplorer: Iniciando Puppeteer Bridge local...
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+ERROR:    LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop judge_loop for 90.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop judge_loop for 60.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop judge_loop for 30.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:     [SELF-TALK] Tick #1: posture=anomaly, action=alert_and_simulate
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+WARNING:  Autofeeder budget timeout: fetch_wikipedia_topic exceeded 8.0s
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:     extract_triples (Attempt 1/3): calling LLM for 52 chars...
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop agi_path_loop for 84.7s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 68 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'dare', 'predicate': 'past-tense', 'object': 'durst', 'confidence': 0.85} from exp_6902
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Ingested from uselessfacts.jsph.pl (exp_id=6902, extracted=1, added=1)
+INFO:     [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+INFO:     [META] Ciclo finalizado. Status: NOMINAL
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents/doc-d61fd25cc22356379acbfde517224ee8 "HTTP/1.1 404 Not Found"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 253 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Judge loop budget timeout; loop remains enabled and will retry later
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+ERROR:    LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+WARNING:  Background guard: pausing loop self_governance_loop for 54.7s (reason=event_loop_lag)
+ERROR:    LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+WARNING:  Autofeeder LightRAG extract budget timeout after 20.0s
+INFO:     Autofeeder: Synced from LightRAG doc doc-d61f (exp_id=6903, added=0)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 578 chars.
+INFO:     extract_triples: processing 5 items from LLM on attempt 1
+INFO:     extract_triples: returning 5 triples
+INFO:     add_triple: {'subject': 'Eventos de execução em tempo de execução', 'predicate': 'registrado', 'object': '2026-03-03 11:02:27', 'confidence': 0.85} from exp_6903
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'Eventos de execução em tempo de execução', 'predicate': 'trigger', 'object': 'trigger_eval_batteries', 'confidence': 0.85} from exp_6903
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'Contexto', 'predicate': 'status', 'object': 'queue/worker/job status e possível latência/timeout', 'confidence': 0.85} from exp_6903
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'Ação', 'predicate': 'identificar', 'object': 'causa', 'confidence': 0.85} from exp_6903
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'Ação', 'predicate': 'aplicar', 'object': 'rollback ou restart control', 'confidence': 0.85} from exp_6903
+INFO:     add_triple: SUCCESS
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop self_improvement_loop for 24.7s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ERROR:    LLM Call Error (groq/llama-3.3-70b-versatile): Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  agi_path_loop: status exceeded 5.0s; loop remains enabled and will retry later
+WARNING:  Background guard: pausing loop affect_markers_loop for 90.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://duckduckgo.com/html/?q=Agent+architectures+for+AGI+and+RLHF "HTTP/1.1 302 Moved Temporarily"
+INFO:httpx:HTTP Request: GET https://html.duckduckgo.com/html/?q=Agent+architectures+for+AGI+and+RLHF "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://arxiv.org/html/2601.01743v1 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop voice_prewarm_loop for 52.1s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+ERROR:    WebExplorer: Erro ao extrair conhecimento: Unterminated string starting at: line 1 column 2447 (char 2446)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop voice_prewarm_loop for 22.1s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://duckduckgo.com/html/?q=causal_graph+causal_graph_interventional_coverage+cobertura+interventional+grafo+causal+causal_graph+edges+113+documentation+reliable+source "HTTP/1.1 302 Moved Temporarily"
+INFO:httpx:HTTP Request: GET https://html.duckduckgo.com/html/?q=causal_graph+causal_graph_interventional_coverage+cobertura+interventional+grafo+causal+causal_graph+edges+113+documentation+reliable+source "HTTP/1.1 202 Accepted"
+INFO:httpx:HTTP Request: GET https://www.pywhy.org/dowhy/main/user_guide/modeling_causal_relationships/index.html "HTTP/1.1 404 Not Found"
+INFO:httpx:HTTP Request: GET https://causal-learn.readthedocs.io/en/latest/ "HTTP/1.1 200 OK"
+INFO:     [SELF-TALK] Tick #2: posture=anomaly, action=alert_and_simulate
+INFO:     OnlineRL: action=trusted_acquisition reward=0.2389 ok=False
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+ERROR:    LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+INFO:     [AutobioRouter] self_event ingested: kind=abstraction_promoted module=episodic_compiler
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop judge_loop for 90.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop judge_loop for 60.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop judge_loop for 29.9s (reason=event_loop_lag)
+INFO:     [AutobioRouter] self_event ingested: kind=sleep_cycle_completed module=sleep_cycle
+INFO:     \U0001f634 Sleep cycle: pruned=0 abstracted=1 sql={'decayed': 2966, 'pruned': 3, 'promoted': 0}
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+ERROR:    LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+ERROR:    LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  roadmap_v5_loop: status exceeded 5.0s; loop remains enabled and will retry later
+WARNING:  Background guard: pausing loop metacognitive_loop for 90.0s (reason=event_loop_lag)
+WARNING:  Judge loop budget timeout; loop remains enabled and will retry later
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop metacognitive_loop for 60.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop metacognitive_loop for 30.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+INFO:     extract_triples (Attempt 1/3): calling LLM for 250 chars...
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     [SELF-TALK] Tick #3: posture=anomaly, action=alert_and_simulate
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 372 chars.
+INFO:     extract_triples: processing 4 items from LLM on attempt 1
+INFO:     extract_triples: returning 4 triples
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'genre', 'object': 'thriller and action', 'confidence': 0.85} from exp_6906
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'director', 'object': 'Alain Desrochers', 'confidence': 0.85} from exp_6906
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'writer', 'object': 'Tony Mosher and John Sullivan', 'confidence': 0.85} from exp_6906
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'cast', 'object': 'Antonio Banderas, Gabriella Wright, Ben Kingsley, Chad Lindberg', 'confidence': 0.85} from exp_6906
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=6906, extracted=4, added=4)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents/doc-959c272964eb6a1b057084210444bc7e "HTTP/1.1 404 Not Found"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 253 chars...
+INFO:     [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+INFO:     [META] Ciclo finalizado. Status: NOMINAL
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 60 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Assistente', 'predicate': 'ter', 'object': 'capacidade de ajudar', 'confidence': 0.85} from exp_6907
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Synced from LightRAG doc doc-959c (exp_id=6907, added=1)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop judge_loop for 74.4s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop judge_loop for 44.3s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop judge_loop for 14.3s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+ERROR:    LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+ERROR:    LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     [SELF-TALK] Tick #4: posture=anomaly, action=alert_and_simulate
+WARNING:  Judge loop budget timeout; loop remains enabled and will retry later
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop self_improvement_loop for 90.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop self_improvement_loop for 60.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop self_improvement_loop for 29.9s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+ERROR:    LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+WARNING:  LLM fallback error (groq/llama-3.3-70b-versatile): Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+INFO:     extract_triples (Attempt 1/3): calling LLM for 250 chars...
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop self_talk_loop for 79.5s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 613 chars.
+INFO:     extract_triples: processing 6 items from LLM on attempt 1
+INFO:     extract_triples: returning 6 triples
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'is', 'object': 'a film', 'confidence': 0.85} from exp_6909
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'released', 'object': '2017', 'confidence': 0.85} from exp_6909
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'genre', 'object': 'thriller and action', 'confidence': 0.85} from exp_6909
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'directed', 'object': 'Alain Desrochers', 'confidence': 0.85} from exp_6909
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'rodeirizado', 'object': 'Tony Mosher e John Sullivan', 'confidence': 0.85} from exp_6909
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'cast', 'object': 'Antonio Banderas, Gabriella Wright, Ben Kingsley, Chad Lindberg', 'confidence': 0.85} from exp_6909
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=6909, extracted=6, added=6)
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents/doc-951b03297898f5068b98c884da190086 "HTTP/1.1 404 Not Found"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 253 chars...
+INFO:     [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+INFO:     [META] Ciclo finalizado. Status: NOMINAL
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 281 chars.
+INFO:     extract_triples: processing 3 items from LLM on attempt 1
+INFO:     extract_triples: returning 3 triples
+INFO:     add_triple: {'subject': 'job_status', 'predicate': 'equals', 'object': 'running_remote', 'confidence': 0.85} from exp_6910
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'job_status', 'predicate': 'equals', 'object': 'running_remote', 'confidence': 0.85} from exp_6910
+INFO:     add_triple: SUCCESS
+INFO:     add_triple: {'subject': 'job_status', 'predicate': 'equals', 'object': 'running_remote', 'confidence': 0.85} from exp_6910
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Synced from LightRAG doc doc-951b (exp_id=6910, added=3)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop self_talk_loop for 49.5s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop self_talk_loop for 19.5s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:     [SELF-TALK] Tick #5: posture=anomaly, action=alert_and_simulate
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+ERROR:    LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Judge loop budget timeout; loop remains enabled and will retry later
+WARNING:  Background guard: pausing loop voice_prewarm_loop for 90.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop voice_prewarm_loop for 60.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop voice_prewarm_loop for 29.9s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop meta_observer_loop for 90.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop meta_observer_loop for 60.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop meta_observer_loop for 29.9s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+WARNING:  Background guard: pausing loop autofeeder_loop for 90.0s (reason=event_loop_lag)
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+INFO:     [SELF-TALK] Tick #6: posture=anomaly, action=alert_and_simulate

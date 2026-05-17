@@ -1,13 +1,13 @@
 {
   "ok": true,
-  "ts": 1778440253,
+  "ts": 1778936080,
   "status": "watch",
   "curriculum": {
     "ok": true,
-    "curriculum_id": "curriculum_d347e2aab626",
-    "ts": 1778440253,
-    "source_count": 12,
-    "task_count": 12,
+    "curriculum_id": "curriculum_f17b8885a62a",
+    "ts": 1778936080,
+    "source_count": 1,
+    "task_count": 5,
     "difficulty_ladder": [
       {
         "level": 1,
@@ -37,531 +37,134 @@
     ],
     "sources": [
       {
-        "source_type": "active_investigation",
-        "source_id": "inv_05f7d35799",
-        "domain": "general",
-        "query": "quanto ? 2+2?",
-        "gap_summary": "no_structured_coverage",
+        "source_type": "bootstrap",
+        "source_id": "bootstrap_generalization",
+        "domain": "generalization",
+        "query": "bootstrap curriculum from self-observed uncertainty",
+        "gap_summary": "no pending active investigations were available",
         "missing_slots": [
-          "aresta_causal_relevante",
-          "evidencia_interna_suficiente",
-          "fato_estruturado_recuperavel"
+          "fresh_gap_source"
         ],
         "next_experiment": {
-          "kind": "causal_graph_enrichment",
-          "target_route": "local_reasoning",
-          "query_terms": [
-            "quanto"
-          ],
-          "action": "registrar uma decisao ou observacao verificavel como aresta causal antes de responder com confianca",
-          "acceptance": "a proxima resposta deve citar evidencia interna recuperada ou declarar UNKNOWN com a lacuna exata"
+          "kind": "coverage_refinement",
+          "target_route": "generalization",
+          "action": "seed a small verified probe before expanding difficulty",
+          "acceptance": "task must produce an auditable score"
         },
-        "priority": 1.36
-      },
-      {
-        "source_type": "active_investigation",
-        "source_id": "inv_6bffd9ebec",
-        "domain": "user_context",
-        "query": "eu perguntei sobre mim",
-        "gap_summary": "confidence_below_threshold",
-        "missing_slots": [
-          "aresta_causal_relevante",
-          "evidencia_interna_suficiente",
-          "fato_estruturado_recuperavel"
-        ],
-        "next_experiment": {
-          "kind": "causal_graph_enrichment",
-          "target_route": "unknown",
-          "query_terms": [
-            "mim",
-            "perguntei",
-            "sobre"
-          ],
-          "action": "registrar uma decisao ou observacao verificavel como aresta causal antes de responder com confianca",
-          "acceptance": "a proxima resposta deve citar evidencia interna recuperada ou declarar UNKNOWN com a lacuna exata"
-        },
-        "priority": 1.36
-      },
-      {
-        "source_type": "active_investigation",
-        "source_id": "inv_98a12d9a04",
-        "domain": "user_context",
-        "query": "eu perguntei sobre mim",
-        "gap_summary": "confidence_below_threshold",
-        "missing_slots": [
-          "aresta_causal_relevante",
-          "evidencia_interna_suficiente"
-        ],
-        "next_experiment": {
-          "kind": "causal_graph_enrichment",
-          "target_route": "active_investigation",
-          "query_terms": [
-            "mim",
-            "perguntei",
-            "sobre"
-          ],
-          "action": "registrar uma decisao ou observacao verificavel como aresta causal antes de responder com confianca",
-          "acceptance": "a proxima resposta deve citar evidencia interna recuperada ou declarar UNKNOWN com a lacuna exata"
-        },
-        "priority": 0.9067
-      },
-      {
-        "source_type": "active_investigation",
-        "source_id": "inv_6b51479e00",
-        "domain": "user_context",
-        "query": "eu perguntei sobre mim",
-        "gap_summary": "confidence_below_threshold",
-        "missing_slots": [
-          "aresta_causal_relevante",
-          "evidencia_interna_suficiente"
-        ],
-        "next_experiment": {
-          "kind": "causal_graph_enrichment",
-          "target_route": "active_investigation",
-          "query_terms": [
-            "mim",
-            "perguntei",
-            "sobre"
-          ],
-          "action": "registrar uma decisao ou observacao verificavel como aresta causal antes de responder com confianca",
-          "acceptance": "a proxima resposta deve citar evidencia interna recuperada ou declarar UNKNOWN com a lacuna exata"
-        },
-        "priority": 0.9067
-      },
-      {
-        "source_type": "active_investigation",
-        "source_id": "inv_d49eb0aaa3",
-        "domain": "user_context",
-        "query": "qual meu nome?",
-        "gap_summary": "confidence_below_threshold",
-        "missing_slots": [
-          "aresta_causal_relevante",
-          "evidencia_interna_suficiente"
-        ],
-        "next_experiment": {
-          "kind": "causal_graph_enrichment",
-          "target_route": "unknown",
-          "query_terms": [
-            "meu",
-            "nome",
-            "qual"
-          ],
-          "action": "registrar uma decisao ou observacao verificavel como aresta causal antes de responder com confianca",
-          "acceptance": "a proxima resposta deve citar evidencia interna recuperada ou declarar UNKNOWN com a lacuna exata"
-        },
-        "priority": 0.9067
-      },
-      {
-        "source_type": "active_investigation",
-        "source_id": "inv_0a8c8162c7",
-        "domain": "user_context",
-        "query": "qual meu nome?",
-        "gap_summary": "confidence_below_threshold",
-        "missing_slots": [
-          "aresta_causal_relevante"
-        ],
-        "next_experiment": {
-          "kind": "causal_graph_enrichment",
-          "target_route": "active_investigation",
-          "query_terms": [
-            "meu",
-            "nome",
-            "qual"
-          ],
-          "action": "registrar uma decisao ou observacao verificavel como aresta causal antes de responder com confianca",
-          "acceptance": "a proxima resposta deve citar evidencia interna recuperada ou declarar UNKNOWN com a lacuna exata"
-        },
-        "priority": 0.4533
-      },
-      {
-        "source_type": "active_investigation",
-        "source_id": "inv_5b3ca2b121",
-        "domain": "user_context",
-        "query": "qual meu nome?",
-        "gap_summary": "confidence_below_threshold",
-        "missing_slots": [
-          "aresta_causal_relevante"
-        ],
-        "next_experiment": {
-          "kind": "causal_graph_enrichment",
-          "target_route": "active_investigation",
-          "query_terms": [
-            "meu",
-            "nome",
-            "qual"
-          ],
-          "action": "registrar uma decisao ou observacao verificavel como aresta causal antes de responder com confianca",
-          "acceptance": "a proxima resposta deve citar evidencia interna recuperada ou declarar UNKNOWN com a lacuna exata"
-        },
-        "priority": 0.4533
-      },
-      {
-        "source_type": "active_investigation",
-        "source_id": "inv_2c4404d07f",
-        "domain": "user_context",
-        "query": "você lembra de mim?",
-        "gap_summary": "confidence_below_threshold",
-        "missing_slots": [
-          "aresta_causal_relevante"
-        ],
-        "next_experiment": {
-          "kind": "causal_graph_enrichment",
-          "target_route": "unknown",
-          "query_terms": [
-            "lembra",
-            "mim",
-            "voce"
-          ],
-          "action": "registrar uma decisao ou observacao verificavel como aresta causal antes de responder com confianca",
-          "acceptance": "a proxima resposta deve citar evidencia interna recuperada ou declarar UNKNOWN com a lacuna exata"
-        },
-        "priority": 0.4533
-      },
-      {
-        "source_type": "active_investigation",
-        "source_id": "inv_c641b0cfbc",
-        "domain": "general",
-        "query": "quanto é 2+2?",
-        "gap_summary": "no_structured_coverage",
-        "missing_slots": [
-          "aresta_causal_relevante"
-        ],
-        "next_experiment": {
-          "kind": "causal_graph_enrichment",
-          "target_route": "local_reasoning",
-          "query_terms": [
-            "quanto"
-          ],
-          "action": "registrar uma decisao ou observacao verificavel como aresta causal antes de responder com confianca",
-          "acceptance": "a proxima resposta deve citar evidencia interna recuperada ou declarar UNKNOWN com a lacuna exata"
-        },
-        "priority": 0.12
-      },
-      {
-        "source_type": "active_investigation",
-        "source_id": "inv_2e6c478502",
-        "domain": "user_context",
-        "query": "eu perguntei sobre mim",
-        "gap_summary": "confidence_below_threshold",
-        "missing_slots": [
-          "aresta_causal_relevante"
-        ],
-        "next_experiment": {
-          "kind": "causal_graph_enrichment",
-          "target_route": "active_investigation",
-          "query_terms": [
-            "mim",
-            "perguntei",
-            "sobre"
-          ],
-          "action": "registrar uma decisao ou observacao verificavel como aresta causal antes de responder com confianca",
-          "acceptance": "a proxima resposta deve citar evidencia interna recuperada ou declarar UNKNOWN com a lacuna exata"
-        },
-        "priority": 0.12
-      },
-      {
-        "source_type": "active_investigation",
-        "source_id": "inv_466c7d8b38",
-        "domain": "user_context",
-        "query": "eu perguntei sobre mim",
-        "gap_summary": "confidence_below_threshold",
-        "missing_slots": [
-          "aresta_causal_relevante"
-        ],
-        "next_experiment": {
-          "kind": "causal_graph_enrichment",
-          "target_route": "active_investigation",
-          "query_terms": [
-            "mim",
-            "perguntei",
-            "sobre"
-          ],
-          "action": "registrar uma decisao ou observacao verificavel como aresta causal antes de responder com confianca",
-          "acceptance": "a proxima resposta deve citar evidencia interna recuperada ou declarar UNKNOWN com a lacuna exata"
-        },
-        "priority": 0.12
-      },
-      {
-        "source_type": "active_investigation",
-        "source_id": "inv_3c1d22cc53",
-        "domain": "user_context",
-        "query": "qual meu nome?",
-        "gap_summary": "confidence_below_threshold",
-        "missing_slots": [
-          "aresta_causal_relevante"
-        ],
-        "next_experiment": {
-          "kind": "causal_graph_enrichment",
-          "target_route": "active_investigation",
-          "query_terms": [
-            "meu",
-            "nome",
-            "qual"
-          ],
-          "action": "registrar uma decisao ou observacao verificavel como aresta causal antes de responder com confianca",
-          "acceptance": "a proxima resposta deve citar evidencia interna recuperada ou declarar UNKNOWN com a lacuna exata"
-        },
-        "priority": 0.12
+        "priority": 0.25
       }
     ],
     "tasks": [
       {
-        "task_id": "curtask_349304cc1522",
-        "source_id": "inv_05f7d35799",
-        "source_type": "active_investigation",
-        "domain": "general",
+        "task_id": "curtask_19ecee21c580",
+        "source_id": "bootstrap_generalization",
+        "source_type": "bootstrap",
+        "domain": "generalization",
         "difficulty": 1,
         "stage": "near_transfer",
         "stage_goal": "small variation of a task the system already almost solves",
-        "title": "Warm start variation for general",
-        "objective": "Restate and solve a close variant of the known gap: quanto ? 2+2?. Keep only one missing slot active: aresta_causal_relevante, evidencia_interna_suficiente, fato_estruturado_recuperavel.",
+        "title": "Warm start variation for generalization",
+        "objective": "Restate and solve a close variant of the known gap: bootstrap curriculum from self-observed uncertainty. Keep only one missing slot active: fresh_gap_source.",
         "acceptance": "success score >= 0.70 and no new anchor failure",
         "missing_slots": [
-          "aresta_causal_relevante",
-          "evidencia_interna_suficiente",
-          "fato_estruturado_recuperavel"
+          "fresh_gap_source"
         ],
         "prerequisite_task_id": null,
         "status": "pending",
         "self_relative": true,
-        "created_at": 1778440253
+        "created_at": 1778936080
       },
       {
-        "task_id": "curtask_f3d00707f122",
-        "source_id": "inv_6bffd9ebec",
-        "source_type": "active_investigation",
-        "domain": "user_context",
-        "difficulty": 1,
-        "stage": "near_transfer",
-        "stage_goal": "small variation of a task the system already almost solves",
-        "title": "Warm start variation for user_context",
-        "objective": "Restate and solve a close variant of the known gap: eu perguntei sobre mim. Keep only one missing slot active: aresta_causal_relevante, evidencia_interna_suficiente, fato_estruturado_recuperavel.",
-        "acceptance": "success score >= 0.70 and no new anchor failure",
+        "task_id": "curtask_4213d3c88aa3",
+        "source_id": "bootstrap_generalization",
+        "source_type": "bootstrap",
+        "domain": "generalization",
+        "difficulty": 2,
+        "stage": "controlled_variation",
+        "stage_goal": "change one premise or missing slot while preserving the domain",
+        "title": "Controlled variation for generalization",
+        "objective": "Change one premise or missing slot from the original gap while preserving domain generalization. Missing slots: fresh_gap_source.",
+        "acceptance": "the system must explain which premise changed and preserve performance >= level 1 - 0.05",
         "missing_slots": [
-          "aresta_causal_relevante",
-          "evidencia_interna_suficiente",
-          "fato_estruturado_recuperavel"
+          "fresh_gap_source"
         ],
-        "prerequisite_task_id": null,
+        "prerequisite_task_id": "curtask_19ecee21c580",
         "status": "pending",
         "self_relative": true,
-        "created_at": 1778440253
+        "created_at": 1778936080
       },
       {
-        "task_id": "curtask_41a8deb1d8a1",
-        "source_id": "inv_98a12d9a04",
-        "source_type": "active_investigation",
-        "domain": "user_context",
-        "difficulty": 1,
-        "stage": "near_transfer",
-        "stage_goal": "small variation of a task the system already almost solves",
-        "title": "Warm start variation for user_context",
-        "objective": "Restate and solve a close variant of the known gap: eu perguntei sobre mim. Keep only one missing slot active: aresta_causal_relevante, evidencia_interna_suficiente.",
-        "acceptance": "success score >= 0.70 and no new anchor failure",
+        "task_id": "curtask_bbb8c44ce77c",
+        "source_id": "bootstrap_generalization",
+        "source_type": "bootstrap",
+        "domain": "generalization",
+        "difficulty": 3,
+        "stage": "causal_intervention",
+        "stage_goal": "execute the active experiment that should close the gap",
+        "title": "Active experiment for generalization",
+        "objective": "Run the proposed active experiment: seed a small verified probe before expanding difficulty.",
+        "acceptance": "task must produce an auditable score",
         "missing_slots": [
-          "aresta_causal_relevante",
-          "evidencia_interna_suficiente"
+          "fresh_gap_source"
         ],
-        "prerequisite_task_id": null,
+        "prerequisite_task_id": "curtask_4213d3c88aa3",
         "status": "pending",
         "self_relative": true,
-        "created_at": 1778440253
+        "created_at": 1778936080
       },
       {
-        "task_id": "curtask_67dd57ad8883",
-        "source_id": "inv_6b51479e00",
-        "source_type": "active_investigation",
-        "domain": "user_context",
-        "difficulty": 1,
-        "stage": "near_transfer",
-        "stage_goal": "small variation of a task the system already almost solves",
-        "title": "Warm start variation for user_context",
-        "objective": "Restate and solve a close variant of the known gap: eu perguntei sobre mim. Keep only one missing slot active: aresta_causal_relevante, evidencia_interna_suficiente.",
-        "acceptance": "success score >= 0.70 and no new anchor failure",
+        "task_id": "curtask_1cf66186a7ae",
+        "source_id": "bootstrap_generalization",
+        "source_type": "bootstrap",
+        "domain": "generalization",
+        "difficulty": 4,
+        "stage": "zero_shot_bridge",
+        "stage_goal": "transfer the skill to an adjacent but unseen domain",
+        "title": "Zero-shot bridge from generalization to generalization_zero_shot_bridge",
+        "objective": "Transfer the learned procedure from generalization into unseen domain generalization_zero_shot_bridge without using stored examples from that domain.",
+        "acceptance": "zero-shot score >= 0.60 or a precise new active investigation is opened",
         "missing_slots": [
-          "aresta_causal_relevante",
-          "evidencia_interna_suficiente"
+          "fresh_gap_source"
         ],
-        "prerequisite_task_id": null,
+        "prerequisite_task_id": "curtask_bbb8c44ce77c",
         "status": "pending",
         "self_relative": true,
-        "created_at": 1778440253
+        "created_at": 1778936080
       },
       {
-        "task_id": "curtask_cdbd6b6177d9",
-        "source_id": "inv_d49eb0aaa3",
-        "source_type": "active_investigation",
-        "domain": "user_context",
-        "difficulty": 1,
-        "stage": "near_transfer",
-        "stage_goal": "small variation of a task the system already almost solves",
-        "title": "Warm start variation for user_context",
-        "objective": "Restate and solve a close variant of the known gap: qual meu nome?. Keep only one missing slot active: aresta_causal_relevante, evidencia_interna_suficiente.",
-        "acceptance": "success score >= 0.70 and no new anchor failure",
+        "task_id": "curtask_fe0b8eedf11b",
+        "source_id": "bootstrap_generalization",
+        "source_type": "bootstrap",
+        "domain": "generalization",
+        "difficulty": 5,
+        "stage": "novel_domain",
+        "stage_goal": "force a new domain with explicit external or sandbox validation",
+        "title": "Novel-domain stress task for generalization_zero_shot_bridge",
+        "objective": "Create a novel task in generalization_zero_shot_bridge, require external or sandbox validation, and compare expected vs observed outcome.",
+        "acceptance": "the task must record surprise, validation evidence, and a pass/fail score",
         "missing_slots": [
-          "aresta_causal_relevante",
-          "evidencia_interna_suficiente"
+          "fresh_gap_source"
         ],
-        "prerequisite_task_id": null,
+        "prerequisite_task_id": "curtask_1cf66186a7ae",
         "status": "pending",
         "self_relative": true,
-        "created_at": 1778440253
-      },
-      {
-        "task_id": "curtask_d12cadfff792",
-        "source_id": "inv_0a8c8162c7",
-        "source_type": "active_investigation",
-        "domain": "user_context",
-        "difficulty": 1,
-        "stage": "near_transfer",
-        "stage_goal": "small variation of a task the system already almost solves",
-        "title": "Warm start variation for user_context",
-        "objective": "Restate and solve a close variant of the known gap: qual meu nome?. Keep only one missing slot active: aresta_causal_relevante.",
-        "acceptance": "success score >= 0.70 and no new anchor failure",
-        "missing_slots": [
-          "aresta_causal_relevante"
-        ],
-        "prerequisite_task_id": null,
-        "status": "pending",
-        "self_relative": true,
-        "created_at": 1778440253
-      },
-      {
-        "task_id": "curtask_5339f3c80b8d",
-        "source_id": "inv_5b3ca2b121",
-        "source_type": "active_investigation",
-        "domain": "user_context",
-        "difficulty": 1,
-        "stage": "near_transfer",
-        "stage_goal": "small variation of a task the system already almost solves",
-        "title": "Warm start variation for user_context",
-        "objective": "Restate and solve a close variant of the known gap: qual meu nome?. Keep only one missing slot active: aresta_causal_relevante.",
-        "acceptance": "success score >= 0.70 and no new anchor failure",
-        "missing_slots": [
-          "aresta_causal_relevante"
-        ],
-        "prerequisite_task_id": null,
-        "status": "pending",
-        "self_relative": true,
-        "created_at": 1778440253
-      },
-      {
-        "task_id": "curtask_34f64c480038",
-        "source_id": "inv_2c4404d07f",
-        "source_type": "active_investigation",
-        "domain": "user_context",
-        "difficulty": 1,
-        "stage": "near_transfer",
-        "stage_goal": "small variation of a task the system already almost solves",
-        "title": "Warm start variation for user_context",
-        "objective": "Restate and solve a close variant of the known gap: você lembra de mim?. Keep only one missing slot active: aresta_causal_relevante.",
-        "acceptance": "success score >= 0.70 and no new anchor failure",
-        "missing_slots": [
-          "aresta_causal_relevante"
-        ],
-        "prerequisite_task_id": null,
-        "status": "pending",
-        "self_relative": true,
-        "created_at": 1778440253
-      },
-      {
-        "task_id": "curtask_466b1345ece3",
-        "source_id": "inv_c641b0cfbc",
-        "source_type": "active_investigation",
-        "domain": "general",
-        "difficulty": 1,
-        "stage": "near_transfer",
-        "stage_goal": "small variation of a task the system already almost solves",
-        "title": "Warm start variation for general",
-        "objective": "Restate and solve a close variant of the known gap: quanto é 2+2?. Keep only one missing slot active: aresta_causal_relevante.",
-        "acceptance": "success score >= 0.70 and no new anchor failure",
-        "missing_slots": [
-          "aresta_causal_relevante"
-        ],
-        "prerequisite_task_id": null,
-        "status": "pending",
-        "self_relative": true,
-        "created_at": 1778440253
-      },
-      {
-        "task_id": "curtask_a2bad34ebe06",
-        "source_id": "inv_2e6c478502",
-        "source_type": "active_investigation",
-        "domain": "user_context",
-        "difficulty": 1,
-        "stage": "near_transfer",
-        "stage_goal": "small variation of a task the system already almost solves",
-        "title": "Warm start variation for user_context",
-        "objective": "Restate and solve a close variant of the known gap: eu perguntei sobre mim. Keep only one missing slot active: aresta_causal_relevante.",
-        "acceptance": "success score >= 0.70 and no new anchor failure",
-        "missing_slots": [
-          "aresta_causal_relevante"
-        ],
-        "prerequisite_task_id": null,
-        "status": "pending",
-        "self_relative": true,
-        "created_at": 1778440253
-      },
-      {
-        "task_id": "curtask_6e8e5748d706",
-        "source_id": "inv_466c7d8b38",
-        "source_type": "active_investigation",
-        "domain": "user_context",
-        "difficulty": 1,
-        "stage": "near_transfer",
-        "stage_goal": "small variation of a task the system already almost solves",
-        "title": "Warm start variation for user_context",
-        "objective": "Restate and solve a close variant of the known gap: eu perguntei sobre mim. Keep only one missing slot active: aresta_causal_relevante.",
-        "acceptance": "success score >= 0.70 and no new anchor failure",
-        "missing_slots": [
-          "aresta_causal_relevante"
-        ],
-        "prerequisite_task_id": null,
-        "status": "pending",
-        "self_relative": true,
-        "created_at": 1778440253
-      },
-      {
-        "task_id": "curtask_f84b4bc6869e",
-        "source_id": "inv_3c1d22cc53",
-        "source_type": "active_investigation",
-        "domain": "user_context",
-        "difficulty": 1,
-        "stage": "near_transfer",
-        "stage_goal": "small variation of a task the system already almost solves",
-        "title": "Warm start variation for user_context",
-        "objective": "Restate and solve a close variant of the known gap: qual meu nome?. Keep only one missing slot active: aresta_causal_relevante.",
-        "acceptance": "success score >= 0.70 and no new anchor failure",
-        "missing_slots": [
-          "aresta_causal_relevante"
-        ],
-        "prerequisite_task_id": null,
-        "status": "pending",
-        "self_relative": true,
-        "created_at": 1778440253
+        "created_at": 1778936080
       }
     ],
     "progression": [
       1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1
+      2,
+      3,
+      4,
+      5
     ]
   },
   "generalization": {
     "ok": true,
     "axis": "generalization",
-    "zero_shot_task_count": 0,
+    "zero_shot_task_count": 2,
     "success_rate": 0.0,
-    "gap_count": 4,
+    "gap_count": 3,
     "cases": [
       {
         "domain": "unseen_counterfactual_ops",
@@ -701,45 +304,45 @@
   "metrics": {
     "success_rate": 0.3333,
     "error_rate": 0.6667,
-    "surprise_score": 1.0,
-    "latency_ms": 623.09,
+    "surprise_score": 0.75,
+    "latency_ms": 916.11,
     "drift_score": 0.0,
-    "zero_shot_task_count": 0,
+    "zero_shot_task_count": 2,
     "resilience_success_rate": 1.0
   },
   "predictive_model": {
     "ok": true,
     "snapshot": {
-      "ts": 1778440253,
+      "ts": 1778936080,
       "source": "longitudinal_harness",
       "metrics": {
         "success_rate": 0.3333,
         "error_rate": 0.6667,
-        "surprise_score": 1.0,
-        "latency_ms": 623.09,
+        "surprise_score": 0.75,
+        "latency_ms": 916.11,
         "drift_score": 0.0,
-        "zero_shot_task_count": 0,
+        "zero_shot_task_count": 2,
         "resilience_success_rate": 1.0,
-        "health_index": 0.3558
+        "health_index": 0.3886
       }
     },
     "prediction": {
       "ok": true,
-      "samples": 2,
-      "window": 2,
+      "samples": 11,
+      "window": 11,
       "horizon_steps": 3,
-      "current_health": 0.3558,
-      "predicted_health": 0.3729,
+      "current_health": 0.3886,
+      "predicted_health": 0.3976,
       "predicted_success_rate": 0.3333,
       "predicted_error_rate": 0.6667,
-      "predicted_surprise_score": 1.0,
+      "predicted_surprise_score": 0.6886,
       "predicted_drift_score": 0.0,
       "slopes": {
-        "health": 0.0057,
+        "health": 0.00298,
         "success_rate": 0.0,
         "error_rate": 0.0,
-        "surprise_score": 0.0,
-        "latency_norm": -0.0355,
+        "surprise_score": -0.02045,
+        "latency_norm": -0.0012,
         "drift_score": 0.0
       },
       "degradation_risk": 0.57,
@@ -752,7 +355,7 @@
     },
     "preventive_action": "enter_conservative_mode"
   },
-  "duration_ms": 631.02,
+  "duration_ms": 931.68,
   "epistemic_ledger": {
     "ok": true,
     "artifact_kind": "system_capability",

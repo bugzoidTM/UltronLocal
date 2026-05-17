@@ -1,5 +1,5 @@
 {
-  "ts": 1778605490,
+  "ts": 1778963632,
   "active_goal": "Modelar taxonomia de erros cognitivos em decisões",
   "active_mission": {
     "id": "mis_1776628887_3",
@@ -556,30 +556,30 @@
     "budget_per_min": 2
   },
   "autonomy_state": {
-    "ticks": 1,
-    "last_tick": 238873,
+    "ticks": 71,
+    "last_tick": 176809,
     "last_error": null,
     "consecutive_errors": 0
   },
   "background_guard": {
     "enabled": true,
     "state": "healthy",
-    "lag_sec": 0.005,
-    "max_lag_sec": 87.2334,
+    "lag_sec": 0.0139,
+    "max_lag_sec": 5313.0155,
     "consecutive_lag": 0,
-    "paused_until": 1778605426.0600717,
+    "paused_until": 1778963609.4482439,
     "last_pause_reason": "event_loop_lag",
-    "last_pause_at": 1778605336.0600717,
+    "last_pause_at": 1778963519.4482439,
     "last_slow_request": null,
-    "blocked_loops": 580,
-    "last_blocked_loop": "recursive_si_loop",
-    "last_log_at": 1778605396.1123915,
+    "blocked_loops": 4028,
+    "last_blocked_loop": "voice_prewarm_loop",
+    "last_log_at": 1778963580.5672052,
     "foreground_active": 0,
-    "last_foreground_path": "/api/chat/stream",
-    "last_foreground_at": 1778605019.2796776,
-    "last_foreground_elapsed_sec": 5.22,
+    "last_foreground_path": null,
+    "last_foreground_at": 0.0,
+    "last_foreground_elapsed_sec": 0.0,
     "last_pause_details": {
-      "lag_sec": 36.525,
+      "lag_sec": 2.245,
       "consecutive_lag": 1
     },
     "paused": false,
@@ -587,22 +587,23 @@
   },
   "background_binary_bus": {
     "enabled": true,
-    "started_at": 1778604783.0040095,
-    "processed": 1556,
+    "started_at": 1778935778.7342265,
+    "processed": 21250,
     "dropped": 0,
     "sink_errors": 0,
     "last_event": {
-      "kind": "workspace",
-      "loop": "judge_loop",
-      "event": "workspace_publish",
-      "at": 1778605457.1644726
+      "kind": "guard_state",
+      "loop": "runtime_guard",
+      "event": "guard_state_write",
+      "at": 1778963631.8361151
     },
     "last_error": null,
     "queue_size": 0,
     "worker_alive": true,
-    "binlog_path": "D:\\UnidadeF\\UltronPro\\backend\\data\\background_bus.binlog"
+    "binlog_path": "D:\\sistemas\\UltronPro\\backend\\data\\background_bus.binlog"
   },
   "extra": {
-    "reason": "judge_timeout"
+    "reason": "judge_tick",
+    "judge_out": "{'open_conflicts': 5, 'resolved': 1, 'needs_human': 0, 'attempted': 1}"
   }
 }

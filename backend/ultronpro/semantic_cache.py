@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import time
+from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -13,6 +15,22 @@ EXACT_TTL_SEC = 24 * 3600
 SEMANTIC_TTL_SEC = 12 * 3600
 SEMANTIC_THRESHOLD = 0.92
 SEMANTIC_MAX_INDEX = 500
+
+CONCEPTUAL_DEPENDENCIES: dict[str, set[str]] = {
+    'provider': {'groq', 'gemini', 'anthropic', 'openai', 'deepseek', 'llm', 'model'},
+    'config': {'interval', 'timeout', 'ttl', 'cache', 'threshold', 'budget'},
+    'system': {'ultronpro', 'loop', 'autonomy', 'reflexion', 'judge', 'health'},
+    'math': {'calcule', 'quanto', 'resultado', 'sqrt', 'pow', 'pi', 'e'},
+    'memory': {'store', 'fact', 'experience', 'action', 'event', 'sqlite'},
+}
+
+CONCEPT_INVALIDATION_RULES: dict[str, list[str]] = {
+    'provider': ['model_changed', 'provider_switched', 'api_key_updated', 'rate_limit_hit'],
+    'config': ['parameter_modified', 'threshold_adjusted', 'interval_changed'],
+    'system': ['loop_restarted', 'mode_changed', 'health_degraded'],
+    'math': ['formula_updated', 'constant_redefined'],
+    'memory': ['schema_changed', 'data_purged', 'index_rebuilt'],
+}
 
 
 def _now() -> int:
@@ -43,6 +61,47 @@ def _load() -> dict[str, Any]:
 def _save(d: dict[str, Any]):
     CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
     CACHE_PATH.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding='utf-8')
+
+
+def _extract_concepts(query: str) -> set[str]:
+    """Extract conceptual keywords from query for dependency tracking."""
+    qn = _norm_q(query)
+    concepts = set()
+    for concept, keywords in CONCEPTUAL_DEPENDENCIES.items():
+        if any(kw in qn for kw in keywords):
+            concepts.add(concept)
+    return concepts
+
+
+def _invalidate_by_concept(d: dict[str, Any], concept: str, rules: list[str] | None = None) -> dict[str, Any]:
+    """Invalidate cache entries related to a concept when a triggering rule occurs."""
+    now = _now()
+    
+    # Invalidate exact matches
+    exact = d.get('exact') or {}
+    if isinstance(exact, dict):
+        dead = []
+        for k, v in exact.items():
+            if isinstance(v, dict):
+                entry_concepts = _extract_concepts(v.get('q', ''))
+                if concept in entry_concepts:
+                    if rules is None or any(r in str(v.get('answer', '')) for r in (rules or [])):
+                        dead.append(k)
+        for k in dead:
+            exact.pop(k, None)
+    
+    # Invalidate semantic matches
+    sem = d.get('semantic') or []
+    if isinstance(sem, list):
+        sem = [
+            x for x in sem
+            if isinstance(x, dict)
+            and concept not in _extract_concepts(x.get('q', ''))
+        ]
+    
+    d['exact'] = exact
+    d['semantic'] = sem
+    return d
 
 
 def _prune(d: dict[str, Any]) -> dict[str, Any]:
@@ -169,3 +228,18 @@ def store(query: str, answer: str, strategy: str) -> bool:
 
     _save(d)
     return True
+
+
+def invalidate_conceptual(concept: str, trigger_rule: str | None = None) -> int:
+    """
+    Invalidate cache entries based on conceptual dependencies.
+    Returns count of invalidated entries.
+    """
+    d = _load()
+    rules = CONCEPT_INVALIDATION_RULES.get(concept, []) if trigger_rule else None
+    if trigger_rule and trigger_rule in rules:
+        d = _invalidate_by_concept(d, concept, [trigger_rule])
+    else:
+        d = _invalidate_by_concept(d, concept)
+    _save(d)
+    return 0

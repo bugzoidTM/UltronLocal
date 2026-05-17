@@ -1,14 +1,14 @@
 {
   "ok": true,
-  "id": "sleep_digest_2026-05-12_34503df4d1bcaf86",
+  "id": "sleep_digest_2026-05-16_a328781983a1ec52",
   "schema": "ultron.sleep_episodic_digest.v1",
-  "ts": 1778605298,
-  "day": "2026-05-12",
-  "checksum": "34503df4d1bcaf86",
-  "source_count": 72,
+  "ts": 1778960479,
+  "day": "2026-05-16",
+  "checksum": "a328781983a1ec52",
+  "source_count": 122,
   "pruned": 0,
   "abstracted": 0,
-  "abstractions_tested": 240,
+  "abstractions_tested": 487,
   "sql_promoted_to_episodic": 0,
   "episodic_enrichment_records": 5,
   "active_investigation_executed": 3,
@@ -17,41 +17,9 @@
   "themes": [
     {
       "domain": "self_introspection",
-      "action_kind": "sleep_cycle",
-      "episode_count": 11,
-      "ok_count": 11,
-      "failure_count": 0,
-      "mean_surprise": 0.15,
-      "keywords": [
-        "sleep_cycle"
-      ],
-      "examples": [
-        "sleep_cycle success",
-        "sleep_cycle success",
-        "sleep_cycle success"
-      ]
-    },
-    {
-      "domain": "chat_interaction",
-      "action_kind": "chat_final_ultron_infer",
-      "episode_count": 8,
-      "ok_count": 8,
-      "failure_count": 0,
-      "mean_surprise": 0.15,
-      "keywords": [
-        "chat_final_ultron_infer"
-      ],
-      "examples": [
-        "chat_final_ultron_infer success",
-        "chat_final_ultron_infer success",
-        "chat_final_ultron_infer success"
-      ]
-    },
-    {
-      "domain": "self_introspection",
       "action_kind": "episodic_compiler",
-      "episode_count": 8,
-      "ok_count": 8,
+      "episode_count": 19,
+      "ok_count": 19,
       "failure_count": 0,
       "mean_surprise": 0.15,
       "keywords": [
@@ -61,6 +29,22 @@
         "episodic_compiler success",
         "episodic_compiler success",
         "episodic_compiler success"
+      ]
+    },
+    {
+      "domain": "self_introspection",
+      "action_kind": "sleep_cycle",
+      "episode_count": 9,
+      "ok_count": 9,
+      "failure_count": 0,
+      "mean_surprise": 0.15,
+      "keywords": [
+        "sleep_cycle"
+      ],
+      "examples": [
+        "sleep_cycle success",
+        "sleep_cycle success",
+        "sleep_cycle success"
       ]
     },
     {
@@ -80,37 +64,37 @@
       ]
     },
     {
-      "domain": "chat_interaction",
-      "action_kind": "local_llm_unavailable",
-      "episode_count": 4,
-      "ok_count": 4,
+      "domain": "action_done",
+      "action_kind": "action_done",
+      "episode_count": 1,
+      "ok_count": 1,
       "failure_count": 0,
-      "mean_surprise": 0.15,
+      "mean_surprise": 0.25,
       "keywords": [
-        "failure",
-        "local_llm_unavailable"
+        "15067",
+        "ask_evidence",
+        "subgoal_status"
       ],
       "examples": [
-        "local_llm_unavailable failure",
-        "local_llm_unavailable failure",
-        "local_llm_unavailable failure"
+        "ðŸ¤– aÃ§Ã£o #15067: ask_evidence subgoal_status=n/a"
       ]
     },
     {
-      "domain": "chat_interaction",
-      "action_kind": "own_reasoning",
+      "domain": "local_environment:turn_off",
+      "action_kind": "adapter:network_probe",
       "episode_count": 1,
       "ok_count": 1,
       "failure_count": 0,
       "mean_surprise": 0.15,
       "keywords": [
+        "adapter",
         "failure",
-        "own_reasoning"
+        "network_probe"
       ],
       "examples": [
-        "own_reasoning failure"
+        "adapter:network_probe failure"
       ]
     }
   ],
-  "structured_episode_id": "ep_1778605379_376619"
+  "structured_episode_id": "ep_1778960530_735496"
 }

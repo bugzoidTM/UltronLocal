@@ -1,39 +1,39 @@
 {
   "schema": "ultron.online_rl_cycle.v1",
   "last_action_ts": {
-    "trusted_acquisition": 1778524461,
-    "homeostasis_tune": 1778546863,
-    "autonomous_cognition_tick": 1778548712,
-    "epistemic_gap_scan": 1778461336,
-    "reflexion_tick": 1778605209,
-    "cognitive_patch_loop": 1778508525,
-    "sleep_digest": 1778604718
+    "trusted_acquisition": 1778943736,
+    "homeostasis_tune": 1778797284,
+    "autonomous_cognition_tick": 1778962332,
+    "epistemic_gap_scan": 1778953245,
+    "reflexion_tick": 1778802689,
+    "cognitive_patch_loop": 1778808092,
+    "sleep_digest": 1778960530
   },
-  "cycle_count": 26,
-  "last_reward": 0.3319,
+  "cycle_count": 101,
+  "last_reward": 0.5656,
   "last_action": {
-    "kind": "reflexion_tick",
+    "kind": "autonomous_cognition_tick",
     "drive": "autonomy",
-    "cost": 0.15,
-    "base_priority": 0.55,
-    "cooldown_sec": 180,
-    "description": "execute meta-cognitive reflexion to evaluate recent traces and propose hypotheses",
+    "cost": 0.2,
+    "base_priority": 0.6,
+    "cooldown_sec": 120,
+    "description": "execute one cycle of autonomous cognition (perceive, suggest, execute, learn)",
     "context": "normal",
-    "score": 1.3689,
-    "rl_priority_adjustment": 4,
-    "need_bonus": 0.08,
-    "state_pressure": 0.6296,
+    "score": 1.0987,
+    "rl_priority_adjustment": 2,
+    "need_bonus": 0.1,
+    "state_pressure": 0.5735,
     "cooldown_remaining_sec": 0,
     "non_llm": true
   },
   "last_reward_report": {
-    "reward": 0.3319,
-    "ok": false,
+    "reward": 0.5656,
+    "ok": true,
     "components": {
-      "action_score": 0.2,
+      "action_score": 0.6,
       "homeostasis_delta": 0.0,
-      "gap_delta": -0.125,
-      "latency_score": 0.9983,
+      "gap_delta": 0.0,
+      "latency_score": 0.9932,
       "result_ok": true
     },
     "bonuses": {
@@ -45,14 +45,14 @@
       "hallucination": 0.0,
       "stale_source": 0.0,
       "source_404_as_useful": 0.0,
-      "loop_pressure": 0.08,
+      "loop_pressure": 0.0,
       "rollback": 0.0
     },
     "evidence": {
-      "hypotheses": 0,
-      "probes": 0
+      "actions_executed": 1,
+      "consequences_learned": 1
     }
   },
-  "last_run_at": 1778605209,
-  "updated_at": 1778605209
+  "last_run_at": 1778962332,
+  "updated_at": 1778962332
 }

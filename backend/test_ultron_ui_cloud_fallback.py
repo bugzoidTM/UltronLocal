@@ -63,6 +63,42 @@ def test_ultron_llm_uses_cloud_when_local_fails(monkeypatch):
     assert "openai" in client.runtime_description()
 
 
+def test_voice_reply_uses_backend_synthesized_text_without_local_resynthesis(monkeypatch):
+    class FakeResponse:
+        status_code = 200
+
+        def json(self):
+            return {
+                "answer": "Encontrei cobertura direta insuficiente. Lacunas restantes: aresta_causal_relevante.",
+                "synthesized_text": "Ainda nao tenho evidencia suficiente para fechar isso com seguranca.",
+                "trace_causal": {"source_module": "causal_transfer_engine"},
+            }
+
+    class FakeHttpClient:
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def post(self, *args, **kwargs):
+            return FakeResponse()
+
+    monkeypatch.setattr(local_llm.httpx, "Client", FakeHttpClient)
+    client = local_llm.UltronLLMClient()
+    monkeypatch.setattr(
+        client,
+        "complete",
+        lambda *args, **kwargs: (_ for _ in ()).throw(AssertionError("local synthesis should not run")),
+    )
+
+    assert client.voice_reply("teste") == "Ainda nao tenho evidencia suficiente para fechar isso com seguranca."
+    assert client.last_route == "causal_brain (via causal_transfer_engine)"
+
+
 def test_free_auto_preset_needs_no_key_and_openrouter_still_requires_key():
     assert preset_for("free_auto")["model"] == "openai"
 

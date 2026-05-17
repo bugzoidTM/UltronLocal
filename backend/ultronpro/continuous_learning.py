@@ -339,7 +339,16 @@ def record_learning_feedback(task_type: str, success: bool, latency_ms: int,
     return get_continuous_learning().record_feedback(task_type, success, latency_ms, error_type, profile)
 
 
+def record_feedback(task_type: str, success: bool, latency_ms: int,
+                    error_type: str | None = None, profile: str = 'balanced') -> dict:
+    return get_continuous_learning().record_feedback(task_type, success, latency_ms, error_type, profile)
+
+
 def get_learning_recommendation(task_type: str) -> dict:
+    return get_continuous_learning().get_recommended_action(task_type)
+
+
+def get_recommended_action(task_type: str) -> dict:
     return get_continuous_learning().get_recommended_action(task_type)
 
 
@@ -347,7 +356,15 @@ def get_learning_performance() -> dict:
     return get_continuous_learning().get_performance_summary()
 
 
+def get_performance_summary() -> dict:
+    return get_continuous_learning().get_performance_summary()
+
+
 def get_learning_insights(limit: int = 10) -> list[dict]:
+    return get_continuous_learning().get_top_insights(limit)
+
+
+def get_top_insights(limit: int = 10) -> list[dict]:
     return get_continuous_learning().get_top_insights(limit)
 
 
@@ -355,5 +372,13 @@ def apply_learning_adjustment(task_type: str) -> dict:
     return get_continuous_learning().apply_learned_adjustment(task_type)
 
 
+def apply_learned_adjustment(task_type: str) -> dict:
+    return get_continuous_learning().apply_learned_adjustment(task_type)
+
+
 def get_continuous_learning_status() -> dict:
+    return get_continuous_learning().get_status()
+
+
+def get_status() -> dict:
     return get_continuous_learning().get_status()

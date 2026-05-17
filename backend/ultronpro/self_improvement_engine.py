@@ -752,5 +752,9 @@ def check_promotion_trigger() -> dict:
     return get_self_improvement_engine().check_promotion_trigger()
 
 
+def get_status() -> dict:
+    return get_self_improvement_engine().get_status()
+
+
 def get_recent_trials(limit: int = 10) -> list[dict]:
     return get_self_improvement_engine().get_recent_trials(limit)

@@ -1,0 +1,1014 @@
+INFO:     uvicorn file log enabled path=D:\UnidadeF\UltronPro\backend\data\logs\uvicorn_live.log max_bytes=26214400 keep_bytes=8388608
+INFO:     Started server process [17736]
+INFO:     Waiting for application startup.
+INFO:     Starting UltronPRO...
+INFO:     Loaded settings. LightRAG URL: https://lightrag.nutef.com
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Qwen llama-server already running
+INFO:     Qwen runtime monitor started
+INFO:     [META] Unidade de Reflexão Metacognitiva Unificada iniciada.
+INFO:     Longitudinal harness loop started
+INFO:     [SELF-TALK] OODA loop started (interval=180s)
+INFO:     Autonomous cognition loop started
+INFO:     Online RL loop started
+INFO:     Ultron loops startup complete
+INFO:     Operational Memory initialized: session=872c2f607dca
+INFO:     Operational Memory initialized: session=811794d21c7b
+INFO:     Background guard started (lag_pause=2.00s, pause=90s, slow_request=4.00s)
+INFO:     Autofeeder started
+INFO:     Autonomy loop started
+INFO:     Judge loop started
+INFO:     Recursive self-improvement loop started
+INFO:     Voice prewarm loop started
+INFO:     Roadmap V5 orchestrator loop started
+INFO:     AGI path loop started
+INFO:     Self-improvement loop started
+INFO:     Reflexion loop started
+INFO:     Self-governance loop started
+INFO:     Meta-observer loop started
+INFO:     Affect markers loop started
+INFO:     Narrative summary loop started
+INFO:     Integration proxy loop started
+INFO:     \U0001f634 Sleep cycle loop started (interval=21600s)
+INFO:     \U0001fa79 Healer verify loop started
+INFO:     \u2697\ufe0f Active Discovery loop started
+INFO:     No-cloud campaign loop started
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Background bootstrap disabled by env
+INFO:     Background source backfill disabled by env
+INFO:     Background recovery: ok
+INFO:     Phenomenal consciousness activated: already_active
+INFO:     WebExplorer: Iniciando (ULTRON_WEB_EXPLORER=1, interval=900s, max_links=1)
+INFO:     WebExplorer: Motor de exploração iniciado em background.
+INFO:     WebExplorer: Iniciando Puppeteer Bridge local...
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop judge_loop for 81.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop autofeeder_loop for 51.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop voice_prewarm_loop for 21.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:     extract_triples (Attempt 1/3): calling LLM for 250 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 94 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'é um filme', 'object': 'norte-americano de 2017 do gênero thriller e ação', 'confidence': 0.85} from exp_6971
+INFO:     add_triple: SUCCESS
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=6971, extracted=1, added=1)
+INFO:     [SELF-TALK] Tick #1: posture=anomaly, action=alert_and_simulate
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents/doc-171e37b33d35a47e434511874d96e6c6 "HTTP/1.1 404 Not Found"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 253 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 69 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Evento', 'predicate': 'ocorre em', 'object': 'runtime 2026-03-01 13:22:02', 'confidence': 0.85} from exp_6972
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Synced from LightRAG doc doc-171e (exp_id=6972, added=1)
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop metacognitive_loop for 83.9s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop metacognitive_loop for 53.9s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop metacognitive_loop for 23.9s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://duckduckgo.com/html/?q=RLHF+vs+DPO+for+LLM+optimization "HTTP/1.1 302 Moved Temporarily"
+INFO:httpx:HTTP Request: GET https://html.duckduckgo.com/html/?q=RLHF+vs+DPO+for+LLM+optimization "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://medium.com/@baicenxiao/rlhf-vs-dpo-choosing-the-method-for-llm-alignment-tuning-66f45ef3d4b5 "HTTP/1.1 403 Forbidden"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+INFO:     [META] Ciclo finalizado. Status: NOMINAL
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop voice_prewarm_loop for 69.2s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop voice_prewarm_loop for 39.2s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop voice_prewarm_loop for 9.2s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     [SELF-TALK] Tick #2: posture=anomaly, action=alert_and_simulate
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop sleep_cycle_loop for 65.5s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET https://duckduckgo.com/html/?q=causal_graph+causal_graph_interventional_coverage+cobertura+interventional+grafo+causal+causal_graph+edges+126+documentation+reliable+source "HTTP/1.1 302 Moved Temporarily"
+INFO:httpx:HTTP Request: GET https://html.duckduckgo.com/html/?q=causal_graph+causal_graph_interventional_coverage+cobertura+interventional+grafo+causal+causal_graph+edges+126+documentation+reliable+source "HTTP/1.1 202 Accepted"
+INFO:httpx:HTTP Request: GET https://www.pywhy.org/dowhy/main/user_guide/modeling_causal_relationships/index.html "HTTP/1.1 404 Not Found"
+INFO:httpx:HTTP Request: GET https://causal-learn.readthedocs.io/en/latest/ "HTTP/1.1 200 OK"
+INFO:     OnlineRL: action=trusted_acquisition reward=0.2391 ok=False
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop healer_verify_loop for 35.5s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop active_discovery_loop for 5.5s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     [AutobioRouter] self_event ingested: kind=abstraction_promoted module=episodic_compiler
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     [AutobioRouter] self_event ingested: kind=abstraction_promoted module=episodic_compiler
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop reflexion_loop for 75.9s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:ultronpro.sleep_cycle:Episodic compiler error in sleep_cycle: [Errno 22] Invalid argument: 'D:\\UnidadeF\\UltronPro\\backend\\data\\causal_abstractions_v2.json'
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     [AutobioRouter] self_event ingested: kind=sleep_cycle_completed module=sleep_cycle
+INFO:     \U0001f634 Sleep cycle: pruned=0 abstracted=2 sql={'decayed': 2920, 'pruned': 25, 'promoted': 0}
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop reflexion_loop for 45.9s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop reflexion_loop for 15.9s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:     [SELF-TALK] Tick #3: posture=anomaly, action=alert_and_simulate
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 250 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 94 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'é um filme', 'object': 'norte-americano de 2017 do gênero thriller e ação', 'confidence': 0.85} from exp_6975
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=6975, extracted=1, added=1)
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents/doc-2b17b02b0facca9291ee9985de55502e "HTTP/1.1 404 Not Found"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 253 chars...
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 82 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Hitler', 'predicate': 'permaneceu', 'object': 'na cidade, em seu bunker (Führerbunker)', 'confidence': 0.85} from exp_6976
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Synced from LightRAG doc doc-2b17 (exp_id=6976, added=1)
+WARNING:  Background guard: pausing loop self_governance_loop for 80.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop self_governance_loop for 50.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop self_governance_loop for 20.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+INFO:     [META] Ciclo finalizado. Status: NOMINAL
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:     [SELF-TALK] Tick #4: posture=anomaly, action=alert_and_simulate
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop integration_proxy_loop for 87.8s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop integration_proxy_loop for 57.8s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop integration_proxy_loop for 27.8s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 250 chars...
+WARNING:  Background guard: pausing loop self_improvement_loop for 90.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 94 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'é um filme', 'object': 'norte-americano de 2017 do gênero thriller e ação', 'confidence': 0.85} from exp_6978
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=6978, extracted=1, added=1)
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents/doc-2dcbaca4ddb14b45355977f216226d29 "HTTP/1.1 404 Not Found"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 253 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 75 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Segunda Guerra Mundial', 'predicate': 'foi', 'object': 'conflito militar global', 'confidence': 0.85} from exp_6979
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Synced from LightRAG doc doc-2dcb (exp_id=6979, added=1)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop self_improvement_loop for 60.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop self_improvement_loop for 29.9s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     [SELF-TALK] Tick #5: posture=anomaly, action=alert_and_simulate
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop affect_markers_loop for 90.0s (reason=event_loop_lag)
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop affect_markers_loop for 60.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop affect_markers_loop for 29.9s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+INFO:     [META] Ciclo finalizado. Status: NOMINAL
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop meta_observer_loop for 75.1s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop meta_observer_loop for 45.1s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop meta_observer_loop for 15.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:     [SELF-TALK] Tick #6: posture=anomaly, action=alert_and_simulate
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 250 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:httpx:HTTP Request: GET https://duckduckgo.com/html/?q=RLHF+vs+DPO+for+LLM+optimization "HTTP/1.1 302 Moved Temporarily"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 94 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'é', 'object': 'um filme norte-americano de 2017 do gênero thriller e ação', 'confidence': 0.85} from exp_6981
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=6981, extracted=1, added=1)
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://html.duckduckgo.com/html/?q=RLHF+vs+DPO+for+LLM+optimization "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents/doc-2c2661c970714be72e5112d5cf9a8e62 "HTTP/1.1 404 Not Found"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 253 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 49 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Evento', 'predicate': 'ocorre em', 'object': 'runtime', 'confidence': 0.85} from exp_6982
+INFO:     add_triple: SUCCESS
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     Autofeeder: Synced from LightRAG doc doc-2c26 (exp_id=6982, added=1)
+INFO:httpx:HTTP Request: GET https://medium.com/@baicenxiao/rlhf-vs-dpo-choosing-the-method-for-llm-alignment-tuning-66f45ef3d4b5 "HTTP/1.1 403 Forbidden"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+INFO:     [SELF-TALK] Tick #7: posture=anomaly, action=alert_and_simulate
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+INFO:     [META] Ciclo finalizado. Status: NOMINAL
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop inner_monologue_loop for 86.4s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop meta_observer_loop for 52.2s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop meta_observer_loop for 22.2s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 250 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 94 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'é', 'object': 'um filme norte-americano de 2017 do gênero thriller e ação', 'confidence': 0.85} from exp_6983
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=6983, extracted=1, added=1)
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents/doc-8be1a596eacff8200d2be4b0fd91582a "HTTP/1.1 404 Not Found"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 253 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 82 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'movimento', 'predicate': 'é definido por', 'object': 'forças atuantes e massa do corpo', 'confidence': 0.85} from exp_6984
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Synced from LightRAG doc doc-8be1 (exp_id=6984, added=1)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     [SELF-TALK] Tick #8: posture=anomaly, action=alert_and_simulate
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop inner_monologue_loop for 56.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop voice_prewarm_loop for 17.1s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+INFO:     [META] Ciclo finalizado. Status: NOMINAL
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop integration_proxy_loop for 90.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop integration_proxy_loop for 60.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop integration_proxy_loop for 30.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:     [SELF-TALK] Tick #9: posture=anomaly, action=alert_and_simulate
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 250 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 94 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'é', 'object': 'um filme norte-americano de 2017 do gênero thriller e ação', 'confidence': 0.85} from exp_6986
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=6986, extracted=1, added=1)
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents/doc-a2c0e72c5a7ee4a6962d775842f61f43 "HTTP/1.1 404 Not Found"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 253 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 60 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Decisão', 'predicate': 'é do tipo', 'object': 'metacognition_ask', 'confidence': 0.85} from exp_6987
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Synced from LightRAG doc doc-a2c0 (exp_id=6987, added=1)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+ERROR:    LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+INFO:     [SELF-TALK] Tick #10: posture=anomaly, action=alert_and_simulate
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+INFO:     [META] Ciclo finalizado. Status: NOMINAL
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop meta_observer_loop for 85.2s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop meta_observer_loop for 55.1s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop meta_observer_loop for 25.1s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 250 chars...
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 94 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'é', 'object': 'um filme norte-americano de 2017 do gênero thriller e ação', 'confidence': 0.85} from exp_6989
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=6989, extracted=1, added=1)
+INFO:httpx:HTTP Request: GET https://duckduckgo.com/html/?q=RLHF+vs+DPO+for+LLM+optimization "HTTP/1.1 302 Moved Temporarily"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://html.duckduckgo.com/html/?q=RLHF+vs+DPO+for+LLM+optimization "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents/doc-a310ba78cd622f4bf569f6cdef8f4fcb "HTTP/1.1 404 Not Found"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 253 chars...
+INFO:httpx:HTTP Request: GET https://medium.com/@baicenxiao/rlhf-vs-dpo-choosing-the-method-for-llm-alignment-tuning-66f45ef3d4b5 "HTTP/1.1 403 Forbidden"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 100 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Planejamento', 'predicate': 'é', 'object': 'um processo de execução em etapas com riscos e dependências.', 'confidence': 0.85} from exp_6990
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Synced from LightRAG doc doc-a310 (exp_id=6990, added=1)
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop agi_path_loop for 80.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop agi_path_loop for 50.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     [AutobioRouter] self_event ingested: kind=abstraction_promoted module=episodic_compiler
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:ultronpro.sleep_cycle:Episodic compiler error in sleep_cycle: [Errno 22] Invalid argument: 'D:\\UnidadeF\\UltronPro\\backend\\data\\causal_abstractions_v2.json'
+WARNING:  Background guard: pausing loop agi_path_loop for 20.0s (reason=event_loop_lag)
+INFO:     [AutobioRouter] self_event ingested: kind=sleep_cycle_completed module=sleep_cycle
+INFO:     OnlineRL: action=sleep_digest reward=0.5365 ok=True
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:     [SELF-TALK] Tick #11: posture=anomaly, action=alert_and_simulate
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop integration_proxy_loop for 80.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop integration_proxy_loop for 50.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop integration_proxy_loop for 20.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+INFO:     [META] Ciclo finalizado. Status: NOMINAL
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop autonomy_loop for 70.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop autonomy_loop for 40.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop autonomy_loop for 10.0s (reason=event_loop_lag)
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     [SELF-TALK] Tick #12: posture=anomaly, action=alert_and_simulate
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop reflexion_loop for 81.6s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop reflexion_loop for 51.6s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop reflexion_loop for 21.6s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 250 chars...
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 94 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'é um filme', 'object': 'norte-americano de 2017 do gênero thriller e ação', 'confidence': 0.85} from exp_6992
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=6992, extracted=1, added=1)
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents/doc-dfc12d577a8b808624fd6b0f45f41910 "HTTP/1.1 404 Not Found"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 253 chars...
+WARNING:  Background guard: pausing loop mission_control_loop for 84.1s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 73 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Francis Bacon', 'predicate': 'especificou', 'object': 'um novo sistema lógico', 'confidence': 0.85} from exp_6993
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Synced from LightRAG doc doc-dfc1 (exp_id=6993, added=1)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop mission_control_loop for 54.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop mission_control_loop for 23.9s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:     [SELF-TALK] Tick #13: posture=anomaly, action=alert_and_simulate
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+INFO:     [META] Ciclo finalizado. Status: NOMINAL
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop integration_proxy_loop for 89.6s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop integration_proxy_loop for 59.5s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop integration_proxy_loop for 29.5s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     [SELF-TALK] Tick #14: posture=anomaly, action=alert_and_simulate
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+ERROR:    LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+ERROR:    LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ERROR:    LLM Call Error (groq/llama-3.3-70b-versatile): Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+INFO:httpx:HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+WARNING:  LLM fallback error (openrouter/google/gemma-3-12b-it:free): Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=***REDACTED*** "HTTP/1.1 429 Too Many Requests"
+WARNING:  LLM fallback error (gemini/gemini-2.0-flash): Client error '429 Too Many Requests' for url 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=***REDACTED***
+For more information check: https://deve
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  agi_path_loop: status exceeded 5.0s; loop remains enabled and will retry later
+WARNING:  Autofeeder budget timeout: fetch_wikipedia_topic exceeded 8.0s
+WARNING:  Background guard: pausing loop judge_loop for 90.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 118 chars...
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 173 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Agrilus admonitor', 'predicate': 'é uma espécie de inseto', 'object': 'do género Agrilus, família Buprestidae, ordem Coleoptera', 'confidence': 0.85} from exp_6994
+INFO:     add_triple: SUCCESS
+INFO:httpx:HTTP Request: POST https://lightrag.nutef.com/documents/text "HTTP/1.1 200 OK"
+INFO:     LightRAG ingest ok source=wikipedia:pt quality=0.5867 ep=https://lightrag.nutef.com/documents/text
+INFO:     Autofeeder: Ingested from wikipedia:pt (exp_id=6994, extracted=1, added=1)
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents/doc-cc07f78729e86c3ca53f48bcd9acde0c "HTTP/1.1 404 Not Found"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 253 chars...
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Autofeeder LightRAG extract budget timeout after 20.0s
+INFO:     Autofeeder: Synced from LightRAG doc doc-cc07 (exp_id=6995, added=0)
+WARNING:  Background guard: pausing loop judge_loop for 60.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 1318 chars.
+WARNING:  extract_triples: attempt 1 failed to yield valid triples. Retrying...
+INFO:     extract_triples (Attempt 2/3): calling LLM for 253 chars...
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop judge_loop for 30.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 1269 chars.
+WARNING:  extract_triples: attempt 2 failed to yield valid triples. Retrying...
+INFO:     extract_triples (Attempt 3/3): calling LLM for 253 chars...
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 156 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 3
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': '403', 'predicate': 'API', 'object': 'perda de vazão em itens prioritários com foco em WIP no janela de 15 min.', 'confidence': 0.85} from exp_6995
+INFO:     add_triple: SUCCESS
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+INFO:     [META] Ciclo finalizado. Status: NOMINAL
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://duckduckgo.com/html/?q=RLHF+vs+DPO+for+LLM+optimization "HTTP/1.1 302 Moved Temporarily"
+INFO:httpx:HTTP Request: GET https://html.duckduckgo.com/html/?q=RLHF+vs+DPO+for+LLM+optimization "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop narrative_summary_loop for 87.8s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET https://medium.com/@baicenxiao/rlhf-vs-dpo-choosing-the-method-for-llm-alignment-tuning-66f45ef3d4b5 "HTTP/1.1 403 Forbidden"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop narrative_summary_loop for 57.7s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop narrative_summary_loop for 27.7s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     [SELF-TALK] Tick #15: posture=anomaly, action=alert_and_simulate
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+ERROR:    LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+ERROR:    LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Judge loop budget timeout; loop remains enabled and will retry later
+WARNING:  Background guard: pausing loop autofeeder_loop for 90.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop autofeeder_loop for 60.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop autofeeder_loop for 30.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+WARNING:  Background guard: pausing loop voice_prewarm_loop for 90.0s (reason=event_loop_lag)
+INFO:     extract_triples (Attempt 1/3): calling LLM for 250 chars...
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 94 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'é um filme', 'object': 'norte-americano de 2017 do gênero thriller e ação', 'confidence': 0.85} from exp_6996
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=6996, extracted=1, added=1)
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents/doc-67f0ced203d4d39fa976350d16dc7622 "HTTP/1.1 404 Not Found"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 253 chars...
+INFO:     [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+INFO:     [META] Roadmap Audit: 100.0% completo.
+INFO:     [META] Ciclo finalizado. Status: NOMINAL
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 85 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Acessar dados pessoais', 'predicate': 'viola', 'object': 'LGPD e políticas de privacidade', 'confidence': 0.85} from exp_6997
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Synced from LightRAG doc doc-67f0 (exp_id=6997, added=1)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop voice_prewarm_loop for 60.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop voice_prewarm_loop for 30.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:     [SELF-TALK] Tick #16: posture=anomaly, action=alert_and_simulate
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+ERROR:    LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+ERROR:    LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Judge loop budget timeout; loop remains enabled and will retry later
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop self_improvement_loop for 36.9s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop self_improvement_loop for 6.9s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ERROR:    LLM Call Error (groq/llama-3.3-70b-versatile): Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop reflexion_loop for 73.5s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop reflexion_loop for 43.5s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop reflexion_loop for 13.4s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+ERROR:    LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     [SELF-TALK] Tick #17: posture=anomaly, action=alert_and_simulate
+WARNING:  Background guard: pausing loop judge_loop for 90.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop judge_loop for 60.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop judge_loop for 30.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+INFO:     extract_triples (Attempt 1/3): calling LLM for 250 chars...
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 94 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'é', 'object': 'um filme norte-americano de 2017 do gênero thriller e ação', 'confidence': 0.85} from exp_6999
+INFO:     add_triple: SUCCESS
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+INFO:     [META] Ciclo finalizado. Status: NOMINAL
+WARNING:  roadmap_v5_loop: agi_metrics exceeded 8.0s; loop remains enabled and will retry later
+WARNING:  Autofeeder extract budget timeout after 20.0s
+INFO:     Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=6999, extracted=0, added=0)
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents/doc-42e8d6e294c1d708a0d03e0e1376af5c "HTTP/1.1 404 Not Found"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 253 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 99 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Império do Oriente', 'predicate': 'traduzia', 'object': 'leis e documentos oficiais de latim para grego', 'confidence': 0.85} from exp_7000
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Synced from LightRAG doc doc-42e8 (exp_id=7000, added=1)
+WARNING:  Background guard: pausing loop voice_prewarm_loop for 83.8s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop voice_prewarm_loop for 53.7s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop voice_prewarm_loop for 23.7s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     [SELF-TALK] Tick #18: posture=anomaly, action=alert_and_simulate
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+ERROR:    LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+ERROR:    LLM Call Error (nvidia/meta/llama-3.1-8b-instruct): Request timed out.
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop web_explorer_loop for 90.0s (reason=event_loop_lag)
+WARNING:  Judge loop budget timeout; loop remains enabled and will retry later
+INFO:     OnlineRL: action=reflexion_tick reward=0.3318 ok=False
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop web_explorer_loop for 60.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8025/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop web_explorer_loop for 29.9s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+WARNING:  roadmap_v5_loop: status exceeded 5.0s; loop remains enabled and will retry later
+INFO:     extract_triples (Attempt 1/3): calling LLM for 250 chars...
+INFO:httpx:HTTP Request: GET https://duckduckgo.com/html/?q=RLHF+vs+DPO+for+LLM+optimization "HTTP/1.1 302 Moved Temporarily"
+INFO:     [SELF-TALK] Tick #19: posture=anomaly, action=alert_and_simulate
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 94 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'é um filme', 'object': 'norte-americano de 2017 do gênero thriller e ação', 'confidence': 0.85} from exp_7002
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=7002, extracted=1, added=1)
+INFO:httpx:HTTP Request: GET https://html.duckduckgo.com/html/?q=RLHF+vs+DPO+for+LLM+optimization "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop self_improvement_loop for 87.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents/doc-72dbe4331504bd051e4e6576e9336cc1 "HTTP/1.1 404 Not Found"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 253 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 55 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Assistente', 'predicate': 'pode ajudar', 'object': 'usuário', 'confidence': 0.85} from exp_7003
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Synced from LightRAG doc doc-72db (exp_id=7003, added=1)
+INFO:httpx:HTTP Request: GET https://medium.com/@baicenxiao/rlhf-vs-dpo-choosing-the-method-for-llm-alignment-tuning-66f45ef3d4b5 "HTTP/1.1 403 Forbidden"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+INFO:     [META] Ciclo finalizado. Status: NOMINAL
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop self_improvement_loop for 57.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop self_improvement_loop for 26.9s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop integration_proxy_loop for 90.0s (reason=event_loop_lag)
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop integration_proxy_loop for 60.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop integration_proxy_loop for 30.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     [SELF-TALK] Tick #20: posture=anomaly, action=alert_and_simulate
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop recursive_si_loop for 90.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop recursive_si_loop for 60.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop recursive_si_loop for 29.9s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop autofeeder_loop for 90.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop autofeeder_loop for 60.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop autofeeder_loop for 30.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     --- [META] INICIANDO CICLO DE CONSCIÊNCIA UNIFICADA ---
+INFO:     [SELF-TALK] Tick #21: posture=anomaly, action=alert_and_simulate
+INFO:     extract_triples (Attempt 1/3): calling LLM for 250 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 94 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Security', 'predicate': 'é um filme', 'object': 'norte-americano de 2017 do gênero thriller e ação', 'confidence': 0.85} from exp_7037
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Ingested from wikipedia_topic:pt:security (exp_id=7037, extracted=1, added=1)
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://lightrag.nutef.com/documents/doc-c0794d30235a9701cd5b433ca71064ea "HTTP/1.1 404 Not Found"
+INFO:     extract_triples (Attempt 1/3): calling LLM for 253 chars...
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     extract_triples: LLM returned 66 chars.
+INFO:     extract_triples: processing 1 items from LLM on attempt 1
+INFO:     extract_triples: returning 1 triples
+INFO:     add_triple: {'subject': 'Câmara dos Deputados', 'predicate': 'nunca foi', 'object': 'dissolvida', 'confidence': 0.85} from exp_7038
+INFO:     add_triple: SUCCESS
+INFO:     Autofeeder: Synced from LightRAG doc doc-c079 (exp_id=7038, added=1)
+INFO:     [META] Estado nominal mantido. Equilíbrio entre drives e realidade.
+INFO:     [META] Ciclo finalizado. Status: NOMINAL
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Judge: trigger detectado, usando LLM. reason=promoted_patch
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     Reflexion triggered by workspace: workspace_trigger
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop inner_monologue_loop for 88.1s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop voice_prewarm_loop for 54.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+WARNING:  Background guard: pausing loop voice_prewarm_loop for 24.0s (reason=event_loop_lag)
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8025/health "HTTP/1.1 200 OK"
+INFO:     [SELF-TALK] Tick #22: posture=anomaly, action=alert_and_simulate
+INFO:httpx:HTTP Request: POST https://integrate.api.nvidia.com/v1/chat/completions "HTTP/1.1 200 OK"

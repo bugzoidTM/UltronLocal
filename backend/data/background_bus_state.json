@@ -1,17 +1,17 @@
 {
   "enabled": true,
-  "started_at": 1778604783.0040095,
-  "processed": 1664,
+  "started_at": 1778935778.7342265,
+  "processed": 21255,
   "dropped": 0,
   "sink_errors": 0,
   "last_event": {
-    "kind": "event",
-    "loop": "meta_observer_loop",
-    "event": "checkpoint_paused",
-    "at": 1778605580.6270556
+    "kind": "guard_state",
+    "loop": "runtime_guard",
+    "event": "guard_state_write",
+    "at": 1778963637.847634
   },
   "last_error": null,
-  "queue_size": 1,
+  "queue_size": 0,
   "worker_alive": true,
-  "binlog_path": "D:\\UnidadeF\\UltronPro\\backend\\data\\background_bus.binlog"
+  "binlog_path": "D:\\sistemas\\UltronPro\\backend\\data\\background_bus.binlog"
 }

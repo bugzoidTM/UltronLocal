@@ -6,14 +6,14 @@
   "auto_apply_confidence_threshold": 0.7,
   "post_action_eval_min_new_traces": 20,
   "last_line": 6,
-  "last_tick_ts": 1778605490,
+  "last_tick_ts": 1778963450,
   "last_action": "none",
   "pending_hypothesis_eval": {
-    "ts": 1778548361,
+    "ts": 1778963449,
     "acao": "adjust_prm_thresholds",
     "confianca": 0.8,
-    "razao": "The recent traces indicate an unstable latency issue, which suggests a meaningful failure pattern. Adjusting the prm thresholds may resolve the issue.",
-    "hipotese": "Adjusting prm thresholds may resolve the unstable latency issue.",
+    "razao": "Meaningful failure pattern detected with unstable latency issues, suggesting that the current PRM thresholds are too high.",
+    "hipotese": "Adjusting PRM thresholds to improve system stability.",
     "baseline": {
       "error_rate": 0.0,
       "outliers_gt_10s_pct": 0.0
@@ -22,15 +22,7 @@
     "detalhes": {
       "applied": {
         "type": "adjust_prm_thresholds",
-        "before": {
-          "low": 0.8,
-          "medium": 0.7
-        },
-        "after": {
-          "low": 0.8,
-          "medium": 0.7
-        },
-        "reversible": true
+        "status": "invalid_patch"
       }
     },
     "resultado_observado": null,
@@ -38,7 +30,7 @@
     "confianca_pos_acao": null,
     "status": "pending"
   },
-  "cycle_count": 1137,
+  "cycle_count": 1546,
   "curiosity_probe_interval": 5,
   "last_confidence": 0.7
 }

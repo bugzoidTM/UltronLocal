@@ -189,6 +189,40 @@
         "110:         try:"
       ],
       "frequency": 1
+    },
+    "2b31f1846b88": {
+      "id": "2b31f1846b88",
+      "timestamp": 1778767409,
+      "module": "learning_agenda.py",
+      "function": "_save",
+      "lineno": 45,
+      "exception_type": "OSError",
+      "message": "[Errno 22] Invalid argument: 'D:\\\\UnidadeF\\\\UltronPro\\\\backend\\\\data\\\\learning_agenda.json'",
+      "traceback_lines": [
+        "  File \"D:\\UnidadeF\\UltronPro\\backend\\ultronpro\\learning_agenda.py\", line 45, in _save",
+        "    STATE_PATH.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding='utf-8')",
+        "    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"C:\\Users\\USUARIO\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\pathlib\\__init__.py\", line 809, in write_text",
+        "    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:",
+        "         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"C:\\Users\\USUARIO\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\pathlib\\__init__.py\", line 771, in open",
+        "    return io.open(self, mode, buffering, encoding, errors, newline)",
+        "           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "OSError: [Errno 22] Invalid argument: 'D:\\\\UnidadeF\\\\UltronPro\\\\backend\\\\data\\\\learning_agenda.json'"
+      ],
+      "source_context": [
+        "41: ",
+        "42: ",
+        "43: def _save(d: dict[str, Any]):",
+        "44:     STATE_PATH.parent.mkdir(parents=True, exist_ok=True)",
+        "45:     STATE_PATH.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding='utf-8')",
+        "46: ",
+        "47: ",
+        "48: def status() -> dict[str, Any]:",
+        "49:     s = _load()",
+        "50:     s['path'] = str(STATE_PATH)"
+      ],
+      "frequency": 2
     }
   },
   "history": [
@@ -214,9 +248,7 @@
     }
   ],
   "fix_counts": {
-    "_test_healable.py": [
-      1776200020.0929902
-    ]
+    "_test_healable.py": []
   },
-  "updated_at": 1778265810
+  "updated_at": 1778767409
 }

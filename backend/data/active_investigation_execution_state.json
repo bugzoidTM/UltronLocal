@@ -1,10 +1,10 @@
 {
-  "ts": 1778605376,
+  "ts": 1778960527,
   "ok": true,
   "executed": true,
   "injected": true,
-  "investigation_id": "gap_background_loop_pressure_742aa533aa",
-  "query": "estabilidade dos loops sob carga. runtime_lifecycle. paused=True reason=event_loop_lag max_lag=87.2334s blocked_loops=562. medir custo por loop e aplicar budget adaptativo sem desligar loops essenciais",
+  "investigation_id": "gap_background_loop_pressure_b3df07059a",
+  "query": "estabilidade dos loops sob carga. runtime_lifecycle. paused=True reason=event_loop_lag max_lag=5313.0155s blocked_loops=3512. medir custo por loop e aplicar budget adaptativo sem desligar loops essenciais",
   "reason": "proactive_epistemic_gap",
   "missing_slots": [
     "evidencia_interna_suficiente",
@@ -14,8 +14,9 @@
     "kind": "runtime_pressure_probe",
     "target_route": "runtime_lifecycle",
     "query_terms": [
-      "2334s",
-      "562",
+      "0155s",
+      "3512",
+      "5313",
       "adaptativo",
       "aplicar",
       "blocked_loops",
@@ -24,8 +25,7 @@
       "custo",
       "desligar",
       "dos",
-      "essenciais",
-      "estabilidade"
+      "essenciais"
     ],
     "action": "medir custo por loop e aplicar budget adaptativo sem desligar loops essenciais",
     "acceptance": "o resultado sandboxado deve produzir uma aresta causal auditavel ou uma refutacao explicita"
@@ -39,10 +39,11 @@
   "experiment_result": {
     "ok": true,
     "accepted": true,
-    "digest": "95115440cedc26d3",
+    "digest": "248c36ffa00c0117",
     "query_terms": [
-      "2334s",
-      "562",
+      "0155s",
+      "3512",
+      "5313",
       "adaptativo",
       "aplicar",
       "blocked_loops",
@@ -51,8 +52,7 @@
       "custo",
       "desligar",
       "dos",
-      "essenciais",
-      "estabilidade"
+      "essenciais"
     ],
     "missing_slots": [
       "evidencia_interna_suficiente",
@@ -61,9 +61,9 @@
     "experiment_kind": "runtime_pressure_probe",
     "target_route": "runtime_lifecycle",
     "edge": {
-      "cause": "active_investigation_gap:2334s 562 adaptativo aplicar blocked_loops budget carga custo desligar dos",
+      "cause": "active_investigation_gap:0155s 3512 5313 adaptativo aplicar blocked_loops budget carga custo desligar",
       "effect": "sandbox_experiment_observed:runtime_pressure_probe:runtime_lifecycle",
-      "condition": "autonomous_executor_next_cycle:gap_background_loop_pressure_742aa533aa",
+      "condition": "autonomous_executor_next_cycle:gap_background_loop_pressure_b3df07059a",
       "confidence": 0.66
     },
     "prior_validation": null,
@@ -75,16 +75,16 @@
         "evidencia_interna_suficiente",
         "resultado_runtime_mensuravel"
       ],
-      "sandbox_digest": "95115440cedc26d3"
+      "sandbox_digest": "248c36ffa00c0117"
     },
     "acceptance_checked": true
   },
   "causal_graph": {
     "ok": true,
     "edge": {
-      "cause": "active_investigation_gap:2334s 562 adaptativo aplicar blocked_loops budget carga custo desligar dos",
+      "cause": "active_investigation_gap:0155s 3512 5313 adaptativo aplicar blocked_loops budget carga custo desligar",
       "effect": "sandbox_experiment_observed:runtime_pressure_probe:runtime_lifecycle",
-      "condition": "autonomous_executor_next_cycle:gap_background_loop_pressure_742aa533aa",
+      "condition": "autonomous_executor_next_cycle:gap_background_loop_pressure_b3df07059a",
       "support": 1,
       "confidence": 0.68,
       "severity": 1,
@@ -94,15 +94,15 @@
       ],
       "last_evidence": {
         "investigation": {
-          "investigation_id": "gap_background_loop_pressure_742aa533aa",
-          "query": "estabilidade dos loops sob carga. runtime_lifecycle. paused=True reason=event_loop_lag max_lag=87.2334s blocked_loops=562. medir custo por loop e aplicar budget adaptativo sem desligar loops essenciais",
+          "investigation_id": "gap_background_loop_pressure_b3df07059a",
+          "query": "estabilidade dos loops sob carga. runtime_lifecycle. paused=True reason=event_loop_lag max_lag=5313.0155s blocked_loops=3512. medir custo por loop e aplicar budget adaptativo sem desligar loops essenciais",
           "reason": "proactive_epistemic_gap",
           "task_type": "runtime_lifecycle",
           "status": "needs_experiment",
           "coverage": {
             "score": 0.0,
             "shared": [],
-            "query_tokens": 24,
+            "query_tokens": 25,
             "evidence_tokens": 0
           },
           "missing_slots": [
@@ -113,8 +113,9 @@
             "kind": "runtime_pressure_probe",
             "target_route": "runtime_lifecycle",
             "query_terms": [
-              "2334s",
-              "562",
+              "0155s",
+              "3512",
+              "5313",
               "adaptativo",
               "aplicar",
               "blocked_loops",
@@ -123,8 +124,7 @@
               "custo",
               "desligar",
               "dos",
-              "essenciais",
-              "estabilidade"
+              "essenciais"
             ],
             "action": "medir custo por loop e aplicar budget adaptativo sem desligar loops essenciais",
             "acceptance": "o resultado sandboxado deve produzir uma aresta causal auditavel ou uma refutacao explicita"
@@ -134,10 +134,11 @@
         "sandbox_result": {
           "ok": true,
           "accepted": true,
-          "digest": "95115440cedc26d3",
+          "digest": "248c36ffa00c0117",
           "query_terms": [
-            "2334s",
-            "562",
+            "0155s",
+            "3512",
+            "5313",
             "adaptativo",
             "aplicar",
             "blocked_loops",
@@ -146,8 +147,7 @@
             "custo",
             "desligar",
             "dos",
-            "essenciais",
-            "estabilidade"
+            "essenciais"
           ],
           "missing_slots": [
             "evidencia_interna_suficiente",
@@ -156,9 +156,9 @@
           "experiment_kind": "runtime_pressure_probe",
           "target_route": "runtime_lifecycle",
           "edge": {
-            "cause": "active_investigation_gap:2334s 562 adaptativo aplicar blocked_loops budget carga custo desligar dos",
+            "cause": "active_investigation_gap:0155s 3512 5313 adaptativo aplicar blocked_loops budget carga custo desligar",
             "effect": "sandbox_experiment_observed:runtime_pressure_probe:runtime_lifecycle",
-            "condition": "autonomous_executor_next_cycle:gap_background_loop_pressure_742aa533aa",
+            "condition": "autonomous_executor_next_cycle:gap_background_loop_pressure_b3df07059a",
             "confidence": 0.66
           },
           "prior_validation": null,
@@ -170,14 +170,14 @@
               "evidencia_interna_suficiente",
               "resultado_runtime_mensuravel"
             ],
-            "sandbox_digest": "95115440cedc26d3"
+            "sandbox_digest": "248c36ffa00c0117"
           },
           "acceptance_checked": true
         },
-        "duration_ms": 2658.57
+        "duration_ms": 2622.12
       },
-      "updated_at": 1778605379
+      "updated_at": 1778960530
     }
   },
-  "duration_ms": 2909.13
+  "duration_ms": 2786.28
 }

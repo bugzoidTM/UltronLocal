@@ -363,7 +363,7 @@ cd backend
 python -m uvicorn ultronpro.main:app --reload --host 127.0.0.1 --port 8000
 ```
 cd F:\sistemas\UltronPro\backend
-python .\run_ultron_ui.py
+.\run_ultron_ui.cmd
 
 
 Acesse:

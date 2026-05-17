@@ -1,19 +1,8 @@
 {
-  "updated_at": 1776794222,
+  "updated_at": 1778936579,
   "blocked_integrity": 1,
   "hallucination_prevented_count": 1,
   "last_decisions": [
-    {
-      "ts": 1776548645,
-      "kind": "generate_analogy_hypothesis",
-      "allowed": true,
-      "reason": "integrity_pass",
-      "meta": {
-        "action_id": 6974,
-        "dq": 0.5,
-        "sym_score": 1.0
-      }
-    },
     {
       "ts": 1776548960,
       "kind": "auto_resolve_conflicts",
@@ -3299,6 +3288,17 @@
       "reason": "integrity_pass",
       "meta": {
         "action_id": 8385,
+        "dq": 0.5,
+        "sym_score": 1.0
+      }
+    },
+    {
+      "ts": 1778936579,
+      "kind": "ask_evidence",
+      "allowed": true,
+      "reason": "integrity_pass",
+      "meta": {
+        "action_id": 15067,
         "dq": 0.5,
         "sym_score": 1.0
       }

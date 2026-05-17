@@ -1,36 +1,36 @@
 {
   "ok": true,
   "snapshot": {
-    "ts": 1778440253,
+    "ts": 1778936080,
     "source": "longitudinal_harness",
     "metrics": {
       "success_rate": 0.3333,
       "error_rate": 0.6667,
-      "surprise_score": 1.0,
-      "latency_ms": 623.09,
+      "surprise_score": 0.75,
+      "latency_ms": 916.11,
       "drift_score": 0.0,
-      "zero_shot_task_count": 0,
+      "zero_shot_task_count": 2,
       "resilience_success_rate": 1.0,
-      "health_index": 0.3558
+      "health_index": 0.3886
     }
   },
   "prediction": {
     "ok": true,
-    "samples": 2,
-    "window": 2,
+    "samples": 11,
+    "window": 11,
     "horizon_steps": 3,
-    "current_health": 0.3558,
-    "predicted_health": 0.3729,
+    "current_health": 0.3886,
+    "predicted_health": 0.3976,
     "predicted_success_rate": 0.3333,
     "predicted_error_rate": 0.6667,
-    "predicted_surprise_score": 1.0,
+    "predicted_surprise_score": 0.6886,
     "predicted_drift_score": 0.0,
     "slopes": {
-      "health": 0.0057,
+      "health": 0.00298,
       "success_rate": 0.0,
       "error_rate": 0.0,
-      "surprise_score": 0.0,
-      "latency_norm": -0.0355,
+      "surprise_score": -0.02045,
+      "latency_norm": -0.0012,
       "drift_score": 0.0
     },
     "degradation_risk": 0.57,

@@ -13,14 +13,6 @@ Classifique a mensagem pela skill aprendida, responda por rota deterministica e 
 - action_kind: intent_greeting
 - status: promoted
 - confidence: 0.960
-- cognitive_status: transfer_stale
-- transfer_status: stale
-- transfer_score: 1.000
-
-## Transfer Gate
-- source_domain: chat_intent
-- target_domains: session_context, surface_variation, voice_transcript
-- pass_rate: 1.000
 
 ## Exemplos observados
 - oi

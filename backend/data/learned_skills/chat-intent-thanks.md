@@ -15,11 +15,11 @@ Classifique a mensagem pela skill aprendida, responda por rota deterministica e 
 - confidence: 0.960
 
 ## Exemplos observados
-- grato pela forca
-- transcricao de voz autorizada: obrigado pela ajuda
-- transcricao de voz autorizada: voce esta bem?
-- mensagem no chat: valeu
-- como você se chama?
-- como se chama?
-- como se chama vc?
-- Como se diz 'Obrigado pela ajuda' em francês?
+- A manga 13 está muito verde. Como resolver?
+- A manga 14 está muito verde. Como resolver?
+- A manga 15 está muito verde. Como resolver?
+- A manga 16 está muito verde. Como resolver?
+- A manga 17 está muito verde. Como resolver?
+- A manga 18 está muito verde. Como resolver?
+- A manga 19 está muito verde. Como resolver?
+- A manga 20 está muito verde. Como resolver?

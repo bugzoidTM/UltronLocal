@@ -447,16 +447,206 @@ class LocalRulesResolver:
         return None
 
 
+class FirstOrderInference:
+    """
+    Motor de inferência de primeira ordem para raciocínio simbólico.
+    Suporta: fatos (S-P-O), regras (se-então), modus ponens, transitividade.
+    """
+    
+    def __init__(self):
+        self.facts: set[tuple[str, str, str]] = set()
+        self.rules: list[dict] = []
+        self._init_knowledge_base()
+    
+    def _init_knowledge_base(self):
+        """Inicializa base de conhecimento com fatos e regras básicas."""
+        # Fatos básicos do sistema
+        self.facts.add(('ultronpro', 'is_a', 'ai_system'))
+        self.facts.add(('ultronpro', 'has_mode', 'autonomous'))
+        self.facts.add(('ultronpro', 'uses_provider', 'groq'))
+        self.facts.add(('groq', 'is_a', 'llm_provider'))
+        self.facts.add(('groq', 'has_model', 'llama-3.3-70b'))
+        self.facts.add(('llama-3.3-70b', 'is_a', 'language_model'))
+        self.facts.add(('language_model', 'can_do', 'text_generation'))
+        self.facts.add(('language_model', 'can_do', 'reasoning'))
+        
+        # Regras de inferência
+        self.rules.append({
+            'if': [('?x', 'is_a', '?y'), ('?y', 'is_a', '?z')],
+            'then': ('?x', 'is_a', '?z'),
+            'name': 'transitivity_is_a'
+        })
+        self.rules.append({
+            'if': [('?x', 'has_property', '?y'), ('?y', 'implies', '?z')],
+            'then': ('?x', 'has_property', '?z'),
+            'name': 'property_implication'
+        })
+        self.rules.append({
+            'if': [('?x', 'uses_provider', '?y'), ('?y', 'is_a', 'llm_provider')],
+            'then': ('?x', 'can_use', 'llm'),
+            'name': 'provider_capability'
+        })
+    
+    def _match_pattern(self, pattern: tuple, fact: tuple, bindings: dict) -> dict | None:
+        """Tenta unificar pattern com fact, retornando bindings atualizados ou None."""
+        new_bindings = bindings.copy()
+        for p, f in zip(pattern, fact):
+            if p.startswith('?'):
+                if p in new_bindings:
+                    if new_bindings[p] != f:
+                        return None
+                else:
+                    new_bindings[p] = f
+            elif p != f:
+                return None
+        return new_bindings
+    
+    def _apply_rule(self, rule: dict, bindings: dict) -> tuple | None:
+        """Aplica regra com bindings, retornando novo fato ou None."""
+        result = []
+        for item in rule['then']:
+            if item.startswith('?') and item in bindings:
+                result.append(bindings[item])
+            else:
+                result.append(item)
+        return tuple(result)
+    
+    def _forward_chain(self, max_steps: int = 10) -> set[tuple]:
+        """Aplica encadeamento para frente para derivar novos fatos."""
+        derived = set(self.facts)
+        for _ in range(max_steps):
+            new_facts = set()
+            for rule in self.rules:
+                for fact_combination in self._get_fact_combinations(len(rule['if'])):
+                    bindings = {}
+                    matched = True
+                    for pattern, fact in zip(rule['if'], fact_combination):
+                        bindings = self._match_pattern(pattern, fact, bindings)
+                        if bindings is None:
+                            matched = False
+                            break
+                    if matched and bindings:
+                        new_fact = self._apply_rule(rule, bindings)
+                        if new_fact and new_fact not in derived:
+                            new_facts.add(new_fact)
+            if not new_facts:
+                break
+            derived.update(new_facts)
+        return derived
+    
+    def _get_fact_combinations(self, n: int) -> list[tuple]:
+        """Gera combinações de n fatos para matching de regras."""
+        from itertools import product
+        return list(product(self.facts, repeat=n))
+    
+    def query(self, subject: str, predicate: str, object_: str = None) -> list[str]:
+        """
+        Consulta a base de conhecimento com inferência.
+        Retorna valores que satisfazem a query.
+        """
+        derived = self._forward_chain()
+        results = []
+        
+        if object_ is None:
+            for s, p, o in derived:
+                if s == subject and p == predicate:
+                    results.append(o)
+        elif subject is None and predicate is None:
+            for s, p, o in derived:
+                if o == object_:
+                    results.append(f"{s} {p} {object_}")
+        else:
+            for s, p, o in derived:
+                match_s = (subject is None or s == subject)
+                match_p = (predicate is None or p == predicate)
+                match_o = (object_ is None or o == object_)
+                if match_s and match_p and match_o:
+                    results.append(f"{s} {p} {o}")
+        
+        return results
+    
+    def can_answer(self, query: str) -> bool:
+        """Verifica se a query pode ser respondida via inferência."""
+        q = _normalize_query(query)
+        inference_patterns = [
+            r'^o que é \w+',
+            r'^qual a relação entre',
+            r'^\w+ pode \w+',
+            r'^\w+ usa \w+',
+            r'^\w+ é um? \w+',
+            r'^quem pode \w+',
+        ]
+        return any(re.match(p, q) for p in inference_patterns)
+    
+    def resolve(self, query: str) -> str | None:
+        """Resolve query usando inferência de primeira ordem."""
+        q = _normalize_query(query)
+        
+        # Parse: "o que é X" -> query(X, is_a, ?)
+        match = re.match(r'^o que é (\w+)', q)
+        if match:
+            entity = match.group(1)
+            results = self.query(entity, 'is_a')
+            if results:
+                return f"{entity} é: {', '.join(results)}"
+            results = self.query(entity, 'can_do')
+            if results:
+                return f"{entity} pode: {', '.join(results)}"
+        
+        # Parse: "X pode Y?" -> query(X, can_do, Y)
+        match = re.match(r'^(\w+) pode (\w+)', q)
+        if match:
+            subject, action = match.groups()
+            results = self.query(subject, 'can_do', action)
+            if results:
+                return f"Sim, {subject} pode {action}"
+            derived = self._forward_chain()
+            for s, p, o in derived:
+                if s == subject and o == action:
+                    return f"Sim, {subject} pode {action} via {p}"
+        
+        # Parse: "X usa Y" -> query(X, uses_provider, Y)
+        match = re.match(r'^(\w+) usa (\w+)', q)
+        if match:
+            subject, obj = match.groups()
+            results = self.query(subject, 'uses_provider', obj)
+            if results:
+                return f"Sim, {subject} usa {obj}"
+        
+        # Parse: "qual a relação entre X e Y"
+        match = re.match(r'^qual a relação entre (\w+) e (\w+)', q)
+        if match:
+            a, b = match.groups()
+            derived = self._forward_chain()
+            relations = []
+            for s, p, o in derived:
+                if (s == a and o == b) or (s == b and o == a):
+                    relations.append(f"{s} {p} {o}")
+            if relations:
+                return f"Relações: {'; '.join(relations)}"
+        
+        return None
+
+
 class LocalReasoningEngine:
     """
     Motor de Raciocínio Local Principal.
     
     Ordem de resolução:
     1. Regras SE-ENTÃO (mais rápido)
-    2. Expressões matemáticas
-    3. Consultas a base de fatos
-    4. Escalonar para LLM
+    2. Inferência de primeira ordem
+    3. Expressões matemáticas
+    4. Consultas a base de fatos
+    5. Escalonar para LLM
     """
+    
+    _inference_engine: FirstOrderInference | None = None
+    
+    @classmethod
+    def _get_inference_engine(cls) -> FirstOrderInference:
+        if cls._inference_engine is None:
+            cls._inference_engine = FirstOrderInference()
+        return cls._inference_engine
     
     @classmethod
     def can_resolve(cls, query: str) -> bool:
@@ -465,6 +655,7 @@ class LocalReasoningEngine:
             return False
         return (
             LocalRulesResolver.can_resolve(query) or
+            cls._get_inference_engine().can_answer(query) or
             LocalMathResolver.can_resolve(query) or
             LocalFactsResolver.can_resolve(query)
         )
@@ -477,7 +668,7 @@ class LocalReasoningEngine:
         Returns:
         {
             'resolved': bool,
-            'method': 'rules' | 'math' | 'facts' | None,
+            'method': 'rules' | 'inference' | 'math' | 'facts' | None,
             'result': str | None,
             'escalate': bool (True se falhar e deve seguir para o proximo resolvedor)
         }
@@ -504,7 +695,20 @@ class LocalReasoningEngine:
                     'escalate': False
                 })
         
-        # 2. Try math
+        # 2. Try first-order inference
+        inference = cls._get_inference_engine()
+        if inference.can_answer(query):
+            result = inference.resolve(query)
+            if result:
+                logger.info(f"LocalReasoning: RESOLVED via INFERENCE in {int((time.time()-t0)*1000)}ms")
+                return _attach_sir(query, {
+                    'resolved': True,
+                    'method': 'inference',
+                    'result': result,
+                    'escalate': False
+                })
+        
+        # 3. Try math
         if LocalMathResolver.can_resolve(query):
             result = LocalMathResolver.resolve(query)
             if result:
@@ -516,7 +720,7 @@ class LocalReasoningEngine:
                     'escalate': False
                 })
         
-        # 3. Try facts
+        # 4. Try facts
         if LocalFactsResolver.can_resolve(query):
             result = LocalFactsResolver.resolve(query)
             if result:

@@ -14,6 +14,19 @@
       "last_seen": 1775253077.410806,
       "success_count": 0,
       "failure_count": 2
+    },
+    "b0d879c54441": {
+      "pattern_id": "b0d879c54441",
+      "trigger": "code_heal_failed:learning_agenda.py",
+      "root_cause": "unknown_root_cause",
+      "symptoms": [
+        "[Errno 22] Invalid argument: 'D:\\\\UnidadeF\\\\UltronPro\\\\backend\\\\data\\\\learning_agenda.json'"
+      ],
+      "frequency": 1,
+      "first_seen": 1778767414.679349,
+      "last_seen": 1778767414.6793492,
+      "success_count": 0,
+      "failure_count": 0
     }
   },
   "lessons": {
@@ -78,6 +91,16 @@
       "error": "Test error for validation",
       "timestamp": 1775253077.410806,
       "metadata": {}
+    },
+    {
+      "action": "code_heal_failed",
+      "context": "learning_agenda.py",
+      "success": false,
+      "error": "[Errno 22] Invalid argument: 'D:\\\\UnidadeF\\\\UltronPro\\\\backend\\\\data\\\\learning_agenda.json'",
+      "timestamp": 1778767414.6793203,
+      "metadata": {
+        "function": "_save"
+      }
     }
   ]
 }

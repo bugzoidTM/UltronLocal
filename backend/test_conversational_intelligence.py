@@ -94,6 +94,92 @@ def test_stream_greeting_typo_does_not_emit_internal_progress():
     assert done["strategy"] == "intent_greeting"
 
 
+def _fake_causal_gap_response():
+    return {
+        "ok": True,
+        "resolved": True,
+        "answer": (
+            "Encontrei cobertura direta insuficiente, mas nao vou parar em UNKNOWN: "
+            "transferi um prior causal de hard_eval para unknown:general.\n"
+            "Lacunas restantes: aresta_causal_relevante, fato_estruturado_recuperavel."
+        ),
+        "strategy": "non_llm_causal_transfer_prior",
+        "module": "causal_transfer_engine",
+        "confidence": 0.62,
+        "evidence_summary": {
+            "reason": "no_structured_coverage",
+            "investigation_id": "inv_test_stream",
+            "status": "transfer_prior_validated",
+            "coverage": {"score": 1.0},
+            "missing_slots": ["aresta_causal_relevante", "fato_estruturado_recuperavel"],
+            "next_experiment": {"kind": "causal_transfer_prior_validation"},
+            "candidate_modules": ["active_investigation"],
+            "transfer_prior": {
+                "type": "autoisomorphic_transfer_prior",
+                "source_domain": "hard_eval",
+                "target_domain": "unknown:general",
+                "confidence": 0.58,
+                "transferred_policy": "Topologia causal comum",
+            },
+            "prior_validation": {"status": "validated", "confidence_after": 0.68},
+        },
+        "gap_signal": {
+            "schema": "ultron.cognitive_gap_signal.v1",
+            "missing_slots": ["aresta_causal_relevante", "fato_estruturado_recuperavel"],
+        },
+        "inference_trace": {
+            "schema": "ultron.unified_inference.v1",
+            "formalism": "weighted_support_graph_v1",
+            "premises": [
+                {
+                    "id": "p1",
+                    "source": "active_investigation",
+                    "modality": "gap_report",
+                    "statement": "investigation status=transfer_prior_validated",
+                    "confidence": 0.62,
+                    "role": "evidence",
+                }
+            ],
+            "inference_steps": [],
+            "gaps": [],
+            "conclusion": {"resolved": True, "confidence": 0.62},
+        },
+    }
+
+
+def test_backend_causal_synthesis_separates_stream_answer_from_trace(monkeypatch):
+    from fastapi.testclient import TestClient
+    from ultronpro import local_reasoning_engine, main, skill_memory, symbolic_reasoner
+
+    monkeypatch.setattr(main, "_intent_pre_classifier", lambda q: "unknown")
+    monkeypatch.setattr(main, "is_autobiographical_intent", lambda q: False)
+    monkeypatch.setattr(main, "_suggest_skill_name_for_chat", lambda q: None)
+    monkeypatch.setattr(main, "_external_factual_decision", lambda q: {"label": "internal"})
+    monkeypatch.setattr(main, "_record_conversation_route", lambda *args, **kwargs: None)
+    monkeypatch.setattr(main, "_record_chat_turn_episode", lambda *args, **kwargs: None)
+    monkeypatch.setattr(main, "_cognitive_response_answer", lambda q: _fake_causal_gap_response())
+    monkeypatch.setattr(symbolic_reasoner, "_solve_deterministic", lambda q: None)
+    monkeypatch.setattr(local_reasoning_engine, "resolve", lambda q: {})
+    monkeypatch.setattr(skill_memory, "learn_from_chat_turn", lambda *args, **kwargs: None)
+
+    client = TestClient(main.app)
+    response = client.post("/api/chat/stream", json={"message": "explique o dominio azorq-91"})
+    events = [
+        json.loads(chunk[6:])
+        for chunk in response.text.split("\n\n")
+        if chunk.startswith("data: ")
+    ]
+    done = next(event for event in events if event.get("type") == "done")
+
+    assert done["synthesized_text"] == done["answer"]
+    assert done["trace_causal"]["schema"] == "ultron.chat.causal_trace.v1"
+    assert done["trace_causal"]["evidence_summary"]["investigation_id"] == "inv_test_stream"
+    assert done["source_strategy"] == "non_llm_causal_transfer_prior"
+    assert "Encontrei cobertura direta insuficiente" not in done["answer"]
+    assert "Lacunas restantes" not in done["answer"]
+    assert "aresta_causal_relevante" not in done["answer"]
+
+
 def test_identity_question_is_concise_not_diagnostic(tmp_path):
     from ultronpro import cognitive_response
 

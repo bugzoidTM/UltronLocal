@@ -1,5 +1,5 @@
 {
-  "updated_at": 1778605208,
+  "updated_at": 1778963356,
   "epsilon": 0.05,
   "min_epsilon": 0.05,
   "decay": 0.995,
@@ -71,209 +71,43 @@
         "reward_sum": 0.0,
         "reward_avg": 0.0
       }
+    },
+    "voice_chat": {
+      "cheap": {
+        "count": 0,
+        "reward_sum": 0.0,
+        "reward_avg": 0.0
+      },
+      "balanced": {
+        "count": 25,
+        "reward_sum": 22.1779,
+        "reward_avg": 0.887116
+      },
+      "deep": {
+        "count": 0,
+        "reward_sum": 0.0,
+        "reward_avg": 0.0
+      }
+    },
+    "critical": {
+      "cheap": {
+        "count": 0,
+        "reward_sum": 0.0,
+        "reward_avg": 0.0
+      },
+      "balanced": {
+        "count": 0,
+        "reward_sum": 0.0,
+        "reward_avg": 0.0
+      },
+      "deep": {
+        "count": 0,
+        "reward_sum": 0.0,
+        "reward_avg": 0.0
+      }
     }
   },
   "recent": [
-    {
-      "ts": 1775261266,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.45,
-      "ok": true,
-      "latency_ms": 8501
-    },
-    {
-      "ts": 1775261584,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.45,
-      "ok": true,
-      "latency_ms": 9985
-    },
-    {
-      "ts": 1775261744,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.4623,
-      "ok": true,
-      "latency_ms": 6566
-    },
-    {
-      "ts": 1775261961,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.45,
-      "ok": true,
-      "latency_ms": 8919
-    },
-    {
-      "ts": 1775262235,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.45,
-      "ok": true,
-      "latency_ms": 10062
-    },
-    {
-      "ts": 1775262526,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.45,
-      "ok": true,
-      "latency_ms": 9477
-    },
-    {
-      "ts": 1775262791,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.5072,
-      "ok": true,
-      "latency_ms": 5892
-    },
-    {
-      "ts": 1775263139,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.5577,
-      "ok": true,
-      "latency_ms": 5134
-    },
-    {
-      "ts": 1775263402,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.5248,
-      "ok": true,
-      "latency_ms": 5628
-    },
-    {
-      "ts": 1775263700,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.45,
-      "ok": true,
-      "latency_ms": 9115
-    },
-    {
-      "ts": 1775263968,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.45,
-      "ok": true,
-      "latency_ms": 9894
-    },
-    {
-      "ts": 1775264238,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.45,
-      "ok": true,
-      "latency_ms": 9013
-    },
-    {
-      "ts": 1775264504,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.6959,
-      "ok": true,
-      "latency_ms": 3061
-    },
-    {
-      "ts": 1775264795,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.45,
-      "ok": true,
-      "latency_ms": 8374
-    },
-    {
-      "ts": 1775265062,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.5267,
-      "ok": true,
-      "latency_ms": 5599
-    },
-    {
-      "ts": 1775265301,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.45,
-      "ok": true,
-      "latency_ms": 10500
-    },
-    {
-      "ts": 1775265466,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.4883,
-      "ok": true,
-      "latency_ms": 6175
-    },
-    {
-      "ts": 1775265660,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.45,
-      "ok": true,
-      "latency_ms": 8509
-    },
-    {
-      "ts": 1775265874,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.4907,
-      "ok": true,
-      "latency_ms": 6140
-    },
-    {
-      "ts": 1775266042,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.45,
-      "ok": true,
-      "latency_ms": 8481
-    },
-    {
-      "ts": 1775266321,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.45,
-      "ok": true,
-      "latency_ms": 10403
-    },
-    {
-      "ts": 1775266606,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.5497,
-      "ok": true,
-      "latency_ms": 5255
-    },
-    {
-      "ts": 1775266884,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.4735,
-      "ok": true,
-      "latency_ms": 6397
-    },
-    {
-      "ts": 1775267171,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.5892,
-      "ok": true,
-      "latency_ms": 4662
-    },
-    {
-      "ts": 1775267442,
-      "task_type": "review",
-      "profile": "balanced",
-      "reward": 0.45,
-      "ok": true,
-      "latency_ms": 9170
-    },
     {
       "ts": 1775267657,
       "task_type": "review",
@@ -4073,6 +3907,206 @@
       "reward": 0.5213,
       "ok": true,
       "latency_ms": 5680
+    },
+    {
+      "ts": 1778694250,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 0.8594,
+      "ok": true,
+      "latency_ms": 5072
+    },
+    {
+      "ts": 1778694270,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 0.7475,
+      "ok": true,
+      "latency_ms": 11463
+    },
+    {
+      "ts": 1778694282,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 0.7475,
+      "ok": true,
+      "latency_ms": 11598
+    },
+    {
+      "ts": 1778694300,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 0.7475,
+      "ok": true,
+      "latency_ms": 12010
+    },
+    {
+      "ts": 1778699050,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 0.8214,
+      "ok": true,
+      "latency_ms": 5641
+    },
+    {
+      "ts": 1778699064,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 1.0,
+      "ok": true,
+      "latency_ms": 807
+    },
+    {
+      "ts": 1778702058,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 0.7475,
+      "ok": true,
+      "latency_ms": 10504
+    },
+    {
+      "ts": 1778702070,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 1.0,
+      "ok": true,
+      "latency_ms": 1
+    },
+    {
+      "ts": 1778722699,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 0.7475,
+      "ok": true,
+      "latency_ms": 6942
+    },
+    {
+      "ts": 1778722786,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 0.9604,
+      "ok": true,
+      "latency_ms": 3556
+    },
+    {
+      "ts": 1778722820,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 0.8696,
+      "ok": true,
+      "latency_ms": 4919
+    },
+    {
+      "ts": 1778722860,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 0.7475,
+      "ok": true,
+      "latency_ms": 12298
+    },
+    {
+      "ts": 1778722904,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 0.9646,
+      "ok": true,
+      "latency_ms": 3494
+    },
+    {
+      "ts": 1778722920,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 0.9926,
+      "ok": true,
+      "latency_ms": 3074
+    },
+    {
+      "ts": 1778722933,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 0.9868,
+      "ok": true,
+      "latency_ms": 3161
+    },
+    {
+      "ts": 1778722947,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 0.9956,
+      "ok": true,
+      "latency_ms": 3029
+    },
+    {
+      "ts": 1778722964,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 1.0,
+      "ok": true,
+      "latency_ms": 2491
+    },
+    {
+      "ts": 1778723002,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 0.7475,
+      "ok": true,
+      "latency_ms": 12385
+    },
+    {
+      "ts": 1778723027,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 1.0,
+      "ok": true,
+      "latency_ms": 2597
+    },
+    {
+      "ts": 1778723051,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 1.0,
+      "ok": true,
+      "latency_ms": 2112
+    },
+    {
+      "ts": 1778723068,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 1.0,
+      "ok": true,
+      "latency_ms": 2383
+    },
+    {
+      "ts": 1778723088,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 1.0,
+      "ok": true,
+      "latency_ms": 2326
+    },
+    {
+      "ts": 1778723104,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 1.0,
+      "ok": true,
+      "latency_ms": 2416
+    },
+    {
+      "ts": 1778723168,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 0.7475,
+      "ok": true,
+      "latency_ms": 12292
+    },
+    {
+      "ts": 1778723439,
+      "task_type": "voice_chat",
+      "profile": "balanced",
+      "reward": 0.7475,
+      "ok": true,
+      "latency_ms": 26985
     }
   ]
 }

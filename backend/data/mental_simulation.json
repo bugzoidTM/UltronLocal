@@ -122,8 +122,52 @@
       "ts_created": 1776794222,
       "ts_resolved": 1776794222,
       "status": "learned"
+    },
+    {
+      "id": "scn_1778936579_cfefba",
+      "name": "action:ask_evidence:15067",
+      "hypotheses": [
+        {
+          "id": "hyp_1778936579_0",
+          "description": "ask_evidence: (aÃ§Ã£o-workspace-TOM) Explicar em linguagem mais simples e confirmar entendimento.",
+          "predicted_outcome": "unknown",
+          "confidence": 0.496,
+          "risk": 0.18,
+          "cost": 0.3,
+          "benefit": 0.496,
+          "evidence_for": [],
+          "evidence_against": [],
+          "causal_chain": []
+        }
+      ],
+      "chosen_hypothesis_id": "hyp_1778936579_0",
+      "simulated_outcome": {
+        "hypothesis_id": "hyp_1778936579_0",
+        "hypothesis_description": "ask_evidence: (aÃ§Ã£o-workspace-TOM) Explicar em linguagem mais simples e confirmar entendimento.",
+        "expected_result": "unknown",
+        "composite_score": 0.2414,
+        "risk_accepted": 0.18,
+        "alternatives_rejected": 0,
+        "rejection_reasons": []
+      },
+      "actual_outcome": {
+        "result": "done",
+        "success": true,
+        "latency_ms": 149,
+        "risk_reason": ""
+      },
+      "surprise_score": 0.8,
+      "lessons": [
+        "Alta surpresa (0.80): o modelo de mundo/previsão falhou para esse tipo de ação.",
+        "Sucesso inesperado: o modelo subestimou capacidade ou superestimou risco.",
+        "A hipótese escolhida não previu corretamente o resultado, mesmo com sucesso."
+      ],
+      "competencies_extracted": [],
+      "ts_created": 1778936579,
+      "ts_resolved": 1778936579,
+      "status": "learned"
     }
   ],
-  "sim_count": 2,
-  "updated_at": 1776794222
+  "sim_count": 14,
+  "updated_at": 1778936579
 }

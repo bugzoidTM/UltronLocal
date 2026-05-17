@@ -89,3 +89,30 @@ def test_synthesis_regenerates_then_accepts_schema_valid_answer():
     assert calls["n"] == 2
     assert result["verification"]["ok"] is True
 
+
+def test_synthesis_can_skip_model_and_use_deterministic_fallback():
+    from ultronpro import sir_amplifier
+
+    sir = sir_amplifier.build_sir_from_raw_context(
+        "qual o status?",
+        "Sistema UltronPro operacional.\nProvider primario ativo: Groq.",
+        source="test",
+    )
+    calls = {"n": 0}
+
+    def fake_complete(prompt, **kwargs):
+        calls["n"] += 1
+        return "{}"
+
+    result = sir_amplifier.synthesize_answer_with_sir(
+        query="qual o status?",
+        sir=sir,
+        complete_fn=fake_complete,
+        fallback_text="fallback",
+        allow_model=False,
+    )
+
+    assert result["strategy"] == "sir_deterministic_fallback"
+    assert calls["n"] == 0
+    assert "Sistema UltronPro operacional" in result["answer"]
+    assert result["attempts"][0]["skipped_model"] is True

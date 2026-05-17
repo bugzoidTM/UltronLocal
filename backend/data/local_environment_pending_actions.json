@@ -1,0 +1,245 @@
+{
+  "ok": true,
+  "version": 1,
+  "updated_at": 1778760841,
+  "pending_actions": {
+    "lpa_a8687f2c33e9": {
+      "pending_id": "lpa_a8687f2c33e9",
+      "status": "executed",
+      "session_id": "codex-local-env-confirm-session",
+      "created_at": 1778678065,
+      "expires_at": 1778678365,
+      "ttl_seconds": 300,
+      "device_id": "lampada_codex_confirmacao",
+      "device_name": "Lampada Codex Confirmacao",
+      "action": "turn_on",
+      "params": {},
+      "reason": "acender lampada codex confirmacao",
+      "requested_by": "chat_stream",
+      "risk_level": 3,
+      "requires_confirmation": true,
+      "gate": {
+        "ok": true,
+        "allowed": false,
+        "reason": "confirmation_required",
+        "risk_level": 3,
+        "requires_confirmation": true
+      },
+      "parsed_command": {
+        "ok": true,
+        "device_id": "lampada_codex_confirmacao",
+        "action": "turn_on",
+        "params": {},
+        "confidence": 0.8,
+        "reason": "matched_registered_device_and_capability"
+      },
+      "confirmation_hint": "confirmo lpa_a8687f2c33e9",
+      "approved_at": 1778678066,
+      "approved_by": "chat_stream",
+      "executed_at": 1778678066,
+      "result_status": "success",
+      "result_ok": true,
+      "ledger_id": "lea_fddba1306d76"
+    },
+    "lpa_e70bf32175d8": {
+      "pending_id": "lpa_e70bf32175d8",
+      "status": "expired",
+      "session_id": "codex_tv_adapter_test",
+      "created_at": 1778758617,
+      "expires_at": 1778758917,
+      "ttl_seconds": 300,
+      "device_id": "net_192_168_68_104",
+      "device_name": "HTTP device 192.168.68.104",
+      "action": "volume_up",
+      "params": {
+        "repeat": 200,
+        "risk_level": 3
+      },
+      "reason": "aumentar volume 200 da TV 192.168.68.104",
+      "requested_by": "codex_test",
+      "risk_level": 3,
+      "requires_confirmation": true,
+      "gate": {
+        "ok": true,
+        "allowed": false,
+        "reason": "confirmation_required",
+        "risk_level": 3,
+        "requires_confirmation": true
+      },
+      "parsed_command": {
+        "ok": true,
+        "device_id": "net_192_168_68_104",
+        "action": "volume_up",
+        "params": {
+          "repeat": 200,
+          "risk_level": 3
+        },
+        "confidence": 0.99,
+        "reason": "matched_registered_device_and_capability"
+      },
+      "confirmation_hint": "confirmo lpa_e70bf32175d8",
+      "expired_at": 1778760841
+    },
+    "lpa_b46b3d85d553": {
+      "pending_id": "lpa_b46b3d85d553",
+      "status": "expired",
+      "session_id": "codex_tv_adapter_test_2",
+      "created_at": 1778758661,
+      "expires_at": 1778758961,
+      "ttl_seconds": 300,
+      "device_id": "net_192_168_68_104",
+      "device_name": "HTTP device 192.168.68.104",
+      "action": "volume_up",
+      "params": {
+        "repeat": 200,
+        "risk_level": 3
+      },
+      "reason": "aumentar volume 200 da TV 192.168.68.104",
+      "requested_by": "codex_test",
+      "risk_level": 3,
+      "requires_confirmation": true,
+      "gate": {
+        "ok": true,
+        "allowed": false,
+        "reason": "confirmation_required",
+        "risk_level": 3,
+        "requires_confirmation": true
+      },
+      "parsed_command": {
+        "ok": true,
+        "device_id": "net_192_168_68_104",
+        "action": "volume_up",
+        "params": {
+          "repeat": 200,
+          "risk_level": 3
+        },
+        "confidence": 0.99,
+        "reason": "matched_registered_device_and_capability"
+      },
+      "confirmation_hint": "confirmo lpa_b46b3d85d553",
+      "expired_at": 1778760841
+    },
+    "lpa_1a1c4636047c": {
+      "pending_id": "lpa_1a1c4636047c",
+      "status": "expired",
+      "session_id": "codex_env_protocols_stream",
+      "created_at": 1778758741,
+      "expires_at": 1778759041,
+      "ttl_seconds": 300,
+      "device_id": "net_192_168_68_104",
+      "device_name": "HTTP device 192.168.68.104",
+      "action": "volume_up",
+      "params": {
+        "repeat": 200,
+        "risk_level": 3
+      },
+      "reason": "aumentar volume 200 da TV 192.168.68.104",
+      "requested_by": "chat_stream",
+      "risk_level": 3,
+      "requires_confirmation": true,
+      "gate": {
+        "ok": true,
+        "allowed": false,
+        "reason": "confirmation_required",
+        "risk_level": 3,
+        "requires_confirmation": true
+      },
+      "parsed_command": {
+        "ok": true,
+        "device_id": "net_192_168_68_104",
+        "action": "volume_up",
+        "params": {
+          "repeat": 200,
+          "risk_level": 3
+        },
+        "confidence": 0.99,
+        "reason": "matched_registered_device_and_capability"
+      },
+      "confirmation_hint": "confirmo lpa_1a1c4636047c",
+      "expired_at": 1778760841
+    },
+    "lpa_d6ec7767ada9": {
+      "pending_id": "lpa_d6ec7767ada9",
+      "status": "expired",
+      "session_id": "codex_env_protocols_final",
+      "created_at": 1778758941,
+      "expires_at": 1778759241,
+      "ttl_seconds": 300,
+      "device_id": "net_192_168_68_104",
+      "device_name": "HTTP device 192.168.68.104",
+      "action": "volume_up",
+      "params": {
+        "repeat": 200,
+        "risk_level": 3
+      },
+      "reason": "aumentar volume 200 da TV 192.168.68.104",
+      "requested_by": "chat_stream",
+      "risk_level": 3,
+      "requires_confirmation": true,
+      "gate": {
+        "ok": true,
+        "allowed": false,
+        "reason": "confirmation_required",
+        "risk_level": 3,
+        "requires_confirmation": true
+      },
+      "parsed_command": {
+        "ok": true,
+        "device_id": "net_192_168_68_104",
+        "action": "volume_up",
+        "params": {
+          "repeat": 200,
+          "risk_level": 3
+        },
+        "confidence": 0.99,
+        "reason": "matched_registered_device_and_capability"
+      },
+      "confirmation_hint": "confirmo lpa_d6ec7767ada9",
+      "expired_at": 1778760841
+    },
+    "lpa_aa7344e3aee4": {
+      "pending_id": "lpa_aa7344e3aee4",
+      "status": "failed",
+      "session_id": "ui_moyvyetk_1znlvs2h",
+      "created_at": 1778759076,
+      "expires_at": 1778759376,
+      "ttl_seconds": 300,
+      "device_id": "net_192_168_68_104",
+      "device_name": "HTTP device 192.168.68.104",
+      "action": "volume_up",
+      "params": {
+        "repeat": 200,
+        "risk_level": 3
+      },
+      "reason": "aumentar volume 200 da TV 192.168.68.104",
+      "requested_by": "chat_stream",
+      "risk_level": 3,
+      "requires_confirmation": true,
+      "gate": {
+        "ok": true,
+        "allowed": false,
+        "reason": "confirmation_required",
+        "risk_level": 3,
+        "requires_confirmation": true
+      },
+      "parsed_command": {
+        "ok": true,
+        "device_id": "net_192_168_68_104",
+        "action": "volume_up",
+        "params": {
+          "repeat": 200,
+          "risk_level": 3
+        },
+        "confidence": 0.99,
+        "reason": "matched_registered_device_and_capability"
+      },
+      "confirmation_hint": "confirmo lpa_aa7344e3aee4",
+      "approved_at": 1778759085,
+      "approved_by": "chat_stream",
+      "executed_at": 1778759092,
+      "result_status": "execution_failed",
+      "result_ok": false,
+      "ledger_id": "lea_9733b9b0bb9a"
+    }
+  }
+}

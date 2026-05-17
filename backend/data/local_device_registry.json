@@ -1,0 +1,3268 @@
+{
+  "ok": true,
+  "version": 1,
+  "updated_at": 1778795346,
+  "devices": {
+    "net_192_168_68_1": {
+      "device_id": "net_192_168_68_1",
+      "name": "HTTP device 192.168.68.1",
+      "type": "http_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state",
+        "open_web_interface"
+      ],
+      "risk_level": 0,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.1",
+        "HTTP device",
+        "http_device",
+        "ARP neighbor",
+        "network_device"
+      ],
+      "config": {
+        "ip": "192.168.68.1",
+        "open_ports": [
+          80,
+          443
+        ],
+        "web_urls": [
+          "http://192.168.68.1/",
+          "https://192.168.68.1/"
+        ],
+        "rtsp_url_candidates": [],
+        "discovered_by": "tcp_port_probe",
+        "last_discovered_ports": [
+          80,
+          443
+        ],
+        "last_access_ports": [
+          80,
+          443
+        ],
+        "mac": "28:ee:52:c0:27:9c"
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "http_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "HTTP device"
+        },
+        "observed_at": 1778795282,
+        "event_model_version": 1,
+        "last_seen_discovery": 1778795282,
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          },
+          {
+            "event": "open_web_interface",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "urls": [
+                "http://192.168.68.1/",
+                "https://192.168.68.1/"
+              ]
+            }
+          }
+        ],
+        "last_access_test": {
+          "ok": true,
+          "status": "responsive",
+          "tested_at": 1778795282,
+          "responsive_ports": [
+            80,
+            443
+          ],
+          "latency_ms": 591,
+          "type": "http_device",
+          "event_count": 2
+        },
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control",
+        "discovery_sources": []
+      },
+      "created_at": 1778680536,
+      "updated_at": 1778795346
+    },
+    "net_192_168_68_100": {
+      "device_id": "net_192_168_68_100",
+      "name": "Camera da Sala",
+      "type": "camera_or_rtsp_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state",
+        "view_stream",
+        "capture_snapshot"
+      ],
+      "risk_level": 1,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.100",
+        "RTSP device",
+        "camera_or_rtsp_device",
+        "camera",
+        "cameras",
+        "stream",
+        "rtsp",
+        "camera 192.168.68.100",
+        "Camera da Sala",
+        "camera da sala"
+      ],
+      "config": {
+        "ip": "192.168.68.100",
+        "open_ports": [
+          554
+        ],
+        "web_urls": [],
+        "rtsp_url_candidates": [
+          "rtsp://192.168.68.100:554/",
+          "rtsp://192.168.68.100:554/stream1",
+          "rtsp://192.168.68.100:554/stream2",
+          "rtsp://192.168.68.100:554/live",
+          "rtsp://192.168.68.100:554/live.sdp",
+          "rtsp://192.168.68.100:554/h264",
+          "rtsp://192.168.68.100:554/h264.sdp",
+          "rtsp://192.168.68.100:554/mpeg4",
+          "rtsp://192.168.68.100:554/cam/realmonitor?channel=1&subtype=0",
+          "rtsp://192.168.68.100:554/cam/realmonitor?channel=1&subtype=1",
+          "rtsp://192.168.68.100:554/Streaming/Channels/1",
+          "rtsp://192.168.68.100:554/Streaming/Channels/101",
+          "rtsp://192.168.68.100:554/Streaming/Channels/102",
+          "rtsp://192.168.68.100:554/h264/ch1/main/av_stream",
+          "rtsp://192.168.68.100:554/h264/ch1/sub/av_stream",
+          "rtsp://192.168.68.100:554/onvif1",
+          "rtsp://192.168.68.100:554/onvif2",
+          "rtsp://192.168.68.100:554/onvif-media/media.amp",
+          "rtsp://192.168.68.100:554/axis-media/media.amp",
+          "rtsp://192.168.68.100:554/profile1/media.smp",
+          "rtsp://192.168.68.100:554/ch0_0.h264",
+          "rtsp://192.168.68.100:554/ch0_1.h264",
+          "rtsp://192.168.68.100:554/videoMain",
+          "rtsp://192.168.68.100:554/videoSub"
+        ],
+        "discovered_by": "tcp_port_probe",
+        "last_discovered_ports": [
+          554
+        ],
+        "last_access_ports": [
+          554
+        ],
+        "stream_probe_status": "no_valid_rtsp_path_found",
+        "last_stream_probe": {
+          "ts": 1778763050,
+          "ok": false,
+          "preferred_url": "rtsp://192.168.68.100:554/",
+          "error": "no_valid_rtsp_path_found",
+          "auth_required": false,
+          "probe": [
+            {
+              "ok": false,
+              "url": "rtsp://192.168.68.100:554/",
+              "returncode": 2812791560,
+              "auth_required": false,
+              "error": "[rtsp @ 000001dd34a54740] method OPTIONS failed: 405 Method Not Allowed [in#0 @ 000001dd34a54340] Error opening input: Server returned 4XX Client Error, but not one of 40{0,1,3,4} Error opening input file rtsp://192.168.68.100:554/. Error opening input files: Server returned 4XX Client Error, but not one of 40{0,1,3,4}",
+              "latency_ms": 254
+            },
+            {
+              "ok": false,
+              "url": "rtsp://192.168.68.100:554/stream1",
+              "returncode": 2812791560,
+              "auth_required": false,
+              "error": "[rtsp @ 000001cdfdb14740] method OPTIONS failed: 405 Method Not Allowed [in#0 @ 000001cdfdb14340] Error opening input: Server returned 4XX Client Error, but not one of 40{0,1,3,4} Error opening input file rtsp://192.168.68.100:554/stream1. Error opening input files: Server returned 4XX Client Error, but not one of 40{0,1,3,4}",
+              "latency_ms": 200
+            },
+            {
+              "ok": false,
+              "url": "rtsp://192.168.68.100:554/stream2",
+              "returncode": 2812791560,
+              "auth_required": false,
+              "error": "[rtsp @ 00000126a2fb4740] method OPTIONS failed: 405 Method Not Allowed [in#0 @ 00000126a2fb4340] Error opening input: Server returned 4XX Client Error, but not one of 40{0,1,3,4} Error opening input file rtsp://192.168.68.100:554/stream2. Error opening input files: Server returned 4XX Client Error, but not one of 40{0,1,3,4}",
+              "latency_ms": 211
+            },
+            {
+              "ok": false,
+              "url": "rtsp://192.168.68.100:554/live",
+              "returncode": 2812791560,
+              "auth_required": false,
+              "error": "[rtsp @ 000001f843594740] method OPTIONS failed: 405 Method Not Allowed [in#0 @ 000001f843594340] Error opening input: Server returned 4XX Client Error, but not one of 40{0,1,3,4} Error opening input file rtsp://192.168.68.100:554/live. Error opening input files: Server returned 4XX Client Error, but not one of 40{0,1,3,4}",
+              "latency_ms": 198
+            },
+            {
+              "ok": false,
+              "url": "rtsp://192.168.68.100:554/live.sdp",
+              "returncode": 2812791560,
+              "auth_required": false,
+              "error": "[rtsp @ 000001dbca3a4740] method OPTIONS failed: 405 Method Not Allowed [in#0 @ 000001dbca3a4340] Error opening input: Server returned 4XX Client Error, but not one of 40{0,1,3,4} Error opening input file rtsp://192.168.68.100:554/live.sdp. Error opening input files: Server returned 4XX Client Error, but not one of 40{0,1,3,4}",
+              "latency_ms": 210
+            },
+            {
+              "ok": false,
+              "url": "rtsp://192.168.68.100:554/h264",
+              "returncode": 2812791560,
+              "auth_required": false,
+              "error": "[rtsp @ 0000024c94884740] method OPTIONS failed: 405 Method Not Allowed [in#0 @ 0000024c94884340] Error opening input: Server returned 4XX Client Error, but not one of 40{0,1,3,4} Error opening input file rtsp://192.168.68.100:554/h264. Error opening input files: Server returned 4XX Client Error, but not one of 40{0,1,3,4}",
+              "latency_ms": 206
+            },
+            {
+              "ok": false,
+              "url": "rtsp://192.168.68.100:554/h264.sdp",
+              "returncode": 2812791560,
+              "auth_required": false,
+              "error": "[rtsp @ 000001afbf394740] method OPTIONS failed: 405 Method Not Allowed [in#0 @ 000001afbf394340] Error opening input: Server returned 4XX Client Error, but not one of 40{0,1,3,4} Error opening input file rtsp://192.168.68.100:554/h264.sdp. Error opening input files: Server returned 4XX Client Error, but not one of 40{0,1,3,4}",
+              "latency_ms": 196
+            },
+            {
+              "ok": false,
+              "url": "rtsp://192.168.68.100:554/mpeg4",
+              "returncode": 2812791560,
+              "auth_required": false,
+              "error": "[rtsp @ 000002bdca184740] method OPTIONS failed: 405 Method Not Allowed [in#0 @ 000002bdca184340] Error opening input: Server returned 4XX Client Error, but not one of 40{0,1,3,4} Error opening input file rtsp://192.168.68.100:554/mpeg4. Error opening input files: Server returned 4XX Client Error, but not one of 40{0,1,3,4}",
+              "latency_ms": 199
+            }
+          ]
+        },
+        "mac": "2c:d8:de:80:0f:a5"
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "camera_or_rtsp_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "RTSP device"
+        },
+        "observed_at": 1778795282,
+        "event_model_version": 1,
+        "last_seen_discovery": 1778795282,
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          },
+          {
+            "event": "view_stream",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "rtsp",
+              "real_time": true,
+              "url_candidates": [
+                "rtsp://192.168.68.100:554/",
+                "rtsp://192.168.68.100:554/stream1",
+                "rtsp://192.168.68.100:554/stream2",
+                "rtsp://192.168.68.100:554/live",
+                "rtsp://192.168.68.100:554/live.sdp",
+                "rtsp://192.168.68.100:554/h264",
+                "rtsp://192.168.68.100:554/h264.sdp",
+                "rtsp://192.168.68.100:554/mpeg4",
+                "rtsp://192.168.68.100:554/cam/realmonitor?channel=1&subtype=0",
+                "rtsp://192.168.68.100:554/cam/realmonitor?channel=1&subtype=1",
+                "rtsp://192.168.68.100:554/Streaming/Channels/1",
+                "rtsp://192.168.68.100:554/Streaming/Channels/101",
+                "rtsp://192.168.68.100:554/Streaming/Channels/102",
+                "rtsp://192.168.68.100:554/h264/ch1/main/av_stream",
+                "rtsp://192.168.68.100:554/h264/ch1/sub/av_stream",
+                "rtsp://192.168.68.100:554/onvif1",
+                "rtsp://192.168.68.100:554/onvif2",
+                "rtsp://192.168.68.100:554/onvif-media/media.amp",
+                "rtsp://192.168.68.100:554/axis-media/media.amp",
+                "rtsp://192.168.68.100:554/profile1/media.smp",
+                "rtsp://192.168.68.100:554/ch0_0.h264",
+                "rtsp://192.168.68.100:554/ch0_1.h264",
+                "rtsp://192.168.68.100:554/videoMain",
+                "rtsp://192.168.68.100:554/videoSub"
+              ],
+              "mjpeg_proxy_endpoint": "/api/local-env/devices/net_192_168_68_100/camera/mjpeg",
+              "requires_camera_credentials": true
+            }
+          },
+          {
+            "event": "capture_snapshot",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "requires_snapshot_url_or_rtsp_decoder": true
+            }
+          }
+        ],
+        "last_access_test": {
+          "ok": true,
+          "status": "responsive",
+          "tested_at": 1778795282,
+          "responsive_ports": [
+            554
+          ],
+          "latency_ms": 264,
+          "type": "camera_or_rtsp_device",
+          "event_count": 3
+        },
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control",
+        "rename_history": [
+          {
+            "ts": 1778760103,
+            "name": "Camera da Sala",
+            "source": "chat"
+          },
+          {
+            "ts": 1778760127,
+            "name": "Camera da Sala",
+            "source": "chat"
+          }
+        ],
+        "last_renamed_at": 1778760127,
+        "discovery_sources": []
+      },
+      "created_at": 1778680536,
+      "updated_at": 1778795346
+    },
+    "net_192_168_68_102": {
+      "device_id": "net_192_168_68_102",
+      "name": "RTSP device 192.168.68.102",
+      "type": "camera_or_rtsp_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state",
+        "view_stream",
+        "capture_snapshot"
+      ],
+      "risk_level": 1,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.102",
+        "RTSP device",
+        "camera_or_rtsp_device",
+        "camera",
+        "cameras",
+        "stream",
+        "rtsp",
+        "camera 192.168.68.102"
+      ],
+      "config": {
+        "ip": "192.168.68.102",
+        "open_ports": [
+          554
+        ],
+        "web_urls": [],
+        "rtsp_url_candidates": [
+          "rtsp://192.168.68.102:554/",
+          "rtsp://192.168.68.102:554/stream1",
+          "rtsp://192.168.68.102:554/stream2",
+          "rtsp://192.168.68.102:554/live",
+          "rtsp://192.168.68.102:554/live.sdp",
+          "rtsp://192.168.68.102:554/h264",
+          "rtsp://192.168.68.102:554/h264.sdp",
+          "rtsp://192.168.68.102:554/mpeg4",
+          "rtsp://192.168.68.102:554/cam/realmonitor?channel=1&subtype=0",
+          "rtsp://192.168.68.102:554/cam/realmonitor?channel=1&subtype=1",
+          "rtsp://192.168.68.102:554/Streaming/Channels/1",
+          "rtsp://192.168.68.102:554/Streaming/Channels/101",
+          "rtsp://192.168.68.102:554/Streaming/Channels/102",
+          "rtsp://192.168.68.102:554/h264/ch1/main/av_stream",
+          "rtsp://192.168.68.102:554/h264/ch1/sub/av_stream",
+          "rtsp://192.168.68.102:554/onvif1",
+          "rtsp://192.168.68.102:554/onvif2",
+          "rtsp://192.168.68.102:554/onvif-media/media.amp",
+          "rtsp://192.168.68.102:554/axis-media/media.amp",
+          "rtsp://192.168.68.102:554/profile1/media.smp",
+          "rtsp://192.168.68.102:554/ch0_0.h264",
+          "rtsp://192.168.68.102:554/ch0_1.h264",
+          "rtsp://192.168.68.102:554/videoMain",
+          "rtsp://192.168.68.102:554/videoSub"
+        ],
+        "discovered_by": "tcp_port_probe",
+        "last_discovered_ports": [
+          554
+        ],
+        "last_access_ports": [
+          554
+        ],
+        "mac": "7c:aa:de:5a:7d:47"
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "camera_or_rtsp_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "RTSP device"
+        },
+        "observed_at": 1778795282,
+        "event_model_version": 1,
+        "last_seen_discovery": 1778795282,
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          },
+          {
+            "event": "view_stream",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "rtsp",
+              "real_time": true,
+              "url_candidates": [
+                "rtsp://192.168.68.102:554/",
+                "rtsp://192.168.68.102:554/stream1",
+                "rtsp://192.168.68.102:554/stream2",
+                "rtsp://192.168.68.102:554/live",
+                "rtsp://192.168.68.102:554/live.sdp",
+                "rtsp://192.168.68.102:554/h264",
+                "rtsp://192.168.68.102:554/h264.sdp",
+                "rtsp://192.168.68.102:554/mpeg4",
+                "rtsp://192.168.68.102:554/cam/realmonitor?channel=1&subtype=0",
+                "rtsp://192.168.68.102:554/cam/realmonitor?channel=1&subtype=1",
+                "rtsp://192.168.68.102:554/Streaming/Channels/1",
+                "rtsp://192.168.68.102:554/Streaming/Channels/101",
+                "rtsp://192.168.68.102:554/Streaming/Channels/102",
+                "rtsp://192.168.68.102:554/h264/ch1/main/av_stream",
+                "rtsp://192.168.68.102:554/h264/ch1/sub/av_stream",
+                "rtsp://192.168.68.102:554/onvif1",
+                "rtsp://192.168.68.102:554/onvif2",
+                "rtsp://192.168.68.102:554/onvif-media/media.amp",
+                "rtsp://192.168.68.102:554/axis-media/media.amp",
+                "rtsp://192.168.68.102:554/profile1/media.smp",
+                "rtsp://192.168.68.102:554/ch0_0.h264",
+                "rtsp://192.168.68.102:554/ch0_1.h264",
+                "rtsp://192.168.68.102:554/videoMain",
+                "rtsp://192.168.68.102:554/videoSub"
+              ],
+              "mjpeg_proxy_endpoint": "/api/local-env/devices/net_192_168_68_102/camera/mjpeg",
+              "requires_camera_credentials": true
+            }
+          },
+          {
+            "event": "capture_snapshot",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "requires_snapshot_url_or_rtsp_decoder": true
+            }
+          }
+        ],
+        "last_access_test": {
+          "ok": true,
+          "status": "responsive",
+          "tested_at": 1778795282,
+          "responsive_ports": [
+            554
+          ],
+          "latency_ms": 31,
+          "type": "camera_or_rtsp_device",
+          "event_count": 3
+        },
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control",
+        "discovery_sources": []
+      },
+      "created_at": 1778680536,
+      "updated_at": 1778795346
+    },
+    "net_192_168_68_103": {
+      "device_id": "net_192_168_68_103",
+      "name": "RTSP device 192.168.68.103",
+      "type": "camera_or_rtsp_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state",
+        "view_stream",
+        "capture_snapshot"
+      ],
+      "risk_level": 1,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.103",
+        "RTSP device",
+        "camera_or_rtsp_device",
+        "camera",
+        "cameras",
+        "stream",
+        "rtsp",
+        "camera 192.168.68.103"
+      ],
+      "config": {
+        "ip": "192.168.68.103",
+        "open_ports": [
+          554
+        ],
+        "web_urls": [],
+        "rtsp_url_candidates": [
+          "rtsp://192.168.68.103:554/",
+          "rtsp://192.168.68.103:554/stream1",
+          "rtsp://192.168.68.103:554/stream2",
+          "rtsp://192.168.68.103:554/live",
+          "rtsp://192.168.68.103:554/live.sdp",
+          "rtsp://192.168.68.103:554/h264",
+          "rtsp://192.168.68.103:554/h264.sdp",
+          "rtsp://192.168.68.103:554/mpeg4",
+          "rtsp://192.168.68.103:554/cam/realmonitor?channel=1&subtype=0",
+          "rtsp://192.168.68.103:554/cam/realmonitor?channel=1&subtype=1",
+          "rtsp://192.168.68.103:554/Streaming/Channels/1",
+          "rtsp://192.168.68.103:554/Streaming/Channels/101",
+          "rtsp://192.168.68.103:554/Streaming/Channels/102",
+          "rtsp://192.168.68.103:554/h264/ch1/main/av_stream",
+          "rtsp://192.168.68.103:554/h264/ch1/sub/av_stream",
+          "rtsp://192.168.68.103:554/onvif1",
+          "rtsp://192.168.68.103:554/onvif2",
+          "rtsp://192.168.68.103:554/onvif-media/media.amp",
+          "rtsp://192.168.68.103:554/axis-media/media.amp",
+          "rtsp://192.168.68.103:554/profile1/media.smp",
+          "rtsp://192.168.68.103:554/ch0_0.h264",
+          "rtsp://192.168.68.103:554/ch0_1.h264",
+          "rtsp://192.168.68.103:554/videoMain",
+          "rtsp://192.168.68.103:554/videoSub"
+        ],
+        "discovered_by": "tcp_port_probe",
+        "last_discovered_ports": [
+          554
+        ],
+        "last_access_ports": [
+          554
+        ],
+        "mac": "7c:aa:de:49:75:fb"
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "camera_or_rtsp_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "RTSP device"
+        },
+        "observed_at": 1778795282,
+        "event_model_version": 1,
+        "last_seen_discovery": 1778795282,
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          },
+          {
+            "event": "view_stream",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "rtsp",
+              "real_time": true,
+              "url_candidates": [
+                "rtsp://192.168.68.103:554/",
+                "rtsp://192.168.68.103:554/stream1",
+                "rtsp://192.168.68.103:554/stream2",
+                "rtsp://192.168.68.103:554/live",
+                "rtsp://192.168.68.103:554/live.sdp",
+                "rtsp://192.168.68.103:554/h264",
+                "rtsp://192.168.68.103:554/h264.sdp",
+                "rtsp://192.168.68.103:554/mpeg4",
+                "rtsp://192.168.68.103:554/cam/realmonitor?channel=1&subtype=0",
+                "rtsp://192.168.68.103:554/cam/realmonitor?channel=1&subtype=1",
+                "rtsp://192.168.68.103:554/Streaming/Channels/1",
+                "rtsp://192.168.68.103:554/Streaming/Channels/101",
+                "rtsp://192.168.68.103:554/Streaming/Channels/102",
+                "rtsp://192.168.68.103:554/h264/ch1/main/av_stream",
+                "rtsp://192.168.68.103:554/h264/ch1/sub/av_stream",
+                "rtsp://192.168.68.103:554/onvif1",
+                "rtsp://192.168.68.103:554/onvif2",
+                "rtsp://192.168.68.103:554/onvif-media/media.amp",
+                "rtsp://192.168.68.103:554/axis-media/media.amp",
+                "rtsp://192.168.68.103:554/profile1/media.smp",
+                "rtsp://192.168.68.103:554/ch0_0.h264",
+                "rtsp://192.168.68.103:554/ch0_1.h264",
+                "rtsp://192.168.68.103:554/videoMain",
+                "rtsp://192.168.68.103:554/videoSub"
+              ],
+              "mjpeg_proxy_endpoint": "/api/local-env/devices/net_192_168_68_103/camera/mjpeg",
+              "requires_camera_credentials": true
+            }
+          },
+          {
+            "event": "capture_snapshot",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "requires_snapshot_url_or_rtsp_decoder": true
+            }
+          }
+        ],
+        "last_access_test": {
+          "ok": true,
+          "status": "responsive",
+          "tested_at": 1778795282,
+          "responsive_ports": [
+            554
+          ],
+          "latency_ms": 286,
+          "type": "camera_or_rtsp_device",
+          "event_count": 3
+        },
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control",
+        "discovery_sources": []
+      },
+      "created_at": 1778680536,
+      "updated_at": 1778795346
+    },
+    "net_192_168_68_104": {
+      "device_id": "net_192_168_68_104",
+      "name": "HTTP device 192.168.68.104",
+      "type": "samsung_tv_or_media_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state",
+        "open_web_interface",
+        "turn_on",
+        "turn_off",
+        "media_play",
+        "media_pause",
+        "volume_up",
+        "volume_down",
+        "mute",
+        "send_key",
+        "launch_app",
+        "set_input"
+      ],
+      "risk_level": 1,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.104",
+        "HTTP device",
+        "http_device",
+        "Samsung TV/Media device",
+        "samsung_tv_or_media_device",
+        "tv",
+        "televisao",
+        "televisão",
+        "media",
+        "controle remoto",
+        "tv 192.168.68.104",
+        "ARP neighbor",
+        "network_device"
+      ],
+      "config": {
+        "ip": "192.168.68.104",
+        "open_ports": [
+          8080
+        ],
+        "web_urls": [
+          "http://192.168.68.104:8080/"
+        ],
+        "rtsp_url_candidates": [],
+        "discovered_by": "arp_cache",
+        "last_discovered_ports": [],
+        "last_access_ports": [
+          8080
+        ],
+        "mac": "8c:ce:4e:d1:c9:a4"
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "network_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "ARP neighbor"
+        },
+        "observed_at": 1778762647,
+        "event_model_version": 1,
+        "last_seen_discovery": 1778762651,
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          },
+          {
+            "event": "open_web_interface",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "urls": [
+                "http://192.168.68.104:8080/"
+              ]
+            }
+          },
+          {
+            "event": "turn_on",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "wake_on_lan",
+              "hint": ""
+            }
+          },
+          {
+            "event": "turn_off",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "media_play",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "media_pause",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "volume_up",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "volume_down",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "mute",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "send_key",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "launch_app",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "set_input",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          }
+        ],
+        "last_access_test": {
+          "ok": false,
+          "status": "unresponsive",
+          "tested_at": 1778795285,
+          "responsive_ports": [],
+          "latency_ms": 2665,
+          "type": "samsung_tv_or_media_device",
+          "event_count": 12
+        },
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control",
+        "discovery_sources": [
+          "arp_cache"
+        ],
+        "last_scan_status": "not_observed_in_current_scan",
+        "last_scan_at": 1778795121
+      },
+      "created_at": 1778680536,
+      "updated_at": 1778795346
+    },
+    "net_192_168_68_109": {
+      "device_id": "net_192_168_68_109",
+      "name": "HTTP device 192.168.68.109",
+      "type": "samsung_tv_or_media_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state",
+        "open_web_interface",
+        "turn_on",
+        "turn_off",
+        "media_play",
+        "media_pause",
+        "volume_up",
+        "volume_down",
+        "mute",
+        "send_key",
+        "launch_app",
+        "set_input"
+      ],
+      "risk_level": 1,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.109",
+        "HTTP device",
+        "http_device",
+        "Samsung TV/Media device",
+        "samsung_tv_or_media_device",
+        "tv",
+        "televisao",
+        "televisão",
+        "media",
+        "controle remoto",
+        "tv 192.168.68.109",
+        "ARP neighbor",
+        "network_device"
+      ],
+      "config": {
+        "ip": "192.168.68.109",
+        "open_ports": [
+          80
+        ],
+        "web_urls": [
+          "http://192.168.68.109/"
+        ],
+        "rtsp_url_candidates": [],
+        "discovered_by": "tcp_port_probe,arp_cache",
+        "last_discovered_ports": [
+          80
+        ],
+        "last_access_ports": [
+          8080
+        ],
+        "mac": "d4:27:87:2e:ca:c0"
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "network_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "ARP neighbor"
+        },
+        "observed_at": 1778762647,
+        "event_model_version": 1,
+        "last_seen_discovery": 1778762651,
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          },
+          {
+            "event": "open_web_interface",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "urls": [
+                "http://192.168.68.109:8080/",
+                "http://192.168.68.109/"
+              ]
+            }
+          },
+          {
+            "event": "turn_on",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "wake_on_lan",
+              "hint": ""
+            }
+          },
+          {
+            "event": "turn_off",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "media_play",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "media_pause",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "volume_up",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "volume_down",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "mute",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "send_key",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "launch_app",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "set_input",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          }
+        ],
+        "last_access_test": {
+          "ok": false,
+          "status": "unresponsive",
+          "tested_at": 1778795302,
+          "responsive_ports": [],
+          "latency_ms": 5322,
+          "type": "samsung_tv_or_media_device",
+          "event_count": 12
+        },
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control",
+        "discovery_sources": [
+          "tcp_port_probe",
+          "arp_cache"
+        ],
+        "last_scan_status": "not_observed_in_current_scan",
+        "last_scan_at": 1778795121
+      },
+      "created_at": 1778680536,
+      "updated_at": 1778795346
+    },
+    "net_192_168_68_111": {
+      "device_id": "net_192_168_68_111",
+      "name": "HTTP device 192.168.68.111",
+      "type": "samsung_tv_or_media_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state",
+        "open_web_interface",
+        "turn_on",
+        "turn_off",
+        "media_play",
+        "media_pause",
+        "volume_up",
+        "volume_down",
+        "mute",
+        "send_key",
+        "launch_app",
+        "set_input"
+      ],
+      "risk_level": 1,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.111",
+        "HTTP device",
+        "http_device",
+        "Samsung TV/Media device",
+        "samsung_tv_or_media_device",
+        "tv",
+        "televisao",
+        "televisão",
+        "media",
+        "controle remoto",
+        "tv 192.168.68.111"
+      ],
+      "config": {
+        "ip": "192.168.68.111",
+        "open_ports": [
+          8001,
+          8002,
+          8080,
+          7000
+        ],
+        "web_urls": [
+          "http://192.168.68.111:8001/",
+          "http://192.168.68.111:8002/",
+          "http://192.168.68.111:8080/",
+          "http://192.168.68.111:7000/"
+        ],
+        "rtsp_url_candidates": [],
+        "discovered_by": "tcp_port_probe",
+        "last_discovered_ports": [
+          8001,
+          8002,
+          8080,
+          7000
+        ],
+        "last_access_ports": [
+          8001,
+          8002,
+          8080,
+          7000
+        ],
+        "mac": "00:7d:3b:8b:05:f1"
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "samsung_tv_or_media_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "Samsung TV/Media device"
+        },
+        "observed_at": 1778795313,
+        "event_model_version": 1,
+        "last_seen_discovery": 1778795313,
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          },
+          {
+            "event": "open_web_interface",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "urls": [
+                "http://192.168.68.111:8001/",
+                "http://192.168.68.111:8002/",
+                "http://192.168.68.111:8080/",
+                "http://192.168.68.111:7000/"
+              ]
+            }
+          },
+          {
+            "event": "turn_on",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "turn_off",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "media_play",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "media_pause",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "volume_up",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "volume_down",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "mute",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "send_key",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "launch_app",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "set_input",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          }
+        ],
+        "last_access_test": {
+          "ok": true,
+          "status": "responsive",
+          "tested_at": 1778795313,
+          "responsive_ports": [
+            8001,
+            8002,
+            8080,
+            7000
+          ],
+          "latency_ms": 5484,
+          "type": "samsung_tv_or_media_device",
+          "event_count": 12
+        },
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control",
+        "discovery_sources": []
+      },
+      "created_at": 1778680536,
+      "updated_at": 1778795346
+    },
+    "net_192_168_68_113": {
+      "device_id": "net_192_168_68_113",
+      "name": "HTTP device 192.168.68.113",
+      "type": "samsung_tv_or_media_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state",
+        "open_web_interface",
+        "turn_on",
+        "turn_off",
+        "media_play",
+        "media_pause",
+        "volume_up",
+        "volume_down",
+        "mute",
+        "send_key",
+        "launch_app",
+        "set_input"
+      ],
+      "risk_level": 1,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.113",
+        "HTTP device",
+        "http_device",
+        "Samsung TV/Media device",
+        "samsung_tv_or_media_device",
+        "tv",
+        "televisao",
+        "televisão",
+        "media",
+        "controle remoto",
+        "tv 192.168.68.113"
+      ],
+      "config": {
+        "ip": "192.168.68.113",
+        "open_ports": [
+          8001,
+          8002,
+          8080,
+          9080,
+          9197
+        ],
+        "web_urls": [
+          "http://192.168.68.113:8001/",
+          "http://192.168.68.113:8002/",
+          "http://192.168.68.113:8080/",
+          "http://192.168.68.113:9080/",
+          "http://192.168.68.113:9197/"
+        ],
+        "rtsp_url_candidates": [],
+        "discovered_by": "tcp_port_probe",
+        "last_discovered_ports": [
+          8001,
+          8002,
+          8080,
+          9080,
+          9197
+        ],
+        "last_access_ports": [
+          8001,
+          8002,
+          8080,
+          9080,
+          9197
+        ],
+        "mac": "98:06:3c:9d:f1:62"
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "samsung_tv_or_media_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "Samsung TV/Media device"
+        },
+        "observed_at": 1778795318,
+        "event_model_version": 1,
+        "last_seen_discovery": 1778795318,
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          },
+          {
+            "event": "open_web_interface",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "urls": [
+                "http://192.168.68.113:8001/",
+                "http://192.168.68.113:8002/",
+                "http://192.168.68.113:8080/",
+                "http://192.168.68.113:9080/",
+                "http://192.168.68.113:9197/"
+              ]
+            }
+          },
+          {
+            "event": "turn_on",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "turn_off",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "media_play",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "media_pause",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "volume_up",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "volume_down",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "mute",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "send_key",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "launch_app",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "set_input",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          }
+        ],
+        "last_access_test": {
+          "ok": true,
+          "status": "responsive",
+          "tested_at": 1778795318,
+          "responsive_ports": [
+            8001,
+            8002,
+            8080,
+            9080,
+            9197
+          ],
+          "latency_ms": 2745,
+          "type": "samsung_tv_or_media_device",
+          "event_count": 12
+        },
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control",
+        "discovery_sources": []
+      },
+      "created_at": 1778680536,
+      "updated_at": 1778795346
+    },
+    "net_192_168_68_249": {
+      "device_id": "net_192_168_68_249",
+      "name": "HTTP device 192.168.68.249",
+      "type": "http_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state",
+        "open_web_interface"
+      ],
+      "risk_level": 0,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.249",
+        "HTTP device",
+        "http_device",
+        "ARP neighbor",
+        "network_device"
+      ],
+      "config": {
+        "ip": "192.168.68.249",
+        "open_ports": [
+          80,
+          443
+        ],
+        "web_urls": [
+          "http://192.168.68.249/",
+          "https://192.168.68.249/"
+        ],
+        "rtsp_url_candidates": [],
+        "discovered_by": "tcp_port_probe",
+        "last_discovered_ports": [
+          80,
+          443
+        ],
+        "last_access_ports": [
+          80,
+          443
+        ],
+        "mac": "28:ee:52:c0:14:d8"
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "http_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "HTTP device"
+        },
+        "observed_at": 1778795346,
+        "event_model_version": 1,
+        "last_seen_discovery": 1778795346,
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          },
+          {
+            "event": "open_web_interface",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "urls": [
+                "http://192.168.68.249/",
+                "https://192.168.68.249/"
+              ]
+            }
+          }
+        ],
+        "last_access_test": {
+          "ok": true,
+          "status": "responsive",
+          "tested_at": 1778795346,
+          "responsive_ports": [
+            80,
+            443
+          ],
+          "latency_ms": 223,
+          "type": "http_device",
+          "event_count": 2
+        },
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control",
+        "discovery_sources": []
+      },
+      "created_at": 1778680536,
+      "updated_at": 1778795346
+    },
+    "net_192_168_68_112": {
+      "device_id": "net_192_168_68_112",
+      "name": "HTTP device 192.168.68.112",
+      "type": "http_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state",
+        "open_web_interface"
+      ],
+      "risk_level": 0,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.112",
+        "HTTP device",
+        "http_device",
+        "ARP neighbor",
+        "network_device"
+      ],
+      "config": {
+        "ip": "192.168.68.112",
+        "open_ports": [
+          80
+        ],
+        "web_urls": [
+          "http://192.168.68.112/"
+        ],
+        "rtsp_url_candidates": [],
+        "discovered_by": "arp_cache",
+        "last_discovered_ports": [],
+        "last_access_ports": [
+          80
+        ],
+        "mac": "76:eb:8c:57:75:d7"
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "network_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "ARP neighbor"
+        },
+        "observed_at": 1778795116,
+        "event_model_version": 1,
+        "last_seen_discovery": 1778795121,
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          },
+          {
+            "event": "open_web_interface",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "urls": [
+                "http://192.168.68.112/"
+              ]
+            }
+          }
+        ],
+        "last_access_test": {
+          "ok": false,
+          "status": "unresponsive",
+          "tested_at": 1778795316,
+          "responsive_ports": [],
+          "latency_ms": 2707,
+          "type": "http_device",
+          "event_count": 2
+        },
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control",
+        "last_scan_status": "not_observed_in_current_scan",
+        "last_scan_at": 1778762352,
+        "discovery_sources": [
+          "arp_cache"
+        ]
+      },
+      "created_at": 1778688419,
+      "updated_at": 1778795346
+    },
+    "net_192_168_68_118": {
+      "device_id": "net_192_168_68_118",
+      "name": "HTTP device 192.168.68.118",
+      "type": "http_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state",
+        "open_web_interface"
+      ],
+      "risk_level": 0,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.118",
+        "HTTP device",
+        "http_device"
+      ],
+      "config": {
+        "ip": "192.168.68.118",
+        "open_ports": [
+          5357
+        ],
+        "web_urls": [
+          "http://192.168.68.118:5357/"
+        ],
+        "rtsp_url_candidates": [],
+        "discovered_by": "tcp_port_probe"
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "http_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "HTTP device"
+        },
+        "observed_at": 1778694020,
+        "event_model_version": 1,
+        "last_scan_status": "not_observed_in_current_scan",
+        "last_scan_at": 1778795121,
+        "last_access_test": {
+          "ok": false,
+          "status": "unresponsive",
+          "tested_at": 1778795346,
+          "responsive_ports": [],
+          "latency_ms": 2633,
+          "type": "http_device",
+          "event_count": 2
+        },
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          },
+          {
+            "event": "open_web_interface",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "urls": [
+                "http://192.168.68.118:5357/"
+              ]
+            }
+          }
+        ],
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control"
+      },
+      "created_at": 1778694030,
+      "updated_at": 1778795346
+    },
+    "net_192_168_68_101": {
+      "device_id": "net_192_168_68_101",
+      "name": "ARP neighbor 192.168.68.101",
+      "type": "network_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state",
+        "open_web_interface"
+      ],
+      "risk_level": 0,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.101",
+        "ARP neighbor",
+        "network_device",
+        "HTTP device",
+        "http_device"
+      ],
+      "config": {
+        "ip": "192.168.68.101",
+        "open_ports": [
+          5357
+        ],
+        "web_urls": [
+          "http://192.168.68.101:5357/"
+        ],
+        "rtsp_url_candidates": [],
+        "onvif_xaddrs": [],
+        "mdns_services": [],
+        "mac": "8c:79:f5:49:86:01",
+        "discovered_by": "tcp_port_probe",
+        "last_discovered_ports": [
+          5357
+        ],
+        "last_access_ports": [
+          5357
+        ]
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "http_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "HTTP device"
+        },
+        "observed_at": 1778795282,
+        "event_model_version": 1,
+        "discovery_sources": [],
+        "last_access_test": {
+          "ok": true,
+          "status": "responsive",
+          "tested_at": 1778795282,
+          "responsive_ports": [
+            5357
+          ],
+          "latency_ms": 31,
+          "type": "http_device",
+          "event_count": 2
+        },
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          },
+          {
+            "event": "open_web_interface",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "urls": [
+                "http://192.168.68.101:5357/"
+              ]
+            }
+          }
+        ],
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control",
+        "last_seen_discovery": 1778795282
+      },
+      "created_at": 1778762352,
+      "updated_at": 1778795346
+    },
+    "net_192_168_68_105": {
+      "device_id": "net_192_168_68_105",
+      "name": "Samsung TV/Media device 192.168.68.105",
+      "type": "samsung_tv_or_media_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state",
+        "open_web_interface",
+        "turn_on",
+        "turn_off",
+        "media_play",
+        "media_pause",
+        "volume_up",
+        "volume_down",
+        "mute",
+        "send_key",
+        "launch_app",
+        "set_input"
+      ],
+      "risk_level": 1,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.105",
+        "Samsung TV/Media device",
+        "samsung_tv_or_media_device",
+        "tv",
+        "televisao",
+        "televisão",
+        "media",
+        "controle remoto",
+        "tv 192.168.68.105"
+      ],
+      "config": {
+        "ip": "192.168.68.105",
+        "open_ports": [
+          8001,
+          8002,
+          8080,
+          9080,
+          9197
+        ],
+        "web_urls": [
+          "http://192.168.68.105:8001/",
+          "http://192.168.68.105:8002/",
+          "http://192.168.68.105:8080/",
+          "http://192.168.68.105:9080/",
+          "http://192.168.68.105:9197/"
+        ],
+        "rtsp_url_candidates": [],
+        "onvif_xaddrs": [],
+        "mdns_services": [],
+        "mac": "68:72:c3:50:98:ca",
+        "discovered_by": "tcp_port_probe",
+        "last_discovered_ports": [
+          8001,
+          8002,
+          8080,
+          9080,
+          9197
+        ],
+        "last_access_ports": [
+          8001,
+          8002,
+          8080,
+          9080,
+          9197
+        ]
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "samsung_tv_or_media_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "Samsung TV/Media device"
+        },
+        "observed_at": 1778795288,
+        "event_model_version": 1,
+        "discovery_sources": [],
+        "last_seen_discovery": 1778795288,
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          },
+          {
+            "event": "open_web_interface",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "urls": [
+                "http://192.168.68.105:8001/",
+                "http://192.168.68.105:8002/",
+                "http://192.168.68.105:8080/",
+                "http://192.168.68.105:9080/",
+                "http://192.168.68.105:9197/"
+              ]
+            }
+          },
+          {
+            "event": "turn_on",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "turn_off",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "media_play",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "media_pause",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "volume_up",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "volume_down",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "mute",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "send_key",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "launch_app",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "set_input",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          }
+        ],
+        "last_access_test": {
+          "ok": true,
+          "status": "responsive",
+          "tested_at": 1778795288,
+          "responsive_ports": [
+            8001,
+            8002,
+            8080,
+            9080,
+            9197
+          ],
+          "latency_ms": 2974,
+          "type": "samsung_tv_or_media_device",
+          "event_count": 12
+        },
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control"
+      },
+      "created_at": 1778762352,
+      "updated_at": 1778795346
+    },
+    "net_192_168_68_106": {
+      "device_id": "net_192_168_68_106",
+      "name": "ARP neighbor 192.168.68.106",
+      "type": "network_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state"
+      ],
+      "risk_level": 0,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.106",
+        "ARP neighbor",
+        "network_device"
+      ],
+      "config": {
+        "ip": "192.168.68.106",
+        "open_ports": [],
+        "web_urls": [],
+        "rtsp_url_candidates": [],
+        "onvif_xaddrs": [],
+        "mdns_services": [],
+        "mac": "48:78:5e:7d:1b:da",
+        "discovered_by": "arp_cache",
+        "last_discovered_ports": []
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "network_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "ARP neighbor"
+        },
+        "observed_at": 1778795116,
+        "event_model_version": 1,
+        "discovery_sources": [
+          "arp_cache"
+        ],
+        "last_access_test": {
+          "ok": false,
+          "status": "unresponsive",
+          "tested_at": 1778795294,
+          "responsive_ports": [],
+          "latency_ms": 5721,
+          "type": "network_device",
+          "event_count": 1
+        },
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          }
+        ],
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control",
+        "last_seen_discovery": 1778795121
+      },
+      "created_at": 1778762352,
+      "updated_at": 1778795346
+    },
+    "net_192_168_68_108": {
+      "device_id": "net_192_168_68_108",
+      "name": "ARP neighbor 192.168.68.108",
+      "type": "network_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state",
+        "open_web_interface"
+      ],
+      "risk_level": 0,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.108",
+        "ARP neighbor",
+        "network_device"
+      ],
+      "config": {
+        "ip": "192.168.68.108",
+        "open_ports": [
+          80
+        ],
+        "web_urls": [
+          "http://192.168.68.108/"
+        ],
+        "rtsp_url_candidates": [],
+        "onvif_xaddrs": [],
+        "mdns_services": [],
+        "mac": "d4:27:87:2e:10:fa",
+        "discovered_by": "tcp_port_probe,arp_cache",
+        "last_discovered_ports": [
+          80
+        ]
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "network_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "ARP neighbor"
+        },
+        "observed_at": 1778762647,
+        "event_model_version": 1,
+        "discovery_sources": [
+          "tcp_port_probe",
+          "arp_cache"
+        ],
+        "last_access_test": {
+          "ok": false,
+          "status": "unresponsive",
+          "tested_at": 1778795296,
+          "responsive_ports": [],
+          "latency_ms": 2654,
+          "type": "network_device",
+          "event_count": 2
+        },
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          },
+          {
+            "event": "open_web_interface",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "urls": [
+                "http://192.168.68.108/"
+              ]
+            }
+          }
+        ],
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control",
+        "last_seen_discovery": 1778762651,
+        "last_scan_status": "not_observed_in_current_scan",
+        "last_scan_at": 1778795121
+      },
+      "created_at": 1778762352,
+      "updated_at": 1778795346
+    },
+    "net_192_168_68_110": {
+      "device_id": "net_192_168_68_110",
+      "name": "ARP neighbor 192.168.68.110",
+      "type": "network_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state"
+      ],
+      "risk_level": 0,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.110",
+        "ARP neighbor",
+        "network_device"
+      ],
+      "config": {
+        "ip": "192.168.68.110",
+        "open_ports": [],
+        "web_urls": [],
+        "rtsp_url_candidates": [],
+        "onvif_xaddrs": [],
+        "mdns_services": [],
+        "mac": "96:13:84:86:6a:f0",
+        "discovered_by": "arp_cache",
+        "last_discovered_ports": []
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "network_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "ARP neighbor"
+        },
+        "observed_at": 1778795116,
+        "event_model_version": 1,
+        "discovery_sources": [
+          "arp_cache"
+        ],
+        "last_access_test": {
+          "ok": false,
+          "status": "unresponsive",
+          "tested_at": 1778795307,
+          "responsive_ports": [],
+          "latency_ms": 5827,
+          "type": "network_device",
+          "event_count": 1
+        },
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          }
+        ],
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control",
+        "last_seen_discovery": 1778795121
+      },
+      "created_at": 1778762352,
+      "updated_at": 1778795346
+    },
+    "net_192_168_68_115": {
+      "device_id": "net_192_168_68_115",
+      "name": "ARP neighbor 192.168.68.115",
+      "type": "network_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state"
+      ],
+      "risk_level": 0,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.115",
+        "ARP neighbor",
+        "network_device"
+      ],
+      "config": {
+        "ip": "192.168.68.115",
+        "open_ports": [],
+        "web_urls": [],
+        "rtsp_url_candidates": [],
+        "onvif_xaddrs": [],
+        "mdns_services": [],
+        "mac": "fa:b3:45:be:dd:26",
+        "discovered_by": "arp_cache",
+        "last_discovered_ports": []
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "network_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "ARP neighbor"
+        },
+        "observed_at": 1778795116,
+        "event_model_version": 1,
+        "discovery_sources": [
+          "arp_cache"
+        ],
+        "last_access_test": {
+          "ok": false,
+          "status": "unresponsive",
+          "tested_at": 1778795324,
+          "responsive_ports": [],
+          "latency_ms": 5771,
+          "type": "network_device",
+          "event_count": 1
+        },
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          }
+        ],
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control",
+        "last_seen_discovery": 1778795121
+      },
+      "created_at": 1778762352,
+      "updated_at": 1778795346
+    },
+    "net_192_168_68_116": {
+      "device_id": "net_192_168_68_116",
+      "name": "Samsung TV/Media device 192.168.68.116",
+      "type": "samsung_tv_or_media_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state",
+        "open_web_interface",
+        "turn_on",
+        "turn_off",
+        "media_play",
+        "media_pause",
+        "volume_up",
+        "volume_down",
+        "mute",
+        "send_key",
+        "launch_app",
+        "set_input"
+      ],
+      "risk_level": 1,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.116",
+        "Samsung TV/Media device",
+        "samsung_tv_or_media_device",
+        "tv",
+        "televisao",
+        "televisão",
+        "media",
+        "controle remoto",
+        "tv 192.168.68.116",
+        "ARP neighbor",
+        "network_device",
+        "HTTP device",
+        "http_device"
+      ],
+      "config": {
+        "ip": "192.168.68.116",
+        "open_ports": [
+          5357
+        ],
+        "web_urls": [
+          "http://192.168.68.116:5357/"
+        ],
+        "rtsp_url_candidates": [],
+        "onvif_xaddrs": [],
+        "mdns_services": [],
+        "mac": "9c:6b:00:50:ab:20",
+        "discovered_by": "tcp_port_probe",
+        "last_discovered_ports": [
+          5357
+        ],
+        "last_access_ports": [
+          5357
+        ]
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "http_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "HTTP device"
+        },
+        "observed_at": 1778795338,
+        "event_model_version": 1,
+        "discovery_sources": [],
+        "last_seen_discovery": 1778795338,
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          },
+          {
+            "event": "open_web_interface",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "urls": [
+                "http://192.168.68.116:5357/"
+              ]
+            }
+          },
+          {
+            "event": "turn_on",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "wake_on_lan",
+              "hint": ""
+            }
+          },
+          {
+            "event": "turn_off",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "media_play",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "media_pause",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "volume_up",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "volume_down",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "mute",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "send_key",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "launch_app",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          },
+          {
+            "event": "set_input",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
+            }
+          }
+        ],
+        "last_access_test": {
+          "ok": true,
+          "status": "responsive",
+          "tested_at": 1778795338,
+          "responsive_ports": [
+            5357
+          ],
+          "latency_ms": 13210,
+          "type": "http_device",
+          "event_count": 12
+        },
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control"
+      },
+      "created_at": 1778762352,
+      "updated_at": 1778795346
+    },
+    "net_192_168_68_119": {
+      "device_id": "net_192_168_68_119",
+      "name": "ARP neighbor 192.168.68.119",
+      "type": "samsung_tv_or_media_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state",
+        "open_web_interface",
+        "turn_on",
+        "turn_off",
+        "media_play",
+        "media_pause",
+        "volume_up",
+        "volume_down",
+        "mute",
+        "send_key",
+        "launch_app",
+        "set_input"
+      ],
+      "risk_level": 1,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.119",
+        "ARP neighbor",
+        "network_device",
+        "Samsung TV/Media device",
+        "samsung_tv_or_media_device",
+        "tv",
+        "televisao",
+        "televisão",
+        "media",
+        "controle remoto",
+        "tv 192.168.68.119"
+      ],
+      "config": {
+        "ip": "192.168.68.119",
+        "open_ports": [
+          8001,
+          8002,
+          8080,
+          9080,
+          9197
+        ],
+        "web_urls": [
+          "http://192.168.68.119:8001/",
+          "http://192.168.68.119:8002/",
+          "http://192.168.68.119:8080/",
+          "http://192.168.68.119:9080/",
+          "http://192.168.68.119:9197/"
+        ],
+        "rtsp_url_candidates": [],
+        "onvif_xaddrs": [],
+        "mdns_services": [],
+        "mac": "64:1c:b0:73:1e:be",
+        "discovered_by": "tcp_port_probe",
+        "last_discovered_ports": [
+          8001,
+          8002,
+          8080,
+          9080,
+          9197
+        ],
+        "last_access_ports": [
+          8001,
+          8002,
+          8080,
+          9080,
+          9197
+        ]
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "samsung_tv_or_media_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "Samsung TV/Media device"
+        },
+        "observed_at": 1778795346,
+        "event_model_version": 1,
+        "discovery_sources": [],
+        "last_access_test": {
+          "ok": true,
+          "status": "responsive",
+          "tested_at": 1778795346,
+          "responsive_ports": [
+            8001,
+            8002,
+            8080,
+            9080,
+            9197
+          ],
+          "latency_ms": 175,
+          "type": "samsung_tv_or_media_device",
+          "event_count": 12
+        },
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          },
+          {
+            "event": "open_web_interface",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "urls": [
+                "http://192.168.68.119:8001/",
+                "http://192.168.68.119:8002/",
+                "http://192.168.68.119:8080/",
+                "http://192.168.68.119:9080/",
+                "http://192.168.68.119:9197/"
+              ]
+            }
+          },
+          {
+            "event": "turn_on",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "turn_off",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "media_play",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "media_pause",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "volume_up",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "volume_down",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "mute",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "send_key",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "launch_app",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "set_input",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          }
+        ],
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control",
+        "last_seen_discovery": 1778795346
+      },
+      "created_at": 1778762352,
+      "updated_at": 1778795346
+    },
+    "local_webcam_0": {
+      "device_id": "local_webcam_0",
+      "name": "Webcam local 0",
+      "type": "local_webcam",
+      "location": "maquina_local",
+      "adapter": "local_media",
+      "capabilities": [
+        "read_state",
+        "view_stream",
+        "capture_snapshot"
+      ],
+      "risk_level": 1,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "webcam 0",
+        "camera local 0",
+        "webcam local",
+        "camera do pc"
+      ],
+      "config": {
+        "camera_index": 0,
+        "stream_url": "local-webcam://0",
+        "backend": "opencv",
+        "open_ports": [],
+        "discovered_by": "opencv_local_capture",
+        "last_discovered_ports": [],
+        "rtsp_url_candidates": [
+          "local-webcam://0"
+        ]
+      },
+      "metadata": {
+        "discovered": true,
+        "observed_at": 1778795121,
+        "event_model_version": 1,
+        "discovery_sources": [
+          "local_webcam"
+        ],
+        "last_access_test": {
+          "ok": true,
+          "status": "responsive",
+          "tested_at": 1778795281,
+          "responsive_ports": [],
+          "latency_ms": 1374,
+          "type": "local_webcam",
+          "event_count": 3
+        },
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "local_media"
+            }
+          },
+          {
+            "event": "view_stream",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "local_webcam",
+              "real_time": true,
+              "url_candidates": [
+                "local-webcam://0"
+              ],
+              "mjpeg_proxy_endpoint": "/api/local-env/devices/local_webcam_0/camera/mjpeg",
+              "requires_camera_credentials": false
+            }
+          },
+          {
+            "event": "capture_snapshot",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "requires_snapshot_url_or_rtsp_decoder": true
+            }
+          }
+        ],
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control",
+        "last_seen_discovery": 1778795121
+      },
+      "created_at": 1778762352,
+      "updated_at": 1778795346
+    },
+    "net_192_168_68_117": {
+      "device_id": "net_192_168_68_117",
+      "name": "ARP neighbor 192.168.68.117",
+      "type": "network_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state"
+      ],
+      "risk_level": 0,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.117",
+        "ARP neighbor",
+        "network_device"
+      ],
+      "config": {
+        "ip": "192.168.68.117",
+        "open_ports": [],
+        "web_urls": [],
+        "rtsp_url_candidates": [],
+        "onvif_xaddrs": [],
+        "mdns_services": [],
+        "mac": "8c:79:f5:49:86:01",
+        "discovered_by": "arp_cache"
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "network_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "ARP neighbor"
+        },
+        "observed_at": 1778795116,
+        "event_model_version": 1,
+        "discovery_sources": [
+          "arp_cache"
+        ],
+        "last_access_test": {
+          "ok": false,
+          "status": "unresponsive",
+          "tested_at": 1778795343,
+          "responsive_ports": [],
+          "latency_ms": 5689,
+          "type": "network_device",
+          "event_count": 1
+        },
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          }
+        ],
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1778795346
+        },
+        "control_mode": "full_registered_capability_control"
+      },
+      "created_at": 1778795121,
+      "updated_at": 1778795346
+    }
+  }
+}
