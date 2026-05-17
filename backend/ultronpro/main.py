@@ -6275,11 +6275,70 @@ async def skill_memory_bridge_run(
         return {"ok": False, "error": str(e)}
 
 
+# ==================== SKILL MEMORY GOVERNOR ENDPOINTS ====================
+
+SKILL_GOV_INTERVAL_SEC = int(os.getenv('ULTRON_GOV_INTERVAL', '3600'))   # 1 hora
+SKILL_GOV_LOOP_ENABLED = int(os.getenv('ULTRON_GOV_ENABLED', '1')) == 1
+
+
+async def skill_governor_loop():
+    """Worker periódico que avalia e demove skills degradadas."""
+    logger.info("🧙 Skill memory governor loop started")
+    await asyncio.sleep(_loop_start_delay('skill_governor_loop', 300))
+    while True:
+        if await runtime_guard.checkpoint("skill_governor_loop"):
+            continue
+        try:
+            from ultronpro import skill_memory_governor
+            result = await asyncio.to_thread(skill_memory_governor.run_governor, dry_run=False)
+            demoted = result.get('demoted', 0)
+            if demoted:
+                logger.info(f"[GOV] {demoted} skill(s) demovida(s) por degradacao de qualidade")
+        except Exception as e:
+            logger.warning(f"skill_governor_loop error: {e}")
+        await asyncio.sleep(SKILL_GOV_INTERVAL_SEC)
+
+
+@app.get("/api/skill-memory-governor/status")
+async def skill_memory_governor_status():
+    """Health score de todas as skills promovidas."""
+    try:
+        from ultronpro import skill_memory_governor
+        return await asyncio.to_thread(skill_memory_governor.status)
+    except Exception as e:
+        logger.warning(f"skill_memory_governor status error: {e}")
+        return {"ok": False, "error": str(e)}
+
+
+@app.post("/api/skill-memory-governor/run")
+async def skill_memory_governor_run(
+    dry_run: bool = True,
+    limit: int = 100,
+):
+    """
+    Executa o governor manualmente.
+
+    - **dry_run**: Se True (padrão), apenas reporta sem demover.
+    - **limit**: Máximo de skills a avaliar.
+    """
+    try:
+        from ultronpro import skill_memory_governor
+        return await asyncio.to_thread(
+            skill_memory_governor.run_governor,
+            dry_run=dry_run,
+            limit=limit,
+        )
+    except Exception as e:
+        logger.warning(f"skill_memory_governor run error: {e}")
+        return {"ok": False, "error": str(e)}
+
+
 _skill_bridge_task = None
+_skill_governor_task = None
 
 @app.on_event("startup")
 async def startup_event():
-    global _autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task, _reflexion_task, _self_governance_task, _meta_observer_task, _affect_task, _narrative_task, _integration_task, _sleep_cycle_task, _healer_verify_task, _background_guard_task, _inner_monologue_task, _self_improvement_task, _recursive_si_task, _active_discovery_task, _no_cloud_campaign_task, _skill_bridge_task
+    global _autofeeder_task, _autonomy_task, _judge_task, _prewarm_task, _roadmap_task, _agi_path_task, _reflexion_task, _self_governance_task, _meta_observer_task, _affect_task, _narrative_task, _integration_task, _sleep_cycle_task, _healer_verify_task, _background_guard_task, _inner_monologue_task, _self_improvement_task, _recursive_si_task, _active_discovery_task, _no_cloud_campaign_task, _skill_bridge_task, _skill_governor_task
     logger.info("Starting UltronPRO...")
     store.init_db()
     graph.init()
@@ -6465,8 +6524,14 @@ async def startup_event():
 
     if SKILL_BRIDGE_LOOP_ENABLED:
         _skill_bridge_task = asyncio.create_task(skill_bridge_loop())
+        logger.info("🌉 Skill memory bridge loop started")
     else:
         logger.info("Skill bridge loop disabled by env")
+
+    if SKILL_GOV_LOOP_ENABLED:
+        _skill_governor_task = asyncio.create_task(skill_governor_loop())
+    else:
+        logger.info("Skill governor loop disabled by env")
 
     if BACKGROUND_LOOPS_ENABLED:
         try:
@@ -6642,6 +6707,7 @@ async def shutdown_event():
         _active_discovery_task,
         _no_cloud_campaign_task,
         _skill_bridge_task,
+        _skill_governor_task,
     ):
         if t:
             t.cancel()
