@@ -12,23 +12,6 @@ router = APIRouter(tags=["Skills2"])
 
 # ==================== SKILL SYSTEM ENDPOINTS ====================
 
-@router.get("/api/skill-memory-bridge/status")
-async def skill_memory_bridge_status():
-    """Status da ponte de aprendizado de skills."""
-    try:
-        from ultronpro import skill_memory_bridge
-        return skill_memory_bridge.status()
-    except Exception as e:
-        return {"ok": False, "error": str(e)}
-
-@router.post("/api/skill-memory-bridge/run")
-async def skill_memory_bridge_run(dry_run: bool = False, limit: int = 20):
-    """Executa a materialização de skills aprendidas."""
-    try:
-        from ultronpro import skill_memory_bridge
-        return skill_memory_bridge.run_bridge(dry_run=dry_run, limit=limit)
-    except Exception as e:
-        return {"ok": False, "error": str(e)}
 
 
 @router.get("/api/skills2/status")
