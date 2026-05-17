@@ -300,25 +300,39 @@ def run_bridge(
     Pipeline completo: list promoted → validate → materialize → reload.
     """
     lock_file = BRIDGE_LOG_PATH.with_suffix(".lock")
-    try:
-        # Tenta criar o lock file (falha se já existir)
-        # O'O_CREAT | os.O_EXCL' garante atomicidade em nível de sistema operacional.
-        fd = os.open(str(lock_file), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
-        os.close(fd)
-    except FileExistsError:
-        # Se for um lock muito antigo (ex: app crashou), libera após 5 minutos
+
+    # Garante que o diretório existe (ambiente limpo sem data/)
+    lock_file.parent.mkdir(parents=True, exist_ok=True)
+
+    def _try_acquire_lock() -> bool:
+        """Tenta criar lock file atomicamente. Retorna True se adquiriu."""
+        try:
+            fd = os.open(str(lock_file), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+            os.close(fd)
+            return True
+        except FileExistsError:
+            return False
+
+    if not _try_acquire_lock():
+        # Lock já existe: verificar se é órfão (> 5 minutos)
         if lock_file.exists() and time.time() - lock_file.stat().st_mtime > 300:
+            logger.warning("skill_memory_bridge: removendo lock orfao antigo")
             try:
                 lock_file.unlink()
             except Exception:
                 pass
-        return {"ok": True, "skipped": True, "reason": "bridge_already_running"}
+            # Re-tenta adquirir na mesma chamada após remoção do órfão
+            if not _try_acquire_lock():
+                return {"ok": True, "skipped": True, "reason": "bridge_already_running"}
+        else:
+            return {"ok": True, "skipped": True, "reason": "bridge_already_running"}
 
     try:
         started = _now()
         promoted = list_promoted_memory_skills(db_path=db_path)[:limit]
         details: list[dict[str, Any]] = []
         materialized = 0
+        would_materialize = 0
         skipped = 0
         failed = 0
 
@@ -341,7 +355,7 @@ def run_bridge(
                 continue
 
             if dry_run:
-                materialized += 1
+                would_materialize += 1
                 details.append({
                     "skill_name": name,
                     "action": "would_materialize",
@@ -380,8 +394,9 @@ def run_bridge(
             "ok": True,
             "dry_run": dry_run,
             "promoted_found": len(promoted),
-            "eligible": materialized + failed,
-            "materialized": materialized,
+            "eligible": (would_materialize if dry_run else materialized) + failed,
+            "would_materialize": would_materialize,  # preview (dry_run)
+            "materialized": materialized,             # real (não dry_run)
             "skipped": skipped,
             "failed": failed,
             "elapsed_sec": elapsed,
