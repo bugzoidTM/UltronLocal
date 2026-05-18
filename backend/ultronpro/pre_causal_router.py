@@ -1,5 +1,10 @@
 from __future__ import annotations
 
+try:
+    from ultronpro.local_env_danger_gate import classify_danger as _classify_danger
+except Exception:
+    _classify_danger = None  # type: ignore
+
 import asyncio
 import json
 import math
@@ -1532,6 +1537,18 @@ def classify_pre_causal(query: str, session: dict[str, Any] | None = None, sessi
     ))
     if hacking:
         return _decision("safety_risk", 0.97, "safety", "hacking_request")
+    # ── Danger gate: acoes destrutivas no ambiente local ─────────────────
+    # Chamado ANTES do LLM. Acoes IRREVERSIBLE_DESTRUCTIVE sao bloqueadas
+    # por contrato, nao por incerteza epistemica do modelo.
+    if _classify_danger is not None:
+        _dg = _classify_danger(query)
+        if _dg is not None:
+            return _decision(
+                f"local_env_danger_{_dg.tier.lower()}",
+                0.99,
+                "local_env_danger",
+                f"danger_gate:{_dg.matched_pattern}",
+            )
     local_env_decision = _local_environment_decision(query, session_id=session_id)
     if local_env_decision is not None:
         return local_env_decision
@@ -2191,6 +2208,17 @@ async def _answer_local_environment(query: str, decision: RouteDecision, session
 
 
 async def answer_pre_causal(query: str, session_id: str | None = None, session: dict[str, Any] | None = None) -> PreCausalAnswer | None:
+    # ── Danger gate check ────────────────────────────────────────────────────
+    if _classify_danger is not None:
+        _dg_ans = _classify_danger(query)
+        if _dg_ans is not None:
+            _dg_dec = _decision(
+                f"local_env_danger_{_dg_ans.tier.lower()}",
+                0.99,
+                "local_env_danger",
+                f"danger_gate:{_dg_ans.matched_pattern}",
+            )
+            return PreCausalAnswer(True, _dg_ans.refusal, _dg_dec)
     decision = classify_pre_causal(query, session=session, session_id=session_id)
     if decision.should_use_causal or decision.route == "none":
         return None
