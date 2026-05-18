@@ -11751,6 +11751,8 @@ def _is_chat_skill_executable(skill_name: str | None) -> bool:
         return False
     if name in _STATIC_CHAT_SKILLS:
         return True
+    if name.startswith("mem_"):
+        return True
     try:
         from ultronpro import skill_evolution
 
@@ -11760,6 +11762,19 @@ def _is_chat_skill_executable(skill_name: str | None) -> bool:
 
 
 def _suggest_skill_name_for_chat(query: str) -> str | None:
+    try:
+        from ultronpro.skill_memory_bridge import _render_deterministic_resolver
+        if _render_deterministic_resolver(query):
+            return "mem_resolver_deterministic"
+    except Exception:
+        pass
+
+    ql = query.lower()
+    if "agradeç" in ql or "obrigad" in ql or "grato" in ql or "valeu" in ql:
+        return "mem_chat_intent_thanks"
+    if "bom dia" in ql or "boa tarde" in ql or "boa noite" in ql or "olá" in ql or "ola" in ql.split() or "oi" in ql.split() or ql in ["oi", "ola"]:
+        return "mem_chat_intent_greeting"
+
     static_name = None
     try:
         from ultronpro import skill_loader
@@ -12227,7 +12242,7 @@ def _intent_pre_classifier(query: str) -> str | None:
     fuzzy_greetings = ('ola', 'oi', 'hello', 'hi', 'hey')
     if len(text) < 24 and any(_edit_distance_at_most_one_local(first_token, item) for item in fuzzy_greetings):
         return 'greeting'
-    thanks_triggers = ('obrigad', 'thank', 'thanks', 'grato', 'grata', 'valeu', 'muito gentil')
+    thanks_triggers = ('obrigad', 'thank', 'thanks', 'grato', 'grata', 'valeu', 'muito gentil', 'agradec')
     if len(text) < 80 and any(item in text for item in thanks_triggers):
         return 'thanks'
     return None

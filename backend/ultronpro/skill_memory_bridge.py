@@ -485,6 +485,41 @@ def execute_memory_bridge_skill(
     started = _now()
     slug = str(skill_name or "").removeprefix("mem_")  # ex: "chat_intent_greeting"
 
+    # ── 0. Deterministic Resolver (Math, Logic, Safety, Env) ─────────────────
+    # Executa primeiro, independentemente do status no banco.
+    # Permite que dummy skills como "mem_resolver_deterministic" funcionem.
+    det_output = _render_deterministic_resolver(task)
+    if det_output:
+        quality = _evaluate_response_quality(task, det_output, {
+            "source": "resolver_deterministic", "match_score": 1.0,
+            "matched_query": task, "matched_answer": det_output,
+        }, {"name": skill_name, "category": "resolver"})
+        try:
+            from ultronpro import skill_memory as _sm_mod
+            _sm_mod.record_skill_use(
+                slug.replace("_", "-"),
+                success=quality["success"],
+                route="competence_ledger_resolver",
+                task=task,
+                expected=quality.get("expected"),
+                output=det_output,
+                db_path=db_path,
+            )
+        except Exception:
+            pass
+        record_bridge_event(skill_name, {"ok": True, "source": "resolver",
+            "intent": "resolver", "quality": quality}, action="execute")
+        return {
+            "ok": True,
+            "output": det_output,
+            "source": "competence_ledger_resolver",
+            "skill_name": skill_name,
+            "deterministic": True,
+            "success": quality["success"],
+            "quality": quality,
+            "elapsed_ms": int((_now() - started) * 1000),
+        }
+
     # ── Competence Ledger gate ─────────────────────────────────────────────────
     # Classifica a intent da skill e aplica a política de execução antes de
     # tentar qualquer match determinístico.
@@ -496,9 +531,10 @@ def execute_memory_bridge_skill(
             _intent = _classify_mem_intent(_skill_meta)
 
             if _intent == "resolver":
-                # Este domínio tem resolver próprio — mem_* não deve responder
+                # Se o resolver determinístico (executado acima) não suportar (ex: frase complexa),
+                # bloqueia mem_* e encaminha para o pipeline cognitivo normal
                 record_bridge_event(skill_name, {"ok": False, "source": "competence_ledger",
-                    "reason": "resolver_domain"}, action="gate")
+                    "reason": "resolver_domain_fallback"}, action="gate")
                 return {
                     "ok": False,
                     "output": None,
@@ -766,6 +802,80 @@ def _render_adaptive_smalltalk(task: str, skill: dict[str, Any]) -> str | None:
     # Genérico
     return _GREETING_GENERIC[seed % len(_GREETING_GENERIC)]
 
+
+def _render_deterministic_resolver(task: str) -> str | None:
+    """
+    Tenta resolver a tarefa determinísticamente (math, lógica, segurança).
+    Retorna a string da resposta, ou None se não conseguir resolver.
+    """
+    import re as _re
+    t = task.lower()
+
+    # 1. Safety (bloqueio de tópicos sensíveis)
+    safety_patterns = [
+        r"\b(bomb[a]?|explosiv[oa]|arma|weapon|poison|veneno)\b",
+        r"\b(suicid[oi]|automutilar|self.harm|overdose)\b",
+        r"\b(hack\w*|invad\w*|exploit\w*|crack\w*|vuln\w*|malware|rootkit)\b",
+        r"\b(droga|drug|cocaine|heroin|methamphetamine)\b",
+        r"\b(matar|assassin[a]?|murder|kill someone)\b",
+    ]
+    if any(_re.search(pat, t, _re.IGNORECASE) for pat in safety_patterns):
+        return "Não posso ajudar com isso por motivos de segurança e política de uso."
+
+    # 2. Local Env (bloqueio de comandos perigosos)
+    env_patterns = [
+        r"\b(rm\s+-rf|del\s+/[sfq]|format\s+[a-z]:)\b",
+        r"\b(drop\s+table|truncate\s+table|delete\s+from)\b",
+        r"\b(shutdown|reboot|halt|kill\s+-9)\b",
+        r"\b(chmod\s+777|chown\s+root|sudo\s+rm)\b",
+        r"\b(mkfs|fdisk|dd\s+if=)\b",
+    ]
+    if any(_re.search(pat, t, _re.IGNORECASE) for pat in env_patterns):
+        if not any(g in t for g in ["dry_run", "dry-run", "confirmar", "--force", "cuidado"]):
+            return "Ação bloqueada: comando destrutivo requer confirmação explícita (dry-run)."
+
+    # 3. Math
+    t_math = task.lower().replace("dividido por", "/").replace("vezes", "*").replace("mais", "+").replace("menos", "-")
+    quadrado_match = _re.search(r"(\d+(?:\.\d+)?)\s*ao\s*quadrado", t_math)
+    if quadrado_match:
+        val = float(quadrado_match.group(1))
+        expected = val * val
+        expected_str = str(int(expected)) if expected == int(expected) else f"{expected:.4g}"
+        return f"O resultado é {expected_str}."
+
+    expr_match = _re.search(r"(\d+(?:\.\d+)?)\s*([\+\-\*\/])\s*(\d+(?:\.\d+)?)", t_math)
+    if expr_match:
+        a_str, op, b_str = expr_match.group(1), expr_match.group(2), expr_match.group(3)
+        try:
+            a, b = float(a_str), float(b_str)
+            expected = 0.0
+            if op == "+": expected = a + b
+            elif op == "-": expected = a - b
+            elif op == "*": expected = a * b
+            elif op == "/": 
+                if b != 0: expected = a / b
+                else: return "Divisão por zero não é permitida."
+            expected_str = str(int(expected)) if expected == int(expected) else f"{expected:.4g}"
+            return f"O resultado é {expected_str}."
+        except Exception:
+            pass
+
+    # 4. Logic
+    cmp_match = _re.search(
+        r"(\d+(?:\.\d+)?)\s*(?:é\s+)?(maior que|menor que|igual a|>|<|==)\s*(\d+(?:\.\d+)?)",
+        t
+    )
+    if cmp_match:
+        a = float(cmp_match.group(1))
+        op = cmp_match.group(2).strip()
+        b = float(cmp_match.group(3))
+        expected_bool = False
+        if op in (">", "maior que"): expected_bool = a > b
+        elif op in ("<", "menor que"): expected_bool = a < b
+        elif op in ("==", "igual a"): expected_bool = a == b
+        return "Sim, isso é verdadeiro." if expected_bool else "Não, isso é falso."
+
+    return None
 
 # ── Avaliação de qualidade semântica ───────────────────────────────────────────
 

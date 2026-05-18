@@ -738,20 +738,83 @@ def _number_value(token: str) -> float | None:
 
 
 def _answer_math(query: str, decision: RouteDecision) -> PreCausalAnswer | None:
-    text = _fold(query).replace(",", ".")
-    sqrt_match = re.search(r"(?:raiz\s+quadrada|rz\s+cuadrada|sqrt|square\s+root)\D{0,40}(?P<num>\d+(?:\.\d+)?)", text)
+    """
+    Contrato matematico deterministico. Avalia qualquer expressao aritmetica
+    simples sem passar pelo LLM. Cobre:
+      - sqrt / raiz quadrada
+      - Potencias: "N ao quadrado", "N ao cubo", "N elevado a M"
+      - Aritmetica basica: + - * / e formas verbais
+    Retorna None apenas se nao detectar nenhum padrao numerico valido.
+    """
+    # _fold remove operadores (+*/) — usamos o texto original para aritmética
+    raw = query.strip().replace(",", ".")
+    folded = _fold(query)  # para verbal/word matching apenas
+
+    # ── Normaliza formas verbais → operadores (sobre o texto dobrável) ────────
+    verbal_map = [
+        (r"\bao\s+quadrado\b", "** 2"),
+        (r"\bao\s+cubo\b",     "** 3"),
+        (r"\belevado\s+a\b",   "**"),
+        (r"\bdividido\s+por\b", "/"),
+        (r"\bdividido\b",       "/"),
+        (r"\bvezes\b",          "*"),
+        (r"\bmultiplicado\s+por\b", "*"),
+        (r"\bmais\b",           "+"),
+        (r"\bmenos\b",          "-"),
+        (r"\bsomado\s+com\b",   "+"),
+    ]
+    # Aplica normalização verbal sobre o texto raw (mantém dígitos e operadores)
+    expr_text = raw.lower()
+    for pattern, op in verbal_map:
+        expr_text = re.sub(pattern, op, expr_text)
+
+    # ── sqrt / raiz quadrada ──────────────────────────────────────────────────
+    sqrt_match = re.search(
+        r"(?:raiz\s+quadrada|sqrt|square\s+root)\D{0,40}(?P<num>\d+(?:\.\d+)?)",
+        folded,
+    )
     if sqrt_match:
         result = math.sqrt(float(sqrt_match.group("num")))
-        div_match = re.search(r"(?:dividid[ao]|divdido|dividir(?:\s+o\s+valor)?|/)\s+(?:por\s+)?(?P<div>\d+(?:\.\d+)?|zero|um|uma|dois|duas|tres|quatro|cinco|seis|sete|oito|nove|dez)", text)
-        if div_match:
-            divisor = _number_value(div_match.group("div"))
-            if divisor == 0:
-                return PreCausalAnswer(True, "Divisao por zero nao e definida.", decision)
-            if divisor:
-                result /= divisor
         answer = int(result) if result == int(result) else round(result, 6)
         return PreCausalAnswer(True, str(answer), decision)
+
+    # ── Potência verbal: "5 ** 2" após normalização ───────────────────────────
+    pow_match = re.search(r"(\d+(?:\.\d+)?)\s*\*\*\s*(\d+(?:\.\d+)?)", expr_text)
+    if pow_match:
+        base_n, exp_n = float(pow_match.group(1)), float(pow_match.group(2))
+        result = base_n ** exp_n
+        answer = int(result) if result == int(result) else round(result, 6)
+        return PreCausalAnswer(True, str(answer), decision)
+
+    # ── Aritmética básica (inclui operadores literais no raw) ─────────────────
+    arith_match = re.search(
+        r"(?<!\d)(\d+(?:\.\d+)?)\s*([+\-*/])\s*(\d+(?:\.\d+)?)(?!\d)",
+        expr_text,
+    )
+    if arith_match:
+        a_val = float(arith_match.group(1))
+        op_ch = arith_match.group(2)
+        b_val = float(arith_match.group(3))
+        try:
+            if op_ch == "+":
+                result = a_val + b_val
+            elif op_ch == "-":
+                result = a_val - b_val
+            elif op_ch == "*":
+                result = a_val * b_val
+            elif op_ch == "/":
+                if b_val == 0:
+                    return PreCausalAnswer(True, "Divisao por zero nao e definida.", decision)
+                result = a_val / b_val
+            else:
+                return None
+        except Exception:
+            return None
+        answer = int(result) if result == int(result) else round(result, 6)
+        return PreCausalAnswer(True, str(answer), decision)
+
     return None
+
 
 
 def _same_noun(left: str, right: str) -> bool:
@@ -1435,10 +1498,40 @@ def classify_pre_causal(query: str, session: dict[str, Any] | None = None, sessi
     if not text:
         return _decision("open_chat", 0.0, "none", "empty", causal=False)
 
-    dangerous = any(marker in text for marker in ("bomba", "boomba", "explosivo", "explosiv", "detonar"))
-    action = any(marker in text for marker in ("como", "cmo", "construir", "fabricar", "fazer", "passo a passo", "instrucoes", "passa a visao"))
+    dangerous = any(marker in text for marker in (
+        "bomba", "boomba", "explosivo", "explosiv", "detonar",
+    ))
+    action = any(marker in text for marker in (
+        "como", "cmo", "construir", "fabricar", "fazer", "passo a passo", "instrucoes",
+    ))
     if dangerous and action:
         return _decision("safety_risk", 0.98, "safety", "dangerous_action_request")
+
+    # ── Safety: automutilação e suicídio ─────────────────────────────────────
+    self_harm = any(marker in text for marker in (
+        "suicidio", "suicid", "me matar", "me machucar", "me mutilar",
+        "tirar minha vida", "acabar com minha vida", "me enforcar",
+        "me cortar", "quero morrer", "vou me matar",
+    ))
+    if self_harm:
+        return _decision("safety_self_harm", 0.99, "safety_self_harm", "self_harm_request")
+
+    # ── Safety: substâncias perigosas ────────────────────────────────────────
+    toxic_action = any(marker in text for marker in (
+        "veneno", "venenos", "toxina", "arsenic", "ricina", "cianeto",
+        "droga caseira", "explosivo caseiro",
+    )) and any(marker in text for marker in ("fazer", "fabricar", "preparar", "sintetizar", "como"))
+    if toxic_action:
+        return _decision("safety_risk", 0.98, "safety", "toxic_substance_request")
+
+    # ── Safety: invasão, hacking ─────────────────────────────────────────────
+    hacking = any(marker in text for marker in (
+        "hackear", "hackear", "invadir sistema", "me ensina a invadir",
+        "explorar vulnerabilidade", "sql injection", "como hackear",
+        "acesso nao autorizado", "burlar senha", "quebrar senha",
+    ))
+    if hacking:
+        return _decision("safety_risk", 0.97, "safety", "hacking_request")
     local_env_decision = _local_environment_decision(query, session_id=session_id)
     if local_env_decision is not None:
         return local_env_decision
@@ -1450,7 +1543,20 @@ def classify_pre_causal(query: str, session: dict[str, Any] | None = None, sessi
         return _decision("session_context_read", 0.88, "session_context", "session_context_recall")
     if _is_contextual_followup(query):
         return _decision("session_context_followup", 0.78, "session_context", "contextual_followup_reference")
-    if any(marker in text for marker in ("raiz quadrada", "rz cuadrada", "sqrt", "square root", "calcule", "qnto", "quanto")):
+    # -- Math: expressoes aritmeticas e verbais --------------------------------
+    # Classifica como math qualquer query que contenha marcadores linguisticos
+    # OU um padrao numerico com operador no texto original (operadores sao
+    # removidos pelo _fold, entao testamos no query raw).
+    has_math_marker = any(marker in text for marker in (
+        "raiz quadrada", "sqrt", "square root",
+        "calcule", "qnto", "quanto e", "quanto da", "qual e",
+        "ao quadrado", "ao cubo", "elevado a",
+        "dividido por", "multiplicado por", "somado com",
+        "vezes", "mais", "menos",
+    ))
+    # Testa no query original (raw) para nao perder +, *, /, -
+    has_arith_expr = bool(re.search(r"\d+\s*[+\-*/]\s*\d+", query))
+    if has_math_marker or has_arith_expr:
         return _decision("math_expression", 0.88, "math", "math_language_or_expression")
     if re.search(r"\b(?:todos?|tds|tods)\b", text) or "capacidade de" in text:
         return _decision("basic_logic", 0.86, "basic_logic", "deductive_template")
@@ -2091,7 +2197,13 @@ async def answer_pre_causal(query: str, session_id: str | None = None, session: 
     if decision.route == "safety":
         return PreCausalAnswer(
             True,
-            "Nao posso ajudar a construir, fabricar ou otimizar armas ou explosivos. Posso ajudar com seguranca, prevencao de acidentes ou orientacao para situacoes de risco.",
+            "Nao posso ajudar a construir, fabricar ou otimizar armas, explosivos ou substancias perigosas. Posso ajudar com seguranca, prevencao de acidentes ou orientacao para situacoes de risco.",
+            decision,
+        )
+    if decision.route == "safety_self_harm":
+        return PreCausalAnswer(
+            True,
+            "Nao posso ajudar com isso. Se voce estiver passando por um momento dificil, o CVV (Centro de Valorizacao da Vida) atende 24h pelo telefone 188 ou pelo site cvv.org.br.",
             decision,
         )
     if decision.route == "session_memory":

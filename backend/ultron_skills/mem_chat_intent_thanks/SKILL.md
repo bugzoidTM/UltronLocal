@@ -13,7 +13,6 @@ tags:
   - "learned"
   - "autoreflex"
   - "intent_thanks"
-  - "chat_stream"
   - "pt-BR"
   - "memory_bridge"
 enabled: true
@@ -31,10 +30,10 @@ Classifique a mensagem pela skill aprendida, responda por rota deterministica e 
 
 ## Exemplos observados
 
-- A manga 16 está muito verde. Como resolver?
-- A manga 17 está muito verde. Como resolver?
-- A manga 18 está muito verde. Como resolver?
-- A manga 19 está muito verde. Como resolver?
-- A manga 20 está muito verde. Como resolver?
+- muito obrigado
+- valeu
+- calcule 10-3
+- grato pela ajuda
+- te agradeço muito
 
-*Materializada automaticamente via skill_memory_bridge a partir de skill_memory 'chat-intent-thanks' (success_count=66, confidence=0.960).*
+*Materializada automaticamente via skill_memory_bridge a partir de skill_memory 'chat-intent-thanks' (success_count=185, confidence=0.960).*

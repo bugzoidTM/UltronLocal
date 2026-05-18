@@ -15,5 +15,11 @@ Classifique a mensagem pela skill aprendida, responda por rota deterministica e 
 - confidence: 0.960
 
 ## Exemplos observados
-- oi
-- ola
+- bom dia!
+- boa noite
+- o que voce sabe fazer
+- bom dia pra voce
+- oi, bom dia!
+- ei, boa tarde
+- passou bem a noite?
+- voce e uma ia?

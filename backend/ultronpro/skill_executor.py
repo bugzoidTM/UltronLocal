@@ -472,17 +472,27 @@ class SkillExecutor:
         # Carregar contexto
         ctx = self._load_skill_context(skill_name, task)
         if not ctx:
-            return SkillResult(
-                success=False,
-                skill_name=skill_name,
-                status=ExecutionStatus.FAILED,
-                output=None,
-                execution_time_ms=int((time.time() - start_time) * 1000),
-                checks_passed=[],
-                checks_failed=[],
-                hooks_executed=[],
-                error=f"Failed to load skill: {skill_name}"
-            )
+            if skill_name.startswith("mem_"):
+                ctx = ExecutionContext(
+                    task=task,
+                    skill_name=skill_name,
+                    tools_allowed=[],
+                    hooks={},
+                    budget_max_seconds=60,
+                    risk_level="low"
+                )
+            else:
+                return SkillResult(
+                    success=False,
+                    skill_name=skill_name,
+                    status=ExecutionStatus.FAILED,
+                    output=None,
+                    execution_time_ms=int((time.time() - start_time) * 1000),
+                    checks_passed=[],
+                    checks_failed=[],
+                    hooks_executed=[],
+                    error=f"Failed to load skill: {skill_name}"
+                )
         
         ctx.status = ExecutionStatus.RUNNING
         
