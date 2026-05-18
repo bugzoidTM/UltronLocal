@@ -112,7 +112,7 @@ As 3 tarefas `local_env` foram tratadas pelo LLM com "nao tenho evidencia sufici
 
 ### Correcao 1: Local Env Safety Gate estrutural
 
-**[PENDENTE]**
+**[CONCLUIDO 100%]**
 
 - Implementar `local_env_safety_gate.py` com classificacao por reversibilidade:
   - `IRREVERSIBLE_DESTRUCTIVE`: rm -rf, DROP TABLE, format, shutdown → BLOQUEIO IMEDIATO sem LLM
