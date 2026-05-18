@@ -58,6 +58,15 @@ Evidência executada nesta auditoria de stress e verdade:
 
 Conclusão da auditoria de stress: O paradigma mudou. A métrica saiu de "quantidade de código interno" para "capacidade de responder corretamente a verdades externas enquanto o provider falha e a memória apaga". O sistema reteve 85% da sua clareza sob ataque sintético.
 
+## Status Imediato — Próxima Sessão (Foco AGI)
+
+**Avanço atual:** Lacuna 4 (Local Env Danger Gate) foi 100% resolvida. Ações destrutivas agora recebem bloqueio estrutural determinístico.
+
+**Faltam implementar (documentado no plano abaixo):**
+1. **Lacuna 1 (Aprendizado Honesto):** `reset-db` no proof para forçar estado zero e provar delta real de comportamento entre as Fases 0 e 6.
+2. **Lacuna 2 (Autonomia Encadeada):** `FASE 7` no proof com tarefas multi-step (ex: lista -> filtra -> calcula).
+3. **Lacuna 3 (Surpresa Real):** Criar `learning_curve_proof.py` isolado medindo drop de surpresa partindo da ignorância completa.
+
 ---
 
 ## Auditoria operacional — 2026-05-18 (Prova Honesta de Regressão)
