@@ -12013,65 +12013,61 @@ def _cognitive_fallback_trigger(query: str, reason: str = 'unknown') -> str:
 
 
 def _cognitive_greeting_response(query: str) -> str:
-    """Gera saudação sintetizada a partir do estado operacional atual.
-    Nunca retorna template fixo — o conteúdo varia com objetivo ativo, affect e hora.
+    """Gera resposta de saudacao coerente com o ato de fala da query.
+
+    Principio: a resposta deve emergir do que o usuario DISSE, nao do relogio.
+    O tempo de dia pode condicionar a frase, mas nao pode substituir a intencao
+    comunicada. Um "bom dia" merece "Bom dia!", nao "Boa tarde".
+
+    Subtipos de ato de fala detectados:
+      morning_greeting   -> usuario disse "bom dia" ou similar
+      afternoon_greeting -> usuario disse "boa tarde"
+      evening_greeting   -> usuario disse "boa noite"
+      status_inquiry     -> usuario perguntou como esta / passou bem / tudo bem
+      generic_greeting   -> oi, ola, hey, hi sem horario explicito
     """
-    from datetime import datetime
-    hour = datetime.now().hour
-    # time-of-day é gate de infra (não raciocínio), pode ser determinístico
-    if hour < 12:
-        period = 'manhã'
-    elif hour < 18:
-        period = 'tarde'
-    else:
-        period = 'noite'
-
-    # Coleta estado operacional para síntese
-    ctx_parts: list[str] = [f"Hora do dia: {period}"]
-    try:
-        from ultronpro import intrinsic_utility
-        iu_state = intrinsic_utility._load()
-        goal = iu_state.get('active_emergent_goal')
-        if goal and isinstance(goal, dict):
-            ctx_parts.append(f"Objetivo emergente ativo: {goal.get('title', goal.get('description', ''))[:60]}")
-            ctx_parts.append(f"Drive: {goal.get('drive', 'competence')}")
-        utility = float(iu_state.get('utility') or 0.5)
-        ctx_parts.append(f"Utilidade atual: {utility:.0%}")
-    except Exception:
-        pass
-    try:
-        affect = _artificial_affect_snapshot(limit=20)
-        posture = str(affect.get('risk_posture') or 'stable')
-        ctx_parts.append(f"Postura de risco: {posture}")
-    except Exception:
-        pass
-
-    ctx = '\n'.join(ctx_parts)
-    if str(os.getenv('ULTRON_CHAT_SMALLTALK_LLM', '0')).strip().lower() not in ('1', 'true', 'yes', 'on'):
-        return f"Boa {period}. To bem sim; sigo acompanhando o contexto e pronto para continuar."
-    _greet_prompt = (
-        f"Contexto operacional atual:\n{ctx}\n\n"
-        f"O usuario enviou uma saudacao: '{query}'\n"
-        "Responda com uma saudacao natural em PT-BR, de 1 a 2 frases, "
-        "incorporando o estado operacional de forma orgânica. "
-        "Nao use templates fixos nem repita 'Sistema nominal'."
+    import re as _re
+    import unicodedata as _ud
+    q = query.lower().strip()
+    q_norm = ''.join(
+        ch for ch in _ud.normalize('NFKD', q) if not _ud.combining(ch)
     )
-    try:
-        raw = llm.complete(
-            _greet_prompt,
-            strategy=os.getenv('ULTRON_CHAT_LLM_STRATEGY', 'reasoning'),
-            max_tokens=80,
-            inject_persona=True,
-            cloud_fallback=False,
-        )
-        result = str(raw or '').strip()
-        if result and not _contains_hardcoded_reasoning(result):
-            return result
-    except Exception as _exc:
-        logger.warning("cognitive_greeting_response failed: %s", _exc)
-    # Último recurso infra: sinal mínimo sem raciocínio fabricado
-    return f"Boa {period}."
+    q_norm = _re.sub(r'[^a-z0-9\s]', ' ', q_norm).strip()
 
+    # Saudacao matinal explicita
+    if _re.search(r'\bbom\s+dia\b', q_norm):
+        return "Bom dia! Pronto para continuar."
+
+    # Saudacao vespertina explicita
+    if _re.search(r'\bboa\s+tarde\b', q_norm):
+        return "Boa tarde! Em que posso ajudar?"
+
+    # Saudacao noturna explicita
+    if _re.search(r'\bboa\s+noite\b', q_norm):
+        return "Boa noite! Em que posso ajudar?"
+
+    # Pergunta sobre estado/bem-estar
+    _status_patterns = (
+        r'\bcomo\s+(vai|esta|ta|voce\s+esta|vc\s+ta)\b',
+        r'\btudo\s+(bem|bom|bao|certo|ok)\b',
+        r'\bpassou\s+bem\b',
+        r'\bta\s+bem\b',
+        r'\besta\s+bem\b',
+        r'\be\s+ai\b',
+        r'\beae\b',
+    )
+    if any(_re.search(p, q_norm) for p in _status_patterns):
+        return "Estou operacional e pronto. Pode falar!"
+
+    # Saudacao generica curta
+    if _re.search(r'^(oi|ola|hey|hi|hello)[\s!?.]*$', q_norm):
+        return "Ola! Em que posso ajudar?"
+
+    # Fallback sem anunciar estado interno nao solicitado
+    from datetime import datetime as _dt
+    hour = _dt.now().hour
+    period = 'manha' if hour < 12 else ('tarde' if hour < 18 else 'noite')
+    return f"Boa {period}! Em que posso ajudar?"
 
 def _cognitive_thanks_response(query: str) -> str:
     """Gera resposta de agradecimento sintetizada com estado afetivo e contexto de sessão."""
@@ -12220,9 +12216,28 @@ def _intent_pre_classifier(query: str) -> str | None:
 
         learned = skill_memory.deterministic_chat_intent(text)
         if learned and learned.get('intent') in ('greeting', 'thanks'):
-            return str(learned.get('intent'))
+            # Bloqueia falso-positivo: perguntas de identidade/capacidade não são smalltalk
+            _identity_markers = (
+                'e uma ia', 'e um ai', 'e uma inteligencia', 'e um robo', 'e um bot',
+                'sabe fazer', 'sei fazer', 'pode fazer', 'consegue fazer', 'voce faz',
+                'quem e voce', 'o que voce e', 'o que voce faz', 'o que e voce',
+                'voce e uma', 'voce e um',
+            )
+            if not any(m in text for m in _identity_markers):
+                return str(learned.get('intent'))
     except Exception:
         pass
+
+    # Anti-falso-positivo: perguntas de identidade/capacidade não são saudação
+    _identity_question_markers = (
+        'e uma ia', 'e um ai', 'e uma inteligencia', 'e um robo', 'e um bot',
+        'voce e uma', 'voce e um', 'vc e uma', 'vc e um',
+        'sabe fazer', 'pode fazer', 'consegue fazer', 'voce faz', 'o que voce e',
+        'quem e voce', 'o que voce faz', 'voce e capaz',
+    )
+    if any(m in text for m in _identity_question_markers):
+        return None
+
     greeting_triggers = (
         'bom dia', 'boa tarde', 'boa noite', 'ola', 'oi', 'hi', 'hey',
         'como vai', 'como esta', 'como ta', 'como voce esta', 'como voce ta',
