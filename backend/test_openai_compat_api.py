@@ -78,6 +78,32 @@ def test_chat_completion_forwards_messages_to_qwen_and_returns_openai_shape(monk
     assert body["choices"][0]["finish_reason"] == "stop"
 
 
+def test_chat_completion_streams_openai_sse_chunks_when_requested(monkeypatch):
+    async def fake_generate(payload):
+        return {"ok": True, "text": "Resposta em streaming", "base_model": "qwen-test"}
+
+    monkeypatch.setattr("ultronpro.api.openai_compat.call_qwen_generate", fake_generate)
+    client = _client(monkeypatch)
+
+    response = client.post(
+        "/v1/chat/completions",
+        headers={"Authorization": "Bearer sk-test-key"},
+        json={
+            "model": MODEL_ALIAS,
+            "messages": [{"role": "user", "content": "ola"}],
+            "stream": True,
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.headers["content-type"].startswith("text/event-stream")
+    assert '"object": "chat.completion.chunk"' in response.text
+    assert '"delta": {"role": "assistant"}' in response.text
+    assert '"delta": {"content": "Resposta em streaming"}' in response.text
+    assert '"finish_reason": "stop"' in response.text
+    assert "data: [DONE]" in response.text
+
+
 def test_chat_completion_translates_upstream_errors(monkeypatch):
     async def fake_generate(payload):
         raise UpstreamInferenceError(429, "inference_busy_retry")
