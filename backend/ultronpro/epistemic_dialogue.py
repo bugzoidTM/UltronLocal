@@ -7,7 +7,7 @@ from typing import Any
 from ultronpro import store, local_world_models, episodic_compiler
 from ultronpro.structural_abstractor import _flatten_dict
 
-DATA_DIR = Path(__file__).resolve().parent.parent.parent / 'data'
+DATA_DIR = Path(__file__).resolve().parent.parent / 'data'
 OVERRIDES_PATH = DATA_DIR / 'human_causal_overrides.jsonl'
 
 def _ensure_overrides():

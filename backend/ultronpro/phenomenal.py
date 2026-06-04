@@ -92,7 +92,7 @@ class PhenomenalConsciousness:
     """
     
     def __init__(self, state_path: Optional[Path] = None):
-        self.state_path = state_path or Path(__file__).resolve().parent.parent.parent / 'data' / 'phenomenal_state.json'
+        self.state_path = state_path or Path(__file__).resolve().parent.parent / 'data' / 'phenomenal_state.json'
         self.state_path.parent.mkdir(parents=True, exist_ok=True)
         
         self.state = self._load_state()

@@ -25,7 +25,7 @@ from collections import deque
 
 from ultronpro import llm, store
 
-DATA_DIR = Path(__file__).resolve().parent.parent.parent / 'data'
+DATA_DIR = Path(__file__).resolve().parent.parent / 'data'
 LOCAL_WORLD_MODELS_PATH = DATA_DIR / 'local_world_models.json'
 LOCAL_CONFIDENCE_MIN = 0.55
 TRANSFER_CONFIDENCE_MIN = 0.18

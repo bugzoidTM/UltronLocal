@@ -25,7 +25,7 @@ from ultronpro.tool_registry_specs import (
 
 logger = logging.getLogger("uvicorn")
 
-AUDIT_PATH = Path(__file__).resolve().parent.parent.parent / 'data' / 'tool_audit.jsonl'
+AUDIT_PATH = Path(__file__).resolve().parent.parent / 'data' / 'tool_audit.jsonl'
 
 
 @dataclass

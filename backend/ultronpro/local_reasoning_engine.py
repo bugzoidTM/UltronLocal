@@ -23,7 +23,7 @@ from typing import Any, Optional
 logger = logging.getLogger("uvicorn")
 
 # Paths
-DATA_DIR = Path(__file__).resolve().parent.parent.parent / 'data'
+DATA_DIR = Path(__file__).resolve().parent.parent / 'data'
 FACTS_DB = DATA_DIR / 'local_facts.db'
 
 

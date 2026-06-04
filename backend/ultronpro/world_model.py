@@ -24,7 +24,7 @@ from dataclasses import dataclass, asdict, field
 from typing import Any, Optional
 from collections import deque
 
-DATA_DIR = Path(__file__).resolve().parent.parent.parent / 'data'
+DATA_DIR = Path(__file__).resolve().parent.parent / 'data'
 WORLD_MODEL_PATH = DATA_DIR / 'world_model.json'
 
 

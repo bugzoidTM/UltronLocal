@@ -32,7 +32,7 @@ except Exception:
 from ultronpro import settings
 
 
-DATA_DIR = Path(__file__).resolve().parent.parent.parent / 'data'
+DATA_DIR = Path(__file__).resolve().parent.parent / 'data'
 VISION_CACHE_PATH = DATA_DIR / 'vision_cache.json'
 
 

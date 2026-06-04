@@ -25,7 +25,7 @@ from typing import Any, Optional
 from collections import deque
 from enum import Enum
 
-DATA_DIR = Path(__file__).resolve().parent.parent.parent / 'data'
+DATA_DIR = Path(__file__).resolve().parent.parent / 'data'
 WORKING_MEMORY_PATH = DATA_DIR / 'working_memory.json'
 
 

@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Any, Optional
 from dataclasses import dataclass, field
 
-DATA_DIR = Path(__file__).resolve().parent.parent.parent / 'data'
+DATA_DIR = Path(__file__).resolve().parent.parent / 'data'
 TRIALS_DB = DATA_DIR / 'self_improvement_trials.db'
 
 

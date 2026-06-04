@@ -27,7 +27,7 @@ from dataclasses import dataclass, asdict, field
 from pathlib import Path
 from typing import Any, Optional
 
-DATA_DIR = Path(__file__).resolve().parent.parent.parent / 'data'
+DATA_DIR = Path(__file__).resolve().parent.parent / 'data'
 CONTINUOUS_LEARNING_PATH = DATA_DIR / 'continuous_learning.json'
 PATTERNS_PATH = DATA_DIR / 'learned_patterns.json'
 INSIGHTS_PATH = DATA_DIR / 'learning_insights.json'

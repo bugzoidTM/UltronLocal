@@ -131,7 +131,7 @@ class QualiaSystem:
     """
     
     def __init__(self, state_path: Optional[Path] = None):
-        self.state_path = state_path or Path(__file__).resolve().parent.parent.parent / 'data' / 'qualia_state.json'
+        self.state_path = state_path or Path(__file__).resolve().parent.parent / 'data' / 'qualia_state.json'
         self.state_path.parent.mkdir(parents=True, exist_ok=True)
         
         self.current_state = self._load_state()

@@ -8,7 +8,7 @@ from typing import Any, List, Dict
 
 from ultronpro import store, local_world_models, learning_agenda
 
-DATA_DIR = Path(__file__).resolve().parent.parent.parent / 'data'
+DATA_DIR = Path(__file__).resolve().parent.parent / 'data'
 EPISTEMIC_PROJECTS_PATH = DATA_DIR / 'epistemic_projects.json'
 
 

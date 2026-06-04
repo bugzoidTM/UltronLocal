@@ -83,7 +83,7 @@ class TaskManager:
         self._budgets: Dict[str, Dict[str, float]] = {}  # owner_id -> budget tracking
         self._semaphores: Dict[str, asyncio.Semaphore] = {}  # owner concurrency control
         
-        self.audit_path = audit_path or Path(__file__).resolve().parent.parent.parent / 'data' / 'task_audit.jsonl'
+        self.audit_path = audit_path or Path(__file__).resolve().parent.parent / 'data' / 'task_audit.jsonl'
         self.audit_path.parent.mkdir(parents=True, exist_ok=True)
         
         self._strategies: Dict[TaskType, Callable] = {}

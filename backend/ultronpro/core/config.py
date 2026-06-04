@@ -25,7 +25,7 @@ def _env_flag(name: str, default: str = '0') -> bool:
 # Paths de dados (base relativa ao pacote ultronpro/)
 # ---------------------------------------------------------------------------
 
-_DATA_DIR = Path(__file__).resolve().parent.parent.parent / 'data'
+_DATA_DIR = Path(__file__).resolve().parent.parent / 'data'
 
 RUNTIME_HEALTH_PATH         = _DATA_DIR / 'runtime_health.json'
 TURBO_REPORT_PATH           = _DATA_DIR / 'turbo_safe_report.json'

@@ -26,7 +26,7 @@ from typing import Optional
 from collections import deque
 from threading import Thread
 
-DATA_DIR = Path(__file__).resolve().parent.parent.parent / 'data'
+DATA_DIR = Path(__file__).resolve().parent.parent / 'data'
 MONOLOGUE_PATH = DATA_DIR / 'inner_monologue.json'
 METRICS_PATH = DATA_DIR / 'inner_monologue_metrics.json'
 

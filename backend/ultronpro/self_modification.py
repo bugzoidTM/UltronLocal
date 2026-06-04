@@ -30,7 +30,7 @@ from typing import Any, Optional
 
 from ultronpro import llm, settings
 
-DATA_DIR = Path(__file__).resolve().parent.parent.parent / 'data'
+DATA_DIR = Path(os.getenv('ULTRON_DATA_DIR', str(Path(__file__).resolve().parent.parent / 'data')))
 SELF_MOD_PATH = DATA_DIR / 'self_modification'
 SELF_MOD_PATH.mkdir(parents=True, exist_ok=True)
 
