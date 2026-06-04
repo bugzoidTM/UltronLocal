@@ -24,6 +24,8 @@ services:
       - ULTRON_DISABLE_DEEPSEEK=1
       - ULTRON_LOCAL_INFER_URL=http://147.93.116.186:18025
       - ULTRON_OPENAI_COMPAT_API_KEYS=${ULTRON_OPENAI_COMPAT_API_KEYS:-}
+      - ULTRON_OPENAI_COMPAT_QWEN_URL=http://ultronpro_infer:8025
+      - ULTRON_OPENAI_COMPAT_QWEN_TOKEN=${ULTRON_LOCAL_INFER_TOKEN:-}
       - ULTRON_LOCAL_INFER_TOKEN=TOKEN_FORTE_123
       - ULTRON_AUTONOMY_ENABLED=0
       - ULTRON_JUDGE_ENABLED=1
@@ -65,6 +67,36 @@ services:
         - traefik.http.routers.ultronpro.entrypoints=websecure
         - traefik.http.routers.ultronpro.tls.certresolver=letsencryptresolver
         - traefik.http.services.ultronpro.loadbalancer.server.port=8000
+  ultronpro_infer:
+    image: ultronpro_trainer:local
+    ports:
+      - "18025:8025"
+    environment:
+      - ULTRON_LOCAL_INFER_TOKEN=${ULTRON_LOCAL_INFER_TOKEN:-}
+      - ULTRON_INFER_TORCH_THREADS=2
+      - ULTRON_INFER_TORCH_INTEROP_THREADS=1
+      - OMP_NUM_THREADS=2
+      - MKL_NUM_THREADS=2
+      - TOKENIZERS_PARALLELISM=false
+      - ULTRON_INFER_MAX_NEW_TOKENS_FAST=96
+      - ULTRON_INFER_MAX_NEW_TOKENS_BALANCED=144
+      - ULTRON_INFER_MAX_NEW_TOKENS_DEEP=224
+    command: ["uvicorn", "ultronpro.inference_api:app", "--host", "0.0.0.0", "--port", "8025"]
+    networks:
+      - Nutef
+    volumes:
+      - ultronpro_data:/app/data
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 8G
+        reservations:
+          cpus: '0.5'
+          memory: 2G
   ultronpro_autonomy:
     image: ultronpro:phase4-lineage-20260319-171533
     command: ["python", "-m", "ultronpro.autonomy_worker"]
