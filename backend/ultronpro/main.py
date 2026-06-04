@@ -17248,11 +17248,13 @@ from ultronpro.api.working_memory import router as working_memory_router
 from ultronpro.api.vision import router as vision_router
 from ultronpro.api.world_model import router as world_model_router
 from ultronpro.api.local_env import router as local_env_router
+from ultronpro.api.openai_compat import router as openai_compat_router
 
 app.include_router(memory_router)
 app.include_router(tasks_router)
 app.include_router(skills2_router)
 app.include_router(tools_router)
+app.include_router(openai_compat_router)
 app.include_router(qualia_router)
 app.include_router(phenomenal_router)
 app.include_router(working_memory_router)
