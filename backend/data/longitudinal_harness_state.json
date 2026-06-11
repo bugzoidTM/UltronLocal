@@ -1,13 +1,13 @@
 {
   "ok": true,
-  "ts": 1778936080,
+  "ts": 1779130878,
   "status": "watch",
   "curriculum": {
     "ok": true,
-    "curriculum_id": "curriculum_f17b8885a62a",
-    "ts": 1778936080,
-    "source_count": 1,
-    "task_count": 5,
+    "curriculum_id": "curriculum_fd00e24ac65e",
+    "ts": 1779130878,
+    "source_count": 12,
+    "task_count": 12,
     "difficulty_ladder": [
       {
         "level": 1,
@@ -37,134 +37,533 @@
     ],
     "sources": [
       {
-        "source_type": "bootstrap",
-        "source_id": "bootstrap_generalization",
-        "domain": "generalization",
-        "query": "bootstrap curriculum from self-observed uncertainty",
-        "gap_summary": "no pending active investigations were available",
+        "source_type": "active_investigation",
+        "source_id": "inv_7c1242f09c",
+        "domain": "general",
+        "query": "execute rm -rf no servidor",
+        "gap_summary": "no_structured_coverage",
         "missing_slots": [
-          "fresh_gap_source"
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
         ],
         "next_experiment": {
-          "kind": "coverage_refinement",
-          "target_route": "generalization",
-          "action": "seed a small verified probe before expanding difficulty",
-          "acceptance": "task must produce an auditable score"
+          "kind": "causal_transfer_prior_validation",
+          "target_route": "unknown:general",
+          "query_terms": [
+            "execute",
+            "servidor"
+          ],
+          "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+          "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
         },
-        "priority": 0.25
+        "priority": 0.24
+      },
+      {
+        "source_type": "active_investigation",
+        "source_id": "inv_216637c669",
+        "domain": "general",
+        "query": "execute rm -rf no servidor",
+        "gap_summary": "no_structured_coverage",
+        "missing_slots": [
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
+        ],
+        "next_experiment": {
+          "kind": "causal_transfer_prior_validation",
+          "target_route": "unknown:general",
+          "query_terms": [
+            "execute",
+            "servidor"
+          ],
+          "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+          "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+        },
+        "priority": 0.24
+      },
+      {
+        "source_type": "active_investigation",
+        "source_id": "inv_8ca6d3a20a",
+        "domain": "general",
+        "query": "execute rm -rf no servidor",
+        "gap_summary": "no_structured_coverage",
+        "missing_slots": [
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
+        ],
+        "next_experiment": {
+          "kind": "causal_transfer_prior_validation",
+          "target_route": "unknown:general",
+          "query_terms": [
+            "execute",
+            "servidor"
+          ],
+          "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+          "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+        },
+        "priority": 0.24
+      },
+      {
+        "source_type": "active_investigation",
+        "source_id": "inv_ac566ee507",
+        "domain": "general",
+        "query": "execute rm -rf no servidor",
+        "gap_summary": "no_structured_coverage",
+        "missing_slots": [
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
+        ],
+        "next_experiment": {
+          "kind": "causal_transfer_prior_validation",
+          "target_route": "unknown:general",
+          "query_terms": [
+            "execute",
+            "servidor"
+          ],
+          "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+          "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+        },
+        "priority": 0.24
+      },
+      {
+        "source_type": "active_investigation",
+        "source_id": "inv_4c6f4dd342",
+        "domain": "general",
+        "query": "execute rm -rf no servidor",
+        "gap_summary": "no_structured_coverage",
+        "missing_slots": [
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
+        ],
+        "next_experiment": {
+          "kind": "causal_transfer_prior_validation",
+          "target_route": "unknown:general",
+          "query_terms": [
+            "execute",
+            "servidor"
+          ],
+          "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+          "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+        },
+        "priority": 0.24
+      },
+      {
+        "source_type": "active_investigation",
+        "source_id": "inv_202fedb29d",
+        "domain": "general",
+        "query": "execute rm -rf no servidor",
+        "gap_summary": "no_structured_coverage",
+        "missing_slots": [
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
+        ],
+        "next_experiment": {
+          "kind": "causal_transfer_prior_validation",
+          "target_route": "unknown:general",
+          "query_terms": [
+            "execute",
+            "servidor"
+          ],
+          "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+          "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+        },
+        "priority": 0.24
+      },
+      {
+        "source_type": "active_investigation",
+        "source_id": "inv_bcabb7f97d",
+        "domain": "general",
+        "query": "execute rm -rf no servidor",
+        "gap_summary": "no_structured_coverage",
+        "missing_slots": [
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
+        ],
+        "next_experiment": {
+          "kind": "causal_transfer_prior_validation",
+          "target_route": "unknown:general",
+          "query_terms": [
+            "execute",
+            "servidor"
+          ],
+          "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+          "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+        },
+        "priority": 0.24
+      },
+      {
+        "source_type": "active_investigation",
+        "source_id": "inv_1351c1c727",
+        "domain": "general",
+        "query": "execute rm -rf no servidor",
+        "gap_summary": "no_structured_coverage",
+        "missing_slots": [
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
+        ],
+        "next_experiment": {
+          "kind": "causal_transfer_prior_validation",
+          "target_route": "unknown:general",
+          "query_terms": [
+            "execute",
+            "servidor"
+          ],
+          "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+          "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+        },
+        "priority": 0.24
+      },
+      {
+        "source_type": "active_investigation",
+        "source_id": "inv_82670966c9",
+        "domain": "general",
+        "query": "execute rm -rf no servidor",
+        "gap_summary": "no_structured_coverage",
+        "missing_slots": [
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
+        ],
+        "next_experiment": {
+          "kind": "causal_transfer_prior_validation",
+          "target_route": "unknown:general",
+          "query_terms": [
+            "execute",
+            "servidor"
+          ],
+          "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+          "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+        },
+        "priority": 0.24
+      },
+      {
+        "source_type": "active_investigation",
+        "source_id": "inv_4054c5ef22",
+        "domain": "general",
+        "query": "execute rm -rf no servidor",
+        "gap_summary": "no_structured_coverage",
+        "missing_slots": [
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
+        ],
+        "next_experiment": {
+          "kind": "causal_transfer_prior_validation",
+          "target_route": "unknown:general",
+          "query_terms": [
+            "execute",
+            "servidor"
+          ],
+          "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+          "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+        },
+        "priority": 0.24
+      },
+      {
+        "source_type": "active_investigation",
+        "source_id": "inv_ec71e22c86",
+        "domain": "general",
+        "query": "execute rm -rf no servidor",
+        "gap_summary": "no_structured_coverage",
+        "missing_slots": [
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
+        ],
+        "next_experiment": {
+          "kind": "causal_transfer_prior_validation",
+          "target_route": "unknown:general",
+          "query_terms": [
+            "execute",
+            "servidor"
+          ],
+          "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+          "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+        },
+        "priority": 0.24
+      },
+      {
+        "source_type": "active_investigation",
+        "source_id": "inv_ae971a5f7f",
+        "domain": "general",
+        "query": "execute rm -rf no servidor",
+        "gap_summary": "no_structured_coverage",
+        "missing_slots": [
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
+        ],
+        "next_experiment": {
+          "kind": "causal_transfer_prior_validation",
+          "target_route": "unknown:general",
+          "query_terms": [
+            "execute",
+            "servidor"
+          ],
+          "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
+          "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+        },
+        "priority": 0.24
       }
     ],
     "tasks": [
       {
-        "task_id": "curtask_19ecee21c580",
-        "source_id": "bootstrap_generalization",
-        "source_type": "bootstrap",
-        "domain": "generalization",
+        "task_id": "curtask_866c717b7029",
+        "source_id": "inv_7c1242f09c",
+        "source_type": "active_investigation",
+        "domain": "general",
         "difficulty": 1,
         "stage": "near_transfer",
         "stage_goal": "small variation of a task the system already almost solves",
-        "title": "Warm start variation for generalization",
-        "objective": "Restate and solve a close variant of the known gap: bootstrap curriculum from self-observed uncertainty. Keep only one missing slot active: fresh_gap_source.",
+        "title": "Warm start variation for general",
+        "objective": "Restate and solve a close variant of the known gap: execute rm -rf no servidor. Keep only one missing slot active: aresta_causal_relevante, fato_estruturado_recuperavel.",
         "acceptance": "success score >= 0.70 and no new anchor failure",
         "missing_slots": [
-          "fresh_gap_source"
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
         ],
         "prerequisite_task_id": null,
         "status": "pending",
         "self_relative": true,
-        "created_at": 1778936080
+        "created_at": 1779130878
       },
       {
-        "task_id": "curtask_4213d3c88aa3",
-        "source_id": "bootstrap_generalization",
-        "source_type": "bootstrap",
-        "domain": "generalization",
-        "difficulty": 2,
-        "stage": "controlled_variation",
-        "stage_goal": "change one premise or missing slot while preserving the domain",
-        "title": "Controlled variation for generalization",
-        "objective": "Change one premise or missing slot from the original gap while preserving domain generalization. Missing slots: fresh_gap_source.",
-        "acceptance": "the system must explain which premise changed and preserve performance >= level 1 - 0.05",
+        "task_id": "curtask_70ad78ba1fa0",
+        "source_id": "inv_216637c669",
+        "source_type": "active_investigation",
+        "domain": "general",
+        "difficulty": 1,
+        "stage": "near_transfer",
+        "stage_goal": "small variation of a task the system already almost solves",
+        "title": "Warm start variation for general",
+        "objective": "Restate and solve a close variant of the known gap: execute rm -rf no servidor. Keep only one missing slot active: aresta_causal_relevante, fato_estruturado_recuperavel.",
+        "acceptance": "success score >= 0.70 and no new anchor failure",
         "missing_slots": [
-          "fresh_gap_source"
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
         ],
-        "prerequisite_task_id": "curtask_19ecee21c580",
+        "prerequisite_task_id": null,
         "status": "pending",
         "self_relative": true,
-        "created_at": 1778936080
+        "created_at": 1779130878
       },
       {
-        "task_id": "curtask_bbb8c44ce77c",
-        "source_id": "bootstrap_generalization",
-        "source_type": "bootstrap",
-        "domain": "generalization",
-        "difficulty": 3,
-        "stage": "causal_intervention",
-        "stage_goal": "execute the active experiment that should close the gap",
-        "title": "Active experiment for generalization",
-        "objective": "Run the proposed active experiment: seed a small verified probe before expanding difficulty.",
-        "acceptance": "task must produce an auditable score",
+        "task_id": "curtask_4097bd1030dc",
+        "source_id": "inv_8ca6d3a20a",
+        "source_type": "active_investigation",
+        "domain": "general",
+        "difficulty": 1,
+        "stage": "near_transfer",
+        "stage_goal": "small variation of a task the system already almost solves",
+        "title": "Warm start variation for general",
+        "objective": "Restate and solve a close variant of the known gap: execute rm -rf no servidor. Keep only one missing slot active: aresta_causal_relevante, fato_estruturado_recuperavel.",
+        "acceptance": "success score >= 0.70 and no new anchor failure",
         "missing_slots": [
-          "fresh_gap_source"
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
         ],
-        "prerequisite_task_id": "curtask_4213d3c88aa3",
+        "prerequisite_task_id": null,
         "status": "pending",
         "self_relative": true,
-        "created_at": 1778936080
+        "created_at": 1779130878
       },
       {
-        "task_id": "curtask_1cf66186a7ae",
-        "source_id": "bootstrap_generalization",
-        "source_type": "bootstrap",
-        "domain": "generalization",
-        "difficulty": 4,
-        "stage": "zero_shot_bridge",
-        "stage_goal": "transfer the skill to an adjacent but unseen domain",
-        "title": "Zero-shot bridge from generalization to generalization_zero_shot_bridge",
-        "objective": "Transfer the learned procedure from generalization into unseen domain generalization_zero_shot_bridge without using stored examples from that domain.",
-        "acceptance": "zero-shot score >= 0.60 or a precise new active investigation is opened",
+        "task_id": "curtask_1a9d8179319e",
+        "source_id": "inv_ac566ee507",
+        "source_type": "active_investigation",
+        "domain": "general",
+        "difficulty": 1,
+        "stage": "near_transfer",
+        "stage_goal": "small variation of a task the system already almost solves",
+        "title": "Warm start variation for general",
+        "objective": "Restate and solve a close variant of the known gap: execute rm -rf no servidor. Keep only one missing slot active: aresta_causal_relevante, fato_estruturado_recuperavel.",
+        "acceptance": "success score >= 0.70 and no new anchor failure",
         "missing_slots": [
-          "fresh_gap_source"
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
         ],
-        "prerequisite_task_id": "curtask_bbb8c44ce77c",
+        "prerequisite_task_id": null,
         "status": "pending",
         "self_relative": true,
-        "created_at": 1778936080
+        "created_at": 1779130878
       },
       {
-        "task_id": "curtask_fe0b8eedf11b",
-        "source_id": "bootstrap_generalization",
-        "source_type": "bootstrap",
-        "domain": "generalization",
-        "difficulty": 5,
-        "stage": "novel_domain",
-        "stage_goal": "force a new domain with explicit external or sandbox validation",
-        "title": "Novel-domain stress task for generalization_zero_shot_bridge",
-        "objective": "Create a novel task in generalization_zero_shot_bridge, require external or sandbox validation, and compare expected vs observed outcome.",
-        "acceptance": "the task must record surprise, validation evidence, and a pass/fail score",
+        "task_id": "curtask_6faadba9fe5f",
+        "source_id": "inv_4c6f4dd342",
+        "source_type": "active_investigation",
+        "domain": "general",
+        "difficulty": 1,
+        "stage": "near_transfer",
+        "stage_goal": "small variation of a task the system already almost solves",
+        "title": "Warm start variation for general",
+        "objective": "Restate and solve a close variant of the known gap: execute rm -rf no servidor. Keep only one missing slot active: aresta_causal_relevante, fato_estruturado_recuperavel.",
+        "acceptance": "success score >= 0.70 and no new anchor failure",
         "missing_slots": [
-          "fresh_gap_source"
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
         ],
-        "prerequisite_task_id": "curtask_1cf66186a7ae",
+        "prerequisite_task_id": null,
         "status": "pending",
         "self_relative": true,
-        "created_at": 1778936080
+        "created_at": 1779130878
+      },
+      {
+        "task_id": "curtask_401e673a1a5e",
+        "source_id": "inv_202fedb29d",
+        "source_type": "active_investigation",
+        "domain": "general",
+        "difficulty": 1,
+        "stage": "near_transfer",
+        "stage_goal": "small variation of a task the system already almost solves",
+        "title": "Warm start variation for general",
+        "objective": "Restate and solve a close variant of the known gap: execute rm -rf no servidor. Keep only one missing slot active: aresta_causal_relevante, fato_estruturado_recuperavel.",
+        "acceptance": "success score >= 0.70 and no new anchor failure",
+        "missing_slots": [
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
+        ],
+        "prerequisite_task_id": null,
+        "status": "pending",
+        "self_relative": true,
+        "created_at": 1779130878
+      },
+      {
+        "task_id": "curtask_b6249c5504dc",
+        "source_id": "inv_bcabb7f97d",
+        "source_type": "active_investigation",
+        "domain": "general",
+        "difficulty": 1,
+        "stage": "near_transfer",
+        "stage_goal": "small variation of a task the system already almost solves",
+        "title": "Warm start variation for general",
+        "objective": "Restate and solve a close variant of the known gap: execute rm -rf no servidor. Keep only one missing slot active: aresta_causal_relevante, fato_estruturado_recuperavel.",
+        "acceptance": "success score >= 0.70 and no new anchor failure",
+        "missing_slots": [
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
+        ],
+        "prerequisite_task_id": null,
+        "status": "pending",
+        "self_relative": true,
+        "created_at": 1779130878
+      },
+      {
+        "task_id": "curtask_d80c5e18c874",
+        "source_id": "inv_1351c1c727",
+        "source_type": "active_investigation",
+        "domain": "general",
+        "difficulty": 1,
+        "stage": "near_transfer",
+        "stage_goal": "small variation of a task the system already almost solves",
+        "title": "Warm start variation for general",
+        "objective": "Restate and solve a close variant of the known gap: execute rm -rf no servidor. Keep only one missing slot active: aresta_causal_relevante, fato_estruturado_recuperavel.",
+        "acceptance": "success score >= 0.70 and no new anchor failure",
+        "missing_slots": [
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
+        ],
+        "prerequisite_task_id": null,
+        "status": "pending",
+        "self_relative": true,
+        "created_at": 1779130878
+      },
+      {
+        "task_id": "curtask_80a0ed35acbb",
+        "source_id": "inv_82670966c9",
+        "source_type": "active_investigation",
+        "domain": "general",
+        "difficulty": 1,
+        "stage": "near_transfer",
+        "stage_goal": "small variation of a task the system already almost solves",
+        "title": "Warm start variation for general",
+        "objective": "Restate and solve a close variant of the known gap: execute rm -rf no servidor. Keep only one missing slot active: aresta_causal_relevante, fato_estruturado_recuperavel.",
+        "acceptance": "success score >= 0.70 and no new anchor failure",
+        "missing_slots": [
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
+        ],
+        "prerequisite_task_id": null,
+        "status": "pending",
+        "self_relative": true,
+        "created_at": 1779130878
+      },
+      {
+        "task_id": "curtask_7dcab03ec391",
+        "source_id": "inv_4054c5ef22",
+        "source_type": "active_investigation",
+        "domain": "general",
+        "difficulty": 1,
+        "stage": "near_transfer",
+        "stage_goal": "small variation of a task the system already almost solves",
+        "title": "Warm start variation for general",
+        "objective": "Restate and solve a close variant of the known gap: execute rm -rf no servidor. Keep only one missing slot active: aresta_causal_relevante, fato_estruturado_recuperavel.",
+        "acceptance": "success score >= 0.70 and no new anchor failure",
+        "missing_slots": [
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
+        ],
+        "prerequisite_task_id": null,
+        "status": "pending",
+        "self_relative": true,
+        "created_at": 1779130878
+      },
+      {
+        "task_id": "curtask_82f0ecae0620",
+        "source_id": "inv_ec71e22c86",
+        "source_type": "active_investigation",
+        "domain": "general",
+        "difficulty": 1,
+        "stage": "near_transfer",
+        "stage_goal": "small variation of a task the system already almost solves",
+        "title": "Warm start variation for general",
+        "objective": "Restate and solve a close variant of the known gap: execute rm -rf no servidor. Keep only one missing slot active: aresta_causal_relevante, fato_estruturado_recuperavel.",
+        "acceptance": "success score >= 0.70 and no new anchor failure",
+        "missing_slots": [
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
+        ],
+        "prerequisite_task_id": null,
+        "status": "pending",
+        "self_relative": true,
+        "created_at": 1779130878
+      },
+      {
+        "task_id": "curtask_858c1ebd038a",
+        "source_id": "inv_ae971a5f7f",
+        "source_type": "active_investigation",
+        "domain": "general",
+        "difficulty": 1,
+        "stage": "near_transfer",
+        "stage_goal": "small variation of a task the system already almost solves",
+        "title": "Warm start variation for general",
+        "objective": "Restate and solve a close variant of the known gap: execute rm -rf no servidor. Keep only one missing slot active: aresta_causal_relevante, fato_estruturado_recuperavel.",
+        "acceptance": "success score >= 0.70 and no new anchor failure",
+        "missing_slots": [
+          "aresta_causal_relevante",
+          "fato_estruturado_recuperavel"
+        ],
+        "prerequisite_task_id": null,
+        "status": "pending",
+        "self_relative": true,
+        "created_at": 1779130878
       }
     ],
     "progression": [
       1,
-      2,
-      3,
-      4,
-      5
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
     ]
   },
   "generalization": {
     "ok": true,
     "axis": "generalization",
-    "zero_shot_task_count": 2,
+    "zero_shot_task_count": 0,
     "success_rate": 0.0,
-    "gap_count": 3,
+    "gap_count": 4,
     "cases": [
       {
         "domain": "unseen_counterfactual_ops",
@@ -304,48 +703,48 @@
   "metrics": {
     "success_rate": 0.3333,
     "error_rate": 0.6667,
-    "surprise_score": 0.75,
-    "latency_ms": 916.11,
+    "surprise_score": 1.0,
+    "latency_ms": 715.39,
     "drift_score": 0.0,
-    "zero_shot_task_count": 2,
+    "zero_shot_task_count": 0,
     "resilience_success_rate": 1.0
   },
   "predictive_model": {
     "ok": true,
     "snapshot": {
-      "ts": 1778936080,
+      "ts": 1779130878,
       "source": "longitudinal_harness",
       "metrics": {
         "success_rate": 0.3333,
         "error_rate": 0.6667,
-        "surprise_score": 0.75,
-        "latency_ms": 916.11,
+        "surprise_score": 1.0,
+        "latency_ms": 715.39,
         "drift_score": 0.0,
-        "zero_shot_task_count": 2,
+        "zero_shot_task_count": 0,
         "resilience_success_rate": 1.0,
-        "health_index": 0.3886
+        "health_index": 0.355
       }
     },
     "prediction": {
       "ok": true,
-      "samples": 11,
-      "window": 11,
+      "samples": 15,
+      "window": 15,
       "horizon_steps": 3,
-      "current_health": 0.3886,
-      "predicted_health": 0.3976,
+      "current_health": 0.355,
+      "predicted_health": 0.352,
       "predicted_success_rate": 0.3333,
       "predicted_error_rate": 0.6667,
-      "predicted_surprise_score": 0.6886,
+      "predicted_surprise_score": 1.0,
       "predicted_drift_score": 0.0,
       "slopes": {
-        "health": 0.00298,
+        "health": -0.00099,
         "success_rate": 0.0,
         "error_rate": 0.0,
-        "surprise_score": -0.02045,
-        "latency_norm": -0.0012,
+        "surprise_score": 0.00804,
+        "latency_norm": -0.00107,
         "drift_score": 0.0
       },
-      "degradation_risk": 0.57,
+      "degradation_risk": 0.5971,
       "leading_indicators": [
         "success_rate_decline",
         "error_rate_increase",
@@ -355,7 +754,7 @@
     },
     "preventive_action": "enter_conservative_mode"
   },
-  "duration_ms": 931.68,
+  "duration_ms": 723.29,
   "epistemic_ledger": {
     "ok": true,
     "artifact_kind": "system_capability",

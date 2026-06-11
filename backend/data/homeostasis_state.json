@@ -1,1995 +1,15 @@
 {
-  "updated_at": 1778963343,
-  "mode": "normal",
+  "updated_at": 1780594313,
+  "mode": "conservative",
   "vitals": {
-    "coherence_score": 0.6515,
-    "uncertainty_load": 0.38,
-    "memory_pressure": 0.2325,
+    "coherence_score": 0.5299,
+    "uncertainty_load": 0.6935,
+    "memory_pressure": 0.2797,
     "goal_drift": 0.18,
     "contradiction_stress": 0.5217,
     "energy_budget": 1.0
   },
   "history": [
-    {
-      "ts": 1778685176,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5751,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.209,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778685787,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6573,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.209,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778686123,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6573,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2091,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778686461,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6573,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2092,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778686828,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.658,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2081,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778687154,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.575,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2094,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778687498,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5749,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2096,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778687561,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5475,
-        "uncertainty_load": 0.6935,
-        "memory_pressure": 0.2096,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778687890,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6564,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2109,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778688144,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5742,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.211,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778688486,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5741,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2111,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778688814,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5466,
-        "uncertainty_load": 0.6935,
-        "memory_pressure": 0.2113,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778689174,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6571,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2101,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778689496,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5741,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2114,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778689814,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5741,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2115,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778690131,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.657,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2103,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778690465,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.574,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2115,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778693843,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6563,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2116,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778694184,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6555,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2131,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.525,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778694509,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6561,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2122,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778694928,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5753,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2098,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778695132,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5745,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2115,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778695359,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5737,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2129,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778695738,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5743,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2122,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778696090,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6565,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2123,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778696421,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5468,
-        "uncertainty_load": 0.6935,
-        "memory_pressure": 0.2124,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778696793,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6565,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2125,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778697139,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6564,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2125,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778697507,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6564,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2126,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778697820,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5467,
-        "uncertainty_load": 0.6935,
-        "memory_pressure": 0.2127,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778698177,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5467,
-        "uncertainty_load": 0.6935,
-        "memory_pressure": 0.2128,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778698507,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.533,
-        "uncertainty_load": 0.7325,
-        "memory_pressure": 0.2129,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778698822,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5474,
-        "uncertainty_load": 0.6935,
-        "memory_pressure": 0.2117,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778699155,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.657,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2118,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778699473,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.574,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2132,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778699738,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.574,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2134,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778699833,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5746,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2124,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778700160,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6569,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2125,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778700473,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5739,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2138,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778700799,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6561,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2139,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778701129,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5327,
-        "uncertainty_load": 0.7325,
-        "memory_pressure": 0.214,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778701444,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5738,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.214,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778701782,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6561,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2141,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778701986,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5744,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2132,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778702148,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5751,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2122,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5183,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778702496,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6566,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2136,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778702810,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6155,
-        "uncertainty_load": 0.4975,
-        "memory_pressure": 0.2137,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778703185,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6558,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.215,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778703549,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5743,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2139,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778703951,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6558,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2152,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778704263,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.575,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2128,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5183,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778722647,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5742,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2142,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778723303,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5748,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2136,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5183,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778723629,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6577,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2125,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5167,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778757924,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5747,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2138,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5183,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778758321,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5479,
-        "uncertainty_load": 0.6935,
-        "memory_pressure": 0.2128,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5167,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778758636,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5754,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2128,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5167,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778758805,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5746,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2142,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5183,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778758950,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5746,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2142,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5183,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778759002,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5746,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2142,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5183,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778759327,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5334,
-        "uncertainty_load": 0.7325,
-        "memory_pressure": 0.2144,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5183,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778759639,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5745,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2146,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5183,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778759953,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5334,
-        "uncertainty_load": 0.7325,
-        "memory_pressure": 0.2146,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5183,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778760320,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5737,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.216,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778760797,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5737,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2161,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778761175,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.573,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2175,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778761516,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6544,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2189,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778761841,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5729,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2177,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778762222,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5729,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2178,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778762645,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5721,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2191,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778763015,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5736,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2167,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778763345,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5743,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2155,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5183,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778763668,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5743,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2155,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5183,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778763991,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6017,
-        "uncertainty_load": 0.5365,
-        "memory_pressure": 0.2156,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5183,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778764317,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6558,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2169,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778764507,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5728,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2183,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778764869,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5727,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2183,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778765196,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.655,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2184,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778765563,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5727,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2185,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778765905,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6001,
-        "uncertainty_load": 0.5365,
-        "memory_pressure": 0.2186,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778766270,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5719,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2199,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778766585,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6542,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.22,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778766902,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5726,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2188,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778767216,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5719,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2201,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778767600,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5719,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2202,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778767929,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5315,
-        "uncertainty_load": 0.7325,
-        "memory_pressure": 0.219,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778768263,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5725,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2191,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778775422,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5718,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2204,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778775750,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5725,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2194,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778775953,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5739,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.217,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5183,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778776348,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5731,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2184,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778776662,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5731,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2185,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778776976,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6554,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2186,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778777293,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5731,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2186,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778777607,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5731,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2187,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778777921,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.573,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2188,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778778320,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5456,
-        "uncertainty_load": 0.6935,
-        "memory_pressure": 0.2189,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778778634,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5455,
-        "uncertainty_load": 0.6935,
-        "memory_pressure": 0.219,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778778948,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6545,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2203,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778779328,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5723,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2203,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778779665,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5722,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2204,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778780015,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5311,
-        "uncertainty_load": 0.7325,
-        "memory_pressure": 0.2204,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778780335,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5722,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2205,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778795170,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5719,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2216,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778795512,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6548,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2207,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778795840,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5726,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2207,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778796225,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5726,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2208,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778796554,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6541,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2221,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778796891,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5718,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2221,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778797203,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5718,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2222,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778797517,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5725,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.221,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778797829,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.545,
-        "uncertainty_load": 0.6935,
-        "memory_pressure": 0.2211,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778798141,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.545,
-        "uncertainty_load": 0.6935,
-        "memory_pressure": 0.2211,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778798456,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5717,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2225,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778798797,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5717,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2225,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778799134,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5717,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2225,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778799451,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5717,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2226,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778799778,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6546,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2214,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778800104,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6539,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2228,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778800444,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5709,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2241,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778800790,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5709,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2241,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778801127,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6539,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2229,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778801459,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5709,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2242,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778801797,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5297,
-        "uncertainty_load": 0.7325,
-        "memory_pressure": 0.2243,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778802125,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6538,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2232,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778802449,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6538,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2232,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778802779,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6537,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2234,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778803102,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5708,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2246,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778803422,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5715,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2235,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778803736,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6537,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2236,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778804063,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5714,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2236,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778804397,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6537,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2237,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778804774,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5707,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.225,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778805089,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6536,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2238,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778805476,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6536,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2239,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778805808,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5706,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2252,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778806143,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5713,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2241,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778806471,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5713,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2241,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778806828,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6528,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2255,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778807168,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6528,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2256,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778807502,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6535,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2244,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778807843,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6534,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2246,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778808178,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5986,
-        "uncertainty_load": 0.5365,
-        "memory_pressure": 0.2248,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778935309,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5711,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2248,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778935630,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6534,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2249,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778935866,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5718,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2237,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.52,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778935943,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5711,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2249,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778936182,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5711,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2251,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778936254,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5711,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2251,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778936494,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6526,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2264,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778936568,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5703,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2264,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778936805,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5162,
-        "uncertainty_load": 0.7715,
-        "memory_pressure": 0.2253,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778936879,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5299,
-        "uncertainty_load": 0.7325,
-        "memory_pressure": 0.2253,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5217,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778937119,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6525,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2267,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778937190,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5428,
-        "uncertainty_load": 0.6935,
-        "memory_pressure": 0.2267,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778937430,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5702,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2269,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778937505,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5702,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2269,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5233,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778937741,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.542,
-        "uncertainty_load": 0.6935,
-        "memory_pressure": 0.2282,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.525,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778937817,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6517,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2282,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.525,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778938056,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5694,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2284,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.525,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778938128,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5687,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2296,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5267,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778938368,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5686,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2297,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5267,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778938443,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.5686,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.2297,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5267,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778938679,
-      "mode": "normal",
-      "vitals": {
-        "coherence_score": 0.6509,
-        "uncertainty_load": 0.38,
-        "memory_pressure": 0.2298,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5267,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778938755,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5193,
-        "uncertainty_load": 0.756,
-        "memory_pressure": 0.2299,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5267,
-        "energy_budget": 1.0
-      }
-    },
     {
       "ts": 1778938994,
       "mode": "conservative",
@@ -2885,6 +905,1986 @@
         "coherence_score": 0.6515,
         "uncertainty_load": 0.38,
         "memory_pressure": 0.2325,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.5217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779038267,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5942,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2326,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779038588,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5924,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.2314,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779038901,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5924,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.2315,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779039215,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5924,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.2315,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779039529,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.7014,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2328,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779039842,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.553,
+        "uncertainty_load": 0.7325,
+        "memory_pressure": 0.2329,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779040155,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5941,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.233,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779040727,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5948,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2318,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.42,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779041043,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.7013,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2331,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779041357,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5923,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.2319,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779041662,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5697,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.232,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.52,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779041670,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5697,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.232,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.52,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779042008,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.594,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2334,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779042301,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.594,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2334,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779042617,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.619,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2335,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779043496,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6197,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2323,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779043810,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5939,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2336,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779044126,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6189,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2337,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779044439,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6196,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2325,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779044753,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5946,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2326,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.42,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779045066,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6196,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2327,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779045380,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6196,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2328,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779045692,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6188,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2341,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779046006,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6195,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.233,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779046318,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6195,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.233,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779046632,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6195,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2331,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779046946,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.7017,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2332,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779047259,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6194,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2333,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779047571,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6187,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2346,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779047898,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6182,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2366,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779048371,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6177,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2386,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779048694,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6177,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2386,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779049008,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6184,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2375,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779049322,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6176,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2388,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779069290,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6171,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2408,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779069602,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6178,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2396,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779105184,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6183,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2411,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3167,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779105519,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.7255,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2412,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2167,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779105837,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.644,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.24,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.215,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779106153,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6714,
+        "uncertainty_load": 0.5365,
+        "memory_pressure": 0.2401,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.215,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779106469,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6755,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2414,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4167,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779106800,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6997,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2428,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3183,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779107127,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6432,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2416,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2167,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779107454,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.7254,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2416,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2167,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779107773,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5674,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2429,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.5183,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779108092,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5657,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.2418,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4167,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779108409,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6174,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2432,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3183,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779108820,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5661,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2464,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.52,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779109222,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6136,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.2466,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.22,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779109538,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6976,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2479,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779109868,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6678,
+        "uncertainty_load": 0.5365,
+        "memory_pressure": 0.2481,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779110189,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.616,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2469,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779110524,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6403,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2482,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779110841,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5991,
+        "uncertainty_load": 0.7325,
+        "memory_pressure": 0.2483,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779111160,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.6402,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2484,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779111477,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.6152,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2484,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779112082,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.6147,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2504,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779112411,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6969,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2506,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779112729,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6977,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2494,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779113049,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6154,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2494,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779113383,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6476,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2495,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.52,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779113702,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6476,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2496,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.52,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779114018,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6557,
+        "uncertainty_load": 0.4975,
+        "memory_pressure": 0.251,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779114336,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5903,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2499,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.42,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779114654,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6395,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2512,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779114970,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6145,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2513,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779115288,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5991,
+        "uncertainty_load": 0.7325,
+        "memory_pressure": 0.2501,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.22,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779115605,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.587,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.2514,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779115922,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.614,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2535,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779116247,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5615,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.2535,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779116600,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5897,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2523,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.42,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779116928,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5889,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2536,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779117246,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5889,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2537,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779117563,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5614,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.2537,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779117880,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.6139,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2538,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779118198,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.6139,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2538,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779118514,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5857,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.2552,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3233,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779118831,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5864,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.254,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779119149,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.6388,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.254,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779124108,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.6138,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2541,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779124795,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.639,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2549,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.22,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779125114,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.722,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2537,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2183,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779125431,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.7227,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2525,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2167,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779125747,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6404,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2525,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2167,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779126121,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5736,
+        "uncertainty_load": 0.7325,
+        "memory_pressure": 0.2539,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3183,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779126437,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.7234,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2514,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.215,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779126754,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5993,
+        "uncertainty_load": 0.7325,
+        "memory_pressure": 0.2528,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2167,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779127072,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.6129,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.2528,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2167,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779127389,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6976,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2529,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3167,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779127706,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6404,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2529,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2167,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779128026,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6396,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2542,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2183,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779128475,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6396,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2543,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2183,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779128833,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6384,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2575,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.22,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779129039,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6126,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2589,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779129394,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6128,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2597,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779129711,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6116,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.263,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779130241,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6368,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2638,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.22,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779130566,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6363,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2657,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.22,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779130884,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.7181,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2678,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.22,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779131282,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.693,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2678,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779131602,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6358,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2679,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.22,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779131921,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.61,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2692,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779132239,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.61,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2693,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779132558,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6107,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2681,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779132876,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.61,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2694,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779133193,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.61,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2695,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779133538,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6352,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2702,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.22,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779133857,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6352,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2703,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.22,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779134175,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6344,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2716,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779134494,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6344,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2717,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779134814,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6344,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2718,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779135133,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6344,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2718,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779135453,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.7159,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2732,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2233,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779135772,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6336,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2733,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2233,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779136091,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6068,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.2721,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779136410,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6336,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2734,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2233,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779136729,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.7165,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2722,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779137048,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6343,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2723,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779137368,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.7165,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2724,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779137686,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6342,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2724,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779138004,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.7164,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2725,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779138324,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6914,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2726,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779138643,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5817,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.2727,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779138962,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.593,
+        "uncertainty_load": 0.7325,
+        "memory_pressure": 0.2728,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779139355,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.6336,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2748,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779139689,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.6336,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2749,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.2217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779140007,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.6343,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2737,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.22,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779140336,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.6338,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2757,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.22,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779140667,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.6338,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2757,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.22,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1779140987,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.6063,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.2758,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.22,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780583645,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5845,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2746,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4183,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780583976,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.6088,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.276,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780584288,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6917,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2748,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3183,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780584595,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6095,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2748,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.3183,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780584914,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.641,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2762,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.52,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780585277,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6402,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2776,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.5217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780585586,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6409,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2764,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.52,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780585896,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5836,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2765,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.42,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780586203,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5579,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2779,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.5217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780586576,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6401,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.278,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.5217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780586884,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5174,
+        "uncertainty_load": 0.7325,
+        "memory_pressure": 0.2768,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.52,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780587190,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5578,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2782,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.5217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780587497,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5303,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.2782,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.5217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780587808,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5296,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.2796,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.5233,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780588115,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5303,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.2784,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.5217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780588423,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.665,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2785,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780588731,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6642,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2798,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4233,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780589042,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.557,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2799,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.5233,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780589348,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5827,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2787,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780589657,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5819,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.28,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4233,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780589964,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5819,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2801,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4233,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780590272,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5819,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2801,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4233,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780590581,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5294,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.2802,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.5233,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780590889,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5819,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2803,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4233,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780591196,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5818,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2803,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4233,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780591508,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5818,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2803,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4233,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780591815,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6648,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2791,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780592125,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5818,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2804,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4233,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780592433,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5818,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2805,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.4233,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780592742,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5568,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2805,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.5233,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780593050,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6398,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2793,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.5217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780593357,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.5293,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.2807,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.5233,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780593664,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5156,
+        "uncertainty_load": 0.7325,
+        "memory_pressure": 0.2807,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.5233,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780593971,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5567,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2808,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.5233,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1780594313,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5299,
+        "uncertainty_load": 0.6935,
+        "memory_pressure": 0.2797,
         "goal_drift": 0.18,
         "contradiction_stress": 0.5217,
         "energy_budget": 1.0

@@ -36,4 +36,4 @@ Classifique a mensagem pela skill aprendida, responda por rota deterministica e 
 - grato pela ajuda
 - te agradeço muito
 
-*Materializada automaticamente via skill_memory_bridge a partir de skill_memory 'chat-intent-thanks' (success_count=185, confidence=0.960).*
+*Materializada automaticamente via skill_memory_bridge a partir de skill_memory 'chat-intent-thanks' (success_count=293, confidence=0.960).*

@@ -9,7 +9,7 @@ from typing import Any
 
 import httpx
 from fastapi import APIRouter, Header
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel
 
 from ultronpro import qwen_runtime
@@ -71,6 +71,46 @@ def _error(status_code: int, message: str, error_type: str, code: str | None = N
                 "param": None,
                 "code": code,
             }
+        },
+    )
+
+
+def _chat_chunk(completion_id: str, created: int, delta: dict[str, str], finish_reason: str | None = None) -> dict[str, Any]:
+    return {
+        "id": completion_id,
+        "object": "chat.completion.chunk",
+        "created": created,
+        "model": MODEL_ALIAS,
+        "choices": [
+            {
+                "index": 0,
+                "delta": delta,
+                "finish_reason": finish_reason,
+            }
+        ],
+    }
+
+
+def _sse_line(data: dict[str, Any] | str) -> str:
+    if isinstance(data, str):
+        return f"data: {data}\n\n"
+    return f"data: {json.dumps(data, ensure_ascii=False)}\n\n"
+
+
+def _stream_response(text: str, completion_id: str, created: int) -> StreamingResponse:
+    async def events():
+        yield _sse_line(_chat_chunk(completion_id, created, {"role": "assistant"}))
+        if text:
+            yield _sse_line(_chat_chunk(completion_id, created, {"content": text}))
+        yield _sse_line(_chat_chunk(completion_id, created, {}, "stop"))
+        yield _sse_line("[DONE]")
+
+    return StreamingResponse(
+        events(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Accel-Buffering": "no",
         },
     )
 
@@ -170,8 +210,6 @@ async def list_models(authorization: str | None = Header(default=None)):
 async def chat_completions(req: ChatCompletionRequest, authorization: str | None = Header(default=None)):
     if not _auth_ok(authorization):
         return _error(401, "Invalid or missing API key.", "authentication_error", "invalid_api_key")
-    if req.stream:
-        return _error(400, "Streaming is not enabled for this endpoint.", "invalid_request_error", "stream_not_supported")
     if not req.messages:
         return _error(400, "At least one message is required.", "invalid_request_error", "messages_required")
 
@@ -190,10 +228,15 @@ async def chat_completions(req: ChatCompletionRequest, authorization: str | None
         return _error(exc.status_code, exc.detail, "upstream_error", "upstream_inference_error")
 
     text = str(upstream.get("text") or "").strip()
+    completion_id = f"chatcmpl-{uuid.uuid4().hex}"
+    created = int(time.time())
+    if req.stream:
+        return _stream_response(text, completion_id, created)
+
     return {
-        "id": f"chatcmpl-{uuid.uuid4().hex}",
+        "id": completion_id,
         "object": "chat.completion",
-        "created": int(time.time()),
+        "created": created,
         "model": MODEL_ALIAS,
         "choices": [
             {

@@ -1,0 +1,83 @@
+{
+  "proof_start": "2026-05-18T18:35:02.610325",
+  "proof_end": "2026-05-18T18:38:40.865021",
+  "duration_hours": 0.061,
+  "total_tasks": 68,
+  "route_accuracy_start": 1.0,
+  "route_accuracy_end": 1.0,
+  "answer_accuracy_start": 0.933,
+  "answer_accuracy_end": 1.0,
+  "generalization_success_rate": 1.0,
+  "avg_surprise_start": 0.123,
+  "avg_surprise_end": 0.15,
+  "surprise_drop": -0.027,
+  "unsafe_action_rate": 0.0,
+  "empty_response_rate": 0.0,
+  "skill_promotions": 0,
+  "skill_demotions": 1,
+  "self_heal_attempts": 0,
+  "self_heal_success": 0,
+  "rollbacks": 0,
+  "local_env_action_success_rate": 1.0,
+  "runtime_crashes": 0,
+  "bridge": {
+    "ok": true,
+    "materialized": 8,
+    "skipped": 22,
+    "errors": 0
+  },
+  "governor": {
+    "ok": true,
+    "evaluated": 30,
+    "demoted": 1,
+    "healthy": 29,
+    "skipped": false
+  },
+  "db_start": {
+    "promoted": 30,
+    "candidates": 46,
+    "exec_logs": 23
+  },
+  "db_end": {
+    "promoted": 30,
+    "candidates": 46,
+    "exec_logs": 23
+  },
+  "phases": {
+    "baseline": {
+      "route_acc": 1.0,
+      "answer_acc": 0.933,
+      "avg_surprise": 0.123,
+      "n": 15,
+      "empty": 0
+    },
+    "training": {
+      "route_acc": 1.0,
+      "answer_acc": 0.933,
+      "avg_surprise": 0.123,
+      "n": 30,
+      "empty": 0
+    },
+    "holdout": {
+      "route_acc": 1.0,
+      "answer_acc": 1.0,
+      "avg_surprise": 0.141,
+      "n": 11,
+      "empty": 0
+    },
+    "safety": {
+      "route_acc": 1.0,
+      "answer_acc": 1.0,
+      "avg_surprise": 0.05,
+      "n": 5,
+      "empty": 0
+    },
+    "stress": {
+      "route_acc": 1.0,
+      "answer_acc": 1.0,
+      "avg_surprise": 0.15,
+      "n": 7,
+      "empty": 0
+    }
+  }
+}

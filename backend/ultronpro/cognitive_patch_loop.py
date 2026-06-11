@@ -29,6 +29,56 @@ def _patch_alert(patch: dict[str, Any]) -> str:
     return str(change.get('alert') or '').strip().lower()
 
 
+# Domínio da lacuna -> módulo candidato para proposta de modificação de código.
+TRUSTED_CODE_MODULE_HINTS = [
+    ('routing', 'rag_router.py'),
+    ('route', 'rag_router.py'),
+    ('causal', 'causal_graph.py'),
+    ('memory', 'episodic_memory.py'),
+    ('plan', 'planner.py'),
+    ('calibr', 'calibration.py'),
+    ('confidence', 'calibration.py'),
+    ('runtime', 'runtime_guard.py'),
+    ('metacog', 'metacognitive_loop.py'),
+]
+
+
+def _escalate_trusted_patch_to_code(patch: dict[str, Any]) -> dict[str, Any]:
+    """Converte um cognitive patch promovido (origem: aquisição confiável) em
+    proposta real de modificação de código. Apenas gera e valida a proposta;
+    a aplicação continua atrás dos gates de self_modification."""
+    change = patch.get('proposed_change') if isinstance(patch.get('proposed_change'), dict) else {}
+    domain = str(change.get('domain') or '').strip().lower()
+    module = next((mod for hint, mod in TRUSTED_CODE_MODULE_HINTS if hint in domain), None)
+    if not module:
+        return {'ok': False, 'reason': 'no_module_mapping', 'domain': domain}
+
+    from ultronpro import self_modification
+
+    key_points = change.get('key_points') if isinstance(change.get('key_points'), list) else []
+    evidence_lines = [
+        f"- {str(kp.get('text') or '')[:300]}"
+        for kp in key_points[:5]
+        if isinstance(kp, dict) and str(kp.get('text') or '').strip()
+    ]
+    context = '\n'.join(evidence_lines + [f"Fonte confiável: {change.get('source_url')}"])
+    goal = str(patch.get('hypothesis') or patch.get('problem_pattern') or 'melhoria baseada em evidência confiável')[:400]
+
+    proposal = self_modification.generate_modification(module, '', goal, context)
+    if isinstance(proposal, dict):
+        return {'ok': False, 'module': module, 'error': str(proposal.get('error') or 'unknown')[:200]}
+    proposal_id = getattr(proposal, 'id', None)
+    validation = self_modification.validate_proposal(str(proposal_id)) if proposal_id else None
+    return {
+        'ok': bool(proposal_id),
+        'module': module,
+        'proposal_id': proposal_id,
+        'validation': validation,
+        'applied': False,
+        'note': 'proposta gerada e validada; aplicação permanece atrás dos gates de self_modification',
+    }
+
+
 def _patch_task_type(patch: dict[str, Any]) -> str:
     change = patch.get('proposed_change') if isinstance(patch.get('proposed_change'), dict) else {}
     return str(change.get('task_type') or 'general')[:80]
@@ -157,6 +207,11 @@ def process_patch(patch_id: str, *, canary_rollout_pct: int = 10) -> dict[str, A
         promoted = cognitive_patches.promote_patch(patch_id, note='auto_patch_loop_promoted')
         out['final_action'] = 'promote'
         out['patch'] = promoted
+        if str(patch_fresh.get('source') or '') == 'trusted_acquisition_loop':
+            try:
+                out['code_escalation'] = _escalate_trusted_patch_to_code(promoted if isinstance(promoted, dict) else patch_fresh)
+            except Exception as exc:
+                out['code_escalation'] = {'ok': False, 'error': str(exc)[:200]}
     elif decision == 'reject':
         rejected = cognitive_patches.reject_patch(patch_id, reason='auto_promotion_gate_reject', evidence_refs=[f'promotion_gate:{patch_id}:{_now()}'])
         out['final_action'] = 'reject'

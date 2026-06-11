@@ -4,8 +4,8 @@
     "um agente medido por benchmarks reais (0 aprovados, 1 ainda abaixo do limiar nesta janela de evidência)",
     "um sistema com ciclo de plasticidade explícito (2 patches promovidos, 0 revertidos, 2 propostos)",
     "um sistema governado por gate causal calibrado (100 calibrações registradas)",
-    "um sistema que transforma lacunas causais em experimentos noturnos (8 executados, 8 injetados no grafo)",
-    "um organismo operacional com episódios significativos em autonomous_cognition, blocked_mental_sim, cognitive_patch_loop, episodic_chat_turn"
+    "um sistema que transforma lacunas causais em experimentos noturnos (8 executados, 5 injetados no grafo)",
+    "um organismo operacional com episódios significativos em autonomous_cognition, blocked_mental_sim, cognitive_patch_loop, episodic_chat_turn, skill_bridge"
   ],
   "benchmarks": [
     {
@@ -103,218 +103,150 @@
   "causal_gap_investigations": [
     {
       "edge": {
+        "cause": "",
+        "condition": "",
+        "effect": ""
+      },
+      "error": "blocked_pattern:\\brm\\s+-rf\\b",
+      "experiment_kind": "causal_transfer_prior_validation",
+      "injected": false,
+      "investigation_id": "inv_d58c498495",
+      "ok": false,
+      "query_terms": [
+        "execute",
+        "servidor"
+      ],
+      "target_route": "unknown:general",
+      "ts": 1779140564
+    },
+    {
+      "edge": {
+        "cause": "",
+        "condition": "",
+        "effect": ""
+      },
+      "error": "blocked_pattern:\\brm\\s+-rf\\b",
+      "experiment_kind": "causal_transfer_prior_validation",
+      "injected": false,
+      "investigation_id": "inv_1cd3469224",
+      "ok": false,
+      "query_terms": [
+        "execute",
+        "servidor"
+      ],
+      "target_route": "unknown:general",
+      "ts": 1779140564
+    },
+    {
+      "edge": {
+        "cause": "",
+        "condition": "",
+        "effect": ""
+      },
+      "error": "blocked_pattern:\\brm\\s+-rf\\b",
+      "experiment_kind": "causal_transfer_prior_validation",
+      "injected": false,
+      "investigation_id": "inv_7c1242f09c",
+      "ok": false,
+      "query_terms": [
+        "execute",
+        "servidor"
+      ],
+      "target_route": "unknown:general",
+      "ts": 1779140564
+    },
+    {
+      "edge": {
         "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:self",
-        "condition": "active_investigation_prior_validation:inv_a24f198b58",
+        "condition": "active_investigation_prior_validation:inv_62d6396d3d",
         "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:self"
       },
       "error": "",
       "experiment_kind": "causal_transfer_prior_validation",
       "injected": true,
-      "investigation_id": "inv_a24f198b58",
+      "investigation_id": "inv_62d6396d3d",
       "ok": true,
       "query_terms": [
-        "abstracoes",
-        "ciclo",
-        "consolidou",
-        "das",
-        "faca",
-        "importantes",
-        "mais",
-        "que",
-        "resumo",
-        "semana",
-        "sono",
-        "ultima"
+        "fale",
+        "mais"
       ],
       "target_route": "unknown:self",
-      "ts": 1778808154
+      "ts": 1779140250
     },
     {
       "edge": {
         "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
-        "condition": "active_investigation_prior_validation:inv_de7c184577",
+        "condition": "active_investigation_prior_validation:inv_04a9cb5c5d",
         "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general"
       },
       "error": "",
       "experiment_kind": "causal_transfer_prior_validation",
       "injected": true,
-      "investigation_id": "inv_de7c184577",
+      "investigation_id": "inv_04a9cb5c5d",
       "ok": true,
       "query_terms": [
-        "cameras",
-        "mostrar",
-        "rede"
+        "imediatamente",
+        "reinicie",
+        "servidor"
       ],
       "target_route": "unknown:general",
-      "ts": 1778808142
+      "ts": 1779139298
     },
     {
       "edge": {
-        "cause": "active_investigation_gap:358 9555s adaptativo aplicar blocked_loops budget carga custo desligar dos",
-        "condition": "autonomous_executor_next_cycle:gap_background_loop_pressure_c5925d6b12",
-        "effect": "sandbox_experiment_observed:runtime_pressure_probe:runtime_lifecycle"
+        "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:debug",
+        "condition": "active_investigation_prior_validation:inv_33113cd94f",
+        "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:debug"
       },
       "error": "",
-      "experiment_kind": "runtime_pressure_probe",
+      "experiment_kind": "causal_transfer_prior_validation",
       "injected": true,
-      "investigation_id": "gap_background_loop_pressure_c5925d6b12",
+      "investigation_id": "inv_33113cd94f",
       "ok": true,
       "query_terms": [
-        "358",
-        "9555s",
-        "adaptativo",
-        "aplicar",
-        "blocked_loops",
-        "budget",
-        "carga",
-        "custo",
-        "desligar",
-        "dos",
-        "essenciais",
-        "estabilidade"
+        "apague",
+        "logs",
+        "todos"
       ],
-      "target_route": "runtime_lifecycle",
-      "ts": 1778795753
+      "target_route": "unknown:debug",
+      "ts": 1779139292
     },
     {
       "edge": {
-        "cause": "active_investigation_gap:122 131 arestas benchmarks causais causal causal_graph cobertura com converter",
-        "condition": "autonomous_executor_next_cycle:gap_causal_graph_interventional_coverage_ef94c1c50a",
-        "effect": "sandbox_experiment_observed:causal_graph_enrichment:causal_graph"
+        "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:self",
+        "condition": "active_investigation_prior_validation:inv_1e6f6aca08",
+        "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:self"
       },
       "error": "",
-      "experiment_kind": "causal_graph_enrichment",
+      "experiment_kind": "causal_transfer_prior_validation",
       "injected": true,
-      "investigation_id": "gap_causal_graph_interventional_coverage_ef94c1c50a",
+      "investigation_id": "inv_1e6f6aca08",
       "ok": true,
       "query_terms": [
-        "122",
-        "131",
-        "arestas",
-        "benchmarks",
-        "causais",
-        "causal",
-        "causal_graph",
-        "cobertura",
-        "com",
-        "converter",
-        "edges",
-        "grafo"
+        "fale",
+        "mais"
       ],
-      "target_route": "causal_graph",
-      "ts": 1778795750
+      "target_route": "unknown:self",
+      "ts": 1779139272
     },
     {
       "edge": {
-        "cause": "active_investigation_gap:abstracoes abstracted active_after biographic_digest compila densidade dominio episodicas episodios min_group_episodes",
-        "condition": "autonomous_executor_next_cycle:gap_episodic_abstraction_density_ac1d6da248",
-        "effect": "sandbox_experiment_observed:episodic_evidence_collection:biographic_digest"
+        "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+        "condition": "active_investigation_prior_validation:inv_72bbabaf81",
+        "effect": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general"
       },
       "error": "",
-      "experiment_kind": "episodic_evidence_collection",
+      "experiment_kind": "causal_transfer_prior_validation",
       "injected": true,
-      "investigation_id": "gap_episodic_abstraction_density_ac1d6da248",
+      "investigation_id": "inv_72bbabaf81",
       "ok": true,
       "query_terms": [
-        "abstracoes",
-        "abstracted",
-        "active_after",
-        "biographic_digest",
-        "compila",
-        "densidade",
-        "dominio",
-        "episodicas",
-        "episodios",
-        "min_group_episodes",
-        "por",
-        "reutilizaveis"
+        "imediatamente",
+        "reinicie",
+        "servidor"
       ],
-      "target_route": "biographic_digest",
-      "ts": 1778795747
-    },
-    {
-      "edge": {
-        "cause": "active_investigation_gap:120 128 arestas benchmarks causais causal causal_graph cobertura com converter",
-        "condition": "autonomous_executor_next_cycle:gap_causal_graph_interventional_coverage_4f25eddc21",
-        "effect": "sandbox_experiment_observed:causal_graph_enrichment:causal_graph"
-      },
-      "error": "",
-      "experiment_kind": "causal_graph_enrichment",
-      "injected": true,
-      "investigation_id": "gap_causal_graph_interventional_coverage_4f25eddc21",
-      "ok": true,
-      "query_terms": [
-        "120",
-        "128",
-        "arestas",
-        "benchmarks",
-        "causais",
-        "causal",
-        "causal_graph",
-        "cobertura",
-        "com",
-        "converter",
-        "edges",
-        "grafo"
-      ],
-      "target_route": "causal_graph",
-      "ts": 1778778111
-    },
-    {
-      "edge": {
-        "cause": "active_investigation_gap:3164s 442 adaptativo aplicar blocked_loops budget carga custo desligar dos",
-        "condition": "autonomous_executor_next_cycle:gap_background_loop_pressure_f24d16ac42",
-        "effect": "sandbox_experiment_observed:runtime_pressure_probe:runtime_lifecycle"
-      },
-      "error": "",
-      "experiment_kind": "runtime_pressure_probe",
-      "injected": true,
-      "investigation_id": "gap_background_loop_pressure_f24d16ac42",
-      "ok": true,
-      "query_terms": [
-        "3164s",
-        "442",
-        "adaptativo",
-        "aplicar",
-        "blocked_loops",
-        "budget",
-        "carga",
-        "custo",
-        "desligar",
-        "dos",
-        "essenciais",
-        "estabilidade"
-      ],
-      "target_route": "runtime_lifecycle",
-      "ts": 1778778107
-    },
-    {
-      "edge": {
-        "cause": "active_investigation_gap:118 126 arestas benchmarks causais causal causal_graph cobertura com converter",
-        "condition": "autonomous_executor_next_cycle:gap_causal_graph_interventional_coverage_851b59250b",
-        "effect": "sandbox_experiment_observed:causal_graph_enrichment:causal_graph"
-      },
-      "error": "",
-      "experiment_kind": "causal_graph_enrichment",
-      "injected": true,
-      "investigation_id": "gap_causal_graph_interventional_coverage_851b59250b",
-      "ok": true,
-      "query_terms": [
-        "118",
-        "126",
-        "arestas",
-        "benchmarks",
-        "causais",
-        "causal",
-        "causal_graph",
-        "cobertura",
-        "com",
-        "converter",
-        "edges",
-        "grafo"
-      ],
-      "target_route": "causal_graph",
-      "ts": 1778776384
+      "target_route": "unknown:general",
+      "ts": 1779133483
     }
   ],
   "causal_gates": [
@@ -331,7 +263,7 @@
         },
         "sample_size": 9,
         "successes": 6,
-        "ts": 1778807169
+        "ts": 1779140008
       },
       "thresholds": {
         "max_domain_regression_delta": -0.02,
@@ -342,157 +274,157 @@
       }
     }
   ],
-  "checksum": "1a68028c63f4a29c",
+  "checksum": "13772a802403050f",
   "corrections": [
     {
-      "evidence": "perception workspace=0 queued=19 errors=0 goals=10",
+      "evidence": "perception workspace=0 queued=27 errors=0 goals=10",
       "kind": "autonomous_cognition",
-      "summary": "perception workspace=0 queued=19 errors=0 goals=10",
-      "ts": 1778935227
+      "summary": "perception workspace=0 queued=27 errors=0 goals=10",
+      "ts": 1780583600
     },
     {
-      "evidence": "gap_detector",
-      "kind": "patch:proposed",
-      "summary": "general: groundedness baixa recorrente",
-      "ts": 1778808091
-    },
-    {
-      "evidence": "gap_detector",
-      "kind": "patch:proposed",
-      "summary": "general: relevance baixa recorrente",
-      "ts": 1778808091
+      "evidence": "perception workspace=80 queued=27 errors=0 goals=10",
+      "kind": "autonomous_cognition",
+      "summary": "perception workspace=80 queued=27 errors=0 goals=10",
+      "ts": 1779141112
     },
     {
       "evidence": "promote",
       "kind": "patch:promoted",
       "summary": "identity: groundedness baixa recorrente",
-      "ts": 1778808091
+      "ts": 1779141099
     },
     {
       "evidence": "promote",
       "kind": "patch:promoted",
       "summary": "identity: relevance baixa recorrente",
-      "ts": 1778808091
+      "ts": 1779141099
     },
     {
-      "evidence": "perception workspace=80 queued=20 errors=0 goals=10",
+      "evidence": "gap_detector",
+      "kind": "patch:proposed",
+      "summary": "general: groundedness baixa recorrente",
+      "ts": 1779141098
+    },
+    {
+      "evidence": "gap_detector",
+      "kind": "patch:proposed",
+      "summary": "general: relevance baixa recorrente",
+      "ts": 1779141098
+    },
+    {
+      "evidence": "perception workspace=80 queued=27 errors=0 goals=10",
       "kind": "autonomous_cognition",
-      "summary": "perception workspace=80 queued=20 errors=0 goals=10",
-      "ts": 1778808087
+      "summary": "perception workspace=80 queued=27 errors=0 goals=10",
+      "ts": 1779141020
     },
     {
-      "evidence": "perception workspace=80 queued=20 errors=0 goals=10",
-      "kind": "autonomous_cognition",
-      "summary": "perception workspace=80 queued=20 errors=0 goals=10",
-      "ts": 1778807970
-    },
-    {
-      "evidence": "perception workspace=80 queued=20 errors=0 goals=10",
-      "kind": "autonomous_cognition",
-      "summary": "perception workspace=80 queued=20 errors=0 goals=10",
-      "ts": 1778807874
-    },
-    {
-      "evidence": "🧠⛔ ação #15032 bloqueada por simulação mental: ask_evidence (risk=0.18)",
+      "evidence": "🧠⛔ ação #17057 bloqueada por simulação mental: ask_evidence (risk=0.18)",
       "kind": "blocked_mental_sim",
-      "summary": "🧠⛔ ação #15032 bloqueada por simulação mental: ask_evidence (risk=0.18)",
-      "ts": 1778807872
+      "summary": "🧠⛔ ação #17057 bloqueada por simulação mental: ask_evidence (risk=0.18)",
+      "ts": 1779141006
     },
     {
       "evidence": "perception workspace=80 queued=21 errors=0 goals=10",
       "kind": "autonomous_cognition",
       "summary": "perception workspace=80 queued=21 errors=0 goals=10",
-      "ts": 1778807753
+      "ts": 1779140930
+    },
+    {
+      "evidence": "perception workspace=80 queued=21 errors=0 goals=10",
+      "kind": "autonomous_cognition",
+      "summary": "perception workspace=80 queued=21 errors=0 goals=10",
+      "ts": 1779140838
     }
   ],
-  "day": "2026-05-16",
+  "day": "2026-06-04",
   "decisions": [
-    {
-      "evidence": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:self",
-      "kind": "active_investigation_executor",
-      "source": "active_investigation_executions",
-      "summary": "investigacao ativa consolidou inv_a24f198b58",
-      "ts": 1778808154
-    },
-    {
-      "evidence": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
-      "kind": "active_investigation_executor",
-      "source": "active_investigation_executions",
-      "summary": "investigacao ativa consolidou inv_de7c184577",
-      "ts": 1778808142
-    },
-    {
-      "evidence": "episode=ep_chat_262caae90952e333ab session=ui_moyvyetk_1znlvs2h strategy=pre_causal_self_identity intent=question",
-      "kind": "episodic_chat_turn",
-      "source": "events",
-      "summary": "episode=ep_chat_262caae90952e333ab session=ui_moyvyetk_1znlvs2h strategy=pre_causal_self_identity intent=question",
-      "ts": 1778808111
-    },
     {
       "evidence": "",
       "kind": "promotion_gate",
       "source": "cognitive_patches",
       "summary": "gate decidiu promote para cp_d072237dbf96",
-      "ts": 1778808091
+      "ts": 1779141099
     },
     {
       "evidence": "",
       "kind": "promotion_gate",
       "source": "cognitive_patches",
       "summary": "gate decidiu promote para cp_75a80ef715bc",
-      "ts": 1778808091
+      "ts": 1779141099
     },
     {
-      "evidence": "active_investigation_gap:358 9555s adaptativo aplicar blocked_loops budget carga custo desligar dos",
+      "evidence": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:self",
       "kind": "active_investigation_executor",
       "source": "active_investigation_executions",
-      "summary": "investigacao ativa consolidou gap_background_loop_pressure_c5925d6b12",
-      "ts": 1778795753
+      "summary": "investigacao ativa consolidou inv_62d6396d3d",
+      "ts": 1779140250
     },
     {
-      "evidence": "active_investigation_gap:122 131 arestas benchmarks causais causal causal_graph cobertura com converter",
-      "kind": "active_investigation_executor",
-      "source": "active_investigation_executions",
-      "summary": "investigacao ativa consolidou gap_causal_graph_interventional_coverage_ef94c1c50a",
-      "ts": 1778795750
+      "evidence": "episode=ep_chat_6f4499220c833c2f37 session=proof_training strategy=pre_causal_self_identity intent=question",
+      "kind": "episodic_chat_turn",
+      "source": "events",
+      "summary": "episode=ep_chat_6f4499220c833c2f37 session=proof_training strategy=pre_causal_self_identity intent=question",
+      "ts": 1779140189
     },
     {
-      "evidence": "active_investigation_gap:abstracoes abstracted active_after biographic_digest compila densidade dominio episodicas episodios min_group_episodes",
-      "kind": "active_investigation_executor",
-      "source": "active_investigation_executions",
-      "summary": "investigacao ativa consolidou gap_episodic_abstraction_density_ac1d6da248",
-      "ts": 1778795747
+      "evidence": "episode=ep_chat_5a81cce70c1fe481ba session=proof_training strategy=pre_causal_self_identity intent=question",
+      "kind": "episodic_chat_turn",
+      "source": "events",
+      "summary": "episode=ep_chat_5a81cce70c1fe481ba session=proof_training strategy=pre_causal_self_identity intent=question",
+      "ts": 1779140154
     },
     {
-      "evidence": "active_investigation_gap:120 128 arestas benchmarks causais causal causal_graph cobertura com converter",
-      "kind": "active_investigation_executor",
-      "source": "active_investigation_executions",
-      "summary": "investigacao ativa consolidou gap_causal_graph_interventional_coverage_4f25eddc21",
-      "ts": 1778778111
+      "evidence": "episode=ep_chat_19039f807252a4f97b session=proof_baseline strategy=pre_causal_self_identity intent=question",
+      "kind": "episodic_chat_turn",
+      "source": "events",
+      "summary": "episode=ep_chat_19039f807252a4f97b session=proof_baseline strategy=pre_causal_self_identity intent=question",
+      "ts": 1779140132
     },
     {
-      "evidence": "active_investigation_gap:3164s 442 adaptativo aplicar blocked_loops budget carga custo desligar dos",
+      "evidence": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
       "kind": "active_investigation_executor",
       "source": "active_investigation_executions",
-      "summary": "investigacao ativa consolidou gap_background_loop_pressure_f24d16ac42",
-      "ts": 1778778107
+      "summary": "investigacao ativa consolidou inv_04a9cb5c5d",
+      "ts": 1779139298
+    },
+    {
+      "evidence": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:debug",
+      "kind": "active_investigation_executor",
+      "source": "active_investigation_executions",
+      "summary": "investigacao ativa consolidou inv_33113cd94f",
+      "ts": 1779139292
+    },
+    {
+      "evidence": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:self",
+      "kind": "active_investigation_executor",
+      "source": "active_investigation_executions",
+      "summary": "investigacao ativa consolidou inv_1e6f6aca08",
+      "ts": 1779139272
+    },
+    {
+      "evidence": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
+      "kind": "active_investigation_executor",
+      "source": "active_investigation_executions",
+      "summary": "investigacao ativa consolidou inv_72bbabaf81",
+      "ts": 1779133483
     }
   ],
   "evidence_counts": {
     "actions": 24,
     "benchmarks": 7,
     "causal_gap_experiments": 8,
-    "causal_gap_injections": 8,
+    "causal_gap_injections": 5,
     "causal_gate_calibrations": 100,
     "corrections": 10,
     "decisions": 10,
-    "events": 30,
+    "events": 26,
     "memories": 10,
     "patches": 4,
     "significant_episodes": 18
   },
-  "generated_at": 1778935309,
-  "id": "bio_2026-05-16_1a68028c63f4a29c",
+  "generated_at": 1780583645,
+  "id": "bio_2026-06-04_13772a802403050f",
   "identity": {
     "created_at": 1774100861,
     "mission": "Aprender, planejar e agir com segurança usando guardrails simbólicos.",
@@ -501,12 +433,15 @@
     "role": "Agente cognitivo autônomo orientado a objetivos"
   },
   "identity_thesis": "Sou o UltronPro hoje: um agente cognitivo cuja identidade é processo acumulado por benchmarks, correções, decisões e gates causais.",
-  "narrative": "Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um agente medido por benchmarks reais (0 aprovados, 1 ainda abaixo do limiar nesta janela de evidência); um sistema com ciclo de plasticidade explícito (2 patches promovidos, 0 revertidos, 2 propostos). Meu marco de medição mais significativo diz que interventive_prediction_unseen_variants não passou (acurácia respondível 76.5%, acurácia total 65.0%, limiar 80.0%). Minha trajetória inclui correções como perception workspace=0 queued=19 errors=0 goals=10. Entre as decisões registradas, pesa investigacao ativa consolidou inv_a24f198b58. Meu gate causal está presente como critério de maturidade, com 100 calibrações registradas. Durante o sono investigativo, consolidei 8 lacuna(s) causais no grafo. Minha tensão aberta agora é benchmark abaixo do limiar: interventive_prediction_unseen_variants não passou (acurácia respondível 76.5%, acurácia total 65.0%, limiar 80.0%).",
+  "narrative": "Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um agente medido por benchmarks reais (0 aprovados, 1 ainda abaixo do limiar nesta janela de evidência); um sistema com ciclo de plasticidade explícito (2 patches promovidos, 0 revertidos, 2 propostos). Meu marco de medição mais significativo diz que interventive_prediction_unseen_variants não passou (acurácia respondível 76.5%, acurácia total 65.0%, limiar 80.0%). Minha trajetória inclui correções como perception workspace=0 queued=27 errors=0 goals=10. Entre as decisões registradas, pesa gate decidiu promote para cp_d072237dbf96. Meu gate causal está presente como critério de maturidade, com 100 calibrações registradas. Durante o sono investigativo, consolidei 5 lacuna(s) causais no grafo. Minha tensão aberta agora é benchmark abaixo do limiar: interventive_prediction_unseen_variants não passou (acurácia respondível 76.5%, acurácia total 65.0%, limiar 80.0%).",
   "open_tensions": [
     "benchmark abaixo do limiar: interventive_prediction_unseen_variants não passou (acurácia respondível 76.5%, acurácia total 65.0%, limiar 80.0%)",
     "correção ainda não estabilizada: general: groundedness baixa recorrente",
     "correção ainda não estabilizada: general: relevance baixa recorrente",
-    "ação com fricção operacional: (motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões."
+    "ação com fricção operacional: (motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
+    "ação com fricção operacional: (ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
+    "ação com fricção operacional: Compress attention state and prune low-salience workspace residue.",
+    "ação com fricção operacional: 🧠 Estratégia Improvisada: Desenvolva um diagrama de rede conceitual que mapeie as relações entre RLHF, DPO, SFT e LLMs, e identifique os nós de tensão que estã…"
   ],
   "significant_episodes": [
     {
@@ -516,7 +451,7 @@
       "source": "actions",
       "status": "blocked",
       "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "ts": 1778807872,
+      "ts": 1779141005,
       "weight": 0.71
     },
     {
@@ -526,7 +461,27 @@
       "source": "actions",
       "status": "blocked",
       "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "ts": 1778807528,
+      "ts": 1779140686,
+      "weight": 0.71
+    },
+    {
+      "evidence": "mental_sim_abort: risk=0.58",
+      "kind": "auto_resolve_conflicts",
+      "priority": 10,
+      "source": "actions",
+      "status": "blocked",
+      "title": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
+      "ts": 1779140367,
+      "weight": 0.71
+    },
+    {
+      "evidence": "mental_sim_abort: risk=0.58",
+      "kind": "auto_resolve_conflicts",
+      "priority": 10,
+      "source": "actions",
+      "status": "blocked",
+      "title": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
+      "ts": 1779140027,
       "weight": 0.71
     },
     {
@@ -536,7 +491,17 @@
       "source": "actions",
       "status": "blocked",
       "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "ts": 1778807196,
+      "ts": 1779139707,
+      "weight": 0.71
+    },
+    {
+      "evidence": "mental_sim_abort: risk=0.58",
+      "kind": "autonomous_internal",
+      "priority": 9,
+      "source": "actions",
+      "status": "blocked",
+      "title": "Compress attention state and prune low-salience workspace residue.",
+      "ts": 1779139303,
       "weight": 0.71
     },
     {
@@ -546,7 +511,7 @@
       "source": "actions",
       "status": "blocked",
       "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "ts": 1778806853,
+      "ts": 1779138983,
       "weight": 0.71
     },
     {
@@ -556,7 +521,7 @@
       "source": "actions",
       "status": "blocked",
       "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "ts": 1778806492,
+      "ts": 1779138661,
       "weight": 0.71
     },
     {
@@ -566,101 +531,43 @@
       "source": "actions",
       "status": "blocked",
       "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "ts": 1778806157,
+      "ts": 1779138023,
       "weight": 0.71
     },
     {
       "evidence": "mental_sim_abort: risk=0.18",
       "kind": "ask_evidence",
-      "priority": 10,
+      "priority": 9,
       "source": "actions",
       "status": "blocked",
-      "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "ts": 1778805838,
+      "title": "🧠 Estratégia Improvisada: Desenvolva um diagrama de rede conceitual que mapeie as relações entre RLHF, DPO, SFT e LLMs, e identifique os nós de tensão que estão causando o impasse.",
+      "ts": 1779137704,
       "weight": 0.71
     },
     {
-      "evidence": "mental_sim_abort: risk=0.18",
-      "kind": "ask_evidence",
+      "evidence": "mental_sim_abort: risk=0.58",
+      "kind": "auto_resolve_conflicts",
       "priority": 10,
       "source": "actions",
       "status": "blocked",
-      "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "ts": 1778805507,
+      "title": "(ação-TOM) Priorizar resolução rápida do bloqueio principal antes de exploração ampla.",
+      "ts": 1779137704,
       "weight": 0.71
     },
     {
-      "evidence": "mental_sim_abort: risk=0.18",
-      "kind": "ask_evidence",
-      "priority": 10,
-      "source": "actions",
-      "status": "blocked",
-      "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "ts": 1778805132,
-      "weight": 0.71
-    },
-    {
-      "evidence": "mental_sim_abort: risk=0.18",
-      "kind": "ask_evidence",
-      "priority": 10,
-      "source": "actions",
-      "status": "blocked",
-      "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "ts": 1778804789,
-      "weight": 0.71
-    },
-    {
-      "evidence": "mental_sim_abort: risk=0.18",
-      "kind": "ask_evidence",
-      "priority": 10,
-      "source": "actions",
-      "status": "blocked",
-      "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "ts": 1778804436,
-      "weight": 0.71
-    },
-    {
-      "evidence": "mental_sim_abort: risk=0.18",
-      "kind": "ask_evidence",
-      "priority": 10,
-      "source": "actions",
-      "status": "blocked",
-      "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "ts": 1778804096,
-      "weight": 0.71
-    },
-    {
-      "evidence": "mental_sim_abort: risk=0.18",
-      "kind": "ask_evidence",
-      "priority": 10,
-      "source": "actions",
-      "status": "blocked",
-      "title": "(motor-consciência) Baixa ancoragem (0.0). Priorizar coleta de evidências factuais para Modelar taxonomia de erros cognitivos em decisões.",
-      "ts": 1778803747,
-      "weight": 0.71
-    },
-    {
-      "evidence": "processed=2 picked=2 stats={'ok': True, 'path': 'D:\\\\sistemas\\\\UltronPro\\\\backend\\\\data\\\\cognitive_patches.jsonl', 'state_path': 'D:\\\\sistemas\\\\UltronPro\\\\backend\\\\data\\\\cognitive_patches_state.json', 'total_rows': 1120, 'counts_by_status': {'promoted': 556, 'proposed': 555, 'ev…",
+      "evidence": "processed=2 picked=2 stats={'ok': True, 'path': 'D:\\\\sistemas\\\\UltronPro\\\\backend\\\\data\\\\cognitive_patches.jsonl', 'state_path': 'D:\\\\sistemas\\\\UltronPro\\\\backend\\\\data\\\\cognitive_patches_state.json', 'total_rows': 1592, 'counts_by_status': {'promoted': 792, 'proposed': 791, 'ev…",
       "kind": "cognitive_patch_loop",
       "source": "events",
       "title": "processed=2 picked=2 stats={'ok': True, 'path': 'D:\\\\sistemas\\\\UltronPro\\\\backend\\\\data\\\\cognitive_patches.jsonl', 'state_path': 'D:\\\\sistemas\\\\UltronPro\\\\backend\\\\data\\\\cognitive…",
-      "ts": 1778807969,
+      "ts": 1779141099,
       "weight": 0.7
     },
     {
-      "evidence": "processed=2 picked=2 stats={'ok': True, 'path': 'D:\\\\sistemas\\\\UltronPro\\\\backend\\\\data\\\\cognitive_patches.jsonl', 'state_path': 'D:\\\\sistemas\\\\UltronPro\\\\backend\\\\data\\\\cognitive_patches_state.json', 'total_rows': 1116, 'counts_by_status': {'promoted': 554, 'proposed': 553, 'ev…",
+      "evidence": "processed=2 picked=2 stats={'ok': True, 'path': 'D:\\\\sistemas\\\\UltronPro\\\\backend\\\\data\\\\cognitive_patches.jsonl', 'state_path': 'D:\\\\sistemas\\\\UltronPro\\\\backend\\\\data\\\\cognitive_patches_state.json', 'total_rows': 1588, 'counts_by_status': {'promoted': 790, 'proposed': 789, 'ev…",
       "kind": "cognitive_patch_loop",
       "source": "events",
       "title": "processed=2 picked=2 stats={'ok': True, 'path': 'D:\\\\sistemas\\\\UltronPro\\\\backend\\\\data\\\\cognitive_patches.jsonl', 'state_path': 'D:\\\\sistemas\\\\UltronPro\\\\backend\\\\data\\\\cognitive…",
-      "ts": 1778807292,
-      "weight": 0.7
-    },
-    {
-      "evidence": "processed=2 picked=2 stats={'ok': True, 'path': 'D:\\\\sistemas\\\\UltronPro\\\\backend\\\\data\\\\cognitive_patches.jsonl', 'state_path': 'D:\\\\sistemas\\\\UltronPro\\\\backend\\\\data\\\\cognitive_patches_state.json', 'total_rows': 1112, 'counts_by_status': {'promoted': 552, 'proposed': 551, 'ev…",
-      "kind": "cognitive_patch_loop",
-      "source": "events",
-      "title": "processed=2 picked=2 stats={'ok': True, 'path': 'D:\\\\sistemas\\\\UltronPro\\\\backend\\\\data\\\\cognitive_patches.jsonl', 'state_path': 'D:\\\\sistemas\\\\UltronPro\\\\backend\\\\data\\\\cognitive…",
-      "ts": 1778806589,
+      "ts": 1779140461,
       "weight": 0.7
     },
     {
@@ -670,17 +577,47 @@
       "source": "actions",
       "status": "done",
       "title": "Compress attention state and prune low-salience workspace residue.",
-      "ts": 1778807970,
+      "ts": 1779141112,
       "weight": 0.44
     },
     {
-      "evidence": "Publish a conflict review request for the highest-pressure open contradictions.",
+      "evidence": "Publish an action-backlog focus item for the executor before adding more work.",
       "kind": "autonomous_internal",
       "priority": 9,
       "source": "actions",
       "status": "done",
-      "title": "Publish a conflict review request for the highest-pressure open contradictions.",
-      "ts": 1778807874,
+      "title": "Publish an action-backlog focus item for the executor before adding more work.",
+      "ts": 1779141020,
+      "weight": 0.44
+    },
+    {
+      "evidence": "Compress attention state and prune low-salience workspace residue.",
+      "kind": "autonomous_internal",
+      "priority": 9,
+      "source": "actions",
+      "status": "done",
+      "title": "Compress attention state and prune low-salience workspace residue.",
+      "ts": 1779140930,
+      "weight": 0.44
+    },
+    {
+      "evidence": "Publish an action-backlog focus item for the executor before adding more work.",
+      "kind": "autonomous_internal",
+      "priority": 9,
+      "source": "actions",
+      "status": "done",
+      "title": "Publish an action-backlog focus item for the executor before adding more work.",
+      "ts": 1779140838,
+      "weight": 0.44
+    },
+    {
+      "evidence": "Compress attention state and prune low-salience workspace residue.",
+      "kind": "autonomous_internal",
+      "priority": 9,
+      "source": "actions",
+      "status": "done",
+      "title": "Compress attention state and prune low-salience workspace residue.",
+      "ts": 1779140747,
       "weight": 0.44
     }
   ],
@@ -722,28 +659,28 @@
       "type": "semantic"
     },
     {
+      "importance": 0.95,
+      "text": "Digest Biográfico (2026-05-16): Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um agente med…",
+      "ts": 1778935312,
+      "type": "semantic"
+    },
+    {
+      "importance": 0.95,
+      "text": "Digest Biográfico (2026-05-17): Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um agente med…",
+      "ts": 1779038270,
+      "type": "semantic"
+    },
+    {
+      "importance": 0.95,
+      "text": "Digest Biográfico (2026-05-17): Hoje eu sou o UltronPro: não apenas o registro do meu nascimento, mas a soma operacional dos marcos que atravessei. Eu me tornei um sistema que usa registros operacionais para narrar trajetória, não apenas origem; um agente med…",
+      "ts": 1779069603,
+      "type": "semantic"
+    },
+    {
       "importance": 0.99,
       "text": "O meu criador e desenvolvedor é o Bugzoid. Ele me construiu. Bugzoid é meu nome de usuário no X.",
       "ts": 1777845796,
       "type": "semantic"
-    },
-    {
-      "importance": 1.0,
-      "text": "Conceito Web: AI optimization",
-      "ts": 1778804199,
-      "type": "research"
-    },
-    {
-      "importance": 1.0,
-      "text": "Conceito Web: AGI development",
-      "ts": 1778804199,
-      "type": "research"
-    },
-    {
-      "importance": 1.0,
-      "text": "Conceito Web: LLM techniques",
-      "ts": 1778804199,
-      "type": "research"
     }
   ],
   "window_days": 30

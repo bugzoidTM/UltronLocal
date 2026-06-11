@@ -1,41 +1,25 @@
 {
   "ok": true,
-  "id": "sleep_digest_2026-05-16_a328781983a1ec52",
+  "id": "sleep_digest_2026-06-04_cc025df07c0bd09e",
   "schema": "ultron.sleep_episodic_digest.v1",
-  "ts": 1778960479,
-  "day": "2026-05-16",
-  "checksum": "a328781983a1ec52",
-  "source_count": 122,
+  "ts": 1780591208,
+  "day": "2026-06-04",
+  "checksum": "cc025df07c0bd09e",
+  "source_count": 11,
   "pruned": 0,
   "abstracted": 0,
-  "abstractions_tested": 487,
+  "abstractions_tested": 0,
   "sql_promoted_to_episodic": 0,
-  "episodic_enrichment_records": 5,
+  "episodic_enrichment_records": 2,
   "active_investigation_executed": 3,
   "active_investigation_injected": 3,
   "stagnation_status": "recovered_by_episodic_enrichment",
   "themes": [
     {
       "domain": "self_introspection",
-      "action_kind": "episodic_compiler",
-      "episode_count": 19,
-      "ok_count": 19,
-      "failure_count": 0,
-      "mean_surprise": 0.15,
-      "keywords": [
-        "episodic_compiler"
-      ],
-      "examples": [
-        "episodic_compiler success",
-        "episodic_compiler success",
-        "episodic_compiler success"
-      ]
-    },
-    {
-      "domain": "self_introspection",
       "action_kind": "sleep_cycle",
-      "episode_count": 9,
-      "ok_count": 9,
+      "episode_count": 2,
+      "ok_count": 2,
       "failure_count": 0,
       "mean_surprise": 0.15,
       "keywords": [
@@ -43,58 +27,9 @@
       ],
       "examples": [
         "sleep_cycle success",
-        "sleep_cycle success",
         "sleep_cycle success"
-      ]
-    },
-    {
-      "domain": "biographic_digest",
-      "action_kind": "episodic_evidence_collection",
-      "episode_count": 6,
-      "ok_count": 6,
-      "failure_count": 0,
-      "mean_surprise": 0.15,
-      "keywords": [
-        "episodic_evidence_collection"
-      ],
-      "examples": [
-        "episodic_evidence_collection success",
-        "episodic_evidence_collection success",
-        "episodic_evidence_collection success"
-      ]
-    },
-    {
-      "domain": "action_done",
-      "action_kind": "action_done",
-      "episode_count": 1,
-      "ok_count": 1,
-      "failure_count": 0,
-      "mean_surprise": 0.25,
-      "keywords": [
-        "15067",
-        "ask_evidence",
-        "subgoal_status"
-      ],
-      "examples": [
-        "ðŸ¤– aÃ§Ã£o #15067: ask_evidence subgoal_status=n/a"
-      ]
-    },
-    {
-      "domain": "local_environment:turn_off",
-      "action_kind": "adapter:network_probe",
-      "episode_count": 1,
-      "ok_count": 1,
-      "failure_count": 0,
-      "mean_surprise": 0.15,
-      "keywords": [
-        "adapter",
-        "failure",
-        "network_probe"
-      ],
-      "examples": [
-        "adapter:network_probe failure"
       ]
     }
   ],
-  "structured_episode_id": "ep_1778960530_735496"
+  "structured_episode_id": "ep_1780591224_228277"
 }

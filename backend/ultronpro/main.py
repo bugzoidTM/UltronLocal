@@ -7762,6 +7762,42 @@ async def online_rl_selftest():
     return online_rl_loop.run_selftest()
 
 
+@app.get('/api/rl/online/prediction')
+async def online_rl_action_prediction_status(limit: int = 20):
+    from ultronpro import action_prediction
+    return action_prediction.status(limit=limit)
+
+
+@app.get('/api/meta/trajectory/status')
+async def trajectory_meta_status():
+    from ultronpro import system_tuner, trajectory_evaluator
+    return {
+        "ok": True,
+        "evaluator": trajectory_evaluator.status(),
+        "tuner": system_tuner.status(),
+    }
+
+
+@app.post('/api/meta/trajectory/run')
+async def trajectory_meta_run(window: int = 80, apply: bool = True, max_adjustments: int = 5):
+    from ultronpro import system_tuner, trajectory_evaluator
+
+    def _cycle():
+        evaluation = trajectory_evaluator.evaluate(window=window)
+        tuning = None
+        if apply:
+            tuning = system_tuner.apply_findings(evaluation.get("findings") or [], max_adjustments=max_adjustments)
+        return {"ok": True, "evaluation": evaluation, "tuning": tuning}
+
+    return await asyncio.to_thread(_cycle)
+
+
+@app.post('/api/rl/online/prediction/selftest')
+async def online_rl_action_prediction_selftest():
+    from ultronpro import action_prediction
+    return action_prediction.run_selftest()
+
+
 @app.get('/api/rl/convergence')
 async def rl_convergence_status(recompute: bool = False):
     """Gap 3 – Longitudinal RL convergence proof.

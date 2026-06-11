@@ -1,8 +1,8 @@
 {
-  "ts": 1778963343.508385,
+  "ts": 1780594313.703279,
   "meta": {
     "cached": false,
-    "scan_ms": 36.65,
+    "scan_ms": 30.1,
     "gap_count": 4,
     "cache_ttl_sec": 15.0
   },
@@ -11,28 +11,28 @@
       "id": "background_loop_pressure",
       "label": "estabilidade dos loops sob carga",
       "domain": "runtime_lifecycle",
-      "metric": "paused=False reason=event_loop_lag max_lag=5313.0155s blocked_loops=3986",
-      "priority": 0.958,
+      "metric": "paused=False reason=event_loop_lag max_lag=52.4661s blocked_loops=1941",
+      "priority": 0.8952,
       "evidence": {
         "background_guard": {
           "enabled": true,
           "state": "healthy",
-          "lag_sec": 0.0013,
-          "max_lag_sec": 5313.0155,
+          "lag_sec": 0.0062,
+          "max_lag_sec": 52.4661,
           "consecutive_lag": 0,
-          "paused_until": 1778963133.331246,
+          "paused_until": 1780594166.1618528,
           "last_pause_reason": "event_loop_lag",
-          "last_pause_at": 1778963043.331246,
+          "last_pause_at": 1780594076.1618528,
           "last_slow_request": null,
-          "blocked_loops": 3986,
-          "last_blocked_loop": "meta_observer_loop",
-          "last_log_at": 1778963120.7883394,
+          "blocked_loops": 1941,
+          "last_blocked_loop": "autonomy_loop",
+          "last_log_at": 1780594311.563185,
           "foreground_active": 0,
-          "last_foreground_path": null,
-          "last_foreground_at": 0.0,
-          "last_foreground_elapsed_sec": 0.0,
+          "last_foreground_path": "/api/chat/stream",
+          "last_foreground_at": 1780594292.4254282,
+          "last_foreground_elapsed_sec": 0.027,
           "last_pause_details": {
-            "lag_sec": 12.805,
+            "lag_sec": 4.364,
             "consecutive_lag": 1
           },
           "paused": false,
@@ -45,18 +45,18 @@
       "id": "causal_graph_interventional_coverage",
       "label": "cobertura interventional do grafo causal",
       "domain": "causal_graph",
-      "metric": "edges=159 strong=0 weak=150",
+      "metric": "edges=7 strong=0 weak=5",
       "priority": 0.833,
       "evidence": {
         "causal_graph": {
           "ok": true,
-          "nodes": 70,
-          "edges": 159,
-          "updated_at": 1778960530,
+          "nodes": 12,
+          "edges": 7,
+          "updated_at": 1780594280,
           "path": "D:\\sistemas\\UltronPro\\backend\\data\\causal_graph.json",
           "interventional_strong_edges": 0,
-          "interventional_weak_edges": 150,
-          "observational_edges": 9
+          "interventional_weak_edges": 5,
+          "observational_edges": 2
         }
       },
       "next_experiment": "converter decisoes e benchmarks recentes em arestas causais com validacao interventional"
@@ -65,64 +65,43 @@
       "id": "episodic_abstraction_density",
       "label": "densidade de abstracoes episodicas reutilizaveis",
       "domain": "biographic_digest",
-      "metric": "abstracted=0 active_after=75 min_group_episodes=3",
+      "metric": "abstracted=0 active_after=1 min_group_episodes=3",
       "priority": 0.78,
       "evidence": {
         "sleep_cycle": {
           "ok": true,
-          "ts": 1778960479,
-          "episodes_total": 77,
-          "active_after": 75,
+          "ts": 1780591208,
+          "episodes_total": 1,
+          "active_after": 1,
           "pruned": 0,
           "abstracted": 0,
-          "abstractions_tested": 487,
+          "abstractions_tested": 0,
           "sql_consolidation": {
-            "decayed": 3070,
-            "pruned": 0,
+            "decayed": 4037,
+            "pruned": 95,
             "promoted": 0
           },
           "episodic_enrichment": {
             "ok": true,
             "enabled": true,
-            "records_created": 5,
-            "eligible_candidates": 5,
-            "skipped_duplicates": 0,
-            "source_episode_count": 111,
-            "group_count": 5,
+            "records_created": 2,
+            "eligible_candidates": 2,
+            "skipped_duplicates": 1,
+            "source_episode_count": 3,
+            "group_count": 1,
             "items": [
               {
-                "fingerprint": "3d3ca9cf8dc02c2b",
+                "fingerprint": "cb09749732d08e9d",
                 "domain": "self_introspection",
                 "action_kind": "sleep_cycle",
                 "task_type": "self_introspection",
                 "ok": true
               },
               {
-                "fingerprint": "6a4bb30e0b6e9b11",
+                "fingerprint": "b67e1165261fdfe2",
                 "domain": "self_event.sleep_cycle_completed",
                 "action_kind": "sleep_cycle",
                 "task_type": "operations",
-                "ok": true
-              },
-              {
-                "fingerprint": "77444faeaac9e4ac",
-                "domain": "biographic_digest",
-                "action_kind": "episodic_evidence_collection",
-                "task_type": "biographic_digest",
-                "ok": true
-              },
-              {
-                "fingerprint": "71a3dc114017cd35",
-                "domain": "active_gap_intervention",
-                "action_kind": "episodic_evidence_collection",
-                "task_type": "biographic_digest",
-                "ok": true
-              },
-              {
-                "fingerprint": "85311cc5e82c653e",
-                "domain": "self_introspection",
-                "action_kind": "episodic_compiler",
-                "task_type": "self_introspection",
                 "ok": true
               }
             ],
@@ -133,33 +112,17 @@
             "ok": true,
             "enabled": true,
             "recorded": true,
-            "id": "sleep_digest_2026-05-16_a328781983a1ec52",
-            "checksum": "a328781983a1ec52",
-            "source_count": 122,
-            "theme_count": 5,
-            "structured_episode_id": "ep_1778960530_735496",
+            "id": "sleep_digest_2026-06-04_cc025df07c0bd09e",
+            "checksum": "cc025df07c0bd09e",
+            "source_count": 11,
+            "theme_count": 1,
+            "structured_episode_id": "ep_1780591224_228277",
             "themes": [
               {
                 "domain": "self_introspection",
-                "action_kind": "episodic_compiler",
-                "episode_count": 19,
-                "ok_count": 19,
-                "failure_count": 0,
-                "mean_surprise": 0.15,
-                "keywords": [
-                  "episodic_compiler"
-                ],
-                "examples": [
-                  "episodic_compiler success",
-                  "episodic_compiler success",
-                  "episodic_compiler success"
-                ]
-              },
-              {
-                "domain": "self_introspection",
                 "action_kind": "sleep_cycle",
-                "episode_count": 9,
-                "ok_count": 9,
+                "episode_count": 2,
+                "ok_count": 2,
                 "failure_count": 0,
                 "mean_surprise": 0.15,
                 "keywords": [
@@ -167,40 +130,7 @@
                 ],
                 "examples": [
                   "sleep_cycle success",
-                  "sleep_cycle success",
                   "sleep_cycle success"
-                ]
-              },
-              {
-                "domain": "biographic_digest",
-                "action_kind": "episodic_evidence_collection",
-                "episode_count": 6,
-                "ok_count": 6,
-                "failure_count": 0,
-                "mean_surprise": 0.15,
-                "keywords": [
-                  "episodic_evidence_collection"
-                ],
-                "examples": [
-                  "episodic_evidence_collection success",
-                  "episodic_evidence_collection success",
-                  "episodic_evidence_collection success"
-                ]
-              },
-              {
-                "domain": "action_done",
-                "action_kind": "action_done",
-                "episode_count": 1,
-                "ok_count": 1,
-                "failure_count": 0,
-                "mean_surprise": 0.25,
-                "keywords": [
-                  "15067",
-                  "ask_evidence",
-                  "subgoal_status"
-                ],
-                "examples": [
-                  "ðŸ¤– aÃ§Ã£o #15067: ask_evidence subgoal_status=n/a"
                 ]
               }
             ],
@@ -211,13 +141,13 @@
             "status": "recovered_by_episodic_enrichment",
             "quiet_gap": true,
             "reason": "sleep_cycle_had_no_prune_or_abstraction",
-            "action_episode_count": 36,
-            "group_count": 5,
-            "groups_below_min": 2,
+            "action_episode_count": 2,
+            "group_count": 1,
+            "groups_below_min": 1,
             "min_group_episodes": 3,
-            "episodic_enrichment_records": 5,
+            "episodic_enrichment_records": 2,
             "nightly_digest_recorded": true,
-            "nightly_digest_id": "sleep_digest_2026-05-16_a328781983a1ec52",
+            "nightly_digest_id": "sleep_digest_2026-06-04_cc025df07c0bd09e",
             "next_step": "continue_nightly_consolidation"
           },
           "causal_gap_investigation": {
@@ -227,26 +157,26 @@
               "ok": true,
               "source": "sleep_cycle_epistemic_gap_scan",
               "seeded": 3,
-              "skipped": 1,
+              "skipped": 0,
               "gap_count": 4,
-              "duration_ms": 1877.79,
+              "duration_ms": 2724.31,
               "items": [
                 {
-                  "investigation_id": "gap_background_loop_pressure_b3df07059a",
+                  "investigation_id": "gap_background_loop_pressure_4c661b7290",
                   "gap_id": "background_loop_pressure",
-                  "priority": 0.958,
+                  "priority": 0.8952,
                   "experiment_kind": "runtime_pressure_probe"
                 },
                 {
-                  "investigation_id": "gap_causal_graph_interventional_coverage_43c2ccd163",
+                  "investigation_id": "gap_causal_graph_interventional_coverage_eb4e9dbb81",
                   "gap_id": "causal_graph_interventional_coverage",
                   "priority": 0.833,
                   "experiment_kind": "causal_graph_enrichment"
                 },
                 {
-                  "investigation_id": "gap_episodic_abstraction_density_0a95a47d49",
+                  "investigation_id": "gap_episodic_abstraction_density_03f9be1847",
                   "gap_id": "episodic_abstraction_density",
-                  "priority": 0.67,
+                  "priority": 0.78,
                   "experiment_kind": "episodic_evidence_collection"
                 }
               ]
@@ -255,11 +185,11 @@
             "executed": 3,
             "injected": 3,
             "failed": 0,
-            "coverage_delta_edges": 3,
+            "coverage_delta_edges": 4,
             "coverage_gained": true,
             "items": [
               {
-                "investigation_id": "gap_episodic_abstraction_density_0a95a47d49",
+                "investigation_id": "gap_episodic_abstraction_density_03f9be1847",
                 "ok": true,
                 "injected": true,
                 "error": null,
@@ -282,19 +212,17 @@
                 "edge": {
                   "cause": "active_investigation_gap:abstracoes abstracted active_after biographic_digest compila densidade dominio episodicas episodios min_group_episodes",
                   "effect": "sandbox_experiment_observed:episodic_evidence_collection:biographic_digest",
-                  "condition": "autonomous_executor_next_cycle:gap_episodic_abstraction_density_0a95a47d49"
+                  "condition": "autonomous_executor_next_cycle:gap_episodic_abstraction_density_03f9be1847"
                 }
               },
               {
-                "investigation_id": "gap_causal_graph_interventional_coverage_43c2ccd163",
+                "investigation_id": "gap_causal_graph_interventional_coverage_eb4e9dbb81",
                 "ok": true,
                 "injected": true,
                 "error": null,
                 "experiment_kind": "causal_graph_enrichment",
                 "target_route": "causal_graph",
                 "query_terms": [
-                  "147",
-                  "156",
                   "arestas",
                   "benchmarks",
                   "causais",
@@ -304,25 +232,26 @@
                   "com",
                   "converter",
                   "edges",
-                  "grafo"
+                  "grafo",
+                  "interventional",
+                  "recentes"
                 ],
                 "edge": {
-                  "cause": "active_investigation_gap:147 156 arestas benchmarks causais causal causal_graph cobertura com converter",
+                  "cause": "active_investigation_gap:arestas benchmarks causais causal causal_graph cobertura com converter edges grafo",
                   "effect": "sandbox_experiment_observed:causal_graph_enrichment:causal_graph",
-                  "condition": "autonomous_executor_next_cycle:gap_causal_graph_interventional_coverage_43c2ccd163"
+                  "condition": "autonomous_executor_next_cycle:gap_causal_graph_interventional_coverage_eb4e9dbb81"
                 }
               },
               {
-                "investigation_id": "gap_background_loop_pressure_b3df07059a",
+                "investigation_id": "gap_background_loop_pressure_4c661b7290",
                 "ok": true,
                 "injected": true,
                 "error": null,
                 "experiment_kind": "runtime_pressure_probe",
                 "target_route": "runtime_lifecycle",
                 "query_terms": [
-                  "0155s",
-                  "3512",
-                  "5313",
+                  "1359",
+                  "4661s",
                   "adaptativo",
                   "aplicar",
                   "blocked_loops",
@@ -331,12 +260,13 @@
                   "custo",
                   "desligar",
                   "dos",
-                  "essenciais"
+                  "essenciais",
+                  "estabilidade"
                 ],
                 "edge": {
-                  "cause": "active_investigation_gap:0155s 3512 5313 adaptativo aplicar blocked_loops budget carga custo desligar",
+                  "cause": "active_investigation_gap:1359 4661s adaptativo aplicar blocked_loops budget carga custo desligar dos",
                   "effect": "sandbox_experiment_observed:runtime_pressure_probe:runtime_lifecycle",
-                  "condition": "autonomous_executor_next_cycle:gap_background_loop_pressure_b3df07059a"
+                  "condition": "autonomous_executor_next_cycle:gap_background_loop_pressure_4c661b7290"
                 }
               }
             ],
@@ -346,31 +276,31 @@
             "ok": true,
             "source": "sleep_cycle_epistemic_gap_scan",
             "seeded": 3,
-            "skipped": 1,
+            "skipped": 0,
             "gap_count": 4,
-            "duration_ms": 1877.79,
+            "duration_ms": 2724.31,
             "items": [
               {
-                "investigation_id": "gap_background_loop_pressure_b3df07059a",
+                "investigation_id": "gap_background_loop_pressure_4c661b7290",
                 "gap_id": "background_loop_pressure",
-                "priority": 0.958,
+                "priority": 0.8952,
                 "experiment_kind": "runtime_pressure_probe"
               },
               {
-                "investigation_id": "gap_causal_graph_interventional_coverage_43c2ccd163",
+                "investigation_id": "gap_causal_graph_interventional_coverage_eb4e9dbb81",
                 "gap_id": "causal_graph_interventional_coverage",
                 "priority": 0.833,
                 "experiment_kind": "causal_graph_enrichment"
               },
               {
-                "investigation_id": "gap_episodic_abstraction_density_0a95a47d49",
+                "investigation_id": "gap_episodic_abstraction_density_03f9be1847",
                 "gap_id": "episodic_abstraction_density",
-                "priority": 0.67,
+                "priority": 0.78,
                 "experiment_kind": "episodic_evidence_collection"
               }
             ]
           },
-          "coverage_delta_edges": 3,
+          "coverage_delta_edges": 4,
           "coverage_gained": true,
           "episodic_memory_gained": true,
           "retention_days": 14,
@@ -393,8 +323,8 @@
       "metric": "benchmark abaixo do limiar: interventive_prediction_unseen_variants não passou (acurácia respondível 76.5%, acurácia total 65.0%, limiar 80.0%)",
       "priority": 0.719,
       "evidence": {
-        "digest_day": "2026-05-16",
-        "checksum": "1a68028c63f4a29c",
+        "digest_day": "2026-06-04",
+        "checksum": "13772a802403050f",
         "open_tension": "benchmark abaixo do limiar: interventive_prediction_unseen_variants não passou (acurácia respondível 76.5%, acurácia total 65.0%, limiar 80.0%)"
       },
       "next_experiment": "transformar a tensao principal do digest em tarefa mensuravel com criterio de fechamento"

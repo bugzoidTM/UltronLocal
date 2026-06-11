@@ -311,6 +311,23 @@ def collect_epistemic_gaps(*, use_cache: bool = True) -> list[EpistemicGap]:
             next_experiment="transformar a tensao principal do digest em tarefa mensuravel com criterio de fechamento",
         ))
 
+    try:
+        from ultronpro import action_prediction
+        ap_gap = action_prediction.miscalibration_gap()
+    except Exception:
+        ap_gap = None
+    if isinstance(ap_gap, dict):
+        gaps.append(_gap(
+            gap_id=str(ap_gap.get("gap_id") or "action_model_miscalibrated"),
+            label=str(ap_gap.get("label") or "modelo de consequencias de acoes mal calibrado"),
+            domain=str(ap_gap.get("domain") or "action_consequence_model"),
+            metric=str(ap_gap.get("metric") or ""),
+            severity=float(ap_gap.get("severity") or 0.5),
+            evidence_strength=0.85,
+            evidence=ap_gap.get("evidence") if isinstance(ap_gap.get("evidence"), dict) else {},
+            next_experiment=str(ap_gap.get("next_experiment") or ""),
+        ))
+
     suite = _latest_intelligence_suite()
     if suite and not bool(suite.get("ok")):
         score = float(suite.get("score_0_10") or 0.0)

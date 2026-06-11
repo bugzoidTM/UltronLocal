@@ -1,7 +1,7 @@
 {
   "ok": true,
   "version": 1,
-  "updated_at": 1778795346,
+  "updated_at": 1780594450,
   "devices": {
     "net_192_168_68_1": {
       "device_id": "net_192_168_68_1",
@@ -53,9 +53,9 @@
           "adapter_hint": "network_probe",
           "name_hint": "HTTP device"
         },
-        "observed_at": 1778795282,
+        "observed_at": 1780594340,
         "event_model_version": 1,
-        "last_seen_discovery": 1778795282,
+        "last_seen_discovery": 1780594340,
         "events": [
           {
             "event": "read_state",
@@ -84,12 +84,12 @@
         "last_access_test": {
           "ok": true,
           "status": "responsive",
-          "tested_at": 1778795282,
+          "tested_at": 1780594340,
           "responsive_ports": [
             80,
             443
           ],
-          "latency_ms": 591,
+          "latency_ms": 568,
           "type": "http_device",
           "event_count": 2
         },
@@ -100,13 +100,13 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
         },
         "control_mode": "full_registered_capability_control",
         "discovery_sources": []
       },
       "created_at": 1778680536,
-      "updated_at": 1778795346
+      "updated_at": 1780594450
     },
     "net_192_168_68_100": {
       "device_id": "net_192_168_68_100",
@@ -248,7 +248,7 @@
             }
           ]
         },
-        "mac": "2c:d8:de:80:0f:a5"
+        "mac": "7c:aa:de:5a:7d:47"
       },
       "metadata": {
         "discovered": true,
@@ -257,9 +257,9 @@
           "adapter_hint": "network_probe",
           "name_hint": "RTSP device"
         },
-        "observed_at": 1778795282,
+        "observed_at": 1780594341,
         "event_model_version": 1,
-        "last_seen_discovery": 1778795282,
+        "last_seen_discovery": 1780594341,
         "events": [
           {
             "event": "read_state",
@@ -324,11 +324,11 @@
         "last_access_test": {
           "ok": true,
           "status": "responsive",
-          "tested_at": 1778795282,
+          "tested_at": 1780594341,
           "responsive_ports": [
             554
           ],
-          "latency_ms": 264,
+          "latency_ms": 58,
           "type": "camera_or_rtsp_device",
           "event_count": 3
         },
@@ -339,7 +339,7 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
         },
         "control_mode": "full_registered_capability_control",
         "rename_history": [
@@ -358,7 +358,7 @@
         "discovery_sources": []
       },
       "created_at": 1778680536,
-      "updated_at": 1778795346
+      "updated_at": 1780594450
     },
     "net_192_168_68_102": {
       "device_id": "net_192_168_68_102",
@@ -369,7 +369,8 @@
       "capabilities": [
         "read_state",
         "view_stream",
-        "capture_snapshot"
+        "capture_snapshot",
+        "open_web_interface"
       ],
       "risk_level": 1,
       "requires_confirmation": false,
@@ -383,59 +384,40 @@
         "cameras",
         "stream",
         "rtsp",
-        "camera 192.168.68.102"
+        "camera 192.168.68.102",
+        "ARP neighbor",
+        "network_device",
+        "HTTP device",
+        "http_device"
       ],
       "config": {
         "ip": "192.168.68.102",
         "open_ports": [
-          554
+          5357
         ],
-        "web_urls": [],
-        "rtsp_url_candidates": [
-          "rtsp://192.168.68.102:554/",
-          "rtsp://192.168.68.102:554/stream1",
-          "rtsp://192.168.68.102:554/stream2",
-          "rtsp://192.168.68.102:554/live",
-          "rtsp://192.168.68.102:554/live.sdp",
-          "rtsp://192.168.68.102:554/h264",
-          "rtsp://192.168.68.102:554/h264.sdp",
-          "rtsp://192.168.68.102:554/mpeg4",
-          "rtsp://192.168.68.102:554/cam/realmonitor?channel=1&subtype=0",
-          "rtsp://192.168.68.102:554/cam/realmonitor?channel=1&subtype=1",
-          "rtsp://192.168.68.102:554/Streaming/Channels/1",
-          "rtsp://192.168.68.102:554/Streaming/Channels/101",
-          "rtsp://192.168.68.102:554/Streaming/Channels/102",
-          "rtsp://192.168.68.102:554/h264/ch1/main/av_stream",
-          "rtsp://192.168.68.102:554/h264/ch1/sub/av_stream",
-          "rtsp://192.168.68.102:554/onvif1",
-          "rtsp://192.168.68.102:554/onvif2",
-          "rtsp://192.168.68.102:554/onvif-media/media.amp",
-          "rtsp://192.168.68.102:554/axis-media/media.amp",
-          "rtsp://192.168.68.102:554/profile1/media.smp",
-          "rtsp://192.168.68.102:554/ch0_0.h264",
-          "rtsp://192.168.68.102:554/ch0_1.h264",
-          "rtsp://192.168.68.102:554/videoMain",
-          "rtsp://192.168.68.102:554/videoSub"
+        "web_urls": [
+          "http://192.168.68.102:5357/"
         ],
+        "rtsp_url_candidates": [],
         "discovered_by": "tcp_port_probe",
         "last_discovered_ports": [
-          554
+          5357
         ],
         "last_access_ports": [
-          554
+          5357
         ],
-        "mac": "7c:aa:de:5a:7d:47"
+        "mac": "9c:6b:00:50:ab:20"
       },
       "metadata": {
         "discovered": true,
         "fingerprint": {
-          "type": "camera_or_rtsp_device",
+          "type": "http_device",
           "adapter_hint": "network_probe",
-          "name_hint": "RTSP device"
+          "name_hint": "HTTP device"
         },
-        "observed_at": 1778795282,
+        "observed_at": 1780594345,
         "event_model_version": 1,
-        "last_seen_discovery": 1778795282,
+        "last_seen_discovery": 1780594345,
         "events": [
           {
             "event": "read_state",
@@ -448,40 +430,27 @@
             }
           },
           {
-            "event": "view_stream",
+            "event": "open_web_interface",
             "risk_level": 0,
             "requires_confirmation": false,
             "registered_capability": true,
             "executable": true,
             "detail": {
+              "urls": [
+                "http://192.168.68.102:5357/"
+              ]
+            }
+          },
+          {
+            "event": "view_stream",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
               "protocol": "rtsp",
               "real_time": true,
-              "url_candidates": [
-                "rtsp://192.168.68.102:554/",
-                "rtsp://192.168.68.102:554/stream1",
-                "rtsp://192.168.68.102:554/stream2",
-                "rtsp://192.168.68.102:554/live",
-                "rtsp://192.168.68.102:554/live.sdp",
-                "rtsp://192.168.68.102:554/h264",
-                "rtsp://192.168.68.102:554/h264.sdp",
-                "rtsp://192.168.68.102:554/mpeg4",
-                "rtsp://192.168.68.102:554/cam/realmonitor?channel=1&subtype=0",
-                "rtsp://192.168.68.102:554/cam/realmonitor?channel=1&subtype=1",
-                "rtsp://192.168.68.102:554/Streaming/Channels/1",
-                "rtsp://192.168.68.102:554/Streaming/Channels/101",
-                "rtsp://192.168.68.102:554/Streaming/Channels/102",
-                "rtsp://192.168.68.102:554/h264/ch1/main/av_stream",
-                "rtsp://192.168.68.102:554/h264/ch1/sub/av_stream",
-                "rtsp://192.168.68.102:554/onvif1",
-                "rtsp://192.168.68.102:554/onvif2",
-                "rtsp://192.168.68.102:554/onvif-media/media.amp",
-                "rtsp://192.168.68.102:554/axis-media/media.amp",
-                "rtsp://192.168.68.102:554/profile1/media.smp",
-                "rtsp://192.168.68.102:554/ch0_0.h264",
-                "rtsp://192.168.68.102:554/ch0_1.h264",
-                "rtsp://192.168.68.102:554/videoMain",
-                "rtsp://192.168.68.102:554/videoSub"
-              ],
+              "url_candidates": [],
               "mjpeg_proxy_endpoint": "/api/local-env/devices/net_192_168_68_102/camera/mjpeg",
               "requires_camera_credentials": true
             }
@@ -500,13 +469,13 @@
         "last_access_test": {
           "ok": true,
           "status": "responsive",
-          "tested_at": 1778795282,
+          "tested_at": 1780594345,
           "responsive_ports": [
-            554
+            5357
           ],
-          "latency_ms": 31,
-          "type": "camera_or_rtsp_device",
-          "event_count": 3
+          "latency_ms": 1860,
+          "type": "http_device",
+          "event_count": 4
         },
         "control_grant": {
           "granted": true,
@@ -515,13 +484,13 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
         },
         "control_mode": "full_registered_capability_control",
         "discovery_sources": []
       },
       "created_at": 1778680536,
-      "updated_at": 1778795346
+      "updated_at": 1780594450
     },
     "net_192_168_68_103": {
       "device_id": "net_192_168_68_103",
@@ -661,13 +630,11 @@
           }
         ],
         "last_access_test": {
-          "ok": true,
-          "status": "responsive",
-          "tested_at": 1778795282,
-          "responsive_ports": [
-            554
-          ],
-          "latency_ms": 286,
+          "ok": false,
+          "status": "unresponsive",
+          "tested_at": 1780594347,
+          "responsive_ports": [],
+          "latency_ms": 1853,
           "type": "camera_or_rtsp_device",
           "event_count": 3
         },
@@ -678,13 +645,15 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
         },
         "control_mode": "full_registered_capability_control",
-        "discovery_sources": []
+        "discovery_sources": [],
+        "last_scan_status": "not_observed_in_current_scan",
+        "last_scan_at": 1780594321
       },
       "created_at": 1778680536,
-      "updated_at": 1778795346
+      "updated_at": 1780594450
     },
     "net_192_168_68_104": {
       "device_id": "net_192_168_68_104",
@@ -739,7 +708,7 @@
         "last_access_ports": [
           8080
         ],
-        "mac": "8c:ce:4e:d1:c9:a4"
+        "mac": "76:eb:8c:57:75:d7"
       },
       "metadata": {
         "discovered": true,
@@ -748,9 +717,9 @@
           "adapter_hint": "network_probe",
           "name_hint": "ARP neighbor"
         },
-        "observed_at": 1778762647,
+        "observed_at": 1780594315,
         "event_model_version": 1,
-        "last_seen_discovery": 1778762651,
+        "last_seen_discovery": 1780594321,
         "events": [
           {
             "event": "read_state",
@@ -888,9 +857,9 @@
         "last_access_test": {
           "ok": false,
           "status": "unresponsive",
-          "tested_at": 1778795285,
+          "tested_at": 1780594350,
           "responsive_ports": [],
-          "latency_ms": 2665,
+          "latency_ms": 2668,
           "type": "samsung_tv_or_media_device",
           "event_count": 12
         },
@@ -901,7 +870,7 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
         },
         "control_mode": "full_registered_capability_control",
         "discovery_sources": [
@@ -911,7 +880,7 @@
         "last_scan_at": 1778795121
       },
       "created_at": 1778680536,
-      "updated_at": 1778795346
+      "updated_at": 1780594450
     },
     "net_192_168_68_109": {
       "device_id": "net_192_168_68_109",
@@ -961,25 +930,25 @@
           "http://192.168.68.109/"
         ],
         "rtsp_url_candidates": [],
-        "discovered_by": "tcp_port_probe,arp_cache",
+        "discovered_by": "tcp_port_probe",
         "last_discovered_ports": [
           80
         ],
         "last_access_ports": [
-          8080
+          80
         ],
         "mac": "d4:27:87:2e:ca:c0"
       },
       "metadata": {
         "discovered": true,
         "fingerprint": {
-          "type": "network_device",
+          "type": "http_device",
           "adapter_hint": "network_probe",
-          "name_hint": "ARP neighbor"
+          "name_hint": "HTTP device"
         },
-        "observed_at": 1778762647,
+        "observed_at": 1780594378,
         "event_model_version": 1,
-        "last_seen_discovery": 1778762651,
+        "last_seen_discovery": 1780594378,
         "events": [
           {
             "event": "read_state",
@@ -999,7 +968,6 @@
             "executable": true,
             "detail": {
               "urls": [
-                "http://192.168.68.109:8080/",
                 "http://192.168.68.109/"
               ]
             }
@@ -1116,12 +1084,14 @@
           }
         ],
         "last_access_test": {
-          "ok": false,
-          "status": "unresponsive",
-          "tested_at": 1778795302,
-          "responsive_ports": [],
-          "latency_ms": 5322,
-          "type": "samsung_tv_or_media_device",
+          "ok": true,
+          "status": "responsive",
+          "tested_at": 1780594378,
+          "responsive_ports": [
+            80
+          ],
+          "latency_ms": 2711,
+          "type": "http_device",
           "event_count": 12
         },
         "control_grant": {
@@ -1131,18 +1101,15 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
         },
         "control_mode": "full_registered_capability_control",
-        "discovery_sources": [
-          "tcp_port_probe",
-          "arp_cache"
-        ],
+        "discovery_sources": [],
         "last_scan_status": "not_observed_in_current_scan",
         "last_scan_at": 1778795121
       },
       "created_at": 1778680536,
-      "updated_at": 1778795346
+      "updated_at": 1780594450
     },
     "net_192_168_68_111": {
       "device_id": "net_192_168_68_111",
@@ -1187,13 +1154,15 @@
           8001,
           8002,
           8080,
-          7000
+          9080,
+          9197
         ],
         "web_urls": [
           "http://192.168.68.111:8001/",
           "http://192.168.68.111:8002/",
           "http://192.168.68.111:8080/",
-          "http://192.168.68.111:7000/"
+          "http://192.168.68.111:9080/",
+          "http://192.168.68.111:9197/"
         ],
         "rtsp_url_candidates": [],
         "discovered_by": "tcp_port_probe",
@@ -1201,15 +1170,17 @@
           8001,
           8002,
           8080,
-          7000
+          9080,
+          9197
         ],
         "last_access_ports": [
           8001,
           8002,
           8080,
-          7000
+          9080,
+          9197
         ],
-        "mac": "00:7d:3b:8b:05:f1"
+        "mac": "68:72:c3:50:98:ca"
       },
       "metadata": {
         "discovered": true,
@@ -1218,9 +1189,9 @@
           "adapter_hint": "network_probe",
           "name_hint": "Samsung TV/Media device"
         },
-        "observed_at": 1778795313,
+        "observed_at": 1780594386,
         "event_model_version": 1,
-        "last_seen_discovery": 1778795313,
+        "last_seen_discovery": 1780594386,
         "events": [
           {
             "event": "read_state",
@@ -1243,7 +1214,8 @@
                 "http://192.168.68.111:8001/",
                 "http://192.168.68.111:8002/",
                 "http://192.168.68.111:8080/",
-                "http://192.168.68.111:7000/"
+                "http://192.168.68.111:9080/",
+                "http://192.168.68.111:9197/"
               ]
             }
           },
@@ -1361,14 +1333,15 @@
         "last_access_test": {
           "ok": true,
           "status": "responsive",
-          "tested_at": 1778795313,
+          "tested_at": 1780594386,
           "responsive_ports": [
             8001,
             8002,
             8080,
-            7000
+            9080,
+            9197
           ],
-          "latency_ms": 5484,
+          "latency_ms": 2922,
           "type": "samsung_tv_or_media_device",
           "event_count": 12
         },
@@ -1379,13 +1352,13 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
         },
         "control_mode": "full_registered_capability_control",
         "discovery_sources": []
       },
       "created_at": 1778680536,
-      "updated_at": 1778795346
+      "updated_at": 1780594450
     },
     "net_192_168_68_113": {
       "device_id": "net_192_168_68_113",
@@ -1427,47 +1400,31 @@
       "config": {
         "ip": "192.168.68.113",
         "open_ports": [
-          8001,
-          8002,
-          8080,
-          9080,
-          9197
+          5357
         ],
         "web_urls": [
-          "http://192.168.68.113:8001/",
-          "http://192.168.68.113:8002/",
-          "http://192.168.68.113:8080/",
-          "http://192.168.68.113:9080/",
-          "http://192.168.68.113:9197/"
+          "http://192.168.68.113:5357/"
         ],
         "rtsp_url_candidates": [],
         "discovered_by": "tcp_port_probe",
         "last_discovered_ports": [
-          8001,
-          8002,
-          8080,
-          9080,
-          9197
+          5357
         ],
         "last_access_ports": [
-          8001,
-          8002,
-          8080,
-          9080,
-          9197
+          5357
         ],
         "mac": "98:06:3c:9d:f1:62"
       },
       "metadata": {
         "discovered": true,
         "fingerprint": {
-          "type": "samsung_tv_or_media_device",
+          "type": "http_device",
           "adapter_hint": "network_probe",
-          "name_hint": "Samsung TV/Media device"
+          "name_hint": "HTTP device"
         },
-        "observed_at": 1778795318,
+        "observed_at": 1780594402,
         "event_model_version": 1,
-        "last_seen_discovery": 1778795318,
+        "last_seen_discovery": 1780594402,
         "events": [
           {
             "event": "read_state",
@@ -1487,11 +1444,7 @@
             "executable": true,
             "detail": {
               "urls": [
-                "http://192.168.68.113:8001/",
-                "http://192.168.68.113:8002/",
-                "http://192.168.68.113:8080/",
-                "http://192.168.68.113:9080/",
-                "http://192.168.68.113:9197/"
+                "http://192.168.68.113:5357/"
               ]
             }
           },
@@ -1502,7 +1455,7 @@
             "registered_capability": true,
             "executable": true,
             "detail": {
-              "adapter": "samsung_ws",
+              "adapter": "wake_on_lan",
               "hint": ""
             }
           },
@@ -1511,10 +1464,10 @@
             "risk_level": 1,
             "requires_confirmation": false,
             "registered_capability": true,
-            "executable": true,
+            "executable": false,
             "detail": {
-              "adapter": "samsung_ws",
-              "hint": ""
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
             }
           },
           {
@@ -1522,10 +1475,10 @@
             "risk_level": 1,
             "requires_confirmation": false,
             "registered_capability": true,
-            "executable": true,
+            "executable": false,
             "detail": {
-              "adapter": "samsung_ws",
-              "hint": ""
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
             }
           },
           {
@@ -1533,10 +1486,10 @@
             "risk_level": 1,
             "requires_confirmation": false,
             "registered_capability": true,
-            "executable": true,
+            "executable": false,
             "detail": {
-              "adapter": "samsung_ws",
-              "hint": ""
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
             }
           },
           {
@@ -1544,10 +1497,10 @@
             "risk_level": 1,
             "requires_confirmation": false,
             "registered_capability": true,
-            "executable": true,
+            "executable": false,
             "detail": {
-              "adapter": "samsung_ws",
-              "hint": ""
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
             }
           },
           {
@@ -1555,10 +1508,10 @@
             "risk_level": 1,
             "requires_confirmation": false,
             "registered_capability": true,
-            "executable": true,
+            "executable": false,
             "detail": {
-              "adapter": "samsung_ws",
-              "hint": ""
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
             }
           },
           {
@@ -1566,10 +1519,10 @@
             "risk_level": 1,
             "requires_confirmation": false,
             "registered_capability": true,
-            "executable": true,
+            "executable": false,
             "detail": {
-              "adapter": "samsung_ws",
-              "hint": ""
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
             }
           },
           {
@@ -1577,10 +1530,10 @@
             "risk_level": 1,
             "requires_confirmation": false,
             "registered_capability": true,
-            "executable": true,
+            "executable": false,
             "detail": {
-              "adapter": "samsung_ws",
-              "hint": ""
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
             }
           },
           {
@@ -1588,10 +1541,10 @@
             "risk_level": 1,
             "requires_confirmation": false,
             "registered_capability": true,
-            "executable": true,
+            "executable": false,
             "detail": {
-              "adapter": "samsung_ws",
-              "hint": ""
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
             }
           },
           {
@@ -1599,26 +1552,22 @@
             "risk_level": 1,
             "requires_confirmation": false,
             "registered_capability": true,
-            "executable": true,
+            "executable": false,
             "detail": {
-              "adapter": "samsung_ws",
-              "hint": ""
+              "adapter": "adapter_config_required",
+              "hint": "Configure Home Assistant, Roku ECP, Samsung/WebSocket, WebOS or endpoint HTTP for reliable TV control."
             }
           }
         ],
         "last_access_test": {
           "ok": true,
           "status": "responsive",
-          "tested_at": 1778795318,
+          "tested_at": 1780594402,
           "responsive_ports": [
-            8001,
-            8002,
-            8080,
-            9080,
-            9197
+            5357
           ],
-          "latency_ms": 2745,
-          "type": "samsung_tv_or_media_device",
+          "latency_ms": 13247,
+          "type": "http_device",
           "event_count": 12
         },
         "control_grant": {
@@ -1628,13 +1577,13 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
         },
         "control_mode": "full_registered_capability_control",
         "discovery_sources": []
       },
       "created_at": 1778680536,
-      "updated_at": 1778795346
+      "updated_at": 1780594450
     },
     "net_192_168_68_249": {
       "device_id": "net_192_168_68_249",
@@ -1715,14 +1664,11 @@
           }
         ],
         "last_access_test": {
-          "ok": true,
-          "status": "responsive",
-          "tested_at": 1778795346,
-          "responsive_ports": [
-            80,
-            443
-          ],
-          "latency_ms": 223,
+          "ok": false,
+          "status": "unresponsive",
+          "tested_at": 1780594449,
+          "responsive_ports": [],
+          "latency_ms": 5309,
           "type": "http_device",
           "event_count": 2
         },
@@ -1733,25 +1679,37 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
         },
         "control_mode": "full_registered_capability_control",
-        "discovery_sources": []
+        "discovery_sources": [],
+        "last_scan_status": "not_observed_in_current_scan",
+        "last_scan_at": 1780594321
       },
       "created_at": 1778680536,
-      "updated_at": 1778795346
+      "updated_at": 1780594450
     },
     "net_192_168_68_112": {
       "device_id": "net_192_168_68_112",
       "name": "HTTP device 192.168.68.112",
-      "type": "http_device",
+      "type": "samsung_tv_or_media_device",
       "location": "rede_local",
       "adapter": "network_probe",
       "capabilities": [
         "read_state",
-        "open_web_interface"
+        "open_web_interface",
+        "turn_on",
+        "turn_off",
+        "media_play",
+        "media_pause",
+        "volume_up",
+        "volume_down",
+        "mute",
+        "send_key",
+        "launch_app",
+        "set_input"
       ],
-      "risk_level": 0,
+      "risk_level": 1,
       "requires_confirmation": false,
       "allowed": true,
       "allow_high_risk": false,
@@ -1760,34 +1718,56 @@
         "HTTP device",
         "http_device",
         "ARP neighbor",
-        "network_device"
+        "network_device",
+        "Samsung TV/Media device",
+        "samsung_tv_or_media_device",
+        "tv",
+        "televisao",
+        "televisão",
+        "media",
+        "controle remoto",
+        "tv 192.168.68.112"
       ],
       "config": {
         "ip": "192.168.68.112",
         "open_ports": [
-          80
+          7000,
+          8001,
+          8002,
+          8080
         ],
         "web_urls": [
-          "http://192.168.68.112/"
+          "http://192.168.68.112:7000/",
+          "http://192.168.68.112:8001/",
+          "http://192.168.68.112:8002/",
+          "http://192.168.68.112:8080/"
         ],
         "rtsp_url_candidates": [],
-        "discovered_by": "arp_cache",
-        "last_discovered_ports": [],
-        "last_access_ports": [
-          80
+        "discovered_by": "tcp_port_probe",
+        "last_discovered_ports": [
+          7000,
+          8001,
+          8002,
+          8080
         ],
-        "mac": "76:eb:8c:57:75:d7"
+        "last_access_ports": [
+          7000,
+          8001,
+          8002,
+          8080
+        ],
+        "mac": "00:7d:3b:8b:05:f1"
       },
       "metadata": {
         "discovered": true,
         "fingerprint": {
-          "type": "network_device",
+          "type": "samsung_tv_or_media_device",
           "adapter_hint": "network_probe",
-          "name_hint": "ARP neighbor"
+          "name_hint": "Samsung TV/Media device"
         },
-        "observed_at": 1778795116,
+        "observed_at": 1780594389,
         "event_model_version": 1,
-        "last_seen_discovery": 1778795121,
+        "last_seen_discovery": 1780594389,
         "events": [
           {
             "event": "read_state",
@@ -1807,19 +1787,137 @@
             "executable": true,
             "detail": {
               "urls": [
-                "http://192.168.68.112/"
+                "http://192.168.68.112:7000/",
+                "http://192.168.68.112:8001/",
+                "http://192.168.68.112:8002/",
+                "http://192.168.68.112:8080/"
               ]
+            }
+          },
+          {
+            "event": "turn_on",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "turn_off",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "media_play",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "media_pause",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "volume_up",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "volume_down",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "mute",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "send_key",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "launch_app",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
+            }
+          },
+          {
+            "event": "set_input",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "adapter": "samsung_ws",
+              "hint": ""
             }
           }
         ],
         "last_access_test": {
-          "ok": false,
-          "status": "unresponsive",
-          "tested_at": 1778795316,
-          "responsive_ports": [],
-          "latency_ms": 2707,
-          "type": "http_device",
-          "event_count": 2
+          "ok": true,
+          "status": "responsive",
+          "tested_at": 1780594389,
+          "responsive_ports": [
+            7000,
+            8001,
+            8002,
+            8080
+          ],
+          "latency_ms": 2915,
+          "type": "samsung_tv_or_media_device",
+          "event_count": 12
         },
         "control_grant": {
           "granted": true,
@@ -1828,17 +1926,15 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
         },
         "control_mode": "full_registered_capability_control",
         "last_scan_status": "not_observed_in_current_scan",
         "last_scan_at": 1778762352,
-        "discovery_sources": [
-          "arp_cache"
-        ]
+        "discovery_sources": []
       },
       "created_at": 1778688419,
-      "updated_at": 1778795346
+      "updated_at": 1780594450
     },
     "net_192_168_68_118": {
       "device_id": "net_192_168_68_118",
@@ -1857,7 +1953,9 @@
       "aliases": [
         "192.168.68.118",
         "HTTP device",
-        "http_device"
+        "http_device",
+        "ARP neighbor",
+        "network_device"
       ],
       "config": {
         "ip": "192.168.68.118",
@@ -1868,25 +1966,27 @@
           "http://192.168.68.118:5357/"
         ],
         "rtsp_url_candidates": [],
-        "discovered_by": "tcp_port_probe"
+        "discovered_by": "arp_cache",
+        "mac": "96:13:84:86:6a:f0",
+        "last_discovered_ports": []
       },
       "metadata": {
         "discovered": true,
         "fingerprint": {
-          "type": "http_device",
+          "type": "network_device",
           "adapter_hint": "network_probe",
-          "name_hint": "HTTP device"
+          "name_hint": "ARP neighbor"
         },
-        "observed_at": 1778694020,
+        "observed_at": 1780594315,
         "event_model_version": 1,
         "last_scan_status": "not_observed_in_current_scan",
         "last_scan_at": 1778795121,
         "last_access_test": {
           "ok": false,
           "status": "unresponsive",
-          "tested_at": 1778795346,
+          "tested_at": 1780594425,
           "responsive_ports": [],
-          "latency_ms": 2633,
+          "latency_ms": 2663,
           "type": "http_device",
           "event_count": 2
         },
@@ -1921,24 +2021,30 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
         },
-        "control_mode": "full_registered_capability_control"
+        "control_mode": "full_registered_capability_control",
+        "discovery_sources": [
+          "arp_cache"
+        ],
+        "last_seen_discovery": 1780594321
       },
       "created_at": 1778694030,
-      "updated_at": 1778795346
+      "updated_at": 1780594450
     },
     "net_192_168_68_101": {
       "device_id": "net_192_168_68_101",
       "name": "ARP neighbor 192.168.68.101",
-      "type": "network_device",
+      "type": "camera_or_rtsp_device",
       "location": "rede_local",
       "adapter": "network_probe",
       "capabilities": [
         "read_state",
-        "open_web_interface"
+        "open_web_interface",
+        "view_stream",
+        "capture_snapshot"
       ],
-      "risk_level": 0,
+      "risk_level": 1,
       "requires_confirmation": false,
       "allowed": true,
       "allow_high_risk": false,
@@ -1947,48 +2053,78 @@
         "ARP neighbor",
         "network_device",
         "HTTP device",
-        "http_device"
+        "http_device",
+        "RTSP device",
+        "camera_or_rtsp_device",
+        "camera",
+        "cameras",
+        "stream",
+        "rtsp",
+        "camera 192.168.68.101"
       ],
       "config": {
         "ip": "192.168.68.101",
         "open_ports": [
-          5357
+          554
         ],
-        "web_urls": [
-          "http://192.168.68.101:5357/"
+        "web_urls": [],
+        "rtsp_url_candidates": [
+          "rtsp://192.168.68.101:554/",
+          "rtsp://192.168.68.101:554/stream1",
+          "rtsp://192.168.68.101:554/stream2",
+          "rtsp://192.168.68.101:554/live",
+          "rtsp://192.168.68.101:554/live.sdp",
+          "rtsp://192.168.68.101:554/h264",
+          "rtsp://192.168.68.101:554/h264.sdp",
+          "rtsp://192.168.68.101:554/mpeg4",
+          "rtsp://192.168.68.101:554/cam/realmonitor?channel=1&subtype=0",
+          "rtsp://192.168.68.101:554/cam/realmonitor?channel=1&subtype=1",
+          "rtsp://192.168.68.101:554/Streaming/Channels/1",
+          "rtsp://192.168.68.101:554/Streaming/Channels/101",
+          "rtsp://192.168.68.101:554/Streaming/Channels/102",
+          "rtsp://192.168.68.101:554/h264/ch1/main/av_stream",
+          "rtsp://192.168.68.101:554/h264/ch1/sub/av_stream",
+          "rtsp://192.168.68.101:554/onvif1",
+          "rtsp://192.168.68.101:554/onvif2",
+          "rtsp://192.168.68.101:554/onvif-media/media.amp",
+          "rtsp://192.168.68.101:554/axis-media/media.amp",
+          "rtsp://192.168.68.101:554/profile1/media.smp",
+          "rtsp://192.168.68.101:554/ch0_0.h264",
+          "rtsp://192.168.68.101:554/ch0_1.h264",
+          "rtsp://192.168.68.101:554/videoMain",
+          "rtsp://192.168.68.101:554/videoSub"
         ],
-        "rtsp_url_candidates": [],
         "onvif_xaddrs": [],
         "mdns_services": [],
-        "mac": "8c:79:f5:49:86:01",
+        "mac": "7c:aa:de:49:75:fb",
         "discovered_by": "tcp_port_probe",
         "last_discovered_ports": [
-          5357
+          554
         ],
         "last_access_ports": [
-          5357
+          554
         ]
       },
       "metadata": {
         "discovered": true,
         "fingerprint": {
-          "type": "http_device",
+          "type": "camera_or_rtsp_device",
           "adapter_hint": "network_probe",
-          "name_hint": "HTTP device"
+          "name_hint": "RTSP device"
         },
-        "observed_at": 1778795282,
+        "observed_at": 1780594343,
         "event_model_version": 1,
         "discovery_sources": [],
         "last_access_test": {
           "ok": true,
           "status": "responsive",
-          "tested_at": 1778795282,
+          "tested_at": 1780594343,
           "responsive_ports": [
-            5357
+            554
           ],
-          "latency_ms": 31,
-          "type": "http_device",
-          "event_count": 2
+          "latency_ms": 2818,
+          "type": "camera_or_rtsp_device",
+          "event_count": 4
         },
         "events": [
           {
@@ -2008,9 +2144,56 @@
             "registered_capability": true,
             "executable": true,
             "detail": {
-              "urls": [
-                "http://192.168.68.101:5357/"
-              ]
+              "urls": []
+            }
+          },
+          {
+            "event": "view_stream",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "rtsp",
+              "real_time": true,
+              "url_candidates": [
+                "rtsp://192.168.68.101:554/",
+                "rtsp://192.168.68.101:554/stream1",
+                "rtsp://192.168.68.101:554/stream2",
+                "rtsp://192.168.68.101:554/live",
+                "rtsp://192.168.68.101:554/live.sdp",
+                "rtsp://192.168.68.101:554/h264",
+                "rtsp://192.168.68.101:554/h264.sdp",
+                "rtsp://192.168.68.101:554/mpeg4",
+                "rtsp://192.168.68.101:554/cam/realmonitor?channel=1&subtype=0",
+                "rtsp://192.168.68.101:554/cam/realmonitor?channel=1&subtype=1",
+                "rtsp://192.168.68.101:554/Streaming/Channels/1",
+                "rtsp://192.168.68.101:554/Streaming/Channels/101",
+                "rtsp://192.168.68.101:554/Streaming/Channels/102",
+                "rtsp://192.168.68.101:554/h264/ch1/main/av_stream",
+                "rtsp://192.168.68.101:554/h264/ch1/sub/av_stream",
+                "rtsp://192.168.68.101:554/onvif1",
+                "rtsp://192.168.68.101:554/onvif2",
+                "rtsp://192.168.68.101:554/onvif-media/media.amp",
+                "rtsp://192.168.68.101:554/axis-media/media.amp",
+                "rtsp://192.168.68.101:554/profile1/media.smp",
+                "rtsp://192.168.68.101:554/ch0_0.h264",
+                "rtsp://192.168.68.101:554/ch0_1.h264",
+                "rtsp://192.168.68.101:554/videoMain",
+                "rtsp://192.168.68.101:554/videoSub"
+              ],
+              "mjpeg_proxy_endpoint": "/api/local-env/devices/net_192_168_68_101/camera/mjpeg",
+              "requires_camera_credentials": true
+            }
+          },
+          {
+            "event": "capture_snapshot",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "requires_snapshot_url_or_rtsp_decoder": true
             }
           }
         ],
@@ -2021,13 +2204,13 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
         },
         "control_mode": "full_registered_capability_control",
-        "last_seen_discovery": 1778795282
+        "last_seen_discovery": 1780594343
       },
       "created_at": 1778762352,
-      "updated_at": 1778795346
+      "updated_at": 1780594450
     },
     "net_192_168_68_105": {
       "device_id": "net_192_168_68_105",
@@ -2062,7 +2245,9 @@
         "televisão",
         "media",
         "controle remoto",
-        "tv 192.168.68.105"
+        "tv 192.168.68.105",
+        "ARP neighbor",
+        "network_device"
       ],
       "config": {
         "ip": "192.168.68.105",
@@ -2083,15 +2268,9 @@
         "rtsp_url_candidates": [],
         "onvif_xaddrs": [],
         "mdns_services": [],
-        "mac": "68:72:c3:50:98:ca",
-        "discovered_by": "tcp_port_probe",
-        "last_discovered_ports": [
-          8001,
-          8002,
-          8080,
-          9080,
-          9197
-        ],
+        "mac": "8c:ce:4e:d1:c9:a4",
+        "discovered_by": "arp_cache",
+        "last_discovered_ports": [],
         "last_access_ports": [
           8001,
           8002,
@@ -2103,14 +2282,16 @@
       "metadata": {
         "discovered": true,
         "fingerprint": {
-          "type": "samsung_tv_or_media_device",
+          "type": "network_device",
           "adapter_hint": "network_probe",
-          "name_hint": "Samsung TV/Media device"
+          "name_hint": "ARP neighbor"
         },
-        "observed_at": 1778795288,
+        "observed_at": 1780594315,
         "event_model_version": 1,
-        "discovery_sources": [],
-        "last_seen_discovery": 1778795288,
+        "discovery_sources": [
+          "arp_cache"
+        ],
+        "last_seen_discovery": 1780594321,
         "events": [
           {
             "event": "read_state",
@@ -2250,17 +2431,11 @@
           }
         ],
         "last_access_test": {
-          "ok": true,
-          "status": "responsive",
-          "tested_at": 1778795288,
-          "responsive_ports": [
-            8001,
-            8002,
-            8080,
-            9080,
-            9197
-          ],
-          "latency_ms": 2974,
+          "ok": false,
+          "status": "unresponsive",
+          "tested_at": 1780594363,
+          "responsive_ports": [],
+          "latency_ms": 13323,
           "type": "samsung_tv_or_media_device",
           "event_count": 12
         },
@@ -2271,12 +2446,12 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
         },
         "control_mode": "full_registered_capability_control"
       },
       "created_at": 1778762352,
-      "updated_at": 1778795346
+      "updated_at": 1780594450
     },
     "net_192_168_68_106": {
       "device_id": "net_192_168_68_106",
@@ -2314,7 +2489,7 @@
           "adapter_hint": "network_probe",
           "name_hint": "ARP neighbor"
         },
-        "observed_at": 1778795116,
+        "observed_at": 1780594315,
         "event_model_version": 1,
         "discovery_sources": [
           "arp_cache"
@@ -2322,9 +2497,9 @@
         "last_access_test": {
           "ok": false,
           "status": "unresponsive",
-          "tested_at": 1778795294,
+          "tested_at": 1780594369,
           "responsive_ports": [],
-          "latency_ms": 5721,
+          "latency_ms": 5739,
           "type": "network_device",
           "event_count": 1
         },
@@ -2347,13 +2522,13 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
         },
         "control_mode": "full_registered_capability_control",
-        "last_seen_discovery": 1778795121
+        "last_seen_discovery": 1780594321
       },
       "created_at": 1778762352,
-      "updated_at": 1778795346
+      "updated_at": 1780594450
     },
     "net_192_168_68_108": {
       "device_id": "net_192_168_68_108",
@@ -2372,7 +2547,9 @@
       "aliases": [
         "192.168.68.108",
         "ARP neighbor",
-        "network_device"
+        "network_device",
+        "HTTP device",
+        "http_device"
       ],
       "config": {
         "ip": "192.168.68.108",
@@ -2386,31 +2563,33 @@
         "onvif_xaddrs": [],
         "mdns_services": [],
         "mac": "d4:27:87:2e:10:fa",
-        "discovered_by": "tcp_port_probe,arp_cache",
+        "discovered_by": "tcp_port_probe",
         "last_discovered_ports": [
+          80
+        ],
+        "last_access_ports": [
           80
         ]
       },
       "metadata": {
         "discovered": true,
         "fingerprint": {
-          "type": "network_device",
+          "type": "http_device",
           "adapter_hint": "network_probe",
-          "name_hint": "ARP neighbor"
+          "name_hint": "HTTP device"
         },
-        "observed_at": 1778762647,
+        "observed_at": 1780594375,
         "event_model_version": 1,
-        "discovery_sources": [
-          "tcp_port_probe",
-          "arp_cache"
-        ],
+        "discovery_sources": [],
         "last_access_test": {
-          "ok": false,
-          "status": "unresponsive",
-          "tested_at": 1778795296,
-          "responsive_ports": [],
-          "latency_ms": 2654,
-          "type": "network_device",
+          "ok": true,
+          "status": "responsive",
+          "tested_at": 1780594375,
+          "responsive_ports": [
+            80
+          ],
+          "latency_ms": 116,
+          "type": "http_device",
           "event_count": 2
         },
         "events": [
@@ -2444,15 +2623,15 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
         },
         "control_mode": "full_registered_capability_control",
-        "last_seen_discovery": 1778762651,
+        "last_seen_discovery": 1780594375,
         "last_scan_status": "not_observed_in_current_scan",
         "last_scan_at": 1778795121
       },
       "created_at": 1778762352,
-      "updated_at": 1778795346
+      "updated_at": 1780594450
     },
     "net_192_168_68_110": {
       "device_id": "net_192_168_68_110",
@@ -2498,9 +2677,9 @@
         "last_access_test": {
           "ok": false,
           "status": "unresponsive",
-          "tested_at": 1778795307,
+          "tested_at": 1780594383,
           "responsive_ports": [],
-          "latency_ms": 5827,
+          "latency_ms": 5714,
           "type": "network_device",
           "event_count": 1
         },
@@ -2523,13 +2702,15 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
         },
         "control_mode": "full_registered_capability_control",
-        "last_seen_discovery": 1778795121
+        "last_seen_discovery": 1778795121,
+        "last_scan_status": "not_observed_in_current_scan",
+        "last_scan_at": 1780594321
       },
       "created_at": 1778762352,
-      "updated_at": 1778795346
+      "updated_at": 1780594450
     },
     "net_192_168_68_115": {
       "device_id": "net_192_168_68_115",
@@ -2556,7 +2737,7 @@
         "rtsp_url_candidates": [],
         "onvif_xaddrs": [],
         "mdns_services": [],
-        "mac": "fa:b3:45:be:dd:26",
+        "mac": "98:06:3c:9d:f1:62",
         "discovered_by": "arp_cache",
         "last_discovered_ports": []
       },
@@ -2567,7 +2748,7 @@
           "adapter_hint": "network_probe",
           "name_hint": "ARP neighbor"
         },
-        "observed_at": 1778795116,
+        "observed_at": 1780594315,
         "event_model_version": 1,
         "discovery_sources": [
           "arp_cache"
@@ -2575,9 +2756,9 @@
         "last_access_test": {
           "ok": false,
           "status": "unresponsive",
-          "tested_at": 1778795324,
+          "tested_at": 1780594414,
           "responsive_ports": [],
-          "latency_ms": 5771,
+          "latency_ms": 5719,
           "type": "network_device",
           "event_count": 1
         },
@@ -2600,13 +2781,13 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
         },
         "control_mode": "full_registered_capability_control",
-        "last_seen_discovery": 1778795121
+        "last_seen_discovery": 1780594321
       },
       "created_at": 1778762352,
-      "updated_at": 1778795346
+      "updated_at": 1780594450
     },
     "net_192_168_68_116": {
       "device_id": "net_192_168_68_116",
@@ -2626,7 +2807,9 @@
         "mute",
         "send_key",
         "launch_app",
-        "set_input"
+        "set_input",
+        "view_stream",
+        "capture_snapshot"
       ],
       "risk_level": 1,
       "requires_confirmation": false,
@@ -2645,39 +2828,69 @@
         "ARP neighbor",
         "network_device",
         "HTTP device",
-        "http_device"
+        "http_device",
+        "RTSP device",
+        "camera_or_rtsp_device",
+        "camera",
+        "cameras",
+        "stream",
+        "rtsp",
+        "camera 192.168.68.116"
       ],
       "config": {
         "ip": "192.168.68.116",
         "open_ports": [
-          5357
+          554
         ],
-        "web_urls": [
-          "http://192.168.68.116:5357/"
+        "web_urls": [],
+        "rtsp_url_candidates": [
+          "rtsp://192.168.68.116:554/",
+          "rtsp://192.168.68.116:554/stream1",
+          "rtsp://192.168.68.116:554/stream2",
+          "rtsp://192.168.68.116:554/live",
+          "rtsp://192.168.68.116:554/live.sdp",
+          "rtsp://192.168.68.116:554/h264",
+          "rtsp://192.168.68.116:554/h264.sdp",
+          "rtsp://192.168.68.116:554/mpeg4",
+          "rtsp://192.168.68.116:554/cam/realmonitor?channel=1&subtype=0",
+          "rtsp://192.168.68.116:554/cam/realmonitor?channel=1&subtype=1",
+          "rtsp://192.168.68.116:554/Streaming/Channels/1",
+          "rtsp://192.168.68.116:554/Streaming/Channels/101",
+          "rtsp://192.168.68.116:554/Streaming/Channels/102",
+          "rtsp://192.168.68.116:554/h264/ch1/main/av_stream",
+          "rtsp://192.168.68.116:554/h264/ch1/sub/av_stream",
+          "rtsp://192.168.68.116:554/onvif1",
+          "rtsp://192.168.68.116:554/onvif2",
+          "rtsp://192.168.68.116:554/onvif-media/media.amp",
+          "rtsp://192.168.68.116:554/axis-media/media.amp",
+          "rtsp://192.168.68.116:554/profile1/media.smp",
+          "rtsp://192.168.68.116:554/ch0_0.h264",
+          "rtsp://192.168.68.116:554/ch0_1.h264",
+          "rtsp://192.168.68.116:554/videoMain",
+          "rtsp://192.168.68.116:554/videoSub"
         ],
-        "rtsp_url_candidates": [],
         "onvif_xaddrs": [],
         "mdns_services": [],
-        "mac": "9c:6b:00:50:ab:20",
+        "mac": "2c:d8:de:80:0f:a5",
         "discovered_by": "tcp_port_probe",
         "last_discovered_ports": [
-          5357
+          554
         ],
         "last_access_ports": [
-          5357
+          554
         ]
       },
       "metadata": {
         "discovered": true,
         "fingerprint": {
-          "type": "http_device",
+          "type": "camera_or_rtsp_device",
           "adapter_hint": "network_probe",
-          "name_hint": "HTTP device"
+          "name_hint": "RTSP device"
         },
-        "observed_at": 1778795338,
+        "observed_at": 1780594417,
         "event_model_version": 1,
         "discovery_sources": [],
-        "last_seen_discovery": 1778795338,
+        "last_seen_discovery": 1780594417,
         "events": [
           {
             "event": "read_state",
@@ -2696,9 +2909,56 @@
             "registered_capability": true,
             "executable": true,
             "detail": {
-              "urls": [
-                "http://192.168.68.116:5357/"
-              ]
+              "urls": []
+            }
+          },
+          {
+            "event": "view_stream",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "rtsp",
+              "real_time": true,
+              "url_candidates": [
+                "rtsp://192.168.68.116:554/",
+                "rtsp://192.168.68.116:554/stream1",
+                "rtsp://192.168.68.116:554/stream2",
+                "rtsp://192.168.68.116:554/live",
+                "rtsp://192.168.68.116:554/live.sdp",
+                "rtsp://192.168.68.116:554/h264",
+                "rtsp://192.168.68.116:554/h264.sdp",
+                "rtsp://192.168.68.116:554/mpeg4",
+                "rtsp://192.168.68.116:554/cam/realmonitor?channel=1&subtype=0",
+                "rtsp://192.168.68.116:554/cam/realmonitor?channel=1&subtype=1",
+                "rtsp://192.168.68.116:554/Streaming/Channels/1",
+                "rtsp://192.168.68.116:554/Streaming/Channels/101",
+                "rtsp://192.168.68.116:554/Streaming/Channels/102",
+                "rtsp://192.168.68.116:554/h264/ch1/main/av_stream",
+                "rtsp://192.168.68.116:554/h264/ch1/sub/av_stream",
+                "rtsp://192.168.68.116:554/onvif1",
+                "rtsp://192.168.68.116:554/onvif2",
+                "rtsp://192.168.68.116:554/onvif-media/media.amp",
+                "rtsp://192.168.68.116:554/axis-media/media.amp",
+                "rtsp://192.168.68.116:554/profile1/media.smp",
+                "rtsp://192.168.68.116:554/ch0_0.h264",
+                "rtsp://192.168.68.116:554/ch0_1.h264",
+                "rtsp://192.168.68.116:554/videoMain",
+                "rtsp://192.168.68.116:554/videoSub"
+              ],
+              "mjpeg_proxy_endpoint": "/api/local-env/devices/net_192_168_68_116/camera/mjpeg",
+              "requires_camera_credentials": true
+            }
+          },
+          {
+            "event": "capture_snapshot",
+            "risk_level": 1,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": false,
+            "detail": {
+              "requires_snapshot_url_or_rtsp_decoder": true
             }
           },
           {
@@ -2815,13 +3075,13 @@
         "last_access_test": {
           "ok": true,
           "status": "responsive",
-          "tested_at": 1778795338,
+          "tested_at": 1780594417,
           "responsive_ports": [
-            5357
+            554
           ],
-          "latency_ms": 13210,
-          "type": "http_device",
-          "event_count": 12
+          "latency_ms": 2726,
+          "type": "camera_or_rtsp_device",
+          "event_count": 14
         },
         "control_grant": {
           "granted": true,
@@ -2830,12 +3090,12 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
         },
         "control_mode": "full_registered_capability_control"
       },
       "created_at": 1778762352,
-      "updated_at": 1778795346
+      "updated_at": 1780594450
     },
     "net_192_168_68_119": {
       "device_id": "net_192_168_68_119",
@@ -2921,17 +3181,11 @@
         "event_model_version": 1,
         "discovery_sources": [],
         "last_access_test": {
-          "ok": true,
-          "status": "responsive",
-          "tested_at": 1778795346,
-          "responsive_ports": [
-            8001,
-            8002,
-            8080,
-            9080,
-            9197
-          ],
-          "latency_ms": 175,
+          "ok": false,
+          "status": "unresponsive",
+          "tested_at": 1780594438,
+          "responsive_ports": [],
+          "latency_ms": 13296,
           "type": "samsung_tv_or_media_device",
           "event_count": 12
         },
@@ -3080,13 +3334,15 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
         },
         "control_mode": "full_registered_capability_control",
-        "last_seen_discovery": 1778795346
+        "last_seen_discovery": 1778795346,
+        "last_scan_status": "not_observed_in_current_scan",
+        "last_scan_at": 1780594321
       },
       "created_at": 1778762352,
-      "updated_at": 1778795346
+      "updated_at": 1780594450
     },
     "local_webcam_0": {
       "device_id": "local_webcam_0",
@@ -3122,7 +3378,7 @@
       },
       "metadata": {
         "discovered": true,
-        "observed_at": 1778795121,
+        "observed_at": 1780594321,
         "event_model_version": 1,
         "discovery_sources": [
           "local_webcam"
@@ -3130,9 +3386,9 @@
         "last_access_test": {
           "ok": true,
           "status": "responsive",
-          "tested_at": 1778795281,
+          "tested_at": 1780594340,
           "responsive_ports": [],
-          "latency_ms": 1374,
+          "latency_ms": 1457,
           "type": "local_webcam",
           "event_count": 3
         },
@@ -3181,13 +3437,13 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
         },
         "control_mode": "full_registered_capability_control",
-        "last_seen_discovery": 1778795121
+        "last_seen_discovery": 1780594321
       },
       "created_at": 1778762352,
-      "updated_at": 1778795346
+      "updated_at": 1780594450
     },
     "net_192_168_68_117": {
       "device_id": "net_192_168_68_117",
@@ -3215,7 +3471,8 @@
         "onvif_xaddrs": [],
         "mdns_services": [],
         "mac": "8c:79:f5:49:86:01",
-        "discovered_by": "arp_cache"
+        "discovered_by": "arp_cache",
+        "last_discovered_ports": []
       },
       "metadata": {
         "discovered": true,
@@ -3224,7 +3481,7 @@
           "adapter_hint": "network_probe",
           "name_hint": "ARP neighbor"
         },
-        "observed_at": 1778795116,
+        "observed_at": 1780594315,
         "event_model_version": 1,
         "discovery_sources": [
           "arp_cache"
@@ -3232,9 +3489,9 @@
         "last_access_test": {
           "ok": false,
           "status": "unresponsive",
-          "tested_at": 1778795343,
+          "tested_at": 1780594422,
           "responsive_ports": [],
-          "latency_ms": 5689,
+          "latency_ms": 5700,
           "type": "network_device",
           "event_count": 1
         },
@@ -3257,12 +3514,345 @@
           "requires_registry": true,
           "requires_user_command": true,
           "risk_gate_active": true,
-          "granted_at": 1778795346
+          "granted_at": 1780594450
+        },
+        "control_mode": "full_registered_capability_control",
+        "last_seen_discovery": 1780594321
+      },
+      "created_at": 1778795121,
+      "updated_at": 1780594450
+    },
+    "net_192_168_68_107": {
+      "device_id": "net_192_168_68_107",
+      "name": "ARP neighbor 192.168.68.107",
+      "type": "network_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state"
+      ],
+      "risk_level": 0,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.107",
+        "ARP neighbor",
+        "network_device"
+      ],
+      "config": {
+        "ip": "192.168.68.107",
+        "open_ports": [],
+        "web_urls": [],
+        "rtsp_url_candidates": [],
+        "onvif_xaddrs": [],
+        "mdns_services": [],
+        "mac": "bc:35:1e:95:5a:9f",
+        "discovered_by": "arp_cache"
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "network_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "ARP neighbor"
+        },
+        "observed_at": 1780594315,
+        "event_model_version": 1,
+        "discovery_sources": [
+          "arp_cache"
+        ],
+        "last_access_test": {
+          "ok": false,
+          "status": "unresponsive",
+          "tested_at": 1780594375,
+          "responsive_ports": [],
+          "latency_ms": 5770,
+          "type": "network_device",
+          "event_count": 1
+        },
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          }
+        ],
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1780594450
         },
         "control_mode": "full_registered_capability_control"
       },
-      "created_at": 1778795121,
-      "updated_at": 1778795346
+      "created_at": 1780594321,
+      "updated_at": 1780594450
+    },
+    "net_192_168_68_114": {
+      "device_id": "net_192_168_68_114",
+      "name": "ARP neighbor 192.168.68.114",
+      "type": "network_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state"
+      ],
+      "risk_level": 0,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.114",
+        "ARP neighbor",
+        "network_device"
+      ],
+      "config": {
+        "ip": "192.168.68.114",
+        "open_ports": [],
+        "web_urls": [],
+        "rtsp_url_candidates": [],
+        "onvif_xaddrs": [],
+        "mdns_services": [],
+        "mac": "fa:b3:45:be:dd:26",
+        "discovered_by": "arp_cache"
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "network_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "ARP neighbor"
+        },
+        "observed_at": 1780594315,
+        "event_model_version": 1,
+        "discovery_sources": [
+          "arp_cache"
+        ],
+        "last_access_test": {
+          "ok": false,
+          "status": "unresponsive",
+          "tested_at": 1780594408,
+          "responsive_ports": [],
+          "latency_ms": 5702,
+          "type": "network_device",
+          "event_count": 1
+        },
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          }
+        ],
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1780594450
+        },
+        "control_mode": "full_registered_capability_control"
+      },
+      "created_at": 1780594321,
+      "updated_at": 1780594450
+    },
+    "net_192_168_68_122": {
+      "device_id": "net_192_168_68_122",
+      "name": "ARP neighbor 192.168.68.122",
+      "type": "network_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state"
+      ],
+      "risk_level": 0,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.122",
+        "ARP neighbor",
+        "network_device"
+      ],
+      "config": {
+        "ip": "192.168.68.122",
+        "open_ports": [],
+        "web_urls": [],
+        "rtsp_url_candidates": [],
+        "onvif_xaddrs": [],
+        "mdns_services": [],
+        "mac": "5c:cd:5b:53:95:30",
+        "discovered_by": "arp_cache"
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "network_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "ARP neighbor"
+        },
+        "observed_at": 1780594315,
+        "event_model_version": 1,
+        "discovery_sources": [
+          "arp_cache"
+        ],
+        "last_access_test": {
+          "ok": false,
+          "status": "unresponsive",
+          "tested_at": 1780594444,
+          "responsive_ports": [],
+          "latency_ms": 5763,
+          "type": "network_device",
+          "event_count": 1
+        },
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          }
+        ],
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1780594450
+        },
+        "control_mode": "full_registered_capability_control"
+      },
+      "created_at": 1780594321,
+      "updated_at": 1780594450
+    },
+    "net_192_168_68_250": {
+      "device_id": "net_192_168_68_250",
+      "name": "ARP neighbor 192.168.68.250",
+      "type": "network_device",
+      "location": "rede_local",
+      "adapter": "network_probe",
+      "capabilities": [
+        "read_state",
+        "open_web_interface"
+      ],
+      "risk_level": 0,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "192.168.68.250",
+        "ARP neighbor",
+        "network_device",
+        "HTTP device",
+        "http_device"
+      ],
+      "config": {
+        "ip": "192.168.68.250",
+        "open_ports": [
+          80,
+          443
+        ],
+        "web_urls": [
+          "http://192.168.68.250/",
+          "https://192.168.68.250/"
+        ],
+        "rtsp_url_candidates": [],
+        "onvif_xaddrs": [],
+        "mdns_services": [],
+        "mac": "28:ee:52:c0:14:d8",
+        "discovered_by": "tcp_port_probe",
+        "last_discovered_ports": [
+          80,
+          443
+        ],
+        "last_access_ports": [
+          80,
+          443
+        ]
+      },
+      "metadata": {
+        "discovered": true,
+        "fingerprint": {
+          "type": "http_device",
+          "adapter_hint": "network_probe",
+          "name_hint": "HTTP device"
+        },
+        "observed_at": 1780594450,
+        "event_model_version": 1,
+        "discovery_sources": [],
+        "last_seen_discovery": 1780594450,
+        "events": [
+          {
+            "event": "read_state",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "protocol": "network_probe"
+            }
+          },
+          {
+            "event": "open_web_interface",
+            "risk_level": 0,
+            "requires_confirmation": false,
+            "registered_capability": true,
+            "executable": true,
+            "detail": {
+              "urls": [
+                "http://192.168.68.250/",
+                "https://192.168.68.250/"
+              ]
+            }
+          }
+        ],
+        "last_access_test": {
+          "ok": true,
+          "status": "responsive",
+          "tested_at": 1780594450,
+          "responsive_ports": [
+            80,
+            443
+          ],
+          "latency_ms": 537,
+          "type": "http_device",
+          "event_count": 2
+        },
+        "control_grant": {
+          "granted": true,
+          "scope": "registered_capabilities",
+          "reason": "access_battery_responsive_devices_full_control",
+          "requires_registry": true,
+          "requires_user_command": true,
+          "risk_gate_active": true,
+          "granted_at": 1780594450
+        },
+        "control_mode": "full_registered_capability_control"
+      },
+      "created_at": 1780594321,
+      "updated_at": 1780594450
     }
   }
 }
