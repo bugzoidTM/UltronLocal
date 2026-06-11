@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from ultronpro import (
+    action_prediction,
     adaptive_control,
     cognitive_patch_loop,
     cognitive_patches,
@@ -19,6 +20,8 @@ from ultronpro import (
     reflexion_agent,
     rl_policy,
     sleep_cycle,
+    system_tuner,
+    trajectory_evaluator,
     trusted_acquisition_loop,
 )
 from ultronpro.core.ports import RuntimePorts, default_ports
@@ -90,6 +93,14 @@ ACTION_CATALOG: dict[str, dict[str, Any]] = {
         "base_priority": 0.55,
         "cooldown_sec": 180,
         "description": "execute meta-cognitive reflexion to evaluate recent traces and propose hypotheses",
+    },
+    "trajectory_tuning": {
+        "kind": "trajectory_tuning",
+        "drive": "coherence",
+        "cost": 0.18,
+        "base_priority": 0.52,
+        "cooldown_sec": 1800,
+        "description": "evaluate recent trajectories/failures and adjust prompts, tools, memory, subagents or aux code",
     },
 }
 
@@ -248,14 +259,16 @@ def _action_need_bonus(kind: str, observation: dict[str, Any]) -> float:
         return 0.20 if any(token in domain_blob for token in ("action", "plan", "execute", "autonomy")) else 0.10
     if kind == "reflexion_tick":
         return 0.18 if any(token in domain_blob for token in ("hypothesis", "error", "reflection", "meta")) else 0.08
+    if kind == "trajectory_tuning":
+        return 0.18 if any(token in domain_blob for token in ("error", "falha", "failure", "regress", "miscalibr")) else 0.08
     return 0.0
 
 
-def _cooldown_remaining(kind: str, state: dict[str, Any], *, now: int | None = None) -> int:
+def _cooldown_remaining(kind: str, state: dict[str, Any], *, now: int | None = None, cooldown_mult: float = 1.0) -> int:
     item = ACTION_CATALOG[kind]
     last = int((state.get("last_action_ts") or {}).get(kind) or 0)
     elapsed = int(now or _now()) - last
-    return max(0, int(item.get("cooldown_sec") or 0) - elapsed)
+    return max(0, int(int(item.get("cooldown_sec") or 0) * max(0.0, float(cooldown_mult))) - elapsed)
 
 
 def candidate_actions(observation: dict[str, Any] | None = None, *, include_cooldown: bool = False) -> list[dict[str, Any]]:
@@ -264,21 +277,33 @@ def candidate_actions(observation: dict[str, Any] | None = None, *, include_cool
     context = str(obs.get("context") or "normal")
     pressure = _state_pressure(obs)
     now = _now()
+    try:
+        tuner_overrides = system_tuner.active_overrides(now=now)
+    except Exception:
+        tuner_overrides = {}
     out: list[dict[str, Any]] = []
     for kind, template in ACTION_CATALOG.items():
-        cooldown = _cooldown_remaining(kind, state, now=now)
+        override = tuner_overrides.get(kind) if isinstance(tuner_overrides.get(kind), dict) else {}
+        cooldown = _cooldown_remaining(kind, state, now=now, cooldown_mult=float(override.get("cooldown_mult") or 1.0))
         if cooldown > 0 and not include_cooldown:
             continue
         rl_adj = int(rl_policy.sample_priority(kind, context))
         bonus = _action_need_bonus(kind, obs)
         cost = float(template.get("cost") or 0.0)
-        score = float(template.get("base_priority") or 0.0) + (0.16 * rl_adj) + bonus + (0.20 * pressure) - (0.18 * cost)
+        try:
+            curiosity = float(action_prediction.exploration_bonus(kind, context))
+        except Exception:
+            curiosity = 0.0
+        tuner_delta = float(override.get("priority_delta") or 0.0)
+        score = float(template.get("base_priority") or 0.0) + (0.16 * rl_adj) + bonus + curiosity + tuner_delta + (0.20 * pressure) - (0.18 * cost)
         row = dict(template)
         row.update({
             "context": context,
             "score": round(score, 4),
             "rl_priority_adjustment": rl_adj,
             "need_bonus": round(bonus, 4),
+            "prediction_curiosity_bonus": round(curiosity, 4),
+            "tuner_priority_delta": round(tuner_delta, 4),
             "state_pressure": round(pressure, 4),
             "cooldown_remaining_sec": cooldown,
             "non_llm": True,
@@ -365,6 +390,15 @@ def _execute_candidate(candidate: dict[str, Any], *, ports: RuntimePorts | None 
         return autonomous_cognition.tick()
     if kind == "reflexion_tick":
         return reflexion_agent.tick()
+    if kind == "trajectory_tuning":
+        evaluation = trajectory_evaluator.evaluate()
+        tuning = system_tuner.apply_findings(evaluation.get("findings") or [], ports=ports)
+        return {
+            "ok": bool(evaluation.get("ok")),
+            "findings_count": int(evaluation.get("findings_count") or 0),
+            "levers": evaluation.get("levers") or [],
+            "tuning": tuning,
+        }
     return {"ok": False, "error": "unknown_action_kind", "kind": kind}
 
 
@@ -459,6 +493,17 @@ def _specific_outcome_score(kind: str, result: dict[str, Any]) -> tuple[float, d
         if result.get("review_triggered"):
             score += 0.20
         evidence = {"hypotheses": len(hyps), "probes": len(probes)}
+        return _clip01(score), evidence
+    if kind == "trajectory_tuning":
+        tuning = result.get("tuning") if isinstance(result.get("tuning"), dict) else {}
+        findings = int(result.get("findings_count") or 0)
+        applied = int(tuning.get("applied_count") or 0)
+        reverted = sum(
+            1 for item in (tuning.get("applied") or [])
+            if isinstance(item, dict) and item.get("action_taken") == "revert_override"
+        )
+        score = 0.16 + min(0.24, findings * 0.06) + min(0.36, applied * 0.12) + min(0.10, reverted * 0.10)
+        evidence = {"findings": findings, "adjustments_applied": applied, "reverted": reverted, "levers": result.get("levers")}
         return _clip01(score), evidence
     return (0.10 if result.get("ok") else 0.0), {}
 
@@ -612,6 +657,7 @@ def _record_consequence(
     result: dict[str, Any],
     *,
     ports: RuntimePorts | None = None,
+    settlement: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     ports = ports or default_ports()
     kind = str(candidate.get("kind") or "unknown")
@@ -619,6 +665,13 @@ def _record_consequence(
     reward = float(reward_report.get("reward") or 0.0)
     updates: dict[str, Any] = {}
     updates["rl_policy"] = rl_policy.update(kind, context, reward)
+    if settlement:
+        updates["action_prediction"] = {
+            "predicted_reward": settlement.get("predicted_reward"),
+            "surprise": settlement.get("surprise"),
+            "high_surprise": settlement.get("high_surprise"),
+            "learning_trend": (settlement.get("learning") or {}).get("trend"),
+        }
     try:
         updates["continuous_learning"] = continuous_learning.record_learning_feedback(
             task_type=f"online_rl:{kind}",
@@ -691,6 +744,14 @@ def run_once(
             "observation": before,
         }
 
+    # Compromisso preditivo: antes de agir, o sistema declara o que espera
+    # que aconteça; depois compara com a consequência real e aprende do erro.
+    prediction: dict[str, Any] | None
+    try:
+        prediction = action_prediction.predict(candidate, before)
+    except Exception:
+        prediction = None
+
     action_result: dict[str, Any]
     try:
         raw = _execute_candidate(candidate, ports=ports)
@@ -707,7 +768,17 @@ def run_once(
         after=after,
         duration_ms=duration_ms,
     )
-    updates = _record_consequence(candidate, reward_report, duration_ms, action_result, ports=ports)
+    settlement: dict[str, Any] | None = None
+    if prediction:
+        try:
+            settlement = action_prediction.settle(
+                prediction,
+                float(reward_report.get("reward") or 0.0),
+                detail={"action_ok": bool(action_result.get("ok")), "duration_ms": duration_ms},
+            )
+        except Exception:
+            settlement = None
+    updates = _record_consequence(candidate, reward_report, duration_ms, action_result, ports=ports, settlement=settlement)
 
     state = _load_state()
     last_action_ts = dict(state.get("last_action_ts") or {})
@@ -731,6 +802,8 @@ def run_once(
         "selection": selection,
         "action_result": action_result,
         "reward": reward_report,
+        "prediction": prediction,
+        "prediction_settlement": settlement,
         "policy_updates": updates,
         "before": {
             "context": before.get("context"),

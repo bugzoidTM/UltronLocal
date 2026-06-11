@@ -26,12 +26,14 @@ def _obs(priority: float = 0.8, coherence: float = 0.6):
 
 
 def _isolate(tmp_path, monkeypatch):
-    from ultronpro import online_rl_loop, rl_policy
+    from ultronpro import action_prediction, online_rl_loop, rl_policy
     from ultronpro.core.ports import recording_ports
 
     monkeypatch.setattr(online_rl_loop, "RUN_LOG_PATH", tmp_path / "online_rl_runs.jsonl")
     monkeypatch.setattr(online_rl_loop, "STATE_PATH", tmp_path / "online_rl_state.json")
     monkeypatch.setattr(rl_policy, "STATE_PATH", tmp_path / "rl_policy_state.json")
+    monkeypatch.setattr(action_prediction, "STATE_PATH", tmp_path / "action_prediction_state.json")
+    monkeypatch.setattr(action_prediction, "TRACE_PATH", tmp_path / "action_predictions.jsonl")
     monkeypatch.setattr(
         online_rl_loop.continuous_learning,
         "record_learning_feedback",
@@ -72,7 +74,8 @@ def test_online_rl_cycle_updates_policy_from_real_consequence(tmp_path, monkeypa
     assert result["policy_updates"]["rl_policy"]["ok"] is True
     assert summary["global_updates"] == 1
     assert summary["arms"][0]["kind"] == "trusted_acquisition"
-    assert summary["arms"][0]["n"] == 1
+    assert summary["arms"][0]["n_total"] == 1
+    assert summary["arms"][0]["n_real"] + summary["arms"][0]["n_synthetic"] == 1
     assert events.rows[0]["kind"] == "online_rl.consequence"
     assert workspace.rows[0]["channel"] == "online_rl.consequence"
 

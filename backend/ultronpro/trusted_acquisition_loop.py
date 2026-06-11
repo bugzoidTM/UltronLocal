@@ -21,6 +21,11 @@ RUN_SCHEMA = "ultron.trusted_acquisition_run.v1"
 NEED_SCHEMA = "ultron.acquisition_need.v1"
 EXTRACTION_SCHEMA = "ultron.trusted_extraction.v1"
 
+# Após N aplicações consecutivas sem conteúdo novo, a lacuna é considerada
+# saturada e decide_need passa a escolher a próxima candidata.
+SATURATION_LIMIT = 3
+APPLIED_FP_CAP = 300
+
 DEFAULT_TRUSTED_DOMAINS = {
     "docs.python.org",
     "developer.mozilla.org",
@@ -81,6 +86,16 @@ TRUSTED_SOURCE_SEEDS = [
         "url": "https://docs.python.org/3/library/sqlite3.html",
         "terms": ["memory", "digest", "store", "sqlite", "persistence"],
     },
+    {
+        "title": "Python asyncio event loop documentation",
+        "url": "https://docs.python.org/3/library/asyncio-eventloop.html",
+        "terms": ["asyncio", "event", "loop", "loops", "lag", "background", "runtime", "lifecycle", "pressure", "estabilidade", "carga"],
+    },
+    {
+        "title": "Python asyncio development and debugging documentation",
+        "url": "https://docs.python.org/3/library/asyncio-dev.html",
+        "terms": ["asyncio", "loop", "loops", "blocking", "debug", "slow", "callback", "runtime", "lifecycle"],
+    },
 ]
 
 CODE_TARGET_TERMS = {
@@ -119,10 +134,19 @@ STOPWORDS = {
     "por",
     "que",
     "sem",
+    "ser",
+    "sob",
+    "sobre",
+    "mais",
     "the",
     "uma",
     "with",
 }
+
+# Tokens que só carregam ruído de telemetria (números, números com unidade,
+# literais booleanos) não devem virar termos de busca.
+_JUNK_TOKEN_RE = re.compile(r"^\d+[a-z]{0,4}$")
+_LITERAL_TOKENS = {"true", "false", "none", "null", "nan"}
 
 
 def _now() -> int:
@@ -171,6 +195,49 @@ def _read_jsonl(path: Path, limit: int = 20) -> list[dict[str, Any]]:
         return []
 
 
+def _state_dict() -> dict[str, Any]:
+    state = _read_json(STATE_PATH, {})
+    return state if isinstance(state, dict) else {}
+
+
+def _applied_fingerprint_map(state: dict[str, Any] | None = None) -> dict[str, int]:
+    state = state if state is not None else _state_dict()
+    raw = state.get("applied_fingerprints")
+    if not isinstance(raw, dict):
+        return {}
+    out: dict[str, int] = {}
+    for key, value in raw.items():
+        try:
+            out[str(key)] = int(value)
+        except Exception:
+            continue
+    return out
+
+
+def _gap_saturation_map(state: dict[str, Any] | None = None) -> dict[str, int]:
+    state = state if state is not None else _state_dict()
+    raw = state.get("gap_saturation")
+    if not isinstance(raw, dict):
+        return {}
+    out: dict[str, int] = {}
+    for key, value in raw.items():
+        try:
+            out[str(key)] = int(value)
+        except Exception:
+            continue
+    return out
+
+
+def _extraction_fingerprint(need: dict[str, Any], extraction: dict[str, Any]) -> str:
+    # Dedup por conteúdo (lacuna + resumo), não por URL: fontes diferentes com o
+    # mesmo resumo não acrescentam conhecimento novo.
+    basis = "|".join([
+        str(need.get("id") or ""),
+        re.sub(r"\s+", " ", str(extraction.get("summary") or "")).strip().lower()[:400],
+    ])
+    return hashlib.sha1(basis.encode("utf-8", errors="ignore")).hexdigest()[:16]
+
+
 def _clip_text(value: Any, limit: int = 1200) -> str:
     text = re.sub(r"\s+", " ", str(value or "")).strip()
     return text[: max(1, int(limit))]
@@ -180,7 +247,9 @@ def _tokens(text: str, *, min_len: int = 3) -> list[str]:
     out: list[str] = []
     for token in re.findall(r"[a-zA-Z0-9_][a-zA-Z0-9_\-]{2,}", (text or "").lower()):
         t = token.strip("-_")
-        if len(t) < min_len or t in STOPWORDS:
+        if len(t) < min_len or t in STOPWORDS or t in _LITERAL_TOKENS:
+            continue
+        if _JUNK_TOKEN_RE.match(t):
             continue
         out.append(t)
     return out
@@ -342,7 +411,7 @@ def build_search_query(need: dict[str, Any]) -> str:
     selected = terms[:8]
     domain = str(need.get("domain") or "").strip()
     suffix = "documentation reliable source"
-    if domain:
+    if domain and domain.lower() not in {str(t).lower() for t in selected}:
         selected.insert(0, domain)
     query = " ".join(x for x in selected if x)
     return _clip_text(f"{query} {suffix}", 240)
@@ -370,7 +439,18 @@ def decide_need(target_gap_id: str | None = None, *, use_cache: bool = False) ->
         return need
 
     gaps.sort(key=lambda item: (-float(item.get("priority") or 0.0), str(item.get("id") or ""), str(item.get("label") or "")))
-    return _need_from_gap(gaps[0], rank=1, total_candidates=len(gaps))
+
+    # Lacunas cujo conteúdo já saturou (mesmas fontes, mesmo resumo) cedem a vez
+    # à próxima candidata, para o ciclo continuar produzindo conhecimento novo.
+    saturation = _gap_saturation_map()
+    fresh = [gap for gap in gaps if int(saturation.get(str(gap.get("id") or ""), 0)) < SATURATION_LIMIT]
+    skipped = [str(gap.get("id") or "") for gap in gaps if gap not in fresh]
+    pool = fresh or gaps
+    need = _need_from_gap(pool[0], rank=1, total_candidates=len(gaps))
+    if skipped and fresh:
+        need["saturation_skipped"] = skipped[:10]
+        need["decision_rule"] = "highest_priority_excluding_saturated_gaps"
+    return need
 
 
 def find_trusted_sources(need: dict[str, Any], *, top_k: int = 5, allowed_domains: list[str] | None = None) -> dict[str, Any]:
@@ -423,6 +503,15 @@ def find_trusted_sources(need: dict[str, Any], *, top_k: int = 5, allowed_domain
     }
 
 
+def _term_overlap(need_terms: set[str], seed_terms: set[str]) -> list[str]:
+    matched: set[str] = set()
+    for nt in need_terms:
+        for st in seed_terms:
+            if nt == st or (len(nt) >= 4 and len(st) >= 4 and (nt in st or st in nt)):
+                matched.add(st)
+    return sorted(matched)
+
+
 def _seed_source_candidates(need: dict[str, Any], allowed: list[str], *, seen_urls: set[str]) -> list[dict[str, Any]]:
     need_terms = set(str(x).lower() for x in (need.get("need_terms") or []) if str(x).strip())
     if not need_terms:
@@ -434,7 +523,7 @@ def _seed_source_candidates(need: dict[str, Any], allowed: list[str], *, seen_ur
             continue
         seed_terms = set(str(x).lower() for x in (seed.get("terms") or []) if str(x).strip())
         seed_terms.update(_tokens(str(seed.get("title") or "")))
-        overlap = sorted(need_terms.intersection(seed_terms))
+        overlap = _term_overlap(need_terms, seed_terms)
         if not overlap:
             continue
         base_score = source_score(url, allowed)
@@ -692,7 +781,13 @@ def apply_extraction(need: dict[str, Any], extraction: dict[str, Any], *, mode: 
     if selected == "auto":
         selected = str(need.get("application_target") or "knowledge")
     if selected in {"patch", "code", "code_patch", "code_patch_proposal"}:
-        return _apply_patch_proposal(need, extraction, ports=ports)
+        # Evidência vira memória sempre; quando o alvo é código, ela também
+        # vira proposta de patch (que segue para os gates de promoção).
+        knowledge = _apply_knowledge(need, extraction, ports=ports)
+        patch = _apply_patch_proposal(need, extraction, ports=ports)
+        patch["knowledge"] = knowledge
+        patch["ok"] = bool(patch.get("ok")) or bool(knowledge.get("ok"))
+        return patch
     return _apply_knowledge(need, extraction, ports=ports)
 
 
@@ -710,9 +805,46 @@ def run_once(
     need = decide_need(target_gap_id=target_gap_id, use_cache=False)
     source_report = find_trusted_sources(need, top_k=top_k, allowed_domains=allowed_domains)
     extraction_report = extract_from_sources(need, source_report.get("trusted") or [], max_sources=max_sources)
+
+    state = _state_dict()
+    applied_fps = _applied_fingerprint_map(state)
+    saturation = _gap_saturation_map(state)
+    gap_id = str(need.get("id") or "")
+
+    useful_list = extraction_report.get("useful") or []
+    fresh_useful = [item for item in useful_list if _extraction_fingerprint(need, item) not in applied_fps]
+    extraction_report["duplicates_skipped"] = len(useful_list) - len(fresh_useful)
+    best = fresh_useful[0] if fresh_useful else {}
+    extraction_report["best"] = best
+
     application = {"ok": False, "mode": "none", "reason": "apply_disabled" if not apply else "no_useful_extraction"}
-    if apply and extraction_report.get("best"):
-        application = apply_extraction(need, extraction_report["best"], mode=application_mode, ports=ports)
+    if apply:
+        if best:
+            application = apply_extraction(need, best, mode=application_mode, ports=ports)
+        elif useful_list:
+            application = {
+                "ok": True,
+                "mode": "skip_duplicate",
+                "reason": "content_already_applied",
+                "duplicates": len(useful_list),
+            }
+
+    if apply and application.get("ok"):
+        if application.get("mode") == "skip_duplicate":
+            saturation[gap_id] = int(saturation.get(gap_id, 0)) + 1
+        elif best:
+            applied_fps[_extraction_fingerprint(need, best)] = started
+            saturation.pop(gap_id, None)
+    if len(applied_fps) > APPLIED_FP_CAP:
+        ordered = sorted(applied_fps.items(), key=lambda kv: kv[1], reverse=True)
+        applied_fps = dict(ordered[:APPLIED_FP_CAP])
+
+    if not application.get("ok"):
+        gaps_remaining = ["trusted_source_missing_or_no_useful_content"]
+    elif application.get("mode") == "skip_duplicate":
+        gaps_remaining = ["gap_content_saturated_try_next_need"]
+    else:
+        gaps_remaining = []
 
     result = {
         "schema": RUN_SCHEMA,
@@ -726,7 +858,7 @@ def run_once(
         "sources": source_report,
         "extraction": extraction_report,
         "application": application,
-        "gaps_remaining": [] if application.get("ok") else ["trusted_source_missing_or_no_useful_content"],
+        "gaps_remaining": gaps_remaining,
     }
     result["run_id"] = _hash_dict({
         "ts": started,
@@ -744,6 +876,8 @@ def run_once(
         "last_need": need,
         "last_application": application,
         "last_gaps_remaining": result["gaps_remaining"],
+        "applied_fingerprints": applied_fps,
+        "gap_saturation": saturation,
     })
     return result
 
