@@ -1,39 +1,39 @@
 {
   "schema": "ultron.online_rl_cycle.v1",
   "last_action_ts": {
-    "trusted_acquisition": 1778943736,
-    "homeostasis_tune": 1778797284,
-    "autonomous_cognition_tick": 1778962332,
-    "epistemic_gap_scan": 1778953245,
-    "reflexion_tick": 1778802689,
-    "cognitive_patch_loop": 1778808092,
-    "sleep_digest": 1778960530
+    "trusted_acquisition": 1780587608,
+    "homeostasis_tune": 1779135826,
+    "autonomous_cognition_tick": 1780585798,
+    "epistemic_gap_scan": 1779105279,
+    "reflexion_tick": 1780589408,
+    "cognitive_patch_loop": 1780593026,
+    "sleep_digest": 1780591224
   },
-  "cycle_count": 101,
-  "last_reward": 0.5656,
+  "cycle_count": 132,
+  "last_reward": 0.4054,
   "last_action": {
-    "kind": "autonomous_cognition_tick",
-    "drive": "autonomy",
-    "cost": 0.2,
-    "base_priority": 0.6,
-    "cooldown_sec": 120,
-    "description": "execute one cycle of autonomous cognition (perceive, suggest, execute, learn)",
+    "kind": "cognitive_patch_loop",
+    "drive": "competence",
+    "cost": 0.34,
+    "base_priority": 0.58,
+    "cooldown_sec": 600,
+    "description": "evaluate proposed cognitive patches through shadow/canary gates",
     "context": "normal",
-    "score": 1.0987,
+    "score": 0.9703,
     "rl_priority_adjustment": 2,
-    "need_bonus": 0.1,
-    "state_pressure": 0.5735,
+    "need_bonus": 0.0,
+    "state_pressure": 0.6576,
     "cooldown_remaining_sec": 0,
     "non_llm": true
   },
   "last_reward_report": {
-    "reward": 0.5656,
-    "ok": true,
+    "reward": 0.4054,
+    "ok": false,
     "components": {
-      "action_score": 0.6,
+      "action_score": 0.38,
       "homeostasis_delta": 0.0,
       "gap_delta": 0.0,
-      "latency_score": 0.9932,
+      "latency_score": 0.9852,
       "result_ok": true
     },
     "bonuses": {
@@ -45,14 +45,16 @@
       "hallucination": 0.0,
       "stale_source": 0.0,
       "source_404_as_useful": 0.0,
-      "loop_pressure": 0.0,
+      "loop_pressure": 0.0805,
       "rollback": 0.0
     },
     "evidence": {
-      "actions_executed": 1,
-      "consequences_learned": 1
+      "processed": 2,
+      "promoted": 0,
+      "rejected": 0,
+      "held": 0
     }
   },
-  "last_run_at": 1778962332,
-  "updated_at": 1778962332
+  "last_run_at": 1780593026,
+  "updated_at": 1780593026
 }

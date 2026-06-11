@@ -2,1392 +2,6 @@
   "patterns": {},
   "insights": [
     {
-      "id": "ins_1778759343_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778759343
-    },
-    {
-      "id": "ins_1778759343_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (7x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778759343
-    },
-    {
-      "id": "ins_1778759343_200",
-      "type": "performance",
-      "content": "6 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778759343
-    },
-    {
-      "id": "ins_1778761507_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (7x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778761507
-    },
-    {
-      "id": "ins_1778761507_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (7x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778761507
-    },
-    {
-      "id": "ins_1778761507_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778761507
-    },
-    {
-      "id": "ins_1778761507_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (7x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778761507
-    },
-    {
-      "id": "ins_1778761507_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (7x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778761507
-    },
-    {
-      "id": "ins_1778761507_200",
-      "type": "performance",
-      "content": "6 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778761507
-    },
-    {
-      "id": "ins_1778762963_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (7x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778762963
-    },
-    {
-      "id": "ins_1778762963_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778762963
-    },
-    {
-      "id": "ins_1778762963_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (7x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778762963
-    },
-    {
-      "id": "ins_1778762963_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778762963
-    },
-    {
-      "id": "ins_1778762963_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (8x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778762963
-    },
-    {
-      "id": "ins_1778762963_200",
-      "type": "performance",
-      "content": "6 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778762963
-    },
-    {
-      "id": "ins_1778764835_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778764835
-    },
-    {
-      "id": "ins_1778764835_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778764835
-    },
-    {
-      "id": "ins_1778764835_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (8x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778764835
-    },
-    {
-      "id": "ins_1778764835_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778764835
-    },
-    {
-      "id": "ins_1778764835_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (8x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778764835
-    },
-    {
-      "id": "ins_1778764835_200",
-      "type": "performance",
-      "content": "6 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778764835
-    },
-    {
-      "id": "ins_1778766656_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778766656
-    },
-    {
-      "id": "ins_1778766656_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (8x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778766656
-    },
-    {
-      "id": "ins_1778766656_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778766656
-    },
-    {
-      "id": "ins_1778766656_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (8x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778766656
-    },
-    {
-      "id": "ins_1778766656_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778766656
-    },
-    {
-      "id": "ins_1778766656_200",
-      "type": "performance",
-      "content": "7 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778766656
-    },
-    {
-      "id": "ins_1778775316_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (8x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778775316
-    },
-    {
-      "id": "ins_1778775316_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778775316
-    },
-    {
-      "id": "ins_1778775316_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (9x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778775316
-    },
-    {
-      "id": "ins_1778775316_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778775316
-    },
-    {
-      "id": "ins_1778775316_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778775316
-    },
-    {
-      "id": "ins_1778775316_200",
-      "type": "performance",
-      "content": "7 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778775316
-    },
-    {
-      "id": "ins_1778776285_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (7x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778776285
-    },
-    {
-      "id": "ins_1778776285_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778776285
-    },
-    {
-      "id": "ins_1778776285_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778776285
-    },
-    {
-      "id": "ins_1778776285_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778776285
-    },
-    {
-      "id": "ins_1778776285_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778776285
-    },
-    {
-      "id": "ins_1778776285_200",
-      "type": "performance",
-      "content": "7 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778776285
-    },
-    {
-      "id": "ins_1778778114_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778778114
-    },
-    {
-      "id": "ins_1778778114_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778778114
-    },
-    {
-      "id": "ins_1778778114_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778778114
-    },
-    {
-      "id": "ins_1778778114_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778778114
-    },
-    {
-      "id": "ins_1778778114_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778778114
-    },
-    {
-      "id": "ins_1778778114_200",
-      "type": "performance",
-      "content": "8 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778778114
-    },
-    {
-      "id": "ins_1778779925_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778779925
-    },
-    {
-      "id": "ins_1778779925_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778779925
-    },
-    {
-      "id": "ins_1778779925_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778779925
-    },
-    {
-      "id": "ins_1778779925_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778779925
-    },
-    {
-      "id": "ins_1778779925_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778779925
-    },
-    {
-      "id": "ins_1778779925_200",
-      "type": "performance",
-      "content": "8 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778779925
-    },
-    {
-      "id": "ins_1778795484_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (11x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778795484
-    },
-    {
-      "id": "ins_1778795484_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778795484
-    },
-    {
-      "id": "ins_1778795484_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778795484
-    },
-    {
-      "id": "ins_1778795484_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778795484
-    },
-    {
-      "id": "ins_1778795484_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778795484
-    },
-    {
-      "id": "ins_1778795484_200",
-      "type": "performance",
-      "content": "8 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778795484
-    },
-    {
-      "id": "ins_1778797284_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778797284
-    },
-    {
-      "id": "ins_1778797284_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778797284
-    },
-    {
-      "id": "ins_1778797284_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778797284
-    },
-    {
-      "id": "ins_1778797284_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778797284
-    },
-    {
-      "id": "ins_1778797284_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778797284
-    },
-    {
-      "id": "ins_1778797284_200",
-      "type": "performance",
-      "content": "8 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778797284
-    },
-    {
-      "id": "ins_1778799085_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778799085
-    },
-    {
-      "id": "ins_1778799085_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778799085
-    },
-    {
-      "id": "ins_1778799085_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778799085
-    },
-    {
-      "id": "ins_1778799085_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778799085
-    },
-    {
-      "id": "ins_1778799085_200",
-      "type": "failure_pattern",
-      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
-      "created_at": 1778799085
-    },
-    {
-      "id": "ins_1778799085_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778799085
-    },
-    {
-      "id": "ins_1778799085_200",
-      "type": "performance",
-      "content": "8 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778799085
-    },
-    {
-      "id": "ins_1778800886_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778800886
-    },
-    {
-      "id": "ins_1778800886_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778800886
-    },
-    {
-      "id": "ins_1778800886_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778800886
-    },
-    {
-      "id": "ins_1778800886_200",
-      "type": "failure_pattern",
-      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
-      "created_at": 1778800886
-    },
-    {
-      "id": "ins_1778800886_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778800886
-    },
-    {
-      "id": "ins_1778800886_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778800886
-    },
-    {
-      "id": "ins_1778800886_200",
-      "type": "performance",
-      "content": "8 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778800886
-    },
-    {
-      "id": "ins_1778802689_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778802689
-    },
-    {
-      "id": "ins_1778802689_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (7x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778802689
-    },
-    {
-      "id": "ins_1778802689_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778802689
-    },
-    {
-      "id": "ins_1778802689_200",
-      "type": "failure_pattern",
-      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
-      "created_at": 1778802689
-    },
-    {
-      "id": "ins_1778802689_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778802689
-    },
-    {
-      "id": "ins_1778802689_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778802689
-    },
-    {
-      "id": "ins_1778802689_200",
-      "type": "performance",
-      "content": "8 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778802689
-    },
-    {
-      "id": "ins_1778804490_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778804490
-    },
-    {
-      "id": "ins_1778804490_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (7x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778804490
-    },
-    {
-      "id": "ins_1778804490_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778804490
-    },
-    {
-      "id": "ins_1778804490_200",
-      "type": "failure_pattern",
-      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
-      "created_at": 1778804490
-    },
-    {
-      "id": "ins_1778804490_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778804490
-    },
-    {
-      "id": "ins_1778804490_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778804490
-    },
-    {
-      "id": "ins_1778804490_200",
-      "type": "performance",
-      "content": "7 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778804490
-    },
-    {
-      "id": "ins_1778806290_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (7x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778806290
-    },
-    {
-      "id": "ins_1778806290_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778806290
-    },
-    {
-      "id": "ins_1778806290_200",
-      "type": "failure_pattern",
-      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
-      "created_at": 1778806290
-    },
-    {
-      "id": "ins_1778806290_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778806290
-    },
-    {
-      "id": "ins_1778806290_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778806290
-    },
-    {
-      "id": "ins_1778806290_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778806290
-    },
-    {
-      "id": "ins_1778806290_200",
-      "type": "performance",
-      "content": "7 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778806290
-    },
-    {
-      "id": "ins_1778808092_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (7x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778808092
-    },
-    {
-      "id": "ins_1778808092_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778808092
-    },
-    {
-      "id": "ins_1778808092_200",
-      "type": "failure_pattern",
-      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
-      "created_at": 1778808092
-    },
-    {
-      "id": "ins_1778808092_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778808092
-    },
-    {
-      "id": "ins_1778808092_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778808092
-    },
-    {
-      "id": "ins_1778808092_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778808092
-    },
-    {
-      "id": "ins_1778808092_200",
-      "type": "performance",
-      "content": "7 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778808092
-    },
-    {
-      "id": "ins_1778935599_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (7x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778935599
-    },
-    {
-      "id": "ins_1778935599_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778935599
-    },
-    {
-      "id": "ins_1778935599_200",
-      "type": "failure_pattern",
-      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
-      "created_at": 1778935599
-    },
-    {
-      "id": "ins_1778935599_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778935599
-    },
-    {
-      "id": "ins_1778935599_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778935599
-    },
-    {
-      "id": "ins_1778935599_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778935599
-    },
-    {
-      "id": "ins_1778935599_200",
-      "type": "performance",
-      "content": "6 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778935599
-    },
-    {
-      "id": "ins_1778936218_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778936218
-    },
-    {
-      "id": "ins_1778936218_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778936218
-    },
-    {
-      "id": "ins_1778936218_200",
-      "type": "failure_pattern",
-      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
-      "created_at": 1778936218
-    },
-    {
-      "id": "ins_1778936218_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778936218
-    },
-    {
-      "id": "ins_1778936218_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778936218
-    },
-    {
-      "id": "ins_1778936218_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778936218
-    },
-    {
-      "id": "ins_1778936218_200",
-      "type": "performance",
-      "content": "7 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778936218
-    },
-    {
-      "id": "ins_1778938033_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778938033
-    },
-    {
-      "id": "ins_1778938033_200",
-      "type": "failure_pattern",
-      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
-      "created_at": 1778938033
-    },
-    {
-      "id": "ins_1778938033_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778938033
-    },
-    {
-      "id": "ins_1778938033_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778938033
-    },
-    {
-      "id": "ins_1778938033_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778938033
-    },
-    {
-      "id": "ins_1778938033_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (9x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778938033
-    },
-    {
-      "id": "ins_1778938033_200",
-      "type": "performance",
-      "content": "8 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778938033
-    },
-    {
-      "id": "ins_1778939996_200",
-      "type": "failure_pattern",
-      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
-      "created_at": 1778939996
-    },
-    {
-      "id": "ins_1778939996_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778939996
-    },
-    {
-      "id": "ins_1778939996_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778939996
-    },
-    {
-      "id": "ins_1778939996_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778939996
-    },
-    {
-      "id": "ins_1778939996_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778939996
-    },
-    {
-      "id": "ins_1778939996_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (9x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778939996
-    },
-    {
-      "id": "ins_1778939996_200",
-      "type": "performance",
-      "content": "9 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778939996
-    },
-    {
-      "id": "ins_1778941934_200",
-      "type": "failure_pattern",
-      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
-      "created_at": 1778941934
-    },
-    {
-      "id": "ins_1778941934_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778941934
-    },
-    {
-      "id": "ins_1778941934_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778941934
-    },
-    {
-      "id": "ins_1778941934_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778941934
-    },
-    {
-      "id": "ins_1778941934_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778941934
-    },
-    {
-      "id": "ins_1778941934_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (9x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778941934
-    },
-    {
-      "id": "ins_1778941934_200",
-      "type": "performance",
-      "content": "9 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778941934
-    },
-    {
-      "id": "ins_1778943736_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778943736
-    },
-    {
-      "id": "ins_1778943736_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778943736
-    },
-    {
-      "id": "ins_1778943736_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778943736
-    },
-    {
-      "id": "ins_1778943736_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778943736
-    },
-    {
-      "id": "ins_1778943736_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778943736
-    },
-    {
-      "id": "ins_1778943736_200",
-      "type": "performance",
-      "content": "9 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778943736
-    },
-    {
-      "id": "ins_1778949643_200",
-      "type": "failure_pattern",
-      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (6x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
-      "created_at": 1778949643
-    },
-    {
-      "id": "ins_1778949643_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778949643
-    },
-    {
-      "id": "ins_1778949643_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778949643
-    },
-    {
-      "id": "ins_1778949643_200",
-      "type": "failure_pattern",
-      "content": "online_rl:reflexion_tick falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:reflexion_tick_None",
-      "created_at": 1778949643
-    },
-    {
-      "id": "ins_1778949643_200",
-      "type": "failure_pattern",
-      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
-      "created_at": 1778949643
-    },
-    {
-      "id": "ins_1778949643_200",
-      "type": "performance",
-      "content": "9 tarefas com latência > 5s detectadas",
-      "source": "continuous_learning",
-      "confidence": 0.7,
-      "action_suggested": "otimizar_latencia",
-      "created_at": 1778949643
-    },
-    {
-      "id": "ins_1778951444_200",
-      "type": "failure_pattern",
-      "content": "online_rl:homeostasis_tune falha frequentemente com None (5x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
-      "created_at": 1778951444
-    },
-    {
-      "id": "ins_1778951444_200",
-      "type": "failure_pattern",
-      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (4x)",
-      "source": "continuous_learning",
-      "confidence": 1.0,
-      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
-      "created_at": 1778951444
-    },
-    {
       "id": "ins_1778951444_200",
       "type": "failure_pattern",
       "content": "online_rl:reflexion_tick falha frequentemente com None (4x)",
@@ -1800,6 +414,1392 @@
       "confidence": 0.7,
       "action_suggested": "otimizar_latencia",
       "created_at": 1778962331
+    },
+    {
+      "id": "ins_1779038618_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779038618
+    },
+    {
+      "id": "ins_1779038618_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779038618
+    },
+    {
+      "id": "ins_1779038618_200",
+      "type": "failure_pattern",
+      "content": "online_rl:homeostasis_tune falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
+      "created_at": 1779038618
+    },
+    {
+      "id": "ins_1779038618_200",
+      "type": "failure_pattern",
+      "content": "online_rl:reflexion_tick falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:reflexion_tick_None",
+      "created_at": 1779038618
+    },
+    {
+      "id": "ins_1779038618_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (6x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779038618
+    },
+    {
+      "id": "ins_1779038618_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779038618
+    },
+    {
+      "id": "ins_1779038618_200",
+      "type": "performance",
+      "content": "12 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779038618
+    },
+    {
+      "id": "ins_1779041059_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (4x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779041059
+    },
+    {
+      "id": "ins_1779041059_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779041059
+    },
+    {
+      "id": "ins_1779041059_200",
+      "type": "failure_pattern",
+      "content": "online_rl:homeostasis_tune falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
+      "created_at": 1779041059
+    },
+    {
+      "id": "ins_1779041059_200",
+      "type": "failure_pattern",
+      "content": "online_rl:reflexion_tick falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:reflexion_tick_None",
+      "created_at": 1779041059
+    },
+    {
+      "id": "ins_1779041059_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (6x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779041059
+    },
+    {
+      "id": "ins_1779041059_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779041059
+    },
+    {
+      "id": "ins_1779041059_200",
+      "type": "performance",
+      "content": "12 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779041059
+    },
+    {
+      "id": "ins_1779044170_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779044170
+    },
+    {
+      "id": "ins_1779044170_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779044170
+    },
+    {
+      "id": "ins_1779044170_200",
+      "type": "failure_pattern",
+      "content": "online_rl:homeostasis_tune falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
+      "created_at": 1779044170
+    },
+    {
+      "id": "ins_1779044170_200",
+      "type": "failure_pattern",
+      "content": "online_rl:reflexion_tick falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:reflexion_tick_None",
+      "created_at": 1779044170
+    },
+    {
+      "id": "ins_1779044170_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (6x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779044170
+    },
+    {
+      "id": "ins_1779044170_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779044170
+    },
+    {
+      "id": "ins_1779044170_200",
+      "type": "performance",
+      "content": "13 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779044170
+    },
+    {
+      "id": "ins_1779045971_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (9x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779045971
+    },
+    {
+      "id": "ins_1779045971_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779045971
+    },
+    {
+      "id": "ins_1779045971_200",
+      "type": "failure_pattern",
+      "content": "online_rl:homeostasis_tune falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
+      "created_at": 1779045971
+    },
+    {
+      "id": "ins_1779045971_200",
+      "type": "failure_pattern",
+      "content": "online_rl:reflexion_tick falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:reflexion_tick_None",
+      "created_at": 1779045971
+    },
+    {
+      "id": "ins_1779045971_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (6x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779045971
+    },
+    {
+      "id": "ins_1779045971_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779045971
+    },
+    {
+      "id": "ins_1779045971_200",
+      "type": "performance",
+      "content": "13 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779045971
+    },
+    {
+      "id": "ins_1779047800_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (9x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779047800
+    },
+    {
+      "id": "ins_1779047800_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779047800
+    },
+    {
+      "id": "ins_1779047800_200",
+      "type": "failure_pattern",
+      "content": "online_rl:homeostasis_tune falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
+      "created_at": 1779047800
+    },
+    {
+      "id": "ins_1779047800_200",
+      "type": "failure_pattern",
+      "content": "online_rl:reflexion_tick falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:reflexion_tick_None",
+      "created_at": 1779047800
+    },
+    {
+      "id": "ins_1779047800_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (6x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779047800
+    },
+    {
+      "id": "ins_1779047800_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779047800
+    },
+    {
+      "id": "ins_1779047800_200",
+      "type": "performance",
+      "content": "14 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779047800
+    },
+    {
+      "id": "ins_1779069416_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (9x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779069416
+    },
+    {
+      "id": "ins_1779069416_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779069416
+    },
+    {
+      "id": "ins_1779069416_200",
+      "type": "failure_pattern",
+      "content": "online_rl:homeostasis_tune falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
+      "created_at": 1779069416
+    },
+    {
+      "id": "ins_1779069416_200",
+      "type": "failure_pattern",
+      "content": "online_rl:reflexion_tick falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:reflexion_tick_None",
+      "created_at": 1779069416
+    },
+    {
+      "id": "ins_1779069416_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (6x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779069416
+    },
+    {
+      "id": "ins_1779069416_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779069416
+    },
+    {
+      "id": "ins_1779069416_200",
+      "type": "performance",
+      "content": "14 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779069416
+    },
+    {
+      "id": "ins_1779105279_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (8x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779105279
+    },
+    {
+      "id": "ins_1779105279_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779105279
+    },
+    {
+      "id": "ins_1779105279_200",
+      "type": "failure_pattern",
+      "content": "online_rl:homeostasis_tune falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
+      "created_at": 1779105279
+    },
+    {
+      "id": "ins_1779105279_200",
+      "type": "failure_pattern",
+      "content": "online_rl:reflexion_tick falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:reflexion_tick_None",
+      "created_at": 1779105279
+    },
+    {
+      "id": "ins_1779105279_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (6x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779105279
+    },
+    {
+      "id": "ins_1779105279_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779105279
+    },
+    {
+      "id": "ins_1779105279_200",
+      "type": "performance",
+      "content": "14 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779105279
+    },
+    {
+      "id": "ins_1779107081_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (4x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779107081
+    },
+    {
+      "id": "ins_1779107081_200",
+      "type": "failure_pattern",
+      "content": "online_rl:homeostasis_tune falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
+      "created_at": 1779107081
+    },
+    {
+      "id": "ins_1779107081_200",
+      "type": "failure_pattern",
+      "content": "online_rl:reflexion_tick falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:reflexion_tick_None",
+      "created_at": 1779107081
+    },
+    {
+      "id": "ins_1779107081_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (6x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779107081
+    },
+    {
+      "id": "ins_1779107081_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (7x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779107081
+    },
+    {
+      "id": "ins_1779107081_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779107081
+    },
+    {
+      "id": "ins_1779107081_200",
+      "type": "performance",
+      "content": "14 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779107081
+    },
+    {
+      "id": "ins_1779109007_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (4x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779109007
+    },
+    {
+      "id": "ins_1779109007_200",
+      "type": "failure_pattern",
+      "content": "online_rl:homeostasis_tune falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
+      "created_at": 1779109007
+    },
+    {
+      "id": "ins_1779109007_200",
+      "type": "failure_pattern",
+      "content": "online_rl:reflexion_tick falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:reflexion_tick_None",
+      "created_at": 1779109007
+    },
+    {
+      "id": "ins_1779109007_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (6x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779109007
+    },
+    {
+      "id": "ins_1779109007_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (7x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779109007
+    },
+    {
+      "id": "ins_1779109007_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779109007
+    },
+    {
+      "id": "ins_1779109007_200",
+      "type": "performance",
+      "content": "14 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779109007
+    },
+    {
+      "id": "ins_1779110815_200",
+      "type": "failure_pattern",
+      "content": "online_rl:homeostasis_tune falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
+      "created_at": 1779110815
+    },
+    {
+      "id": "ins_1779110815_200",
+      "type": "failure_pattern",
+      "content": "online_rl:reflexion_tick falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:reflexion_tick_None",
+      "created_at": 1779110815
+    },
+    {
+      "id": "ins_1779110815_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (6x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779110815
+    },
+    {
+      "id": "ins_1779110815_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (7x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779110815
+    },
+    {
+      "id": "ins_1779110815_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779110815
+    },
+    {
+      "id": "ins_1779110815_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779110815
+    },
+    {
+      "id": "ins_1779110815_200",
+      "type": "performance",
+      "content": "15 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779110815
+    },
+    {
+      "id": "ins_1779112248_200",
+      "type": "failure_pattern",
+      "content": "online_rl:reflexion_tick falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:reflexion_tick_None",
+      "created_at": 1779112248
+    },
+    {
+      "id": "ins_1779112248_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (6x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779112248
+    },
+    {
+      "id": "ins_1779112248_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (8x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779112248
+    },
+    {
+      "id": "ins_1779112248_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779112248
+    },
+    {
+      "id": "ins_1779112248_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779112248
+    },
+    {
+      "id": "ins_1779112248_200",
+      "type": "performance",
+      "content": "15 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779112248
+    },
+    {
+      "id": "ins_1779114051_200",
+      "type": "failure_pattern",
+      "content": "online_rl:reflexion_tick falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:reflexion_tick_None",
+      "created_at": 1779114051
+    },
+    {
+      "id": "ins_1779114051_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (6x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779114051
+    },
+    {
+      "id": "ins_1779114051_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (9x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779114051
+    },
+    {
+      "id": "ins_1779114051_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779114051
+    },
+    {
+      "id": "ins_1779114051_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779114051
+    },
+    {
+      "id": "ins_1779114051_200",
+      "type": "performance",
+      "content": "14 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779114051
+    },
+    {
+      "id": "ins_1779115854_200",
+      "type": "failure_pattern",
+      "content": "online_rl:reflexion_tick falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:reflexion_tick_None",
+      "created_at": 1779115854
+    },
+    {
+      "id": "ins_1779115854_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (6x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779115854
+    },
+    {
+      "id": "ins_1779115854_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779115854
+    },
+    {
+      "id": "ins_1779115854_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779115854
+    },
+    {
+      "id": "ins_1779115854_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779115854
+    },
+    {
+      "id": "ins_1779115854_200",
+      "type": "performance",
+      "content": "14 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779115854
+    },
+    {
+      "id": "ins_1779117665_200",
+      "type": "failure_pattern",
+      "content": "online_rl:reflexion_tick falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:reflexion_tick_None",
+      "created_at": 1779117665
+    },
+    {
+      "id": "ins_1779117665_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (6x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779117665
+    },
+    {
+      "id": "ins_1779117665_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779117665
+    },
+    {
+      "id": "ins_1779117665_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779117665
+    },
+    {
+      "id": "ins_1779117665_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779117665
+    },
+    {
+      "id": "ins_1779117665_200",
+      "type": "performance",
+      "content": "14 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779117665
+    },
+    {
+      "id": "ins_1779124833_200",
+      "type": "failure_pattern",
+      "content": "online_rl:reflexion_tick falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:reflexion_tick_None",
+      "created_at": 1779124833
+    },
+    {
+      "id": "ins_1779124833_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (6x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779124833
+    },
+    {
+      "id": "ins_1779124833_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779124833
+    },
+    {
+      "id": "ins_1779124833_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779124833
+    },
+    {
+      "id": "ins_1779124833_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779124833
+    },
+    {
+      "id": "ins_1779124833_200",
+      "type": "performance",
+      "content": "15 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779124833
+    },
+    {
+      "id": "ins_1779126634_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (6x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779126634
+    },
+    {
+      "id": "ins_1779126634_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779126634
+    },
+    {
+      "id": "ins_1779126634_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779126634
+    },
+    {
+      "id": "ins_1779126634_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779126634
+    },
+    {
+      "id": "ins_1779126634_200",
+      "type": "performance",
+      "content": "15 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779126634
+    },
+    {
+      "id": "ins_1779128807_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (6x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779128807
+    },
+    {
+      "id": "ins_1779128807_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (11x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779128807
+    },
+    {
+      "id": "ins_1779128807_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779128807
+    },
+    {
+      "id": "ins_1779128807_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779128807
+    },
+    {
+      "id": "ins_1779128807_200",
+      "type": "performance",
+      "content": "15 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779128807
+    },
+    {
+      "id": "ins_1779129371_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (11x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779129371
+    },
+    {
+      "id": "ins_1779129371_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (5x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779129371
+    },
+    {
+      "id": "ins_1779129371_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779129371
+    },
+    {
+      "id": "ins_1779129371_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779129371
+    },
+    {
+      "id": "ins_1779129371_200",
+      "type": "performance",
+      "content": "15 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779129371
+    },
+    {
+      "id": "ins_1779130408_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (11x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779130408
+    },
+    {
+      "id": "ins_1779130408_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (5x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779130408
+    },
+    {
+      "id": "ins_1779130408_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779130408
+    },
+    {
+      "id": "ins_1779130408_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779130408
+    },
+    {
+      "id": "ins_1779130408_200",
+      "type": "performance",
+      "content": "15 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779130408
+    },
+    {
+      "id": "ins_1779132225_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (10x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779132225
+    },
+    {
+      "id": "ins_1779132225_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (5x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779132225
+    },
+    {
+      "id": "ins_1779132225_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779132225
+    },
+    {
+      "id": "ins_1779132225_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779132225
+    },
+    {
+      "id": "ins_1779132225_200",
+      "type": "performance",
+      "content": "16 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779132225
+    },
+    {
+      "id": "ins_1779134025_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (9x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779134025
+    },
+    {
+      "id": "ins_1779134025_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (5x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779134025
+    },
+    {
+      "id": "ins_1779134025_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779134025
+    },
+    {
+      "id": "ins_1779134025_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779134025
+    },
+    {
+      "id": "ins_1779134025_200",
+      "type": "performance",
+      "content": "16 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779134025
+    },
+    {
+      "id": "ins_1779135825_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (5x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779135825
+    },
+    {
+      "id": "ins_1779135825_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (8x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779135825
+    },
+    {
+      "id": "ins_1779135825_200",
+      "type": "failure_pattern",
+      "content": "online_rl:homeostasis_tune falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
+      "created_at": 1779135825
+    },
+    {
+      "id": "ins_1779135825_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779135825
+    },
+    {
+      "id": "ins_1779135825_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779135825
+    },
+    {
+      "id": "ins_1779135825_200",
+      "type": "performance",
+      "content": "16 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779135825
+    },
+    {
+      "id": "ins_1779137627_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (8x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779137627
+    },
+    {
+      "id": "ins_1779137627_200",
+      "type": "failure_pattern",
+      "content": "online_rl:homeostasis_tune falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
+      "created_at": 1779137627
+    },
+    {
+      "id": "ins_1779137627_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779137627
+    },
+    {
+      "id": "ins_1779137627_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (4x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779137627
+    },
+    {
+      "id": "ins_1779137627_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (4x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779137627
+    },
+    {
+      "id": "ins_1779137627_200",
+      "type": "performance",
+      "content": "16 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779137627
+    },
+    {
+      "id": "ins_1779139439_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (8x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779139439
+    },
+    {
+      "id": "ins_1779139439_200",
+      "type": "failure_pattern",
+      "content": "online_rl:homeostasis_tune falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
+      "created_at": 1779139439
+    },
+    {
+      "id": "ins_1779139439_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779139439
+    },
+    {
+      "id": "ins_1779139439_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (4x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779139439
+    },
+    {
+      "id": "ins_1779139439_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (4x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779139439
+    },
+    {
+      "id": "ins_1779139439_200",
+      "type": "performance",
+      "content": "16 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779139439
+    },
+    {
+      "id": "ins_1779140513_200",
+      "type": "failure_pattern",
+      "content": "online_rl:trusted_acquisition falha frequentemente com None (8x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:trusted_acquisition_None",
+      "created_at": 1779140513
+    },
+    {
+      "id": "ins_1779140513_200",
+      "type": "failure_pattern",
+      "content": "online_rl:homeostasis_tune falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:homeostasis_tune_None",
+      "created_at": 1779140513
+    },
+    {
+      "id": "ins_1779140513_200",
+      "type": "failure_pattern",
+      "content": "online_rl:epistemic_gap_scan falha frequentemente com None (3x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:epistemic_gap_scan_None",
+      "created_at": 1779140513
+    },
+    {
+      "id": "ins_1779140513_200",
+      "type": "failure_pattern",
+      "content": "online_rl:autonomous_cognition_tick falha frequentemente com None (4x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:autonomous_cognition_tick_None",
+      "created_at": 1779140513
+    },
+    {
+      "id": "ins_1779140513_200",
+      "type": "failure_pattern",
+      "content": "online_rl:cognitive_patch_loop falha frequentemente com None (4x)",
+      "source": "continuous_learning",
+      "confidence": 1.0,
+      "action_suggested": "revisar_online_rl:cognitive_patch_loop_None",
+      "created_at": 1779140513
+    },
+    {
+      "id": "ins_1779140513_200",
+      "type": "performance",
+      "content": "16 tarefas com latência > 5s detectadas",
+      "source": "continuous_learning",
+      "confidence": 0.7,
+      "action_suggested": "otimizar_latencia",
+      "created_at": 1779140513
     }
   ],
   "feedback_history": [
@@ -6298,6 +6298,206 @@
       "latency_ms": 810,
       "error_type": null,
       "profile": "normal"
+    },
+    {
+      "ts": 1779038618,
+      "task_type": "online_rl:sleep_digest",
+      "success": true,
+      "latency_ms": 16580,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1779041059,
+      "task_type": "online_rl:cognitive_patch_loop",
+      "success": false,
+      "latency_ms": 1272,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1779044170,
+      "task_type": "online_rl:sleep_digest",
+      "success": true,
+      "latency_ms": 29313,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1779045971,
+      "task_type": "online_rl:autonomous_cognition_tick",
+      "success": true,
+      "latency_ms": 671,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1779047800,
+      "task_type": "online_rl:sleep_digest",
+      "success": true,
+      "latency_ms": 28490,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1779069416,
+      "task_type": "online_rl:sleep_digest",
+      "success": true,
+      "latency_ms": 24864,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1779105279,
+      "task_type": "online_rl:epistemic_gap_scan",
+      "success": true,
+      "latency_ms": 220,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1779107081,
+      "task_type": "online_rl:cognitive_patch_loop",
+      "success": false,
+      "latency_ms": 1731,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1779109007,
+      "task_type": "online_rl:sleep_digest",
+      "success": false,
+      "latency_ms": 44948,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1779110815,
+      "task_type": "online_rl:sleep_digest",
+      "success": true,
+      "latency_ms": 7416,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1779112248,
+      "task_type": "online_rl:trusted_acquisition",
+      "success": false,
+      "latency_ms": 2723,
+      "error_type": null,
+      "profile": "conservative"
+    },
+    {
+      "ts": 1779114051,
+      "task_type": "online_rl:trusted_acquisition",
+      "success": false,
+      "latency_ms": 1933,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1779115854,
+      "task_type": "online_rl:trusted_acquisition",
+      "success": false,
+      "latency_ms": 2753,
+      "error_type": null,
+      "profile": "conservative"
+    },
+    {
+      "ts": 1779117665,
+      "task_type": "online_rl:sleep_digest",
+      "success": true,
+      "latency_ms": 10466,
+      "error_type": null,
+      "profile": "conservative"
+    },
+    {
+      "ts": 1779124833,
+      "task_type": "online_rl:sleep_digest",
+      "success": true,
+      "latency_ms": 14035,
+      "error_type": null,
+      "profile": "conservative"
+    },
+    {
+      "ts": 1779126634,
+      "task_type": "online_rl:autonomous_cognition_tick",
+      "success": true,
+      "latency_ms": 855,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1779128807,
+      "task_type": "online_rl:trusted_acquisition",
+      "success": false,
+      "latency_ms": 2066,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1779129371,
+      "task_type": "online_rl:autonomous_cognition_tick",
+      "success": true,
+      "latency_ms": 1289,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1779130408,
+      "task_type": "online_rl:sleep_digest",
+      "success": true,
+      "latency_ms": 10808,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1779132225,
+      "task_type": "online_rl:sleep_digest",
+      "success": true,
+      "latency_ms": 16015,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1779134025,
+      "task_type": "online_rl:homeostasis_tune",
+      "success": false,
+      "latency_ms": 121,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1779135825,
+      "task_type": "online_rl:homeostasis_tune",
+      "success": false,
+      "latency_ms": 121,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1779137627,
+      "task_type": "online_rl:cognitive_patch_loop",
+      "success": false,
+      "latency_ms": 1434,
+      "error_type": null,
+      "profile": "normal"
+    },
+    {
+      "ts": 1779139439,
+      "task_type": "online_rl:sleep_digest",
+      "success": true,
+      "latency_ms": 11551,
+      "error_type": null,
+      "profile": "conservative"
+    },
+    {
+      "ts": 1779140513,
+      "task_type": "online_rl:trusted_acquisition",
+      "success": false,
+      "latency_ms": 2115,
+      "error_type": null,
+      "profile": "conservative"
     }
   ],
   "policy_weights": {
@@ -6305,13 +6505,13 @@
     "research": 1.4201178518906643,
     "review": 0.9238685574788892,
     "heartbeat": 0.7909809926574759,
-    "online_rl:trusted_acquisition": -0.6362081626495535,
-    "online_rl:homeostasis_tune": -0.38012721760000007,
-    "online_rl:autonomous_cognition_tick": 0.27320722532811786,
-    "online_rl:epistemic_gap_scan": -0.00802418499999999,
+    "online_rl:trusted_acquisition": -0.785184557962935,
+    "online_rl:homeostasis_tune": -0.49790304625600007,
+    "online_rl:autonomous_cognition_tick": 0.5556680672641979,
+    "online_rl:epistemic_gap_scan": 0.14277823350000002,
     "online_rl:reflexion_tick": -0.4188692665,
-    "online_rl:cognitive_patch_loop": -0.11426500000000003,
-    "online_rl:sleep_digest": 0.47310875237930017
+    "online_rl:cognitive_patch_loop": -0.354299185,
+    "online_rl:sleep_digest": 0.5384541523365444
   },
-  "updated_at": 1778962331
+  "updated_at": 1779140513
 }

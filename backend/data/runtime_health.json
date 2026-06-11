@@ -1,5 +1,5 @@
 {
-  "ts": 1779038174,
+  "ts": 1779141104,
   "active_goal": "Modelar taxonomia de erros cognitivos em decisões",
   "active_mission": {
     "id": "mis_1776628887_3",
@@ -556,44 +556,53 @@
     "budget_per_min": 2
   },
   "autonomy_state": {
-    "ticks": 0,
-    "last_tick": null,
+    "ticks": 3,
+    "last_tick": 17144,
     "last_error": null,
     "consecutive_errors": 0
   },
   "background_guard": {
     "enabled": true,
-    "state": "healthy",
-    "lag_sec": 0.0,
-    "max_lag_sec": 0.0,
+    "state": "paused",
+    "lag_sec": 0.0035,
+    "max_lag_sec": 36.2808,
     "consecutive_lag": 0,
-    "paused_until": 0.0,
-    "last_pause_reason": null,
-    "last_pause_at": 0.0,
+    "paused_until": 1779141191.15257,
+    "last_pause_reason": "event_loop_lag",
+    "last_pause_at": 1779141101.15257,
     "last_slow_request": null,
-    "blocked_loops": 0,
-    "last_blocked_loop": null,
-    "last_log_at": 0.0,
+    "blocked_loops": 694,
+    "last_blocked_loop": "agi_path_loop",
+    "last_log_at": 1779141066.5197158,
     "foreground_active": 0,
-    "last_foreground_path": null,
-    "last_foreground_at": 0.0,
-    "last_foreground_elapsed_sec": 0.0,
-    "paused": false,
-    "paused_for_sec": 0.0
+    "last_foreground_path": "/api/chat",
+    "last_foreground_at": 1779140311.3585782,
+    "last_foreground_elapsed_sec": 0.405,
+    "last_pause_details": {
+      "lag_sec": 4.299,
+      "consecutive_lag": 1
+    },
+    "paused": true,
+    "paused_for_sec": 86.29755163192749
   },
   "background_binary_bus": {
     "enabled": true,
-    "started_at": 0.0,
-    "processed": 0,
+    "started_at": 1779140093.680892,
+    "processed": 2109,
     "dropped": 0,
     "sink_errors": 0,
-    "last_event": null,
+    "last_event": {
+      "kind": "runtime_health",
+      "loop": "judge_loop",
+      "event": "runtime_health_write",
+      "at": 1779141103.4943707
+    },
     "last_error": null,
     "queue_size": 0,
-    "worker_alive": false,
+    "worker_alive": true,
     "binlog_path": "D:\\sistemas\\UltronPro\\backend\\data\\background_bus.binlog"
   },
   "extra": {
-    "reason": "startup_complete"
+    "reason": "autofeeder_tick"
   }
 }

@@ -1,20 +1,24 @@
 {
   "enabled": true,
-  "state": "healthy",
-  "lag_sec": 0.0139,
-  "max_lag_sec": 0.4344,
+  "state": "foreground_throttle",
+  "lag_sec": 0.0007,
+  "max_lag_sec": 52.4661,
   "consecutive_lag": 0,
-  "paused_until": 0.0,
-  "last_pause_reason": null,
-  "last_pause_at": 0.0,
+  "paused_until": 1780594508.6223843,
+  "last_pause_reason": "event_loop_lag",
+  "last_pause_at": 1780594418.6223843,
   "last_slow_request": null,
-  "blocked_loops": 0,
-  "last_blocked_loop": null,
-  "last_log_at": 0.0,
+  "blocked_loops": 2019,
+  "last_blocked_loop": "self_improvement_loop",
+  "last_log_at": 1780594442.223835,
   "foreground_active": 0,
-  "last_foreground_path": null,
-  "last_foreground_at": 0.0,
-  "last_foreground_elapsed_sec": 0.0,
-  "paused": false,
-  "paused_for_sec": 0.0
+  "last_foreground_path": "/api/chat/stream",
+  "last_foreground_at": 1780594451.362876,
+  "last_foreground_elapsed_sec": 0.014,
+  "last_pause_details": {
+    "lag_sec": 5.927,
+    "consecutive_lag": 1
+  },
+  "paused": true,
+  "paused_for_sec": 37.412200689315796
 }

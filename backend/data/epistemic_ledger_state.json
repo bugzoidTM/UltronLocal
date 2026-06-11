@@ -1,7 +1,7 @@
 {
   "ok": true,
   "version": 1,
-  "updated_at": 1778936080,
+  "updated_at": 1779130878,
   "artifacts": {
     "factual_claim:factual_claim_a76c1ad71b5e161b": {
       "artifact_kind": "factual_claim",
@@ -10,282 +10,6 @@
       "metadata": {},
       "created_at": 1777641323,
       "evidence": [
-        {
-          "evidence_id": "ev_1778613068_0867b96e",
-          "ts": 1778613068,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "Use ground truth before promotion",
-            "answer": "{\"answer\": \"external_anchor\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "external_anchor"
-              },
-              "gold_answer": "external_anchor",
-              "expected_answer": "external_anchor",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778613068_1d9f705b",
-          "ts": 1778613068,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778613068,
-              "query": "Use ground truth before promotion",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "external_anchor",
-                  "predicted_answer": {
-                    "answer": "external_anchor"
-                  }
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778616183_0867b96e",
-          "ts": 1778616183,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "Use ground truth before promotion",
-            "answer": "{\"answer\": \"external_anchor\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "external_anchor"
-              },
-              "gold_answer": "external_anchor",
-              "expected_answer": "external_anchor",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778616183_8e2a4c6e",
-          "ts": 1778616183,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778616183,
-              "query": "Use ground truth before promotion",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "external_anchor",
-                  "predicted_answer": {
-                    "answer": "external_anchor"
-                  }
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778680702_0867b96e",
-          "ts": 1778680702,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "Use ground truth before promotion",
-            "answer": "{\"answer\": \"external_anchor\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "external_anchor"
-              },
-              "gold_answer": "external_anchor",
-              "expected_answer": "external_anchor",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778680702_1adbaa2e",
-          "ts": 1778680702,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778680702,
-              "query": "Use ground truth before promotion",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "external_anchor",
-                  "predicted_answer": {
-                    "answer": "external_anchor"
-                  }
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778696548_0867b96e",
-          "ts": 1778696548,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "Use ground truth before promotion",
-            "answer": "{\"answer\": \"external_anchor\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "external_anchor"
-              },
-              "gold_answer": "external_anchor",
-              "expected_answer": "external_anchor",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778696549_46b09926",
-          "ts": 1778696549,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778696548,
-              "query": "Use ground truth before promotion",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "external_anchor",
-                  "predicted_answer": {
-                    "answer": "external_anchor"
-                  }
-                }
-              ]
-            }
-          }
-        },
         {
           "evidence_id": "ev_1778759813_0867b96e",
           "ts": 1778759813,
@@ -2769,6 +2493,282 @@
               ]
             }
           }
+        },
+        {
+          "evidence_id": "ev_1779105760_0867b96e",
+          "ts": 1779105760,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "Use ground truth before promotion",
+            "answer": "{\"answer\": \"external_anchor\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "external_anchor"
+              },
+              "gold_answer": "external_anchor",
+              "expected_answer": "external_anchor",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779105760_a422ffd7",
+          "ts": 1779105760,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779105760,
+              "query": "Use ground truth before promotion",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "external_anchor",
+                  "predicted_answer": {
+                    "answer": "external_anchor"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779112695_0867b96e",
+          "ts": 1779112695,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "Use ground truth before promotion",
+            "answer": "{\"answer\": \"external_anchor\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "external_anchor"
+              },
+              "gold_answer": "external_anchor",
+              "expected_answer": "external_anchor",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779112695_b515bc87",
+          "ts": 1779112695,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779112694,
+              "query": "Use ground truth before promotion",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "external_anchor",
+                  "predicted_answer": {
+                    "answer": "external_anchor"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779129849_0867b96e",
+          "ts": 1779129849,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "Use ground truth before promotion",
+            "answer": "{\"answer\": \"external_anchor\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "external_anchor"
+              },
+              "gold_answer": "external_anchor",
+              "expected_answer": "external_anchor",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779129849_f6daae59",
+          "ts": 1779129849,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779129849,
+              "query": "Use ground truth before promotion",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "external_anchor",
+                  "predicted_answer": {
+                    "answer": "external_anchor"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779130878_0867b96e",
+          "ts": 1779130878,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "Use ground truth before promotion",
+            "answer": "{\"answer\": \"external_anchor\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "external_anchor"
+              },
+              "gold_answer": "external_anchor",
+              "expected_answer": "external_anchor",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779130878_d5b80935",
+          "ts": 1779130878,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779130878,
+              "query": "Use ground truth before promotion",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "external_anchor",
+                  "predicted_answer": {
+                    "answer": "external_anchor"
+                  }
+                }
+              ]
+            }
+          }
         }
       ],
       "last_assessment": {
@@ -2816,282 +2816,6 @@
       "metadata": {},
       "created_at": 1777641323,
       "evidence": [
-        {
-          "evidence_id": "ev_1778613068_18e4a6e5",
-          "ts": 1778613068,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "If cause absent and result same, label causal status",
-            "answer": "{\"answer\": \"spurious_or_unproven_cause\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "spurious_or_unproven_cause"
-              },
-              "gold_answer": "spurious_or_unproven_cause",
-              "expected_answer": "spurious_or_unproven_cause",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778613068_0ac2e799",
-          "ts": 1778613068,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778613068,
-              "query": "If cause absent and result same, label causal status",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "spurious_or_unproven_cause",
-                  "predicted_answer": {
-                    "answer": "spurious_or_unproven_cause"
-                  }
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778616183_18e4a6e5",
-          "ts": 1778616183,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "If cause absent and result same, label causal status",
-            "answer": "{\"answer\": \"spurious_or_unproven_cause\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "spurious_or_unproven_cause"
-              },
-              "gold_answer": "spurious_or_unproven_cause",
-              "expected_answer": "spurious_or_unproven_cause",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778616183_47d81d72",
-          "ts": 1778616183,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778616183,
-              "query": "If cause absent and result same, label causal status",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "spurious_or_unproven_cause",
-                  "predicted_answer": {
-                    "answer": "spurious_or_unproven_cause"
-                  }
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778680702_18e4a6e5",
-          "ts": 1778680702,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "If cause absent and result same, label causal status",
-            "answer": "{\"answer\": \"spurious_or_unproven_cause\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "spurious_or_unproven_cause"
-              },
-              "gold_answer": "spurious_or_unproven_cause",
-              "expected_answer": "spurious_or_unproven_cause",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778680702_804a37ec",
-          "ts": 1778680702,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778680702,
-              "query": "If cause absent and result same, label causal status",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "spurious_or_unproven_cause",
-                  "predicted_answer": {
-                    "answer": "spurious_or_unproven_cause"
-                  }
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778696549_18e4a6e5",
-          "ts": 1778696549,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "If cause absent and result same, label causal status",
-            "answer": "{\"answer\": \"spurious_or_unproven_cause\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "spurious_or_unproven_cause"
-              },
-              "gold_answer": "spurious_or_unproven_cause",
-              "expected_answer": "spurious_or_unproven_cause",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778696549_f305dcab",
-          "ts": 1778696549,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778696549,
-              "query": "If cause absent and result same, label causal status",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "spurious_or_unproven_cause",
-                  "predicted_answer": {
-                    "answer": "spurious_or_unproven_cause"
-                  }
-                }
-              ]
-            }
-          }
-        },
         {
           "evidence_id": "ev_1778759813_18e4a6e5",
           "ts": 1778759813,
@@ -5575,6 +5299,282 @@
               ]
             }
           }
+        },
+        {
+          "evidence_id": "ev_1779105760_18e4a6e5",
+          "ts": 1779105760,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "If cause absent and result same, label causal status",
+            "answer": "{\"answer\": \"spurious_or_unproven_cause\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "spurious_or_unproven_cause"
+              },
+              "gold_answer": "spurious_or_unproven_cause",
+              "expected_answer": "spurious_or_unproven_cause",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779105760_9011387a",
+          "ts": 1779105760,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779105760,
+              "query": "If cause absent and result same, label causal status",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "spurious_or_unproven_cause",
+                  "predicted_answer": {
+                    "answer": "spurious_or_unproven_cause"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779112695_18e4a6e5",
+          "ts": 1779112695,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "If cause absent and result same, label causal status",
+            "answer": "{\"answer\": \"spurious_or_unproven_cause\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "spurious_or_unproven_cause"
+              },
+              "gold_answer": "spurious_or_unproven_cause",
+              "expected_answer": "spurious_or_unproven_cause",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779112695_cc4be763",
+          "ts": 1779112695,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779112695,
+              "query": "If cause absent and result same, label causal status",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "spurious_or_unproven_cause",
+                  "predicted_answer": {
+                    "answer": "spurious_or_unproven_cause"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779129849_18e4a6e5",
+          "ts": 1779129849,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "If cause absent and result same, label causal status",
+            "answer": "{\"answer\": \"spurious_or_unproven_cause\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "spurious_or_unproven_cause"
+              },
+              "gold_answer": "spurious_or_unproven_cause",
+              "expected_answer": "spurious_or_unproven_cause",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779129849_8cc20b9d",
+          "ts": 1779129849,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779129849,
+              "query": "If cause absent and result same, label causal status",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "spurious_or_unproven_cause",
+                  "predicted_answer": {
+                    "answer": "spurious_or_unproven_cause"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779130878_18e4a6e5",
+          "ts": 1779130878,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "If cause absent and result same, label causal status",
+            "answer": "{\"answer\": \"spurious_or_unproven_cause\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "spurious_or_unproven_cause"
+              },
+              "gold_answer": "spurious_or_unproven_cause",
+              "expected_answer": "spurious_or_unproven_cause",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779130878_6f8dede0",
+          "ts": 1779130878,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779130878,
+              "query": "If cause absent and result same, label causal status",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "spurious_or_unproven_cause",
+                  "predicted_answer": {
+                    "answer": "spurious_or_unproven_cause"
+                  }
+                }
+              ]
+            }
+          }
         }
       ],
       "last_assessment": {
@@ -5622,282 +5622,6 @@
       "metadata": {},
       "created_at": 1777641323,
       "evidence": [
-        {
-          "evidence_id": "ev_1778613068_7306aa16",
-          "ts": 1778613068,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "A gap requires progressive tasks",
-            "answer": "{\"answer\": \"auto_curriculum\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "auto_curriculum"
-              },
-              "gold_answer": "auto_curriculum",
-              "expected_answer": "auto_curriculum",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778613068_5e739a0c",
-          "ts": 1778613068,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778613068,
-              "query": "A gap requires progressive tasks",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "auto_curriculum",
-                  "predicted_answer": {
-                    "answer": "auto_curriculum"
-                  }
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778616183_7306aa16",
-          "ts": 1778616183,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "A gap requires progressive tasks",
-            "answer": "{\"answer\": \"auto_curriculum\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "auto_curriculum"
-              },
-              "gold_answer": "auto_curriculum",
-              "expected_answer": "auto_curriculum",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778616183_748167cf",
-          "ts": 1778616183,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778616183,
-              "query": "A gap requires progressive tasks",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "auto_curriculum",
-                  "predicted_answer": {
-                    "answer": "auto_curriculum"
-                  }
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778680702_7306aa16",
-          "ts": 1778680702,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "A gap requires progressive tasks",
-            "answer": "{\"answer\": \"auto_curriculum\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "auto_curriculum"
-              },
-              "gold_answer": "auto_curriculum",
-              "expected_answer": "auto_curriculum",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778680702_e6bc931e",
-          "ts": 1778680702,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778680702,
-              "query": "A gap requires progressive tasks",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "auto_curriculum",
-                  "predicted_answer": {
-                    "answer": "auto_curriculum"
-                  }
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778696549_7306aa16",
-          "ts": 1778696549,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "A gap requires progressive tasks",
-            "answer": "{\"answer\": \"auto_curriculum\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "auto_curriculum"
-              },
-              "gold_answer": "auto_curriculum",
-              "expected_answer": "auto_curriculum",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778696549_f68c0303",
-          "ts": 1778696549,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778696549,
-              "query": "A gap requires progressive tasks",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "auto_curriculum",
-                  "predicted_answer": {
-                    "answer": "auto_curriculum"
-                  }
-                }
-              ]
-            }
-          }
-        },
         {
           "evidence_id": "ev_1778759813_7306aa16",
           "ts": 1778759813,
@@ -8381,6 +8105,282 @@
               ]
             }
           }
+        },
+        {
+          "evidence_id": "ev_1779105760_7306aa16",
+          "ts": 1779105760,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "A gap requires progressive tasks",
+            "answer": "{\"answer\": \"auto_curriculum\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "auto_curriculum"
+              },
+              "gold_answer": "auto_curriculum",
+              "expected_answer": "auto_curriculum",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779105760_4403a55b",
+          "ts": 1779105760,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779105760,
+              "query": "A gap requires progressive tasks",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "auto_curriculum",
+                  "predicted_answer": {
+                    "answer": "auto_curriculum"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779112695_7306aa16",
+          "ts": 1779112695,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "A gap requires progressive tasks",
+            "answer": "{\"answer\": \"auto_curriculum\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "auto_curriculum"
+              },
+              "gold_answer": "auto_curriculum",
+              "expected_answer": "auto_curriculum",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779112695_daa99389",
+          "ts": 1779112695,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779112695,
+              "query": "A gap requires progressive tasks",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "auto_curriculum",
+                  "predicted_answer": {
+                    "answer": "auto_curriculum"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779129849_7306aa16",
+          "ts": 1779129849,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "A gap requires progressive tasks",
+            "answer": "{\"answer\": \"auto_curriculum\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "auto_curriculum"
+              },
+              "gold_answer": "auto_curriculum",
+              "expected_answer": "auto_curriculum",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779129849_09a07669",
+          "ts": 1779129849,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779129849,
+              "query": "A gap requires progressive tasks",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "auto_curriculum",
+                  "predicted_answer": {
+                    "answer": "auto_curriculum"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779130878_7306aa16",
+          "ts": 1779130878,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "A gap requires progressive tasks",
+            "answer": "{\"answer\": \"auto_curriculum\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "auto_curriculum"
+              },
+              "gold_answer": "auto_curriculum",
+              "expected_answer": "auto_curriculum",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779130878_765f5a11",
+          "ts": 1779130878,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779130878,
+              "query": "A gap requires progressive tasks",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "auto_curriculum",
+                  "predicted_answer": {
+                    "answer": "auto_curriculum"
+                  }
+                }
+              ]
+            }
+          }
         }
       ],
       "last_assessment": {
@@ -8428,742 +8428,6 @@
       "metadata": {},
       "created_at": 1777641323,
       "evidence": [
-        {
-          "evidence_id": "ev_1778780321_b6c7faf2",
-          "ts": 1778780321,
-          "evidence_type": "counterfactual",
-          "status": "passed",
-          "passed": true,
-          "score": 1.0,
-          "source": "resilience_failure_simulation",
-          "payload": {
-            "resilience": {
-              "ok": true,
-              "axis": "resilience",
-              "success_rate": 1.0,
-              "checks": {
-                "provider_failure_simulation": true,
-                "memory_loss_curriculum_rebuild": true,
-                "error_spike_preventive_action": true
-              },
-              "spike_prediction": {
-                "ok": true,
-                "samples": 3,
-                "window": 3,
-                "horizon_steps": 2,
-                "current_health": 0.5588,
-                "predicted_health": 0.2968,
-                "predicted_success_rate": 0.3,
-                "predicted_error_rate": 0.57,
-                "predicted_surprise_score": 0.99,
-                "predicted_drift_score": 0.48,
-                "slopes": {
-                  "health": -0.131,
-                  "success_rate": -0.13,
-                  "error_rate": 0.13,
-                  "surprise_score": 0.185,
-                  "latency_norm": 0.02167,
-                  "drift_score": 0.115
-                },
-                "degradation_risk": 1.0,
-                "leading_indicators": [
-                  "success_rate_decline",
-                  "error_rate_increase",
-                  "surprise_increase",
-                  "capacity_drift",
-                  "latency_increase"
-                ],
-                "recommendation": "request_human_help"
-              },
-              "memory_loss_task_count": 3
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778780321_84e36070",
-          "ts": 1778780321,
-          "evidence_type": "longitudinal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "capacity_drift_monitor",
-          "payload": {
-            "drift": {
-              "ok": true,
-              "axis": "capacity_drift",
-              "baseline_success_rate": 0.0,
-              "current_success_rate": 0.0,
-              "drift_score": 0.0,
-              "cases": [
-                {
-                  "case_id": "legacy_external_validation",
-                  "query": "Use ground truth before promotion",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                },
-                {
-                  "case_id": "legacy_counterfactual",
-                  "query": "If cause absent and result same, label causal status",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                },
-                {
-                  "case_id": "legacy_curriculum",
-                  "query": "A gap requires progressive tasks",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                }
-              ]
-            },
-            "metrics": {
-              "success_rate": 0.3333,
-              "error_rate": 0.6667,
-              "surprise_score": 0.75,
-              "latency_ms": 798.45,
-              "drift_score": 0.0,
-              "zero_shot_task_count": 2,
-              "resilience_success_rate": 1.0
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778780322_53330be8",
-          "ts": 1778780322,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.3333,
-          "source": "longitudinal_harness_generalization",
-          "payload": {
-            "generalization": {
-              "ok": true,
-              "axis": "generalization",
-              "zero_shot_task_count": 2,
-              "success_rate": 0.0,
-              "gap_count": 3,
-              "cases": [
-                {
-                  "domain": "unseen_counterfactual_ops",
-                  "query": "A provider fails during a causal validation task. What mode should the agent enter?",
-                  "answer": "conservative_mode",
-                  "gold": "conservative_mode",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                },
-                {
-                  "domain": "unseen_memory_reconstruction",
-                  "query": "Memory is unavailable but factual certainty is required. What should be opened?",
-                  "answer": "active_investigation",
-                  "gold": "active_investigation",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                },
-                {
-                  "domain": "unseen_spurious_visual",
-                  "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
-                  "answer": "spurious_or_unproven_cause",
-                  "gold": "spurious_or_unproven_cause",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778780322_b6c7faf2",
-          "ts": 1778780322,
-          "evidence_type": "counterfactual",
-          "status": "passed",
-          "passed": true,
-          "score": 1.0,
-          "source": "resilience_failure_simulation",
-          "payload": {
-            "resilience": {
-              "ok": true,
-              "axis": "resilience",
-              "success_rate": 1.0,
-              "checks": {
-                "provider_failure_simulation": true,
-                "memory_loss_curriculum_rebuild": true,
-                "error_spike_preventive_action": true
-              },
-              "spike_prediction": {
-                "ok": true,
-                "samples": 3,
-                "window": 3,
-                "horizon_steps": 2,
-                "current_health": 0.5588,
-                "predicted_health": 0.2968,
-                "predicted_success_rate": 0.3,
-                "predicted_error_rate": 0.57,
-                "predicted_surprise_score": 0.99,
-                "predicted_drift_score": 0.48,
-                "slopes": {
-                  "health": -0.131,
-                  "success_rate": -0.13,
-                  "error_rate": 0.13,
-                  "surprise_score": 0.185,
-                  "latency_norm": 0.02167,
-                  "drift_score": 0.115
-                },
-                "degradation_risk": 1.0,
-                "leading_indicators": [
-                  "success_rate_decline",
-                  "error_rate_increase",
-                  "surprise_increase",
-                  "capacity_drift",
-                  "latency_increase"
-                ],
-                "recommendation": "request_human_help"
-              },
-              "memory_loss_task_count": 3
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778780322_e9c5167b",
-          "ts": 1778780322,
-          "evidence_type": "longitudinal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "capacity_drift_monitor",
-          "payload": {
-            "drift": {
-              "ok": true,
-              "axis": "capacity_drift",
-              "baseline_success_rate": 0.0,
-              "current_success_rate": 0.0,
-              "drift_score": 0.0,
-              "cases": [
-                {
-                  "case_id": "legacy_external_validation",
-                  "query": "Use ground truth before promotion",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                },
-                {
-                  "case_id": "legacy_counterfactual",
-                  "query": "If cause absent and result same, label causal status",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                },
-                {
-                  "case_id": "legacy_curriculum",
-                  "query": "A gap requires progressive tasks",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                }
-              ]
-            },
-            "metrics": {
-              "success_rate": 0.3333,
-              "error_rate": 0.6667,
-              "surprise_score": 0.75,
-              "latency_ms": 819.56,
-              "drift_score": 0.0,
-              "zero_shot_task_count": 2,
-              "resilience_success_rate": 1.0
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778780323_53330be8",
-          "ts": 1778780323,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.3333,
-          "source": "longitudinal_harness_generalization",
-          "payload": {
-            "generalization": {
-              "ok": true,
-              "axis": "generalization",
-              "zero_shot_task_count": 2,
-              "success_rate": 0.0,
-              "gap_count": 3,
-              "cases": [
-                {
-                  "domain": "unseen_counterfactual_ops",
-                  "query": "A provider fails during a causal validation task. What mode should the agent enter?",
-                  "answer": "conservative_mode",
-                  "gold": "conservative_mode",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                },
-                {
-                  "domain": "unseen_memory_reconstruction",
-                  "query": "Memory is unavailable but factual certainty is required. What should be opened?",
-                  "answer": "active_investigation",
-                  "gold": "active_investigation",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                },
-                {
-                  "domain": "unseen_spurious_visual",
-                  "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
-                  "answer": "spurious_or_unproven_cause",
-                  "gold": "spurious_or_unproven_cause",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778780323_b6c7faf2",
-          "ts": 1778780323,
-          "evidence_type": "counterfactual",
-          "status": "passed",
-          "passed": true,
-          "score": 1.0,
-          "source": "resilience_failure_simulation",
-          "payload": {
-            "resilience": {
-              "ok": true,
-              "axis": "resilience",
-              "success_rate": 1.0,
-              "checks": {
-                "provider_failure_simulation": true,
-                "memory_loss_curriculum_rebuild": true,
-                "error_spike_preventive_action": true
-              },
-              "spike_prediction": {
-                "ok": true,
-                "samples": 3,
-                "window": 3,
-                "horizon_steps": 2,
-                "current_health": 0.5588,
-                "predicted_health": 0.2968,
-                "predicted_success_rate": 0.3,
-                "predicted_error_rate": 0.57,
-                "predicted_surprise_score": 0.99,
-                "predicted_drift_score": 0.48,
-                "slopes": {
-                  "health": -0.131,
-                  "success_rate": -0.13,
-                  "error_rate": 0.13,
-                  "surprise_score": 0.185,
-                  "latency_norm": 0.02167,
-                  "drift_score": 0.115
-                },
-                "degradation_risk": 1.0,
-                "leading_indicators": [
-                  "success_rate_decline",
-                  "error_rate_increase",
-                  "surprise_increase",
-                  "capacity_drift",
-                  "latency_increase"
-                ],
-                "recommendation": "request_human_help"
-              },
-              "memory_loss_task_count": 3
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778780323_bac06433",
-          "ts": 1778780323,
-          "evidence_type": "longitudinal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "capacity_drift_monitor",
-          "payload": {
-            "drift": {
-              "ok": true,
-              "axis": "capacity_drift",
-              "baseline_success_rate": 0.0,
-              "current_success_rate": 0.0,
-              "drift_score": 0.0,
-              "cases": [
-                {
-                  "case_id": "legacy_external_validation",
-                  "query": "Use ground truth before promotion",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                },
-                {
-                  "case_id": "legacy_counterfactual",
-                  "query": "If cause absent and result same, label causal status",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                },
-                {
-                  "case_id": "legacy_curriculum",
-                  "query": "A gap requires progressive tasks",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                }
-              ]
-            },
-            "metrics": {
-              "success_rate": 0.3333,
-              "error_rate": 0.6667,
-              "surprise_score": 0.75,
-              "latency_ms": 805.98,
-              "drift_score": 0.0,
-              "zero_shot_task_count": 2,
-              "resilience_success_rate": 1.0
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778780323_53330be8",
-          "ts": 1778780323,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.3333,
-          "source": "longitudinal_harness_generalization",
-          "payload": {
-            "generalization": {
-              "ok": true,
-              "axis": "generalization",
-              "zero_shot_task_count": 2,
-              "success_rate": 0.0,
-              "gap_count": 3,
-              "cases": [
-                {
-                  "domain": "unseen_counterfactual_ops",
-                  "query": "A provider fails during a causal validation task. What mode should the agent enter?",
-                  "answer": "conservative_mode",
-                  "gold": "conservative_mode",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                },
-                {
-                  "domain": "unseen_memory_reconstruction",
-                  "query": "Memory is unavailable but factual certainty is required. What should be opened?",
-                  "answer": "active_investigation",
-                  "gold": "active_investigation",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                },
-                {
-                  "domain": "unseen_spurious_visual",
-                  "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
-                  "answer": "spurious_or_unproven_cause",
-                  "gold": "spurious_or_unproven_cause",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778780324_b6c7faf2",
-          "ts": 1778780324,
-          "evidence_type": "counterfactual",
-          "status": "passed",
-          "passed": true,
-          "score": 1.0,
-          "source": "resilience_failure_simulation",
-          "payload": {
-            "resilience": {
-              "ok": true,
-              "axis": "resilience",
-              "success_rate": 1.0,
-              "checks": {
-                "provider_failure_simulation": true,
-                "memory_loss_curriculum_rebuild": true,
-                "error_spike_preventive_action": true
-              },
-              "spike_prediction": {
-                "ok": true,
-                "samples": 3,
-                "window": 3,
-                "horizon_steps": 2,
-                "current_health": 0.5588,
-                "predicted_health": 0.2968,
-                "predicted_success_rate": 0.3,
-                "predicted_error_rate": 0.57,
-                "predicted_surprise_score": 0.99,
-                "predicted_drift_score": 0.48,
-                "slopes": {
-                  "health": -0.131,
-                  "success_rate": -0.13,
-                  "error_rate": 0.13,
-                  "surprise_score": 0.185,
-                  "latency_norm": 0.02167,
-                  "drift_score": 0.115
-                },
-                "degradation_risk": 1.0,
-                "leading_indicators": [
-                  "success_rate_decline",
-                  "error_rate_increase",
-                  "surprise_increase",
-                  "capacity_drift",
-                  "latency_increase"
-                ],
-                "recommendation": "request_human_help"
-              },
-              "memory_loss_task_count": 3
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778780324_52b51c06",
-          "ts": 1778780324,
-          "evidence_type": "longitudinal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "capacity_drift_monitor",
-          "payload": {
-            "drift": {
-              "ok": true,
-              "axis": "capacity_drift",
-              "baseline_success_rate": 0.0,
-              "current_success_rate": 0.0,
-              "drift_score": 0.0,
-              "cases": [
-                {
-                  "case_id": "legacy_external_validation",
-                  "query": "Use ground truth before promotion",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                },
-                {
-                  "case_id": "legacy_counterfactual",
-                  "query": "If cause absent and result same, label causal status",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                },
-                {
-                  "case_id": "legacy_curriculum",
-                  "query": "A gap requires progressive tasks",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                }
-              ]
-            },
-            "metrics": {
-              "success_rate": 0.3333,
-              "error_rate": 0.6667,
-              "surprise_score": 0.75,
-              "latency_ms": 805.3,
-              "drift_score": 0.0,
-              "zero_shot_task_count": 2,
-              "resilience_success_rate": 1.0
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778780325_53330be8",
-          "ts": 1778780325,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.3333,
-          "source": "longitudinal_harness_generalization",
-          "payload": {
-            "generalization": {
-              "ok": true,
-              "axis": "generalization",
-              "zero_shot_task_count": 2,
-              "success_rate": 0.0,
-              "gap_count": 3,
-              "cases": [
-                {
-                  "domain": "unseen_counterfactual_ops",
-                  "query": "A provider fails during a causal validation task. What mode should the agent enter?",
-                  "answer": "conservative_mode",
-                  "gold": "conservative_mode",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                },
-                {
-                  "domain": "unseen_memory_reconstruction",
-                  "query": "Memory is unavailable but factual certainty is required. What should be opened?",
-                  "answer": "active_investigation",
-                  "gold": "active_investigation",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                },
-                {
-                  "domain": "unseen_spurious_visual",
-                  "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
-                  "answer": "spurious_or_unproven_cause",
-                  "gold": "spurious_or_unproven_cause",
-                  "ok": true,
-                  "score": 0.1,
-                  "correct": false,
-                  "alerts": [
-                    "factual_error_against_ground_truth",
-                    "ground_truth_mismatch",
-                    "external_anchor_failure",
-                    "cross_modal_validation_failed"
-                  ]
-                }
-              ]
-            }
-          }
-        },
         {
           "evidence_id": "ev_1778780325_b6c7faf2",
           "ts": 1778780325,
@@ -13330,6 +12594,742 @@
               "resilience_success_rate": 1.0
             }
           }
+        },
+        {
+          "evidence_id": "ev_1779105760_16cbfa3c",
+          "ts": 1779105760,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.3333,
+          "source": "longitudinal_harness_generalization",
+          "payload": {
+            "generalization": {
+              "ok": true,
+              "axis": "generalization",
+              "zero_shot_task_count": 0,
+              "success_rate": 0.0,
+              "gap_count": 4,
+              "cases": [
+                {
+                  "domain": "unseen_counterfactual_ops",
+                  "query": "A provider fails during a causal validation task. What mode should the agent enter?",
+                  "answer": "conservative_mode",
+                  "gold": "conservative_mode",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                },
+                {
+                  "domain": "unseen_memory_reconstruction",
+                  "query": "Memory is unavailable but factual certainty is required. What should be opened?",
+                  "answer": "active_investigation",
+                  "gold": "active_investigation",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                },
+                {
+                  "domain": "unseen_spurious_visual",
+                  "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
+                  "answer": "spurious_or_unproven_cause",
+                  "gold": "spurious_or_unproven_cause",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779105760_b6c7faf2",
+          "ts": 1779105760,
+          "evidence_type": "counterfactual",
+          "status": "passed",
+          "passed": true,
+          "score": 1.0,
+          "source": "resilience_failure_simulation",
+          "payload": {
+            "resilience": {
+              "ok": true,
+              "axis": "resilience",
+              "success_rate": 1.0,
+              "checks": {
+                "provider_failure_simulation": true,
+                "memory_loss_curriculum_rebuild": true,
+                "error_spike_preventive_action": true
+              },
+              "spike_prediction": {
+                "ok": true,
+                "samples": 3,
+                "window": 3,
+                "horizon_steps": 2,
+                "current_health": 0.5588,
+                "predicted_health": 0.2968,
+                "predicted_success_rate": 0.3,
+                "predicted_error_rate": 0.57,
+                "predicted_surprise_score": 0.99,
+                "predicted_drift_score": 0.48,
+                "slopes": {
+                  "health": -0.131,
+                  "success_rate": -0.13,
+                  "error_rate": 0.13,
+                  "surprise_score": 0.185,
+                  "latency_norm": 0.02167,
+                  "drift_score": 0.115
+                },
+                "degradation_risk": 1.0,
+                "leading_indicators": [
+                  "success_rate_decline",
+                  "error_rate_increase",
+                  "surprise_increase",
+                  "capacity_drift",
+                  "latency_increase"
+                ],
+                "recommendation": "request_human_help"
+              },
+              "memory_loss_task_count": 3
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779105760_00cadac5",
+          "ts": 1779105760,
+          "evidence_type": "longitudinal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "capacity_drift_monitor",
+          "payload": {
+            "drift": {
+              "ok": true,
+              "axis": "capacity_drift",
+              "baseline_success_rate": 0.0,
+              "current_success_rate": 0.0,
+              "drift_score": 0.0,
+              "cases": [
+                {
+                  "case_id": "legacy_external_validation",
+                  "query": "Use ground truth before promotion",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                },
+                {
+                  "case_id": "legacy_counterfactual",
+                  "query": "If cause absent and result same, label causal status",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                },
+                {
+                  "case_id": "legacy_curriculum",
+                  "query": "A gap requires progressive tasks",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                }
+              ]
+            },
+            "metrics": {
+              "success_rate": 0.3333,
+              "error_rate": 0.6667,
+              "surprise_score": 1.0,
+              "latency_ms": 1042.64,
+              "drift_score": 0.0,
+              "zero_shot_task_count": 0,
+              "resilience_success_rate": 1.0
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779112695_16cbfa3c",
+          "ts": 1779112695,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.3333,
+          "source": "longitudinal_harness_generalization",
+          "payload": {
+            "generalization": {
+              "ok": true,
+              "axis": "generalization",
+              "zero_shot_task_count": 0,
+              "success_rate": 0.0,
+              "gap_count": 4,
+              "cases": [
+                {
+                  "domain": "unseen_counterfactual_ops",
+                  "query": "A provider fails during a causal validation task. What mode should the agent enter?",
+                  "answer": "conservative_mode",
+                  "gold": "conservative_mode",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                },
+                {
+                  "domain": "unseen_memory_reconstruction",
+                  "query": "Memory is unavailable but factual certainty is required. What should be opened?",
+                  "answer": "active_investigation",
+                  "gold": "active_investigation",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                },
+                {
+                  "domain": "unseen_spurious_visual",
+                  "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
+                  "answer": "spurious_or_unproven_cause",
+                  "gold": "spurious_or_unproven_cause",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779112695_b6c7faf2",
+          "ts": 1779112695,
+          "evidence_type": "counterfactual",
+          "status": "passed",
+          "passed": true,
+          "score": 1.0,
+          "source": "resilience_failure_simulation",
+          "payload": {
+            "resilience": {
+              "ok": true,
+              "axis": "resilience",
+              "success_rate": 1.0,
+              "checks": {
+                "provider_failure_simulation": true,
+                "memory_loss_curriculum_rebuild": true,
+                "error_spike_preventive_action": true
+              },
+              "spike_prediction": {
+                "ok": true,
+                "samples": 3,
+                "window": 3,
+                "horizon_steps": 2,
+                "current_health": 0.5588,
+                "predicted_health": 0.2968,
+                "predicted_success_rate": 0.3,
+                "predicted_error_rate": 0.57,
+                "predicted_surprise_score": 0.99,
+                "predicted_drift_score": 0.48,
+                "slopes": {
+                  "health": -0.131,
+                  "success_rate": -0.13,
+                  "error_rate": 0.13,
+                  "surprise_score": 0.185,
+                  "latency_norm": 0.02167,
+                  "drift_score": 0.115
+                },
+                "degradation_risk": 1.0,
+                "leading_indicators": [
+                  "success_rate_decline",
+                  "error_rate_increase",
+                  "surprise_increase",
+                  "capacity_drift",
+                  "latency_increase"
+                ],
+                "recommendation": "request_human_help"
+              },
+              "memory_loss_task_count": 3
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779112695_49fc28a6",
+          "ts": 1779112695,
+          "evidence_type": "longitudinal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "capacity_drift_monitor",
+          "payload": {
+            "drift": {
+              "ok": true,
+              "axis": "capacity_drift",
+              "baseline_success_rate": 0.0,
+              "current_success_rate": 0.0,
+              "drift_score": 0.0,
+              "cases": [
+                {
+                  "case_id": "legacy_external_validation",
+                  "query": "Use ground truth before promotion",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                },
+                {
+                  "case_id": "legacy_counterfactual",
+                  "query": "If cause absent and result same, label causal status",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                },
+                {
+                  "case_id": "legacy_curriculum",
+                  "query": "A gap requires progressive tasks",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                }
+              ]
+            },
+            "metrics": {
+              "success_rate": 0.3333,
+              "error_rate": 0.6667,
+              "surprise_score": 1.0,
+              "latency_ms": 901.35,
+              "drift_score": 0.0,
+              "zero_shot_task_count": 0,
+              "resilience_success_rate": 1.0
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779129849_16cbfa3c",
+          "ts": 1779129849,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.3333,
+          "source": "longitudinal_harness_generalization",
+          "payload": {
+            "generalization": {
+              "ok": true,
+              "axis": "generalization",
+              "zero_shot_task_count": 0,
+              "success_rate": 0.0,
+              "gap_count": 4,
+              "cases": [
+                {
+                  "domain": "unseen_counterfactual_ops",
+                  "query": "A provider fails during a causal validation task. What mode should the agent enter?",
+                  "answer": "conservative_mode",
+                  "gold": "conservative_mode",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                },
+                {
+                  "domain": "unseen_memory_reconstruction",
+                  "query": "Memory is unavailable but factual certainty is required. What should be opened?",
+                  "answer": "active_investigation",
+                  "gold": "active_investigation",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                },
+                {
+                  "domain": "unseen_spurious_visual",
+                  "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
+                  "answer": "spurious_or_unproven_cause",
+                  "gold": "spurious_or_unproven_cause",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779129849_b6c7faf2",
+          "ts": 1779129849,
+          "evidence_type": "counterfactual",
+          "status": "passed",
+          "passed": true,
+          "score": 1.0,
+          "source": "resilience_failure_simulation",
+          "payload": {
+            "resilience": {
+              "ok": true,
+              "axis": "resilience",
+              "success_rate": 1.0,
+              "checks": {
+                "provider_failure_simulation": true,
+                "memory_loss_curriculum_rebuild": true,
+                "error_spike_preventive_action": true
+              },
+              "spike_prediction": {
+                "ok": true,
+                "samples": 3,
+                "window": 3,
+                "horizon_steps": 2,
+                "current_health": 0.5588,
+                "predicted_health": 0.2968,
+                "predicted_success_rate": 0.3,
+                "predicted_error_rate": 0.57,
+                "predicted_surprise_score": 0.99,
+                "predicted_drift_score": 0.48,
+                "slopes": {
+                  "health": -0.131,
+                  "success_rate": -0.13,
+                  "error_rate": 0.13,
+                  "surprise_score": 0.185,
+                  "latency_norm": 0.02167,
+                  "drift_score": 0.115
+                },
+                "degradation_risk": 1.0,
+                "leading_indicators": [
+                  "success_rate_decline",
+                  "error_rate_increase",
+                  "surprise_increase",
+                  "capacity_drift",
+                  "latency_increase"
+                ],
+                "recommendation": "request_human_help"
+              },
+              "memory_loss_task_count": 3
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779129849_1c3e5161",
+          "ts": 1779129849,
+          "evidence_type": "longitudinal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "capacity_drift_monitor",
+          "payload": {
+            "drift": {
+              "ok": true,
+              "axis": "capacity_drift",
+              "baseline_success_rate": 0.0,
+              "current_success_rate": 0.0,
+              "drift_score": 0.0,
+              "cases": [
+                {
+                  "case_id": "legacy_external_validation",
+                  "query": "Use ground truth before promotion",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                },
+                {
+                  "case_id": "legacy_counterfactual",
+                  "query": "If cause absent and result same, label causal status",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                },
+                {
+                  "case_id": "legacy_curriculum",
+                  "query": "A gap requires progressive tasks",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                }
+              ]
+            },
+            "metrics": {
+              "success_rate": 0.3333,
+              "error_rate": 0.6667,
+              "surprise_score": 1.0,
+              "latency_ms": 816.07,
+              "drift_score": 0.0,
+              "zero_shot_task_count": 0,
+              "resilience_success_rate": 1.0
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779130878_16cbfa3c",
+          "ts": 1779130878,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.3333,
+          "source": "longitudinal_harness_generalization",
+          "payload": {
+            "generalization": {
+              "ok": true,
+              "axis": "generalization",
+              "zero_shot_task_count": 0,
+              "success_rate": 0.0,
+              "gap_count": 4,
+              "cases": [
+                {
+                  "domain": "unseen_counterfactual_ops",
+                  "query": "A provider fails during a causal validation task. What mode should the agent enter?",
+                  "answer": "conservative_mode",
+                  "gold": "conservative_mode",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                },
+                {
+                  "domain": "unseen_memory_reconstruction",
+                  "query": "Memory is unavailable but factual certainty is required. What should be opened?",
+                  "answer": "active_investigation",
+                  "gold": "active_investigation",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                },
+                {
+                  "domain": "unseen_spurious_visual",
+                  "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
+                  "answer": "spurious_or_unproven_cause",
+                  "gold": "spurious_or_unproven_cause",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779130878_b6c7faf2",
+          "ts": 1779130878,
+          "evidence_type": "counterfactual",
+          "status": "passed",
+          "passed": true,
+          "score": 1.0,
+          "source": "resilience_failure_simulation",
+          "payload": {
+            "resilience": {
+              "ok": true,
+              "axis": "resilience",
+              "success_rate": 1.0,
+              "checks": {
+                "provider_failure_simulation": true,
+                "memory_loss_curriculum_rebuild": true,
+                "error_spike_preventive_action": true
+              },
+              "spike_prediction": {
+                "ok": true,
+                "samples": 3,
+                "window": 3,
+                "horizon_steps": 2,
+                "current_health": 0.5588,
+                "predicted_health": 0.2968,
+                "predicted_success_rate": 0.3,
+                "predicted_error_rate": 0.57,
+                "predicted_surprise_score": 0.99,
+                "predicted_drift_score": 0.48,
+                "slopes": {
+                  "health": -0.131,
+                  "success_rate": -0.13,
+                  "error_rate": 0.13,
+                  "surprise_score": 0.185,
+                  "latency_norm": 0.02167,
+                  "drift_score": 0.115
+                },
+                "degradation_risk": 1.0,
+                "leading_indicators": [
+                  "success_rate_decline",
+                  "error_rate_increase",
+                  "surprise_increase",
+                  "capacity_drift",
+                  "latency_increase"
+                ],
+                "recommendation": "request_human_help"
+              },
+              "memory_loss_task_count": 3
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779130878_e634bb7c",
+          "ts": 1779130878,
+          "evidence_type": "longitudinal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "capacity_drift_monitor",
+          "payload": {
+            "drift": {
+              "ok": true,
+              "axis": "capacity_drift",
+              "baseline_success_rate": 0.0,
+              "current_success_rate": 0.0,
+              "drift_score": 0.0,
+              "cases": [
+                {
+                  "case_id": "legacy_external_validation",
+                  "query": "Use ground truth before promotion",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                },
+                {
+                  "case_id": "legacy_counterfactual",
+                  "query": "If cause absent and result same, label causal status",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                },
+                {
+                  "case_id": "legacy_curriculum",
+                  "query": "A gap requires progressive tasks",
+                  "ok": true,
+                  "score": 0.1,
+                  "correct": false,
+                  "alerts": [
+                    "factual_error_against_ground_truth",
+                    "ground_truth_mismatch",
+                    "external_anchor_failure",
+                    "cross_modal_validation_failed"
+                  ]
+                }
+              ]
+            },
+            "metrics": {
+              "success_rate": 0.3333,
+              "error_rate": 0.6667,
+              "surprise_score": 1.0,
+              "latency_ms": 715.39,
+              "drift_score": 0.0,
+              "zero_shot_task_count": 0,
+              "resilience_success_rate": 1.0
+            }
+          }
         }
       ],
       "last_assessment": {
@@ -14758,282 +14758,6 @@
       "metadata": {},
       "created_at": 1777641331,
       "evidence": [
-        {
-          "evidence_id": "ev_1778613067_a4278222",
-          "ts": 1778613067,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "A provider fails during a causal validation task. What mode should the agent enter?",
-            "answer": "{\"answer\": \"conservative_mode\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "conservative_mode"
-              },
-              "gold_answer": "conservative_mode",
-              "expected_answer": "conservative_mode",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778613067_f7d6a0e4",
-          "ts": 1778613067,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778613067,
-              "query": "A provider fails during a causal validation task. What mode should the agent enter?",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "conservative_mode",
-                  "predicted_answer": {
-                    "answer": "conservative_mode"
-                  }
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778616183_a4278222",
-          "ts": 1778616183,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "A provider fails during a causal validation task. What mode should the agent enter?",
-            "answer": "{\"answer\": \"conservative_mode\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "conservative_mode"
-              },
-              "gold_answer": "conservative_mode",
-              "expected_answer": "conservative_mode",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778616183_1d12c96b",
-          "ts": 1778616183,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778616183,
-              "query": "A provider fails during a causal validation task. What mode should the agent enter?",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "conservative_mode",
-                  "predicted_answer": {
-                    "answer": "conservative_mode"
-                  }
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778680702_a4278222",
-          "ts": 1778680702,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "A provider fails during a causal validation task. What mode should the agent enter?",
-            "answer": "{\"answer\": \"conservative_mode\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "conservative_mode"
-              },
-              "gold_answer": "conservative_mode",
-              "expected_answer": "conservative_mode",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778680702_a7b3de5e",
-          "ts": 1778680702,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778680702,
-              "query": "A provider fails during a causal validation task. What mode should the agent enter?",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "conservative_mode",
-                  "predicted_answer": {
-                    "answer": "conservative_mode"
-                  }
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778696548_a4278222",
-          "ts": 1778696548,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "A provider fails during a causal validation task. What mode should the agent enter?",
-            "answer": "{\"answer\": \"conservative_mode\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "conservative_mode"
-              },
-              "gold_answer": "conservative_mode",
-              "expected_answer": "conservative_mode",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778696548_f07d6702",
-          "ts": 1778696548,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778696548,
-              "query": "A provider fails during a causal validation task. What mode should the agent enter?",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "conservative_mode",
-                  "predicted_answer": {
-                    "answer": "conservative_mode"
-                  }
-                }
-              ]
-            }
-          }
-        },
         {
           "evidence_id": "ev_1778759813_a4278222",
           "ts": 1778759813,
@@ -17517,6 +17241,282 @@
               ]
             }
           }
+        },
+        {
+          "evidence_id": "ev_1779105759_a4278222",
+          "ts": 1779105759,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "A provider fails during a causal validation task. What mode should the agent enter?",
+            "answer": "{\"answer\": \"conservative_mode\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "conservative_mode"
+              },
+              "gold_answer": "conservative_mode",
+              "expected_answer": "conservative_mode",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779105759_0cfb43ab",
+          "ts": 1779105759,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779105759,
+              "query": "A provider fails during a causal validation task. What mode should the agent enter?",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "conservative_mode",
+                  "predicted_answer": {
+                    "answer": "conservative_mode"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779112694_a4278222",
+          "ts": 1779112694,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "A provider fails during a causal validation task. What mode should the agent enter?",
+            "answer": "{\"answer\": \"conservative_mode\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "conservative_mode"
+              },
+              "gold_answer": "conservative_mode",
+              "expected_answer": "conservative_mode",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779112694_56f8c83f",
+          "ts": 1779112694,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779112694,
+              "query": "A provider fails during a causal validation task. What mode should the agent enter?",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "conservative_mode",
+                  "predicted_answer": {
+                    "answer": "conservative_mode"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779129849_a4278222",
+          "ts": 1779129849,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "A provider fails during a causal validation task. What mode should the agent enter?",
+            "answer": "{\"answer\": \"conservative_mode\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "conservative_mode"
+              },
+              "gold_answer": "conservative_mode",
+              "expected_answer": "conservative_mode",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779129849_545789b1",
+          "ts": 1779129849,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779129849,
+              "query": "A provider fails during a causal validation task. What mode should the agent enter?",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "conservative_mode",
+                  "predicted_answer": {
+                    "answer": "conservative_mode"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779130878_a4278222",
+          "ts": 1779130878,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "A provider fails during a causal validation task. What mode should the agent enter?",
+            "answer": "{\"answer\": \"conservative_mode\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "conservative_mode"
+              },
+              "gold_answer": "conservative_mode",
+              "expected_answer": "conservative_mode",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779130878_24701f69",
+          "ts": 1779130878,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779130878,
+              "query": "A provider fails during a causal validation task. What mode should the agent enter?",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "conservative_mode",
+                  "predicted_answer": {
+                    "answer": "conservative_mode"
+                  }
+                }
+              ]
+            }
+          }
         }
       ],
       "last_assessment": {
@@ -17564,282 +17564,6 @@
       "metadata": {},
       "created_at": 1777641331,
       "evidence": [
-        {
-          "evidence_id": "ev_1778613067_e5b1a40b",
-          "ts": 1778613067,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "Memory is unavailable but factual certainty is required. What should be opened?",
-            "answer": "{\"answer\": \"active_investigation\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "active_investigation"
-              },
-              "gold_answer": "active_investigation",
-              "expected_answer": "active_investigation",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778613067_4f8e2381",
-          "ts": 1778613067,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778613067,
-              "query": "Memory is unavailable but factual certainty is required. What should be opened?",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "active_investigation",
-                  "predicted_answer": {
-                    "answer": "active_investigation"
-                  }
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778616183_e5b1a40b",
-          "ts": 1778616183,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "Memory is unavailable but factual certainty is required. What should be opened?",
-            "answer": "{\"answer\": \"active_investigation\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "active_investigation"
-              },
-              "gold_answer": "active_investigation",
-              "expected_answer": "active_investigation",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778616183_2a3b0453",
-          "ts": 1778616183,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778616183,
-              "query": "Memory is unavailable but factual certainty is required. What should be opened?",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "active_investigation",
-                  "predicted_answer": {
-                    "answer": "active_investigation"
-                  }
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778680702_e5b1a40b",
-          "ts": 1778680702,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "Memory is unavailable but factual certainty is required. What should be opened?",
-            "answer": "{\"answer\": \"active_investigation\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "active_investigation"
-              },
-              "gold_answer": "active_investigation",
-              "expected_answer": "active_investigation",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778680702_e9513d10",
-          "ts": 1778680702,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778680702,
-              "query": "Memory is unavailable but factual certainty is required. What should be opened?",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "active_investigation",
-                  "predicted_answer": {
-                    "answer": "active_investigation"
-                  }
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778696548_e5b1a40b",
-          "ts": 1778696548,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "Memory is unavailable but factual certainty is required. What should be opened?",
-            "answer": "{\"answer\": \"active_investigation\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "active_investigation"
-              },
-              "gold_answer": "active_investigation",
-              "expected_answer": "active_investigation",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778696548_f9ea86ae",
-          "ts": 1778696548,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778696548,
-              "query": "Memory is unavailable but factual certainty is required. What should be opened?",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "active_investigation",
-                  "predicted_answer": {
-                    "answer": "active_investigation"
-                  }
-                }
-              ]
-            }
-          }
-        },
         {
           "evidence_id": "ev_1778759813_e5b1a40b",
           "ts": 1778759813,
@@ -20323,6 +20047,282 @@
               ]
             }
           }
+        },
+        {
+          "evidence_id": "ev_1779105759_e5b1a40b",
+          "ts": 1779105759,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "Memory is unavailable but factual certainty is required. What should be opened?",
+            "answer": "{\"answer\": \"active_investigation\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "active_investigation"
+              },
+              "gold_answer": "active_investigation",
+              "expected_answer": "active_investigation",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779105759_9e31ae21",
+          "ts": 1779105759,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779105759,
+              "query": "Memory is unavailable but factual certainty is required. What should be opened?",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "active_investigation",
+                  "predicted_answer": {
+                    "answer": "active_investigation"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779112694_e5b1a40b",
+          "ts": 1779112694,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "Memory is unavailable but factual certainty is required. What should be opened?",
+            "answer": "{\"answer\": \"active_investigation\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "active_investigation"
+              },
+              "gold_answer": "active_investigation",
+              "expected_answer": "active_investigation",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779112694_3bbb1c6a",
+          "ts": 1779112694,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779112694,
+              "query": "Memory is unavailable but factual certainty is required. What should be opened?",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "active_investigation",
+                  "predicted_answer": {
+                    "answer": "active_investigation"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779129849_e5b1a40b",
+          "ts": 1779129849,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "Memory is unavailable but factual certainty is required. What should be opened?",
+            "answer": "{\"answer\": \"active_investigation\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "active_investigation"
+              },
+              "gold_answer": "active_investigation",
+              "expected_answer": "active_investigation",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779129849_3850a367",
+          "ts": 1779129849,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779129849,
+              "query": "Memory is unavailable but factual certainty is required. What should be opened?",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "active_investigation",
+                  "predicted_answer": {
+                    "answer": "active_investigation"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779130878_e5b1a40b",
+          "ts": 1779130878,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "Memory is unavailable but factual certainty is required. What should be opened?",
+            "answer": "{\"answer\": \"active_investigation\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "active_investigation"
+              },
+              "gold_answer": "active_investigation",
+              "expected_answer": "active_investigation",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779130878_728e585f",
+          "ts": 1779130878,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779130878,
+              "query": "Memory is unavailable but factual certainty is required. What should be opened?",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "active_investigation",
+                  "predicted_answer": {
+                    "answer": "active_investigation"
+                  }
+                }
+              ]
+            }
+          }
         }
       ],
       "last_assessment": {
@@ -20370,282 +20370,6 @@
       "metadata": {},
       "created_at": 1777641331,
       "evidence": [
-        {
-          "evidence_id": "ev_1778440253_824b1e8f",
-          "ts": 1778440253,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778440253,
-              "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "spurious_or_unproven_cause",
-                  "predicted_answer": {
-                    "answer": "spurious_or_unproven_cause"
-                  }
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778613068_b77ef258",
-          "ts": 1778613068,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
-            "answer": "{\"answer\": \"spurious_or_unproven_cause\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "spurious_or_unproven_cause"
-              },
-              "gold_answer": "spurious_or_unproven_cause",
-              "expected_answer": "spurious_or_unproven_cause",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778613068_8c71a643",
-          "ts": 1778613068,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778613068,
-              "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "spurious_or_unproven_cause",
-                  "predicted_answer": {
-                    "answer": "spurious_or_unproven_cause"
-                  }
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778616183_b77ef258",
-          "ts": 1778616183,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
-            "answer": "{\"answer\": \"spurious_or_unproven_cause\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "spurious_or_unproven_cause"
-              },
-              "gold_answer": "spurious_or_unproven_cause",
-              "expected_answer": "spurious_or_unproven_cause",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778616183_05349d92",
-          "ts": 1778616183,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778616183,
-              "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "spurious_or_unproven_cause",
-                  "predicted_answer": {
-                    "answer": "spurious_or_unproven_cause"
-                  }
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778680702_b77ef258",
-          "ts": 1778680702,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
-            "answer": "{\"answer\": \"spurious_or_unproven_cause\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "spurious_or_unproven_cause"
-              },
-              "gold_answer": "spurious_or_unproven_cause",
-              "expected_answer": "spurious_or_unproven_cause",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778680702_8f991dd6",
-          "ts": 1778680702,
-          "evidence_type": "cross_modal",
-          "status": "failed",
-          "passed": false,
-          "score": 0.0,
-          "source": "cross_modal_validation",
-          "payload": {
-            "cross_modal": {
-              "ok": false,
-              "validated": true,
-              "ts": 1778680702,
-              "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
-              "passed_count": 0,
-              "failed_count": 1,
-              "unavailable_count": 0,
-              "surprise_score": 1.0,
-              "needs_revision": true,
-              "modalities": [
-                {
-                  "modality": "external_ground_truth",
-                  "status": "failed",
-                  "surprise": 1.0,
-                  "reason": "gold_answer_mismatch",
-                  "gold_answer": "spurious_or_unproven_cause",
-                  "predicted_answer": {
-                    "answer": "spurious_or_unproven_cause"
-                  }
-                }
-              ]
-            }
-          }
-        },
-        {
-          "evidence_id": "ev_1778696548_b77ef258",
-          "ts": 1778696548,
-          "evidence_type": "external",
-          "status": "failed",
-          "passed": false,
-          "score": 0.1,
-          "source": "ground_truth",
-          "payload": {
-            "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
-            "answer": "{\"answer\": \"spurious_or_unproven_cause\"}",
-            "factual_eval": {
-              "ok": true,
-              "has_ground_truth": true,
-              "kind": "exact",
-              "factual_correct": false,
-              "factual_score": 0.1,
-              "predicted_answer": {
-                "answer": "spurious_or_unproven_cause"
-              },
-              "gold_answer": "spurious_or_unproven_cause",
-              "expected_answer": "spurious_or_unproven_cause",
-              "ground_truth_source": "ground_truth",
-              "benchmark_id": null,
-              "benchmark": null,
-              "family": null,
-              "split": null,
-              "comparability_tier": null,
-              "alerts": [
-                "factual_error_against_ground_truth",
-                "ground_truth_mismatch"
-              ]
-            }
-          }
-        },
         {
           "evidence_id": "ev_1778759813_b77ef258",
           "ts": 1778759813,
@@ -23129,6 +22853,282 @@
               ]
             }
           }
+        },
+        {
+          "evidence_id": "ev_1779105759_b77ef258",
+          "ts": 1779105759,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
+            "answer": "{\"answer\": \"spurious_or_unproven_cause\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "spurious_or_unproven_cause"
+              },
+              "gold_answer": "spurious_or_unproven_cause",
+              "expected_answer": "spurious_or_unproven_cause",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779105760_5c505e93",
+          "ts": 1779105760,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779105759,
+              "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "spurious_or_unproven_cause",
+                  "predicted_answer": {
+                    "answer": "spurious_or_unproven_cause"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779112694_b77ef258",
+          "ts": 1779112694,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
+            "answer": "{\"answer\": \"spurious_or_unproven_cause\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "spurious_or_unproven_cause"
+              },
+              "gold_answer": "spurious_or_unproven_cause",
+              "expected_answer": "spurious_or_unproven_cause",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779112694_b954bd1f",
+          "ts": 1779112694,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779112694,
+              "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "spurious_or_unproven_cause",
+                  "predicted_answer": {
+                    "answer": "spurious_or_unproven_cause"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779129849_b77ef258",
+          "ts": 1779129849,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
+            "answer": "{\"answer\": \"spurious_or_unproven_cause\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "spurious_or_unproven_cause"
+              },
+              "gold_answer": "spurious_or_unproven_cause",
+              "expected_answer": "spurious_or_unproven_cause",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779129849_05e5f01c",
+          "ts": 1779129849,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779129849,
+              "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "spurious_or_unproven_cause",
+                  "predicted_answer": {
+                    "answer": "spurious_or_unproven_cause"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779130878_b77ef258",
+          "ts": 1779130878,
+          "evidence_type": "external",
+          "status": "failed",
+          "passed": false,
+          "score": 0.1,
+          "source": "ground_truth",
+          "payload": {
+            "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
+            "answer": "{\"answer\": \"spurious_or_unproven_cause\"}",
+            "factual_eval": {
+              "ok": true,
+              "has_ground_truth": true,
+              "kind": "exact",
+              "factual_correct": false,
+              "factual_score": 0.1,
+              "predicted_answer": {
+                "answer": "spurious_or_unproven_cause"
+              },
+              "gold_answer": "spurious_or_unproven_cause",
+              "expected_answer": "spurious_or_unproven_cause",
+              "ground_truth_source": "ground_truth",
+              "benchmark_id": null,
+              "benchmark": null,
+              "family": null,
+              "split": null,
+              "comparability_tier": null,
+              "alerts": [
+                "factual_error_against_ground_truth",
+                "ground_truth_mismatch"
+              ]
+            }
+          }
+        },
+        {
+          "evidence_id": "ev_1779130878_7e0e50c7",
+          "ts": 1779130878,
+          "evidence_type": "cross_modal",
+          "status": "failed",
+          "passed": false,
+          "score": 0.0,
+          "source": "cross_modal_validation",
+          "payload": {
+            "cross_modal": {
+              "ok": false,
+              "validated": true,
+              "ts": 1779130878,
+              "query": "A visual feature disappears and the prediction stays unchanged. What should be flagged?",
+              "passed_count": 0,
+              "failed_count": 1,
+              "unavailable_count": 0,
+              "surprise_score": 1.0,
+              "needs_revision": true,
+              "modalities": [
+                {
+                  "modality": "external_ground_truth",
+                  "status": "failed",
+                  "surprise": 1.0,
+                  "reason": "gold_answer_mismatch",
+                  "gold_answer": "spurious_or_unproven_cause",
+                  "predicted_answer": {
+                    "answer": "spurious_or_unproven_cause"
+                  }
+                }
+              ]
+            }
+          }
         }
       ],
       "last_assessment": {
@@ -23151,17 +23151,17 @@
           "failed_external_evidence"
         ],
         "evidence_summary": {
-          "cross_modal": {
-            "passed": 0,
-            "failed": 40,
-            "latest_status": "failed",
-            "best_score": 0.0
-          },
           "external": {
             "passed": 0,
             "failed": 40,
             "latest_status": "failed",
             "best_score": 0.1
+          },
+          "cross_modal": {
+            "passed": 0,
+            "failed": 40,
+            "latest_status": "failed",
+            "best_score": 0.0
           }
         },
         "evidence_count": 80,
