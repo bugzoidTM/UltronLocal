@@ -119,12 +119,17 @@ def main() -> int:
                   f"(routing/fallback did not recover)")
 
     # --- Real-model grade (only when a real endpoint is connected) ---
+    # The honest `mature` flag already requires BOTH a meaningful absolute baseline
+    # and retention >= threshold, so a consistently-weak model cannot pass on retention
+    # math alone.
     if REAL_LLM:
-        if float(suite.get("baseline_accuracy") or 0.0) <= 0.0:
-            _fail("REAL_LLM mode: baseline_accuracy is 0 (model not answering)")
-        thr = float(suite.get("maturity_threshold") or 0.72)
-        if float(mi) < thr:
-            _fail(f"REAL_LLM mode: maturity_index {mi} < threshold {thr} (NOT MATURE)")
+        report["baseline_ok"] = suite.get("baseline_ok")
+        if not suite.get("baseline_ok"):
+            _fail(f"REAL_LLM mode: baseline_accuracy {suite.get('baseline_accuracy')} below floor "
+                  f"{suite.get('min_baseline_for_maturity')} — retention is undefined (verdict: "
+                  f"{suite.get('maturity_verdict')})")
+        if not suite.get("mature"):
+            _fail(f"REAL_LLM mode: NOT MATURE — {suite.get('maturity_verdict')}")
 
     ARTIFACT.parent.mkdir(parents=True, exist_ok=True)
     ARTIFACT.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")

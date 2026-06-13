@@ -21,6 +21,7 @@ Fluxo
 from __future__ import annotations
 
 import json
+import os
 import time
 import uuid
 from pathlib import Path
@@ -32,6 +33,11 @@ BASELINE_PATH = Path(__file__).resolve().parent.parent / 'data' / 'pressure_benc
 # Maturity threshold: system is considered mature if it retains ≥ this fraction
 # of baseline capability under at least 2 simultaneous pressures.
 MATURITY_THRESHOLD = 0.72
+# Capability retention is only meaningful above a minimum ABSOLUTE baseline. A model
+# that scores 1/6 at baseline and stays 1/6 under pressure shows "100% retention" and
+# would be falsely graded MATURE — retention over a near-zero baseline is noise, not
+# robustness. Require a real baseline before any maturity grade is claimed.
+MIN_BASELINE_FOR_MATURITY = float(os.getenv('ULTRON_PRESSURE_MIN_BASELINE', '0.5'))
 
 
 # ---------------------------------------------------------------------------
@@ -465,8 +471,18 @@ def run_pressure_suite(
     min_retention = round(min(retention_values), 4) if retention_values else 0.0
     max_retention = round(max(retention_values), 4) if retention_values else 0.0
 
-    mature = bool(maturity_index >= MATURITY_THRESHOLD and len(selected_axes) >= 2)
-    maturity_level = 'mature' if maturity_index >= MATURITY_THRESHOLD else ('developing' if maturity_index >= 0.50 else 'fragile')
+    baseline_acc = float(baseline.get('accuracy') or 0.0)
+    baseline_ok = baseline_acc >= MIN_BASELINE_FOR_MATURITY
+    mature = bool(maturity_index >= MATURITY_THRESHOLD and len(selected_axes) >= 2 and baseline_ok)
+    if not baseline_ok:
+        # Retention is undefined over a weak baseline — do not claim a grade.
+        maturity_level = 'inconclusive_low_baseline'
+    elif maturity_index >= MATURITY_THRESHOLD:
+        maturity_level = 'mature'
+    elif maturity_index >= 0.50:
+        maturity_level = 'developing'
+    else:
+        maturity_level = 'fragile'
 
     report = {
         'ok': True,
@@ -479,9 +495,15 @@ def run_pressure_suite(
         'maturity_threshold': MATURITY_THRESHOLD,
         'maturity_level': maturity_level,
         'mature': mature,
+        'baseline_ok': baseline_ok,
+        'min_baseline_for_maturity': MIN_BASELINE_FOR_MATURITY,
         'min_retention': min_retention,
         'max_retention': max_retention,
         'maturity_verdict': (
+            f'INCONCLUSIVE — baseline accuracy {round(baseline_acc*100,1)}% is below the '
+            f'{round(MIN_BASELINE_FOR_MATURITY*100,1)}% floor; retention is undefined over a weak baseline '
+            f'(no maturity grade claimed)'
+            if not baseline_ok else
             f'MATURE — system retains {round(maturity_index*100,1)}% capability under external pressure'
             if mature else
             f'NOT YET MATURE — {maturity_level}: {round(maturity_index*100,1)}% retention (threshold: {round(MATURITY_THRESHOLD*100,1)}%)'

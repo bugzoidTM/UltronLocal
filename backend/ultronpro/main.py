@@ -11523,9 +11523,13 @@ def _classify_query_type(query: str) -> str:
     """Classifica tipo de query deterministicamente."""
     query_lower = query.lower()
 
-    quick_smalltalk = _quick_smalltalk_intent(query)
-    if quick_smalltalk:
-        return quick_smalltalk
+    # Factual interrogatives ("o que e uma estrela") must not be captured as smalltalk
+    # by an over-generalized learned greeting skill. The autobiographical/identity check
+    # below still routes "quem e voce" correctly.
+    if not _is_factual_interrogative(query):
+        quick_smalltalk = _quick_smalltalk_intent(query)
+        if quick_smalltalk:
+            return quick_smalltalk
     
     # Greeting - deve vir primeiro
     greeting_triggers = ('bom dia', 'boa tarde', 'boa noite', 'ola', 'olá', 'oi', 'hi', 'hey', 
@@ -12222,6 +12226,26 @@ def _cognitive_identity_response(query: str) -> str:
     return ''
 
 
+_FACTUAL_INTERROGATIVE_STARTERS = (
+    'o que e', 'o que sao', 'o que significa', 'o que', 'que e', 'que sao',
+    'qual', 'quais', 'quem', 'quando', 'onde', 'por que', 'porque', 'quanto',
+    'explique', 'defina', 'descreva', 'como funciona',
+)
+
+
+def _is_factual_interrogative(text: str) -> bool:
+    """True for clearly factual/interrogative queries (e.g. 'o que e uma estrela').
+
+    Used to stop learned smalltalk skills from semantically over-matching factual
+    questions as greetings. Deliberately excludes greeting-shaped 'como vai/esta'.
+    """
+    t = unicodedata.normalize('NFKD', str(text or '').lower())
+    t = ''.join(ch for ch in t if not unicodedata.combining(ch))
+    t = re.sub(r'[^a-z0-9\s]+', ' ', t)
+    t = re.sub(r'\s+', ' ', t).strip()
+    return any(t == s or t.startswith(s + ' ') for s in _FACTUAL_INTERROGATIVE_STARTERS)
+
+
 def _intent_pre_classifier(query: str) -> str | None:
     text = unicodedata.normalize('NFKD', str(query or '').lower())
     text = ''.join(ch for ch in text if not unicodedata.combining(ch))
@@ -12259,7 +12283,9 @@ def _intent_pre_classifier(query: str) -> str | None:
                 'quem e voce', 'o que voce e', 'o que voce faz', 'o que e voce',
                 'voce e uma', 'voce e um',
             )
-            if not any(m in text for m in _identity_markers):
+            # Block learned smalltalk from capturing factual interrogatives
+            # ("o que e uma estrela" was matching a promoted greeting skill at 0.93).
+            if not any(m in text for m in _identity_markers) and not _is_factual_interrogative(text):
                 return str(learned.get('intent'))
     except Exception:
         pass
@@ -12291,7 +12317,10 @@ def _intent_pre_classifier(query: str) -> str | None:
         return 'greeting'
     first_token = re.sub(r'[^a-z0-9_]+', '', text.split(' ', 1)[0])
     fuzzy_greetings = ('ola', 'oi', 'hello', 'hi', 'hey')
-    if len(text) < 24 and any(_edit_distance_at_most_one_local(first_token, item) for item in fuzzy_greetings):
+    # Require >=2 chars: a single-char first token like the Portuguese article "o"
+    # (in "o que e uma estrela?") is edit-distance 1 from "oi"/"ola" and would be a
+    # false-positive greeting. Real greeting typos have >=2 chars.
+    if len(text) < 24 and len(first_token) >= 2 and any(_edit_distance_at_most_one_local(first_token, item) for item in fuzzy_greetings):
         return 'greeting'
     thanks_triggers = ('obrigad', 'thank', 'thanks', 'grato', 'grata', 'valeu', 'muito gentil', 'agradec')
     if len(text) < 80 and any(item in text for item in thanks_triggers):
@@ -13395,28 +13424,65 @@ async def chat_fast(req: ChatRequest):
         )
         if cognitive.get('resolved') and cognitive.get('answer'):
             final_payload = _finalize_cognitive_chat_payload(q, cognitive)
-            answer = await asyncio.to_thread(_ensure_chat_answer_constraints, q, str(final_payload.get('answer') or ''))
-            if answer:
-                dt = int((time.time() - t0) * 1000)
-                qs.update_valence(0.12)
-                qs.update_coherence(0.82)
-                qs.update_all_qualia()
-                qs.generate_narrative()
-                final_payload.update({
-                    'ok': True,
-                    'answer': answer,
-                    'latency_ms': dt,
-                    'qualia': qs.generate_report(),
-                })
-                return _learned_chat_response(
-                    q,
-                    final_payload,
-                    meta={
-                        'module': cognitive.get('module'),
-                        'cognitive_core': True,
-                        'trace_causal': final_payload.get('trace_causal'),
-                    },
-                )
+            # A causal/transfer "backend synthesis" result is an evidence-hedge
+            # ("ainda nao tenho evidencia suficiente..."), not a real answer. For
+            # general-knowledge questions (not self/operational), defer to the live
+            # LLM instead of hedging; keep the hedge only for autobiographical/self
+            # or capability queries where honest "insufficient evidence" beats a
+            # hallucinated fact.
+            _is_causal_hedge = str(final_payload.get('strategy') or '').endswith('_backend_synthesis')
+            _operational_q = is_autobiographical_intent(q) or _is_self_capability_request(q)
+            if _is_causal_hedge and not _operational_q:
+                # General-knowledge question the causal core could only hedge on. Answer
+                # directly from the local LLM's parametric knowledge instead of returning
+                # "nao tenho evidencia" OR dumping low-coverage RAG from the reasoning path.
+                logger.info("Chat: deferring causal backend-synthesis hedge to LLM (general-knowledge query)")
+                try:
+                    gen_answer = await asyncio.wait_for(
+                        asyncio.to_thread(_chat_last_resort_model_answer, q, session_id, max_tokens=260),
+                        timeout=_chat_llm_timeout(default=110.0),
+                    )
+                    gen_answer = await asyncio.to_thread(_ensure_chat_answer_constraints, q, gen_answer)
+                except Exception as exc:
+                    logger.warning("Chat: general-knowledge LLM deferral failed: %s", exc)
+                    gen_answer = ''
+                if gen_answer:
+                    dt = int((time.time() - t0) * 1000)
+                    qs.update_valence(0.1)
+                    qs.update_coherence(0.78)
+                    qs.update_all_qualia()
+                    qs.generate_narrative()
+                    return _learned_chat_response(q, {
+                        'ok': True,
+                        'answer': gen_answer,
+                        'strategy': 'chat_general_knowledge_llm',
+                        'latency_ms': dt,
+                        'qualia': qs.generate_report(),
+                    }, meta={'module': 'llm_general_knowledge', 'deferred_from': cognitive.get('module')})
+                # LLM produced nothing: fall through to the rest of the pipeline.
+            else:
+                answer = await asyncio.to_thread(_ensure_chat_answer_constraints, q, str(final_payload.get('answer') or ''))
+                if answer:
+                    dt = int((time.time() - t0) * 1000)
+                    qs.update_valence(0.12)
+                    qs.update_coherence(0.82)
+                    qs.update_all_qualia()
+                    qs.generate_narrative()
+                    final_payload.update({
+                        'ok': True,
+                        'answer': answer,
+                        'latency_ms': dt,
+                        'qualia': qs.generate_report(),
+                    })
+                    return _learned_chat_response(
+                        q,
+                        final_payload,
+                        meta={
+                            'module': cognitive.get('module'),
+                            'cognitive_core': True,
+                            'trace_causal': final_payload.get('trace_causal'),
+                        },
+                    )
     except asyncio.TimeoutError:
         logger.warning("Cognitive response timed out")
     except Exception as e:
