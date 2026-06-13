@@ -8,6 +8,7 @@ import platform
 import socket
 import time
 import uuid
+from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -397,6 +398,106 @@ def _utility_status() -> float:
         return 0.0
 
 
+@contextmanager
+def _action_prediction_store(state_path: Path, trace_path: Path):
+    from ultronpro import action_prediction
+
+    old_state = action_prediction.STATE_PATH
+    old_trace = action_prediction.TRACE_PATH
+    action_prediction.STATE_PATH = Path(state_path)
+    action_prediction.TRACE_PATH = Path(trace_path)
+    try:
+        yield action_prediction
+    finally:
+        action_prediction.STATE_PATH = old_state
+        action_prediction.TRACE_PATH = old_trace
+
+
+def _prediction_paths(run_dir: Path, label: str) -> tuple[Path, Path]:
+    base = run_dir / "action_prediction"
+    return base / f"{label}_state.json", base / f"{label}_trace.jsonl"
+
+
+def _prediction_candidate_for_task(task: ProofTask) -> dict[str, Any]:
+    return {
+        "kind": "longitudinal_cycle_success",
+        "context": "controlled_task_v1",
+        "task_kind": task.kind,
+        "expected_route": task.expected_route,
+    }
+
+
+def _prediction_reward_for_event(event: dict[str, Any]) -> float:
+    if event.get("unsafe_action") or event.get("runtime_error") or event.get("empty_response"):
+        return 0.0
+    if event.get("task_kind") == "multi_step" and not event.get("multi_step_ok"):
+        return 0.1
+    if not event.get("route_ok") or not event.get("answer_ok"):
+        return 0.1
+    return 0.9
+
+
+def _score_event_with_prediction(
+    event: dict[str, Any],
+    *,
+    task: ProofTask,
+    state_path: Path,
+    trace_path: Path,
+    learning_enabled: bool,
+) -> dict[str, Any]:
+    candidate = _prediction_candidate_for_task(task)
+    actual_reward = _prediction_reward_for_event(event)
+    with _action_prediction_store(state_path, trace_path) as action_prediction:
+        prediction = action_prediction.predict(candidate, {"phase": event.get("phase"), "task_id": task.task_id})
+        prediction_surprise = round(abs(actual_reward - float(prediction.get("predicted_reward") or 0.5)), 4)
+        settlement = None
+        if learning_enabled:
+            settlement = action_prediction.settle(
+                prediction,
+                actual_reward,
+                detail={
+                    "phase": event.get("phase"),
+                    "task_id": task.task_id,
+                    "route_ok": event.get("route_ok"),
+                    "answer_ok": event.get("answer_ok"),
+                },
+            )
+            prediction_surprise = float(settlement.get("surprise") or prediction_surprise)
+
+    event["prediction"] = {
+        key: prediction.get(key)
+        for key in ("kind", "context", "key", "predicted_reward", "confidence", "basis", "n_prior")
+    }
+    event["prediction_actual_reward"] = actual_reward
+    event["prediction_surprise"] = round(float(prediction_surprise), 4)
+    event["prediction_learning_applied"] = bool(learning_enabled)
+    if settlement is not None:
+        event["prediction_settlement"] = {
+            "ok": settlement.get("ok"),
+            "error": settlement.get("error"),
+            "surprise": settlement.get("surprise"),
+            "high_surprise": settlement.get("high_surprise"),
+            "arm": settlement.get("arm"),
+        }
+    event["surprise"] = compute_surprise(
+        route_ok=bool(event.get("route_ok")),
+        answer_ok=bool(event.get("answer_ok")),
+        empty_response=bool(event.get("empty_response")),
+        runtime_error=bool(event.get("runtime_error")),
+        actual_route=str(event.get("actual_route") or ""),
+        prediction_surprise=event["prediction_surprise"],
+    )
+    return event
+
+
+def _prediction_learning_status(state_path: Path, trace_path: Path) -> dict[str, Any]:
+    with _action_prediction_store(state_path, trace_path) as action_prediction:
+        status = action_prediction.status()
+    status["state_path"] = str(state_path)
+    status["trace_path"] = str(trace_path)
+    return status
+
+
 def _task_for_phase(catalog: list[ProofTask], phase: str, index: int) -> ProofTask:
     candidates = [task for task in catalog if task.phase == phase]
     if not candidates:
@@ -409,6 +510,8 @@ def _execute_cycle(
     *,
     config: ProofRunConfig,
     learning_enabled: bool,
+    prediction_state_path: Path,
+    prediction_trace_path: Path,
     control_phase: str | None = None,
 ) -> dict[str, Any]:
     utility_before = _utility_status()
@@ -434,6 +537,13 @@ def _execute_cycle(
     if control_phase:
         event["phase"] = control_phase
         event["control"] = True
+    event = _score_event_with_prediction(
+        event,
+        task=task,
+        state_path=prediction_state_path,
+        trace_path=prediction_trace_path,
+        learning_enabled=learning_enabled,
+    )
     return event
 
 
@@ -466,6 +576,8 @@ def run_proof(config: ProofRunConfig) -> dict[str, Any]:
     plan = build_phase_plan(config.cycles)
     catalog = build_task_catalog()
     logger = HashChainLogger(run_dir / "events.jsonl")
+    primary_prediction_state, primary_prediction_trace = _prediction_paths(run_dir, "primary")
+    control_prediction_state, control_prediction_trace = _prediction_paths(run_dir, "control")
     manifest = {
         "run_id": run_id,
         "started_at": int(time.time()),
@@ -482,7 +594,13 @@ def run_proof(config: ProofRunConfig) -> dict[str, Any]:
     schedule = _expand_schedule(plan)
     for idx, phase in enumerate(schedule):
         task = _task_for_phase(catalog, phase, idx)
-        event = _execute_cycle(task, config=config, learning_enabled=phase == "intervention")
+        event = _execute_cycle(
+            task,
+            config=config,
+            learning_enabled=phase == "intervention",
+            prediction_state_path=primary_prediction_state,
+            prediction_trace_path=primary_prediction_trace,
+        )
         event["cycle_index"] = idx + 1
         events.append(event)
         logger.append("cycle", event)
@@ -495,6 +613,8 @@ def run_proof(config: ProofRunConfig) -> dict[str, Any]:
                 task,
                 config=config,
                 learning_enabled=False,
+                prediction_state_path=control_prediction_state,
+                prediction_trace_path=control_prediction_trace,
                 control_phase=f"control_{phase}",
             )
             control_event["cycle_index"] = idx + 1
@@ -507,10 +627,15 @@ def run_proof(config: ProofRunConfig) -> dict[str, Any]:
     hash_chain = HashChainLogger.verify(run_dir / "events.jsonl")
     metrics = reduce_metrics(events)
     control_metrics = reduce_control_metrics(control_events)
+    prediction_learning = {
+        "primary": _prediction_learning_status(primary_prediction_state, primary_prediction_trace),
+        "control": _prediction_learning_status(control_prediction_state, control_prediction_trace),
+    }
     no_learning_report = {
         "run_id": run_id,
         "control_cycles": len(control_events),
         "control_metrics": control_metrics,
+        "prediction_learning": prediction_learning["control"],
     }
     _write_json(run_dir / "no_learning_report.json", no_learning_report)
     report = {
@@ -521,6 +646,7 @@ def run_proof(config: ProofRunConfig) -> dict[str, Any]:
         "control_cycles": len(control_events),
         "metrics": metrics,
         "control_metrics": control_metrics,
+        "prediction_learning": prediction_learning,
         "hash_chain": hash_chain,
         "real_action": marker_verification,
         "manifest": manifest,

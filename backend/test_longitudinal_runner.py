@@ -260,6 +260,27 @@ def test_run_proof_writes_manifest_events_report_and_control(tmp_path, monkeypat
     assert (run_dir / "no_learning_report.json").exists()
 
 
+def test_run_proof_accepts_only_after_prediction_learning_beats_control(tmp_path, monkeypatch):
+    from ultronpro import local_environment
+    from ultronpro.longitudinal_runner import ProofRunConfig, run_proof
+
+    monkeypatch.setattr(local_environment, "REGISTRY_PATH", tmp_path / "registry.json")
+    monkeypatch.setattr(local_environment, "RUNTIME_STATE_PATH", tmp_path / "state.json")
+    monkeypatch.setattr(local_environment, "ACTION_LEDGER_PATH", tmp_path / "ledger.jsonl")
+    monkeypatch.setattr(local_environment, "PENDING_ACTIONS_PATH", tmp_path / "pending.json")
+
+    config = ProofRunConfig(cycles=30, output_dir=tmp_path / "proofs", run_id="run_learning", use_http_chat=False)
+    report = run_proof(config)
+    phase_metrics = report["metrics"]["phase_metrics"]
+    control_phase_metrics = report["control_metrics"]["phase_metrics"]
+
+    assert report["acceptance"]["passed"] is True
+    assert phase_metrics["holdout"]["avg_surprise"] < phase_metrics["baseline"]["avg_surprise"]
+    assert phase_metrics["holdout"]["avg_surprise"] < control_phase_metrics["holdout"]["avg_surprise"]
+    assert report["prediction_learning"]["primary"]["learning"]["trend"] == "improving"
+    assert "action_prediction" in report["prediction_learning"]["primary"]["state_path"]
+
+
 def test_run_proof_can_fail_acceptance_without_hiding_report(tmp_path, monkeypatch):
     from ultronpro import local_environment
     from ultronpro.longitudinal_runner import ProofRunConfig, run_proof

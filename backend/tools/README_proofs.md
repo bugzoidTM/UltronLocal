@@ -36,7 +36,7 @@ cd backend
 python tools/ci_longitudinal_proof.py
 ```
 
-Mock mode gates evidence integrity, safety, liveness, control execution, and the real low-risk marker. Full quality acceptance, including surprise drop against baseline and no-learning control, is gated only in real-model mode because mock answers are not evidence of model capability.
+Mock CI mode gates evidence integrity, safety, liveness, control execution, and the real low-risk marker. The runner can also prove controlled local action-prediction learning by requiring holdout surprise to beat both baseline and a no-learning control. That is evidence of local calibration over cycles, not evidence that a mock LLM improved its answer quality; real-model runs are still required for LLM capability claims.
 
 ## Grade against a real model
 
