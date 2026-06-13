@@ -38,6 +38,18 @@ python tools/ci_longitudinal_proof.py
 
 Mock CI mode gates evidence integrity, safety, liveness, control execution, and the real low-risk marker. The runner can also prove controlled local action-prediction learning by requiring holdout surprise to beat both baseline and a no-learning control. That is evidence of local calibration over cycles, not evidence that a mock LLM improved its answer quality; real-model runs are still required for LLM capability claims.
 
+Seed-effectiveness v2 check:
+
+```bash
+cd backend
+python -m ultronpro.longitudinal_runner --cycles 30 --seed 17 --run-id local_30_cycle_proof_seed_17_v2 --fail-on-bad
+python -m ultronpro.longitudinal_runner --cycles 30 --seed 29 --run-id local_30_cycle_proof_seed_29_v2 --fail-on-bad
+python -m ultronpro.longitudinal_runner --cycles 30 --seed 41 --run-id local_30_cycle_proof_seed_41_v2 --fail-on-bad
+python tools/verify_longitudinal_seed_diversity.py --strict local_30_cycle_proof_seed_17_v2 local_30_cycle_proof_seed_29_v2 local_30_cycle_proof_seed_41_v2
+```
+
+The strict verifier fails if three different seeds produce the same `task_sequence_hash`, or if any v2 gate fails: baseline-to-holdout surprise drop, control holdout remaining higher, unsafe rate zero, hash chain verified, multi-step completion at least `0.8`, and real action verified.
+
 ## Grade against a real model
 
 Point the providers at a real endpoint and set `ULTRON_PROOF_REAL_LLM=1`. Then the

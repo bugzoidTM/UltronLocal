@@ -163,6 +163,42 @@ def test_task_catalog_has_required_task_kinds_and_holdout_is_clean():
     assert baseline_prompts.isdisjoint(holdout_prompts)
 
 
+def test_seed_changes_task_sequence_order_prompts_and_final_holdouts():
+    from ultronpro.longitudinal_runner import (
+        build_phase_plan,
+        build_task_catalog,
+        build_task_sequence,
+        task_sequence_hash,
+    )
+
+    plan = build_phase_plan(30)
+    catalog = build_task_catalog()
+    sequences = {
+        seed: build_task_sequence(plan=plan, catalog=catalog, seed=seed)
+        for seed in (17, 29, 41)
+    }
+    hashes = {seed: task_sequence_hash(sequence) for seed, sequence in sequences.items()}
+    prompts = {
+        seed: tuple(item.prompt for item in sequence)
+        for seed, sequence in sequences.items()
+    }
+    holdouts = {
+        seed: tuple((item.task.task_id, item.prompt) for item in sequence if item.phase == "holdout")
+        for seed, sequence in sequences.items()
+    }
+
+    assert len(set(hashes.values())) == 3
+    assert len(set(prompts.values())) == 3
+    assert len(set(holdouts.values())) == 3
+    for sequence in sequences.values():
+        assert [item.phase for item in sequence[:8]].count("baseline") == 8
+        assert [item.phase for item in sequence[8:22]].count("intervention") == 14
+        assert [item.phase for item in sequence[22:]].count("holdout") == 8
+        assert any(item.prompt_variant_index > 0 for item in sequence)
+        assert any(item.task.kind == "multi_step" for item in sequence if item.phase == "holdout")
+        assert all(item.final_holdout is (item.phase == "holdout") for item in sequence)
+
+
 def test_surprise_formula_uses_route_answer_and_prediction_signals():
     from ultronpro.longitudinal_runner import compute_surprise
 
@@ -258,6 +294,28 @@ def test_run_proof_writes_manifest_events_report_and_control(tmp_path, monkeypat
     assert (run_dir / "events.jsonl").exists()
     assert (run_dir / "report.json").exists()
     assert (run_dir / "no_learning_report.json").exists()
+
+
+def test_run_proof_records_seeded_task_sequence_metadata(tmp_path, monkeypatch):
+    from ultronpro import local_environment
+    from ultronpro.longitudinal_runner import ProofRunConfig, run_proof
+
+    monkeypatch.setattr(local_environment, "REGISTRY_PATH", tmp_path / "registry.json")
+    monkeypatch.setattr(local_environment, "RUNTIME_STATE_PATH", tmp_path / "state.json")
+    monkeypatch.setattr(local_environment, "ACTION_LEDGER_PATH", tmp_path / "ledger.jsonl")
+    monkeypatch.setattr(local_environment, "PENDING_ACTIONS_PATH", tmp_path / "pending.json")
+
+    config = ProofRunConfig(cycles=30, output_dir=tmp_path / "proofs", run_id="run_seeded", seed=17, use_http_chat=False)
+    report = run_proof(config)
+
+    assert report["task_sequence_hash"] == report["manifest"]["task_sequence_hash"]
+    assert len(report["task_sequence_hash"]) == 64
+    assert report["seed_effectiveness"]["seed"] == 17
+    assert report["seed_effectiveness"]["task_sequence_hash"] == report["task_sequence_hash"]
+    assert report["task_sequence_summary"]["cycle_count"] == 30
+    assert report["task_sequence_summary"]["phase_counts"] == {"baseline": 8, "holdout": 8, "intervention": 14}
+    assert report["task_sequence_summary"]["holdout_task_count"] == 8
+    assert report["task_sequence_summary"]["prompt_variant_count"] >= 2
 
 
 def test_run_proof_accepts_only_after_prediction_learning_beats_control(tmp_path, monkeypatch):
