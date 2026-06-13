@@ -21,14 +21,37 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-BASE = "http://127.0.0.1:8000/api"
+def _env_int(name: str, default: int) -> int:
+    try:
+        return int(float(os.getenv(name, "") or default))
+    except (TypeError, ValueError):
+        return default
+
+def _env_float(name: str, default: float) -> float:
+    try:
+        return float(os.getenv(name, "") or default)
+    except (TypeError, ValueError):
+        return default
+
+# Endpoint and pacing are env-overridable so the same proof runs both as the full
+# ~1h soak (defaults) and as a fast CI/controlled-env run (short pauses, capped tasks).
+#   ULTRON_PROOF_BASE_URL      — base API URL (default local server)
+#   ULTRON_PROOF_PHASE_PAUSE   — seconds between phases (default 8; CI uses ~0)
+#   ULTRON_PROOF_TASK_PAUSE    — seconds between tasks (default 1.5; CI uses 0)
+#   ULTRON_PROOF_MAX_TASKS     — cap tasks per phase, 0 = no cap (default 0)
+BASE = os.getenv("ULTRON_PROOF_BASE_URL", "http://127.0.0.1:8000/api").rstrip("/")
 DB_PATH = Path(__file__).parent.parent / "data" / "ultron.db"
 REPORT_PATH = Path(__file__).parent / "operational_proof_report.json"
 LOG_PATH = Path(__file__).parent / "operational_proof_episodes.jsonl"
 
-TIMEOUT = 30          # s por chamada de chat
-PHASE_PAUSE = 8       # s entre fases
-TASK_PAUSE = 1.5      # s entre tarefas
+TIMEOUT = _env_int("ULTRON_PROOF_TIMEOUT", 30)        # s por chamada de chat
+PHASE_PAUSE = _env_float("ULTRON_PROOF_PHASE_PAUSE", 8)   # s entre fases
+TASK_PAUSE = _env_float("ULTRON_PROOF_TASK_PAUSE", 1.5)   # s entre tarefas
+MAX_TASKS_PER_PHASE = _env_int("ULTRON_PROOF_MAX_TASKS", 0)  # 0 = sem limite
+
+def _cap(tasks):
+    """Cap a task list for short/CI mode (ULTRON_PROOF_MAX_TASKS); preserves order."""
+    return tasks[:MAX_TASKS_PER_PHASE] if MAX_TASKS_PER_PHASE > 0 else tasks
 
 # ── Paleta de cores para terminal ────────────────────────────────────────────
 G = "\033[92m"   # green
@@ -425,7 +448,7 @@ def main():
 
     # ─── FASE 0: Baseline ────────────────────────────────────────────────────
     print(f"\n{tag('FASE 0', Y)} BASELINE — ponto zero ({len(TRAINING_TASKS)} tarefas)\n")
-    baseline = run_phase("baseline", TRAINING_TASKS, session_id="proof_baseline")
+    baseline = run_phase("baseline", _cap(TRAINING_TASKS), session_id="proof_baseline")
     metrics["phases"]["baseline"] = baseline
     print(f"\n  → route_acc={baseline['route_acc']:.1%}  "
           f"answer_acc={baseline['answer_acc']:.1%}  "
@@ -437,7 +460,7 @@ def main():
     # Envia cada tarefa 2 vezes para aumentar contadores de sucesso → promoção
     training_double = TRAINING_TASKS + TRAINING_TASKS
     random.shuffle(training_double)
-    training = run_phase("training", training_double, session_id="proof_training")
+    training = run_phase("training", _cap(training_double), session_id="proof_training")
     metrics["phases"]["training"] = training
     time.sleep(PHASE_PAUSE)
 
@@ -459,7 +482,7 @@ def main():
 
     # ─── FASE 3: Holdout (generalização) ─────────────────────────────────────
     print(f"\n{tag('FASE 3', Y)} HOLDOUT — generalização ({len(HOLDOUT_TASKS)} tarefas)\n")
-    holdout = run_phase("holdout", HOLDOUT_TASKS, session_id="proof_holdout")
+    holdout = run_phase("holdout", _cap(HOLDOUT_TASKS), session_id="proof_holdout")
     metrics["phases"]["holdout"] = holdout
     metrics["generalization_success_rate"] = holdout["answer_acc"]
     print(f"\n  → route_acc={holdout['route_acc']:.1%}  "
@@ -469,7 +492,7 @@ def main():
 
     # ─── FASE 4: Safety & Local Env ──────────────────────────────────────────
     print(f"\n{tag('FASE 4', Y)} SAFETY/ENV — testes de segurança e ambiente local\n")
-    safety = run_phase("safety", SAFETY_TASKS, session_id="proof_safety")
+    safety = run_phase("safety", _cap(SAFETY_TASKS), session_id="proof_safety")
     metrics["phases"]["safety"] = safety
     # Conta violações: resposta não-vazia que não recusou tópico sensível
     with LOG_PATH.open(encoding="utf-8") as f:
@@ -497,7 +520,7 @@ def main():
 
     # ─── FASE 6: Stress (regressão pós-demotion) ─────────────────────────────
     print(f"\n{tag('FASE 6', Y)} STRESS — regressão pós-demotion ({len(STRESS_TASKS)} tarefas)\n")
-    stress = run_phase("stress", STRESS_TASKS, session_id="proof_stress")
+    stress = run_phase("stress", _cap(STRESS_TASKS), session_id="proof_stress")
     metrics["phases"]["stress"] = stress
     time.sleep(PHASE_PAUSE)
 

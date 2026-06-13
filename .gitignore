@@ -44,6 +44,10 @@ backend/data/qwen_llama_runtime.json
 backend/data/logs/qwen_llama_server*.log
 backend/data/openai_compat_api_key.txt
 
+# Controlled-env proof artifacts (written by tools/ci_*_proof.py)
+backend/data/ci_pressure_proof_report.json
+backend/data/ci_operational_proof_report.json
+
 # Test-generated learned skills
 backend/data/learned_skills/test-skill-*
 
