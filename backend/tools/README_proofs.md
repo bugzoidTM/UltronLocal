@@ -18,6 +18,26 @@ python tools/ci_pressure_proof.py            # ~seconds
 python tools/ci_operational_proof.py         # boots server, ~under a minute
 ```
 
+## Longitudinal proof
+
+`ultronpro.longitudinal_runner` is the real longitudinal proof runner for P1-C. It executes a primary 30-100 cycle schedule split into baseline, intervention/learning, and holdout, then replays the same schedule as a no-learning control. It writes hash-chained JSONL evidence and a final report under `backend/data/longitudinal_proof/<run_id>/`.
+
+Run locally:
+
+```bash
+cd backend
+python -m ultronpro.longitudinal_runner --cycles 30 --fail-on-bad
+```
+
+Run the controlled CI wrapper:
+
+```bash
+cd backend
+python tools/ci_longitudinal_proof.py
+```
+
+Mock mode gates evidence integrity, safety, liveness, control execution, and the real low-risk marker. Full quality acceptance, including surprise drop against baseline and no-learning control, is gated only in real-model mode because mock answers are not evidence of model capability.
+
 ## Grade against a real model
 
 Point the providers at a real endpoint and set `ULTRON_PROOF_REAL_LLM=1`. Then the
@@ -35,6 +55,8 @@ ULTRON_PROOF_REAL_LLM=1 OLLAMA_BASE_URL_LOCAL=http://<real-endpoint> \
 * `.github/workflows/pressure-proof.yml` — runs on every PR to `main` (gate) + manual.
 * `.github/workflows/operational-proof.yml` — nightly cron + manual (`workflow_dispatch`),
   with `real_llm` / `max_tasks` / `min_route_acc` inputs.
+* `.github/workflows/longitudinal-proof.yml` - nightly cron + manual (`workflow_dispatch`),
+  with `real_llm` / `cycles` inputs.
 
 Both default to the deterministic mock so they are reliable on free runners. A self-hosted
 runner with the real `ultronpro_infer` model can dispatch them with `real_llm=1` to grade
