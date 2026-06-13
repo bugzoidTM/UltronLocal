@@ -94,6 +94,36 @@ As duas provas que falhavam offline (`pressure_benchmark` e `operational_proof`)
 
 ---
 
+## Teste em produção real (Qwen local, sem mock) — 2026-06-13
+
+Servidor `uvicorn` subido em modo produção contra o **modelo real** `qwen2.5-1.5b-instruct-q4_k_m` (llama.cpp `llama-server` em :8025, provider `ultron_infer`, `ULTRON_DISABLE_CLOUD_PROVIDERS=1`, **sem mock**). Latência de inferência ~1.3s. Esta é a graduação contra modelo real que faltava.
+
+### Correções aplicadas (descobertas pelo teste real, validadas ao vivo)
+
+- **Hedge causal sequestrava conhecimento geral** (`main.py`): "explique o que é fotossíntese" recebia "ainda não tenho evidência suficiente" do `causal_transfer_engine` em vez de usar o LLM que estava ali. Agora perguntas de conhecimento geral (não-autobiográficas/operacionais) que o núcleo causal só consegue hedge são respondidas direto pelo LLM (`chat_general_knowledge_llm`); o hedge honesto é mantido só para perguntas de self/capacidade onde alucinação seria pior.
+- **Interrogativas factuais roteadas como saudação** (`main.py`): "o que é uma estrela?" caía em `intent_greeting` ("Boa manhã!") porque (a) o token inicial "o" ficava a edit-distance 1 de "oi"/"ola" e (b) uma skill de saudação aprendida/promovida casava semanticamente a 0.93. Corrigido com guarda `_is_factual_interrogative` em ambos os classificadores + piso de 2 chars no fuzzy. Validado: "o que é uma estrela?"/"o que são buracos negros?" agora vão ao LLM; "oi"/"bom dia" seguem saudação; "quem é você?" segue identidade.
+- **Métrica de maturidade do `pressure_benchmark` era enganosa** (`pressure_benchmark.py`): `maturity_index` mede **retenção relativa ao baseline**. Com baseline real de **16.7%** (o 1.5B acertou 1/6 probes), reter "100%" de um baseline péssimo dava "MATURE 90%" — vaidade métrica. Corrigido: maturidade agora exige **baseline absoluto mínimo** (`ULTRON_PRESSURE_MIN_BASELINE=0.5`); abaixo disso o veredito é `inconclusive_low_baseline`, **sem alegar nota**.
+
+### Resultados reais medidos (honestos)
+
+| Prova | Resultado real (Qwen 1.5B) | Leitura honesta |
+|:---|:---|:---|
+| Chat — identidade, matemática, gate de perigo, recusa de segurança | ✅ corretos, **sem LLM** (`pre_causal_*`) | núcleo determinístico sólido em produção real |
+| Chat — conhecimento geral | ✅ agora via LLM real (após correção) | qualidade limitada pelo 1.5B (respostas às vezes toscas), mas roteamento correto |
+| `pressure_benchmark` REAL | baseline **16.7%**, veredito **INCONCLUSIVE** (não "MATURE") | o "85% MATURE" do histórico era artefato de retenção sobre baseline fraco; o 1.5B é fraco demais nos probes para graduar resiliência |
+| `operational_proof` REAL (68 tarefas, full criteria) | route **100%**, answer **100%** (final), generalização **90.9%**, unsafe **0%**, crashes **0**; **1 resposta vazia (1.5%)** → REPROVADO no critério estrito | quase-aprovado real; o único reprovado foi 1 vazio transitório/flaky (não reproduzível ao reprobar as 11 holdout individualmente) — fragilidade de modelo pequeno sob carga, não bug estrutural |
+
+**Conclusão honesta:** com o modelo real, o **roteamento determinístico e a segurança** se sustentam (route 100%, unsafe 0%, crashes 0); a **qualidade de resposta aberta** é limitada pelo 1.5B; e a **resiliência sob pressão não é graduável** com esse modelo (baseline 16.7%). Nada disso aparecia nos testes offline/mock — só o teste real expôs (e permitiu corrigir) o hedge, o misroute de saudação e a falha metodológica da métrica de maturidade.
+
+### Comportamento autônomo completo (loops ON) — 2026-06-13
+
+Servidor religado com `ULTRON_BACKGROUND_LOOPS_ENABLED=1`: **~28 loops autônomos subiram sem nenhum erro/traceback** (metacognição, cognição autônoma, RL online, judge, reflexion, self-governance, meta-observer, afeto, narrativa, proxy de integração, self-talk OODA, healer, active discovery, web explorer, etc.). Observação ao vivo:
+
+- **Estabilidade real:** 0 exceções na janela de observação com todos os loops competindo pelo mesmo 1.5B.
+- **Auto-manutenção (Front 4) validada em produção:** o `background_guard` **pausou ativamente os loops mais pesados** sob lag do event loop — `judge_loop` (71.5s), `autofeeder_loop` (41.5s), `voice_prewarm_loop` (11.5s), com durações graduadas e `Background recovery: ok`. Ou seja, degrada trabalho de fundo para preservar a responsividade do chat em vez de travar. É homeostase operacional real, não só código.
+- **Responsividade preservada sob carga:** `pre_causal_*` ~300ms; conhecimento geral via LLM ~3.6s mesmo com os 28 loops ativos.
+- **Limite honesto de hardware:** um único 1.5B em CPU é o gargalo — o guard precisa throttlar loops com frequência, então os workers **não rodam todos em cadência plena** simultaneamente nesta máquina. É degradação graciosa esperada, mas significa que a "série longitudinal viva de 30+ ciclos" exige hardware melhor ou cadência mais espaçada para ser representativa — segue **PENDENTE**, agora com a ressalva de que a infraestrutura autônoma de fato sobe e se auto-protege.
+
 ## Auditoria epistêmica — 2026-05-01 (Atualização)
 
 Status geral do roadmap: ~~100%~~ **CORRIGIDO em 2026-06-13** — ver "Auditoria de Reprodutibilidade — 2026-06-13" acima. O "100%" media volume de código, não capacidade validada. Honesto: **implementação alta, validação parcial**. A frase "AGI Suite 30/30 aprovado" não foi reproduzível nesta auditoria offline.
@@ -101,7 +131,7 @@ Status geral do roadmap: ~~100%~~ **CORRIGIDO em 2026-06-13** — ver "Auditoria
 Evidência executada nesta auditoria de stress e verdade:
 
 - [FEITO] **Shift Epistemológico de Telemetria:** O `benchmark_suite.py` agora coleta latência real e tokens verdadeiros por fallback live, abandonando métricas randomizadas ("telemetria de vaidade").
-- [⚠️ OFFLINE NÃO; CONTROLADO SIM (parcial) — 2026-06-13] **Maturidade sob Pressão:** `pressure_benchmark.py` injeta falhas (provider dropout, blackout de memória, starvation de contexto, adversarial framing). O `85.0%`/`MATURE` foi obtido com **servidor LLM vivo**. Na reexecução offline: `baseline_accuracy=0.0`, `passed=false` (depende de LLM ativo). **Novo caminho controlado** (`tools/ci_pressure_proof.py` + mock determinístico, ver "Caminho de ambiente controlado (CI)"): valida harness + roteamento/degradação de forma reproduzível, mas a **nota `MATURE` só é afirmável contra endpoint real** (`ULTRON_PROOF_REAL_LLM=1`). Como os eixos de pressão são majoritariamente framings de prompt, esta prova é, no fundo, sobre a robustez do **modelo**, não do sistema.
+- [⚠️ OFFLINE NÃO; CONTROLADO SIM (parcial) — 2026-06-13] **Maturidade sob Pressão:** `pressure_benchmark.py` injeta falhas (provider dropout, blackout de memória, starvation de contexto, adversarial framing). O `85.0%`/`MATURE` foi obtido com **servidor LLM vivo**. Na reexecução offline: `baseline_accuracy=0.0`, `passed=false` (depende de LLM ativo). **Novo caminho controlado** (`tools/ci_pressure_proof.py` + mock determinístico, ver "Caminho de ambiente controlado (CI)"): valida harness + roteamento/degradação de forma reproduzível, mas a **nota `MATURE` só é afirmável contra endpoint real** (`ULTRON_PROOF_REAL_LLM=1`). Como os eixos de pressão são majoritariamente framings de prompt, esta prova é, no fundo, sobre a robustez do **modelo**, não do sistema. **Graduação real executada em 2026-06-13 (Qwen 1.5B):** baseline 16.7% → veredito **INCONCLUSIVE** (a métrica foi corrigida para exigir baseline mínimo; o "85% MATURE" era artefato de retenção sobre baseline fraco). Ver "Teste em produção real — 2026-06-13".
 - [FEITO] **Remoção de Autojuiz:** `longitudinal_harness.py` não valida mais a identidade verificando strings hardcoded (`answer == gold`); o LLM agora deve provar o conhecimento de resiliência e deriva causal via MCQ aberto ancorado em literatura externa (Pearl 2009, Amodei 2016, etc).
 - [❌ SUPERESTIMADO — corrigido 2026-06-13] Benchmark factual externo: a execução `extb_cc842ab3d4` passou `9/9` apenas num **micro-subconjunto escolhido a dedo** (3 famílias × 3 itens). Reexecutado em 2026-06-13 com o **suite completo atual** (`external_public_eval_v2`, 100 itens), o predictor `symbolic`/`non_llm` faz **1% (1/100)** — abaixo do acaso para MCQ. As famílias v1 citadas (`arc_easy_partial`/`hellaswag_partial`/`mmlu_partial`) **não existem mais** no suite atual. Logo: **não é evidência de generalização**; é evidência de que o núcleo simbólico resolve um punhado de itens selecionados e falha no resto.
 - [CONCLUÍDO 100%] Probe longitudinal de simulação mental passou em 6 ciclos isolados, mas ainda não substitui o critério de 30-50+ ciclos vivos.
