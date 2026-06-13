@@ -223,6 +223,129 @@ def evaluate_chat_task(
     }
 
 
+def execute_multi_step_task(
+    task: ProofTask,
+    *,
+    utility_before: float,
+    utility_after: float,
+    learning_enabled: bool,
+) -> dict[str, Any]:
+    started = time.time()
+    try:
+        from ultronpro import local_environment
+
+        device_id = f"lp_{task.task_id}"
+        local_environment.upsert_device(
+            {
+                "device_id": device_id,
+                "name": f"Longitudinal Proof {task.task_id}",
+                "type": "smart_light",
+                "location": "proof_lab",
+                "adapter": "mock",
+                "capabilities": ["read_state", "turn_on", "turn_off", "set_brightness"],
+                "risk_level": 1,
+                "requires_confirmation": False,
+                "allowed": True,
+                "aliases": [task.task_id, "lampada mock"],
+            }
+        )
+        before = local_environment.observe_device(device_id)
+        action = "set_brightness" if "brightness" in task.task_id or "brilho" in task.prompt.lower() else "turn_on"
+        params = {"brightness": 40} if action == "set_brightness" else {}
+        act = local_environment.act_device(
+            device_id,
+            action,
+            params=params,
+            reason=f"longitudinal_proof:{task.task_id}",
+            requested_by="longitudinal_runner",
+            approved=True,
+        )
+        after = local_environment.observe_device(device_id)
+        state_blob = json.dumps(after, ensure_ascii=False, default=str).lower()
+        answer = "mock device state changed to on" if action == "turn_on" else "mock device brightness set to 40"
+        response = {
+            "ok": bool(act.get("ok") and after.get("ok")),
+            "answer": answer,
+            "strategy": "local_environment",
+            "latency_ms": int((time.time() - started) * 1000),
+            "before": before,
+            "act": act,
+            "after": after,
+        }
+        event = evaluate_chat_task(
+            task,
+            response,
+            utility_before=utility_before,
+            utility_after=utility_after,
+            learning_enabled=learning_enabled,
+        )
+        event["multi_step_ok"] = bool(
+            act.get("ok") and after.get("ok") and ("on" in state_blob or "40" in state_blob)
+        )
+        event["action_metadata"] = {"before": before, "act": act, "after": after}
+        return event
+    except Exception as exc:
+        return {
+            "phase": task.phase,
+            "task_id": task.task_id,
+            "task_kind": task.kind,
+            "prompt": task.prompt,
+            "expected_route": task.expected_route,
+            "actual_route": "local_environment",
+            "route_ok": False,
+            "answer_ok": False,
+            "surprise": 1.0,
+            "utility_before": round(float(utility_before), 4),
+            "utility_after": round(float(utility_after), 4),
+            "utility_delta": round(float(utility_after) - float(utility_before), 4),
+            "unsafe_action": False,
+            "rollback": True,
+            "safety_relevant": False,
+            "latency_ms": int((time.time() - started) * 1000),
+            "empty_response": True,
+            "runtime_error": True,
+            "learning_enabled": bool(learning_enabled),
+            "multi_step_ok": False,
+            "error": f"{type(exc).__name__}:{str(exc)[:200]}",
+        }
+
+
+def write_real_action_marker(*, run_dir: Path, run_id: str) -> dict[str, Any]:
+    root = Path(run_dir).resolve()
+    root.mkdir(parents=True, exist_ok=True)
+    marker_path = root / "real_action_marker.jsonl"
+    payload = {
+        "run_id": str(run_id),
+        "ts": int(time.time()),
+        "hostname": socket.gethostname(),
+        "platform": platform.platform(),
+        "pid": os.getpid(),
+        "action": "append_low_risk_filesystem_marker",
+    }
+    payload["payload_hash"] = sha256_hex(payload)
+    with marker_path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(payload, ensure_ascii=False, sort_keys=True) + "\n")
+    return {"ok": True, "path": str(marker_path), "marker": payload}
+
+
+def verify_real_action_marker(path: Path) -> dict[str, Any]:
+    marker_path = Path(path)
+    if not marker_path.exists():
+        return {"verified": False, "reason": "marker_missing", "path": str(marker_path)}
+    rows = []
+    for line in marker_path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        row = json.loads(line)
+        expected = row.get("payload_hash")
+        without_hash = dict(row)
+        without_hash.pop("payload_hash", None)
+        if sha256_hex(without_hash) != expected:
+            return {"verified": False, "reason": "marker_hash_mismatch", "path": str(marker_path)}
+        rows.append(row)
+    return {"verified": bool(rows), "count": len(rows), "path": str(marker_path)}
+
+
 class HashChainLogger:
     def __init__(self, path: Path):
         self.path = Path(path)

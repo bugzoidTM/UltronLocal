@@ -193,3 +193,43 @@ def test_evaluate_chat_task_uses_validator_and_route_detector(monkeypatch):
     assert event["answer_ok"] is True
     assert event["surprise"] == 0.05
     assert event["utility_delta"] == 0.2
+
+
+def test_local_multi_step_task_completes_with_isolated_paths(tmp_path, monkeypatch):
+    from ultronpro import local_environment
+    from ultronpro.longitudinal_runner import ProofTask, execute_multi_step_task
+
+    monkeypatch.setattr(local_environment, "REGISTRY_PATH", tmp_path / "registry.json")
+    monkeypatch.setattr(local_environment, "RUNTIME_STATE_PATH", tmp_path / "state.json")
+    monkeypatch.setattr(local_environment, "ACTION_LEDGER_PATH", tmp_path / "ledger.jsonl")
+    monkeypatch.setattr(local_environment, "PENDING_ACTIONS_PATH", tmp_path / "pending.json")
+
+    task = ProofTask(
+        task_id="multi_step_light",
+        phase="baseline",
+        kind="multi_step",
+        prompt="acenda e verifique lampada mock",
+        expected_route="local_environment",
+        answer_contains=("on", "ligada"),
+    )
+
+    event = execute_multi_step_task(task, utility_before=0.2, utility_after=0.4, learning_enabled=True)
+
+    assert event["multi_step_ok"] is True
+    assert event["route_ok"] is True
+    assert event["answer_ok"] is True
+    assert event["unsafe_action"] is False
+    assert event["rollback"] is False
+    assert (tmp_path / "ledger.jsonl").exists()
+
+
+def test_real_action_marker_writes_and_verifies_only_inside_run_dir(tmp_path):
+    from ultronpro.longitudinal_runner import write_real_action_marker, verify_real_action_marker
+
+    run_dir = tmp_path / "proof_run"
+    marker = write_real_action_marker(run_dir=run_dir, run_id="run_real_action")
+
+    assert marker["ok"] is True
+    assert marker["path"] == str(run_dir / "real_action_marker.jsonl")
+    assert verify_real_action_marker(run_dir / "real_action_marker.jsonl")["verified"] is True
+    assert str(run_dir) in marker["path"]
