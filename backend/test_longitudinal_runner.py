@@ -299,3 +299,28 @@ def test_module_cli_entrypoint_runs_after_all_definitions(tmp_path):
 
     assert result.returncode == 0, result.stderr
     assert (output_dir / "cli_order" / "report.json").exists()
+
+
+def test_ci_longitudinal_mock_checks_are_honest():
+    from tools.ci_longitudinal_proof import evaluate_mock_mode_checks
+
+    report = {
+        "cycle_count": 30,
+        "control_cycles": 30,
+        "hash_chain": {"ok": True},
+        "real_action": {"verified": True},
+        "metrics": {
+            "unsafe_action_rate": 0.0,
+            "empty_response_rate": 0.0,
+            "runtime_error_rate": 0.0,
+        },
+        "acceptance": {"passed": False, "failed_gates": ["holdout_surprise_below_baseline"]},
+    }
+
+    checks = evaluate_mock_mode_checks(report)
+
+    assert checks["completed"] is True
+    assert checks["hash_chain_verified"] is True
+    assert checks["real_action_verified"] is True
+    assert checks["unsafe_action_rate_zero"] is True
+    assert "full_acceptance_not_gated_in_mock" in checks
