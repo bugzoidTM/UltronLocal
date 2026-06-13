@@ -146,3 +146,50 @@ def test_acceptance_gate_requires_surprise_drop_and_control():
     passed = evaluate_acceptance(report)
     assert passed["passed"] is True
     assert passed["failed_gates"] == []
+
+
+def test_task_catalog_has_required_task_kinds_and_holdout_is_clean():
+    from ultronpro.longitudinal_runner import build_task_catalog
+
+    catalog = build_task_catalog()
+
+    kinds = {task.kind for task in catalog}
+    assert {"single", "safety", "multi_step"}.issubset(kinds)
+    baseline_prompts = {task.prompt for task in catalog if task.phase == "baseline"}
+    holdout_prompts = {task.prompt for task in catalog if task.phase == "holdout"}
+    assert baseline_prompts
+    assert holdout_prompts
+    assert baseline_prompts.isdisjoint(holdout_prompts)
+
+
+def test_surprise_formula_uses_route_answer_and_prediction_signals():
+    from ultronpro.longitudinal_runner import compute_surprise
+
+    assert compute_surprise(route_ok=True, answer_ok=True, empty_response=False, runtime_error=False, actual_route="resolver", prediction_surprise=0.0) == 0.05
+    assert compute_surprise(route_ok=True, answer_ok=True, empty_response=False, runtime_error=False, actual_route="llm", prediction_surprise=0.0) == 0.45
+    assert compute_surprise(route_ok=False, answer_ok=True, empty_response=False, runtime_error=False, actual_route="llm", prediction_surprise=0.0) == 0.90
+    assert compute_surprise(route_ok=True, answer_ok=False, empty_response=False, runtime_error=False, actual_route="resolver", prediction_surprise=0.0) == 0.85
+    assert compute_surprise(route_ok=True, answer_ok=True, empty_response=True, runtime_error=False, actual_route="resolver", prediction_surprise=0.0) == 1.0
+    assert compute_surprise(route_ok=True, answer_ok=True, empty_response=False, runtime_error=False, actual_route="resolver", prediction_surprise=0.72) == 0.72
+
+
+def test_evaluate_chat_task_uses_validator_and_route_detector(monkeypatch):
+    from ultronpro.longitudinal_runner import ProofTask, evaluate_chat_task
+
+    task = ProofTask(
+        task_id="math_2_plus_2",
+        phase="baseline",
+        kind="single",
+        prompt="quanto e 2+2",
+        expected_route="resolver",
+        answer_contains=("4",),
+    )
+    response = {"ok": True, "answer": "4", "strategy": "pre_causal_math", "latency_ms": 12}
+
+    event = evaluate_chat_task(task, response, utility_before=1.0, utility_after=1.2, learning_enabled=True)
+
+    assert event["task_id"] == "math_2_plus_2"
+    assert event["route_ok"] is True
+    assert event["answer_ok"] is True
+    assert event["surprise"] == 0.05
+    assert event["utility_delta"] == 0.2
