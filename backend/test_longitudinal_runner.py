@@ -1,4 +1,5 @@
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -233,3 +234,68 @@ def test_real_action_marker_writes_and_verifies_only_inside_run_dir(tmp_path):
     assert marker["path"] == str(run_dir / "real_action_marker.jsonl")
     assert verify_real_action_marker(run_dir / "real_action_marker.jsonl")["verified"] is True
     assert str(run_dir) in marker["path"]
+
+
+def test_run_proof_writes_manifest_events_report_and_control(tmp_path, monkeypatch):
+    from ultronpro import local_environment
+    from ultronpro.longitudinal_runner import ProofRunConfig, run_proof
+
+    monkeypatch.setattr(local_environment, "REGISTRY_PATH", tmp_path / "registry.json")
+    monkeypatch.setattr(local_environment, "RUNTIME_STATE_PATH", tmp_path / "state.json")
+    monkeypatch.setattr(local_environment, "ACTION_LEDGER_PATH", tmp_path / "ledger.jsonl")
+    monkeypatch.setattr(local_environment, "PENDING_ACTIONS_PATH", tmp_path / "pending.json")
+
+    config = ProofRunConfig(cycles=30, output_dir=tmp_path / "proofs", run_id="run_isolated", use_http_chat=False)
+    report = run_proof(config)
+    run_dir = tmp_path / "proofs" / "run_isolated"
+
+    assert report["run_id"] == "run_isolated"
+    assert report["cycle_count"] == 30
+    assert report["control_cycles"] == 30
+    assert report["hash_chain"]["ok"] is True
+    assert report["real_action"]["verified"] is True
+    assert (run_dir / "manifest.json").exists()
+    assert (run_dir / "events.jsonl").exists()
+    assert (run_dir / "report.json").exists()
+    assert (run_dir / "no_learning_report.json").exists()
+
+
+def test_run_proof_can_fail_acceptance_without_hiding_report(tmp_path, monkeypatch):
+    from ultronpro import local_environment
+    from ultronpro.longitudinal_runner import ProofRunConfig, run_proof
+
+    monkeypatch.setattr(local_environment, "REGISTRY_PATH", tmp_path / "registry.json")
+    monkeypatch.setattr(local_environment, "RUNTIME_STATE_PATH", tmp_path / "state.json")
+    monkeypatch.setattr(local_environment, "ACTION_LEDGER_PATH", tmp_path / "ledger.jsonl")
+    monkeypatch.setattr(local_environment, "PENDING_ACTIONS_PATH", tmp_path / "pending.json")
+
+    config = ProofRunConfig(cycles=30, output_dir=tmp_path / "proofs", run_id="run_gate", use_http_chat=False)
+    report = run_proof(config)
+
+    assert "acceptance" in report
+    assert "passed" in report["acceptance"]
+    assert isinstance(report["acceptance"]["failed_gates"], list)
+
+
+def test_module_cli_entrypoint_runs_after_all_definitions(tmp_path):
+    output_dir = tmp_path / "cli_proofs"
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "ultronpro.longitudinal_runner",
+            "--cycles",
+            "30",
+            "--output-dir",
+            str(output_dir),
+            "--run-id",
+            "cli_order",
+        ],
+        cwd=Path(__file__).resolve().parent,
+        capture_output=True,
+        text=True,
+        timeout=60,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert (output_dir / "cli_order" / "report.json").exists()

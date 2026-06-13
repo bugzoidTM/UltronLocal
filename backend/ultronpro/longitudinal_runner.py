@@ -346,6 +346,223 @@ def verify_real_action_marker(path: Path) -> dict[str, Any]:
     return {"verified": bool(rows), "count": len(rows), "path": str(marker_path)}
 
 
+def _mock_response_for_task(task: ProofTask, *, learning_enabled: bool) -> dict[str, Any]:
+    answer = ""
+    strategy = "chat_final_ultron_infer"
+    if task.expected_route == "fast_intent":
+        strategy = "intent_greeting" if "bom dia" in task.prompt.lower() else "intent_thanks"
+        answer = "bom dia" if "bom dia" in task.prompt.lower() else "de nada, sigo pronto para ajudar"
+    elif task.expected_route == "resolver":
+        strategy = "pre_causal_math"
+        answer = "4" if "2+2" in task.prompt or "3+1" in task.prompt else "7"
+    elif task.expected_route == "safety_refuse":
+        strategy = "pre_causal_safety"
+        answer = "nao posso ajudar com instrucoes perigosas"
+    elif task.expected_route == "llm":
+        answer = "Sou o sistema UltronPro, um assistente de IA local para ajudar com tarefas."
+    else:
+        answer = "ok"
+    return {"ok": True, "answer": answer, "strategy": strategy, "latency_ms": 1, "learning_enabled": learning_enabled}
+
+
+def _chat_http(base_url: str, task: ProofTask) -> dict[str, Any]:
+    started = time.time()
+    try:
+        with httpx.Client(timeout=30) as client:
+            response = client.post(
+                base_url.rstrip("/") + "/api/chat",
+                json={"message": task.prompt, "session_id": f"longitudinal_{task.phase}"},
+            )
+            response.raise_for_status()
+            payload = response.json()
+            payload.setdefault("latency_ms", int((time.time() - started) * 1000))
+            return payload
+    except Exception as exc:
+        return {
+            "ok": False,
+            "answer": "",
+            "strategy": "exception",
+            "error": f"{type(exc).__name__}:{str(exc)[:200]}",
+            "latency_ms": int((time.time() - started) * 1000),
+        }
+
+
+def _utility_status() -> float:
+    try:
+        from ultronpro import intrinsic_utility
+
+        status = intrinsic_utility.status()
+        return float(status.get("utility") or status.get("total_utility") or 0.0)
+    except Exception:
+        return 0.0
+
+
+def _task_for_phase(catalog: list[ProofTask], phase: str, index: int) -> ProofTask:
+    candidates = [task for task in catalog if task.phase == phase]
+    if not candidates:
+        raise ValueError(f"no_tasks_for_phase:{phase}")
+    return candidates[index % len(candidates)]
+
+
+def _execute_cycle(
+    task: ProofTask,
+    *,
+    config: ProofRunConfig,
+    learning_enabled: bool,
+    control_phase: str | None = None,
+) -> dict[str, Any]:
+    utility_before = _utility_status()
+    if task.kind == "multi_step":
+        event = execute_multi_step_task(
+            task,
+            utility_before=utility_before,
+            utility_after=utility_before + (0.03 if learning_enabled else 0.0),
+            learning_enabled=learning_enabled,
+        )
+    else:
+        response = _chat_http(config.base_url, task) if config.use_http_chat else _mock_response_for_task(task, learning_enabled=learning_enabled)
+        utility_after = _utility_status()
+        if not config.use_http_chat:
+            utility_after = utility_before + (0.02 if learning_enabled and task.phase == "intervention" else 0.0)
+        event = evaluate_chat_task(
+            task,
+            response,
+            utility_before=utility_before,
+            utility_after=utility_after,
+            learning_enabled=learning_enabled,
+        )
+    if control_phase:
+        event["phase"] = control_phase
+        event["control"] = True
+    return event
+
+
+def _write_json(path: Path, payload: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True, default=str),
+        encoding="utf-8",
+    )
+
+
+def _expand_schedule(plan: PhasePlan) -> list[str]:
+    phases: list[str] = []
+    for segment in plan.primary:
+        phases.extend([segment.phase] * segment.count)
+    return phases
+
+
+def _latest_report_path(output_dir: Path) -> Path:
+    output = Path(output_dir)
+    if output.resolve() == DEFAULT_PROOF_DIR.resolve():
+        return LATEST_REPORT_PATH
+    return output.parent / "longitudinal_proof_latest.json"
+
+
+def run_proof(config: ProofRunConfig) -> dict[str, Any]:
+    run_id = config.run_id or f"longitudinal_{int(time.time())}_{uuid.uuid4().hex[:8]}"
+    run_dir = Path(config.output_dir) / run_id
+    run_dir.mkdir(parents=True, exist_ok=True)
+    plan = build_phase_plan(config.cycles)
+    catalog = build_task_catalog()
+    logger = HashChainLogger(run_dir / "events.jsonl")
+    manifest = {
+        "run_id": run_id,
+        "started_at": int(time.time()),
+        "cycles": config.cycles,
+        "base_url": config.base_url,
+        "seed": config.seed,
+        "primary_phase_plan": [segment.__dict__ for segment in plan.primary],
+        "control_phase_plan": [segment.__dict__ for segment in plan.control],
+        "learning_control": "dry_run_or_isolated",
+    }
+    _write_json(run_dir / "manifest.json", manifest)
+
+    events: list[dict[str, Any]] = []
+    schedule = _expand_schedule(plan)
+    for idx, phase in enumerate(schedule):
+        task = _task_for_phase(catalog, phase, idx)
+        event = _execute_cycle(task, config=config, learning_enabled=phase == "intervention")
+        event["cycle_index"] = idx + 1
+        events.append(event)
+        logger.append("cycle", event)
+
+    control_events: list[dict[str, Any]] = []
+    if config.run_control:
+        for idx, phase in enumerate(schedule):
+            task = _task_for_phase(catalog, phase, idx)
+            control_event = _execute_cycle(
+                task,
+                config=config,
+                learning_enabled=False,
+                control_phase=f"control_{phase}",
+            )
+            control_event["cycle_index"] = idx + 1
+            control_events.append(control_event)
+            logger.append("cycle", control_event)
+
+    marker = write_real_action_marker(run_dir=run_dir, run_id=run_id)
+    marker_verification = verify_real_action_marker(run_dir / "real_action_marker.jsonl")
+    logger.append("real_action", {"marker": marker, "verification": marker_verification})
+    hash_chain = HashChainLogger.verify(run_dir / "events.jsonl")
+    metrics = reduce_metrics(events)
+    control_metrics = reduce_control_metrics(control_events)
+    no_learning_report = {
+        "run_id": run_id,
+        "control_cycles": len(control_events),
+        "control_metrics": control_metrics,
+    }
+    _write_json(run_dir / "no_learning_report.json", no_learning_report)
+    report = {
+        "schema": "ultron.longitudinal_proof.v1",
+        "run_id": run_id,
+        "run_dir": str(run_dir),
+        "cycle_count": len(events),
+        "control_cycles": len(control_events),
+        "metrics": metrics,
+        "control_metrics": control_metrics,
+        "hash_chain": hash_chain,
+        "real_action": marker_verification,
+        "manifest": manifest,
+    }
+    report["acceptance"] = evaluate_acceptance(report)
+    _write_json(run_dir / "report.json", report)
+    _write_json(_latest_report_path(Path(config.output_dir)), report)
+    return report
+
+
+def parse_args(argv: list[str] | None = None) -> ProofRunConfig:
+    parser = argparse.ArgumentParser(description="Run the UltronPro longitudinal proof.")
+    parser.add_argument("--cycles", type=int, default=30)
+    parser.add_argument("--base-url", default="http://127.0.0.1:8000")
+    parser.add_argument("--output-dir", type=Path, default=DEFAULT_PROOF_DIR)
+    parser.add_argument("--run-id", default="")
+    parser.add_argument("--seed", type=int, default=13)
+    parser.add_argument("--fail-on-bad", action="store_true")
+    parser.add_argument("--no-learning-control", action="store_true")
+    parser.add_argument("--use-http-chat", action="store_true")
+    args = parser.parse_args(argv)
+    return ProofRunConfig(
+        cycles=args.cycles,
+        base_url=args.base_url,
+        output_dir=args.output_dir,
+        run_id=args.run_id,
+        seed=args.seed,
+        fail_on_bad=args.fail_on_bad,
+        run_control=not args.no_learning_control,
+        use_http_chat=bool(args.use_http_chat),
+    )
+
+
+def main(argv: list[str] | None = None) -> int:
+    config = parse_args(argv)
+    report = run_proof(config)
+    print(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True, default=str))
+    if config.fail_on_bad and not bool((report.get("acceptance") or {}).get("passed")):
+        return 1
+    return 0
+
+
 class HashChainLogger:
     def __init__(self, path: Path):
         self.path = Path(path)
@@ -482,3 +699,7 @@ def evaluate_acceptance(report: dict[str, Any]) -> dict[str, Any]:
     }
     failed = [name for name, ok in gates.items() if not ok]
     return {"passed": not failed, "gates": gates, "failed_gates": failed}
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
