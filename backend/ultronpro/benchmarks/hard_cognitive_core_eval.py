@@ -148,6 +148,7 @@ def evaluate_isomorphism_mapper() -> dict[str, Any]:
 
 async def evaluate_non_llm_chat() -> dict[str, Any]:
     from ultronpro.main import ChatRequest, chat_fast
+    from ultronpro import llm
 
     questions = [
         "quem é você?",
@@ -161,19 +162,25 @@ async def evaluate_non_llm_chat() -> dict[str, Any]:
     ]
     rows = []
     for question in questions:
+        # Authoritative non-LLM proof: measure the exact number of LLM router
+        # invocations that happened while producing this answer. A strategy-name
+        # whitelist is fragile and gameable; an invocation delta is not.
+        llm_calls_before = llm.call_count()
         response = await chat_fast(ChatRequest(message=question))
+        llm_calls_used = llm.call_count() - llm_calls_before
         if hasattr(response, "body"):
             data = json.loads(response.body.decode("utf-8"))
         else:
             data = response
         strategy = str(data.get("strategy") or data.get("method") or "")
         answer = str(data.get("answer") or data.get("response") or "")
-        non_llm = bool(data.get("cognitive_core")) or strategy.startswith(("non_llm", "local_", "symbolic", "intent_"))
+        non_llm = llm_calls_used == 0
         rows.append({
             "question": question,
             "strategy": strategy,
             "module": data.get("module"),
             "non_llm": non_llm,
+            "llm_calls_used": llm_calls_used,
             "answer_len": len(answer.strip()),
             "ok": non_llm and len(answer.strip()) > 0 and "[RAG]" not in answer,
         })

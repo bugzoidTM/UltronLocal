@@ -1,0 +1,54 @@
+name: Pressure Proof (resilience harness)
+
+# Controlled-environment resilience proof. Runs pressure_benchmark against a
+# deterministic neutral mock LLM and asserts the parts that do NOT depend on the
+# underlying model's IQ: the harness executes (all 5 axes scored) and routing /
+# graceful-degradation recovers under provider_dropout & rate_limit_cascade.
+# The maturity GRADE is NOT asserted here (mock-derived). Grade the real system by
+# pointing the providers at a real endpoint and setting ULTRON_PROOF_REAL_LLM=1.
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      real_llm:
+        description: "Set 1 to grade against a real LLM endpoint (requires endpoint env)"
+        required: false
+        default: "0"
+
+permissions:
+  contents: read
+
+jobs:
+  pressure-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run pressure proof (controlled env)
+        env:
+          ULTRON_PROOF_REAL_LLM: ${{ github.event.inputs.real_llm || '0' }}
+          MOCK_LLM_PORT: "11434"
+        run: python tools/ci_pressure_proof.py
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pressure-proof-report
+          path: backend/data/ci_pressure_proof_report.json
+          if-no-files-found: ignore

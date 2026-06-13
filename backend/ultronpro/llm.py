@@ -302,6 +302,10 @@ class LLMRouter:
         self.clients = {}
         self.fail_cooldown_until: Dict[str, int] = {}
         self.last_call_meta = {'provider': None, 'model': None, 'task_type': None, 'budget_mode': None}
+        # Authoritative invocation counter: every entry into complete() bumps this,
+        # including cache hits (a cached completion is still LLM-derived content).
+        # Used by benchmarks to prove a response was produced without any LLM call.
+        self.call_count = 0
         self.usage = {
             'started_at': int(time.time()),
             'providers': {
@@ -545,6 +549,9 @@ class LLMRouter:
         return client
 
     def complete(self, prompt: str, strategy: str = "default", system: str = None, json_mode: bool = False, inject_persona: bool = True, max_tokens: int | None = None, cloud_fallback: bool = True, input_class: str | None = None) -> str:
+        # Count every entry into the LLM router (before cache/persona) so that
+        # "non-LLM" can be proven by an exact delta of zero around a call path.
+        self.call_count += 1
         # runtime personality injection (dynamic system prompt + few-shot exemplars)
         if inject_persona:
             try:
@@ -1175,6 +1182,14 @@ def complete(prompt: str, strategy: str = "default", system: str = None, json_mo
 
 def last_call_meta() -> dict:
     return dict(router.last_call_meta or {})
+
+def call_count() -> int:
+    """Total entries into the LLM router since process start (cache hits included).
+
+    Benchmarks read a before/after delta around a code path to prove that a
+    response was produced with zero LLM invocations (delta == 0 => non-LLM).
+    """
+    return int(getattr(router, 'call_count', 0))
 
 def usage_status() -> dict:
     return router.usage_status()

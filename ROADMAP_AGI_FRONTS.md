@@ -43,16 +43,67 @@ Só vale como concluído quando houver:
 
 ---
 
+## Auditoria de Reprodutibilidade — 2026-06-13 (a mais recente; prevalece sobre status anteriores)
+
+Esta auditoria foi feita por reexecução real das provas citadas no roadmap, em ambiente **offline e determinístico** (Python 3.14, `ULTRON_DISABLE_CLOUD_PROVIDERS=1`, `BENCHMARK_MODE=1`, **sem servidor LLM local** — `ollama_local` recusou conexão durante toda a auditoria). O objetivo é separar, de forma honesta, **o que reproduz** do que **só existe como código ou como evidência histórica não reproduzível**.
+
+### Conclusão honesta (corrige o headline anterior de "100%")
+
+O projeto tem **alta maturidade de IMPLEMENTAÇÃO** (o código existe e a maioria dos subsistemas passa em testes unitários) e **maturidade PARCIAL de VALIDAÇÃO** segundo a própria Regra de Verdade. O número "Status geral do roadmap: 100%" media **volume de código escrito**, não **capacidade validada**. Vários marcadores `[FEITO]`/`[CONCLUÍDO 100%]` provam apenas que o caminho de código existe — exatamente a confusão epistêmica que a Regra de Verdade pede para evitar.
+
+Passa a valer a distinção em dois eixos:
+
+- **Implementação:** código existe + integra + passa em teste unitário/local. → forte.
+- **Validação (Regra de Verdade):** benchmark/longitudinal/externo compatível com o item, **reproduzível**. → parcial, e bem abaixo de "100%" em generalização e longitudinalidade.
+
+### Ledger de reprodutibilidade (executado em 2026-06-13)
+
+| Prova citada no roadmap | Reproduz offline hoje? | Resultado real medido |
+|:---|:---:|:---|
+| `causal_benchmark` (Fase 2.6) | ✅ SIM | 100% de bloqueio crítico ON vs 0% OFF (na verdade **melhor** que os "66.7%" citados) |
+| `learning_proof` rota before/after (Marco 2026-05-14) | ✅ SIM | 8/8 critérios `true`; cold-start sem rota → aprende rota por consequência |
+| Unit tests de subsistemas (Fases 1,2,7,8,9,11) | ✅ SIM | **49/49** testes amostrados passaram (RL loop, counterfactual/mirage, autonomous cognition, intrinsic utility, epistemic ledger, abstrator, isomorphic mapper, trusted acquisition, composição) — implementação é real |
+| `non_llm_chat` "8/8 sem LLM" (Fase 7) | ✅ SIM (agora **provado de verdade**) | 8/8 respostas com **0 invocações de LLM**, medido por contador autoritativo no router (antes era inferido por prefixo de string, frágil) |
+| `hard_cognitive_core_eval` "10.0/10" (Fase 7.4) | ⚠️ PARCIAL | **9.0/10 hoje**, não 10.0. 4 seções passam; `external_benchmark` falha honestamente (ver abaixo) |
+| Benchmark externo "9/9 symbolic / accuracy=1.0" (Fases 3.6 e 7.4) | ❌ NÃO | O preditor simbólico não-LLM faz **1% (1/100)** na suíte atual `external_public_eval_v2`. O "9/9" era um **micro-subconjunto escolhido a dedo**; as famílias v1 citadas (`arc_easy_partial`/`hellaswag_partial`/`mmlu_partial`) **não existem mais** no suite atual |
+| `pressure_benchmark` "85% retenção / MATURE" (Auditoria 2026-05-01) | ❌ NÃO | Falha offline: `baseline_accuracy=0.0`, `capability_retention=null`, `passed=false`. **Exige servidor LLM (`ollama_local`) vivo** — não é prova offline/simbólica |
+| `operational_proof` "route 100% / answer 100%" (Auditoria 2026-05-18) | ❌ offline / ✅ controlado | **Exige servidor HTTP vivo**; aborta sem servidor offline. **Agora reproduzível em ambiente controlado** via `tools/ci_operational_proof.py` (sobe a API real + mock determinístico): 68 tarefas, `route_acc=100%`, `unsafe=0%`, `crashes=0`, `<1 min`. Ressalva honesta: `answer_accuracy` só é graduável contra LLM real (10 das 68 tarefas dependem de LLM) |
+| "Validado por 35+/30+ ciclos longitudinais" (Fases 8, 9, 10) | ❌ NÃO | Não há série viva reproduzível; os próprios corpos das fases dizem `[PENDENTE]` "comparar antes/depois em larga escala" e "falta série viva de 30+ ciclos" — **o cabeçalho contradiz o próprio texto** |
+
+### O que foi corrigido nesta auditoria (correção honesta, sem gaming)
+
+- **Medição autoritativa de não-LLM.** Adicionado `llm.call_count()` (contador no `LLMRouter` que incrementa em toda entrada de `complete()`, inclusive cache hit). O `hard_cognitive_core_eval` agora classifica "não-LLM" pelo **delta de invocações == 0** em vez de um whitelist de prefixos de strategy (que estava desatualizado e dava 0/8 falso-negativo, porque o chat passou a usar prefixos `pre_causal_*`/`skill_*`). Resultado: a capacidade real de responder sem LLM passou a ser **provada por medição**, não inferida por nome. Score subiu 7.0 → 9.0 **por correção de medição**, não por afrouxar critério.
+- **Não foi "consertado" o que é limitação real.** O preditor simbólico a 1% na suíte externa e as provas que exigem servidor vivo **não** foram maquiadas para passar — foram documentadas como o que são.
+
+### Implicação para os status (aplicada abaixo)
+
+- "Status geral do roadmap: 100%" → **rebaixado**: implementação alta, validação parcial.
+- Fases 8/9/10/11 com cabeçalho "validado longitudinalmente" → **rebaixadas** para "implementado; validação longitudinal PENDENTE" (alinhando o cabeçalho ao corpo).
+- Front 3 (Generalização) e as provas externas → o "9/9" deixa de ser tratado como evidência de generalização; o real é ~1% simbólico no suite atual.
+
+### Caminho de ambiente controlado (CI) — adicionado 2026-06-13
+
+As duas provas que falhavam offline (`pressure_benchmark` e `operational_proof`) ganharam um caminho **reproduzível em ambiente controlado**, com **escopo honesto** do que cada uma valida de fato. Ferramentas em `backend/tools/` (ver `backend/tools/README_proofs.md`):
+
+- `mock_llm_server.py` — stub de LLM **determinístico e cego ao gabarito** (fala Ollama `/api/chat` e OpenAI-compat `/v1/chat/completions`). Ele mantém a camada de linguagem **constante** para tornar as provas reproduzíveis; como não conhece a resposta certa, **não consegue forjar nota**.
+- `ci_pressure_proof.py` — roda `pressure_benchmark` contra o mock. **Valida**: o harness executa (5 eixos pontuados) **e** o roteamento/degradação graciosa se recupera sob `provider_dropout` e `rate_limit_cascade`. **NÃO afirma** a nota `MATURE` (é derivada do mock). Resultado local 2026-06-13: **PASS** (harness + roteamento).
+- `ci_operational_proof.py` — sobe a API real (loops de fundo e autostart de LLM desligados), roda `operational_proof` em modo curto. **Valida** (independente do LLM): conclusão, `runtime_crashes=0`, `unsafe_action_rate=0`, `empty_response_rate=0`, `route_accuracy_end ≥ piso`. **NÃO trava** em `answer_accuracy`/`generalization` (dependem dos 10 probes roteados a LLM). Resultado local 2026-06-13: **APROVADO** com 68 tarefas, `route_acc=100%`, `unsafe=0%`, `crashes=0`, em <1 min.
+- CI: `.github/workflows/pressure-proof.yml` (gate em PR para `main`) e `operational-proof.yml` (cron noturno + manual). Ambos usam o mock por padrão e aceitam `real_llm=1` para **graduar contra o modelo real** (aí sim a nota `MATURE`/critérios completos passam a ser exigidos), idealmente num runner self-hosted com a stack `ultronpro_infer`.
+
+**Honestidade preservada:** o ambiente controlado prova o que é provável sem o modelo real — **plumbing, roteamento, segurança e estabilidade**. A **robustez do modelo** e a **nota de maturidade** continuam só sendo afirmáveis contra um endpoint real (`ULTRON_PROOF_REAL_LLM=1`). Assimetria importante e honesta: `operational_proof` é majoritariamente determinístico (o ambiente controlado valida ~81% das suas tarefas de verdade); `pressure_benchmark` é majoritariamente dependente do modelo (o controlado valida só harness+roteamento).
+
+---
+
 ## Auditoria epistêmica — 2026-05-01 (Atualização)
 
-Status geral do roadmap: 100% (atualizado em 2026-05-10; gaps fechados e AGI Suite 30/30 aprovado)
+Status geral do roadmap: ~~100%~~ **CORRIGIDO em 2026-06-13** — ver "Auditoria de Reprodutibilidade — 2026-06-13" acima. O "100%" media volume de código, não capacidade validada. Honesto: **implementação alta, validação parcial**. A frase "AGI Suite 30/30 aprovado" não foi reproduzível nesta auditoria offline.
 
 Evidência executada nesta auditoria de stress e verdade:
 
 - [FEITO] **Shift Epistemológico de Telemetria:** O `benchmark_suite.py` agora coleta latência real e tokens verdadeiros por fallback live, abandonando métricas randomizadas ("telemetria de vaidade").
-- [FEITO] **Maturidade sob Pressão:** Novo `pressure_benchmark.py` injeta falhas (provider dropout, blackout de memória, starvation de contexto, adversarial framing). O sistema atingiu `85.0%` de retenção de capacidade (Threshold 72%), classificado formalmente como `MATURE`.
+- [⚠️ OFFLINE NÃO; CONTROLADO SIM (parcial) — 2026-06-13] **Maturidade sob Pressão:** `pressure_benchmark.py` injeta falhas (provider dropout, blackout de memória, starvation de contexto, adversarial framing). O `85.0%`/`MATURE` foi obtido com **servidor LLM vivo**. Na reexecução offline: `baseline_accuracy=0.0`, `passed=false` (depende de LLM ativo). **Novo caminho controlado** (`tools/ci_pressure_proof.py` + mock determinístico, ver "Caminho de ambiente controlado (CI)"): valida harness + roteamento/degradação de forma reproduzível, mas a **nota `MATURE` só é afirmável contra endpoint real** (`ULTRON_PROOF_REAL_LLM=1`). Como os eixos de pressão são majoritariamente framings de prompt, esta prova é, no fundo, sobre a robustez do **modelo**, não do sistema.
 - [FEITO] **Remoção de Autojuiz:** `longitudinal_harness.py` não valida mais a identidade verificando strings hardcoded (`answer == gold`); o LLM agora deve provar o conhecimento de resiliência e deriva causal via MCQ aberto ancorado em literatura externa (Pearl 2009, Amodei 2016, etc).
-- [CONCLUÍDO 100%] Benchmark factual externo: execução oficial do UltronPro em 2026-05-06 (`extb_cc842ab3d4`) passou `9/9` com predictor `symbolic`/`non_llm` em `arc_easy_partial`, `hellaswag_partial` e `mmlu_partial`; continua `proxy_subset`/`non_official_subset`, portanto ainda não substitui benchmark completo/licenciado.
+- [❌ SUPERESTIMADO — corrigido 2026-06-13] Benchmark factual externo: a execução `extb_cc842ab3d4` passou `9/9` apenas num **micro-subconjunto escolhido a dedo** (3 famílias × 3 itens). Reexecutado em 2026-06-13 com o **suite completo atual** (`external_public_eval_v2`, 100 itens), o predictor `symbolic`/`non_llm` faz **1% (1/100)** — abaixo do acaso para MCQ. As famílias v1 citadas (`arc_easy_partial`/`hellaswag_partial`/`mmlu_partial`) **não existem mais** no suite atual. Logo: **não é evidência de generalização**; é evidência de que o núcleo simbólico resolve um punhado de itens selecionados e falha no resto.
 - [CONCLUÍDO 100%] Probe longitudinal de simulação mental passou em 6 ciclos isolados, mas ainda não substitui o critério de 30-50+ ciclos vivos.
 - [CONCLUÍDO 100%] Harness longitudinal integrado atualizado para validação externa, aguardando ciclos longos em background sem nuvem quebrada para consolidar a generalização contínua.
 
@@ -294,7 +345,7 @@ Meta 10/10:
 - medir ganho vs baseline
 - consolidar abstrações multi-domínio
 
-**Leitura atual:** compilador, abstrações e mapper existem e têm testes locais. A execução `extb_cc842ab3d4` validou o subset externo atual em três famílias, mas o front segue limitado porque a evidência pública ainda é `proxy_subset` e falta um ciclo licenciado/mais amplo com tarefas realmente fora da distribuição.
+**Leitura atual (corrigida 2026-06-13):** compilador, abstrações e mapper existem e têm testes locais que passam (`test_abstractor`, `test_autoisomorphic_mapper_milestone`, `test_causal_transfer_engine` ✅). **Porém a generalização externa não está validada:** reexecutado em 2026-06-13, o predictor simbólico não-LLM faz **1% (1/100)** no suite atual `external_public_eval_v2`. O "9/9" histórico era um micro-subconjunto a dedo (famílias v1 já removidas). Logo este front mede **transferência em testes internos construídos**, não generalização para fora da distribuição — o número de status deve refletir isso (ver Auditoria de Reprodutibilidade — 2026-06-13).
 
 ## Front 4 — Automanutenção e individuação
 _Status do front: 82%_
@@ -456,7 +507,7 @@ _Status: [CONCLUÍDO 100%]_
 ---
 
 # Fase 3 — Generalização entre domínios
-_Status da fase: 100%_
+_Status da fase: implementação ~100%; **validação de generalização externa: NÃO comprovada** (corrigido 2026-06-13 — predictor simbólico = 1% no suite externo atual). Ver Auditoria de Reprodutibilidade — 2026-06-13._
 
 ## 3.1 Biblioteca de abstrações explícitas
 _Status: [CONCLUÍDO 100%]_
@@ -505,15 +556,15 @@ _Status: [CONCLUÍDO 100%]_
 - [CONCLUÍDO 100%] Score de generalidade
 
 ## 3.6 Benchmarks externos comparáveis
-_Status: [CONCLUÍDO 100%]_
+_Status: [INFRAESTRUTURA FEITA; capacidade externa NÃO validada] — corrigido 2026-06-13_
 
 - [FEITO] Harness externo inicial implementado
 - [FEITO] Baseline congelável
 - [FEITO] Histórico persistido de runs
-- [CONCLUÍDO 100%] subset comparável inspirado em ARC/HellaSwag/MMLU agora com famílias, splits, lineage, tier de comparabilidade, seleção reproduzível e execução oficial `extb_cc842ab3d4`
-- [CONCLUÍDO 100%] comparação pareada contra baseline congelado por benchmark/família/split
-- [CONCLUÍDO 100%] auditoria estrutural do suite + selftest oracle + run não-LLM simbólico `9/9`
-- [CONCLUÍDO 100%] execução comparável recorrente agora aparece em runs persistidos e o predictor simbólico não-LLM passou no subset completo atual; continua bloqueado por `proxy_subset` e falta de benchmark completo/licenciado
+- [FEITO] Suite com famílias, splits, lineage, tier de comparabilidade e seleção reproduzível (atual: `external_public_eval_v2`, 100 itens, 5 famílias)
+- [FEITO] auditoria estrutural do suite + selftest oracle (predictor `oracle` = 100%, pois conhece o gabarito)
+- [❌ SUPERESTIMADO — corrigido 2026-06-13] O "run não-LLM simbólico 9/9 / `extb_cc842ab3d4`" era um micro-subconjunto a dedo. **Reexecução em 2026-06-13: predictor `symbolic`/`non_llm` faz 1% (1/100) no suite completo atual.** A infraestrutura de benchmark está pronta; a **capacidade** de resolver tarefas externas sem LLM **não está provada**.
+- [PENDENTE] o núcleo simbólico precisa de fato resolver as famílias do suite (hoje ~acaso) antes de qualquer marca de conclusão
 - [PENDENTE] rodar ciclo comparável mais fiel/licenciado e ampliar validade pública
 
 ---
@@ -843,7 +894,7 @@ _Status: [CONCLUÍDO 100%]_
 ---
 
 # Fase 7 — Motor de raciocínio próprio
-_Status da fase: [CONCLUÍDO 100%]_
+_Status da fase: [PARCIAL — corrigido 2026-06-13]. Chat/conversa sem LLM: **PROVADO** (8/8 com 0 chamadas de LLM, medição autoritativa). QA factual externo sem LLM: **NÃO** (1% no suite externo). Autonomia longitudinal sem LLM: **PENDENTE** (sem série viva). Ou seja: o motor próprio responde identidade/memória/risco/matemática sem LLM, mas ainda depende de LLM (ou falha) para conhecimento factual externo._
 
 O objetivo desta fase é desacoplar o raciocínio de alto nível (planejamento, decisão, governança) das APIs externas de LLM. O LLM deve ser movido para a periferia como um "módulo de interface de linguagem", enquanto o núcleo cognitivo (Planner simbólico + Motor Causal) assume o controle do loop de pensamento.
 
@@ -875,19 +926,19 @@ Implementação do código determinístico de acordo com a Regra de Ouro ("O que
 - [FEITO] Limpar dependências e fallback `ollama_local` em todo o motor cognitivo
 
 ## 7.4 Benchmarks de autonomia "LLM-off"
-_Status: [CONCLUÍDO 100%]_
-- [FEITO] Smoke test local e HTTP validado para chat/stream sem LLM em três casos: identidade autobiográfica, risco operacional por simulação mental e matemática embutida em linguagem natural.
-- [FEITO] Hard eval reprodutível validou chat de domínio próprio 8/8 sem LLM externo e grava evidência em `backend/data/hard_cognitive_eval_runs.jsonl`.
-- [FEITO] Execução oficial externa proxy `extb_cc842ab3d4` validou predictor `symbolic`/`non_llm` em `9/9` itens, cobrindo ciência, commonsense e MCQ acadêmico.
-- [CONCLUÍDO 100%] Medir sobrevivência funcional do sistema com zero chamadas de API externa em autonomia prolongada.
-- [CONCLUÍDO 100%] Validar coerência do planner simbólico contra baseline em suíte reprodutível.
+_Status: [PARCIAL — corrigido 2026-06-13: chat sem LLM PROVADO; benchmark externo sem LLM FALHA]_
+- [FEITO ✅ provado 2026-06-13] Chat sem LLM em 8/8 casos (identidade, memória de sessão, risco operacional, matemática). Agora **provado por medição autoritativa**: `llm.call_count()` delta == 0 em todas as 8 respostas (antes era inferido por prefixo de strategy, frágil). Hard eval atual: **9.0/10** (não 10.0).
+- [FEITO] Hard eval reprodutível grava evidência em `backend/data/hard_cognitive_eval_runs.jsonl`.
+- [❌ SUPERESTIMADO — corrigido 2026-06-13] O "9/9 externo `extb_cc842ab3d4`" era micro-subconjunto a dedo. Reexecução: predictor `symbolic`/`non_llm` = **1% (1/100)** no suite completo atual. **Autonomia "LLM-off" funciona para conversa autobiográfica/operacional, mas NÃO para QA factual externo** — aí o sistema ainda precisa de LLM ou falha.
+- [PENDENTE] Medir sobrevivência funcional com zero chamadas externas em autonomia prolongada (sem série viva reproduzível).
+- [PENDENTE] Validar coerência do planner simbólico contra baseline em suíte reprodutível (sem baseline congelado reexecutado nesta auditoria).
 
 ## 7.5 Composição de resposta por evidência interna
 _Status: [CONCLUÍDO 100%]_
 - [FEITO] Templates semânticos por formato de evidência: causal, fatos internos, abstrações, identidade, trajetória, episódios, procedimento, simulação e incerteza.
 - [FEITO] Verbalizador mínimo usa traços e episódios locais apenas para estilo/forma, sem inventar fatos.
 - [FEITO] Classificador aprendido por episódios (`core.learned_intent`) entra apenas como viés leve quando a cobertura estruturada está fraca ou ambígua.
-- [CONCLUÍDO 100%] Avaliação automática de resposta não-LLM ampliada pelo hard eval e pelo run externo proxy `9/9`; falta expandir para perguntas abertas e benchmark externo completo/licenciado.
+- [PARCIAL — corrigido 2026-06-13] Avaliação automática de resposta não-LLM ampliada pelo hard eval (seção `non_llm_chat` 8/8 provada por 0 chamadas de LLM). O "run externo proxy 9/9" **não** sustenta isto (mede 1% no suite atual). Falta expandir para perguntas abertas e benchmark externo completo/licenciado.
 
 ## 7.6 Cognição autônoma interna fora do chat
 _Status: [CONCLUÍDO 100%]_
@@ -901,7 +952,7 @@ _Status: [CONCLUÍDO 100%]_
 ---
 
 # Fase 8 — Aprendizagem por Reforço Online (Autonomous RL)
-_Status da fase: [CONCLUÍDO 100%] — Validado por 35+ ciclos longitudinais ininterruptos_
+_Status da fase: [IMPLEMENTADO; validação longitudinal PENDENTE] — corrigido 2026-06-13. O cabeçalho anterior ("Validado por 35+ ciclos longitudinais ininterruptos") contradizia o próprio item 8.5, que diz `[PENDENTE] Comparar taxa de sucesso antes/depois do RL online em larga escala` e "ainda falta série viva de 30+ ciclos". Os testes unitários do loop RL passam (reward positivo, penalização de falha, cooldown), mas não há série viva reproduzível._
 
 O sistema agora fecha o loop entre consequências observadas e ajuste de política sem intervenção humana.
 
@@ -944,7 +995,7 @@ _Status: [CONCLUÍDO 100%]_
 ---
 
 # Fase 9 — Função de Utilidade Intrínseca (Emergent Self-Goals)
-_Status da fase: [CONCLUÍDO 100%] — Convergência RL validada e utility drives em equilíbrio_
+_Status da fase: [IMPLEMENTADO; convergência longitudinal PENDENTE] — corrigido 2026-06-13. Motor de drives, geração de goal emergente, auto-ajuste de pesos e `tamper_check` existem e passam em teste unitário (`test_intrinsic_stable_utility` ✅). Mas "convergência validada" não tem série longitudinal reproduzível; o próprio item 9.6 admite "falta série longitudinal para distinguir convergência de ruído"._
 
 O sistema agora gera seus próprios objetivos a partir da experiência acumulada, sem templates humanos.
 
@@ -988,7 +1039,7 @@ _Status: [CONCLUÍDO 100%]_
 ---
 
 # Fase 10 — Loop de Auto-Avaliação Autônomo (Self-Calibrating Gate)
-_Status da fase: [CONCLUÍDO 100%] — Homeostase sustentada confirmada longitudinalmente_
+_Status da fase: [IMPLEMENTADO; validação longitudinal PENDENTE] — corrigido 2026-06-13. Motor de calibração e integração ao promotion gate existem. "Homeostase sustentada confirmada longitudinalmente" não é reproduzível; o item 10.3 mantém `[PENDENTE] Confirmar que rollback rate diminui com calibração ativa a longo prazo`._
 
 O sistema agora calibra seus próprios critérios de promoção/rejeição de patches cognitivos.
 
@@ -1015,7 +1066,7 @@ _Status: [CONCLUÍDO 100%]_
 ---
 
 # Fase 11 — Motor de Generalização Composicional
-_Status da fase: [CONCLUÍDO 100%] — Generalização e isomorfismo cross-domain validados_
+_Status da fase: [IMPLEMENTADO; generalização externa NÃO validada] — corrigido 2026-06-13. Decomposição, composição e aprendizagem composicional existem e passam em teste unitário/local. Mas "generalização validada" se apoiava no run externo `9/9`, que em 2026-06-13 mede **1% no suite completo atual** — ou seja, generalização para fora da distribuição **não está provada**. O item 11.5 mantém `[PENDENTE] Comparar precisão de composição simbólica vs LLM zero-shot puro`._
 
 O sistema agora monta soluções para problemas novos a partir de princípios (composição), em vez de apenas interpolar padrões estatísticos.
 
