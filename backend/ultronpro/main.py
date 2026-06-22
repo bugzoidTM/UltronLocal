@@ -5714,6 +5714,42 @@ async def agi_path_loop():
             await asyncio.sleep(300)
 
 
+def _reflexion_tick_sync() -> list:
+    """Parte sincrona do reflexion_loop (qualia + reflexion_agent.tick).
+
+    Roda fora do event loop via bg_runtime.run_blocking; retorna a lista de
+    curiosity-probes criadas, para o loop async tratar o ingest web (que tem
+    await proprio)."""
+    try:
+        from ultronpro import qualia, phenomenal
+        q = qualia.get_qualia_system()
+        qualia_state = q.get_state().to_dict()
+        exp = phenomenal.integrate_qualia(qualia_state)
+        if exp.is_genuine:
+            store.db.add_event('phenomenal', f"exp_genuine unity={exp.unity_score:.2f}")
+    except Exception:
+        pass
+
+    triggers = store.db.read_workspace(channels=['reflexion.trigger'], limit=5)
+    for t in triggers:
+        consumed = json.loads(t.get('consumed_by_json') or '{}')
+        if 'reflexion_agent' not in consumed:
+            payload = t.get('payload') or {}
+            reason = payload.get('reason', 'workspace_trigger')
+            logger.info(f"Reflexion triggered by workspace: {reason}")
+            store.db.mark_workspace_consumed(t['id'], 'reflexion_agent')
+            out = reflexion_agent.tick(force=(float(t.get('salience') or 0.0) > 0.8))
+            if bool(out.get('triggered')):
+                store.db.add_event('reflexion_ws', f"reflex-ws reason={reason} action={out.get('action')}")
+
+    out = reflexion_agent.tick(force=False)
+    if bool(out.get('triggered')):
+        store.db.add_event('reflexion', f"reflexion action={out.get('action')} conf={out.get('confidence')}")
+    cp = (out.get('curiosity_probe') or {}) if isinstance(out, dict) else {}
+    created = cp.get('created') if isinstance(cp.get('created'), list) else []
+    return created
+
+
 async def reflexion_loop():
     logger.info("Reflexion loop started")
     await asyncio.sleep(_loop_start_delay('reflexion_loop', 180))
@@ -5721,39 +5757,11 @@ async def reflexion_loop():
         if await runtime_guard.checkpoint("reflexion_loop"):
             continue
         try:
-            # Integrate qualia with phenomenal consciousness
-            try:
-                from ultronpro import qualia, phenomenal
-                q = qualia.get_qualia_system()
-                qualia_state = q.get_state().to_dict()
-                exp = phenomenal.integrate_qualia(qualia_state)
-                if exp.is_genuine:
-                    store.db.add_event('phenomenal', f"ðŸ”® exp_genuine unity={exp.unity_score:.2f}")
-            except Exception:
-                pass
-
-            # read workspace for reflection triggers
-            triggers = store.db.read_workspace(channels=['reflexion.trigger'], limit=5)
-            for t in triggers:
-                consumed = json.loads(t.get('consumed_by_json') or '{}')
-                if 'reflexion_agent' not in consumed:
-                    payload = t.get('payload') or {}
-                    reason = payload.get('reason', 'workspace_trigger')
-                    logger.info(f"Reflexion triggered by workspace: {reason}")
-                    store.db.mark_workspace_consumed(t['id'], 'reflexion_agent')
-                    # Force a tick if trigger is high salience
-                    out = reflexion_agent.tick(force=(float(t.get('salience') or 0.0) > 0.8))
-                    if bool(out.get('triggered')):
-                        store.db.add_event('reflexion_ws', f"ðŸ§  reflex-ws reason={reason} action={out.get('action')}")
-            
-            out = reflexion_agent.tick(force=False)
-            if bool(out.get('triggered')):
-                store.db.add_event('reflexion', f"ðŸ§  reflexion action={out.get('action')} conf={out.get('confidence')}")
-            cp = (out.get('curiosity_probe') or {}) if isinstance(out, dict) else {}
-            created = cp.get('created') if isinstance(cp.get('created'), list) else []
+            # qualia + reflexion_agent.tick fora do event loop; ingest web fica async.
+            created = await bg_runtime.run_blocking(_reflexion_tick_sync, label="reflexion_loop")
             auto = await _auto_resolve_rag_ingest_probes_from_web(created)
             if int(auto.get('ingested') or 0) > 0:
-                store.db.add_event('curiosity_probe_web', f"ðŸŒ auto-ingested={auto.get('ingested')} handled={auto.get('handled')}")
+                store.db.add_event('curiosity_probe_web', f"auto-ingested={auto.get('ingested')} handled={auto.get('handled')}")
             await asyncio.sleep(REFLEXION_TICK_SEC)
         except Exception as e:
             logger.warning(f"Reflexion loop skipped: {e}")
@@ -6599,74 +6607,74 @@ async def startup_event():
 
 # ==================== SELF-IMPROVEMENT LOOP ====================
 
+def _self_improvement_tick_sync() -> dict:
+    """Corpo sincrono do self_improvement_loop (CPU/DB-bound).
+
+    Roda fora do event loop via bg_runtime.run_blocking, incluindo o
+    cognitive_patch_loop.scan_and_autorun (shadow evals + gates), que e a parte
+    mais pesada do tick. Nenhuma chamada async aqui."""
+    from ultronpro import self_improvement_engine
+
+    limitations = self_improvement_engine.identify_limitations()
+
+    if limitations:
+        self_improvement_engine.create_objectives()
+        critical = [l for l in limitations if l.priority >= 4]
+        if critical and len(self_improvement_engine.get_recent_trials(limit=5)) < 3:
+            lim = critical[0]
+            if 'rate_limit' in lim.id:
+                result = self_improvement_engine.run_experiment(
+                    lim.id, 'lane_provider',
+                    {'lane': 'lane_1_micro', 'provider': 'nvidia', 'model': 'meta/llama-3.1-8b-instruct'}
+                )
+            elif 'circuit' in lim.id:
+                result = self_improvement_engine.run_experiment(
+                    lim.id, 'circuit_breaker',
+                    {'threshold': 5, 'cooldown': 600}
+                )
+            else:
+                result = {'ok': False, 'error': 'unknown_limitation'}
+            if result.get('ok'):
+                store.db.add_event('self_improvement', f"experimento={result.get('experiment_id')} para {lim.name}")
+
+    review = self_improvement_engine.review_strategy()
+    if review.get('llm_consulted'):
+        store.db.add_event('self_improvement_review', f"estrategia revisada: {review.get('strategy', 'none')}")
+
+    promotion_check = self_improvement_engine.check_promotion_trigger()
+    if promotion_check.get('promotion_triggered'):
+        store.db.add_event('promotion_gate', f"promocao recomendada: patch={promotion_check.get('patch_id')} decisao={promotion_check.get('gate_decision')}")
+
+    try:
+        patch_loop = cognitive_patch_loop.scan_and_autorun(scan_limit=40, process_limit=2)
+        autorun = patch_loop.get('autorun') if isinstance(patch_loop.get('autorun'), dict) else {}
+        if int(autorun.get('processed') or 0) > 0:
+            store.db.add_event(
+                'cognitive_patch_loop',
+                f"processed={autorun.get('processed')} picked={autorun.get('picked')} stats={autorun.get('stats_after')}",
+            )
+    except Exception as patch_loop_exc:
+        logger.debug(f"cognitive_patch_loop skipped in self_improvement_loop: {patch_loop_exc}")
+
+    _runtime_health_write({'reason': 'self_improvement_tick', 'limitations': len(limitations)})
+    return {'limitations': len(limitations)}
+
+
 async def self_improvement_loop():
     """Loop de auto-melhoria - executa a cada SELF_IMPROVEMENT_INTERVAL_SEC."""
     logger.info("Self-improvement loop started")
-    await asyncio.sleep(_loop_start_delay('self_improvement_loop', 300))  # Espera inicial
-    
+    await asyncio.sleep(_loop_start_delay('self_improvement_loop', 300))
+
     while True:
         if await runtime_guard.checkpoint("self_improvement_loop"):
             continue
         try:
-            from ultronpro import self_improvement_engine
-            
-            # 1. Identificar limitaÃ§Ãµes
-            limitations = self_improvement_engine.identify_limitations()
-            
-            if limitations:
-                # 2. Criar objetivos
-                objectives = self_improvement_engine.create_objectives()
-                
-                # 3. Se hÃ¡ limitaÃ§Ãµes crÃ­ticas, tentar experimento
-                critical = [l for l in limitations if l.priority >= 4]
-                if critical and len(self_improvement_engine.get_recent_trials(limit=5)) < 3:
-                    # Poucos experimentos recentes - tentar um
-                    lim = critical[0]
-                    
-                    # Escolher mudanÃ§a baseada na limitaÃ§Ã£o
-                    if 'rate_limit' in lim.id:
-                        result = self_improvement_engine.run_experiment(
-                            lim.id, 'lane_provider',
-                            {'lane': 'lane_1_micro', 'provider': 'nvidia', 'model': 'meta/llama-3.1-8b-instruct'}
-                        )
-                    elif 'circuit' in lim.id:
-                        result = self_improvement_engine.run_experiment(
-                            lim.id, 'circuit_breaker',
-                            {'threshold': 5, 'cooldown': 600}
-                        )
-                    else:
-                        result = {'ok': False, 'error': 'unknown_limitation'}
-                    
-                    if result.get('ok'):
-                        store.db.add_event('self_improvement', f"ðŸ”§ experimento={result.get('experiment_id')} para {lim.name}")
-            
-            # 4. Revisar estratÃ©gia periodicamente
-            review = self_improvement_engine.review_strategy()
-            if review.get('llm_consulted'):
-                store.db.add_event('self_improvement_review', f"ðŸ§  estratÃ©gia revisada: {review.get('strategy', 'none')}")
-            
-            # 5. Verificar promoÃ§Ã£o gate
-            promotion_check = self_improvement_engine.check_promotion_trigger()
-            if promotion_check.get('promotion_triggered'):
-                store.db.add_event('promotion_gate', f"ðŸš€ promoÃ§Ã£o recomendada: patch={promotion_check.get('patch_id')} decisÃ£o={promotion_check.get('gate_decision')}")
-            
-            try:
-                patch_loop = cognitive_patch_loop.scan_and_autorun(scan_limit=40, process_limit=2)
-                autorun = patch_loop.get('autorun') if isinstance(patch_loop.get('autorun'), dict) else {}
-                if int(autorun.get('processed') or 0) > 0:
-                    store.db.add_event(
-                        'cognitive_patch_loop',
-                        f"processed={autorun.get('processed')} picked={autorun.get('picked')} stats={autorun.get('stats_after')}",
-                    )
-            except Exception as patch_loop_exc:
-                logger.debug(f"cognitive_patch_loop skipped in self_improvement_loop: {patch_loop_exc}")
-
-            _runtime_health_write({'reason': 'self_improvement_tick', 'limitations': len(limitations)})
-            
+            # Corpo pesado (engine + scan_and_autorun) fora do event loop.
+            await bg_runtime.run_blocking(_self_improvement_tick_sync, label="self_improvement_loop")
         except Exception as e:
             logger.warning(f"Self-improvement loop error: {e}")
             _runtime_health_write({'reason': 'self_improvement_error', 'error': str(e)[:100]})
-        
+
         await asyncio.sleep(SELF_IMPROVEMENT_INTERVAL_SEC)
 
 
