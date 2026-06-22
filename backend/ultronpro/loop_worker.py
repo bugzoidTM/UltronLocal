@@ -9,6 +9,18 @@ logger = logging.getLogger("uvicorn")
 
 async def run_loop_worker(name: str, loop_factory: Callable[[], Awaitable[None]]) -> None:
     logger.info("%s worker starting", name)
+    try:
+        from ultronpro import bg_runtime
+
+        bg = bg_runtime.install()
+        logger.info(
+            "%s worker bg_runtime: %s threads, heavy_concurrency=%s",
+            name,
+            bg.get("thread_workers"),
+            bg.get("heavy_concurrency"),
+        )
+    except Exception as exc:
+        logger.warning("%s worker bg_runtime install skipped: %s", name, exc)
     task = asyncio.create_task(loop_factory())
     stop = asyncio.Event()
 
@@ -47,6 +59,9 @@ BASE_DISABLED_LOOPS = {
 DEFAULT_GOVERNANCE = {
     'ULTRON_LLM_BLOCKING_CONCURRENCY': '1',
     'ULTRON_LIGHTRAG_CONCURRENCY': '1',
+    # Pool de threads de fundo limitado por worker (vs. min(32, cpu+4) do asyncio)
+    'ULTRON_BG_THREAD_WORKERS': '6',
+    'ULTRON_BG_HEAVY_CONCURRENCY': '2',
     'ULTRON_LLM_COMPAT_TIMEOUT_SEC': '12',
     'ULTRON_LLM_ROUTER_TIMEOUT_SEC': '15',
     'ULTRON_LLM_ANTHROPIC_TIMEOUT_SEC': '12',
