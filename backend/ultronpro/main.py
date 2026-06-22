@@ -27,7 +27,7 @@ import uvicorn
 import httpx
 
 from ultronpro.secret_redaction import install_logging_redaction
-from ultronpro import llm, llm_adapter, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, roadmap_v5, agi_path, episodic_memory, learning_agenda, sleep_cycle, replay_traces, rag_synth_generator, semantic_cache, prm_lite, symbolic_reasoner, reflexion_agent, cognitive_state, causal_graph, sandbox_client, web_browser, context_policy, quality_eval, context_metrics, context_inspector, rag_router, rag_eval, rag_eval_cases, rag_eval_store, internal_critic, memory_governor, causal_preflight, cognitive_patches, gap_detector, shadow_eval, promotion_gate, rollback_manager, benchmark_suite, ultronbody, explicit_abstractions, structural_mapper, transfer_benchmark, external_benchmarks, cognitive_patch_loop, organic_eval_feed, roadmap_status, self_governance, operational_consciousness_benchmark, local_reasoning, self_improvement_engine, inner_monologue, working_memory, vision, world_model, causal_discovery, self_modification, continuous_learning, recursive_self_improvement, autonomous_loop, metacognitive_loop, web_explorer, mental_simulation, code_self_healer, self_talk_loop, autonomous_cognition, low_power, runtime_guard, trusted_acquisition_loop, online_rl_loop, longitudinal_harness
+from ultronpro import llm, llm_adapter, knowledge_bridge, graph, settings, curiosity, conflicts, store, extract, planner, goals, autofeeder, policy, analogy, tom, semantics, unsupervised, neuroplastic, causal, intrinsic, emergence, itc, longhorizon, subgoals, neurosym, project_kernel, tool_router, project_executor, integrity, self_model, env_tools, persona, fs_audit, sql_explorer, source_probe, squad_phase_a, squad_phase_c, mission_control, homeostasis, contrafactual, grounding, identity_daily, governance, adaptive_control, economic, self_play, calibration, plasticity_runtime, roadmap_v5, agi_path, episodic_memory, learning_agenda, sleep_cycle, replay_traces, rag_synth_generator, semantic_cache, prm_lite, symbolic_reasoner, reflexion_agent, cognitive_state, causal_graph, sandbox_client, web_browser, context_policy, quality_eval, context_metrics, context_inspector, rag_router, rag_eval, rag_eval_cases, rag_eval_store, internal_critic, memory_governor, causal_preflight, cognitive_patches, gap_detector, shadow_eval, promotion_gate, rollback_manager, benchmark_suite, ultronbody, explicit_abstractions, structural_mapper, transfer_benchmark, external_benchmarks, cognitive_patch_loop, organic_eval_feed, roadmap_status, self_governance, operational_consciousness_benchmark, local_reasoning, self_improvement_engine, inner_monologue, working_memory, vision, world_model, causal_discovery, self_modification, continuous_learning, recursive_self_improvement, autonomous_loop, metacognitive_loop, web_explorer, mental_simulation, code_self_healer, self_talk_loop, autonomous_cognition, low_power, runtime_guard, trusted_acquisition_loop, online_rl_loop, longitudinal_harness, bg_runtime
 
 
 # New systems - qualia
@@ -4751,8 +4751,11 @@ async def autonomy_loop():
             st = store.db.stats()
             open_conf = len(store.db.list_conflicts(status="open", limit=5))
 
-            # Homeostasis (M1): monitor vitals and adapt autonomy mode
-            meta_status = _metacognition_tick() or {}
+            # Homeostasis (M1): monitor vitals and adapt autonomy mode.
+            # _metacognition_tick faz várias consultas ao DB + cálculo a cada
+            # tick; roda fora do event loop e sob o semáforo de carga para não
+            # bloquear o servidor nem saturar os núcleos.
+            meta_status = (await bg_runtime.run_blocking(_metacognition_tick, label="autonomy_metacognition")) or {}
             actions_recent = store.db.list_actions(limit=120)
             denom = max(1, len(actions_recent))
             blocked_ratio = len([a for a in actions_recent if str(a.get('status') or '') == 'blocked']) / denom
@@ -6379,6 +6382,23 @@ async def startup_event():
     if _background_guard_task is None or _background_guard_task.done():
         _background_guard_task = asyncio.create_task(runtime_guard.monitor_loop())
 
+    # Limita o paralelismo do trabalho de fundo: instala um pool de threads
+    # limitado como default executor (todos os asyncio.to_thread passam a
+    # respeitá-lo) e um semáforo para seções CPU-bound, reservando núcleo para
+    # o event loop e para o foreground. Não desliga nenhum loop.
+    try:
+        from ultronpro import bg_runtime
+
+        bg = bg_runtime.install()
+        logger.info(
+            "Background runtime limiter: %s threads, heavy_concurrency=%s (cpu=%s)",
+            bg.get("thread_workers"),
+            bg.get("heavy_concurrency"),
+            bg.get("cpu_count"),
+        )
+    except Exception as exc:
+        logger.warning("Background runtime limiter install skipped: %s", exc)
+
 
     async def _delayed_startup_tasks():
         await asyncio.sleep(1) # Breathe
@@ -7766,6 +7786,12 @@ async def online_rl_selftest():
 async def online_rl_action_prediction_status(limit: int = 20):
     from ultronpro import action_prediction
     return action_prediction.status(limit=limit)
+
+
+@app.get('/api/meta/bg-runtime/status')
+async def bg_runtime_status():
+    from ultronpro import bg_runtime
+    return bg_runtime.status()
 
 
 @app.get('/api/meta/trajectory/status')
