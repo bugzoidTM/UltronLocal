@@ -1,0 +1,18 @@
+{
+  "schema": "ultron.action_prediction.v1",
+  "arms": {
+    "reflexion_tick|normal": {
+      "n": 1,
+      "mean_reward": 0.4766,
+      "mae": 0.3734,
+      "bias": -0.0234,
+      "calibration": 0.6266,
+      "last_surprise": 0.078,
+      "updated_at": 1781362231
+    }
+  },
+  "recent_abs_errors": [
+    0.078
+  ],
+  "updated_at": 1781362231
+}

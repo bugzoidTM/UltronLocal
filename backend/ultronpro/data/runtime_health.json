@@ -1,5 +1,5 @@
 {
-  "ts": 1780594422,
+  "ts": 1781362227,
   "active_goal": "Modelar taxonomia de erros cognitivos em decisões",
   "active_mission": {
     "id": "mis_1776628887_3",
@@ -556,46 +556,46 @@
     "budget_per_min": 2
   },
   "autonomy_state": {
-    "ticks": 35,
-    "last_tick": 197008,
+    "ticks": 2,
+    "last_tick": 137980,
     "last_error": null,
     "consecutive_errors": 0
   },
   "background_guard": {
     "enabled": true,
     "state": "paused",
-    "lag_sec": 0.0032,
-    "max_lag_sec": 52.4661,
+    "lag_sec": 0.005,
+    "max_lag_sec": 13.9926,
     "consecutive_lag": 0,
-    "paused_until": 1780594508.6223843,
+    "paused_until": 1781362215.4165165,
     "last_pause_reason": "event_loop_lag",
-    "last_pause_at": 1780594418.6223843,
+    "last_pause_at": 1781362125.4165165,
     "last_slow_request": null,
-    "blocked_loops": 1992,
-    "last_blocked_loop": "self_talk_loop",
-    "last_log_at": 1780594404.3909106,
+    "blocked_loops": 100,
+    "last_blocked_loop": "voice_prewarm_loop",
+    "last_log_at": 1781362193.9315314,
     "foreground_active": 0,
-    "last_foreground_path": "/api/chat/stream",
-    "last_foreground_at": 1780594338.9112563,
-    "last_foreground_elapsed_sec": 0.008,
+    "last_foreground_path": "/api/chat",
+    "last_foreground_at": 1781361816.7508724,
+    "last_foreground_elapsed_sec": 5.891,
     "last_pause_details": {
-      "lag_sec": 5.927,
+      "lag_sec": 13.993,
       "consecutive_lag": 1
     },
-    "paused": true,
-    "paused_for_sec": 86.04272103309631
+    "paused": false,
+    "paused_for_sec": 0.0
   },
   "background_binary_bus": {
     "enabled": true,
-    "started_at": 1780583555.726492,
-    "processed": 10438,
+    "started_at": 1781361810.860069,
+    "processed": 439,
     "dropped": 0,
     "sink_errors": 0,
     "last_event": {
-      "kind": "guard_state",
-      "loop": "runtime_guard",
-      "event": "guard_state_write",
-      "at": 1780594420.625633
+      "kind": "workspace",
+      "loop": "integration_proxy_loop",
+      "event": "workspace_publish",
+      "at": 1781362227.2747688
     },
     "last_error": null,
     "queue_size": 0,
@@ -603,7 +603,9 @@
     "binlog_path": "D:\\sistemas\\UltronPro\\backend\\data\\background_bus.binlog"
   },
   "extra": {
-    "reason": "judge_tick",
-    "judge_out": "{'open_conflicts': 5, 'resolved': 1, 'needs_human': 3, 'attempted': 4}"
+    "reason": "integration_proxy_tick",
+    "integration_proxy_score": 0.7932,
+    "integration_level": "high",
+    "alerts": 0
   }
 }

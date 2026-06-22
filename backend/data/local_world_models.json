@@ -4,19 +4,19 @@
       "empirical_matrix": {
         "autocog:compact_workspace_focus": {
           "outcomes": {
-            "success": 53.2
+            "success": 55.2
           },
           "expected_value": 1.0,
           "risk": 0.0,
-          "observations": 53.2
+          "observations": 55.2
         },
         "autocog:prioritize_action_backlog": {
           "outcomes": {
-            "success": 69.2
+            "success": 72.2
           },
           "expected_value": 1.0,
           "risk": 0.0,
-          "observations": 69.2
+          "observations": 72.2
         },
         "autocog:queue_conflict_review": {
           "outcomes": {
@@ -1537,6 +1537,46 @@
           "expected_value": 1.0,
           "risk": 0.0,
           "observations": 1.0
+        },
+        "struct:autocog:prioritize_action_backlog|active_goal_count=10|failed_action_count=8|high_salience_count=53|open_conflict_count=4|queued_action_count=18|recent_error_count=0|unconsumed_high_salience_count=53|workspace_count=80": {
+          "outcomes": {
+            "success": 1.0
+          },
+          "expected_value": 1.0,
+          "risk": 0.0,
+          "observations": 1.0
+        },
+        "struct:autocog:compact_workspace_focus|active_goal_count=10|failed_action_count=8|high_salience_count=51|open_conflict_count=4|queued_action_count=20|recent_error_count=0|unconsumed_high_salience_count=51|workspace_count=80": {
+          "outcomes": {
+            "success": 1.0
+          },
+          "expected_value": 1.0,
+          "risk": 0.0,
+          "observations": 1.0
+        },
+        "struct:autocog:prioritize_action_backlog|active_goal_count=10|failed_action_count=8|high_salience_count=49|open_conflict_count=4|queued_action_count=20|recent_error_count=0|unconsumed_high_salience_count=49|workspace_count=80": {
+          "outcomes": {
+            "success": 1.0
+          },
+          "expected_value": 1.0,
+          "risk": 0.0,
+          "observations": 1.0
+        },
+        "struct:autocog:compact_workspace_focus|active_goal_count=10|failed_action_count=8|high_salience_count=52|open_conflict_count=3|queued_action_count=20|recent_error_count=0|unconsumed_high_salience_count=52|workspace_count=80": {
+          "outcomes": {
+            "success": 1.0
+          },
+          "expected_value": 1.0,
+          "risk": 0.0,
+          "observations": 1.0
+        },
+        "struct:autocog:prioritize_action_backlog|active_goal_count=10|failed_action_count=8|high_salience_count=49|open_conflict_count=3|queued_action_count=20|recent_error_count=0|unconsumed_high_salience_count=49|workspace_count=80": {
+          "outcomes": {
+            "success": 1.0
+          },
+          "expected_value": 1.0,
+          "risk": 0.0,
+          "observations": 1.0
         }
       },
       "hypotheses": [],
@@ -1551,116 +1591,6 @@
         "workspace_count"
       ],
       "transitions": [
-        {
-          "ts": 1780585472,
-          "action": "autocog:prioritize_action_backlog",
-          "state_hash": "22142423",
-          "state_t": {
-            "workspace_count": 80,
-            "high_salience_count": 50,
-            "unconsumed_high_salience_count": 50,
-            "queued_action_count": 20,
-            "failed_action_count": 8,
-            "active_goal_count": 10,
-            "open_conflict_count": 4,
-            "recent_error_count": 0
-          },
-          "actual_outcome": "success",
-          "predicted_outcome": "success",
-          "surprise": 0.008,
-          "metrics": {
-            "surprise_delta": 0.008,
-            "predicted_risk": 0.008
-          }
-        },
-        {
-          "ts": 1780585563,
-          "action": "autocog:prioritize_action_backlog",
-          "state_hash": "53340352",
-          "state_t": {
-            "workspace_count": 80,
-            "high_salience_count": 51,
-            "unconsumed_high_salience_count": 51,
-            "queued_action_count": 20,
-            "failed_action_count": 8,
-            "active_goal_count": 10,
-            "open_conflict_count": 6,
-            "recent_error_count": 0
-          },
-          "actual_outcome": "success",
-          "predicted_outcome": "success",
-          "surprise": 0.0016,
-          "metrics": {
-            "surprise_delta": 0.0016,
-            "predicted_risk": 0.0016
-          }
-        },
-        {
-          "ts": 1780585654,
-          "action": "autocog:compact_workspace_focus",
-          "state_hash": "-1970867",
-          "state_t": {
-            "workspace_count": 80,
-            "high_salience_count": 48,
-            "unconsumed_high_salience_count": 48,
-            "queued_action_count": 20,
-            "failed_action_count": 9,
-            "active_goal_count": 10,
-            "open_conflict_count": 6,
-            "recent_error_count": 0
-          },
-          "actual_outcome": "success",
-          "predicted_outcome": "success",
-          "surprise": 0.6,
-          "metrics": {
-            "surprise_delta": 0.6,
-            "predicted_risk": 0.6
-          }
-        },
-        {
-          "ts": 1780585745,
-          "action": "autocog:prioritize_action_backlog",
-          "state_hash": "19364452",
-          "state_t": {
-            "workspace_count": 80,
-            "high_salience_count": 50,
-            "unconsumed_high_salience_count": 50,
-            "queued_action_count": 21,
-            "failed_action_count": 9,
-            "active_goal_count": 10,
-            "open_conflict_count": 4,
-            "recent_error_count": 0
-          },
-          "actual_outcome": "success",
-          "predicted_outcome": "success",
-          "surprise": 0.0003,
-          "metrics": {
-            "surprise_delta": 0.0003,
-            "predicted_risk": 0.0003
-          }
-        },
-        {
-          "ts": 1780585798,
-          "action": "autocog:compact_workspace_focus",
-          "state_hash": "-1890406",
-          "state_t": {
-            "workspace_count": 80,
-            "high_salience_count": 49,
-            "unconsumed_high_salience_count": 49,
-            "queued_action_count": 21,
-            "failed_action_count": 9,
-            "active_goal_count": 10,
-            "open_conflict_count": 4,
-            "recent_error_count": 0
-          },
-          "actual_outcome": "success",
-          "predicted_outcome": "success",
-          "surprise": 0.264,
-          "metrics": {
-            "surprise_delta": 0.264,
-            "predicted_risk": 0.264
-          }
-        },
         {
           "ts": 1780585836,
           "action": "autocog:prioritize_action_backlog",
@@ -3741,6 +3671,116 @@
             "failed_action_count": 9,
             "active_goal_count": 10,
             "open_conflict_count": 4,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1781361825,
+          "action": "autocog:prioritize_action_backlog",
+          "state_hash": "-7178192",
+          "state_t": {
+            "workspace_count": 80,
+            "high_salience_count": 53,
+            "unconsumed_high_salience_count": 53,
+            "queued_action_count": 18,
+            "failed_action_count": 8,
+            "active_goal_count": 10,
+            "open_conflict_count": 4,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1781361916,
+          "action": "autocog:compact_workspace_focus",
+          "state_hash": "12053836",
+          "state_t": {
+            "workspace_count": 80,
+            "high_salience_count": 51,
+            "unconsumed_high_salience_count": 51,
+            "queued_action_count": 20,
+            "failed_action_count": 8,
+            "active_goal_count": 10,
+            "open_conflict_count": 4,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1781362013,
+          "action": "autocog:prioritize_action_backlog",
+          "state_hash": "40320969",
+          "state_t": {
+            "workspace_count": 80,
+            "high_salience_count": 49,
+            "unconsumed_high_salience_count": 49,
+            "queued_action_count": 20,
+            "failed_action_count": 8,
+            "active_goal_count": 10,
+            "open_conflict_count": 4,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1781362105,
+          "action": "autocog:compact_workspace_focus",
+          "state_hash": "52465224",
+          "state_t": {
+            "workspace_count": 80,
+            "high_salience_count": 52,
+            "unconsumed_high_salience_count": 52,
+            "queued_action_count": 20,
+            "failed_action_count": 8,
+            "active_goal_count": 10,
+            "open_conflict_count": 3,
+            "recent_error_count": 0
+          },
+          "actual_outcome": "success",
+          "predicted_outcome": "success",
+          "surprise": 0.0,
+          "metrics": {
+            "surprise_delta": 0.0,
+            "predicted_risk": 0.0
+          }
+        },
+        {
+          "ts": 1781362196,
+          "action": "autocog:prioritize_action_backlog",
+          "state_hash": "-6891695",
+          "state_t": {
+            "workspace_count": 80,
+            "high_salience_count": 49,
+            "unconsumed_high_salience_count": 49,
+            "queued_action_count": 20,
+            "failed_action_count": 8,
+            "active_goal_count": 10,
+            "open_conflict_count": 3,
             "recent_error_count": 0
           },
           "actual_outcome": "success",

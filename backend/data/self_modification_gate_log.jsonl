@@ -22,3 +22,7 @@
 {"ts": 1778441292, "event": "pass", "ok": true, "vetoed": false, "reason": "all_modules_import_ok", "details": {"ok_count": 196, "skipped": 8}}
 {"ts": 1778441292, "event": "pass", "ok": true, "vetoed": false, "reason": "benchmark_no_baseline", "details": {"note": "No prior benchmark run — regression check skipped (first-time pass).", "before": null, "after": null}}
 {"ts": 1778441292, "event": "gate_passed", "patch_id": "t3", "decision": "hold"}
+{"ts": 1781362123, "event": "pass", "ok": true, "vetoed": false, "reason": "no_module_target", "details": {}}
+{"ts": 1781362123, "event": "veto", "ok": false, "vetoed": true, "reason": "human_approval_required", "details": {"patch_id": "cp_3fa95259e8d6", "note": "Set ULTRON_SELF_MOD_AUTO_APPROVE=1 or add 'approved_by' field to patch."}}
+{"ts": 1781362124, "event": "pass", "ok": true, "vetoed": false, "reason": "no_module_target", "details": {}}
+{"ts": 1781362124, "event": "veto", "ok": false, "vetoed": true, "reason": "human_approval_required", "details": {"patch_id": "cp_bda2f70da87b", "note": "Set ULTRON_SELF_MOD_AUTO_APPROVE=1 or add 'approved_by' field to patch."}}

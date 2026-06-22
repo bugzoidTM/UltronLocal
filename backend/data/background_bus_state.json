@@ -1,17 +1,17 @@
 {
   "enabled": true,
-  "started_at": 1780583555.726492,
-  "processed": 10522,
+  "started_at": 1781361810.860069,
+  "processed": 484,
   "dropped": 0,
   "sink_errors": 0,
   "last_event": {
-    "kind": "event",
-    "loop": "self_improvement_loop",
-    "event": "checkpoint_foreground_throttle",
-    "at": 1780594471.2101521
+    "kind": "guard_state",
+    "loop": "runtime_guard",
+    "event": "guard_state_write",
+    "at": 1781362267.7484488
   },
   "last_error": null,
-  "queue_size": 1,
+  "queue_size": 0,
   "worker_alive": true,
   "binlog_path": "D:\\sistemas\\UltronPro\\backend\\data\\background_bus.binlog"
 }

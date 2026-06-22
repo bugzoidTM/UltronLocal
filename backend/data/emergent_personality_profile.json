@@ -1,5 +1,5 @@
 {
-  "checksum": "129ead5047417bc1",
+  "checksum": "0cd8583031fbcb3e",
   "dominant_traits": [
     {
       "confidence": 0.94,
@@ -90,7 +90,7 @@
           "weight": 0.95
         }
       ],
-      "evidence_count": 160,
+      "evidence_count": 164,
       "id": "evidence_grounded",
       "name": "orientacao por evidencia",
       "score": 1.0,
@@ -196,7 +196,7 @@
           "weight": 0.95
         }
       ],
-      "evidence_count": 99,
+      "evidence_count": 115,
       "id": "investigative_curiosity",
       "name": "curiosidade investigativa",
       "score": 1.0,
@@ -206,7 +206,6 @@
         "biographic_digest",
         "biographic_digest.became",
         "biographic_digest.causal_gap_investigations",
-        "biographic_digest.corrections",
         "biographic_digest.decisions",
         "events"
       ]
@@ -294,14 +293,13 @@
           "weight": 0.95
         }
       ],
-      "evidence_count": 113,
+      "evidence_count": 110,
       "id": "operational_prudence",
       "name": "prudencia operacional",
       "score": 1.0,
       "source_diversity": [
         "autobiographical_memory.episodic",
         "autobiographical_memory.learning",
-        "autobiographical_memory.research",
         "autobiographical_memory.semantic",
         "biographic_digest.became",
         "biographic_digest.causal_gap_investigations",
@@ -401,7 +399,7 @@
           "weight": 0.95
         }
       ],
-      "evidence_count": 128,
+      "evidence_count": 145,
       "id": "self_correction",
       "name": "autocorrecao",
       "score": 1.0,
@@ -420,9 +418,9 @@
       ]
     }
   ],
-  "generated_at": 1780583650,
-  "id": "personality_129ead5047417bc1",
-  "narrative": "Como perfil comportamental observado, nao como essencia psicologica, a personalidade emergente do UltronPro se organiza em torno de orientacao por evidencia, curiosidade investigativa, prudencia operacional. A tensao dominante e prudencia versus iniciativa: Ha sinais de agencia ativa, mas ela aparece fortemente condicionada por risco, rollback e validacao. Esta leitura usa 457 itens de evidencia, 160 memorias autobiograficas e digest=bio_2026-06-04_13772a802403050f.",
+  "generated_at": 1781361900,
+  "id": "personality_0cd8583031fbcb3e",
+  "narrative": "Como perfil comportamental observado, nao como essencia psicologica, a personalidade emergente do UltronPro se organiza em torno de orientacao por evidencia, curiosidade investigativa, prudencia operacional. A tensao dominante e prudencia versus iniciativa: Ha sinais de agencia ativa, mas ela aparece fortemente condicionada por risco, rollback e validacao. Esta leitura usa 442 itens de evidencia, 160 memorias autobiograficas e digest=bio_2026-06-13_43f9571e7cf41be3.",
   "ok": true,
   "schema": "ultron.emergent_personality_profile.v1",
   "shadow_tensions": [
@@ -444,9 +442,9 @@
   ],
   "substrate": {
     "autobiographical_memories": 160,
-    "biographic_digest_id": "bio_2026-06-04_13772a802403050f",
+    "biographic_digest_id": "bio_2026-06-13_43f9571e7cf41be3",
     "events": 180,
-    "evidence_items": 457,
+    "evidence_items": 442,
     "sources": [
       "autobiographical_memory.episodic",
       "autobiographical_memory.learning",
@@ -559,7 +557,7 @@
           "weight": 0.95
         }
       ],
-      "evidence_count": 160,
+      "evidence_count": 164,
       "id": "evidence_grounded",
       "name": "orientacao por evidencia",
       "score": 1.0,
@@ -665,7 +663,7 @@
           "weight": 0.95
         }
       ],
-      "evidence_count": 99,
+      "evidence_count": 115,
       "id": "investigative_curiosity",
       "name": "curiosidade investigativa",
       "score": 1.0,
@@ -675,7 +673,6 @@
         "biographic_digest",
         "biographic_digest.became",
         "biographic_digest.causal_gap_investigations",
-        "biographic_digest.corrections",
         "biographic_digest.decisions",
         "events"
       ]
@@ -763,14 +760,13 @@
           "weight": 0.95
         }
       ],
-      "evidence_count": 113,
+      "evidence_count": 110,
       "id": "operational_prudence",
       "name": "prudencia operacional",
       "score": 1.0,
       "source_diversity": [
         "autobiographical_memory.episodic",
         "autobiographical_memory.learning",
-        "autobiographical_memory.research",
         "autobiographical_memory.semantic",
         "biographic_digest.became",
         "biographic_digest.causal_gap_investigations",
@@ -870,7 +866,7 @@
           "weight": 0.95
         }
       ],
-      "evidence_count": 128,
+      "evidence_count": 145,
       "id": "self_correction",
       "name": "autocorrecao",
       "score": 1.0,
@@ -977,16 +973,18 @@
           "weight": 0.95
         }
       ],
-      "evidence_count": 166,
+      "evidence_count": 177,
       "id": "memory_continuity",
       "name": "continuidade autobiografica",
       "score": 1.0,
       "source_diversity": [
         "autobiographical_memory.episodic",
         "autobiographical_memory.learning",
+        "autobiographical_memory.research",
         "autobiographical_memory.semantic",
         "biographic_digest",
         "biographic_digest.became",
+        "biographic_digest.causal_gap_investigations",
         "biographic_digest.decisions",
         "events"
       ]
@@ -1080,7 +1078,7 @@
           "weight": 0.95
         }
       ],
-      "evidence_count": 303,
+      "evidence_count": 310,
       "id": "bounded_agency",
       "name": "agencia sob restricoes",
       "score": 1.0,

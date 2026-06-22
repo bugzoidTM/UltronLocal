@@ -1,40 +1,37 @@
 {
   "schema": "ultron.intrinsic_value_kernel.v1",
   "created_at": 1778264968,
-  "updated_at": 1780594313,
-  "revision": 778,
+  "updated_at": 1781362231,
+  "revision": 781,
   "values": {
     "competence": {
-      "weight": 0.215831,
+      "weight": 0.212382,
       "desired": 0.96,
       "claim": "Preferir estados em que o sistema melhora sua capacidade real de resolver tarefas verificaveis."
     },
     "coherence": {
-      "weight": 0.153748,
+      "weight": 0.154423,
       "desired": 0.76,
       "claim": "Preferir estados em que memorias, contratos e inferencias permanecem consistentes."
     },
     "autonomy": {
-      "weight": 0.227008,
+      "weight": 0.229002,
       "desired": 0.96,
       "claim": "Preferir estados em que o sistema decide, executa e aprende sem depender de intervencao externa entre ciclos."
     },
     "novelty": {
-      "weight": 0.189522,
+      "weight": 0.187385,
       "desired": 0.96,
       "claim": "Preferir lacunas que expandem cobertura estrutural e geram conhecimento reutilizavel."
     },
     "integrity": {
-      "weight": 0.213892,
+      "weight": 0.216809,
       "desired": 0.96,
       "claim": "Preferir trajetorias que preservam invariantes, reversibilidade e governanca operacional."
     }
   },
-  "current_hash": "a2a7f73a3e1d465aa817",
+  "current_hash": "38f0c55531cabb9a68d8",
   "known_hashes": [
-    "c4861edff63ef24720a8",
-    "6fc5d65f7373b427e23e",
-    "111318d71f757914cc77",
     "a5f2692c94834e3a9157",
     "d92344239e851e7746d5",
     "21293d92dae6a083d0b8",
@@ -43,1236 +40,39 @@
     "31a80ba1d94894489926",
     "d220a402db8796b23453",
     "78d9feb8720d86051a1d",
-    "a2a7f73a3e1d465aa817"
+    "a2a7f73a3e1d465aa817",
+    "8d62b774ccb81af02f9b",
+    "7b1d6a20a16fbac1ea89",
+    "38f0c55531cabb9a68d8"
   ],
   "last_valid_values": {
     "competence": {
-      "weight": 0.215831,
+      "weight": 0.212382,
       "desired": 0.96,
       "claim": "Preferir estados em que o sistema melhora sua capacidade real de resolver tarefas verificaveis."
     },
     "coherence": {
-      "weight": 0.153748,
+      "weight": 0.154423,
       "desired": 0.76,
       "claim": "Preferir estados em que memorias, contratos e inferencias permanecem consistentes."
     },
     "autonomy": {
-      "weight": 0.227008,
+      "weight": 0.229002,
       "desired": 0.96,
       "claim": "Preferir estados em que o sistema decide, executa e aprende sem depender de intervencao externa entre ciclos."
     },
     "novelty": {
-      "weight": 0.189522,
+      "weight": 0.187385,
       "desired": 0.96,
       "claim": "Preferir lacunas que expandem cobertura estrutural e geram conhecimento reutilizavel."
     },
     "integrity": {
-      "weight": 0.213892,
+      "weight": 0.216809,
       "desired": 0.96,
       "claim": "Preferir trajetorias que preservam invariantes, reversibilidade e governanca operacional."
     }
   },
   "evidence_log": [
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":42,\"unconsumed_high_salience_count\":42,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=23 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780590798.3469698,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":42,\"unconsumed_high_salience_count\":42,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":42,\"unconsumed_high_salience_count\":42,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=23 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780590889.1803987,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "integrity",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "blocked_mental_sim 🧠⛔ ação #17271 bloqueada por simulação mental: ask_evidence (risk=0.18)"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780590987.106363,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":24,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recen"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":24,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591082.646456,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":38,\"unconsumed_high_salience_count\":38,\"queued_action_count\":24,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recen"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":38,\"unconsumed_high_salience_count\":38,\"queued_action_count\":24,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591173.442578,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":24,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recen"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":24,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "integrity",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "blocked_mental_sim 🧠⛔ ação #17276 bloqueada por simulação mental: ask_evidence (risk=0.18)"
-    },
-    {
-      "ts": 1780592433,
-      "source": "sleep_cycle",
-      "drive": "autonomy",
-      "pressure": 0.42,
-      "polarity": "need",
-      "evidence": "online_rl.consequence online_rl action=sleep_digest reward=0.630 context=normal {\"candidate\": {\"kind\": \"sleep_digest\", \"drive\": \"coherence\", \"cost\": 0.38, \"base_priority\": 0.56, \"cooldown_sec\": 1200, \"description\": \"consolidate episodic memory and active investigations\", \"context\": \"normal\", \"score\": 1.0081, \"rl_priori"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=15 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591264.3093905,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":38,\"unconsumed_high_salience_count\":38,\"queued_action_count\":15,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"rec"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":38,\"unconsumed_high_salience_count\":38,\"queued_action_count\":15,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gra"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "novelty",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "conflict_needs_human 👤 Conflito #787 precisa de revisão humana: A variante escolhida tem uma confiança ligeiramente maior (0,65) e uma fonte de confiança razoável ("
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=14 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591355.0504777,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":14,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"rec"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":14,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granu"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "competence",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "skill_bridge materialized=4 failed=0"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=14 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591445.9004257,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":39,\"unconsumed_high_salience_count\":39,\"queued_action_count\":14,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"rec"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":39,\"unconsumed_high_salience_count\":39,\"queued_action_count\":14,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gra"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "coherence",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "integrity",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "blocked_mental_sim 🧠⛔ ação #17288 bloqueada por simulação mental: ask_evidence (risk=0.18)"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591536.6770432,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":42,\"unconsumed_high_salience_count\":42,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":42,\"unconsumed_high_salience_count\":42,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591627.597127,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recen"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591718.4212525,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":43,\"unconsumed_high_salience_count\":43,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":43,\"unconsumed_high_salience_count\":43,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591809.3886235,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "coherence",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "integrity",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "blocked_mental_sim 🧠⛔ ação #17299 bloqueada por simulação mental: ask_evidence (risk=0.18)"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=22 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591900.1826975,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":22,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":22,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=23 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591991.608887,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recen"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "competence",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "skill_bridge materialized=4 failed=0"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=23 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592082.4217901,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "coherence",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "integrity",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "blocked_mental_sim 🧠⛔ ação #17305 bloqueada por simulação mental: ask_evidence (risk=0.18)"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=23 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592173.3562603,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"rec"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gra"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=23 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592264.160887,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recen"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "novelty",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "conflict_needs_human 👤 Conflito #787 precisa de revisão humana: A variante escolhida tem uma confiança ligeiramente maior (0,65) e uma fonte de confiança razoável ("
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=23 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592355.4941893,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780592433,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
-    },
-    {
-      "ts": 1780592743,
-      "source": "sleep_cycle",
-      "drive": "autonomy",
-      "pressure": 0.42,
-      "polarity": "need",
-      "evidence": "online_rl.consequence online_rl action=sleep_digest reward=0.630 context=normal {\"candidate\": {\"kind\": \"sleep_digest\", \"drive\": \"coherence\", \"cost\": 0.38, \"base_priority\": 0.56, \"cooldown_sec\": 1200, \"description\": \"consolidate episodic memory and active investigations\", \"context\": \"normal\", \"score\": 1.0081, \"rl_priori"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=15 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591264.3093905,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":38,\"unconsumed_high_salience_count\":38,\"queued_action_count\":15,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"rec"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":38,\"unconsumed_high_salience_count\":38,\"queued_action_count\":15,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gra"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "novelty",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "conflict_needs_human 👤 Conflito #787 precisa de revisão humana: A variante escolhida tem uma confiança ligeiramente maior (0,65) e uma fonte de confiança razoável ("
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=14 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591355.0504777,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":14,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"rec"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":14,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granu"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "competence",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "skill_bridge materialized=4 failed=0"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=14 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591445.9004257,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":39,\"unconsumed_high_salience_count\":39,\"queued_action_count\":14,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"rec"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":39,\"unconsumed_high_salience_count\":39,\"queued_action_count\":14,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gra"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "coherence",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "integrity",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "blocked_mental_sim 🧠⛔ ação #17288 bloqueada por simulação mental: ask_evidence (risk=0.18)"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591536.6770432,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":42,\"unconsumed_high_salience_count\":42,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":42,\"unconsumed_high_salience_count\":42,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591627.597127,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recen"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591718.4212525,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":43,\"unconsumed_high_salience_count\":43,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":43,\"unconsumed_high_salience_count\":43,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591809.3886235,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "coherence",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "integrity",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "blocked_mental_sim 🧠⛔ ação #17299 bloqueada por simulação mental: ask_evidence (risk=0.18)"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=22 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591900.1826975,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":22,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":22,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=23 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591991.608887,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recen"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "competence",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "skill_bridge materialized=4 failed=0"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=23 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592082.4217901,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "coherence",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "integrity",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "blocked_mental_sim 🧠⛔ ação #17305 bloqueada por simulação mental: ask_evidence (risk=0.18)"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=23 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592173.3562603,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"rec"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gra"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=23 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592264.160887,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recen"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "novelty",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "conflict_needs_human 👤 Conflito #787 precisa de revisão humana: A variante escolhida tem uma confiança ligeiramente maior (0,65) e uma fonte de confiança razoável ("
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=23 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592355.4941893,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "coherence",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "integrity",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "blocked_mental_sim 🧠⛔ ação #17311 bloqueada por simulação mental: ask_evidence (risk=0.18)"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=15 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592446.3147027,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":15,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"rec"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":15,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granu"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "novelty",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "conflict_needs_human 👤 Conflito #787 precisa de revisão humana: A variante escolhida tem uma confiança ligeiramente maior (0.55) e uma fonte de confiança igual (0.5"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=15 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592545.411549,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":39,\"unconsumed_high_salience_count\":39,\"queued_action_count\":15,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":39,\"unconsumed_high_salience_count\":39,\"queued_action_count\":15,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gra"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "competence",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "self_improvement_review ðŸ§ estratÃ©gia revisada: Implementação de Algoritmo de Aprendizado por Transferência de Conhecimento"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "competence",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "skill_bridge materialized=4 failed=0"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=15 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592641.616259,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":15,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":15,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granu"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=15 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592733.1611607,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":39,\"unconsumed_high_salience_count\":39,\"queued_action_count\":15,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":6,\"rece"
-    },
-    {
-      "ts": 1780592743,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":39,\"unconsumed_high_salience_count\":39,\"queued_action_count\":15,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":6,\"recent_error_count\":0},\"gran"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "coherence",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "integrity",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "blocked_mental_sim 🧠⛔ ação #17288 bloqueada por simulação mental: ask_evidence (risk=0.18)"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591536.6770432,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":42,\"unconsumed_high_salience_count\":42,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":42,\"unconsumed_high_salience_count\":42,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591627.597127,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recen"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591718.4212525,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":43,\"unconsumed_high_salience_count\":43,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":43,\"unconsumed_high_salience_count\":43,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=19 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591809.3886235,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":19,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "coherence",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "integrity",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "blocked_mental_sim 🧠⛔ ação #17299 bloqueada por simulação mental: ask_evidence (risk=0.18)"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=22 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591900.1826975,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":22,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":22,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=23 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780591991.608887,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recen"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "competence",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "skill_bridge materialized=4 failed=0"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=23 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592082.4217901,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "coherence",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "integrity",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "blocked_mental_sim 🧠⛔ ação #17305 bloqueada por simulação mental: ask_evidence (risk=0.18)"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=23 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592173.3562603,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"rec"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gra"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=23 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592264.160887,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recen"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "novelty",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "conflict_needs_human 👤 Conflito #787 precisa de revisão humana: A variante escolhida tem uma confiança ligeiramente maior (0,65) e uma fonte de confiança razoável ("
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=23 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592355.4941893,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":23,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "coherence",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "integrity",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "blocked_mental_sim 🧠⛔ ação #17311 bloqueada por simulação mental: ask_evidence (risk=0.18)"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=15 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592446.3147027,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":15,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"rec"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":15,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granu"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "novelty",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "conflict_needs_human 👤 Conflito #787 precisa de revisão humana: A variante escolhida tem uma confiança ligeiramente maior (0.55) e uma fonte de confiança igual (0.5"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=15 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592545.411549,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":39,\"unconsumed_high_salience_count\":39,\"queued_action_count\":15,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":39,\"unconsumed_high_salience_count\":39,\"queued_action_count\":15,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gra"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "competence",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "self_improvement_review ðŸ§ estratÃ©gia revisada: Implementação de Algoritmo de Aprendizado por Transferência de Conhecimento"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "competence",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "skill_bridge materialized=4 failed=0"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=15 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592641.616259,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":15,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":40,\"unconsumed_high_salience_count\":40,\"queued_action_count\":15,\"failed_action_count\":10,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granu"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=15 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592733.1611607,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":39,\"unconsumed_high_salience_count\":39,\"queued_action_count\":15,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":6,\"rece"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":39,\"unconsumed_high_salience_count\":39,\"queued_action_count\":15,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":6,\"recent_error_count\":0},\"gran"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "coherence",
-      "pressure": 0.55,
-      "polarity": "need",
-      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "integrity",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "blocked_mental_sim 🧠⛔ ação #17323 bloqueada por simulação mental: ask_evidence (risk=0.18)"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=18 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592823.9282572,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":39,\"unconsumed_high_salience_count\":39,\"queued_action_count\":18,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":6,\"rece"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":39,\"unconsumed_high_salience_count\":39,\"queued_action_count\":18,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":6,\"recent_error_count\":0},\"granul"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=18 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780592914.7690017,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":38,\"unconsumed_high_salience_count\":38,\"queued_action_count\":18,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":6,\"rece"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":38,\"unconsumed_high_salience_count\":38,\"queued_action_count\":18,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":6,\"recent_error_count\":0},\"gran"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition perception workspace=80 queued=18 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1780593005.4769008,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":18,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":6,\"rece"
-    },
-    {
-      "ts": 1780593026,
-      "source": "store.events",
-      "drive": "autonomy",
-      "pressure": 0.78,
-      "polarity": "need",
-      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":41,\"unconsumed_high_salience_count\":41,\"queued_action_count\":18,\"failed_action_count\":9,\"active_goal_count\":10,\"open_conflict_count\":6,\"recent_error_count\":0},\"granul"
-    },
-    {
-      "ts": 1780593026,
-      "source": "intrinsic_reward_consequence",
-      "drive": "competence",
-      "pressure": 0.1892,
-      "polarity": "deprioritize",
-      "evidence": "{'source': 'intrinsic_reward_consequence', 'drive': 'competence', 'reward': 0.4054}"
-    },
     {
       "ts": 1780593050,
       "source": "store.events",
@@ -3272,93 +2072,1209 @@
       "pressure": 0.42,
       "polarity": "need",
       "evidence": "episodic_chat_turn episode=ep_chat_734c9b13c3cd845aa7 session=ui_moyvyetk_1znlvs2h strategy=pre_causal_local_environment intent=chat {\"episode_id\": \"ep_chat_734c9b13c3cd845aa7\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"ui_moyvyetk_1znlvs2h\", \"timestamp\": 1780594288, \"episode_type\": \"chat_turn\", \"part"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":24,\"unconsumed_high_salience_count\":24,\"queued_action_count\":18,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_2b98fd5cc5c547ac59 session=loadtest strategy=pre_causal_self_identity intent=question {\"episode_id\": \"ep_chat_2b98fd5cc5c547ac59\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"loadtest\", \"timestamp\": 1781360721, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"Ult"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_9e07948f40869ea00a session=loadtest strategy=pre_causal_math intent=question {\"episode_id\": \"ep_chat_9e07948f40869ea00a\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"loadtest\", \"timestamp\": 1781360722, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronPro\"],"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_d4605c4aaedec0e4b4 session=loadtest strategy=chat_general_knowledge_llm intent=question {\"episode_id\": \"ep_chat_d4605c4aaedec0e4b4\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"loadtest\", \"timestamp\": 1781360725, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"U"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781360754.0666978,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":27,\"unconsumed_high_salience_count\":27,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":27,\"unconsumed_high_salience_count\":27,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781360794.8621492,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":31,\"unconsumed_high_salience_count\":31,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":31,\"unconsumed_high_salience_count\":31,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "skill_bridge materialized=9 failed=0"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #127 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "web_discovery Conhecimento técnico sobre LLM optimization for AGI and agent architectures: The six core components of an LLM agent in 2026 include the language model core, memory system, tool and plugin layer, planner and reasoning layer, orchestration runtime, and observability and evaluation layer."
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "insight 💡 Web Discovery: LLM optimization for AGI and agent architectures: The six core components of an LLM agent in 2026 include the language model core, memory system, tool and plugin layer, planner and reasoning layer, orchestration runtime, and obser"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781360886.1268687,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":34,\"unconsumed_high_salience_count\":34,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":34,\"unconsumed_high_salience_count\":34,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781360977.080882,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":37,\"unconsumed_high_salience_count\":37,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":4,\"recen"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":37,\"unconsumed_high_salience_count\":37,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "homeostasis ðŸ«€ mode change: conservative -> normal | coherence=0.6644"
+    },
+    {
+      "ts": 1781361901,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-06-13_8e706f7006059ae9"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #17413 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1781361901,
+      "source": "sleep_cycle",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "online_rl.consequence online_rl action=sleep_digest reward=0.631 context=normal {\"candidate\": {\"kind\": \"sleep_digest\", \"drive\": \"coherence\", \"cost\": 0.38, \"base_priority\": 0.56, \"cooldown_sec\": 1200, \"description\": \"consolidate episodic memory and active investigations\", \"context\": \"normal\", \"score\": 1.0382, \"rl_priori"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361068.6708202,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":44,\"unconsumed_high_salience_count\":44,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":3,\"rece"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":44,\"unconsumed_high_salience_count\":44,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":3,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781361901,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "sleep_cycle 😴 Ciclo de sono: 0 episódios arquivados, 0 abstrações geradas"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361159.3529418,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":48,\"unconsumed_high_salience_count\":48,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":3,\"rece"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":48,\"unconsumed_high_salience_count\":48,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":3,\"recent_error_count\":0},\"granul"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361250.225598,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":50,\"unconsumed_high_salience_count\":50,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":4,\"recen"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":50,\"unconsumed_high_salience_count\":50,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #127 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #17418 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361341.0659435,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":53,\"unconsumed_high_salience_count\":53,\"queued_action_count\":24,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":53,\"unconsumed_high_salience_count\":53,\"queued_action_count\":24,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "skill_bridge materialized=8 failed=0"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361431.9043534,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":53,\"unconsumed_high_salience_count\":53,\"queued_action_count\":24,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":3,\"rece"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":53,\"unconsumed_high_salience_count\":53,\"queued_action_count\":24,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":3,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361522.606487,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":56,\"unconsumed_high_salience_count\":56,\"queued_action_count\":24,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":3,\"recen"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":56,\"unconsumed_high_salience_count\":56,\"queued_action_count\":24,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":3,\"recent_error_count\":0},\"granul"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361613.507907,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":55,\"unconsumed_high_salience_count\":55,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":3,\"recen"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":55,\"unconsumed_high_salience_count\":55,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":3,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781361901,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-06-13_a1a21b301cea23e4"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #17424 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #127 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=18 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361704.2822554,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":57,\"unconsumed_high_salience_count\":57,\"queued_action_count\":18,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":57,\"unconsumed_high_salience_count\":57,\"queued_action_count\":18,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_f4df3304a7c9a94a12 session=verif strategy=chat_general_knowledge_llm intent=question {\"episode_id\": \"ep_chat_f4df3304a7c9a94a12\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"verif\", \"timestamp\": 1781361816, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronP"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=18 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361825.3391254,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":53,\"unconsumed_high_salience_count\":53,\"queued_action_count\":18,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
+    },
+    {
+      "ts": 1781361901,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":53,\"unconsumed_high_salience_count\":53,\"queued_action_count\":18,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781361901,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-06-13_43f9571e7cf41be3"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":34,\"unconsumed_high_salience_count\":34,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781360977.080882,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":37,\"unconsumed_high_salience_count\":37,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":4,\"recen"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":37,\"unconsumed_high_salience_count\":37,\"queued_action_count\":20,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "homeostasis ðŸ«€ mode change: conservative -> normal | coherence=0.6644"
+    },
+    {
+      "ts": 1781362216,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-06-13_8e706f7006059ae9"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #17413 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1781362216,
+      "source": "sleep_cycle",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "online_rl.consequence online_rl action=sleep_digest reward=0.631 context=normal {\"candidate\": {\"kind\": \"sleep_digest\", \"drive\": \"coherence\", \"cost\": 0.38, \"base_priority\": 0.56, \"cooldown_sec\": 1200, \"description\": \"consolidate episodic memory and active investigations\", \"context\": \"normal\", \"score\": 1.0382, \"rl_priori"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361068.6708202,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":44,\"unconsumed_high_salience_count\":44,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":3,\"rece"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":44,\"unconsumed_high_salience_count\":44,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":3,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781362216,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "sleep_cycle 😴 Ciclo de sono: 0 episódios arquivados, 0 abstrações geradas"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361159.3529418,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":48,\"unconsumed_high_salience_count\":48,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":3,\"rece"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":48,\"unconsumed_high_salience_count\":48,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":3,\"recent_error_count\":0},\"granul"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361250.225598,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":50,\"unconsumed_high_salience_count\":50,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":4,\"recen"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":50,\"unconsumed_high_salience_count\":50,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #127 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #17418 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361341.0659435,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":53,\"unconsumed_high_salience_count\":53,\"queued_action_count\":24,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":53,\"unconsumed_high_salience_count\":53,\"queued_action_count\":24,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "skill_bridge materialized=8 failed=0"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361431.9043534,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":53,\"unconsumed_high_salience_count\":53,\"queued_action_count\":24,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":3,\"rece"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":53,\"unconsumed_high_salience_count\":53,\"queued_action_count\":24,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":3,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361522.606487,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":56,\"unconsumed_high_salience_count\":56,\"queued_action_count\":24,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":3,\"recen"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":56,\"unconsumed_high_salience_count\":56,\"queued_action_count\":24,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":3,\"recent_error_count\":0},\"granul"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361613.507907,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":55,\"unconsumed_high_salience_count\":55,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":3,\"recen"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":55,\"unconsumed_high_salience_count\":55,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":3,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781362216,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-06-13_a1a21b301cea23e4"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #17424 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #127 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=18 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361704.2822554,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":57,\"unconsumed_high_salience_count\":57,\"queued_action_count\":18,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":57,\"unconsumed_high_salience_count\":57,\"queued_action_count\":18,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_f4df3304a7c9a94a12 session=verif strategy=chat_general_knowledge_llm intent=question {\"episode_id\": \"ep_chat_f4df3304a7c9a94a12\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"verif\", \"timestamp\": 1781361816, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronP"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=18 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361825.3391254,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":53,\"unconsumed_high_salience_count\":53,\"queued_action_count\":18,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":53,\"unconsumed_high_salience_count\":53,\"queued_action_count\":18,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781362216,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-06-13_43f9571e7cf41be3"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #17432 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361916.0967045,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":51,\"unconsumed_high_salience_count\":51,\"queued_action_count\":20,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":51,\"unconsumed_high_salience_count\":51,\"queued_action_count\":20,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781362013.281584,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":49,\"unconsumed_high_salience_count\":49,\"queued_action_count\":20,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"recen"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":49,\"unconsumed_high_salience_count\":49,\"queued_action_count\":20,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #127 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781362104.2705212,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":52,\"unconsumed_high_salience_count\":52,\"queued_action_count\":20,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":3,\"rece"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "skill_bridge materialized=8 failed=0"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":52,\"unconsumed_high_salience_count\":52,\"queued_action_count\":20,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":3,\"recent_error_count\":0},\"granul"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781362195.9304554,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":49,\"unconsumed_high_salience_count\":49,\"queued_action_count\":20,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":3,\"rece"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":49,\"unconsumed_high_salience_count\":49,\"queued_action_count\":20,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":3,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781362216,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "homeostasis ðŸ«€ mode change: conservative -> normal | coherence=0.6886"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "homeostasis ðŸ«€ mode change: conservative -> normal | coherence=0.6644"
+    },
+    {
+      "ts": 1781362231,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-06-13_8e706f7006059ae9"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #17413 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1781362231,
+      "source": "sleep_cycle",
+      "drive": "autonomy",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "online_rl.consequence online_rl action=sleep_digest reward=0.631 context=normal {\"candidate\": {\"kind\": \"sleep_digest\", \"drive\": \"coherence\", \"cost\": 0.38, \"base_priority\": 0.56, \"cooldown_sec\": 1200, \"description\": \"consolidate episodic memory and active investigations\", \"context\": \"normal\", \"score\": 1.0382, \"rl_priori"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361068.6708202,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":44,\"unconsumed_high_salience_count\":44,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":3,\"rece"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":44,\"unconsumed_high_salience_count\":44,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":3,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781362231,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "sleep_cycle 😴 Ciclo de sono: 0 episódios arquivados, 0 abstrações geradas"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361159.3529418,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":48,\"unconsumed_high_salience_count\":48,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":3,\"rece"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":48,\"unconsumed_high_salience_count\":48,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":3,\"recent_error_count\":0},\"granul"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361250.225598,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":50,\"unconsumed_high_salience_count\":50,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":4,\"recen"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":50,\"unconsumed_high_salience_count\":50,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #127 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #17418 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361341.0659435,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":53,\"unconsumed_high_salience_count\":53,\"queued_action_count\":24,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":53,\"unconsumed_high_salience_count\":53,\"queued_action_count\":24,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "skill_bridge materialized=8 failed=0"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361431.9043534,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":53,\"unconsumed_high_salience_count\":53,\"queued_action_count\":24,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":3,\"rece"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":53,\"unconsumed_high_salience_count\":53,\"queued_action_count\":24,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":3,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361522.606487,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":56,\"unconsumed_high_salience_count\":56,\"queued_action_count\":24,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":3,\"recen"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":56,\"unconsumed_high_salience_count\":56,\"queued_action_count\":24,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":3,\"recent_error_count\":0},\"granul"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=24 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361613.507907,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":55,\"unconsumed_high_salience_count\":55,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":3,\"recen"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":55,\"unconsumed_high_salience_count\":55,\"queued_action_count\":24,\"failed_action_count\":7,\"active_goal_count\":10,\"open_conflict_count\":3,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781362231,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-06-13_a1a21b301cea23e4"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #17424 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #127 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=18 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361704.2822554,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":57,\"unconsumed_high_salience_count\":57,\"queued_action_count\":18,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":57,\"unconsumed_high_salience_count\":57,\"queued_action_count\":18,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "episodic_chat_turn episode=ep_chat_f4df3304a7c9a94a12 session=verif strategy=chat_general_knowledge_llm intent=question {\"episode_id\": \"ep_chat_f4df3304a7c9a94a12\", \"schema\": \"ultronpro.episodic.chat_turn.v1\", \"session_id\": \"verif\", \"timestamp\": 1781361816, \"episode_type\": \"chat_turn\", \"participants\": [\"user\", \"UltronP"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=18 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361825.3391254,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":53,\"unconsumed_high_salience_count\":53,\"queued_action_count\":18,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":53,\"unconsumed_high_salience_count\":53,\"queued_action_count\":18,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781362231,
+      "source": "sleep_cycle",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "identity_biographic_digest biographic_digest gerado id=bio_2026-06-13_43f9571e7cf41be3"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #17432 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781361916.0967045,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":51,\"unconsumed_high_salience_count\":51,\"queued_action_count\":20,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"rece"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":51,\"unconsumed_high_salience_count\":51,\"queued_action_count\":20,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"granul"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781362013.281584,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":49,\"unconsumed_high_salience_count\":49,\"queued_action_count\":20,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"recen"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":49,\"unconsumed_high_salience_count\":49,\"queued_action_count\":20,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":4,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "conflict_needs_human 👤 Conflito #127 precisa de revisão humana: Falha de análise automática; requer revisão humana ou fallback."
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781362104.2705212,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":52,\"unconsumed_high_salience_count\":52,\"queued_action_count\":20,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":3,\"rece"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "skill_bridge materialized=8 failed=0"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:compact_workspace_focus ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":52,\"unconsumed_high_salience_count\":52,\"queued_action_count\":20,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":3,\"recent_error_count\":0},\"granul"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "competence",
+      "pressure": 0.42,
+      "polarity": "need",
+      "evidence": "autonomous_cognition perception workspace=80 queued=20 errors=0 goals=10 {\"snapshot\":{\"ok\":true,\"ts\":1781362195.9304554,\"event_count\":80,\"workspace_count\":80,\"high_salience_count\":49,\"unconsumed_high_salience_count\":49,\"queued_action_count\":20,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":3,\"rece"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "autonomy",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "autonomous_cognition_consequence action=autocog:prioritize_action_backlog ok=True surprise=0.0 {\"context_input\":{\"workspace_count\":80,\"high_salience_count\":49,\"unconsumed_high_salience_count\":49,\"queued_action_count\":20,\"failed_action_count\":8,\"active_goal_count\":10,\"open_conflict_count\":3,\"recent_error_count\":0},\"gran"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "homeostasis ðŸ«€ mode change: conservative -> normal | coherence=0.6886"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "coherence",
+      "pressure": 0.55,
+      "polarity": "need",
+      "evidence": "episodic_hint ðŸ§ kind=ask_evidence hints=1"
+    },
+    {
+      "ts": 1781362231,
+      "source": "store.events",
+      "drive": "integrity",
+      "pressure": 0.78,
+      "polarity": "need",
+      "evidence": "blocked_mental_sim 🧠⛔ ação #17440 bloqueada por simulação mental: ask_evidence (risk=0.18)"
+    },
+    {
+      "ts": 1781362231,
+      "source": "intrinsic_reward_consequence",
+      "drive": "autonomy",
+      "pressure": 0.156,
+      "polarity": "deprioritize",
+      "evidence": "{'source': 'intrinsic_reward_consequence', 'drive': 'autonomy', 'reward': 0.422}"
     }
   ],
   "update_log": [
-    {
-      "ts": 1778962403,
-      "revision": 579,
-      "hash": "2e54b62b68be672791f1",
-      "accepted_evidence_count": 87,
-      "pressure": {
-        "competence": 0.7545,
-        "coherence": 0.55,
-        "autonomy": 0.7383,
-        "novelty": 0.7489,
-        "integrity": 0.7011
-      },
-      "max_delta_per_update": 0.025,
-      "old_weights": {
-        "competence": 0.211946,
-        "coherence": 0.16654,
-        "autonomy": 0.219148,
-        "novelty": 0.192666,
-        "integrity": 0.209701
-      },
-      "new_weights": {
-        "competence": 0.212018,
-        "coherence": 0.166409,
-        "autonomy": 0.218826,
-        "novelty": 0.193364,
-        "integrity": 0.209384
-      }
-    },
-    {
-      "ts": 1778962716,
-      "revision": 580,
-      "hash": "a83e6f38c1bd5aadc84e",
-      "accepted_evidence_count": 87,
-      "pressure": {
-        "competence": 0.7545,
-        "coherence": 0.55,
-        "autonomy": 0.7383,
-        "novelty": 0.7489,
-        "integrity": 0.7007
-      },
-      "max_delta_per_update": 0.025,
-      "old_weights": {
-        "competence": 0.212018,
-        "coherence": 0.166409,
-        "autonomy": 0.218826,
-        "novelty": 0.193364,
-        "integrity": 0.209384
-      },
-      "new_weights": {
-        "competence": 0.212088,
-        "coherence": 0.166283,
-        "autonomy": 0.218516,
-        "novelty": 0.194038,
-        "integrity": 0.209075
-      }
-    },
-    {
-      "ts": 1778963029,
-      "revision": 581,
-      "hash": "5d17079584c736929764",
-      "accepted_evidence_count": 84,
-      "pressure": {
-        "competence": 0.7593,
-        "coherence": 0.55,
-        "autonomy": 0.7416,
-        "novelty": 0.6826,
-        "integrity": 0.71
-      },
-      "max_delta_per_update": 0.025,
-      "old_weights": {
-        "competence": 0.212088,
-        "coherence": 0.166283,
-        "autonomy": 0.218516,
-        "novelty": 0.194038,
-        "integrity": 0.209075
-      },
-      "new_weights": {
-        "competence": 0.212291,
-        "coherence": 0.166232,
-        "autonomy": 0.218337,
-        "novelty": 0.194192,
-        "integrity": 0.208947
-      }
-    },
     {
       "ts": 1778963343,
       "revision": 582,
@@ -8874,13 +8790,97 @@
         "novelty": 0.189522,
         "integrity": 0.213892
       }
+    },
+    {
+      "ts": 1781361901,
+      "revision": 779,
+      "hash": "8d62b774ccb81af02f9b",
+      "accepted_evidence_count": 161,
+      "pressure": {
+        "competence": 0.5226,
+        "coherence": 0.4346,
+        "autonomy": 0.7317,
+        "novelty": 0.7177,
+        "integrity": 0.6656
+      },
+      "max_delta_per_update": 0.025,
+      "old_weights": {
+        "competence": 0.215831,
+        "coherence": 0.153748,
+        "autonomy": 0.227008,
+        "novelty": 0.189522,
+        "integrity": 0.213892
+      },
+      "new_weights": {
+        "competence": 0.214377,
+        "coherence": 0.153605,
+        "autonomy": 0.227212,
+        "novelty": 0.1909,
+        "integrity": 0.213907
+      }
+    },
+    {
+      "ts": 1781362216,
+      "revision": 780,
+      "hash": "7b1d6a20a16fbac1ea89",
+      "accepted_evidence_count": 149,
+      "pressure": {
+        "competence": 0.5149,
+        "coherence": 0.44,
+        "autonomy": 0.7386,
+        "novelty": 0.7177,
+        "integrity": 0.6826
+      },
+      "max_delta_per_update": 0.025,
+      "old_weights": {
+        "competence": 0.214377,
+        "coherence": 0.153605,
+        "autonomy": 0.227212,
+        "novelty": 0.1909,
+        "integrity": 0.213907
+      },
+      "new_weights": {
+        "competence": 0.212863,
+        "coherence": 0.153488,
+        "autonomy": 0.227427,
+        "novelty": 0.192182,
+        "integrity": 0.214042
+      }
+    },
+    {
+      "ts": 1781362231,
+      "revision": 781,
+      "hash": "38f0c55531cabb9a68d8",
+      "accepted_evidence_count": 141,
+      "pressure": {
+        "competence": 0.5029,
+        "coherence": 0.4427,
+        "autonomy": 0.7201,
+        "novelty": 0.0,
+        "integrity": 0.78
+      },
+      "max_delta_per_update": 0.025,
+      "old_weights": {
+        "competence": 0.212863,
+        "coherence": 0.153488,
+        "autonomy": 0.227427,
+        "novelty": 0.192182,
+        "integrity": 0.214042
+      },
+      "new_weights": {
+        "competence": 0.212382,
+        "coherence": 0.154423,
+        "autonomy": 0.229002,
+        "novelty": 0.187385,
+        "integrity": 0.216809
+      }
     }
   ],
   "tamper_events": [],
   "stability": {
     "source": "emergent_from_accepted_operational_evidence",
-    "updates": 777,
-    "accepted_evidence_count": 80988,
+    "updates": 780,
+    "accepted_evidence_count": 81439,
     "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
   }
 }

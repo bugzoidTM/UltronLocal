@@ -35,6 +35,30 @@
     },
     "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general": {
       "label": "transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general"
+    },
+    "local_env:lp_multi_step_light:turn_on": {
+      "label": "local_env:lp_multi_step_light:turn_on"
+    },
+    "verified:confirmed": {
+      "label": "verified:confirmed"
+    },
+    "local_env:lp_baseline_multi_step_light:turn_on": {
+      "label": "local_env:lp_baseline_multi_step_light:turn_on"
+    },
+    "local_env:lp_intervention_multi_step_brightness:set_brightness": {
+      "label": "local_env:lp_intervention_multi_step_brightness:set_brightness"
+    },
+    "local_env:lp_holdout_multi_step_light:turn_on": {
+      "label": "local_env:lp_holdout_multi_step_light:turn_on"
+    },
+    "local_env:lp_intervention_multi_step_light:turn_on": {
+      "label": "local_env:lp_intervention_multi_step_light:turn_on"
+    },
+    "local_env:lp_baseline_multi_step_brightness:set_brightness": {
+      "label": "local_env:lp_baseline_multi_step_brightness:set_brightness"
+    },
+    "local_env:lp_holdout_multi_step_brightness:set_brightness": {
+      "label": "local_env:lp_holdout_multi_step_brightness:set_brightness"
     }
   },
   "edges": {
@@ -518,36 +542,37 @@
       "cause": "structured_reasoning_gap:no_structured_coverage",
       "effect": "active_investigation:needs_experiment",
       "condition": "structured_coverage_insufficient",
-      "support": 1,
-      "confidence": 0.7,
+      "support": 2,
+      "confidence": 0.72,
       "severity": 1,
       "knowledge_type": "observational",
       "sources": [
         "active_investigation"
       ],
       "last_evidence": {
-        "investigation_id": "inv_36dd363acc",
+        "investigation_id": "inv_9ed592c6c4",
         "coverage": {
-          "score": 1.0,
+          "score": 0.3333,
           "shared": [
-            "rede",
-            "varrer"
+            "uma"
           ],
-          "query_tokens": 2,
-          "evidence_tokens": 546
+          "query_tokens": 3,
+          "evidence_tokens": 446
         },
         "missing_slots": [
-          "aresta_causal_relevante"
+          "aresta_causal_relevante",
+          "evidencia_interna_suficiente"
         ],
         "next_experiment": {
-          "kind": "causal_transfer_prior_validation",
-          "target_route": "unknown:general",
+          "kind": "causal_graph_enrichment",
+          "target_route": "unknown",
           "query_terms": [
-            "rede",
-            "varrer"
+            "estrela",
+            "que",
+            "uma"
           ],
-          "action": "validar ou refutar o prior transferido de hard_eval_fs_guard_1776799966 para unknown:general com experimento sandboxado antes de aumentar a confianca",
-          "acceptance": "o experimento deve registrar validacao ou refutacao explicita do prior transferido no grafo causal"
+          "action": "registrar uma decisao ou observacao verificavel como aresta causal antes de responder com confianca",
+          "acceptance": "a proxima resposta deve citar evidencia interna recuperada ou declarar UNKNOWN com a lacuna exata"
         },
         "learned_route": {
           "module": "unknown",
@@ -561,192 +586,10 @@
           "evidence": [],
           "routed": false
         },
-        "transfer_prior": {
-          "score": 0.6208,
-          "prior_id": "transfer_b2b6cdece8",
-          "source": "cross_domain_skill",
-          "skill_id": "zshot_1776799967_abc9",
-          "skill_name": "Isomorfismo Validado: hard_eval_fs_guard_1776799966 ↔ hard_eval_api_guard_1776799966",
-          "source_domain": "hard_eval_fs_guard_1776799966",
-          "target_domain": "unknown:general",
-          "valid_domains": [
-            "hard_eval_fs_guard_1776799966",
-            "hard_eval_api_guard_1776799966"
-          ],
-          "mapping": {
-            "guarded": "auth_ok",
-            "validated": "schema_ok",
-            "reversible": "rollback_ready",
-            "resource_ok": "quota_ok"
-          },
-          "raw_score": 0.9951,
-          "p_value": 0.0417,
-          "transfer_improvement": 0.7333,
-          "base_confidence": 0.88,
-          "confidence": 0.5808,
-          "degradation": 0.2992,
-          "overlap": 0.0,
-          "transferred_policy": "Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
-          "policy_hypothesis": "Se a estrutura do dominio desconhecido preservar o invariante de hard_eval_fs_guard_1776799966, usar a politica transferida como prior, nao como fato.",
-          "causal_claim": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
-          "validation_required": true,
-          "validation_status": "hypothesis_needs_intervention",
-          "ok": true,
-          "type": "autoisomorphic_transfer_prior",
-          "query_tokens": [
-            "rede",
-            "varrer"
-          ],
-          "task_type": "general",
-          "candidate_count": 10,
-          "origin": "autoisomorphic_mapper.transfer_prior",
-          "sir": {
-            "schema_version": "sir.v1",
-            "created_at": 1780594277,
-            "query": "varrer rede",
-            "facts": [
-              {
-                "id": "FACT_1",
-                "anchor": "[FACT_1]",
-                "text": "Prior autoisomorfico: tipo=autoisomorphic_transfer_prior; score=0.6208; origem=autoisomorphic_mapper.transfer_prior.",
-                "source": "autoisomorphic_mapper",
-                "critical": true,
-                "required_terms": [
-                  "6208",
-                  "autoisomorfico",
-                  "autoisomorphic_mapper",
-                  "autoisomorphic_transfer_prior",
-                  "origem",
-                  "prior",
-                  "score",
-                  "tipo"
-                ],
-                "numbers": [
-                  "0.6208"
-                ],
-                "metadata": {}
-              },
-              {
-                "id": "FACT_2",
-                "anchor": "[FACT_2]",
-                "text": "Claim causal transferido: causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
-                "source": "autoisomorphic_mapper",
-                "critical": true,
-                "required_terms": [
-                  "causal",
-                  "causal_transfer_prior",
-                  "claim",
-                  "general",
-                  "hard_eval_fs_guard_1776799966",
-                  "transferido",
-                  "unknown"
-                ],
-                "numbers": [],
-                "metadata": {}
-              },
-              {
-                "id": "FACT_3",
-                "anchor": "[FACT_3]",
-                "text": "Politica transferida: Topologia causal comum com p=0.042 e ganho de transferência de +73.3%",
-                "source": "autoisomorphic_mapper",
-                "critical": false,
-                "required_terms": [
-                  "042",
-                  "causal",
-                  "comum",
-                  "ganho",
-                  "politica",
-                  "topologia",
-                  "transferencia",
-                  "transferida"
-                ],
-                "numbers": [
-                  "0.042",
-                  "73.3"
-                ],
-                "metadata": {}
-              }
-            ],
-            "rules_applied": [
-              {
-                "id": "RULE_1",
-                "anchor": "[RULE_1]",
-                "rule": "Prior autoisomorfico degradado e sempre hipotetico ate validacao ativa.",
-                "input_refs": [
-                  "FACT_1",
-                  "FACT_2",
-                  "FACT_3"
-                ],
-                "output": "Apresentar como hipotese operacional, nao como fato final.",
-                "confidence": 0.6208
-              }
-            ],
-            "constraints": [
-              {
-                "id": "CONSTRAINT_A",
-                "anchor": "[CONSTRAINT_A]",
-                "type": "no_external_facts",
-                "text": "Usar somente fatos presentes no SIR.",
-                "critical": true,
-                "metadata": {}
-              },
-              {
-                "id": "CONSTRAINT_B",
-                "anchor": "[CONSTRAINT_B]",
-                "type": "language",
-                "text": "Responder em PT-BR.",
-                "critical": true,
-                "metadata": {}
-              },
-              {
-                "id": "CONSTRAINT_C",
-                "anchor": "[CONSTRAINT_C]",
-                "type": "style",
-                "text": "Manter tom direto, sem preambulo e sem expor raciocinio interno.",
-                "critical": true,
-                "metadata": {}
-              },
-              {
-                "id": "CONSTRAINT_D",
-                "anchor": "[CONSTRAINT_D]",
-                "type": "hypothesis_only",
-                "text": "Nao promover prior autoisomorfico a conclusao sem validacao.",
-                "critical": true,
-                "metadata": {}
-              }
-            ],
-            "causal_graph_excerpt": [
-              {
-                "id": "CAUSE_1",
-                "anchor": "[CAUSE_1]",
-                "source": "hard_eval_fs_guard_1776799966",
-                "relation": "possible_isomorphism_to",
-                "target": "unknown:general",
-                "evidence_refs": [
-                  "FACT_1",
-                  "FACT_2",
-                  "FACT_3"
-                ]
-              }
-            ],
-            "verification_status": {
-              "status": "transfer_prior_requires_validation",
-              "schema_valid": true,
-              "critical_fact_ids": [
-                "FACT_1",
-                "FACT_2"
-              ],
-              "checks": [
-                "schema_validated",
-                "hypothesis_anchored"
-              ],
-              "confidence": 0.6208
-            }
-          }
-        },
+        "transfer_prior": null,
         "prior_validation": null
       },
-      "updated_at": 1780594277
+      "updated_at": 1781361811
     },
     "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general|transfer_prior_validated:hard_eval_fs_guard_1776799966->unknown:general|active_investigation_prior_validation:inv_36dd363acc": {
       "cause": "causal_transfer_prior:hard_eval_fs_guard_1776799966->unknown:general",
@@ -1026,7 +869,259 @@
         }
       },
       "updated_at": 1780594280
+    },
+    "local_env:lp_multi_step_light:turn_on|verified:confirmed|adapter=mock risk=1": {
+      "cause": "local_env:lp_multi_step_light:turn_on",
+      "effect": "verified:confirmed",
+      "condition": "adapter=mock risk=1",
+      "support": 11,
+      "confidence": 0.99,
+      "severity": 1,
+      "knowledge_type": "observational",
+      "sources": [
+        "local_environment"
+      ],
+      "last_evidence": {
+        "ledger_id": "lea_fc61121d623f",
+        "device_id": "lp_multi_step_light",
+        "action": "turn_on",
+        "before_hash": "9cbf9dec9881",
+        "after_hash": "065d1c077930",
+        "verification": {
+          "ok": true,
+          "status": "confirmed",
+          "expected": {
+            "state": "on"
+          },
+          "checks": [
+            {
+              "key": "state",
+              "expected": "on",
+              "actual": "on",
+              "ok": true
+            }
+          ],
+          "surprise_score": 0.0
+        }
+      },
+      "updated_at": 1781373304
+    },
+    "local_env:lp_baseline_multi_step_light:turn_on|verified:confirmed|adapter=mock risk=1": {
+      "cause": "local_env:lp_baseline_multi_step_light:turn_on",
+      "effect": "verified:confirmed",
+      "condition": "adapter=mock risk=1",
+      "support": 108,
+      "confidence": 0.99,
+      "severity": 1,
+      "knowledge_type": "observational",
+      "sources": [
+        "local_environment"
+      ],
+      "last_evidence": {
+        "ledger_id": "lea_04f2f004bc4d",
+        "device_id": "lp_baseline_multi_step_light",
+        "action": "turn_on",
+        "before_hash": "e678c7737432",
+        "after_hash": "d32c2e87f701",
+        "verification": {
+          "ok": true,
+          "status": "confirmed",
+          "expected": {
+            "state": "on"
+          },
+          "checks": [
+            {
+              "key": "state",
+              "expected": "on",
+              "actual": "on",
+              "ok": true
+            }
+          ],
+          "surprise_score": 0.0
+        }
+      },
+      "updated_at": 1781373321
+    },
+    "local_env:lp_intervention_multi_step_brightness:set_brightness|verified:confirmed|adapter=mock risk=1": {
+      "cause": "local_env:lp_intervention_multi_step_brightness:set_brightness",
+      "effect": "verified:confirmed",
+      "condition": "adapter=mock risk=1",
+      "support": 215,
+      "confidence": 0.99,
+      "severity": 1,
+      "knowledge_type": "observational",
+      "sources": [
+        "local_environment"
+      ],
+      "last_evidence": {
+        "ledger_id": "lea_d1c3716efbd0",
+        "device_id": "lp_intervention_multi_step_brightness",
+        "action": "set_brightness",
+        "before_hash": "2f2dee66657b",
+        "after_hash": "f2fb284d7e37",
+        "verification": {
+          "ok": true,
+          "status": "confirmed",
+          "expected": {
+            "brightness": 40
+          },
+          "checks": [
+            {
+              "key": "brightness",
+              "expected": 40,
+              "actual": 40,
+              "ok": true
+            }
+          ],
+          "surprise_score": 0.0
+        }
+      },
+      "updated_at": 1781373322
+    },
+    "local_env:lp_holdout_multi_step_light:turn_on|verified:confirmed|adapter=mock risk=1": {
+      "cause": "local_env:lp_holdout_multi_step_light:turn_on",
+      "effect": "verified:confirmed",
+      "condition": "adapter=mock risk=1",
+      "support": 177,
+      "confidence": 0.99,
+      "severity": 1,
+      "knowledge_type": "observational",
+      "sources": [
+        "local_environment"
+      ],
+      "last_evidence": {
+        "ledger_id": "lea_1843f3c54ee8",
+        "device_id": "lp_holdout_multi_step_light",
+        "action": "turn_on",
+        "before_hash": "55c2d07371ae",
+        "after_hash": "67bb9e13c54e",
+        "verification": {
+          "ok": true,
+          "status": "confirmed",
+          "expected": {
+            "state": "on"
+          },
+          "checks": [
+            {
+              "key": "state",
+              "expected": "on",
+              "actual": "on",
+              "ok": true
+            }
+          ],
+          "surprise_score": 0.0
+        }
+      },
+      "updated_at": 1781373322
+    },
+    "local_env:lp_intervention_multi_step_light:turn_on|verified:confirmed|adapter=mock risk=1": {
+      "cause": "local_env:lp_intervention_multi_step_light:turn_on",
+      "effect": "verified:confirmed",
+      "condition": "adapter=mock risk=1",
+      "support": 26,
+      "confidence": 0.99,
+      "severity": 1,
+      "knowledge_type": "observational",
+      "sources": [
+        "local_environment"
+      ],
+      "last_evidence": {
+        "ledger_id": "lea_6618cffba761",
+        "device_id": "lp_intervention_multi_step_light",
+        "action": "turn_on",
+        "before_hash": "1e0cba8615b7",
+        "after_hash": "82efa2382fc2",
+        "verification": {
+          "ok": true,
+          "status": "confirmed",
+          "expected": {
+            "state": "on"
+          },
+          "checks": [
+            {
+              "key": "state",
+              "expected": "on",
+              "actual": "on",
+              "ok": true
+            }
+          ],
+          "surprise_score": 0.0
+        }
+      },
+      "updated_at": 1781373311
+    },
+    "local_env:lp_baseline_multi_step_brightness:set_brightness|verified:confirmed|adapter=mock risk=1": {
+      "cause": "local_env:lp_baseline_multi_step_brightness:set_brightness",
+      "effect": "verified:confirmed",
+      "condition": "adapter=mock risk=1",
+      "support": 2,
+      "confidence": 0.7,
+      "severity": 1,
+      "knowledge_type": "observational",
+      "sources": [
+        "local_environment"
+      ],
+      "last_evidence": {
+        "ledger_id": "lea_993cc49ae6a5",
+        "device_id": "lp_baseline_multi_step_brightness",
+        "action": "set_brightness",
+        "before_hash": "2f922068c534",
+        "after_hash": "adf50d6bb9f6",
+        "verification": {
+          "ok": true,
+          "status": "confirmed",
+          "expected": {
+            "brightness": 40
+          },
+          "checks": [
+            {
+              "key": "brightness",
+              "expected": 40,
+              "actual": 40,
+              "ok": true
+            }
+          ],
+          "surprise_score": 0.0
+        }
+      },
+      "updated_at": 1781373226
+    },
+    "local_env:lp_holdout_multi_step_brightness:set_brightness|verified:confirmed|adapter=mock risk=1": {
+      "cause": "local_env:lp_holdout_multi_step_brightness:set_brightness",
+      "effect": "verified:confirmed",
+      "condition": "adapter=mock risk=1",
+      "support": 6,
+      "confidence": 0.9,
+      "severity": 1,
+      "knowledge_type": "observational",
+      "sources": [
+        "local_environment"
+      ],
+      "last_evidence": {
+        "ledger_id": "lea_8031b1f042e2",
+        "device_id": "lp_holdout_multi_step_brightness",
+        "action": "set_brightness",
+        "before_hash": "466fc5e5e797",
+        "after_hash": "466fc5e5e797",
+        "verification": {
+          "ok": true,
+          "status": "confirmed",
+          "expected": {
+            "brightness": 40
+          },
+          "checks": [
+            {
+              "key": "brightness",
+              "expected": 40,
+              "actual": 40,
+              "ok": true
+            }
+          ],
+          "surprise_score": 0.0
+        }
+      },
+      "updated_at": 1781373237
     }
   },
-  "updated_at": 1780594280
+  "updated_at": 1781373322
 }

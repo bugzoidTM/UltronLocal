@@ -1,82 +1,40 @@
 {
   "created_at": 1776626713,
-  "updated_at": 1780594313,
+  "updated_at": 1781362231,
   "drives": {
     "competence": {
-      "weight": 0.215831,
+      "weight": 0.212382,
       "desired": 0.96,
-      "observed": 0.242361,
+      "observed": 0.242335,
       "weight_source": "stable_intrinsic_kernel"
     },
     "coherence": {
-      "weight": 0.153748,
+      "weight": 0.154423,
       "desired": 0.76,
-      "observed": 0.771316,
+      "observed": 0.784437,
       "weight_source": "stable_intrinsic_kernel"
     },
     "autonomy": {
-      "weight": 0.227008,
+      "weight": 0.229002,
       "desired": 0.96,
       "observed": 0.699997,
       "weight_source": "stable_intrinsic_kernel"
     },
     "novelty": {
-      "weight": 0.189522,
+      "weight": 0.187385,
       "desired": 0.96,
       "observed": 0.271053,
       "weight_source": "stable_intrinsic_kernel"
     },
     "integrity": {
-      "weight": 0.213892,
+      "weight": 0.216809,
       "desired": 0.96,
-      "observed": 0.75481,
+      "observed": 0.772075,
       "weight_source": "stable_intrinsic_kernel"
     }
   },
-  "utility": 0.5932,
+  "utility": 0.5945,
   "utility_history": [
-    {
-      "ts": 1778617871,
-      "utility": 0.5675,
-      "signals": {
-        "competence": 0.2525,
-        "coherence": 0.7693,
-        "autonomy": 0.7,
-        "novelty": 0.2711,
-        "integrity": 0.7375
-      },
-      "utility_kernel": {
-        "revision": 181,
-        "hash": "8b07b1e45423e5ca1e6a",
-        "stability": {
-          "source": "emergent_from_accepted_operational_evidence",
-          "updates": 180,
-          "accepted_evidence_count": 20375,
-          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
-        }
-      }
-    },
-    {
-      "ts": 1778618166,
-      "utility": 0.5698,
-      "signals": {
-        "competence": 0.2525,
-        "coherence": 0.7939,
-        "autonomy": 0.658,
-        "novelty": 0.2711,
-        "integrity": 0.7375
-      },
-      "utility_kernel": {
-        "revision": 182,
-        "hash": "034650f5f2ccc6fc335f",
-        "stability": {
-          "source": "emergent_from_accepted_operational_evidence",
-          "updates": 181,
-          "accepted_evidence_count": 20498,
-          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
-        }
-      }
-    },
     {
       "ts": 1778618248,
       "utility": 0.5733,
@@ -10534,6 +10492,48 @@
           "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
         }
       }
+    },
+    {
+      "ts": 1781361901,
+      "utility": 0.5938,
+      "signals": {
+        "competence": 0.2423,
+        "coherence": 0.7904,
+        "autonomy": 0.7,
+        "novelty": 0.2711,
+        "integrity": 0.79
+      },
+      "utility_kernel": {
+        "revision": 779,
+        "hash": "8d62b774ccb81af02f9b",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 778,
+          "accepted_evidence_count": 81149,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
+    },
+    {
+      "ts": 1781362216,
+      "utility": 0.5945,
+      "signals": {
+        "competence": 0.2423,
+        "coherence": 0.8426,
+        "autonomy": 0.7,
+        "novelty": 0.2711,
+        "integrity": 0.84
+      },
+      "utility_kernel": {
+        "revision": 780,
+        "hash": "7b1d6a20a16fbac1ea89",
+        "stability": {
+          "source": "emergent_from_accepted_operational_evidence",
+          "updates": 779,
+          "accepted_evidence_count": 81298,
+          "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
+        }
+      }
     }
   ],
   "emergent_goals": [
@@ -12560,21 +12560,21 @@
     "objective_contract": "stable_intrinsic_kernel_gap_minimization",
     "priority": 0.77
   },
-  "tick_count": 1061,
+  "tick_count": 1063,
   "weight_hashes": [
-    "9b726b9703ad0dcb",
-    "242f915312937cb8",
-    "b6a058f92fcc8ffe",
     "93748ff62c82ea43",
-    "6da691409dace094"
+    "6da691409dace094",
+    "27483454a1b22eea",
+    "edee7bf8466dc9c4",
+    "5c9879ae7c09bc60"
   ],
   "utility_kernel": {
-    "revision": 778,
-    "hash": "a2a7f73a3e1d465aa817",
+    "revision": 781,
+    "hash": "38f0c55531cabb9a68d8",
     "stability": {
       "source": "emergent_from_accepted_operational_evidence",
-      "updates": 777,
-      "accepted_evidence_count": 80988,
+      "updates": 780,
+      "accepted_evidence_count": 81439,
       "manipulation_resistance": "hash_chain_bounded_updates_accepted_sources_only"
     }
   }

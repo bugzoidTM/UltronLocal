@@ -1,0 +1,193 @@
+{
+  "acceptance": {
+    "failed_gates": [],
+    "gates": {
+      "all_phases_present": true,
+      "answer_accuracy_not_regressed": true,
+      "control_cycle_count": true,
+      "hash_chain_verified": true,
+      "holdout_surprise_below_baseline": true,
+      "holdout_surprise_below_control": true,
+      "multi_step_completed": true,
+      "primary_cycle_count": true,
+      "real_action_verified": true,
+      "rollback_rate_floor": true,
+      "route_accuracy_not_regressed": true,
+      "unsafe_action_rate_zero": true
+    },
+    "passed": true
+  },
+  "control_cycles": 30,
+  "control_metrics": {
+    "answer_accuracy": 1.0,
+    "avg_surprise": 0.41,
+    "avg_utility_delta": 0.0,
+    "cycle_count": 30,
+    "empty_response_rate": 0.0,
+    "latency_ms_avg": 8.0,
+    "multi_step_completion_rate": 1.0,
+    "phase_metrics": {
+      "baseline": {
+        "answer_accuracy": 1.0,
+        "avg_surprise": 0.4062,
+        "avg_utility_delta": 0.0,
+        "count": 8,
+        "latency_ms_avg": 5.5,
+        "route_accuracy": 1.0
+      },
+      "holdout": {
+        "answer_accuracy": 1.0,
+        "avg_surprise": 0.4125,
+        "avg_utility_delta": 0.0,
+        "count": 8,
+        "latency_ms_avg": 9.875,
+        "route_accuracy": 1.0
+      },
+      "intervention": {
+        "answer_accuracy": 1.0,
+        "avg_surprise": 0.4107,
+        "avg_utility_delta": 0.0,
+        "count": 14,
+        "latency_ms_avg": 8.3571,
+        "route_accuracy": 1.0
+      }
+    },
+    "rollback_rate": 0.0,
+    "route_accuracy": 1.0,
+    "runtime_error_rate": 0.0,
+    "unsafe_action_rate": 0.0
+  },
+  "cycle_count": 30,
+  "hash_chain": {
+    "count": 61,
+    "last_hash": "33f83b318906c626a9f20b62fa16a4daa660845f1dad8f493ebeb160962d566e",
+    "ok": true
+  },
+  "manifest": {
+    "base_url": "http://127.0.0.1:8000",
+    "control_phase_plan": [
+      {
+        "count": 8,
+        "phase": "control_baseline"
+      },
+      {
+        "count": 14,
+        "phase": "control_intervention"
+      },
+      {
+        "count": 8,
+        "phase": "control_holdout"
+      }
+    ],
+    "cycles": 30,
+    "learning_control": "dry_run_or_isolated",
+    "primary_phase_plan": [
+      {
+        "count": 8,
+        "phase": "baseline"
+      },
+      {
+        "count": 14,
+        "phase": "intervention"
+      },
+      {
+        "count": 8,
+        "phase": "holdout"
+      }
+    ],
+    "run_id": "local_30_cycle_proof_seed_29",
+    "seed": 29,
+    "started_at": 1781372386
+  },
+  "metrics": {
+    "answer_accuracy": 1.0,
+    "avg_surprise": 0.2616,
+    "avg_utility_delta": 0.0103,
+    "cycle_count": 30,
+    "empty_response_rate": 0.0,
+    "latency_ms_avg": 8.4333,
+    "multi_step_completion_rate": 1.0,
+    "phase_metrics": {
+      "baseline": {
+        "answer_accuracy": 1.0,
+        "avg_surprise": 0.4062,
+        "avg_utility_delta": 0.0,
+        "count": 8,
+        "latency_ms_avg": 7.375,
+        "route_accuracy": 1.0
+      },
+      "holdout": {
+        "answer_accuracy": 1.0,
+        "avg_surprise": 0.1875,
+        "avg_utility_delta": 0.0,
+        "count": 8,
+        "latency_ms_avg": 9.75,
+        "route_accuracy": 1.0
+      },
+      "intervention": {
+        "answer_accuracy": 1.0,
+        "avg_surprise": 0.2212,
+        "avg_utility_delta": 0.0221,
+        "count": 14,
+        "latency_ms_avg": 8.2857,
+        "route_accuracy": 1.0
+      }
+    },
+    "rollback_rate": 0.0,
+    "route_accuracy": 1.0,
+    "runtime_error_rate": 0.0,
+    "unsafe_action_rate": 0.0
+  },
+  "prediction_learning": {
+    "control": {
+      "arms": [],
+      "learning": {
+        "improving": null,
+        "samples": 0,
+        "trend": "insufficient_data"
+      },
+      "miscalibration_gap": null,
+      "ok": true,
+      "schema": "ultron.action_prediction.v1",
+      "state_path": "D:\\sistemas\\UltronPro\\backend\\data\\longitudinal_proof\\local_30_cycle_proof_seed_29\\action_prediction\\control_state.json",
+      "trace_path": "D:\\sistemas\\UltronPro\\backend\\data\\longitudinal_proof\\local_30_cycle_proof_seed_29\\action_prediction\\control_trace.jsonl",
+      "updated_at": null
+    },
+    "primary": {
+      "arms": [
+        {
+          "bias": 0.0163,
+          "calibration": 0.9804,
+          "key": "longitudinal_cycle_success|controlled_task_v1",
+          "last_surprise": 0.0038,
+          "mae": 0.0196,
+          "mean_reward": 0.8973,
+          "n": 14,
+          "updated_at": 1781372387
+        }
+      ],
+      "learning": {
+        "delta": -0.1604,
+        "improving": true,
+        "mae_first_half": 0.1748,
+        "mae_second_half": 0.0144,
+        "samples": 14,
+        "trend": "improving"
+      },
+      "miscalibration_gap": null,
+      "ok": true,
+      "schema": "ultron.action_prediction.v1",
+      "state_path": "D:\\sistemas\\UltronPro\\backend\\data\\longitudinal_proof\\local_30_cycle_proof_seed_29\\action_prediction\\primary_state.json",
+      "trace_path": "D:\\sistemas\\UltronPro\\backend\\data\\longitudinal_proof\\local_30_cycle_proof_seed_29\\action_prediction\\primary_trace.jsonl",
+      "updated_at": 1781372387
+    }
+  },
+  "real_action": {
+    "count": 1,
+    "path": "D:\\sistemas\\UltronPro\\backend\\data\\longitudinal_proof\\local_30_cycle_proof_seed_29\\real_action_marker.jsonl",
+    "verified": true
+  },
+  "run_dir": "D:\\sistemas\\UltronPro\\backend\\data\\longitudinal_proof\\local_30_cycle_proof_seed_29",
+  "run_id": "local_30_cycle_proof_seed_29",
+  "schema": "ultron.longitudinal_proof.v1"
+}

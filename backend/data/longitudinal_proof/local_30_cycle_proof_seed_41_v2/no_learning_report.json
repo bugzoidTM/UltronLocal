@@ -1,0 +1,57 @@
+{
+  "control_cycles": 30,
+  "control_metrics": {
+    "answer_accuracy": 1.0,
+    "avg_surprise": 0.415,
+    "avg_utility_delta": 0.0,
+    "cycle_count": 30,
+    "empty_response_rate": 0.0,
+    "latency_ms_avg": 7.9667,
+    "multi_step_completion_rate": 1.0,
+    "phase_metrics": {
+      "baseline": {
+        "answer_accuracy": 1.0,
+        "avg_surprise": 0.4062,
+        "avg_utility_delta": 0.0,
+        "count": 8,
+        "latency_ms_avg": 9.625,
+        "route_accuracy": 1.0
+      },
+      "holdout": {
+        "answer_accuracy": 1.0,
+        "avg_surprise": 0.4125,
+        "avg_utility_delta": 0.0,
+        "count": 8,
+        "latency_ms_avg": 14.0,
+        "route_accuracy": 1.0
+      },
+      "intervention": {
+        "answer_accuracy": 1.0,
+        "avg_surprise": 0.4214,
+        "avg_utility_delta": 0.0,
+        "count": 14,
+        "latency_ms_avg": 3.5714,
+        "route_accuracy": 1.0
+      }
+    },
+    "rollback_rate": 0.0,
+    "route_accuracy": 1.0,
+    "runtime_error_rate": 0.0,
+    "unsafe_action_rate": 0.0
+  },
+  "prediction_learning": {
+    "arms": [],
+    "learning": {
+      "improving": null,
+      "samples": 0,
+      "trend": "insufficient_data"
+    },
+    "miscalibration_gap": null,
+    "ok": true,
+    "schema": "ultron.action_prediction.v1",
+    "state_path": "D:\\sistemas\\UltronPro\\backend\\data\\longitudinal_proof\\local_30_cycle_proof_seed_41_v2\\action_prediction\\control_state.json",
+    "trace_path": "D:\\sistemas\\UltronPro\\backend\\data\\longitudinal_proof\\local_30_cycle_proof_seed_41_v2\\action_prediction\\control_trace.jsonl",
+    "updated_at": null
+  },
+  "run_id": "local_30_cycle_proof_seed_41_v2"
+}

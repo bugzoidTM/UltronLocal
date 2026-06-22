@@ -1,0 +1,36 @@
+{
+  "base_url": "http://127.0.0.1:8000",
+  "control_phase_plan": [
+    {
+      "count": 8,
+      "phase": "control_baseline"
+    },
+    {
+      "count": 14,
+      "phase": "control_intervention"
+    },
+    {
+      "count": 8,
+      "phase": "control_holdout"
+    }
+  ],
+  "cycles": 30,
+  "learning_control": "dry_run_or_isolated",
+  "primary_phase_plan": [
+    {
+      "count": 8,
+      "phase": "baseline"
+    },
+    {
+      "count": 14,
+      "phase": "intervention"
+    },
+    {
+      "count": 8,
+      "phase": "holdout"
+    }
+  ],
+  "run_id": "local_30_cycle_proof",
+  "seed": 13,
+  "started_at": 1781365525
+}

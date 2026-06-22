@@ -1,46 +1,12 @@
 {
-  "ts": 1780594313.703279,
+  "ts": 1781362230.2644672,
   "meta": {
     "cached": false,
-    "scan_ms": 30.1,
+    "scan_ms": 11.68,
     "gap_count": 4,
     "cache_ttl_sec": 15.0
   },
   "gaps": [
-    {
-      "id": "background_loop_pressure",
-      "label": "estabilidade dos loops sob carga",
-      "domain": "runtime_lifecycle",
-      "metric": "paused=False reason=event_loop_lag max_lag=52.4661s blocked_loops=1941",
-      "priority": 0.8952,
-      "evidence": {
-        "background_guard": {
-          "enabled": true,
-          "state": "healthy",
-          "lag_sec": 0.0062,
-          "max_lag_sec": 52.4661,
-          "consecutive_lag": 0,
-          "paused_until": 1780594166.1618528,
-          "last_pause_reason": "event_loop_lag",
-          "last_pause_at": 1780594076.1618528,
-          "last_slow_request": null,
-          "blocked_loops": 1941,
-          "last_blocked_loop": "autonomy_loop",
-          "last_log_at": 1780594311.563185,
-          "foreground_active": 0,
-          "last_foreground_path": "/api/chat/stream",
-          "last_foreground_at": 1780594292.4254282,
-          "last_foreground_elapsed_sec": 0.027,
-          "last_pause_details": {
-            "lag_sec": 4.364,
-            "consecutive_lag": 1
-          },
-          "paused": false,
-          "paused_for_sec": 0.0
-        }
-      },
-      "next_experiment": "medir custo por loop e aplicar budget adaptativo sem desligar loops essenciais"
-    },
     {
       "id": "causal_graph_interventional_coverage",
       "label": "cobertura interventional do grafo causal",
@@ -52,7 +18,7 @@
           "ok": true,
           "nodes": 12,
           "edges": 7,
-          "updated_at": 1780594280,
+          "updated_at": 1781361811,
           "path": "D:\\sistemas\\UltronPro\\backend\\data\\causal_graph.json",
           "interventional_strong_edges": 0,
           "interventional_weak_edges": 5,
@@ -323,11 +289,45 @@
       "metric": "benchmark abaixo do limiar: interventive_prediction_unseen_variants não passou (acurácia respondível 76.5%, acurácia total 65.0%, limiar 80.0%)",
       "priority": 0.719,
       "evidence": {
-        "digest_day": "2026-06-04",
-        "checksum": "13772a802403050f",
+        "digest_day": "2026-06-13",
+        "checksum": "43f9571e7cf41be3",
         "open_tension": "benchmark abaixo do limiar: interventive_prediction_unseen_variants não passou (acurácia respondível 76.5%, acurácia total 65.0%, limiar 80.0%)"
       },
       "next_experiment": "transformar a tensao principal do digest em tarefa mensuravel com criterio de fechamento"
+    },
+    {
+      "id": "background_loop_pressure",
+      "label": "estabilidade dos loops sob carga",
+      "domain": "runtime_lifecycle",
+      "metric": "paused=True reason=event_loop_lag max_lag=13.9926s blocked_loops=102",
+      "priority": 0.5746,
+      "evidence": {
+        "background_guard": {
+          "enabled": true,
+          "state": "paused",
+          "lag_sec": 0.0137,
+          "max_lag_sec": 13.9926,
+          "consecutive_lag": 0,
+          "paused_until": 1781362317.5515165,
+          "last_pause_reason": "event_loop_lag",
+          "last_pause_at": 1781362227.5515165,
+          "last_slow_request": null,
+          "blocked_loops": 102,
+          "last_blocked_loop": "sleep_cycle_loop",
+          "last_log_at": 1781362227.5515568,
+          "foreground_active": 0,
+          "last_foreground_path": "/api/chat",
+          "last_foreground_at": 1781361816.7508724,
+          "last_foreground_elapsed_sec": 5.891,
+          "last_pause_details": {
+            "lag_sec": 11.8,
+            "consecutive_lag": 1
+          },
+          "paused": true,
+          "paused_for_sec": 87.38091731071472
+        }
+      },
+      "next_experiment": "medir custo por loop e aplicar budget adaptativo sem desligar loops essenciais"
     }
   ]
 }

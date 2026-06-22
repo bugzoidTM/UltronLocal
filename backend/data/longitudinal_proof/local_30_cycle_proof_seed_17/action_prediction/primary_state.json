@@ -1,0 +1,31 @@
+{
+  "schema": "ultron.action_prediction.v1",
+  "arms": {
+    "longitudinal_cycle_success|controlled_task_v1": {
+      "n": 14,
+      "mean_reward": 0.8973,
+      "mae": 0.0196,
+      "bias": 0.0163,
+      "calibration": 0.9804,
+      "last_surprise": 0.0038,
+      "updated_at": 1781372376
+    }
+  },
+  "recent_abs_errors": [
+    0.4,
+    0.28,
+    0.196,
+    0.1372,
+    0.096,
+    0.0672,
+    0.047,
+    0.0329,
+    0.023,
+    0.0161,
+    0.0113,
+    0.0079,
+    0.0055,
+    0.0038
+  ],
+  "updated_at": 1781372376
+}

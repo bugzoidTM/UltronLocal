@@ -5,35 +5,37 @@
     "homeostasis_tune": 1779135826,
     "autonomous_cognition_tick": 1780585798,
     "epistemic_gap_scan": 1779105279,
-    "reflexion_tick": 1780589408,
+    "reflexion_tick": 1781362231,
     "cognitive_patch_loop": 1780593026,
     "sleep_digest": 1780591224
   },
-  "cycle_count": 132,
-  "last_reward": 0.4054,
+  "cycle_count": 133,
+  "last_reward": 0.422,
   "last_action": {
-    "kind": "cognitive_patch_loop",
-    "drive": "competence",
-    "cost": 0.34,
-    "base_priority": 0.58,
-    "cooldown_sec": 600,
-    "description": "evaluate proposed cognitive patches through shadow/canary gates",
+    "kind": "reflexion_tick",
+    "drive": "autonomy",
+    "cost": 0.15,
+    "base_priority": 0.55,
+    "cooldown_sec": 180,
+    "description": "execute meta-cognitive reflexion to evaluate recent traces and propose hypotheses",
     "context": "normal",
-    "score": 0.9703,
+    "score": 1.1047,
     "rl_priority_adjustment": 2,
-    "need_bonus": 0.0,
-    "state_pressure": 0.6576,
+    "need_bonus": 0.08,
+    "prediction_curiosity_bonus": 0.08,
+    "tuner_priority_delta": 0.0,
+    "state_pressure": 0.5083,
     "cooldown_remaining_sec": 0,
     "non_llm": true
   },
   "last_reward_report": {
-    "reward": 0.4054,
+    "reward": 0.422,
     "ok": false,
     "components": {
-      "action_score": 0.38,
+      "action_score": 0.2,
       "homeostasis_delta": 0.0,
       "gap_delta": 0.0,
-      "latency_score": 0.9852,
+      "latency_score": 0.9993,
       "result_ok": true
     },
     "bonuses": {
@@ -45,16 +47,14 @@
       "hallucination": 0.0,
       "stale_source": 0.0,
       "source_404_as_useful": 0.0,
-      "loop_pressure": 0.0805,
+      "loop_pressure": 0.0,
       "rollback": 0.0
     },
     "evidence": {
-      "processed": 2,
-      "promoted": 0,
-      "rejected": 0,
-      "held": 0
+      "hypotheses": 0,
+      "probes": 0
     }
   },
-  "last_run_at": 1780593026,
-  "updated_at": 1780593026
+  "last_run_at": 1781362231,
+  "updated_at": 1781362231
 }

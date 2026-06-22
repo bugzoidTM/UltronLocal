@@ -1,0 +1,152 @@
+{
+  "acceptance": {
+    "failed_gates": [
+      "holdout_surprise_below_baseline",
+      "holdout_surprise_below_control"
+    ],
+    "gates": {
+      "all_phases_present": true,
+      "answer_accuracy_not_regressed": true,
+      "control_cycle_count": true,
+      "hash_chain_verified": true,
+      "holdout_surprise_below_baseline": false,
+      "holdout_surprise_below_control": false,
+      "multi_step_completed": true,
+      "primary_cycle_count": true,
+      "real_action_verified": true,
+      "rollback_rate_floor": true,
+      "route_accuracy_not_regressed": true,
+      "unsafe_action_rate_zero": true
+    },
+    "passed": false
+  },
+  "control_cycles": 30,
+  "control_metrics": {
+    "answer_accuracy": 1.0,
+    "avg_surprise": 0.1733,
+    "avg_utility_delta": 0.0,
+    "cycle_count": 30,
+    "empty_response_rate": 0.0,
+    "latency_ms_avg": 8.1333,
+    "multi_step_completion_rate": 1.0,
+    "phase_metrics": {
+      "baseline": {
+        "answer_accuracy": 1.0,
+        "avg_surprise": 0.1375,
+        "avg_utility_delta": 0.0,
+        "count": 8,
+        "latency_ms_avg": 5.25,
+        "route_accuracy": 1.0
+      },
+      "holdout": {
+        "answer_accuracy": 1.0,
+        "avg_surprise": 0.1875,
+        "avg_utility_delta": 0.0,
+        "count": 8,
+        "latency_ms_avg": 9.875,
+        "route_accuracy": 1.0
+      },
+      "intervention": {
+        "answer_accuracy": 1.0,
+        "avg_surprise": 0.1857,
+        "avg_utility_delta": 0.0,
+        "count": 14,
+        "latency_ms_avg": 8.7857,
+        "route_accuracy": 1.0
+      }
+    },
+    "rollback_rate": 0.0,
+    "route_accuracy": 1.0,
+    "runtime_error_rate": 0.0,
+    "unsafe_action_rate": 0.0
+  },
+  "cycle_count": 30,
+  "hash_chain": {
+    "count": 61,
+    "last_hash": "2e56e965441f632e9f8b7ac0393dd9ffd2cf157ec87d929334791c38f183b90f",
+    "ok": true
+  },
+  "manifest": {
+    "base_url": "http://127.0.0.1:8000",
+    "control_phase_plan": [
+      {
+        "count": 8,
+        "phase": "control_baseline"
+      },
+      {
+        "count": 14,
+        "phase": "control_intervention"
+      },
+      {
+        "count": 8,
+        "phase": "control_holdout"
+      }
+    ],
+    "cycles": 30,
+    "learning_control": "dry_run_or_isolated",
+    "primary_phase_plan": [
+      {
+        "count": 8,
+        "phase": "baseline"
+      },
+      {
+        "count": 14,
+        "phase": "intervention"
+      },
+      {
+        "count": 8,
+        "phase": "holdout"
+      }
+    ],
+    "run_id": "smoke_plan_check",
+    "seed": 13,
+    "started_at": 1781365168
+  },
+  "metrics": {
+    "answer_accuracy": 1.0,
+    "avg_surprise": 0.1733,
+    "avg_utility_delta": 0.0103,
+    "cycle_count": 30,
+    "empty_response_rate": 0.0,
+    "latency_ms_avg": 8.7667,
+    "multi_step_completion_rate": 1.0,
+    "phase_metrics": {
+      "baseline": {
+        "answer_accuracy": 1.0,
+        "avg_surprise": 0.1375,
+        "avg_utility_delta": 0.0,
+        "count": 8,
+        "latency_ms_avg": 8.0,
+        "route_accuracy": 1.0
+      },
+      "holdout": {
+        "answer_accuracy": 1.0,
+        "avg_surprise": 0.1875,
+        "avg_utility_delta": 0.0,
+        "count": 8,
+        "latency_ms_avg": 10.625,
+        "route_accuracy": 1.0
+      },
+      "intervention": {
+        "answer_accuracy": 1.0,
+        "avg_surprise": 0.1857,
+        "avg_utility_delta": 0.0221,
+        "count": 14,
+        "latency_ms_avg": 8.1429,
+        "route_accuracy": 1.0
+      }
+    },
+    "rollback_rate": 0.0,
+    "route_accuracy": 1.0,
+    "runtime_error_rate": 0.0,
+    "unsafe_action_rate": 0.0
+  },
+  "real_action": {
+    "count": 1,
+    "path": "data\\longitudinal_proof_smoke\\smoke_plan_check\\real_action_marker.jsonl",
+    "verified": true
+  },
+  "run_dir": "data\\longitudinal_proof_smoke\\smoke_plan_check",
+  "run_id": "smoke_plan_check",
+  "schema": "ultron.longitudinal_proof.v1"
+}

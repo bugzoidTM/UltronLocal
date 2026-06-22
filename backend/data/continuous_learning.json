@@ -49,14 +49,22 @@
       "latency_ms": 1779,
       "error_type": null,
       "profile": "normal"
+    },
+    {
+      "ts": 1781362231,
+      "task_type": "online_rl:reflexion_tick",
+      "success": false,
+      "latency_ms": 80,
+      "error_type": null,
+      "profile": "normal"
     }
   ],
   "policy_weights": {
     "online_rl:sleep_digest": 0.538,
     "online_rl:autonomous_cognition_tick": 0.55,
     "online_rl:trusted_acquisition": 0.35,
-    "online_rl:reflexion_tick": 0.35,
+    "online_rl:reflexion_tick": 0.21499999999999997,
     "online_rl:cognitive_patch_loop": 0.35
   },
-  "updated_at": 1780593026
+  "updated_at": 1781362231
 }

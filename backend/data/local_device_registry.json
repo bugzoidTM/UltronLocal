@@ -1,7 +1,7 @@
 {
   "ok": true,
   "version": 1,
-  "updated_at": 1780594450,
+  "updated_at": 1781373322,
   "devices": {
     "net_192_168_68_1": {
       "device_id": "net_192_168_68_1",
@@ -3853,6 +3853,156 @@
       },
       "created_at": 1780594321,
       "updated_at": 1780594450
+    },
+    "lp_baseline_multi_step_light": {
+      "device_id": "lp_baseline_multi_step_light",
+      "name": "Longitudinal Proof baseline_multi_step_light",
+      "type": "smart_light",
+      "location": "proof_lab",
+      "adapter": "mock",
+      "capabilities": [
+        "read_state",
+        "turn_on",
+        "turn_off",
+        "set_brightness"
+      ],
+      "risk_level": 1,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "baseline_multi_step_light",
+        "lampada mock"
+      ],
+      "config": {},
+      "metadata": {},
+      "created_at": 1781365156,
+      "updated_at": 1781373321
+    },
+    "lp_intervention_multi_step_brightness": {
+      "device_id": "lp_intervention_multi_step_brightness",
+      "name": "Longitudinal Proof intervention_multi_step_brightness",
+      "type": "smart_light",
+      "location": "proof_lab",
+      "adapter": "mock",
+      "capabilities": [
+        "read_state",
+        "turn_on",
+        "turn_off",
+        "set_brightness"
+      ],
+      "risk_level": 1,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "intervention_multi_step_brightness",
+        "lampada mock"
+      ],
+      "config": {},
+      "metadata": {},
+      "created_at": 1781365156,
+      "updated_at": 1781373322
+    },
+    "lp_holdout_multi_step_light": {
+      "device_id": "lp_holdout_multi_step_light",
+      "name": "Longitudinal Proof holdout_multi_step_light",
+      "type": "smart_light",
+      "location": "proof_lab",
+      "adapter": "mock",
+      "capabilities": [
+        "read_state",
+        "turn_on",
+        "turn_off",
+        "set_brightness"
+      ],
+      "risk_level": 1,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "holdout_multi_step_light",
+        "lampada mock"
+      ],
+      "config": {},
+      "metadata": {},
+      "created_at": 1781365157,
+      "updated_at": 1781373322
+    },
+    "lp_intervention_multi_step_light": {
+      "device_id": "lp_intervention_multi_step_light",
+      "name": "Longitudinal Proof intervention_multi_step_light",
+      "type": "smart_light",
+      "location": "proof_lab",
+      "adapter": "mock",
+      "capabilities": [
+        "read_state",
+        "turn_on",
+        "turn_off",
+        "set_brightness"
+      ],
+      "risk_level": 1,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "intervention_multi_step_light",
+        "lampada mock"
+      ],
+      "config": {},
+      "metadata": {},
+      "created_at": 1781373216,
+      "updated_at": 1781373227
+    },
+    "lp_baseline_multi_step_brightness": {
+      "device_id": "lp_baseline_multi_step_brightness",
+      "name": "Longitudinal Proof baseline_multi_step_brightness",
+      "type": "smart_light",
+      "location": "proof_lab",
+      "adapter": "mock",
+      "capabilities": [
+        "read_state",
+        "turn_on",
+        "turn_off",
+        "set_brightness"
+      ],
+      "risk_level": 1,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "baseline_multi_step_brightness",
+        "lampada mock"
+      ],
+      "config": {},
+      "metadata": {},
+      "created_at": 1781373224,
+      "updated_at": 1781373226
+    },
+    "lp_holdout_multi_step_brightness": {
+      "device_id": "lp_holdout_multi_step_brightness",
+      "name": "Longitudinal Proof holdout_multi_step_brightness",
+      "type": "smart_light",
+      "location": "proof_lab",
+      "adapter": "mock",
+      "capabilities": [
+        "read_state",
+        "turn_on",
+        "turn_off",
+        "set_brightness"
+      ],
+      "risk_level": 1,
+      "requires_confirmation": false,
+      "allowed": true,
+      "allow_high_risk": false,
+      "aliases": [
+        "holdout_multi_step_brightness",
+        "lampada mock"
+      ],
+      "config": {},
+      "metadata": {},
+      "created_at": 1781373225,
+      "updated_at": 1781373237
     }
   }
 }

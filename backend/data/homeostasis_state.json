@@ -1,39 +1,15 @@
 {
-  "updated_at": 1780594313,
-  "mode": "conservative",
+  "updated_at": 1781362215,
+  "mode": "normal",
   "vitals": {
-    "coherence_score": 0.5299,
-    "uncertainty_load": 0.6935,
-    "memory_pressure": 0.2797,
+    "coherence_score": 0.6886,
+    "uncertainty_load": 0.38,
+    "memory_pressure": 0.2857,
     "goal_drift": 0.18,
-    "contradiction_stress": 0.5217,
+    "contradiction_stress": 0.32,
     "energy_budget": 1.0
   },
   "history": [
-    {
-      "ts": 1778938994,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5411,
-        "uncertainty_load": 0.6935,
-        "memory_pressure": 0.2299,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5267,
-        "energy_budget": 1.0
-      }
-    },
-    {
-      "ts": 1778939067,
-      "mode": "conservative",
-      "vitals": {
-        "coherence_score": 0.5686,
-        "uncertainty_load": 0.615,
-        "memory_pressure": 0.23,
-        "goal_drift": 0.18,
-        "contradiction_stress": 0.5267,
-        "energy_budget": 1.0
-      }
-    },
     {
       "ts": 1778939306,
       "mode": "conservative",
@@ -2887,6 +2863,30 @@
         "memory_pressure": 0.2797,
         "goal_drift": 0.18,
         "contradiction_stress": 0.5217,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1781361900,
+      "mode": "conservative",
+      "vitals": {
+        "coherence_score": 0.5813,
+        "uncertainty_load": 0.615,
+        "memory_pressure": 0.2856,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.42,
+        "energy_budget": 1.0
+      }
+    },
+    {
+      "ts": 1781362215,
+      "mode": "normal",
+      "vitals": {
+        "coherence_score": 0.6886,
+        "uncertainty_load": 0.38,
+        "memory_pressure": 0.2857,
+        "goal_drift": 0.18,
+        "contradiction_stress": 0.32,
         "energy_budget": 1.0
       }
     }

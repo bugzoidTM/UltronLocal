@@ -30,10 +30,10 @@ Classifique a mensagem pela skill aprendida, responda por rota deterministica e 
 
 ## Exemplos observados
 
-- muito obrigado
 - valeu
 - calcule 10-3
 - grato pela ajuda
 - te agradeço muito
+- como vai?
 
-*Materializada automaticamente via skill_memory_bridge a partir de skill_memory 'chat-intent-thanks' (success_count=293, confidence=0.960).*
+*Materializada automaticamente via skill_memory_bridge a partir de skill_memory 'chat-intent-thanks' (success_count=319, confidence=0.960).*
